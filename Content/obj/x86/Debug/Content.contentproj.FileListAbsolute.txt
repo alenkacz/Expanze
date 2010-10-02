@@ -1,0 +1,2 @@
+C:\Users\Alenka\Downloads\GameStateManagementSample_4_0\Content\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Content\obj\x86\Debug\ResolveAssemblyReference.cache
