@@ -7,7 +7,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\_Projekty\Expanze\Expanze\GameStateManagementSample\bin\x86\Debug\Content\background.xnb</Output>
+      <Output>C:\_Projekty\Expanze\Expanze\Expanze\bin\x86\Debug\Content\background.xnb</Output>
       <Time>2010-10-02T20:40:56.1+02:00</Time>
     </Item>
     <Item>
@@ -16,7 +16,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\_Projekty\Expanze\Expanze\GameStateManagementSample\bin\x86\Debug\Content\blank.xnb</Output>
+      <Output>C:\_Projekty\Expanze\Expanze\Expanze\bin\x86\Debug\Content\blank.xnb</Output>
       <Time>2010-10-02T20:40:56.102+02:00</Time>
     </Item>
     <Item>
@@ -25,7 +25,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\_Projekty\Expanze\Expanze\GameStateManagementSample\bin\x86\Debug\Content\gradient.xnb</Output>
+      <Output>C:\_Projekty\Expanze\Expanze\Expanze\bin\x86\Debug\Content\gradient.xnb</Output>
       <Time>2010-10-02T20:40:56.108+02:00</Time>
     </Item>
     <Item>
@@ -34,7 +34,7 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\_Projekty\Expanze\Expanze\GameStateManagementSample\bin\x86\Debug\Content\menufont.xnb</Output>
+      <Output>C:\_Projekty\Expanze\Expanze\Expanze\bin\x86\Debug\Content\menufont.xnb</Output>
       <Time>2010-10-02T20:40:56.109+02:00</Time>
     </Item>
     <Item>
@@ -43,7 +43,7 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\_Projekty\Expanze\Expanze\GameStateManagementSample\bin\x86\Debug\Content\gamefont.xnb</Output>
+      <Output>C:\_Projekty\Expanze\Expanze\Expanze\bin\x86\Debug\Content\gamefont.xnb</Output>
       <Time>2010-10-02T20:40:56.106+02:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
@@ -53,9 +53,9 @@
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
       <RootDirectory>C:\_Projekty\Expanze\Expanze\Content\</RootDirectory>
-      <LoggerRootDirectory>C:\_Projekty\Expanze\Expanze\GameStateManagementSample\</LoggerRootDirectory>
+      <LoggerRootDirectory>C:\_Projekty\Expanze\Expanze\Expanze\</LoggerRootDirectory>
       <IntermediateDirectory>C:\_Projekty\Expanze\Expanze\Content\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\_Projekty\Expanze\Expanze\GameStateManagementSample\bin\x86\Debug\Content\</OutputDirectory>
+      <OutputDirectory>C:\_Projekty\Expanze\Expanze\Expanze\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
