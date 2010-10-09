@@ -1,2 +1,4 @@
 app/Expanze/bin
 app/Expanze/obj
+*.cachefile
+*.exe
