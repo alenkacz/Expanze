@@ -1,0 +1,5 @@
+Content\menuItem.xnb
+Content\cursor1.xnb
+Content\sword.xnb
+Content\myFont.xnb
+Content\sword_0.xnb
