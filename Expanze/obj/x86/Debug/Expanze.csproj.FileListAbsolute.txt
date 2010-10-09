@@ -31,3 +31,14 @@ C:\_Projekty\Expanze\Expanze\Expanze\obj\x86\Debug\ResolveAssemblyReference.cach
 C:\_Projekty\Expanze\Expanze\Expanze\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\_Projekty\Expanze\Expanze\Expanze\obj\x86\Debug\Expanze.exe
 C:\_Projekty\Expanze\Expanze\Expanze\obj\x86\Debug\Expanze.pdb
+C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\Expanze\bin\x86\Debug\Content\background.xnb
+C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\Expanze\bin\x86\Debug\Content\blank.xnb
+C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\Expanze\bin\x86\Debug\Content\gradient.xnb
+C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\Expanze\bin\x86\Debug\Content\menufont.xnb
+C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\Expanze\bin\x86\Debug\Content\gamefont.xnb
+C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\Expanze\bin\x86\Debug\Expanze.exe
+C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\Expanze\bin\x86\Debug\Expanze.pdb
+C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\Expanze\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\Expanze\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\Expanze\obj\x86\Debug\Expanze.exe
+C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\Expanze\obj\x86\Debug\Expanze.pdb

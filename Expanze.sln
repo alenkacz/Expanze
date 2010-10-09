@@ -1,7 +1,7 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expanze", "GameStateManagementSample\Expanze.csproj", "{CE4C1E0D-7E54-4BF6-9959-FB4BCC16B68E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expanze", "Expanze\Expanze.csproj", "{CE4C1E0D-7E54-4BF6-9959-FB4BCC16B68E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content", "Content\Content.contentproj", "{B7219195-3990-4557-87D7-856DB165635D}"
 EndProject

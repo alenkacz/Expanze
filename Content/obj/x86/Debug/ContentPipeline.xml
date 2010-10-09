@@ -7,8 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\_Projekty\Expanze\Expanze\Expanze\bin\x86\Debug\Content\background.xnb</Output>
-      <Time>2010-10-02T20:40:56.1+02:00</Time>
+      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\Expanze\bin\x86\Debug\Content\background.xnb</Output>
+      <Time>2010-10-09T19:07:42.104+02:00</Time>
     </Item>
     <Item>
       <Source>blank.png</Source>
@@ -16,8 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\_Projekty\Expanze\Expanze\Expanze\bin\x86\Debug\Content\blank.xnb</Output>
-      <Time>2010-10-02T20:40:56.102+02:00</Time>
+      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\Expanze\bin\x86\Debug\Content\blank.xnb</Output>
+      <Time>2010-10-09T19:07:42.105+02:00</Time>
     </Item>
     <Item>
       <Source>gradient.png</Source>
@@ -25,8 +25,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\_Projekty\Expanze\Expanze\Expanze\bin\x86\Debug\Content\gradient.xnb</Output>
-      <Time>2010-10-02T20:40:56.108+02:00</Time>
+      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\Expanze\bin\x86\Debug\Content\gradient.xnb</Output>
+      <Time>2010-10-09T19:07:42.107+02:00</Time>
     </Item>
     <Item>
       <Source>menufont.spritefont</Source>
@@ -34,8 +34,8 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\_Projekty\Expanze\Expanze\Expanze\bin\x86\Debug\Content\menufont.xnb</Output>
-      <Time>2010-10-02T20:40:56.109+02:00</Time>
+      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\Expanze\bin\x86\Debug\Content\menufont.xnb</Output>
+      <Time>2010-10-09T19:07:42.108+02:00</Time>
     </Item>
     <Item>
       <Source>gamefont.spritefont</Source>
@@ -43,8 +43,8 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\_Projekty\Expanze\Expanze\Expanze\bin\x86\Debug\Content\gamefont.xnb</Output>
-      <Time>2010-10-02T20:40:56.106+02:00</Time>
+      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\Expanze\bin\x86\Debug\Content\gamefont.xnb</Output>
+      <Time>2010-10-09T19:07:42.107+02:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -52,10 +52,10 @@
       <TargetProfile>Reach</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\_Projekty\Expanze\Expanze\Content\</RootDirectory>
-      <LoggerRootDirectory>C:\_Projekty\Expanze\Expanze\Expanze\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\_Projekty\Expanze\Expanze\Content\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\_Projekty\Expanze\Expanze\Expanze\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\Content\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\Expanze\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\Content\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\Expanze\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
@@ -84,7 +84,7 @@
       </Assembly>
       <Assembly>
         <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2010-10-01T23:01:49.0068+02:00</Value>
+        <Value>2010-10-01T21:51:01.4236+02:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>
