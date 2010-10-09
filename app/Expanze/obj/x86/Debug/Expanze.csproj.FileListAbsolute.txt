@@ -53,3 +53,4 @@ C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expan
 C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\obj\x86\Debug\Expanze.exe
 C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\obj\x86\Debug\Expanze.pdb
+C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\Models\redhex.xnb

@@ -8,7 +8,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\background.xnb</Output>
-      <Time>2010-10-09T19:07:42.104+02:00</Time>
+      <Time>2010-10-09T19:57:58.385+02:00</Time>
     </Item>
     <Item>
       <Source>blank.png</Source>
@@ -17,7 +17,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\blank.xnb</Output>
-      <Time>2010-10-09T19:07:42.105+02:00</Time>
+      <Time>2010-10-09T19:57:58.386+02:00</Time>
     </Item>
     <Item>
       <Source>gradient.png</Source>
@@ -26,7 +26,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\gradient.xnb</Output>
-      <Time>2010-10-09T19:07:42.107+02:00</Time>
+      <Time>2010-10-09T19:57:58.388+02:00</Time>
     </Item>
     <Item>
       <Source>menufont.spritefont</Source>
@@ -35,7 +35,7 @@
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\menufont.xnb</Output>
-      <Time>2010-10-09T19:07:42.108+02:00</Time>
+      <Time>2010-10-09T19:57:58.389+02:00</Time>
     </Item>
     <Item>
       <Source>gamefont.spritefont</Source>
@@ -44,7 +44,27 @@
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\gamefont.xnb</Output>
-      <Time>2010-10-09T19:07:42.107+02:00</Time>
+      <Time>2010-10-09T19:57:58.387+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\redhex.X</Source>
+      <Name>Models\redhex</Name>
+      <Importer>XImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\Models\redhex.xnb</Output>
+      <Time>2010-10-09T20:43:18.208+02:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\Models\redhex_0.xml</Key>
+        <Value>2010-10-09T20:43:33.995+02:00</Value>
+      </Dependency>
+    </Item>
+    <Item>
+      <Source>Models\redhex.X</Source>
+      <Importer>XImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>obj\x86\Debug\Models\redhex_0.xml</Output>
+      <Time>2010-10-09T20:43:18.208+02:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

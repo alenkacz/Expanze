@@ -14,18 +14,15 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Expanze
 {
-    /// <summary>
-    /// Sample showing how to manage different game states, with transitions
-    /// between menu screens, a loading screen, the game itself, and a pause
-    /// menu. This main game class is extremely simple: allGame the interesting
-    /// stuff happens in the ScreenManager component.
-    /// </summary>
+   
     public class ExpanzeGame : Microsoft.Xna.Framework.Game
     {
+
         #region Fields
 
         GraphicsDeviceManager graphics;
         ScreenManager screenManager;
+        Hexa hexaComp;
 
 
         // By preloading any assets used by UI rendering, we avoid framerate glitches
@@ -56,6 +53,9 @@ namespace Expanze
             screenManager = new ScreenManager(this);
 
             Components.Add(screenManager);
+
+            hexaComp = new Hexa(this);
+            Components.Add(hexaComp);
 
             // Activate the first screens.
             screenManager.AddScreen(new BackgroundScreen(), null);

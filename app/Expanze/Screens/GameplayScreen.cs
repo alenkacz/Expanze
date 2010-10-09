@@ -19,9 +19,7 @@ using Microsoft.Xna.Framework.Input;
 namespace Expanze
 {
     /// <summary>
-    /// This screen implements the actual game logic. It is just a
-    /// placeholder to get the idea across: you'll probably want to
-    /// put some more interesting gameplay in here!
+    ///  Main gameplay screen
     /// </summary>
     class GameplayScreen : GameScreen
     {
@@ -29,6 +27,7 @@ namespace Expanze
 
         ContentManager content;
         SpriteFont gameFont;
+        Hexa hexaComp;
 
         Vector2 playerPosition = new Vector2(100, 100);
         Vector2 enemyPosition = new Vector2(100, 100);
