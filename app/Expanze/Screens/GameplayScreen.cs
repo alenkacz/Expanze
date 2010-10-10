@@ -61,9 +61,10 @@ namespace Expanze
 
             gameFont = content.Load<SpriteFont>("gamefont");
 
-            // A real game would probably have more content than this sample, so
-            // it would take longer to load. We simulate that by delaying for a
-            // while, giving you a chance to admire the beautiful loading screen.
+            hexaComp = new Hexa(ScreenManager.Game);
+            ScreenManager.Game.Components.Add(hexaComp);
+
+            //simulating loading screens
             Thread.Sleep(1000);
 
             // once the load has finished, we use ResetElapsedTime to tell the game's
@@ -194,10 +195,7 @@ namespace Expanze
 
             spriteBatch.Begin();
 
-            spriteBatch.DrawString(gameFont, "// TODO", playerPosition, Color.Green);
-
-            spriteBatch.DrawString(gameFont, "Insert Gameplay Here",
-                                   enemyPosition, Color.DarkRed);
+            spriteBatch.DrawString(gameFont, "Awesome Map", playerPosition, Color.DarkRed);
 
             spriteBatch.End();
 

@@ -22,7 +22,6 @@ namespace Expanze
 
         GraphicsDeviceManager graphics;
         ScreenManager screenManager;
-        Hexa hexaComp;
 
 
         // By preloading any assets used by UI rendering, we avoid framerate glitches
@@ -53,9 +52,6 @@ namespace Expanze
             screenManager = new ScreenManager(this);
 
             Components.Add(screenManager);
-
-            hexaComp = new Hexa(this);
-            Components.Add(hexaComp);
 
             // Activate the first screens.
             screenManager.AddScreen(new BackgroundScreen(), null);

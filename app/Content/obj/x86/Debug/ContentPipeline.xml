@@ -66,6 +66,126 @@
       <Output>obj\x86\Debug\Models\redhex_0.xml</Output>
       <Time>2010-10-09T20:43:18.208+02:00</Time>
     </Item>
+    <Item>
+      <Source>Models\blackhex.X</Source>
+      <Name>Models\blackhex</Name>
+      <Importer>XImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\Models\blackhex.xnb</Output>
+      <Time>2010-10-10T13:43:48.838+02:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\Models\blackhex_0.xml</Key>
+        <Value>2010-10-10T13:45:42.284+02:00</Value>
+      </Dependency>
+    </Item>
+    <Item>
+      <Source>Models\bluehex.X</Source>
+      <Name>Models\bluehex</Name>
+      <Importer>XImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\Models\bluehex.xnb</Output>
+      <Time>2010-10-10T13:43:48.855+02:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\Models\bluehex_0.xml</Key>
+        <Value>2010-10-10T13:45:42.842+02:00</Value>
+      </Dependency>
+    </Item>
+    <Item>
+      <Source>Models\brownhex.X</Source>
+      <Name>Models\brownhex</Name>
+      <Importer>XImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\Models\brownhex.xnb</Output>
+      <Time>2010-10-10T13:43:48.869+02:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\Models\brownhex_0.xml</Key>
+        <Value>2010-10-10T13:45:42.934+02:00</Value>
+      </Dependency>
+    </Item>
+    <Item>
+      <Source>Models\darkgreenhex.X</Source>
+      <Name>Models\darkgreenhex</Name>
+      <Importer>XImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\Models\darkgreenhex.xnb</Output>
+      <Time>2010-10-10T13:43:48.885+02:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\Models\darkgreenhex_0.xml</Key>
+        <Value>2010-10-10T13:45:42.989+02:00</Value>
+      </Dependency>
+    </Item>
+    <Item>
+      <Source>Models\greenhex.X</Source>
+      <Name>Models\greenhex</Name>
+      <Importer>XImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\Models\greenhex.xnb</Output>
+      <Time>2010-10-10T13:43:48.895+02:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\Models\greenhex_0.xml</Key>
+        <Value>2010-10-10T13:45:43.045+02:00</Value>
+      </Dependency>
+    </Item>
+    <Item>
+      <Source>Models\whitehex.X</Source>
+      <Name>Models\whitehex</Name>
+      <Importer>XImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\Models\whitehex.xnb</Output>
+      <Time>2010-10-10T13:43:48.904+02:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\Models\whitehex_0.xml</Key>
+        <Value>2010-10-10T13:45:43.096+02:00</Value>
+      </Dependency>
+    </Item>
+    <Item>
+      <Source>Models\blackhex.X</Source>
+      <Importer>XImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>obj\x86\Debug\Models\blackhex_0.xml</Output>
+      <Time>2010-10-10T13:43:48.838+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\bluehex.X</Source>
+      <Importer>XImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>obj\x86\Debug\Models\bluehex_0.xml</Output>
+      <Time>2010-10-10T13:43:48.855+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\brownhex.X</Source>
+      <Importer>XImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>obj\x86\Debug\Models\brownhex_0.xml</Output>
+      <Time>2010-10-10T13:43:48.869+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\darkgreenhex.X</Source>
+      <Importer>XImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>obj\x86\Debug\Models\darkgreenhex_0.xml</Output>
+      <Time>2010-10-10T13:43:48.885+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\greenhex.X</Source>
+      <Importer>XImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>obj\x86\Debug\Models\greenhex_0.xml</Output>
+      <Time>2010-10-10T13:43:48.895+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\whitehex.X</Source>
+      <Importer>XImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>obj\x86\Debug\Models\whitehex_0.xml</Output>
+      <Time>2010-10-10T13:43:48.904+02:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>
