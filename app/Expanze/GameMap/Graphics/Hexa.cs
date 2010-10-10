@@ -66,13 +66,8 @@ namespace Expanze
             hexaModel[2] = Game.Content.Load<Model>("Models/whitehex");
             hexaModel[3] = Game.Content.Load<Model>("Models/brownhex");
             hexaModel[4] = Game.Content.Load<Model>("Models/bluehex");
-            hexaModel[5] = Game.Content.Load<Model>("Models/bluehex");
+            hexaModel[5] = Game.Content.Load<Model>("Models/mill");
             hexaModel[6] = Game.Content.Load<Model>("Models/bluehex");
-            foreach (Model m in hexaModel)
-            {
-                Matrix[] transforms = new Matrix[m.Bones.Count];
-                m.CopyAbsoluteBoneTransformsTo(transforms);
-            }
         }
 
         public override void Update(GameTime gameTime)
@@ -91,12 +86,15 @@ namespace Expanze
             view = Matrix.CreateLookAt(eye, target, up);
             for (int loop1 = 0; loop1 < N_MODEL; loop1++)
             {
+                Matrix[] transforms = new Matrix[hexaModel[loop1].Bones.Count];
+                hexaModel[loop1].CopyAbsoluteBoneTransformsTo(transforms);
+
                 foreach (ModelMesh mesh in hexaModel[loop1].Meshes)
                 {
                     foreach (BasicEffect effect in mesh.Effects)
                     {
                         effect.EnableDefaultLighting();
-                        effect.World = world[loop1];
+                        effect.World = world[loop1] * transforms[mesh.ParentBone.Index];
                         effect.View = view;
                         effect.Projection = projection;
                     }
