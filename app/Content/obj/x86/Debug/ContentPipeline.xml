@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline">
+<XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline" xmlns:Framework="Microsoft.Xna.Framework" xmlns:Processors="Microsoft.Xna.Framework.Content.Pipeline.Processors">
   <Asset Type="Pipeline:BuildItemCollection">
     <Item>
       <Source>background.png</Source>
@@ -7,8 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\background.xnb</Output>
-      <Time>2010-10-09T19:57:58.385+02:00</Time>
+      <Output>C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\background.xnb</Output>
+      <Time>2010-10-13T20:21:35.201+02:00</Time>
     </Item>
     <Item>
       <Source>blank.png</Source>
@@ -16,8 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\blank.xnb</Output>
-      <Time>2010-10-09T19:57:58.386+02:00</Time>
+      <Output>C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\blank.xnb</Output>
+      <Time>2010-10-13T20:21:35.205+02:00</Time>
     </Item>
     <Item>
       <Source>gradient.png</Source>
@@ -25,8 +25,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\gradient.xnb</Output>
-      <Time>2010-10-09T19:57:58.388+02:00</Time>
+      <Output>C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\gradient.xnb</Output>
+      <Time>2010-10-13T20:21:35.212+02:00</Time>
     </Item>
     <Item>
       <Source>menufont.spritefont</Source>
@@ -34,8 +34,8 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\menufont.xnb</Output>
-      <Time>2010-10-09T19:57:58.389+02:00</Time>
+      <Output>C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\menufont.xnb</Output>
+      <Time>2010-10-13T20:21:35.213+02:00</Time>
     </Item>
     <Item>
       <Source>gamefont.spritefont</Source>
@@ -43,8 +43,8 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\gamefont.xnb</Output>
-      <Time>2010-10-09T19:57:58.387+02:00</Time>
+      <Output>C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\gamefont.xnb</Output>
+      <Time>2010-10-13T20:21:35.209+02:00</Time>
     </Item>
     <Item>
       <Source>Models\redhex.X</Source>
@@ -52,19 +52,12 @@
       <Importer>XImporter</Importer>
       <Processor>ModelProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\Models\redhex.xnb</Output>
-      <Time>2010-10-09T20:43:18.208+02:00</Time>
+      <Output>C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\redhex.xnb</Output>
+      <Time>2010-10-13T20:23:06.34+02:00</Time>
       <Dependency>
         <Key>obj\x86\Debug\Models\redhex_0.xml</Key>
-        <Value>2010-10-09T20:43:33.995+02:00</Value>
+        <Value>2010-10-13T20:24:37.754+02:00</Value>
       </Dependency>
-    </Item>
-    <Item>
-      <Source>Models\redhex.X</Source>
-      <Importer>XImporter</Importer>
-      <Options>IntermediateFile, DontCacheImportedData</Options>
-      <Output>obj\x86\Debug\Models\redhex_0.xml</Output>
-      <Time>2010-10-09T20:43:18.208+02:00</Time>
     </Item>
     <Item>
       <Source>Models\blackhex.X</Source>
@@ -72,11 +65,11 @@
       <Importer>XImporter</Importer>
       <Processor>ModelProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\Models\blackhex.xnb</Output>
-      <Time>2010-10-10T13:43:48.838+02:00</Time>
+      <Output>C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\blackhex.xnb</Output>
+      <Time>2010-10-13T20:23:06.308+02:00</Time>
       <Dependency>
         <Key>obj\x86\Debug\Models\blackhex_0.xml</Key>
-        <Value>2010-10-10T13:45:42.284+02:00</Value>
+        <Value>2010-10-13T20:24:38.144+02:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -85,11 +78,11 @@
       <Importer>XImporter</Importer>
       <Processor>ModelProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\Models\bluehex.xnb</Output>
-      <Time>2010-10-10T13:43:48.855+02:00</Time>
+      <Output>C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\bluehex.xnb</Output>
+      <Time>2010-10-13T20:23:06.311+02:00</Time>
       <Dependency>
         <Key>obj\x86\Debug\Models\bluehex_0.xml</Key>
-        <Value>2010-10-10T13:45:42.842+02:00</Value>
+        <Value>2010-10-13T20:24:38.369+02:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -98,11 +91,11 @@
       <Importer>XImporter</Importer>
       <Processor>ModelProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\Models\brownhex.xnb</Output>
-      <Time>2010-10-10T13:43:48.869+02:00</Time>
+      <Output>C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\brownhex.xnb</Output>
+      <Time>2010-10-13T20:23:06.327+02:00</Time>
       <Dependency>
         <Key>obj\x86\Debug\Models\brownhex_0.xml</Key>
-        <Value>2010-10-10T13:45:42.934+02:00</Value>
+        <Value>2010-10-13T20:24:38.591+02:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -111,11 +104,11 @@
       <Importer>XImporter</Importer>
       <Processor>ModelProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\Models\darkgreenhex.xnb</Output>
-      <Time>2010-10-10T13:43:48.885+02:00</Time>
+      <Output>C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\darkgreenhex.xnb</Output>
+      <Time>2010-10-13T20:23:06.331+02:00</Time>
       <Dependency>
         <Key>obj\x86\Debug\Models\darkgreenhex_0.xml</Key>
-        <Value>2010-10-10T13:45:42.989+02:00</Value>
+        <Value>2010-10-13T20:24:38.82+02:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -124,11 +117,11 @@
       <Importer>XImporter</Importer>
       <Processor>ModelProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\Models\greenhex.xnb</Output>
-      <Time>2010-10-10T13:43:48.895+02:00</Time>
+      <Output>C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\greenhex.xnb</Output>
+      <Time>2010-10-13T20:23:06.334+02:00</Time>
       <Dependency>
         <Key>obj\x86\Debug\Models\greenhex_0.xml</Key>
-        <Value>2010-10-10T13:45:43.045+02:00</Value>
+        <Value>2010-10-13T20:24:39.037+02:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -137,54 +130,132 @@
       <Importer>XImporter</Importer>
       <Processor>ModelProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\Models\whitehex.xnb</Output>
-      <Time>2010-10-10T13:43:48.904+02:00</Time>
+      <Output>C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\whitehex.xnb</Output>
+      <Time>2010-10-13T20:23:06.343+02:00</Time>
       <Dependency>
         <Key>obj\x86\Debug\Models\whitehex_0.xml</Key>
-        <Value>2010-10-10T13:45:43.096+02:00</Value>
+        <Value>2010-10-13T20:24:39.344+02:00</Value>
       </Dependency>
+    </Item>
+    <Item>
+      <Source>Models\redhex.X</Source>
+      <Importer>XImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>obj\x86\Debug\Models\redhex_0.xml</Output>
+      <Time>2010-10-13T20:23:06.34+02:00</Time>
     </Item>
     <Item>
       <Source>Models\blackhex.X</Source>
       <Importer>XImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>obj\x86\Debug\Models\blackhex_0.xml</Output>
-      <Time>2010-10-10T13:43:48.838+02:00</Time>
+      <Time>2010-10-13T20:23:06.308+02:00</Time>
     </Item>
     <Item>
       <Source>Models\bluehex.X</Source>
       <Importer>XImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>obj\x86\Debug\Models\bluehex_0.xml</Output>
-      <Time>2010-10-10T13:43:48.855+02:00</Time>
+      <Time>2010-10-13T20:23:06.311+02:00</Time>
     </Item>
     <Item>
       <Source>Models\brownhex.X</Source>
       <Importer>XImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>obj\x86\Debug\Models\brownhex_0.xml</Output>
-      <Time>2010-10-10T13:43:48.869+02:00</Time>
+      <Time>2010-10-13T20:23:06.327+02:00</Time>
     </Item>
     <Item>
       <Source>Models\darkgreenhex.X</Source>
       <Importer>XImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>obj\x86\Debug\Models\darkgreenhex_0.xml</Output>
-      <Time>2010-10-10T13:43:48.885+02:00</Time>
+      <Time>2010-10-13T20:23:06.331+02:00</Time>
     </Item>
     <Item>
       <Source>Models\greenhex.X</Source>
       <Importer>XImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>obj\x86\Debug\Models\greenhex_0.xml</Output>
-      <Time>2010-10-10T13:43:48.895+02:00</Time>
+      <Time>2010-10-13T20:23:06.334+02:00</Time>
     </Item>
     <Item>
       <Source>Models\whitehex.X</Source>
       <Importer>XImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>obj\x86\Debug\Models\whitehex_0.xml</Output>
-      <Time>2010-10-10T13:43:48.904+02:00</Time>
+      <Time>2010-10-13T20:23:06.343+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\mill.x</Source>
+      <Name>Models\mill</Name>
+      <Importer>XImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\mill.xnb</Output>
+      <Time>2010-10-11T16:07:34.101+02:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\Models\mill_0.xml</Key>
+        <Value>2010-10-13T20:30:36.283+02:00</Value>
+      </Dependency>
+      <Request>C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\lopatky_0.xnb</Request>
+      <Request>C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\zab_0.xnb</Request>
+      <Request>C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\mlyn1_0.xnb</Request>
+    </Item>
+    <Item>
+      <Source>Models\mill.x</Source>
+      <Importer>XImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>obj\x86\Debug\Models\mill_0.xml</Output>
+      <Time>2010-10-11T16:07:34.101+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\lopatky.jpg</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\lopatky_0.xnb</Output>
+      <Time>2010-10-13T20:23:06.466+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\zab.jpg</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\zab_0.xnb</Output>
+      <Time>2010-10-13T20:23:06.494+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\mlyn1.jpg</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\mlyn1_0.xnb</Output>
+      <Time>2010-10-13T20:23:06.48+02:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -192,10 +263,10 @@
       <TargetProfile>Reach</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Content\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Content\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\_Projekty\Expanze2\app\Content\</RootDirectory>
+      <LoggerRootDirectory>C:\_Projekty\Expanze2\app\Expanze\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\_Projekty\Expanze2\app\Content\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
@@ -224,7 +295,7 @@
       </Assembly>
       <Assembly>
         <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2010-10-01T21:51:01.4236+02:00</Value>
+        <Value>2010-10-01T23:01:49.0068+02:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>

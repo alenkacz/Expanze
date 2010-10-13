@@ -3,3 +3,4 @@ C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Content\obj\x86\Debug\Reso
 C:\_Projekty\Expanze\Expanze\Content\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\Content\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Content\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\_Projekty\Expanze2\app\Content\obj\x86\Debug\ResolveAssemblyReference.cache

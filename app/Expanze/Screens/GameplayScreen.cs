@@ -10,6 +10,7 @@
 #region Using Statements
 using System;
 using System.Threading;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -27,7 +28,7 @@ namespace Expanze
 
         ContentManager content;
         SpriteFont gameFont;
-        Hexa hexaComp;
+        List<GameComponent> gameComponents = new List<GameComponent>();
 
         Vector2 playerPosition = new Vector2(100, 100);
         Vector2 enemyPosition = new Vector2(100, 100);
@@ -61,11 +62,18 @@ namespace Expanze
 
             gameFont = content.Load<SpriteFont>("gamefont");
 
+            Hexa hexaComp;
             hexaComp = new Hexa(ScreenManager.Game);
-            ScreenManager.Game.Components.Add(hexaComp);
+            gameComponents.Add(hexaComp);
+
+            foreach(GameComponent gameComponent in gameComponents)
+            {
+                gameComponent.Initialize();
+                gameComponent.LoadContent();
+            }
 
             //simulating loading screens
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
 
             // once the load has finished, we use ResetElapsedTime to tell the game's
             // timing mechanism that we have just finished a very long frame, and that
@@ -80,6 +88,10 @@ namespace Expanze
         public override void UnloadContent()
         {
             content.Unload();
+            foreach (GameComponent gameComponent in gameComponents)
+            {
+                gameComponent.UnloadContent();
+            }
         }
 
 
@@ -121,6 +133,11 @@ namespace Expanze
 
                 // TODO: this game isn't very fun! You could probably improve
                 // it by inserting something more interesting in this space :-)
+            }
+
+            foreach (GameComponent gameComponent in gameComponents)
+            {
+                gameComponent.Update(gameTime);
             }
         }
 
@@ -189,6 +206,11 @@ namespace Expanze
             // This game has a blue background. Why? Because!
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
                                                Color.CornflowerBlue, 0, 0);
+
+            foreach (GameComponent gameComponent in gameComponents)
+            {
+                gameComponent.Draw(gameTime);
+            }
 
             // Our player and enemy are both actually just text strings.
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;

@@ -3,7 +3,7 @@
   <Asset Type="Graphics:NodeContent">
     <Name>Cylinder001</Name>
     <Identity>
-      <SourceFilename>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Content\Models\brownhex.X</SourceFilename>
+      <SourceFilename>C:\_Projekty\Expanze2\app\Content\Models\brownhex.X</SourceFilename>
       <SourceTool>XImporter</SourceTool>
     </Identity>
     <Transform>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.008547 1</Transform>
@@ -33,7 +33,7 @@
   <Resources>
     <Resource ID="#Resource1" Type="Graphics:BasicMaterialContent">
       <Identity>
-        <SourceFilename>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Content\Models\brownhex.X</SourceFilename>
+        <SourceFilename>C:\_Projekty\Expanze2\app\Content\Models\brownhex.X</SourceFilename>
         <SourceTool>XImporter</SourceTool>
       </Identity>
       <OpaqueData>

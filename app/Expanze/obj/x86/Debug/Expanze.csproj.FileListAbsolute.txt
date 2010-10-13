@@ -60,3 +60,25 @@ C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expan
 C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\Models\darkgreenhex.xnb
 C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\Models\greenhex.xnb
 C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\app\Expanze\bin\x86\Debug\Content\Models\whitehex.xnb
+C:\_Projekty\Expanze2\app\Expanze\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\_Projekty\Expanze2\app\Expanze\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\_Projekty\Expanze2\app\Expanze\obj\x86\Debug\Expanze.exe
+C:\_Projekty\Expanze2\app\Expanze\obj\x86\Debug\Expanze.pdb
+C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\background.xnb
+C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\blank.xnb
+C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\gradient.xnb
+C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\menufont.xnb
+C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\gamefont.xnb
+C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\redhex.xnb
+C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\blackhex.xnb
+C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\bluehex.xnb
+C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\brownhex.xnb
+C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\darkgreenhex.xnb
+C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\greenhex.xnb
+C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\whitehex.xnb
+C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Expanze.exe
+C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Expanze.pdb
+C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\mill.xnb
+C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\lopatky_0.xnb
+C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\zab_0.xnb
+C:\_Projekty\Expanze2\app\Expanze\bin\x86\Debug\Content\Models\mlyn1_0.xnb

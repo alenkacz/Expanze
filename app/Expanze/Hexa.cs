@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Expanze
 {
-    class Hexa : DrawableGameComponent
+    class Hexa : GameComponent
     {
         const int N_MODEL = 7;
         Model[] hexaModel;
@@ -22,18 +22,17 @@ namespace Expanze
         public float angle;
 
         Game myGame;
+        ContentManager content;
 
         float aspectRatio;
 
         public Hexa(Game game)
-            : base(game)
         {
             myGame = game;
         }
 
         public override void Initialize()
         {
-            base.Initialize();
             aspectRatio = myGame.GraphicsDevice.Viewport.Width / (float)myGame.GraphicsDevice.Viewport.Height;
             eye = new Vector3(-5.0f, -5.0f, 0.0f);
             target = new Vector3(0.0f, 0.0f, 0.0f);
@@ -58,16 +57,19 @@ namespace Expanze
             projection = Matrix.CreatePerspectiveFieldOfView((float) MathHelper.ToRadians(90), aspectRatio, 1.0f, 100.0f);
         }
 
-        protected override void LoadContent()
+        public override void LoadContent()
         {
+            if (content == null)
+                content = new ContentManager(myGame.Services, "Content");
+
             hexaModel = new Model[N_MODEL];
-            hexaModel[0] = Game.Content.Load<Model>("Models/redhex");
-            hexaModel[1] = Game.Content.Load<Model>("Models/greenhex");
-            hexaModel[2] = Game.Content.Load<Model>("Models/whitehex");
-            hexaModel[3] = Game.Content.Load<Model>("Models/brownhex");
-            hexaModel[4] = Game.Content.Load<Model>("Models/bluehex");
-            hexaModel[5] = Game.Content.Load<Model>("Models/mill");
-            hexaModel[6] = Game.Content.Load<Model>("Models/bluehex");
+            hexaModel[0] = content.Load<Model>("Models/redhex");
+            hexaModel[1] = content.Load<Model>("Models/greenhex");
+            hexaModel[2] = content.Load<Model>("Models/whitehex");
+            hexaModel[3] = content.Load<Model>("Models/brownhex");
+            hexaModel[4] = content.Load<Model>("Models/bluehex");
+            hexaModel[5] = content.Load<Model>("Models/mill");
+            hexaModel[6] = content.Load<Model>("Models/bluehex");
         }
 
         public override void Update(GameTime gameTime)
@@ -81,8 +83,8 @@ namespace Expanze
 
         public override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.BlendState = BlendState.Opaque;
-            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            myGame.GraphicsDevice.BlendState = BlendState.Opaque;
+            myGame.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
             view = Matrix.CreateLookAt(eye, target, up);
             for (int loop1 = 0; loop1 < N_MODEL; loop1++)
