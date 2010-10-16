@@ -7,6 +7,8 @@ namespace Expanze
 {
     class StoneHexa : Hexa
     {
-        private Settings.Types type = Settings.Types.Stone;
+        public StoneHexa(int value) : base(value, Settings.Types.Stone)
+        {
+        }
     }
 }

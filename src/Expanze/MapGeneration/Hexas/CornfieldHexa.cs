@@ -7,6 +7,8 @@ namespace Expanze
 {
     class CornfieldHexa : Hexa
     {
-        private Settings.Types type = Settings.Types.Cornfield;
+        public CornfieldHexa(int value) : base(value, Settings.Types.Cornfield)
+        {
+        }
     }
 }

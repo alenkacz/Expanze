@@ -15,17 +15,17 @@ namespace Expanze
             switch (type)
             {
                 case Settings.Types.Cornfield:
-                    return new CornfieldHexa();
+                    return new CornfieldHexa(number);
                 case Settings.Types.Desert:
-                    return new DesertHexa();
+                    return new DesertHexa(number);
                 case Settings.Types.Forest:
-                    return new ForestHexa();
+                    return new ForestHexa(number);
                 case Settings.Types.Mountains:
-                    return new MountainsHexa();
+                    return new MountainsHexa(number);
                 case Settings.Types.Pasture:
-                    return new PastureHexa();
+                    return new PastureHexa(number);
                 case Settings.Types.Stone:
-                    return new StoneHexa();
+                    return new StoneHexa(number);
                 default:
                     return null;
             }

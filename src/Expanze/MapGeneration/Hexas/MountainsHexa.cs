@@ -7,6 +7,8 @@ namespace Expanze
 {
     class MountainsHexa : Hexa
     {
-        private Settings.Types type = Settings.Types.Mountains;
+        public MountainsHexa(int value) : base(value, Settings.Types.Mountains)
+        {
+        }
     }
 }

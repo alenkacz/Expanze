@@ -94,7 +94,7 @@ namespace Expanze
                 case "stone":
                     return Settings.Types.Stone;
                 default:
-                    return Settings.Types.Null;
+                    return Settings.Types.Water;
             }
         }
     }

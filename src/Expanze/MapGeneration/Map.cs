@@ -82,13 +82,13 @@ namespace Expanze
                 content = new ContentManager(myGame.Services, "Content");
 
             hexaModel = new Model[N_MODEL];
-            hexaModel[0] = content.Load<Model>("Models/redhex");
-            hexaModel[1] = content.Load<Model>("Models/greenhex");
-            hexaModel[2] = content.Load<Model>("Models/whitehex");
-            hexaModel[3] = content.Load<Model>("Models/brownhex");
-            hexaModel[4] = content.Load<Model>("Models/bluehex");
-            hexaModel[5] = content.Load<Model>("Models/mill");
-            hexaModel[6] = content.Load<Model>("Models/bluehex");
+            hexaModel[(int)Settings.Types.Cornfield] = content.Load<Model>(Settings.mapPaths[(int) Settings.Types.Cornfield]);
+            hexaModel[(int)Settings.Types.Desert] = content.Load<Model>(Settings.mapPaths[(int) Settings.Types.Desert]);
+            hexaModel[(int)Settings.Types.Forest] = content.Load<Model>(Settings.mapPaths[(int)Settings.Types.Forest]);
+            hexaModel[(int)Settings.Types.Mountains] = content.Load<Model>(Settings.mapPaths[(int)Settings.Types.Mountains]);
+            hexaModel[(int)Settings.Types.Pasture] = content.Load<Model>(Settings.mapPaths[(int)Settings.Types.Pasture]);
+            hexaModel[(int)Settings.Types.Stone] = content.Load<Model>(Settings.mapPaths[(int)Settings.Types.Stone]);
+            hexaModel[(int)Settings.Types.Water] = content.Load<Model>(Settings.mapPaths[(int)Settings.Types.Water]);
         }
 
         public override void Update(GameTime gameTime)
@@ -106,24 +106,37 @@ namespace Expanze
             myGame.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
             view = Matrix.CreateLookAt(eye, target, up);
-            for (int loop1 = 0; loop1 < N_MODEL; loop1++)
+
+            Matrix mWorld = Matrix.Identity;
+            for (int i = 0; i < hexaMap.Length; i++)
             {
-                Matrix[] transforms = new Matrix[hexaModel[loop1].Bones.Count];
-                hexaModel[loop1].CopyAbsoluteBoneTransformsTo(transforms);
-
-                foreach (ModelMesh mesh in hexaModel[loop1].Meshes)
+                for (int j = 0; j < hexaMap[i].Length; j++)
                 {
-                    foreach (BasicEffect effect in mesh.Effects)
-                    {
-                        effect.EnableDefaultLighting();
-                        effect.World = transforms[mesh.ParentBone.Index] * world[loop1];
-                        effect.View = view;
-                        effect.Projection = projection;
-                    }
+                    int hexaID;
+                    if (hexaMap[i][j] == null)
+                        hexaID = (int)Settings.Types.Water;
+                    else
+                        hexaID = (int) hexaMap[i][j].getType();
+                    Matrix[] transforms = new Matrix[hexaModel[hexaID].Bones.Count];
+                    hexaModel[hexaID].CopyAbsoluteBoneTransformsTo(transforms);
 
-                    mesh.Draw();
+                    foreach (ModelMesh mesh in hexaModel[hexaID].Meshes)
+                    {
+                        foreach (BasicEffect effect in mesh.Effects)
+                        {
+                            effect.EnableDefaultLighting();
+                            effect.World = transforms[mesh.ParentBone.Index] * mWorld;
+                            effect.View = view;
+                            effect.Projection = projection;
+                        }
+
+                        mesh.Draw();
+                    }
+                    mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, 0.55f));
                 }
+                mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.51f, 0.0f, -0.28f - 0.55f * hexaMap[i].Length));
             }
+
             base.Draw(gameTime);
         }
     }

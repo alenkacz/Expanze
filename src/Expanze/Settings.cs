@@ -7,9 +7,9 @@ namespace Expanze
 {
     static class Settings
     {
-        public enum Types { Cornfield, Forest, Stone, Pasture, Mountains, Desert, Null };
+        public enum Types { Cornfield, Forest, Stone, Pasture, Mountains, Desert, Water };
 
         //indexed by enum Types
-        public static String[] mapPaths = new String[] { "/Models/brownhex", "/Models/greenhex", "/Models/brownhex", "/Models/greennhex", "/Models/brownhex", "/Models/brownhex" };
+        public static String[] mapPaths = new String[] { "Models/yellowhex", "Models/brownhex", "Models/greyhex", "Models/greenhex", "Models/redhex", "Models/orangehex", "Models/bluehex" };
     }
 }

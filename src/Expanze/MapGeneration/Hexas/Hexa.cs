@@ -11,12 +11,13 @@ namespace Expanze
     class Hexa
     {
         int value;
-        private Settings.Types type = Settings.Types.Null;
+        private Settings.Types type = Settings.Types.Water;
 
         public Hexa() { }
 
-        public Hexa( int value )
+        public Hexa( int value , Settings.Types type)
         {
+            this.type = type;
             this.value = value;
         }
 

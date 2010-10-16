@@ -7,6 +7,8 @@ namespace Expanze
 {
     class DesertHexa : Hexa
     {
-        private Settings.Types type = Settings.Types.Desert;
+        public DesertHexa(int value) : base(value, Settings.Types.Desert)
+        {
+        }
     }
 }

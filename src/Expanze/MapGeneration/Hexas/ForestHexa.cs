@@ -7,6 +7,8 @@ namespace Expanze
 {
     class ForestHexa : Hexa
     {
-        private Settings.Types type = Settings.Types.Forest;
+        public ForestHexa(int value) : base(value, Settings.Types.Forest)
+        {
+        }
     }
 }

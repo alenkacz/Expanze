@@ -7,6 +7,8 @@ namespace Expanze
 {
     class PastureHexa : Hexa
     {
-        private Settings.Types type = Settings.Types.Pasture;
+        public PastureHexa(int value) : base(value, Settings.Types.Pasture)
+        {
+        }
     }
 }
