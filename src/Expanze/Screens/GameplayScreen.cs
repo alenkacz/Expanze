@@ -62,9 +62,9 @@ namespace Expanze
 
             gameFont = content.Load<SpriteFont>("gamefont");
 
-            Hexa hexaComp;
-            hexaComp = new Hexa(ScreenManager.Game);
-            gameComponents.Add(hexaComp);
+            Map mapComp;
+            mapComp = new Map(ScreenManager.Game);
+            gameComponents.Add(mapComp);
 
             foreach(GameComponent gameComponent in gameComponents)
             {
