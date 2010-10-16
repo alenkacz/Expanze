@@ -94,10 +94,10 @@ namespace Expanze
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            angle = angle + gameTime.ElapsedGameTime.Milliseconds / 1000.0f * 1.0f;
+            //angle = angle + gameTime.ElapsedGameTime.Milliseconds / 1000.0f * 1.0f;
             if (angle > 360.0f)
                 angle -= 360.0f;
-            eye = new Vector3((float)(2.5f * Math.Cos(angle)), 2.0f, 2.5f * (float)Math.Sin(angle));
+            eye = new Vector3(0.4f, 1.5f, 0.0f);
         }
 
         public override void Draw(GameTime gameTime)
@@ -107,34 +107,35 @@ namespace Expanze
 
             view = Matrix.CreateLookAt(eye, target, up);
 
-            Matrix mWorld = Matrix.Identity;
+            Matrix mWorld = Matrix.Identity * Matrix.CreateTranslation(new Vector3(-0.50f * hexaMap.Length / 2.0f, 0.0f, -0.56f * hexaMap[0].Length / 2.0f)); ;
             for (int i = 0; i < hexaMap.Length; i++)
             {
                 for (int j = 0; j < hexaMap[i].Length; j++)
                 {
                     int hexaID;
-                    if (hexaMap[i][j] == null)
-                        hexaID = (int)Settings.Types.Water;
-                    else
-                        hexaID = (int) hexaMap[i][j].getType();
-                    Matrix[] transforms = new Matrix[hexaModel[hexaID].Bones.Count];
-                    hexaModel[hexaID].CopyAbsoluteBoneTransformsTo(transforms);
-
-                    foreach (ModelMesh mesh in hexaModel[hexaID].Meshes)
+                    if (hexaMap[i][j] != null)
                     {
-                        foreach (BasicEffect effect in mesh.Effects)
-                        {
-                            effect.EnableDefaultLighting();
-                            effect.World = transforms[mesh.ParentBone.Index] * mWorld;
-                            effect.View = view;
-                            effect.Projection = projection;
-                        }
+                        hexaID = (int)hexaMap[i][j].getType();
+                   
+                        Matrix[] transforms = new Matrix[hexaModel[hexaID].Bones.Count];
+                        hexaModel[hexaID].CopyAbsoluteBoneTransformsTo(transforms);
 
-                        mesh.Draw();
+                        foreach (ModelMesh mesh in hexaModel[hexaID].Meshes)
+                        {
+                            foreach (BasicEffect effect in mesh.Effects)
+                            {
+                                effect.EnableDefaultLighting();
+                                effect.World = transforms[mesh.ParentBone.Index] * mWorld;
+                                effect.View = view;
+                                effect.Projection = projection;
+                            }
+
+                            mesh.Draw();
+                        }
                     }
-                    mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, 0.55f));
+                    mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, 0.56f));
                 }
-                mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.51f, 0.0f, -0.28f - 0.55f * hexaMap[i].Length));
+                mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.50f, 0.0f, -0.28f - 0.56f * hexaMap[i].Length));
             }
 
             base.Draw(gameTime);

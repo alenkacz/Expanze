@@ -26,8 +26,12 @@ namespace Expanze
                     return new PastureHexa(number);
                 case Settings.Types.Stone:
                     return new StoneHexa(number);
-                default:
+                case Settings.Types.Water:
+                    return new WaterHexa();
+                case Settings.Types.Nothing:
                     return null;
+                default:
+                    throw new Exception("XML file with map is broken.");
             }
         }
     }

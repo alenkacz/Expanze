@@ -87,14 +87,18 @@ namespace Expanze
                     return Settings.Types.Forest;
                 case "desert":
                     return Settings.Types.Desert;
-                case "mountaint":
+                case "mountains":
                     return Settings.Types.Mountains;
                 case "pasture":
                     return Settings.Types.Pasture;
                 case "stone":
                     return Settings.Types.Stone;
-                default:
+                case "water":
                     return Settings.Types.Water;
+                case "nothing" :
+                    return Settings.Types.Nothing;
+                default :
+                    return Settings.Types.Null;
             }
         }
     }

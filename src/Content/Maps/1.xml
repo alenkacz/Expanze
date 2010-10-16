@@ -28,13 +28,13 @@
       <number>5</number>
     </hexa>
     <hexa>
-      <type>pastures</type>
+      <type>pasture</type>
       <number>4</number>
     </hexa>
   </row>
   <row>
     <hexa>
-      <type>pastures</type>
+      <type>pasture</type>
       <number>9</number>
     </hexa>
     <hexa>
@@ -56,7 +56,11 @@
   </row>
   <row>
     <hexa>
-      <type>mountaint</type>
+      <type>nothing</type>
+      <number>0</number>
+    </hexa>
+    <hexa>
+      <type>mountains</type>
       <number>3</number>
     </hexa>
     <hexa>
@@ -73,6 +77,14 @@
     </hexa>
   </row>
   <row>
+    <hexa>
+      <type>nothing</type>
+      <number>0</number>
+    </hexa>
+    <hexa>
+      <type>nothing</type>
+      <number>0</number>
+    </hexa>
     <hexa>
       <type>mountains</type>
       <number>3</number>

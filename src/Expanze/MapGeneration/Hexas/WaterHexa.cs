@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Expanze
 {
-    class MountainsHexa : Hexa
+    class WaterHexa : Hexa
     {
-        public MountainsHexa(int value) : base(value, Settings.Types.Mountains)
+        public WaterHexa() : base(0, Settings.Types.Water)
         {
         }
     }
