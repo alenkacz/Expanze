@@ -2,7 +2,7 @@
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics" xmlns:Framework="Microsoft.Xna.Framework">
   <Asset Type="Graphics:NodeContent">
     <Identity>
-      <SourceFilename>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\docs\KeyboardModelTut\Tutorial 1\Content\sword.x</SourceFilename>
+      <SourceFilename>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\docs\KeyboardModelTut\Tutorial 1\Content\sword.x</SourceFilename>
       <SourceTool>XImporter</SourceTool>
     </Identity>
     <Transform>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</Transform>
@@ -52,7 +52,7 @@
   <Resources>
     <Resource ID="#Resource1" Type="Graphics:BasicMaterialContent">
       <Identity>
-        <SourceFilename>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\docs\KeyboardModelTut\Tutorial 1\Content\sword.x</SourceFilename>
+        <SourceFilename>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\docs\KeyboardModelTut\Tutorial 1\Content\sword.x</SourceFilename>
         <SourceTool>XImporter</SourceTool>
       </Identity>
       <OpaqueData>
@@ -70,7 +70,7 @@
     </Resource>
     <Resource ID="#Resource2" Type="Graphics:BasicMaterialContent">
       <Identity>
-        <SourceFilename>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\docs\KeyboardModelTut\Tutorial 1\Content\sword.x</SourceFilename>
+        <SourceFilename>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\docs\KeyboardModelTut\Tutorial 1\Content\sword.x</SourceFilename>
         <SourceTool>XImporter</SourceTool>
       </Identity>
       <OpaqueData>
@@ -88,7 +88,7 @@
     </Resource>
     <Resource ID="#Resource3" Type="Graphics:BasicMaterialContent">
       <Identity>
-        <SourceFilename>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\docs\KeyboardModelTut\Tutorial 1\Content\sword.x</SourceFilename>
+        <SourceFilename>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\docs\KeyboardModelTut\Tutorial 1\Content\sword.x</SourceFilename>
         <SourceTool>XImporter</SourceTool>
       </Identity>
       <OpaqueData>

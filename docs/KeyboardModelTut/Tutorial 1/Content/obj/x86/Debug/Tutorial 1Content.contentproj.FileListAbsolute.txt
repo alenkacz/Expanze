@@ -1,2 +1,3 @@
 C:\Users\Houp\Documents\Visual Studio 2010\Projects\cviceni3base\Tutorial 1\Content\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\docs\KeyboardModelTut\Tutorial 1\Content\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\docs\KeyboardModelTut\Tutorial 1\Content\obj\x86\Debug\ResolveAssemblyReference.cache

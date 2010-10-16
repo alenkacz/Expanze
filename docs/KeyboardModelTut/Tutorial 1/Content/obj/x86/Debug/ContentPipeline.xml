@@ -7,8 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\docs\KeyboardModelTut\Tutorial 1\bin\x86\Debug\Content\menuItem.xnb</Output>
-      <Time>2010-10-09T19:57:58.467+02:00</Time>
+      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\docs\KeyboardModelTut\Tutorial 1\bin\x86\Debug\Content\menuItem.xnb</Output>
+      <Time>2010-10-16T10:03:29.158+02:00</Time>
     </Item>
     <Item>
       <Source>cursor1.png</Source>
@@ -16,8 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\docs\KeyboardModelTut\Tutorial 1\bin\x86\Debug\Content\cursor1.xnb</Output>
-      <Time>2010-10-09T19:57:58.466+02:00</Time>
+      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\docs\KeyboardModelTut\Tutorial 1\bin\x86\Debug\Content\cursor1.xnb</Output>
+      <Time>2010-10-16T10:03:29.157+02:00</Time>
     </Item>
     <Item>
       <Source>sword.x</Source>
@@ -25,13 +25,13 @@
       <Importer>XImporter</Importer>
       <Processor>ModelProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\docs\KeyboardModelTut\Tutorial 1\bin\x86\Debug\Content\sword.xnb</Output>
-      <Time>2010-10-09T19:57:58.479+02:00</Time>
+      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\docs\KeyboardModelTut\Tutorial 1\bin\x86\Debug\Content\sword.xnb</Output>
+      <Time>2010-10-16T10:03:29.164+02:00</Time>
       <Dependency>
         <Key>obj\x86\Debug\sword_0.xml</Key>
-        <Value>2010-10-09T20:16:08.849+02:00</Value>
+        <Value>2010-10-16T17:54:35.458+02:00</Value>
       </Dependency>
-      <Request>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\docs\KeyboardModelTut\Tutorial 1\bin\x86\Debug\Content\sword_0.xnb</Request>
+      <Request>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\docs\KeyboardModelTut\Tutorial 1\bin\x86\Debug\Content\sword_0.xnb</Request>
     </Item>
     <Item>
       <Source>myFont.spritefont</Source>
@@ -39,18 +39,18 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\docs\KeyboardModelTut\Tutorial 1\bin\x86\Debug\Content\myFont.xnb</Output>
-      <Time>2010-10-09T19:57:58.468+02:00</Time>
+      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\docs\KeyboardModelTut\Tutorial 1\bin\x86\Debug\Content\myFont.xnb</Output>
+      <Time>2010-10-16T10:03:29.158+02:00</Time>
     </Item>
     <Item>
       <Source>sword.x</Source>
       <Importer>XImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>obj\x86\Debug\sword_0.xml</Output>
-      <Time>2010-10-09T19:57:58.479+02:00</Time>
+      <Time>2010-10-16T10:03:29.164+02:00</Time>
     </Item>
     <Item>
-      <Source>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\docs\KeyboardModelTut\Tutorial 1\Textures\sword.png</Source>
+      <Source>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\docs\KeyboardModelTut\Tutorial 1\Textures\sword.png</Source>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Parameters>
@@ -62,8 +62,8 @@
         <Data Key="PremultiplyAlpha" Type="bool">true</Data>
       </Parameters>
       <Options>None</Options>
-      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\docs\KeyboardModelTut\Tutorial 1\bin\x86\Debug\Content\sword_0.xnb</Output>
-      <Time>2010-10-09T19:57:58.489+02:00</Time>
+      <Output>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\docs\KeyboardModelTut\Tutorial 1\bin\x86\Debug\Content\sword_0.xnb</Output>
+      <Time>2010-10-16T10:03:29.173+02:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -71,10 +71,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\docs\KeyboardModelTut\Tutorial 1\Content\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\docs\KeyboardModelTut\Tutorial 1\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\docs\KeyboardModelTut\Tutorial 1\Content\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze2\Expanze\docs\KeyboardModelTut\Tutorial 1\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\docs\KeyboardModelTut\Tutorial 1\Content\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\docs\KeyboardModelTut\Tutorial 1\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\docs\KeyboardModelTut\Tutorial 1\Content\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\docs\KeyboardModelTut\Tutorial 1\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>

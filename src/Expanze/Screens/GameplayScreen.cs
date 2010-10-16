@@ -29,6 +29,7 @@ namespace Expanze
         ContentManager content;
         SpriteFont gameFont;
         List<GameComponent> gameComponents = new List<GameComponent>();
+        List<GuiComponent> guiComponents = new List<GuiComponent>();
 
         Vector2 playerPosition = new Vector2(100, 100);
         Vector2 enemyPosition = new Vector2(100, 100);
@@ -66,10 +67,23 @@ namespace Expanze
             mapComp = new Map(ScreenManager.Game);
             gameComponents.Add(mapComp);
 
+            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width - 180, ScreenManager.Game.GraphicsDevice.Viewport.Height - 50, gameFont);
+            guiComponents.Add(changeTurnButton);
+            //gameComponents.Add(buttonComp);
+
+            CustomCursor cursorComp = new CustomCursor(ScreenManager.Game);
+            gameComponents.Add(cursorComp);
+
             foreach(GameComponent gameComponent in gameComponents)
             {
                 gameComponent.Initialize();
                 gameComponent.LoadContent();
+            }
+
+            foreach (GuiComponent guiComponent in guiComponents)
+            {
+                guiComponent.Initialize();
+                guiComponent.LoadContent();
             }
 
             //simulating loading screens
@@ -91,6 +105,11 @@ namespace Expanze
             foreach (GameComponent gameComponent in gameComponents)
             {
                 gameComponent.UnloadContent();
+            }
+
+            foreach (GuiComponent guiComponent in guiComponents)
+            {
+                guiComponent.UnloadContent();
             }
         }
 
@@ -131,14 +150,18 @@ namespace Expanze
 
                 enemyPosition = Vector2.Lerp(enemyPosition, targetPosition, 0.05f);
 
-                // TODO: this game isn't very fun! You could probably improve
-                // it by inserting something more interesting in this space :-)
+                foreach (GameComponent gameComponent in gameComponents)
+                {
+                    gameComponent.Update(gameTime);
+                }
+
+                foreach (GuiComponent guiComponent in guiComponents)
+                {
+                    guiComponent.Update(gameTime);
+                }
             }
 
-            foreach (GameComponent gameComponent in gameComponents)
-            {
-                gameComponent.Update(gameTime);
-            }
+            
         }
 
 
@@ -207,10 +230,17 @@ namespace Expanze
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
                                                Color.CornflowerBlue, 0, 0);
 
+            foreach (GuiComponent guiComponent in guiComponents)
+            {
+                guiComponent.Draw(gameTime);
+            }
+
             foreach (GameComponent gameComponent in gameComponents)
             {
                 gameComponent.Draw(gameTime);
             }
+
+  
 
             // Our player and enemy are both actually just text strings.
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
