@@ -1,11 +1,19 @@
 app/Expanze/bin
 
 app/Expanze/obj
+src/Expanze/bin
 
+src/Expanze/obj
+src/Content/obj
 *.cachefile
 
+*.cach
 *.exe
 
 *.dll
 *.exe
 *.o
+*.sln
+*.suo
+*.csproj
+*.contentproj
