@@ -11,6 +11,7 @@
 using System;
 using System.Threading;
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -74,9 +75,9 @@ namespace Expanze
 
             //render to texture
             PresentationParameters pp = ScreenManager.GraphicsDevice.PresentationParameters;
-            //renderTarget = new RenderTarget2D(ScreenManager.GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight, true, ScreenManager.GraphicsDevice.DisplayMode.Format, pp.DepthStencilFormat);
-            renderTarget = new RenderTarget2D(ScreenManager.GraphicsDevice, 1024, 1024, true, ScreenManager.GraphicsDevice.DisplayMode.Format, pp.DepthStencilFormat);
-
+            renderTarget = new RenderTarget2D(ScreenManager.GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight, false, ScreenManager.GraphicsDevice.DisplayMode.Format, pp.DepthStencilFormat);
+            //renderTarget = new RenderTarget2D(ScreenManager.GraphicsDevice, 1024, 1024, false, ScreenManager.GraphicsDevice.DisplayMode.Format, pp.DepthStencilFormat);
+    
             Map mapComp;
             mapComp = new Map(ScreenManager.Game);
             gameComponents.Add(mapComp);
@@ -241,7 +242,7 @@ namespace Expanze
         public override void Draw(GameTime gameTime)
         {
             //render to texture
-            //ScreenManager.GraphicsDevice.SetRenderTarget(renderTarget);
+            ScreenManager.GraphicsDevice.SetRenderTarget(renderTarget);
 
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
                                                Color.Blue, 0, 0);
@@ -277,8 +278,11 @@ namespace Expanze
 
             //render to texture
             ScreenManager.GraphicsDevice.SetRenderTarget(null);
-            //shadowMap = renderTarget.GetTexture();
-            //shadowMap.Save("shadowmap.bmp", ImageFileFormat.Bmp);
+            shadowMap = renderTarget;
+            using (Stream stream = File.OpenWrite("cat.png"))
+            {
+                shadowMap.SaveAsPng(stream, shadowMap.Width, shadowMap.Height);
+            }
         }
 
 
