@@ -30,6 +30,8 @@ namespace Expanze
         int selectedEntry = 0;
         string menuTitle;
 
+        CustomCursor cursorComp;
+
         #endregion
 
         #region Properties
@@ -59,6 +61,15 @@ namespace Expanze
 
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
+        }
+
+        public override void LoadContent()
+        {
+            ScreenManager.Game.IsMouseVisible = true;
+
+            cursorComp = new CustomCursor(ScreenManager.Game);
+            cursorComp.Initialize();
+            cursorComp.LoadContent();
         }
 
 
@@ -183,6 +194,9 @@ namespace Expanze
         public override void Update(GameTime gameTime, bool otherScreenHasFocus,
                                                        bool coveredByOtherScreen)
         {
+
+            cursorComp.Draw(gameTime);
+
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
 
             // Update each nested MenuEntry object.
@@ -208,6 +222,7 @@ namespace Expanze
             SpriteFont font = ScreenManager.Font;
 
             spriteBatch.Begin();
+            cursorComp.Draw(gameTime);
 
             // Draw each menu entry in turn.
             for (int i = 0; i < menuEntries.Count; i++)

@@ -20,7 +20,6 @@ namespace Expanze
     {
         #region Initialization
 
-
         /// <summary>
         /// Constructor fills in the menu contents.
         /// </summary>

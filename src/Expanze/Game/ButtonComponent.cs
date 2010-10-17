@@ -20,6 +20,9 @@ namespace Expanze
         int mousex;
         int mousey;
 
+        //button still pressed
+        bool pressed = false;
+
         const int width = 150;
         const int height = 40;
 
@@ -52,13 +55,19 @@ namespace Expanze
             base.Draw(gameTime);
             spriteBatch.Begin();
 
-            if (ButtonState.Pressed == mouseState.LeftButton)
+            if (ButtonState.Pressed == mouseState.LeftButton && !pressed)
             {
 
                 if ((mousex > spritePosition.X && mousex < spritePosition.X + width) && (mousey < spritePosition.Y + height && mousey > spritePosition.Y))//identify mouse over x y posotions for the button
                 {
-                    spriteBatch.DrawString(gameFont, "You click OK", new Vector2(100.0f, 50.0f), Color.YellowGreen);
+                    GameMaster.getInstance().changeActivePlayer();
+                    pressed = true;
                 }
+            }
+
+            if (pressed && ButtonState.Pressed != mouseState.LeftButton)
+            {
+                pressed = false;
             }
 
             spriteBatch.Draw(myButton, spritePosition, Color.White);

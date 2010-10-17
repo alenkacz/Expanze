@@ -26,6 +26,11 @@ namespace Expanze
     {
         #region Fields
 
+        GameMaster gMaster;
+
+        RenderTarget2D renderTarget;
+        Texture2D shadowMap;
+
         ContentManager content;
         SpriteFont gameFont;
         List<GameComponent> gameComponents = new List<GameComponent>();
@@ -50,6 +55,7 @@ namespace Expanze
         {
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
+            gMaster = GameMaster.getInstance();
         }
 
 
@@ -63,6 +69,14 @@ namespace Expanze
 
             gameFont = content.Load<SpriteFont>("gamefont");
 
+            //gamelogic
+            gMaster.startGame();
+
+            //render to texture
+            PresentationParameters pp = ScreenManager.GraphicsDevice.PresentationParameters;
+            //renderTarget = new RenderTarget2D(ScreenManager.GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight, true, ScreenManager.GraphicsDevice.DisplayMode.Format, pp.DepthStencilFormat);
+            renderTarget = new RenderTarget2D(ScreenManager.GraphicsDevice, 1024, 1024, true, ScreenManager.GraphicsDevice.DisplayMode.Format, pp.DepthStencilFormat);
+
             Map mapComp;
             mapComp = new Map(ScreenManager.Game);
             gameComponents.Add(mapComp);
@@ -71,8 +85,8 @@ namespace Expanze
             guiComponents.Add(changeTurnButton);
             //gameComponents.Add(buttonComp);
 
-            CustomCursor cursorComp = new CustomCursor(ScreenManager.Game);
-            gameComponents.Add(cursorComp);
+            //CustomCursor cursorComp = new CustomCursor(ScreenManager.Game);
+            //gameComponents.Add(cursorComp);
 
             foreach(GameComponent gameComponent in gameComponents)
             {
@@ -226,9 +240,11 @@ namespace Expanze
         /// </summary>
         public override void Draw(GameTime gameTime)
         {
-            // This game has a blue background. Why? Because!
+            //render to texture
+            //ScreenManager.GraphicsDevice.SetRenderTarget(renderTarget);
+
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
-                                               Color.CornflowerBlue, 0, 0);
+                                               Color.Blue, 0, 0);
 
             foreach (GuiComponent guiComponent in guiComponents)
             {
@@ -247,7 +263,7 @@ namespace Expanze
 
             spriteBatch.Begin();
 
-            spriteBatch.DrawString(gameFont, "Awesome Map", playerPosition, Color.DarkRed);
+            spriteBatch.DrawString(gameFont, gMaster.getActivePlayer().getName(), Settings.playerNamePosition, Color.DarkRed);
 
             spriteBatch.End();
 
@@ -258,6 +274,11 @@ namespace Expanze
 
                 ScreenManager.FadeBackBufferToBlack(alpha);
             }
+
+            //render to texture
+            ScreenManager.GraphicsDevice.SetRenderTarget(null);
+            //shadowMap = renderTarget.GetTexture();
+            //shadowMap.Save("shadowmap.bmp", ImageFileFormat.Bmp);
         }
 
 
