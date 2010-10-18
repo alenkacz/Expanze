@@ -279,7 +279,15 @@ namespace Expanze
             //render to texture
             ScreenManager.GraphicsDevice.SetRenderTarget(null);
             shadowMap = renderTarget;
-            using (Stream stream = File.OpenWrite("cat.png"))
+            Color[] c = new Color[shadowMap.Height * shadowMap.Width];
+            shadowMap.GetData<Color>(c);
+            int x = 5, y = 6;
+            string s = "cat.png";
+            if (c[x + y * shadowMap.Width] == Color.Blue)
+            {
+                s = "dog.png";
+            }
+            using (Stream stream = File.OpenWrite(s))
             {
                 shadowMap.SaveAsPng(stream, shadowMap.Width, shadowMap.Height);
             }
