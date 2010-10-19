@@ -54,8 +54,8 @@ namespace Expanze
             Components.Add(screenManager);
 
             // Activate the first screens.
-            screenManager.AddScreen(new BackgroundScreen(), null);
-            screenManager.AddScreen(new MainMenuScreen(), null);
+            GameScreen[] gs = { new BackgroundScreen(), new MainMenuScreen() };
+            IntroScreen.Load(screenManager, true, null, gs);
         }
 
 
