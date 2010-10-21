@@ -108,7 +108,7 @@ namespace Expanze
         /// <returns></returns>
         public bool checkFinished(GameTime time)
         {
-            if (time.TotalGameTime.TotalSeconds > 2 || Keyboard.GetState().IsKeyDown(Keys.Enter) || Keyboard.GetState().IsKeyDown(Keys.Escape) || Mouse.GetState().LeftButton == ButtonState.Pressed)
+            if (time.TotalGameTime.TotalSeconds > 5 || Keyboard.GetState().IsKeyDown(Keys.Enter) || Keyboard.GetState().IsKeyDown(Keys.Escape) || Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
                 return true;
             }
