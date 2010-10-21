@@ -242,22 +242,21 @@ namespace Expanze
         public override void Draw(GameTime gameTime)
         {
             //render to texture
-            ScreenManager.GraphicsDevice.SetRenderTarget(renderTarget);
+            //ScreenManager.GraphicsDevice.SetRenderTarget(renderTarget);
 
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
                                                Color.Blue, 0, 0);
 
-            foreach (GuiComponent guiComponent in guiComponents)
-            {
-                guiComponent.Draw(gameTime);
-            }
-
+           
             foreach (GameComponent gameComponent in gameComponents)
             {
                 gameComponent.Draw(gameTime);
             }
 
-  
+            foreach (GuiComponent guiComponent in guiComponents)
+            {
+                guiComponent.Draw(gameTime);
+            }
 
             // Our player and enemy are both actually just text strings.
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
@@ -289,7 +288,7 @@ namespace Expanze
             }
             using (Stream stream = File.OpenWrite(s))
             {
-                shadowMap.SaveAsPng(stream, shadowMap.Width, shadowMap.Height);
+                //shadowMap.SaveAsPng(stream, shadowMap.Width, shadowMap.Height);
             }
         }
 

@@ -35,9 +35,62 @@ namespace Expanze
             myGame = game;
         }
 
+        private void CreateTownsAndRoads()
+        {
+            Hexa[] neighbours = new Hexa[6];
+
+            for (int i = 0; i < hexaMap.Length; ++i)
+            {
+                  for (int j = 0; j < hexaMap[i].Length; ++j)
+                  {
+                      if (hexaMap[i][j] == null)
+                          continue;
+
+                      // UP LEFT
+                      if (i >= 1 && hexaMap[i - 1].Length > j)
+                          neighbours[(int)Hexa.RoadPos.UpLeft] = hexaMap[i - 1][j];
+                      else
+                          neighbours[(int)Hexa.RoadPos.UpLeft] = null;
+
+                      // UP RIGHT
+                      if (i >= 1 && j > 0 && hexaMap[i - 1].Length > j - 1)
+                          neighbours[(int)Hexa.RoadPos.UpRight] = hexaMap[i - 1][j - 1];
+                      else
+                          neighbours[(int)Hexa.RoadPos.UpRight] = null;
+
+                      // LEFT
+                      if (hexaMap[i].Length > j + 1)
+                          neighbours[(int)Hexa.RoadPos.MiddleLeft] = hexaMap[i][j + 1];
+                      else
+                          neighbours[(int)Hexa.RoadPos.MiddleLeft] = null;
+
+                      // RIGHT
+                      if (j - 1 >= 0)
+                          neighbours[(int)Hexa.RoadPos.MiddleRight] = hexaMap[i][j - 1];
+                      else
+                          neighbours[(int)Hexa.RoadPos.MiddleRight] = null;
+
+                      // BOTTOM LEFT
+                      if (i + 1 < hexaMap.Length && hexaMap[i + 1].Length > j + 1)
+                          neighbours[(int)Hexa.RoadPos.BottomLeft] = hexaMap[i + 1][j + 1];
+                      else
+                          neighbours[(int)Hexa.RoadPos.BottomLeft] = null;
+
+                      // BOTTOM RIGHT
+                      if (i + 1 < hexaMap.Length && hexaMap[i + 1].Length > j)
+                          neighbours[(int)Hexa.RoadPos.BottomRight] = hexaMap[i + 1][j];
+                      else
+                          neighbours[(int)Hexa.RoadPos.BottomRight] = null;
+
+                      hexaMap[i][j].CreateTownsAndRoads(neighbours);
+                  }
+            }
+        }
+
         public override void Initialize()
         {
             hexaMap = getMap();
+            CreateTownsAndRoads();
 
             aspectRatio = myGame.GraphicsDevice.Viewport.Width / (float)myGame.GraphicsDevice.Viewport.Height;
             eye = new Vector3(-5.0f, -5.0f, 0.0f);
