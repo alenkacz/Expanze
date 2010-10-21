@@ -242,7 +242,30 @@ namespace Expanze
         public override void Draw(GameTime gameTime)
         {
             //render to texture
-            //ScreenManager.GraphicsDevice.SetRenderTarget(renderTarget);
+            ScreenManager.GraphicsDevice.SetRenderTarget(renderTarget);
+            ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
+                                               Color.Black, 0, 0);
+            foreach (GameComponent gameComponent in gameComponents)
+            {
+                gameComponent.DrawPickableAreas();
+            }
+
+            //render to texture
+            ScreenManager.GraphicsDevice.SetRenderTarget(null);
+            shadowMap = renderTarget;
+            Color[] c = new Color[shadowMap.Height * shadowMap.Width];
+            shadowMap.GetData<Color>(c);
+            int x = 5, y = 6;
+            string s = "cat.png";
+            if (c[x + y * shadowMap.Width] == Color.Blue)
+            {
+                s = "dog.png";
+            }
+            using (Stream stream = File.OpenWrite(s))
+            {
+                shadowMap.SaveAsPng(stream, shadowMap.Width, shadowMap.Height);
+            }
+
 
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
                                                Color.Blue, 0, 0);
@@ -275,21 +298,7 @@ namespace Expanze
                 ScreenManager.FadeBackBufferToBlack(alpha);
             }
 
-            //render to texture
-            ScreenManager.GraphicsDevice.SetRenderTarget(null);
-            shadowMap = renderTarget;
-            Color[] c = new Color[shadowMap.Height * shadowMap.Width];
-            shadowMap.GetData<Color>(c);
-            int x = 5, y = 6;
-            string s = "cat.png";
-            if (c[x + y * shadowMap.Width] == Color.Blue)
-            {
-                s = "dog.png";
-            }
-            using (Stream stream = File.OpenWrite(s))
-            {
-                //shadowMap.SaveAsPng(stream, shadowMap.Width, shadowMap.Height);
-            }
+            
         }
 
 

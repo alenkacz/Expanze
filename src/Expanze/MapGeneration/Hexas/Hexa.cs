@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Expanze
 {
@@ -13,20 +15,35 @@ namespace Expanze
         public enum RoadPos { UpLeft, UpRight, MiddleLeft, MiddleRight, BottomLeft, BottomRight, Count };
         public enum TownPos { Up, UpLeft, UpRight, BottomLeft, BottomRight, Bottom, Count };
 
-        int value;
+        int value;      // how many sources will player get
+        int number;     // from counter, useable for picking
         private Settings.Types type = Settings.Types.Water;
         private Town[] towns;
         private Road[] roads;
+        private Matrix world;   // wordl position of Hex
 
+        private static Map map;
+        private static int counter = 0;    // how many hexas are created
 
         public Hexa() : this(0, Settings.Types.Water) { }
 
         public Hexa( int value , Settings.Types type)
         {
+            this.number = ++counter;
             this.type = type;
             this.value = value;
             this.towns = new Town[(int) TownPos.Count];
             this.roads = new Road[(int) RoadPos.Count];
+        }
+
+        public void setWorld(Matrix m)
+        {
+            world = m;
+        }
+
+        public static void setMap(Map map2)
+        {
+            map = map2;
         }
 
         public void CreateTownsAndRoads(Hexa[] neighbours)
@@ -71,6 +88,47 @@ namespace Expanze
                 roads[(int)RoadPos.BottomRight] = new Road();
             else
                 roads[(int)RoadPos.BottomRight] = neighbours[(int)RoadPos.BottomRight].getRoad(RoadPos.UpLeft);
+        }
+
+        public void Draw(GameTime gameTime)
+        {
+            Model m = map.getHexaModel(type);
+            Matrix[] transforms = new Matrix[m.Bones.Count];
+            m.CopyAbsoluteBoneTransformsTo(transforms);
+
+            foreach (ModelMesh mesh in m.Meshes)
+            {
+                foreach (BasicEffect effect in mesh.Effects)
+                {
+                    effect.EnableDefaultLighting();
+                    effect.World = transforms[mesh.ParentBone.Index] * world;
+                    effect.View = Settings.view;
+                    effect.Projection = Settings.projection;
+                }
+                mesh.Draw();
+            }
+        }
+
+        public void DrawPickableAreas()
+        {
+            Model m = map.getCircleShape();
+            Matrix[] transforms = new Matrix[m.Bones.Count];
+            m.CopyAbsoluteBoneTransformsTo(transforms);
+
+            Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.1f, 0.0f)) * Matrix.CreateScale(0.5f) * world;
+
+            foreach (ModelMesh mesh in m.Meshes)
+            {
+                foreach (BasicEffect effect in mesh.Effects)
+                {
+                    effect.LightingEnabled = true;
+                    effect.AmbientLightColor = new Vector3((float) number / counter, (float) number / counter, (float) number / counter);
+                    effect.World = transforms[mesh.ParentBone.Index] * mWorld;
+                    effect.View = Settings.view;
+                    effect.Projection = Settings.projection;
+                }
+                mesh.Draw();
+            }
         }
 
         public string getModelPath()
