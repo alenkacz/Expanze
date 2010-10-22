@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Expanze
 {
@@ -18,7 +19,11 @@ namespace Expanze
         int value;      // how many sources will player get
         int number;     // from counter, useable for picking
         Color pickHexaColor;
-        private Boolean pickActive = false;
+        private Boolean pickActive = false;         // if mouse is over pickable area
+        private Boolean pickNewActive = false;      // if mouse is newly over pickable area
+        private Boolean pickNewPress = false;       // if mouse press on pickable area newly
+        private Boolean pickPress = false;          // if mouse press on pickable area
+        private Boolean pickNewRelease = false;     // if mouse is newly release above pickable area
 
         private Settings.Types type = Settings.Types.Water;
         private Town[] towns;
@@ -171,12 +176,18 @@ namespace Expanze
                     else
                         effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
 
-                    effect.World = transforms[mesh.ParentBone.Index] * world;
+                    effect.World = Matrix.CreateRotationZ((float) Math.PI) * transforms[mesh.ParentBone.Index] * world;
                     effect.View = GameState.view;
                     effect.Projection = GameState.projection;
                 }
                 mesh.Draw();
             }
+
+            foreach (Road road in roads)
+                road.Draw(gameTime);
+
+            foreach (Town town in towns)
+                town.Draw(gameTime);
         }
 
         public void DrawPickableAreas()
@@ -204,19 +215,43 @@ namespace Expanze
                 road.DrawPickableAreas();
 
             foreach (Town town in towns)
-                if(town != null)
-                    town.DrawPickableAreas();
+                town.DrawPickableAreas();
         }
 
         public void HandlePickableAreas(Color c)
         {
+            foreach (Road road in roads)
+                road.HandlePickableAreas(c);
+
+            foreach (Town town in towns)
+                town.HandlePickableAreas(c);
+
             if (c == pickHexaColor)
             {
+                if (!pickActive)
+                    pickNewActive = true;
                 pickActive = true;
+
+                if (GameState.CurrentMouseState.LeftButton == ButtonState.Pressed)
+                {
+                    if (!pickPress)
+                        pickNewPress = true;
+                    pickPress = true;
+                }
+                else
+                {
+                    if (pickPress)
+                        pickNewRelease = true;
+                    pickPress = false;
+                }
             }
             else
             {
                 pickActive = false;
+                pickPress = false;
+                pickNewActive = false;
+                pickNewPress = false;
+                pickNewRelease = false;
             }
         }
 

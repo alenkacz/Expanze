@@ -111,7 +111,7 @@ namespace Expanze
 
             aspectRatio = myGame.GraphicsDevice.Viewport.Width / (float)myGame.GraphicsDevice.Viewport.Height;
             target = new Vector3(0.0f, 0.0f, 0.0f);
-            up = new Vector3(0.0f, 1.0f, 0.0f);
+            up = new Vector3(0.1f, 0.8f, 0.0f);
             eye = new Vector3(0.4f, 1.5f, 0.0f);
             GameState.view = Matrix.CreateLookAt(eye, target, up);
             GameState.projection = Matrix.CreatePerspectiveFieldOfView((float)MathHelper.ToRadians(90), aspectRatio, 1.0f, 100.0f);
@@ -211,7 +211,7 @@ namespace Expanze
                     if (hexaMap[i][j] != null)
                     {
                         hexaMap[i][j].Draw(gameTime);
-                        hexaMap[i][j].DrawPickableAreas();
+                        //hexaMap[i][j].DrawPickableAreas();
                     }
                 }
             }
