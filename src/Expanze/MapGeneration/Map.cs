@@ -105,9 +105,9 @@ namespace Expanze
         public override void Initialize()
         {
             hexaMap = getMap();
+            CreateHexaWorldMatrices(); // have to be before Create Towns and roads
             CreateTownsAndRoads();
-            CreateHexaWorldMatrices();
-            Hexa.setMap(this);
+            GameState.map = this;
 
             aspectRatio = myGame.GraphicsDevice.Viewport.Width / (float)myGame.GraphicsDevice.Viewport.Height;
             target = new Vector3(0.0f, 0.0f, 0.0f);
@@ -211,6 +211,7 @@ namespace Expanze
                     if (hexaMap[i][j] != null)
                     {
                         hexaMap[i][j].Draw(gameTime);
+                        hexaMap[i][j].DrawPickableAreas();
                     }
                 }
             }

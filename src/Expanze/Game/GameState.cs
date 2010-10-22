@@ -17,6 +17,7 @@ namespace Expanze
         public static MouseState LastMouseState;
 
         public static Game game;
+        public static Map map;
 
         public static SpriteFont gameFont;
     }

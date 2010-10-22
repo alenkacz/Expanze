@@ -25,7 +25,6 @@ namespace Expanze
         private Road[] roads;
         private Matrix world;   // wordl position of Hex
 
-        private static Map map;
         private static int counter = 0;    // how many hexas are created
 
         public Hexa() : this(0, Settings.Types.Water) { }
@@ -46,11 +45,6 @@ namespace Expanze
             world = m;
         }
 
-        public static void setMap(Map map2)
-        {
-            map = map2;
-        }
-
         public void CreateTownsAndRoads(Hexa[] neighbours)
         {
             if (type == Settings.Types.Nothing || type == Settings.Types.Water)
@@ -59,45 +53,45 @@ namespace Expanze
             // Always make owns road or get reference from other roads (not sending reference to other hexas)
             if (neighbours[(int)RoadPos.UpLeft] == null || 
                 neighbours[(int)RoadPos.UpLeft].getRoad(RoadPos.BottomRight) == null)
-                roads[(int)RoadPos.UpLeft] = new Road();
+                roads[(int)RoadPos.UpLeft] = new Road(Matrix.CreateRotationY(-(float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(-0.25f, 0.0f, 0.14f)) * world);
             else
                 roads[(int)RoadPos.UpLeft] = neighbours[(int)RoadPos.UpLeft].getRoad(RoadPos.BottomRight);
 
             if (neighbours[(int)RoadPos.UpRight] == null ||
                 neighbours[(int)RoadPos.UpRight].getRoad(RoadPos.BottomLeft) == null)
-                roads[(int)RoadPos.UpRight] = new Road();
+                roads[(int)RoadPos.UpRight] = new Road(Matrix.CreateRotationY((float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(-0.25f, 0.0f, -0.14f)) * world);
             else
                 roads[(int)RoadPos.UpRight] = neighbours[(int)RoadPos.UpRight].getRoad(RoadPos.BottomLeft);
 
             if (neighbours[(int)RoadPos.MiddleLeft] == null ||
                 neighbours[(int)RoadPos.MiddleLeft].getRoad(RoadPos.MiddleRight) == null)
-                roads[(int)RoadPos.MiddleLeft] = new Road();
+                roads[(int)RoadPos.MiddleLeft] = new Road(Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, 0.28f)) * world);
             else
                 roads[(int)RoadPos.MiddleLeft] = neighbours[(int)RoadPos.MiddleLeft].getRoad(RoadPos.MiddleRight);
 
             if (neighbours[(int)RoadPos.MiddleRight] == null ||
                 neighbours[(int)RoadPos.MiddleRight].getRoad(RoadPos.MiddleLeft) == null)
-                roads[(int)RoadPos.MiddleRight] = new Road();
+                roads[(int)RoadPos.MiddleRight] = new Road(Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, -0.28f)) * world);
             else
                 roads[(int)RoadPos.MiddleRight] = neighbours[(int)RoadPos.MiddleRight].getRoad(RoadPos.MiddleLeft);
 
 
             if (neighbours[(int)RoadPos.BottomLeft] == null ||
                 neighbours[(int)RoadPos.BottomLeft].getRoad(RoadPos.UpRight) == null)
-                roads[(int)RoadPos.BottomLeft] = new Road();
+                roads[(int)RoadPos.BottomLeft] = new Road(Matrix.CreateRotationY((float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(0.25f, 0.0f, 0.14f)) * world);
             else
                 roads[(int)RoadPos.BottomLeft] = neighbours[(int)RoadPos.BottomLeft].getRoad(RoadPos.UpRight);
 
             if (neighbours[(int)RoadPos.BottomRight] == null ||
                 neighbours[(int)RoadPos.BottomRight].getRoad(RoadPos.UpLeft) == null)
-                roads[(int)RoadPos.BottomRight] = new Road();
+                roads[(int)RoadPos.BottomRight] = new Road(Matrix.CreateRotationY(-(float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(0.25f, 0.0f, -0.14f)) * world);
             else
                 roads[(int)RoadPos.BottomRight] = neighbours[(int)RoadPos.BottomRight].getRoad(RoadPos.UpLeft);
         }
 
         public void Draw(GameTime gameTime)
         {
-            Model m = map.getHexaModel(type);
+            Model m = GameState.map.getHexaModel(type);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 
@@ -107,7 +101,7 @@ namespace Expanze
                 {
                     effect.EnableDefaultLighting();
                     if (pickActive)
-                        effect.EmissiveColor = new Vector3(1.0f, 0.0f, 0.0f);
+                        effect.EmissiveColor = new Vector3(0.3f, 0.0f, 0.0f);
                     else
                         effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
 
@@ -121,12 +115,12 @@ namespace Expanze
 
         public void DrawPickableAreas()
         {
-            Model m = map.getCircleShape();
+            Model m = GameState.map.getCircleShape();
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 
-            Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.1f, 0.0f)) * Matrix.CreateScale(0.5f) * world;
-
+            Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.05f, 0.0f)) * Matrix.CreateScale(0.55f) * world;
+            
             foreach (ModelMesh mesh in m.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
@@ -139,6 +133,9 @@ namespace Expanze
                 }
                 mesh.Draw();
             }
+
+            foreach (Road road in roads)
+                road.DrawPickableAreas();
         }
 
         public void HandlePickableAreas(Color c)
