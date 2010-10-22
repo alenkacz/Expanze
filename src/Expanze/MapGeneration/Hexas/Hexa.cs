@@ -50,6 +50,9 @@ namespace Expanze
             if (type == Settings.Types.Nothing || type == Settings.Types.Water)
                 return;
 
+            ///////////////////////
+            // Creating roads -> //
+            ///////////////////////
             // Always make owns road or get reference from other roads (not sending reference to other hexas)
             if (neighbours[(int)RoadPos.UpLeft] == null || 
                 neighbours[(int)RoadPos.UpLeft].getRoad(RoadPos.BottomRight) == null)
@@ -65,7 +68,7 @@ namespace Expanze
 
             if (neighbours[(int)RoadPos.MiddleLeft] == null ||
                 neighbours[(int)RoadPos.MiddleLeft].getRoad(RoadPos.MiddleRight) == null)
-                roads[(int)RoadPos.MiddleLeft] = new Road(Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, 0.28f)) * world);
+                roads[(int)RoadPos.MiddleLeft] = new Road(Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, 0.29f)) * world);
             else
                 roads[(int)RoadPos.MiddleLeft] = neighbours[(int)RoadPos.MiddleLeft].getRoad(RoadPos.MiddleRight);
 
@@ -87,6 +90,69 @@ namespace Expanze
                 roads[(int)RoadPos.BottomRight] = new Road(Matrix.CreateRotationY(-(float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(0.25f, 0.0f, -0.14f)) * world);
             else
                 roads[(int)RoadPos.BottomRight] = neighbours[(int)RoadPos.BottomRight].getRoad(RoadPos.UpLeft);
+            
+            ///////////////////////
+            // Creating tows ->  //
+            ///////////////////////
+            if ((neighbours[(int)RoadPos.UpLeft] == null ||
+                 neighbours[(int)RoadPos.UpLeft].getTown(TownPos.BottomRight) == null) &&
+                (neighbours[(int)RoadPos.UpRight] == null ||
+                 neighbours[(int)RoadPos.UpRight].getTown(TownPos.BottomLeft) == null))
+                towns[(int)TownPos.Up] = new Town(Matrix.CreateTranslation(new Vector3(-0.32f, 0.0f, 0.0f)) * world);
+            else
+                if (neighbours[(int)RoadPos.UpLeft] != null && neighbours[(int)RoadPos.UpLeft].getTown(TownPos.BottomRight) != null)
+                    towns[(int)TownPos.Up] = neighbours[(int)RoadPos.UpLeft].getTown(TownPos.BottomRight);
+                else
+                    towns[(int)TownPos.Up] = neighbours[(int)RoadPos.UpRight].getTown(TownPos.BottomLeft);
+
+            if ((neighbours[(int)RoadPos.BottomLeft] == null ||
+                 neighbours[(int)RoadPos.BottomLeft].getTown(TownPos.UpRight) == null) &&
+                (neighbours[(int)RoadPos.BottomRight] == null ||
+                 neighbours[(int)RoadPos.BottomRight].getTown(TownPos.UpLeft) == null))
+                towns[(int)TownPos.Bottom] = new Town(Matrix.CreateTranslation(new Vector3(0.32f, 0.0f, 0.0f)) * world);
+            else
+                towns[(int)TownPos.Bottom] = neighbours[(int)RoadPos.BottomLeft].getTown(TownPos.UpRight);
+
+            if ((neighbours[(int)RoadPos.UpRight] == null ||
+                neighbours[(int)RoadPos.UpRight].getTown(TownPos.Bottom) == null) &&
+               (neighbours[(int)RoadPos.MiddleRight] == null ||
+                neighbours[(int)RoadPos.MiddleRight].getTown(TownPos.UpLeft) == null))
+                towns[(int)TownPos.UpRight] = new Town(Matrix.CreateTranslation(new Vector3(-0.16f, 0.0f, -0.28f)) * world);
+            else
+                if (neighbours[(int)RoadPos.UpRight] != null && neighbours[(int)RoadPos.UpRight].getTown(TownPos.Bottom) != null)
+                    towns[(int)TownPos.UpRight] = neighbours[(int)RoadPos.UpRight].getTown(TownPos.Bottom);
+                else
+                    towns[(int)TownPos.UpRight] = neighbours[(int)RoadPos.MiddleRight].getTown(TownPos.UpLeft);
+
+            if ((neighbours[(int)RoadPos.UpLeft] == null ||
+                 neighbours[(int)RoadPos.UpLeft].getTown(TownPos.Bottom) == null) &&
+                (neighbours[(int)RoadPos.MiddleLeft] == null ||
+                 neighbours[(int)RoadPos.MiddleLeft].getTown(TownPos.UpRight) == null))
+                 towns[(int)TownPos.UpLeft] = new Town(Matrix.CreateTranslation(new Vector3(-0.16f, 0.0f, 0.28f)) * world);
+            else
+                towns[(int)TownPos.UpLeft] = neighbours[(int)RoadPos.UpLeft].getTown(TownPos.Bottom);
+
+            if ((neighbours[(int)RoadPos.BottomRight] == null ||
+                neighbours[(int)RoadPos.BottomRight].getTown(TownPos.Up) == null) &&
+               (neighbours[(int)RoadPos.MiddleRight] == null ||
+                neighbours[(int)RoadPos.MiddleRight].getTown(TownPos.BottomLeft) == null))
+                towns[(int)TownPos.BottomRight] = new Town(Matrix.CreateTranslation(new Vector3(0.16f, 0.0f, -0.28f)) * world);
+            else
+                if (neighbours[(int)RoadPos.BottomRight] != null && neighbours[(int)RoadPos.BottomRight].getTown(TownPos.Bottom) != null)
+                    towns[(int)TownPos.BottomRight] = neighbours[(int)RoadPos.BottomRight].getTown(TownPos.Up);
+                else
+                    towns[(int)TownPos.BottomRight] = neighbours[(int)RoadPos.MiddleRight].getTown(TownPos.BottomLeft);
+            
+            if ((neighbours[(int)RoadPos.BottomLeft] == null ||
+                neighbours[(int)RoadPos.BottomLeft].getTown(TownPos.Up) == null) &&
+               (neighbours[(int)RoadPos.MiddleLeft] == null ||
+                neighbours[(int)RoadPos.MiddleLeft].getTown(TownPos.BottomRight) == null))
+                towns[(int)TownPos.BottomLeft] = new Town(Matrix.CreateTranslation(new Vector3(0.16f, 0.0f, 0.28f)) * world);
+            else
+                if (neighbours[(int)RoadPos.BottomLeft] != null && neighbours[(int)RoadPos.BottomLeft].getTown(TownPos.Bottom) != null)
+                    towns[(int)TownPos.BottomLeft] = neighbours[(int)RoadPos.BottomLeft].getTown(TownPos.Up);
+                else
+                    towns[(int)TownPos.BottomLeft] = neighbours[(int)RoadPos.MiddleLeft].getTown(TownPos.BottomRight);
         }
 
         public void Draw(GameTime gameTime)
@@ -119,7 +185,7 @@ namespace Expanze
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 
-            Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.05f, 0.0f)) * Matrix.CreateScale(0.55f) * world;
+            Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.05f, 0.0f)) * Matrix.CreateScale(0.6f) * world;
             
             foreach (ModelMesh mesh in m.Meshes)
             {
@@ -136,6 +202,10 @@ namespace Expanze
 
             foreach (Road road in roads)
                 road.DrawPickableAreas();
+
+            foreach (Town town in towns)
+                if(town != null)
+                    town.DrawPickableAreas();
         }
 
         public void HandlePickableAreas(Color c)
