@@ -93,6 +93,9 @@ namespace Expanze
             {
                 Gestures.Add(TouchPanel.ReadGesture());
             }
+
+            GameState.LastMouseState = GameState.CurrentMouseState;
+            GameState.CurrentMouseState = Mouse.GetState();
         }
 
 

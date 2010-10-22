@@ -17,7 +17,6 @@ namespace Expanze
         const int N_MODEL = 7;
         Model[] hexaModel;
         Model rectangleShape, circleShape;
-        Matrix[] world;
 
         public Vector3 eye, target, up;
         public float angle;
@@ -114,31 +113,8 @@ namespace Expanze
             eye = new Vector3(-5.0f, -5.0f, 0.0f);
             target = new Vector3(0.0f, 0.0f, 0.0f);
             up = new Vector3(0.0f, 1.0f, 0.0f);
-            angle = 0.0f;
-            Settings.view = Matrix.CreateLookAt(eye, target, up);
-
-            for (int i = 0; i < hexaMap.Length; ++i)
-            {
-//                for (int j = 0; j < hexaMap[i].Length; ++i)
-//                {
-//                }
-            }
-
-                    world = new Matrix[N_MODEL];
-            world[0] = Matrix.Identity;
-            Vector3 t = new Vector3(0.51f, 0.0f, 0.28f);
-            world[1] = Matrix.CreateTranslation(t);
-            t = new Vector3(-0.51f, 0.0f, 0.28f);
-            world[2] = Matrix.CreateTranslation(t);
-            t = new Vector3(0.51f, 0.0f, -0.28f);
-            world[3] = Matrix.CreateTranslation(t);
-            t = new Vector3(-0.51f, 0.0f, -0.28f);
-            world[4] = Matrix.CreateTranslation(t);
-            t = new Vector3(0.0f, 0.0f, -0.55f);
-            world[5] = Matrix.CreateTranslation(t) * Matrix.CreateScale(0.3f);
-            t = new Vector3(0.0f, 0.0f, 0.55f);
-            world[6] = Matrix.CreateTranslation(t);
-            Settings.projection = Matrix.CreatePerspectiveFieldOfView((float)MathHelper.ToRadians(90), aspectRatio, 1.0f, 100.0f);
+            GameState.view = Matrix.CreateLookAt(eye, target, up);
+            GameState.projection = Matrix.CreatePerspectiveFieldOfView((float)MathHelper.ToRadians(90), aspectRatio, 1.0f, 100.0f);
         }
 
         private Hexa[][] getMap()
@@ -188,18 +164,20 @@ namespace Expanze
             eye = new Vector3(0.4f, 1.5f, 0.0f);
         }
 
+        public override void HandlePickableAreas(Color c)
+        {
+            for (int i = 0; i < hexaMap.Length; i++)
+                for (int j = 0; j < hexaMap[i].Length; j++)
+                    if (hexaMap[i][j] != null)
+                        hexaMap[i][j].HandlePickableAreas(c);
+        }
+
         public override void DrawPickableAreas()
         {
             for (int i = 0; i < hexaMap.Length; i++)
-            {
                 for (int j = 0; j < hexaMap[i].Length; j++)
-                {
                     if (hexaMap[i][j] != null)
-                    {
                         hexaMap[i][j].DrawPickableAreas();
-                    }
-                }
-            }
         }
 
         public override void Draw(GameTime gameTime)
@@ -207,7 +185,7 @@ namespace Expanze
             myGame.GraphicsDevice.BlendState = BlendState.Opaque;
             myGame.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
-            Settings.view = Matrix.CreateLookAt(eye, target, up);
+            GameState.view = Matrix.CreateLookAt(eye, target, up);
 
             for (int i = 0; i < hexaMap.Length; i++)
             {

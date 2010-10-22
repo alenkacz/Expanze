@@ -33,7 +33,7 @@ namespace Expanze
         Texture2D shadowMap;
 
         ContentManager content;
-        SpriteFont gameFont;
+        
         List<GameComponent> gameComponents = new List<GameComponent>();
         List<GuiComponent> guiComponents = new List<GuiComponent>();
 
@@ -68,7 +68,7 @@ namespace Expanze
             if (content == null)
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
 
-            gameFont = content.Load<SpriteFont>("gamefont");
+            GameState.gameFont = content.Load<SpriteFont>("gamefont");
 
             //gamelogic
             gMaster.startGame();
@@ -79,10 +79,11 @@ namespace Expanze
             //renderTarget = new RenderTarget2D(ScreenManager.GraphicsDevice, 1024, 1024, false, ScreenManager.GraphicsDevice.DisplayMode.Format, pp.DepthStencilFormat);
     
             Map mapComp;
+            GameState.game = ScreenManager.Game;
             mapComp = new Map(ScreenManager.Game);
             gameComponents.Add(mapComp);
 
-            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width - 180, ScreenManager.Game.GraphicsDevice.Viewport.Height - 50, gameFont);
+            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width - 180, ScreenManager.Game.GraphicsDevice.Viewport.Height - 50, GameState.gameFont);
             guiComponents.Add(changeTurnButton);
             //gameComponents.Add(buttonComp);
 
@@ -160,7 +161,7 @@ namespace Expanze
 
                 // Apply a stabilizing force to stop the enemy moving off the screen.
                 Vector2 targetPosition = new Vector2(
-                    ScreenManager.GraphicsDevice.Viewport.Width / 2 - gameFont.MeasureString("Insert Gameplay Here").X / 2, 
+                    ScreenManager.GraphicsDevice.Viewport.Width / 2 - GameState.gameFont.MeasureString("Insert Gameplay Here").X / 2, 
                     200);
 
                 enemyPosition = Vector2.Lerp(enemyPosition, targetPosition, 0.05f);
@@ -255,17 +256,15 @@ namespace Expanze
             shadowMap = renderTarget;
             Color[] c = new Color[shadowMap.Height * shadowMap.Width];
             shadowMap.GetData<Color>(c);
-            int x = 5, y = 6;
-            string s = "cat.png";
-            if (c[x + y * shadowMap.Width] == Color.Blue)
-            {
-                s = "dog.png";
-            }
-            using (Stream stream = File.OpenWrite(s))
-            {
-                shadowMap.SaveAsPng(stream, shadowMap.Width, shadowMap.Height);
-            }
 
+            Color color = Color.Black;
+            int x = GameState.CurrentMouseState.X, y = GameState.CurrentMouseState.Y;
+            if(x > 0 && y > 0 && x < shadowMap.Width && y < shadowMap.Height)
+                color = c[x + y * shadowMap.Width];
+            foreach (GameComponent gameComponent in gameComponents)
+            {
+                gameComponent.HandlePickableAreas(color);
+            }
 
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
                                                Color.Blue, 0, 0);
@@ -286,7 +285,7 @@ namespace Expanze
 
             spriteBatch.Begin();
 
-            spriteBatch.DrawString(gameFont, gMaster.getActivePlayer().getName(), Settings.playerNamePosition, Color.DarkRed);
+            spriteBatch.DrawString(GameState.gameFont, gMaster.getActivePlayer().getName(), Settings.playerNamePosition, Color.DarkRed);
 
             spriteBatch.End();
 

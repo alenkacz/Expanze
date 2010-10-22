@@ -14,6 +14,7 @@ namespace Expanze
          {
          }
          public virtual void DrawPickableAreas() { }
+         public virtual void HandlePickableAreas(Color c) { }   // which color was last time under mouse cursor
          public virtual void Draw(GameTime gameTime) { }
          public virtual void LoadContent() { }
          public virtual void UnloadContent() { }

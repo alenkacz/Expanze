@@ -17,6 +17,9 @@ namespace Expanze
 
         int value;      // how many sources will player get
         int number;     // from counter, useable for picking
+        Color pickHexaColor;
+        private Boolean pickActive = false;
+
         private Settings.Types type = Settings.Types.Water;
         private Town[] towns;
         private Road[] roads;
@@ -30,6 +33,8 @@ namespace Expanze
         public Hexa( int value , Settings.Types type)
         {
             this.number = ++counter;
+            this.pickHexaColor = new Color(this.number / 256.0f, 0.0f, 0.0f);
+            
             this.type = type;
             this.value = value;
             this.towns = new Town[(int) TownPos.Count];
@@ -101,9 +106,14 @@ namespace Expanze
                 foreach (BasicEffect effect in mesh.Effects)
                 {
                     effect.EnableDefaultLighting();
+                    if (pickActive)
+                        effect.EmissiveColor = new Vector3(1.0f, 0.0f, 0.0f);
+                    else
+                        effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
+
                     effect.World = transforms[mesh.ParentBone.Index] * world;
-                    effect.View = Settings.view;
-                    effect.Projection = Settings.projection;
+                    effect.View = GameState.view;
+                    effect.Projection = GameState.projection;
                 }
                 mesh.Draw();
             }
@@ -122,12 +132,24 @@ namespace Expanze
                 foreach (BasicEffect effect in mesh.Effects)
                 {
                     effect.LightingEnabled = true;
-                    effect.AmbientLightColor = new Vector3((float) number / counter, (float) number / counter, (float) number / counter);
+                    effect.AmbientLightColor = pickHexaColor.ToVector3(); //new Vector3((float) number / counter, (float) number / counter, (float) number / counter);
                     effect.World = transforms[mesh.ParentBone.Index] * mWorld;
-                    effect.View = Settings.view;
-                    effect.Projection = Settings.projection;
+                    effect.View = GameState.view;
+                    effect.Projection = GameState.projection;
                 }
                 mesh.Draw();
+            }
+        }
+
+        public void HandlePickableAreas(Color c)
+        {
+            if (c == pickHexaColor)
+            {
+                pickActive = true;
+            }
+            else
+            {
+                pickActive = false;
             }
         }
 
