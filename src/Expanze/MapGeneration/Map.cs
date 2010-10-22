@@ -110,9 +110,9 @@ namespace Expanze
             Hexa.setMap(this);
 
             aspectRatio = myGame.GraphicsDevice.Viewport.Width / (float)myGame.GraphicsDevice.Viewport.Height;
-            eye = new Vector3(-5.0f, -5.0f, 0.0f);
             target = new Vector3(0.0f, 0.0f, 0.0f);
             up = new Vector3(0.0f, 1.0f, 0.0f);
+            eye = new Vector3(0.4f, 1.5f, 0.0f);
             GameState.view = Matrix.CreateLookAt(eye, target, up);
             GameState.projection = Matrix.CreatePerspectiveFieldOfView((float)MathHelper.ToRadians(90), aspectRatio, 1.0f, 100.0f);
         }
@@ -155,13 +155,30 @@ namespace Expanze
             circleShape = content.Load<Model>("Shapes/circle");
         }
 
+
+        public void ChangeCamera()
+        {
+            if (GameState.CurrentMouseState.LeftButton == ButtonState.Pressed)
+            {
+                float dx = (GameState.CurrentMouseState.X - GameState.LastMouseState.X) / 100.0f;
+                eye.Z += dx;
+                target.Z += dx;
+
+                float dy = (GameState.CurrentMouseState.Y - GameState.LastMouseState.Y) / 100.0f;
+                eye.X -= dy;
+                target.X -= dy;
+            }
+        }
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            ChangeCamera();
+
             //angle = angle + gameTime.ElapsedGameTime.Milliseconds / 1000.0f * 1.0f;
             if (angle > 360.0f)
                 angle -= 360.0f;
-            eye = new Vector3(0.4f, 1.5f, 0.0f);
         }
 
         public override void HandlePickableAreas(Color c)

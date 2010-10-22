@@ -134,7 +134,6 @@ namespace Expanze
 
         #region Update and Draw
 
-
         /// <summary>
         /// Updates the state of the game. This method checks the GameScreen.IsActive
         /// property, so the game will stop updating when the pause menu is active,
