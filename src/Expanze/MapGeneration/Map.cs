@@ -114,7 +114,7 @@ namespace Expanze
             up = new Vector3(0.1f, 0.8f, 0.0f);
             eye = new Vector3(0.4f, 1.5f, 0.0f);
             GameState.view = Matrix.CreateLookAt(eye, target, up);
-            GameState.projection = Matrix.CreatePerspectiveFieldOfView((float)MathHelper.ToRadians(90), aspectRatio, 1.0f, 100.0f);
+            GameState.projection = Matrix.CreatePerspectiveFieldOfView((float)MathHelper.ToRadians(90), aspectRatio, 0.01f, 100.0f);
         }
 
         private Hexa[][] getMap()
@@ -167,6 +167,11 @@ namespace Expanze
                 float dy = (GameState.CurrentMouseState.Y - GameState.LastMouseState.Y) / 100.0f;
                 eye.X -= dy;
                 target.X -= dy;
+            }
+
+            if (GameState.CurrentMouseState.ScrollWheelValue - GameState.LastMouseState.ScrollWheelValue != 0)
+            {
+                eye.Y += (GameState.CurrentMouseState.ScrollWheelValue - GameState.LastMouseState.ScrollWheelValue) / 500.0f;
             }
         }
 
