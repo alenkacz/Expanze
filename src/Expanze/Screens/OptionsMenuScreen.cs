@@ -23,25 +23,25 @@ namespace Expanze
         #region Fields
 
         MenuEntry ungulateMenuEntry;
-        MenuEntry languageMenuEntry;
-        MenuEntry frobnicateMenuEntry;
-        MenuEntry elfMenuEntry;
+        //MenuEntry languageMenuEntry;
+        //MenuEntry frobnicateMenuEntry;
+        //MenuEntry elfMenuEntry;
 
         enum Ungulate
         {
-            BactrianCamel,
-            Dromedary,
-            Llama,
+            Test,
+            Test2,
+            Test3,
         }
 
-        static Ungulate currentUngulate = Ungulate.Dromedary;
+        static Ungulate currentUngulate = Ungulate.Test;
 
-        static string[] languages = { "C#", "French", "Deoxyribonucleic acid" };
-        static int currentLanguage = 0;
+        //static string[] languages = { "Test", "Test2", "Test3" };
+        //static int currentLanguage = 0;
 
-        static bool frobnicate = true;
+        //static bool frobnicate = true;
 
-        static int elf = 23;
+        //static int elf = 23;
 
         #endregion
 
@@ -56,9 +56,9 @@ namespace Expanze
         {
             // Create our menu entries.
             ungulateMenuEntry = new MenuEntry(string.Empty);
-            languageMenuEntry = new MenuEntry(string.Empty);
-            frobnicateMenuEntry = new MenuEntry(string.Empty);
-            elfMenuEntry = new MenuEntry(string.Empty);
+            //languageMenuEntry = new MenuEntry(string.Empty);
+            //frobnicateMenuEntry = new MenuEntry(string.Empty);
+            //elfMenuEntry = new MenuEntry(string.Empty);
 
             SetMenuEntryText();
 
@@ -66,16 +66,16 @@ namespace Expanze
 
             // Hook up menu event handlers.
             ungulateMenuEntry.Selected += UngulateMenuEntrySelected;
-            languageMenuEntry.Selected += LanguageMenuEntrySelected;
-            frobnicateMenuEntry.Selected += FrobnicateMenuEntrySelected;
-            elfMenuEntry.Selected += ElfMenuEntrySelected;
+            //languageMenuEntry.Selected += LanguageMenuEntrySelected;
+            //frobnicateMenuEntry.Selected += FrobnicateMenuEntrySelected;
+            //elfMenuEntry.Selected += ElfMenuEntrySelected;
             back.Selected += OnCancel;
             
             // Add entries to the menu.
             MenuEntries.Add(ungulateMenuEntry);
-            MenuEntries.Add(languageMenuEntry);
-            MenuEntries.Add(frobnicateMenuEntry);
-            MenuEntries.Add(elfMenuEntry);
+            //MenuEntries.Add(languageMenuEntry);
+            //MenuEntries.Add(frobnicateMenuEntry);
+            //MenuEntries.Add(elfMenuEntry);
             MenuEntries.Add(back);
         }
 
@@ -85,10 +85,10 @@ namespace Expanze
         /// </summary>
         void SetMenuEntryText()
         {
-            ungulateMenuEntry.Text = "Preferred ungulate: " + currentUngulate;
-            languageMenuEntry.Text = "Language: " + languages[currentLanguage];
-            frobnicateMenuEntry.Text = "Frobnicate: " + (frobnicate ? "on" : "off");
-            elfMenuEntry.Text = "elf: " + elf;
+            ungulateMenuEntry.Text = "Settings: " + currentUngulate;
+            //languageMenuEntry.Text = "Language: " + languages[currentLanguage];
+            //frobnicateMenuEntry.Text = "Frobnicate: " + (frobnicate ? "on" : "off");
+            //elfMenuEntry.Text = "elf: " + elf;
         }
 
 
@@ -104,7 +104,7 @@ namespace Expanze
         {
             currentUngulate++;
 
-            if (currentUngulate > Ungulate.Llama)
+            if (currentUngulate > Ungulate.Test3)
                 currentUngulate = 0;
 
             SetMenuEntryText();
@@ -116,7 +116,7 @@ namespace Expanze
         /// </summary>
         void LanguageMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            currentLanguage = (currentLanguage + 1) % languages.Length;
+            //currentLanguage = (currentLanguage + 1) % languages.Length;
 
             SetMenuEntryText();
         }
@@ -127,7 +127,7 @@ namespace Expanze
         /// </summary>
         void FrobnicateMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            frobnicate = !frobnicate;
+            //frobnicate = !frobnicate;
 
             SetMenuEntryText();
         }
@@ -138,7 +138,7 @@ namespace Expanze
         /// </summary>
         void ElfMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            elf++;
+            //elf++;
 
             SetMenuEntryText();
         }

@@ -1,4 +1,4 @@
-#region File Description
+﻿#region File Description
 //-----------------------------------------------------------------------------
 // MainMenuScreen.cs
 //
@@ -27,18 +27,24 @@ namespace Expanze
             : base("Main Menu")
         {
             // Create our menu entries.
-            MenuEntry playGameMenuEntry = new MenuEntry("Play Game");
-            MenuEntry optionsMenuEntry = new MenuEntry("Options");
-            MenuEntry exitMenuEntry = new MenuEntry("Exit");
+            MenuEntry hotseatMenuEntry = new MenuEntry("Hot seat");
+            MenuEntry campaignMenuEntry = new MenuEntry("Sólo kampaň");
+            MenuEntry settingsMenuEntry = new MenuEntry("Nastavení");
+            MenuEntry creatorsMenuEntry = new MenuEntry("Autoři");
+            MenuEntry exitMenuEntry = new MenuEntry("Konec");
 
             // Hook up menu event handlers.
-            playGameMenuEntry.Selected += PlayGameMenuEntrySelected;
-            optionsMenuEntry.Selected += OptionsMenuEntrySelected;
+            hotseatMenuEntry.Selected += HotseatMenuEntrySelected;
+            campaignMenuEntry.Selected += CampaignMenuEntrySelected;
+            settingsMenuEntry.Selected += SettingsMenuEntrySelected;
+            creatorsMenuEntry.Selected += CreatorsMenuEntrySelected;
             exitMenuEntry.Selected += OnCancel;
 
             // Add entries to the menu.
-            MenuEntries.Add(playGameMenuEntry);
-            MenuEntries.Add(optionsMenuEntry);
+            MenuEntries.Add(hotseatMenuEntry);
+            MenuEntries.Add(campaignMenuEntry);
+            MenuEntries.Add(settingsMenuEntry);
+            MenuEntries.Add(creatorsMenuEntry);
             MenuEntries.Add(exitMenuEntry);
         }
 
@@ -51,7 +57,16 @@ namespace Expanze
         /// <summary>
         /// Event handler for when the Play Game menu entry is selected.
         /// </summary>
-        void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        void HotseatMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        {
+            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
+                               new GameplayScreen());
+        }
+
+        /// <summary>
+        /// Event handler for when the Play Game menu entry is selected.
+        /// </summary>
+        void CampaignMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
             LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
                                new GameplayScreen());
@@ -61,9 +76,17 @@ namespace Expanze
         /// <summary>
         /// Event handler for when the Options menu entry is selected.
         /// </summary>
-        void OptionsMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        void SettingsMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
             ScreenManager.AddScreen(new OptionsMenuScreen(), e.PlayerIndex);
+        }
+
+        /// <summary>
+        /// Event handler for when the Options menu entry is selected.
+        /// </summary>
+        void CreatorsMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        {
+            ScreenManager.AddScreen(new CreatorsMenuScreen(), e.PlayerIndex);
         }
 
 
