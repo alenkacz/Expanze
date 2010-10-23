@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
 	<Asset Type="Graphics:FontDescription">
-		<FontName>Segoe UI Mono</FontName>
-		<Size>23</Size>
+		<FontName>Segoe Script</FontName>
+		<Size>20</Size>
 		<Spacing>2</Spacing>
 		<Style>Regular</Style>
 		<CharacterRegions>
