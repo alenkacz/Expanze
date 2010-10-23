@@ -83,8 +83,12 @@ namespace Expanze
             mapComp = new Map(ScreenManager.Game);
             gameComponents.Add(mapComp);
 
-            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width - 180, ScreenManager.Game.GraphicsDevice.Viewport.Height - 50, GameState.gameFont);
+            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width - 180, ScreenManager.Game.GraphicsDevice.Viewport.Height - 50, GameState.gameFont, 150, 40, "button");
             guiComponents.Add(changeTurnButton);
+            ButtonComponent menuHUDButton = new ButtonComponent(ScreenManager.Game, 10, 10, GameState.gameFont, 232, 225, "menu_button");
+            guiComponents.Add(menuHUDButton);
+            MaterialsHUDComponent materialsHUDComp = new MaterialsHUDComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width/4, ScreenManager.Game.GraphicsDevice.Viewport.Height - 78, GameState.gameFont, 232, 225, "suroviny_hud");
+            guiComponents.Add(materialsHUDComp);
             //gameComponents.Add(buttonComp);
 
             //CustomCursor cursorComp = new CustomCursor(ScreenManager.Game);
@@ -266,7 +270,7 @@ namespace Expanze
             }
 
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
-                                               Color.Blue, 0, 0);
+                                               Color.White, 0, 0);
 
            
             foreach (GameComponent gameComponent in gameComponents)

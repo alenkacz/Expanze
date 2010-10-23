@@ -10,12 +10,7 @@ namespace Expanze
 {
     class ButtonComponent : GuiComponent
     {
-        SpriteBatch spriteBatch;
-        Texture2D myButton;
-        Vector2 spritePosition;
         MouseState mouseState;
-        Game myGame;
-        SpriteFont gameFont;
 
         int mousex;
         int mousey;
@@ -23,22 +18,8 @@ namespace Expanze
         //button still pressed
         bool pressed = false;
 
-        const int width = 150;
-        const int height = 40;
-
-        public ButtonComponent(Game game, int x, int y, SpriteFont font)
-        {
-            myGame = game;
-            spritePosition.X = x;
-            spritePosition.Y = y;
-            gameFont = font;
-        }
-
-        public override void LoadContent()
-        {
-            spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
-            myButton = myGame.Content.Load<Texture2D>("button");
-        }
+        public ButtonComponent(Game game, int x, int y, SpriteFont font, int width, int height, String texture) 
+            : base(game,x,y,font,width,height,texture) {}
 
         public override void Update(GameTime gameTime)
         {
