@@ -34,6 +34,9 @@ namespace Expanze
         public readonly KeyboardState[] LastKeyboardStates;
         public readonly GamePadState[] LastGamePadStates;
 
+        public MouseState CurrentMouseState;
+        public MouseState LastMouseState;
+
         public readonly bool[] GamePadWasConnected;
 
         public TouchCollection TouchState;
@@ -56,6 +59,9 @@ namespace Expanze
             LastKeyboardStates = new KeyboardState[MaxInputs];
             LastGamePadStates = new GamePadState[MaxInputs];
 
+            LastMouseState = new MouseState();
+            CurrentMouseState = new MouseState();
+
             GamePadWasConnected = new bool[MaxInputs];
         }
 
@@ -74,9 +80,11 @@ namespace Expanze
             {
                 LastKeyboardStates[i] = CurrentKeyboardStates[i];
                 LastGamePadStates[i] = CurrentGamePadStates[i];
+                LastMouseState = CurrentMouseState;
 
                 CurrentKeyboardStates[i] = Keyboard.GetState((PlayerIndex)i);
                 CurrentGamePadStates[i] = GamePad.GetState((PlayerIndex)i);
+                CurrentMouseState = Mouse.GetState();
 
                 // Keep track of whether a gamepad has ever been
                 // connected, so we can detect if it is unplugged.
@@ -157,6 +165,14 @@ namespace Expanze
                         IsNewButtonPress(button, PlayerIndex.Four, out playerIndex));
             }
         }
+
+        public bool IsMouseHover(Buttons button, PlayerIndex? controllingPlayer,
+                                                    out PlayerIndex playerIndex)
+        {
+            playerIndex = (PlayerIndex) controllingPlayer;
+            return true;
+        }
+
 
 
         /// <summary>
