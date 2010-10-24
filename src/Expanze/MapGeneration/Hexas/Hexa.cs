@@ -165,6 +165,9 @@ namespace Expanze
             Model m = GameState.map.getHexaModel(type);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
+            RasterizerState rasterizerState = new RasterizerState();
+            rasterizerState.CullMode = CullMode.None;
+            GameState.game.GraphicsDevice.RasterizerState = rasterizerState;
 
             foreach (ModelMesh mesh in m.Meshes)
             {

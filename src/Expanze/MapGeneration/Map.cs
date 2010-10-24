@@ -35,7 +35,7 @@ namespace Expanze
 
         private void CreateHexaWorldMatrices()
         {
-            Matrix mWorld = Matrix.Identity * Matrix.CreateTranslation(new Vector3(-0.50f * hexaMap.Length / 2.0f, 0.0f, -0.56f * hexaMap[0].Length / 2.0f)); ;
+            Matrix mWorld = Matrix.Identity * Matrix.CreateTranslation(new Vector3(-0.49f * hexaMap.Length / 2.0f, 0.0f, -0.56f * hexaMap[0].Length / 2.0f)); ;
             for (int i = 0; i < hexaMap.Length; i++)
             {
                 for (int j = 0; j < hexaMap[i].Length; j++)
@@ -46,7 +46,7 @@ namespace Expanze
                     }
                     mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, 0.56f));
                 }
-                mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.50f, 0.0f, -0.28f - 0.56f * hexaMap[i].Length));
+                mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.49f, 0.0f, -0.28f - 0.56f * hexaMap[i].Length));
             }
         }
 
@@ -114,7 +114,7 @@ namespace Expanze
             up = new Vector3(0.1f, 0.8f, 0.0f);
             eye = new Vector3(0.4f, 1.5f, 0.0f);
             GameState.view = Matrix.CreateLookAt(eye, target, up);
-            GameState.projection = Matrix.CreatePerspectiveFieldOfView((float)MathHelper.ToRadians(90), aspectRatio, 1.0f, 100.0f);
+            GameState.projection = Matrix.CreatePerspectiveFieldOfView((float)MathHelper.ToRadians(90), aspectRatio, 0.01f, 100.0f);
         }
 
         private Hexa[][] getMap()
@@ -167,6 +167,11 @@ namespace Expanze
                 float dy = (GameState.CurrentMouseState.Y - GameState.LastMouseState.Y) / 100.0f;
                 eye.X -= dy;
                 target.X -= dy;
+            }
+
+            if (GameState.CurrentMouseState.ScrollWheelValue - GameState.LastMouseState.ScrollWheelValue != 0)
+            {
+                eye.Y += (GameState.CurrentMouseState.ScrollWheelValue - GameState.LastMouseState.ScrollWheelValue) / 500.0f;
             }
         }
 
