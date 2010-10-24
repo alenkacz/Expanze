@@ -35,7 +35,7 @@ namespace Expanze
 
         private void CreateHexaWorldMatrices()
         {
-            Matrix mWorld = Matrix.Identity * Matrix.CreateTranslation(new Vector3(-0.50f * hexaMap.Length / 2.0f, 0.0f, -0.56f * hexaMap[0].Length / 2.0f)); ;
+            Matrix mWorld = Matrix.Identity * Matrix.CreateTranslation(new Vector3(-0.49f * hexaMap.Length / 2.0f, 0.0f, -0.56f * hexaMap[0].Length / 2.0f)); ;
             for (int i = 0; i < hexaMap.Length; i++)
             {
                 for (int j = 0; j < hexaMap[i].Length; j++)
@@ -46,7 +46,7 @@ namespace Expanze
                     }
                     mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, 0.56f));
                 }
-                mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.50f, 0.0f, -0.28f - 0.56f * hexaMap[i].Length));
+                mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.49f, 0.0f, -0.28f - 0.56f * hexaMap[i].Length));
             }
         }
 
