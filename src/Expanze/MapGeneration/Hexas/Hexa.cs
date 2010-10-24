@@ -27,7 +27,9 @@ namespace Expanze
 
         private Settings.Types type = Settings.Types.Water;
         private Town[] towns;
+        private Boolean[] townOwner;
         private Road[] roads;
+        private Boolean[] roadOwner;
         private Matrix world;   // wordl position of Hex
 
         private static int counter = 0;    // how many hexas are created
@@ -42,7 +44,9 @@ namespace Expanze
             this.type = type;
             this.value = value;
             this.towns = new Town[(int) TownPos.Count];
-            this.roads = new Road[(int) RoadPos.Count];
+            this.roads = new Road[(int)RoadPos.Count];
+            this.townOwner = new Boolean[(int)TownPos.Count];
+            this.roadOwner = new Boolean[(int)RoadPos.Count];
         }
 
         public void setWorld(Matrix m)
@@ -59,40 +63,58 @@ namespace Expanze
             // Creating roads -> //
             ///////////////////////
             // Always make owns road or get reference from other roads (not sending reference to other hexas)
-            if (neighbours[(int)RoadPos.UpLeft] == null || 
+            if (neighbours[(int)RoadPos.UpLeft] == null ||
                 neighbours[(int)RoadPos.UpLeft].getRoad(RoadPos.BottomRight) == null)
+            {
+                roadOwner[(int)RoadPos.UpLeft] = true;
                 roads[(int)RoadPos.UpLeft] = new Road(Matrix.CreateRotationY(-(float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(-0.25f, 0.0f, 0.14f)) * world);
+            }
             else
                 roads[(int)RoadPos.UpLeft] = neighbours[(int)RoadPos.UpLeft].getRoad(RoadPos.BottomRight);
 
             if (neighbours[(int)RoadPos.UpRight] == null ||
                 neighbours[(int)RoadPos.UpRight].getRoad(RoadPos.BottomLeft) == null)
+            {
+                roadOwner[(int)RoadPos.UpRight] = true;
                 roads[(int)RoadPos.UpRight] = new Road(Matrix.CreateRotationY((float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(-0.25f, 0.0f, -0.14f)) * world);
+            }
             else
                 roads[(int)RoadPos.UpRight] = neighbours[(int)RoadPos.UpRight].getRoad(RoadPos.BottomLeft);
 
             if (neighbours[(int)RoadPos.MiddleLeft] == null ||
                 neighbours[(int)RoadPos.MiddleLeft].getRoad(RoadPos.MiddleRight) == null)
+            {
+                roadOwner[(int)RoadPos.MiddleLeft] = true;
                 roads[(int)RoadPos.MiddleLeft] = new Road(Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, 0.29f)) * world);
+            }
             else
                 roads[(int)RoadPos.MiddleLeft] = neighbours[(int)RoadPos.MiddleLeft].getRoad(RoadPos.MiddleRight);
 
             if (neighbours[(int)RoadPos.MiddleRight] == null ||
                 neighbours[(int)RoadPos.MiddleRight].getRoad(RoadPos.MiddleLeft) == null)
+            {
+                roadOwner[(int)RoadPos.MiddleRight] = true;
                 roads[(int)RoadPos.MiddleRight] = new Road(Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, -0.28f)) * world);
+            }
             else
                 roads[(int)RoadPos.MiddleRight] = neighbours[(int)RoadPos.MiddleRight].getRoad(RoadPos.MiddleLeft);
 
 
             if (neighbours[(int)RoadPos.BottomLeft] == null ||
                 neighbours[(int)RoadPos.BottomLeft].getRoad(RoadPos.UpRight) == null)
+            {
+                roadOwner[(int)RoadPos.BottomLeft] = true;
                 roads[(int)RoadPos.BottomLeft] = new Road(Matrix.CreateRotationY((float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(0.25f, 0.0f, 0.14f)) * world);
+            }
             else
                 roads[(int)RoadPos.BottomLeft] = neighbours[(int)RoadPos.BottomLeft].getRoad(RoadPos.UpRight);
 
             if (neighbours[(int)RoadPos.BottomRight] == null ||
                 neighbours[(int)RoadPos.BottomRight].getRoad(RoadPos.UpLeft) == null)
+            {
+                roadOwner[(int)RoadPos.BottomRight] = true;
                 roads[(int)RoadPos.BottomRight] = new Road(Matrix.CreateRotationY(-(float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(0.25f, 0.0f, -0.14f)) * world);
+            }
             else
                 roads[(int)RoadPos.BottomRight] = neighbours[(int)RoadPos.BottomRight].getRoad(RoadPos.UpLeft);
             
@@ -103,7 +125,10 @@ namespace Expanze
                  neighbours[(int)RoadPos.UpLeft].getTown(TownPos.BottomRight) == null) &&
                 (neighbours[(int)RoadPos.UpRight] == null ||
                  neighbours[(int)RoadPos.UpRight].getTown(TownPos.BottomLeft) == null))
+            {
+                townOwner[(int)TownPos.Up] = true;
                 towns[(int)TownPos.Up] = new Town(Matrix.CreateTranslation(new Vector3(-0.32f, 0.0f, 0.0f)) * world);
+            }
             else
                 if (neighbours[(int)RoadPos.UpLeft] != null && neighbours[(int)RoadPos.UpLeft].getTown(TownPos.BottomRight) != null)
                     towns[(int)TownPos.Up] = neighbours[(int)RoadPos.UpLeft].getTown(TownPos.BottomRight);
@@ -114,7 +139,10 @@ namespace Expanze
                  neighbours[(int)RoadPos.BottomLeft].getTown(TownPos.UpRight) == null) &&
                 (neighbours[(int)RoadPos.BottomRight] == null ||
                  neighbours[(int)RoadPos.BottomRight].getTown(TownPos.UpLeft) == null))
+            {
+                townOwner[(int)TownPos.Bottom] = true;
                 towns[(int)TownPos.Bottom] = new Town(Matrix.CreateTranslation(new Vector3(0.32f, 0.0f, 0.0f)) * world);
+            }
             else
                 towns[(int)TownPos.Bottom] = neighbours[(int)RoadPos.BottomLeft].getTown(TownPos.UpRight);
 
@@ -122,7 +150,10 @@ namespace Expanze
                 neighbours[(int)RoadPos.UpRight].getTown(TownPos.Bottom) == null) &&
                (neighbours[(int)RoadPos.MiddleRight] == null ||
                 neighbours[(int)RoadPos.MiddleRight].getTown(TownPos.UpLeft) == null))
+            {
+                townOwner[(int)TownPos.UpRight] = true;
                 towns[(int)TownPos.UpRight] = new Town(Matrix.CreateTranslation(new Vector3(-0.16f, 0.0f, -0.28f)) * world);
+            }
             else
                 if (neighbours[(int)RoadPos.UpRight] != null && neighbours[(int)RoadPos.UpRight].getTown(TownPos.Bottom) != null)
                     towns[(int)TownPos.UpRight] = neighbours[(int)RoadPos.UpRight].getTown(TownPos.Bottom);
@@ -133,7 +164,10 @@ namespace Expanze
                  neighbours[(int)RoadPos.UpLeft].getTown(TownPos.Bottom) == null) &&
                 (neighbours[(int)RoadPos.MiddleLeft] == null ||
                  neighbours[(int)RoadPos.MiddleLeft].getTown(TownPos.UpRight) == null))
-                 towns[(int)TownPos.UpLeft] = new Town(Matrix.CreateTranslation(new Vector3(-0.16f, 0.0f, 0.28f)) * world);
+            {
+                townOwner[(int)TownPos.UpLeft] = true;
+                towns[(int)TownPos.UpLeft] = new Town(Matrix.CreateTranslation(new Vector3(-0.16f, 0.0f, 0.28f)) * world);
+            }
             else
                 towns[(int)TownPos.UpLeft] = neighbours[(int)RoadPos.UpLeft].getTown(TownPos.Bottom);
 
@@ -141,18 +175,24 @@ namespace Expanze
                 neighbours[(int)RoadPos.BottomRight].getTown(TownPos.Up) == null) &&
                (neighbours[(int)RoadPos.MiddleRight] == null ||
                 neighbours[(int)RoadPos.MiddleRight].getTown(TownPos.BottomLeft) == null))
+            {
+                townOwner[(int)TownPos.BottomRight] = true;
                 towns[(int)TownPos.BottomRight] = new Town(Matrix.CreateTranslation(new Vector3(0.16f, 0.0f, -0.28f)) * world);
+            }
             else
                 if (neighbours[(int)RoadPos.BottomRight] != null && neighbours[(int)RoadPos.BottomRight].getTown(TownPos.Bottom) != null)
                     towns[(int)TownPos.BottomRight] = neighbours[(int)RoadPos.BottomRight].getTown(TownPos.Up);
                 else
                     towns[(int)TownPos.BottomRight] = neighbours[(int)RoadPos.MiddleRight].getTown(TownPos.BottomLeft);
-            
+
             if ((neighbours[(int)RoadPos.BottomLeft] == null ||
                 neighbours[(int)RoadPos.BottomLeft].getTown(TownPos.Up) == null) &&
                (neighbours[(int)RoadPos.MiddleLeft] == null ||
                 neighbours[(int)RoadPos.MiddleLeft].getTown(TownPos.BottomRight) == null))
+            {
+                townOwner[(int)TownPos.BottomLeft] = true;
                 towns[(int)TownPos.BottomLeft] = new Town(Matrix.CreateTranslation(new Vector3(0.16f, 0.0f, 0.28f)) * world);
+            }
             else
                 if (neighbours[(int)RoadPos.BottomLeft] != null && neighbours[(int)RoadPos.BottomLeft].getTown(TownPos.Bottom) != null)
                     towns[(int)TownPos.BottomLeft] = neighbours[(int)RoadPos.BottomLeft].getTown(TownPos.Up);
@@ -186,11 +226,14 @@ namespace Expanze
                 mesh.Draw();
             }
 
-            foreach (Road road in roads)
-                road.Draw(gameTime);
+            for (int loop1 = 0; loop1 < roads.Length; loop1++)
+                if (roadOwner[loop1])
+                    roads[loop1].Draw(gameTime);
 
-            foreach (Town town in towns)
-                town.Draw(gameTime);
+
+            for (int loop1 = 0; loop1 < towns.Length; loop1++)
+                if (townOwner[loop1])
+                    towns[loop1].Draw(gameTime);
         }
 
         public void DrawPickableAreas()
@@ -214,20 +257,25 @@ namespace Expanze
                 mesh.Draw();
             }
 
-            foreach (Road road in roads)
-                road.DrawPickableAreas();
+            for (int loop1 = 0; loop1 < roads.Length; loop1++)
+                if (roadOwner[loop1])
+                    roads[loop1].DrawPickableAreas();
 
-            foreach (Town town in towns)
-                town.DrawPickableAreas();
+
+            for (int loop1 = 0; loop1 < towns.Length; loop1++)
+                if (townOwner[loop1])
+                    towns[loop1].DrawPickableAreas();
         }
 
         public void HandlePickableAreas(Color c)
         {
-            foreach (Road road in roads)
-                road.HandlePickableAreas(c);
+            for (int loop1 = 0; loop1 < roads.Length; loop1++)
+                if (roadOwner[loop1])
+                    roads[loop1].HandlePickableAreas(c);
 
-            foreach (Town town in towns)
-                town.HandlePickableAreas(c);
+            for (int loop1 = 0; loop1 < towns.Length; loop1++)
+                if (townOwner[loop1])
+                    towns[loop1].HandlePickableAreas(c);
 
             if (c == pickHexaColor)
             {
