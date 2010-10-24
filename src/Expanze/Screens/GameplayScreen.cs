@@ -69,6 +69,7 @@ namespace Expanze
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
 
             GameState.gameFont = content.Load<SpriteFont>("gamefont");
+            GameState.hudMaterialsFont = content.Load<SpriteFont>("hudMaterialsFont");
 
             //gamelogic
             gMaster.startGame();

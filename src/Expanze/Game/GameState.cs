@@ -20,5 +20,6 @@ namespace Expanze
         public static Map map;
 
         public static SpriteFont gameFont;
+        public static SpriteFont hudMaterialsFont;
     }
 }

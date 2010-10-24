@@ -11,6 +11,10 @@ namespace Expanze
     class MaterialsHUDComponent : GuiComponent
     {
 
+        //space between texts in HUD of materials
+        const int space = 80;
+        int start = 30;
+
         public MaterialsHUDComponent(Game game, int x, int y, SpriteFont font, int width, int height, String texture) 
             : base(game,x,y,font,width,height,texture) {}
 
@@ -19,9 +23,15 @@ namespace Expanze
             base.Draw(gameTime);
             spriteBatch.Begin();
 
-            spriteBatch.DrawString(GameState.gameFont, "123", new Vector2(100,100), Color.DarkRed);
+            Player act = GameMaster.getInstance().getActivePlayer();
 
             spriteBatch.Draw(myButton, spritePosition, Color.White);
+            spriteBatch.DrawString(GameState.hudMaterialsFont, act.getCorn().ToString(), new Vector2(this.spritePosition.X + start, this.spritePosition.Y + 55), Color.White);
+            spriteBatch.DrawString(GameState.hudMaterialsFont, act.getSheep().ToString(), new Vector2(this.spritePosition.X + start + space, this.spritePosition.Y + 55), Color.White);
+            spriteBatch.DrawString(GameState.hudMaterialsFont, act.getBrick().ToString(), new Vector2(this.spritePosition.X + start + 2 * space, this.spritePosition.Y + 55), Color.White);
+            spriteBatch.DrawString(GameState.hudMaterialsFont, act.getWood().ToString(), new Vector2(this.spritePosition.X + start + 3 * space, this.spritePosition.Y + 55), Color.White);
+            spriteBatch.DrawString(GameState.hudMaterialsFont, act.getStone().ToString(), new Vector2(this.spritePosition.X + start + 4 * space, this.spritePosition.Y + 55), Color.White);
+
             spriteBatch.End();
         }
     }
