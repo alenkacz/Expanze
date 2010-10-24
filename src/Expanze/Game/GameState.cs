@@ -19,6 +19,7 @@ namespace Expanze
         public static Game game;
         public static Map map;
 
+        public static SpriteBatch spriteBatch;
         public static SpriteFont gameFont;
         public static SpriteFont hudMaterialsFont;
     }

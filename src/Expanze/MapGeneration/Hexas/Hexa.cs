@@ -234,6 +234,19 @@ namespace Expanze
             for (int loop1 = 0; loop1 < towns.Length; loop1++)
                 if (townOwner[loop1])
                     towns[loop1].Draw(gameTime);
+
+            Vector3 point3D = GameState.game.GraphicsDevice.Viewport.Project(new Vector3(-0.15f, 0.0f, 0.05f), GameState.projection, GameState.view, world);
+            Vector2 point2D = new Vector2();
+            point2D.X = point3D.X;
+            point2D.Y = point3D.Y;
+            SpriteBatch spriteBatch = GameState.spriteBatch;
+
+            spriteBatch.Begin();
+            spriteBatch.DrawString(GameState.gameFont, value + "", point2D, Color.DarkRed);
+            spriteBatch.End();
+
+            GameState.game.GraphicsDevice.BlendState = BlendState.Opaque;
+            GameState.game.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
         }
 
         public void DrawPickableAreas()

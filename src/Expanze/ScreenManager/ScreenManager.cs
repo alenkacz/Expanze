@@ -116,6 +116,7 @@ namespace Expanze
             ContentManager content = Game.Content;
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            GameState.spriteBatch = spriteBatch;
             font = content.Load<SpriteFont>("menufont");
             blankTexture = content.Load<Texture2D>("blank");
 
