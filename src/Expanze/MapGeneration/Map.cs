@@ -202,6 +202,20 @@ namespace Expanze
                         hexaMap[i][j].DrawPickableAreas();
         }
 
+        public override void Draw2D()
+        {
+            for (int i = 0; i < hexaMap.Length; i++)
+            {
+                for (int j = 0; j < hexaMap[i].Length; j++)
+                {
+                    if (hexaMap[i][j] != null)
+                    {
+                        hexaMap[i][j].Draw2D();
+                    }
+                }
+            }
+        }
+
         public override void Draw(GameTime gameTime)
         {
             myGame.GraphicsDevice.BlendState = BlendState.Opaque;

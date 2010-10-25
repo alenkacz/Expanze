@@ -279,6 +279,11 @@ namespace Expanze
                 gameComponent.Draw(gameTime);
             }
 
+            foreach (GameComponent gameComponent in gameComponents)
+            {
+                gameComponent.Draw2D();
+            }
+
             foreach (GuiComponent guiComponent in guiComponents)
             {
                 guiComponent.Draw(gameTime);

@@ -200,6 +200,31 @@ namespace Expanze
                     towns[(int)TownPos.BottomLeft] = neighbours[(int)RoadPos.MiddleLeft].getTown(TownPos.BottomRight);
         }
 
+        public void Draw2D()
+        {
+            BoundingFrustum frustum = new BoundingFrustum(GameState.view * GameState.projection);
+            ContainmentType type = frustum.Contains(Vector3.Transform(new Vector3(0.0f, 0.0f, 0.0f), world)) ;
+
+            if (type != ContainmentType.Disjoint)
+            {
+                Vector3 point3D = GameState.game.GraphicsDevice.Viewport.Project(new Vector3(0.0f, 0.0f, 0.0f), GameState.projection, GameState.view, world);
+                Vector2 point2D = new Vector2();
+                point2D.X = point3D.X;
+                point2D.Y = point3D.Y;
+                SpriteBatch spriteBatch = GameState.spriteBatch;
+
+                Vector2 stringCenter = GameState.hudMaterialsFont.MeasureString(value + "") * 0.5f;
+
+                // now subtract the string center from the text position to find correct position 
+                point2D.X = (int)(point2D.X - stringCenter.X);
+                point2D.Y = (int)(point2D.Y - stringCenter.Y);
+
+                spriteBatch.Begin();
+                spriteBatch.DrawString(GameState.hudMaterialsFont, value + "", point2D, Color.DarkRed);
+                spriteBatch.End();
+            }
+        }
+
         public void Draw(GameTime gameTime)
         {
             Model m = GameState.map.getHexaModel(type);
@@ -234,19 +259,6 @@ namespace Expanze
             for (int loop1 = 0; loop1 < towns.Length; loop1++)
                 if (townOwner[loop1])
                     towns[loop1].Draw(gameTime);
-
-            Vector3 point3D = GameState.game.GraphicsDevice.Viewport.Project(new Vector3(-0.15f, 0.0f, 0.05f), GameState.projection, GameState.view, world);
-            Vector2 point2D = new Vector2();
-            point2D.X = point3D.X;
-            point2D.Y = point3D.Y;
-            SpriteBatch spriteBatch = GameState.spriteBatch;
-
-            spriteBatch.Begin();
-            spriteBatch.DrawString(GameState.gameFont, value + "", point2D, Color.DarkRed);
-            spriteBatch.End();
-
-            GameState.game.GraphicsDevice.BlendState = BlendState.Opaque;
-            GameState.game.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
         }
 
         public void DrawPickableAreas()
