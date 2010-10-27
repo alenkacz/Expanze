@@ -10,6 +10,9 @@ namespace Expanze
 {
     class Town
     {
+        private Player playerOwner;
+        private bool isBuild;
+
         private int number;
         public static int counter = 0;
         private Color pickTownColor;
@@ -21,17 +24,28 @@ namespace Expanze
 
         private Matrix world;
 
+        public Boolean getPickNewPress() {return pickNewPress;}
+        public bool getIsBuild() { return isBuild; }
+
         public Town(Matrix world)
         {
             this.world = world;
 
             number = ++counter;
+            isBuild = false;
+
             this.pickTownColor = new Color(0.0f, 0.0f, this.number / 256.0f);
+        }
+
+        public void BuildTown(Player player)
+        {
+            playerOwner = player;
+            isBuild = true;
         }
 
         public void Draw(GameTime gameTime)
         {
-            if (pickActive)
+            if (pickActive || isBuild)
             {
                 Model m = GameState.map.getTownModel();
                 Matrix[] transforms = new Matrix[m.Bones.Count];
@@ -43,6 +57,10 @@ namespace Expanze
                 {
                     foreach (BasicEffect effect in mesh.Effects)
                     {
+                        if (pickActive)
+                            effect.DiffuseColor = new Vector3(0, 1.0f, 0);
+                        else
+                            effect.DiffuseColor = new Vector3(1.0f, 1.0f, 1.0f);
                         effect.World = transforms[mesh.ParentBone.Index] * mWorld;
                         effect.View = GameState.view;
                         effect.Projection = GameState.projection;

@@ -44,12 +44,27 @@ namespace Expanze
             return true;
         }
 
-        public Player getActivePlayer()
+        public Player getActivePlayer() { return activePlayer; }
+        public State getState() { return state; }
+
+        public bool nextTurn()
         {
-            return activePlayer;
+            bool status = true;
+            status &= changeActivePlaye();
+
+            return status;
         }
 
-        public bool changeActivePlayer()
+        public void changeStateToStateGame()
+        {
+            state = State.StateGame;
+            foreach (Player player in players)
+            {
+                player.addSources(100, 100, 100, 100, 100);
+            }
+        }
+
+        public bool changeActivePlaye()
         {
             if (state == State.StateFirstTown || state == State.StateGame)
             {
@@ -71,7 +86,7 @@ namespace Expanze
                 activePlayerIndex--;
                 if (activePlayerIndex < 0)
                 {
-                    state = State.StateGame;
+                    changeStateToStateGame();
                     activePlayerIndex = 0;
                 }
             }

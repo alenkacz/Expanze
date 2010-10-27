@@ -51,5 +51,14 @@ namespace Expanze
         {
             return this.brick;
         }
+
+        public void addSources(int corn, int wood, int stone, int sheep, int brick)
+        {
+            this.corn += corn;
+            this.wood += wood;
+            this.stone += stone;
+            this.sheep += sheep;
+            this.brick += brick;
+        }
     }
 }

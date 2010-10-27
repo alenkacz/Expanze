@@ -178,6 +178,11 @@ namespace Expanze
             if (GameState.CurrentMouseState.ScrollWheelValue - GameState.LastMouseState.ScrollWheelValue != 0)
             {
                 eye.Y += (GameState.CurrentMouseState.ScrollWheelValue - GameState.LastMouseState.ScrollWheelValue) / 500.0f;
+
+                if (eye.Y < 0.1f)
+                    eye.Y = 0.1f;
+                if(eye.Y > 2.8f)
+                    eye.Y = 2.8f;
             }
         }
 
