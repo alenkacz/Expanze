@@ -7,8 +7,13 @@ namespace Expanze
 {
     class GameMaster
     {
-        private Player[] players = new Player[2];
+        public enum State {StateFirstTown, StateSecondTown, StateGame};
+
+        private const int n_player = 2;
+        private Player[] players = new Player[n_player];
         private Player activePlayer;
+        private int activePlayerIndex;
+        private State state;
 
         private static GameMaster instance = null;
 
@@ -32,8 +37,10 @@ namespace Expanze
             players[0] = new Player(Settings.startScore, "Player1");
             players[1] = new Player(Settings.startScore, "Player2");
 
-            activePlayer = players[0];
+            activePlayerIndex = 0;
+            activePlayer = players[activePlayerIndex];
 
+            state = State.StateFirstTown;
             return true;
         }
 
@@ -44,14 +51,32 @@ namespace Expanze
 
         public bool changeActivePlayer()
         {
-            if (activePlayer == players[0])
+            if (state == State.StateFirstTown || state == State.StateGame)
             {
-                activePlayer = players[1];
+                activePlayerIndex++;
+                if (activePlayerIndex == n_player)
+                {
+                    switch (state)
+                    {
+                        case State.StateFirstTown :
+                            activePlayerIndex--;
+                            state = State.StateSecondTown;
+                            break;
+                        case State.StateGame :
+                            activePlayerIndex = 0;
+                            break;
+                    }
+                }
+            } else {
+                activePlayerIndex--;
+                if (activePlayerIndex < 0)
+                {
+                    state = State.StateGame;
+                    activePlayerIndex = 0;
+                }
             }
-            else
-            {
-                activePlayer = players[0];
-            }
+
+            activePlayer = players[activePlayerIndex];
 
             return true;
         }

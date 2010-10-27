@@ -32,11 +32,11 @@ namespace Expanze
         {
             if (pickActive)
             {
-                Model m = GameState.map.getRectangleShape();
+                Model m = GameState.map.getRoadModel();
                 Matrix[] transforms = new Matrix[m.Bones.Count];
                 m.CopyAbsoluteBoneTransformsTo(transforms);
 
-                Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.01f, 0.0f)) * Matrix.CreateScale(0.2f) * world;
+                Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.01f, 0.0f)) * Matrix.CreateScale(0.3f) * world;
 
                 foreach (ModelMesh mesh in m.Meshes)
                 {

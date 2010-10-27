@@ -17,6 +17,6 @@ namespace Expanze
         public const int startScore = 15000;
 
         //position of player name on the gamescreen
-        public static Vector2 playerNamePosition = new Vector2(10,10);
+        public static Vector2 playerNamePosition = new Vector2(790,10);
     }
 }

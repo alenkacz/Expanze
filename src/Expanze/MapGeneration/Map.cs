@@ -17,6 +17,7 @@ namespace Expanze
         const int N_MODEL = 7;
         Model[] hexaModel;
         Model rectangleShape, circleShape;
+        Model townModel, roadModel;
 
         public Vector3 eye, target, up;
         public float angle;
@@ -128,6 +129,9 @@ namespace Expanze
             return hexaModel[(int)type];
         }
 
+        public Model getTownModel() { return townModel; }
+        public Model getRoadModel() { return roadModel; }
+
         public Model getRectangleShape()
         {
             return rectangleShape;
@@ -153,6 +157,8 @@ namespace Expanze
             hexaModel[(int)Settings.Types.Water] = content.Load<Model>(Settings.mapPaths[(int)Settings.Types.Water]);
             rectangleShape = content.Load<Model>("Shapes/rectangle");
             circleShape = content.Load<Model>("Shapes/circle");
+            townModel = content.Load<Model>("Models/town");
+            roadModel = content.Load<Model>("Models/road");
         }
 
 
