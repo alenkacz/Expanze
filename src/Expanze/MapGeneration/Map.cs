@@ -108,6 +108,14 @@ namespace Expanze
             hexaMap = getMap();
             CreateHexaWorldMatrices(); // have to be before Create Towns and roads
             CreateTownsAndRoads();
+            for (int i = 0; i < hexaMap.Length; i++)
+                for (int j = 0; j < hexaMap[i].Length; j++)
+                    if (hexaMap[i][j] != null)
+                    {
+                        hexaMap[i][j].FindRoadNeighbours();
+                        hexaMap[i][j].FindTownNeighbours();
+                    }
+
             GameState.map = this;
 
             aspectRatio = myGame.GraphicsDevice.Viewport.Width / (float)myGame.GraphicsDevice.Viewport.Height;

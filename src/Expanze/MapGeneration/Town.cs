@@ -12,6 +12,9 @@ namespace Expanze
     {
         private Player playerOwner;
         private bool isBuild;
+        private Road[] roadNeighbour; // two or 3 neighbours
+        private Town[] townNeighbour; // two or 3 neighbours
+        private Hexa[] hexaNeighbour; // 1 - 3 neighbours
 
         private int number;
         public static int counter = 0;
@@ -35,6 +38,31 @@ namespace Expanze
             isBuild = false;
 
             this.pickTownColor = new Color(0.0f, 0.0f, this.number / 256.0f);
+
+            roadNeighbour = new Road[3];
+            townNeighbour = new Town[3];
+            hexaNeighbour = new Hexa[3];
+        }
+
+        public void setRoadNeighbours(Road road1, Road road2, Road road3)
+        {
+            roadNeighbour[0] = road1;
+            roadNeighbour[1] = road2;
+            roadNeighbour[2] = road3;
+        }
+
+        public void setTownNeighbours(Town town1, Town town2, Town town3)
+        {
+            townNeighbour[0] = town1;
+            townNeighbour[1] = town2;
+            townNeighbour[2] = town3;
+        }
+
+        public void setHexaNeighbours(Hexa hexa1, Hexa hexa2, Hexa hexa3)
+        {
+            hexaNeighbour[0] = hexa1;
+            hexaNeighbour[1] = hexa2;
+            hexaNeighbour[2] = hexa3;
         }
 
         public void BuildTown(Player player)

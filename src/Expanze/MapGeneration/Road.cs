@@ -20,12 +20,22 @@ namespace Expanze
         private Boolean pickNewRelease = false;     // if mouse is newly release above pickable area
         private Matrix world;
 
+        private Town[] neighbour; // every road must have two neighbour
+
         public Road(Matrix world)
         {
             this.world = world;
 
             number = ++counter;
             this.pickRoadColor = new Color(0.0f, counter / 256.0f, 0.0f);
+
+            neighbour = new Town[2];
+        }
+
+        public void SetTownNeighbours(Town one, Town two)
+        {
+            neighbour[0] = one;
+            neighbour[1] = two;
         }
 
         public void Draw(GameTime gameTime)

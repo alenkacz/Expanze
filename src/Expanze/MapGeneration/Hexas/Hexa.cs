@@ -13,12 +13,14 @@ namespace Expanze
     /// </summary>
     class Hexa
     {
+        // use for positioning roads and hexas too
         public enum RoadPos { UpLeft, UpRight, MiddleLeft, MiddleRight, BottomLeft, BottomRight, Count };
+
         public enum TownPos { Up, UpLeft, UpRight, BottomLeft, BottomRight, Bottom, Count };
 
         int value;      // how many sources will player get
         int number;     // from counter, useable for picking
-        Color pickHexaColor;
+        Color pickHexaColor;    // color o hexa in render texture
         private Boolean pickActive = false;         // if mouse is over pickable area
         private Boolean pickNewActive = false;      // if mouse is newly over pickable area
         private Boolean pickNewPress = false;       // if mouse press on pickable area newly
@@ -26,10 +28,11 @@ namespace Expanze
         private Boolean pickNewRelease = false;     // if mouse is newly release above pickable area
 
         private Settings.Types type = Settings.Types.Water;
-        private Town[] towns;
-        private Boolean[] townOwner;
-        private Road[] roads;
-        private Boolean[] roadOwner;
+        private Hexa[] hexaNeighbours;      // neighbours of hexa, to index use RoadPos
+        private Town[] towns;               // possible towns on hexa, to index use Town Pos
+        private Boolean[] townOwner;        // was this town made by this hexa? if was, this hexa will draw it, handle picking, get sources...
+        private Road[] roads;               // possible roads on hexa, to index use RoadPos
+        private Boolean[] roadOwner;        // was this road made by this hexa? if was, this hexa will draw it, handle picking...
         private Matrix world;   // wordl position of Hex
 
         private static int counter = 0;    // how many hexas are created
@@ -56,6 +59,10 @@ namespace Expanze
 
         public void CreateTownsAndRoads(Hexa[] neighbours)
         {
+            hexaNeighbours = new Hexa[neighbours.Length];
+            for (int loop1 = 0; loop1 < neighbours.Length; loop1++)
+                hexaNeighbours[loop1] = neighbours[loop1];
+
             if (type == Settings.Types.Nothing || type == Settings.Types.Water)
                 return;
 
@@ -198,6 +205,155 @@ namespace Expanze
                     towns[(int)TownPos.BottomLeft] = neighbours[(int)RoadPos.BottomLeft].getTown(TownPos.Up);
                 else
                     towns[(int)TownPos.BottomLeft] = neighbours[(int)RoadPos.MiddleLeft].getTown(TownPos.BottomRight);
+        }
+
+        public void FindTownNeighbours()
+        {
+            Town thirdTown = null;
+            Road thirdRoad = null;
+            for (int loop1 = 0; loop1 < towns.Length; loop1++)
+            {
+                if (townOwner[loop1])
+                {
+                    thirdTown = null;
+                    thirdRoad = null;
+
+                    switch ((TownPos)loop1)
+                    {
+                        case TownPos.Up :
+                            if(hexaNeighbours[(int) RoadPos.UpLeft] != null)
+                            {
+                                thirdTown = hexaNeighbours[(int)RoadPos.UpLeft].getTown(TownPos.UpRight);
+                                thirdRoad = hexaNeighbours[(int)RoadPos.UpLeft].getRoad(RoadPos.MiddleRight);
+                            }
+                            else if (hexaNeighbours[(int)RoadPos.UpRight] != null)
+                            {
+                                thirdTown = hexaNeighbours[(int)RoadPos.UpRight].getTown(TownPos.UpLeft);
+                                thirdRoad = hexaNeighbours[(int)RoadPos.UpRight].getRoad(RoadPos.MiddleLeft);
+                            }
+                            towns[loop1].setRoadNeighbours(roads[(int)RoadPos.UpLeft], roads[(int)RoadPos.UpRight], thirdRoad);
+                            towns[loop1].setTownNeighbours(towns[(int)TownPos.UpLeft], towns[(int)TownPos.UpRight], thirdTown);
+                            towns[loop1].setHexaNeighbours(this, hexaNeighbours[(int)RoadPos.UpLeft], hexaNeighbours[(int)RoadPos.UpRight]);
+                            break;
+
+                        case TownPos.Bottom:
+                            if (hexaNeighbours[(int)RoadPos.BottomLeft] != null)
+                            {
+                                thirdTown = hexaNeighbours[(int)RoadPos.BottomLeft].getTown(TownPos.BottomRight);
+                                thirdRoad = hexaNeighbours[(int)RoadPos.BottomLeft].getRoad(RoadPos.MiddleRight);
+                            }
+                            else if (hexaNeighbours[(int)RoadPos.BottomRight] != null)
+                            {
+                                thirdTown = hexaNeighbours[(int)RoadPos.BottomRight].getTown(TownPos.BottomLeft);
+                                thirdRoad = hexaNeighbours[(int)RoadPos.BottomRight].getRoad(RoadPos.MiddleLeft);
+                            }
+                            towns[loop1].setRoadNeighbours(roads[(int)RoadPos.BottomLeft], roads[(int)RoadPos.BottomRight], thirdRoad);
+                            towns[loop1].setTownNeighbours(towns[(int)TownPos.BottomLeft], towns[(int)TownPos.BottomRight], thirdTown);
+                            towns[loop1].setHexaNeighbours(this, hexaNeighbours[(int)RoadPos.BottomLeft], hexaNeighbours[(int)RoadPos.BottomRight]);
+                            break;
+
+                        case TownPos.UpLeft:
+                            if (hexaNeighbours[(int)RoadPos.MiddleLeft] != null)
+                            {
+                                thirdTown = hexaNeighbours[(int)RoadPos.MiddleLeft].getTown(TownPos.Up);
+                                thirdRoad = hexaNeighbours[(int)RoadPos.MiddleLeft].getRoad(RoadPos.UpRight);
+                            }
+                            else if (hexaNeighbours[(int)RoadPos.UpLeft] != null)
+                            {
+                                thirdTown = hexaNeighbours[(int)RoadPos.UpLeft].getTown(TownPos.BottomLeft);
+                                thirdRoad = hexaNeighbours[(int)RoadPos.UpLeft].getRoad(RoadPos.BottomLeft);
+                            }
+                            towns[loop1].setRoadNeighbours(roads[(int)RoadPos.UpLeft], roads[(int)RoadPos.MiddleLeft], thirdRoad);
+                            towns[loop1].setTownNeighbours(towns[(int)TownPos.Up], towns[(int)TownPos.BottomLeft], thirdTown);
+                            towns[loop1].setHexaNeighbours(this, hexaNeighbours[(int)RoadPos.UpLeft], hexaNeighbours[(int)RoadPos.MiddleLeft]);
+                            break;
+
+                        case TownPos.UpRight:
+                            if (hexaNeighbours[(int)RoadPos.MiddleRight] != null)
+                            {
+                                thirdTown = hexaNeighbours[(int)RoadPos.MiddleRight].getTown(TownPos.Up);
+                                thirdRoad = hexaNeighbours[(int)RoadPos.MiddleRight].getRoad(RoadPos.UpLeft);
+                            }
+                            else if (hexaNeighbours[(int)RoadPos.UpRight] != null)
+                            {
+                                thirdTown = hexaNeighbours[(int)RoadPos.UpRight].getTown(TownPos.BottomRight);
+                                thirdRoad = hexaNeighbours[(int)RoadPos.UpRight].getRoad(RoadPos.BottomRight);
+                            }
+                            towns[loop1].setRoadNeighbours(roads[(int)RoadPos.UpRight], roads[(int)RoadPos.MiddleRight], thirdRoad);
+                            towns[loop1].setTownNeighbours(towns[(int)TownPos.Up], towns[(int)TownPos.BottomRight], thirdTown);
+                            towns[loop1].setHexaNeighbours(this, hexaNeighbours[(int)RoadPos.UpRight], hexaNeighbours[(int)RoadPos.MiddleRight]);
+                            break;
+
+                        case TownPos.BottomLeft:
+                            if (hexaNeighbours[(int)RoadPos.MiddleLeft] != null)
+                            {
+                                thirdTown = hexaNeighbours[(int)RoadPos.MiddleLeft].getTown(TownPos.Bottom);
+                                thirdRoad = hexaNeighbours[(int)RoadPos.MiddleLeft].getRoad(RoadPos.BottomRight);
+                            }
+                            else if (hexaNeighbours[(int)RoadPos.BottomLeft] != null)
+                            {
+                                thirdTown = hexaNeighbours[(int)RoadPos.BottomLeft].getTown(TownPos.UpLeft);
+                                thirdRoad = hexaNeighbours[(int)RoadPos.BottomLeft].getRoad(RoadPos.UpLeft);
+                            }
+                            towns[loop1].setRoadNeighbours(roads[(int)RoadPos.BottomLeft], roads[(int)RoadPos.MiddleLeft], thirdRoad);
+                            towns[loop1].setTownNeighbours(towns[(int)TownPos.Bottom], towns[(int)TownPos.UpLeft], thirdTown);
+                            towns[loop1].setHexaNeighbours(this, hexaNeighbours[(int)RoadPos.BottomLeft], hexaNeighbours[(int)RoadPos.MiddleLeft]);
+                            break;
+
+                        case TownPos.BottomRight:
+                            if (hexaNeighbours[(int)RoadPos.MiddleRight] != null)
+                            {
+                                thirdTown = hexaNeighbours[(int)RoadPos.MiddleRight].getTown(TownPos.Bottom);
+                                thirdRoad = hexaNeighbours[(int)RoadPos.MiddleRight].getRoad(RoadPos.BottomLeft);
+                            }
+                            else if (hexaNeighbours[(int)RoadPos.BottomRight] != null)
+                            {
+                                thirdTown = hexaNeighbours[(int)RoadPos.BottomRight].getTown(TownPos.UpRight);
+                                thirdRoad = hexaNeighbours[(int)RoadPos.BottomRight].getRoad(RoadPos.UpRight);
+                            }
+                            towns[loop1].setRoadNeighbours(roads[(int)RoadPos.BottomRight], roads[(int)RoadPos.MiddleRight], thirdRoad);
+                            towns[loop1].setTownNeighbours(towns[(int)TownPos.Bottom], towns[(int)TownPos.UpRight], thirdTown);
+                            towns[loop1].setHexaNeighbours(this, hexaNeighbours[(int)RoadPos.BottomRight], hexaNeighbours[(int)RoadPos.MiddleRight]);
+                            break;
+                    }
+                }
+            }
+        }
+
+        public void FindRoadNeighbours()
+        {
+            for (int loop1 = 0; loop1 < roads.Length; loop1++)
+            {
+                if (roadOwner[loop1])
+                {
+                    switch ((RoadPos) loop1)
+                    {
+                        case RoadPos.UpLeft :
+                            roads[loop1].SetTownNeighbours(towns[(int) TownPos.UpLeft], towns[(int) TownPos.Up]);
+                            break;
+
+                        case RoadPos.UpRight:
+                            roads[loop1].SetTownNeighbours(towns[(int)TownPos.UpRight], towns[(int)TownPos.Up]);
+                            break;
+
+                        case RoadPos.BottomLeft:
+                            roads[loop1].SetTownNeighbours(towns[(int)TownPos.BottomLeft], towns[(int)TownPos.Bottom]);
+                            break;
+
+                        case RoadPos.BottomRight:
+                            roads[loop1].SetTownNeighbours(towns[(int)TownPos.BottomRight], towns[(int)TownPos.Bottom]);
+                            break;
+
+                        case RoadPos.MiddleLeft:
+                            roads[loop1].SetTownNeighbours(towns[(int)TownPos.UpLeft], towns[(int)TownPos.BottomLeft]);
+                            break;
+
+                        case RoadPos.MiddleRight:
+                            roads[loop1].SetTownNeighbours(towns[(int)TownPos.UpRight], towns[(int)TownPos.BottomRight]);
+                            break;
+                    }
+                }
+            }
         }
 
         public void Draw2D()
