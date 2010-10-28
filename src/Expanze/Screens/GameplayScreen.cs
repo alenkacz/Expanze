@@ -37,6 +37,7 @@ namespace Expanze
         List<GameComponent> gameComponents = new List<GameComponent>();
         List<GuiComponent> guiComponents = new List<GuiComponent>();
 
+
         Vector2 playerPosition = new Vector2(100, 100);
         Vector2 enemyPosition = new Vector2(100, 100);
 
@@ -86,7 +87,7 @@ namespace Expanze
 
             ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width - 180, ScreenManager.Game.GraphicsDevice.Viewport.Height - 50, GameState.gameFont, 150, 40, "button");
             guiComponents.Add(changeTurnButton);
-            ButtonComponent menuHUDButton = new ButtonComponent(ScreenManager.Game, 10, 10, GameState.gameFont, 232, 225, "menu_button");
+            MenuButtonComponent menuHUDButton = new MenuButtonComponent(ScreenManager.Game, 10, 10, GameState.gameFont, 232, 225, "menu_button");
             guiComponents.Add(menuHUDButton);
             MaterialsHUDComponent materialsHUDComp = new MaterialsHUDComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width/4, ScreenManager.Game.GraphicsDevice.Viewport.Height - 78, GameState.gameFont, 232, 225, "suroviny_hud");
             guiComponents.Add(materialsHUDComp);
@@ -207,7 +208,7 @@ namespace Expanze
             bool gamePadDisconnected = !gamePadState.IsConnected &&
                                        input.GamePadWasConnected[playerIndex];
 
-            if (input.IsPauseGame(ControllingPlayer) || gamePadDisconnected)
+            if (input.IsPauseGame(ControllingPlayer) || gamePadDisconnected || GameMaster.getInstance().isPaused())
             {
                 ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
             }

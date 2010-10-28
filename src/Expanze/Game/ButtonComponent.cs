@@ -10,13 +10,13 @@ namespace Expanze
 {
     class ButtonComponent : GuiComponent
     {
-        MouseState mouseState;
+        protected MouseState mouseState;
 
-        int mousex;
-        int mousey;
+        protected int mousex;
+        protected int mousey;
 
         //button still pressed
-        bool pressed = false;
+        protected bool pressed = false;
 
         public ButtonComponent(Game game, int x, int y, SpriteFont font, int width, int height, String texture) 
             : base(game,x,y,font,width,height,texture) {}

@@ -12,8 +12,8 @@ namespace Expanze
     {
 
         //space between texts in HUD of materials
-        const int space = 80;
-        int start = 30;
+        const int space = 90;
+        int start = 40;
 
         public MaterialsHUDComponent(Game game, int x, int y, SpriteFont font, int width, int height, String texture) 
             : base(game,x,y,font,width,height,texture) {}

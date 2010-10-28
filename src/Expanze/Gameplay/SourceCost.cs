@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Expanze.Gameplay
+namespace Expanze
 {
     class SourceCost
     {

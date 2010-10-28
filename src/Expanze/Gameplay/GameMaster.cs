@@ -14,6 +14,7 @@ namespace Expanze
         private Player activePlayer;
         private int activePlayerIndex;
         private State state;
+        private bool paused = false;
 
         private static GameMaster instance = null;
 
@@ -62,6 +63,21 @@ namespace Expanze
             {
                 player.addSources(100, 100, 100, 100, 100);
             }
+        }
+
+        public bool isPaused()
+        {
+            if (this.paused)
+            {
+                this.paused = false;
+                return true;
+            }
+            return false;
+        }
+
+        public void setPaused()
+        {
+            this.paused = true;
         }
 
         public bool changeActivePlaye()
