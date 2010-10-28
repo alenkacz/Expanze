@@ -462,7 +462,7 @@ namespace Expanze
                     towns[loop1].HandlePickableAreas(c);
 
                     // create new town?
-                    if (towns[loop1].getPickNewPress() && !towns[loop1].getIsBuild())
+                    if (towns[loop1].getPickNewPress() && !towns[loop1].getIsBuild() && !towns[loop1].HasTownBuildNeighbour())
                     {
                         if (gm.getState() != GameMaster.State.StateGame)
                         {

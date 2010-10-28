@@ -12,9 +12,9 @@ namespace Expanze
 
         private int corn = 0;
         private int wood = 0;
+        private int ore = 0;
+        private int meat = 0;
         private int stone = 0;
-        private int sheep = 0;
-        private int brick = 0;
 
         public Player(int score, String name)
         {
@@ -37,28 +37,28 @@ namespace Expanze
             return this.wood;
         }
 
+        public int getOre()
+        {
+            return this.ore;
+        }
+
+        public int getMeat()
+        {
+            return this.meat;
+        }
+
         public int getStone()
         {
             return this.stone;
-        }
-
-        public int getSheep()
-        {
-            return this.sheep;
-        }
-
-        public int getBrick()
-        {
-            return this.brick;
         }
 
         public void addSources(int corn, int wood, int stone, int sheep, int brick)
         {
             this.corn += corn;
             this.wood += wood;
-            this.stone += stone;
-            this.sheep += sheep;
-            this.brick += brick;
+            this.ore += stone;
+            this.meat += sheep;
+            this.stone += brick;
         }
     }
 }

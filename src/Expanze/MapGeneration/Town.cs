@@ -71,6 +71,21 @@ namespace Expanze
             isBuild = true;
         }
 
+        // has someone already built town next to this spot?
+        public Boolean HasTownBuildNeighbour()
+        {
+            for (int loop1 = 0; loop1 < townNeighbour.Length; loop1++)
+            {
+                if (townNeighbour[loop1] != null)
+                {
+                    if (townNeighbour[loop1].getIsBuild())
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
         public void Draw(GameTime gameTime)
         {
             if (pickActive || isBuild)
@@ -86,7 +101,12 @@ namespace Expanze
                     foreach (BasicEffect effect in mesh.Effects)
                     {
                         if (pickActive)
-                            effect.DiffuseColor = new Vector3(0, 1.0f, 0);
+                        {
+                            if(HasTownBuildNeighbour())
+                                effect.DiffuseColor = new Vector3(1, 0.0f, 0);
+                            else
+                                effect.DiffuseColor = new Vector3(0, 1.0f, 0);
+                        }
                         else
                             effect.DiffuseColor = new Vector3(1.0f, 1.0f, 1.0f);
                         effect.World = transforms[mesh.ParentBone.Index] * mWorld;

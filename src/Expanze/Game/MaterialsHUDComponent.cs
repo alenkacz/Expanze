@@ -27,10 +27,10 @@ namespace Expanze
 
             spriteBatch.Draw(myButton, spritePosition, Color.White);
             spriteBatch.DrawString(GameState.hudMaterialsFont, act.getCorn().ToString(), new Vector2(this.spritePosition.X + start, this.spritePosition.Y + 55), Color.White);
-            spriteBatch.DrawString(GameState.hudMaterialsFont, act.getSheep().ToString(), new Vector2(this.spritePosition.X + start + space, this.spritePosition.Y + 55), Color.White);
-            spriteBatch.DrawString(GameState.hudMaterialsFont, act.getBrick().ToString(), new Vector2(this.spritePosition.X + start + 2 * space, this.spritePosition.Y + 55), Color.White);
+            spriteBatch.DrawString(GameState.hudMaterialsFont, act.getMeat().ToString(), new Vector2(this.spritePosition.X + start + space, this.spritePosition.Y + 55), Color.White);
+            spriteBatch.DrawString(GameState.hudMaterialsFont, act.getStone().ToString(), new Vector2(this.spritePosition.X + start + 2 * space, this.spritePosition.Y + 55), Color.White);
             spriteBatch.DrawString(GameState.hudMaterialsFont, act.getWood().ToString(), new Vector2(this.spritePosition.X + start + 3 * space, this.spritePosition.Y + 55), Color.White);
-            spriteBatch.DrawString(GameState.hudMaterialsFont, act.getStone().ToString(), new Vector2(this.spritePosition.X + start + 4 * space, this.spritePosition.Y + 55), Color.White);
+            spriteBatch.DrawString(GameState.hudMaterialsFont, act.getOre().ToString(), new Vector2(this.spritePosition.X + start + 4 * space, this.spritePosition.Y + 55), Color.White);
 
             spriteBatch.End();
         }

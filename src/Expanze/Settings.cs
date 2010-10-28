@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Expanze.Gameplay;
 
 namespace Expanze
 {
@@ -18,5 +19,8 @@ namespace Expanze
 
         //position of player name on the gamescreen
         public static Vector2 playerNamePosition = new Vector2(790,10);
+
+        public static SourceCost costTown = new SourceCost(60, 60, 50, 50, 30);
+        public static SourceCost costRoad = new SourceCost(0, 40, 0, 0, 50);
     }
 }
