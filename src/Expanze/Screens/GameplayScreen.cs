@@ -36,6 +36,7 @@ namespace Expanze
         
         List<GameComponent> gameComponents = new List<GameComponent>();
         List<GuiComponent> guiComponents = new List<GuiComponent>();
+        CustomCursor cursorComp;
 
 
         Vector2 playerPosition = new Vector2(100, 100);
@@ -93,8 +94,7 @@ namespace Expanze
             guiComponents.Add(materialsHUDComp);
             //gameComponents.Add(buttonComp);
 
-            //CustomCursor cursorComp = new CustomCursor(ScreenManager.Game);
-            //gameComponents.Add(cursorComp);
+            cursorComp = new CustomCursor(ScreenManager.Game);
 
             foreach(GameComponent gameComponent in gameComponents)
             {
@@ -107,6 +107,10 @@ namespace Expanze
                 guiComponent.Initialize();
                 guiComponent.LoadContent();
             }
+
+            //must be last - to be on the highest layer
+            cursorComp.Initialize();
+            cursorComp.LoadContent();
 
             //simulating loading screens
             //Thread.Sleep(1000);
@@ -133,6 +137,8 @@ namespace Expanze
             {
                 guiComponent.UnloadContent();
             }
+
+            cursorComp.UnloadContent();
         }
 
 
@@ -180,6 +186,8 @@ namespace Expanze
                 {
                     guiComponent.Update(gameTime);
                 }
+
+                cursorComp.Update(gameTime);
             }
 
             
@@ -289,6 +297,8 @@ namespace Expanze
             {
                 guiComponent.Draw(gameTime);
             }
+
+            cursorComp.Draw(gameTime);
 
             // Our player and enemy are both actually just text strings.
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;

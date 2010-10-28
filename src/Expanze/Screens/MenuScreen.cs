@@ -65,11 +65,11 @@ namespace Expanze
 
         public override void LoadContent()
         {
-            ScreenManager.Game.IsMouseVisible = true;
+            //ScreenManager.Game.IsMouseVisible = true;
 
-            cursorComp = new CustomCursor(ScreenManager.Game);
-            cursorComp.Initialize();
-            cursorComp.LoadContent();
+            //cursorComp = new CustomCursor(ScreenManager.Game);
+            //cursorComp.Initialize();
+            //cursorComp.LoadContent();
         }
 
 
@@ -195,7 +195,7 @@ namespace Expanze
                                                        bool coveredByOtherScreen)
         {
 
-            cursorComp.Draw(gameTime);
+            //cursorComp.Draw(gameTime);
 
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
 
@@ -222,7 +222,7 @@ namespace Expanze
             SpriteFont font = ScreenManager.Font;
 
             spriteBatch.Begin();
-            cursorComp.Draw(gameTime);
+            //cursorComp.Draw(gameTime);
 
             // Draw each menu entry in turn.
             for (int i = 0; i < menuEntries.Count; i++)
