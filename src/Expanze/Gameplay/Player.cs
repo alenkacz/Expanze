@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Expanze.Gameplay;
 
 namespace Expanze
 {
@@ -52,13 +53,22 @@ namespace Expanze
             return this.stone;
         }
 
-        public void addSources(int corn, int wood, int stone, int sheep, int brick)
+        public void payForSomething(SourceCost cost)
+        {
+            corn -= cost.corn;
+            wood -= cost.wood;
+            ore -= cost.ore;
+            meat -= cost.meat;
+            stone -= cost.stone;
+        }
+
+        public void addSources(int wood, int stone, int corn, int meat, int ore)
         {
             this.corn += corn;
             this.wood += wood;
-            this.ore += stone;
-            this.meat += sheep;
-            this.stone += brick;
+            this.ore += ore;
+            this.meat += meat;
+            this.stone += stone;
         }
     }
 }

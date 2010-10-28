@@ -10,6 +10,9 @@ namespace Expanze
 {
     class Road
     {
+        private Player playerOwner;
+        private bool isBuild;
+
         private int number;
         public static int counter = 0;
         private Color pickRoadColor;
@@ -30,7 +33,11 @@ namespace Expanze
             this.pickRoadColor = new Color(0.0f, counter / 256.0f, 0.0f);
 
             neighbour = new Town[2];
+            isBuild = false;
+            playerOwner = null;
         }
+
+        public Player getOwner() { return playerOwner; }
 
         public void SetTownNeighbours(Town one, Town two)
         {
@@ -40,7 +47,7 @@ namespace Expanze
 
         public void Draw(GameTime gameTime)
         {
-            if (pickActive)
+            if (pickActive || isBuild)
             {
                 Model m = GameState.map.getRoadModel();
                 Matrix[] transforms = new Matrix[m.Bones.Count];
@@ -85,6 +92,28 @@ namespace Expanze
             }
         }
 
+        public Boolean IsActivePlayersRoadOnEndOfRoad(Player player)
+        {
+            foreach (Town town in neighbour)
+            {
+                if (town.HasPlayerRoadNeighbour(player))
+                    return true;
+            }
+
+            return false;
+        }
+
+        public Boolean IsActivePlayersTownOnEndOfRoad(Player player)
+        {
+            foreach(Town town in neighbour)
+            {
+                if (town.getPlayerOwner() == player)
+                    return true;
+            }
+
+            return false;
+        }
+
         public void HandlePickableAreas(Color c)
         {
             if (c == pickRoadColor)
@@ -113,6 +142,23 @@ namespace Expanze
                 pickNewActive = false;
                 pickNewPress = false;
                 pickNewRelease = false;
+            }
+
+            GameMaster gm = GameMaster.getInstance();
+            if (pickNewPress)
+            {
+                if (gm.getState() == GameMaster.State.StateGame)
+                {
+                    Player activePlayer = gm.getActivePlayer();
+                    if (!isBuild && 
+                        (IsActivePlayersRoadOnEndOfRoad(activePlayer) || IsActivePlayersTownOnEndOfRoad(activePlayer)) &&
+                        Settings.costRoad.HasPlayerSources(activePlayer))
+                    {
+                        activePlayer.payForSomething(Settings.costRoad);
+                        isBuild = true;
+                        playerOwner = activePlayer;
+                    }
+                }
             }
         }
     }

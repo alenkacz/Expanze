@@ -29,6 +29,7 @@ namespace Expanze
 
         public Boolean getPickNewPress() {return pickNewPress;}
         public bool getIsBuild() { return isBuild; }
+        public Player getPlayerOwner() { return playerOwner; }
 
         public Town(Matrix world)
         {
@@ -42,6 +43,8 @@ namespace Expanze
             roadNeighbour = new Road[3];
             townNeighbour = new Town[3];
             hexaNeighbour = new Hexa[3];
+
+            playerOwner = null;
         }
 
         public void setRoadNeighbours(Road road1, Road road2, Road road3)
@@ -69,6 +72,19 @@ namespace Expanze
         {
             playerOwner = player;
             isBuild = true;
+        }
+
+        public Boolean HasPlayerRoadNeighbour(Player player)
+        {
+            foreach (Road road in roadNeighbour)
+            {
+                if (road != null)
+                {
+                    if (road.getOwner() == player)
+                        return true;
+                }
+            }
+            return false;
         }
 
         // has someone already built town next to this spot?
