@@ -161,7 +161,7 @@ namespace Expanze
                     {
                         if (pickActive)
                         {
-                            if(HasTownBuildNeighbour())
+                            if (!CanActivePlayerBuildTown())
                                 effect.DiffuseColor = new Vector3(1, 0.0f, 0);
                             else
                                 effect.DiffuseColor = new Vector3(0, 1.0f, 0);
@@ -228,6 +228,38 @@ namespace Expanze
                 pickNewPress = false;
                 pickNewRelease = false;
             }
+
+            // create new town?
+            GameMaster gm = GameMaster.getInstance();
+            if (pickNewPress && CanActivePlayerBuildTown())
+            {
+                BuildTown(gm.getActivePlayer());
+                if (gm.getState() != GameMaster.State.StateGame)
+                {
+                    gm.nextTurn();
+                }
+                else
+                    gm.getActivePlayer().payForSomething(Settings.costTown);
+            }
+        }
+
+        private Boolean CanActivePlayerBuildTown()
+        {
+            GameMaster gm = GameMaster.getInstance();
+            if (gm.getState() == GameMaster.State.StateGame)
+            {
+                Player activePlayer = gm.getActivePlayer();
+                Boolean hasActivePlayerRoadNeighbour = false;
+
+                foreach(Road road in roadNeighbour)
+                {
+                    if (road != null && road.getOwner() == activePlayer)
+                        hasActivePlayerRoadNeighbour = true;
+                }
+
+                return !isBuild && !HasTownBuildNeighbour() && Settings.costTown.HasPlayerSources(activePlayer) && hasActivePlayerRoadNeighbour;
+            } else
+                return !isBuild && !HasTownBuildNeighbour();
         }
     }
 }

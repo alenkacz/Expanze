@@ -463,26 +463,13 @@ namespace Expanze
                 if (roadOwner[loop1])
                     roads[loop1].HandlePickableAreas(c);
 
-            GameMaster gm = GameMaster.getInstance();
             for (int loop1 = 0; loop1 < towns.Length; loop1++)
             {
                 if (townOwner[loop1])
                 {
                     towns[loop1].HandlePickableAreas(c);
-
-                    // create new town?
-                    if (towns[loop1].getPickNewPress() && !towns[loop1].getIsBuild() && !towns[loop1].HasTownBuildNeighbour())
-                    {
-                        if (gm.getState() != GameMaster.State.StateGame)
-                        {
-                            towns[loop1].BuildTown(gm.getActivePlayer());
-                            gm.nextTurn();
-                        }
-                    }
                 }
             }
-
-
 
             if (c == pickHexaColor)
             {
