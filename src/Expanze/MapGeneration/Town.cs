@@ -47,6 +47,8 @@ namespace Expanze
             playerOwner = null;
         }
 
+        public static void resetCounter() { counter = 0; }
+
         public void setRoadNeighbours(Road road1, Road road2, Road road3)
         {
             roadNeighbour[0] = road1;
@@ -66,6 +68,47 @@ namespace Expanze
             hexaNeighbour[0] = hexa1;
             hexaNeighbour[1] = hexa2;
             hexaNeighbour[2] = hexa3;
+        }
+
+        public void CollectSources(Player player)
+        {
+            if (playerOwner != player)
+                return;
+
+            SourceCost cost = new SourceCost();
+            int amount;
+
+            foreach (Hexa hexa in hexaNeighbour)
+            {
+                if (hexa != null)
+                {
+                    amount = hexa.getValue();
+
+                    switch (hexa.getType())
+                    {
+                        case Settings.Types.Forest:
+                            cost = new SourceCost(amount, 0, 0, 0, 0);
+                            break;
+
+                        case Settings.Types.Stone:
+                            cost = new SourceCost(0, amount, 0, 0, 0);
+                            break;
+
+                        case Settings.Types.Cornfield :
+                            cost = new SourceCost(0, 0, amount, 0, 0);
+                            break;
+
+                        case Settings.Types.Pasture:
+                            cost = new SourceCost(0, 0, 0, amount, 0);
+                            break;
+
+                        case Settings.Types.Mountains:
+                            cost = new SourceCost(0, 0, 0, 0, amount);
+                            break;
+                    }
+                    player.addSources(cost);
+                }
+            }
         }
 
         public void BuildTown(Player player)

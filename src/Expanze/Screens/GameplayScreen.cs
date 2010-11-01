@@ -280,7 +280,7 @@ namespace Expanze
             }
 
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
-                                               Color.White, 0, 0);
+                                               Color.Black, 0, 0);
 
            
             foreach (GameComponent gameComponent in gameComponents)

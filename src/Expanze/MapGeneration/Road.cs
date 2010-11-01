@@ -37,6 +37,8 @@ namespace Expanze
             playerOwner = null;
         }
 
+        public static void resetCounter() { counter = 0; }
+
         public Player getOwner() { return playerOwner; }
 
         public void SetTownNeighbours(Town one, Town two)
@@ -47,7 +49,8 @@ namespace Expanze
 
         public void Draw(GameTime gameTime)
         {
-            if (pickActive || isBuild)
+            GameMaster gm = GameMaster.getInstance();
+            if ((pickActive && gm.getState() == GameMaster.State.StateGame) || isBuild)
             {
                 Model m = GameState.map.getRoadModel();
                 Matrix[] transforms = new Matrix[m.Bones.Count];

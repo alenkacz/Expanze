@@ -36,6 +36,10 @@ namespace Expanze
 
         private void CreateHexaWorldMatrices()
         {
+            Hexa.resetCounter();
+            Road.resetCounter();
+            Town.resetCounter();
+
             Matrix mWorld = Matrix.Identity * Matrix.CreateTranslation(new Vector3(-0.49f * hexaMap.Length / 2.0f, 0.0f, -0.56f * hexaMap[0].Length / 2.0f)); ;
             for (int i = 0; i < hexaMap.Length; i++)
             {
@@ -169,6 +173,16 @@ namespace Expanze
             roadModel = content.Load<Model>("Models/road");
         }
 
+        // active player gets on start of his turn sources from mining buildings
+        public void getSources(Player player)
+        {
+            for (int i = 0; i < hexaMap.Length; i++)
+                for (int j = 0; j < hexaMap[i].Length; j++)
+                    if (hexaMap[i][j] != null)
+                    {
+                        hexaMap[i][j].CollectSources(player);
+                    }
+        }
 
         public void ChangeCamera()
         {

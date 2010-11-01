@@ -13,6 +13,15 @@ namespace Expanze
         public int meat = 0;
         public int ore = 0;
 
+        public SourceCost()
+        {
+            corn = 0;
+            wood = 0;
+            stone = 0;
+            meat = 0;
+            ore = 0;
+        }
+
         public SourceCost(int wood, int stone, int corn, int meat, int ore)
         {
             this.corn = corn;

@@ -52,6 +52,8 @@ namespace Expanze
             this.roadOwner = new Boolean[(int)RoadPos.Count];
         }
 
+        public static void resetCounter() { counter = 0; }
+
         public void setWorld(Matrix m)
         {
             world = m;
@@ -448,6 +450,13 @@ namespace Expanze
                     towns[loop1].DrawPickableAreas();
         }
 
+        public void CollectSources(Player player)
+        {
+            for (int loop1 = 0; loop1 < towns.Length; loop1++)
+                if (townOwner[loop1])
+                    towns[loop1].CollectSources(player);
+        }
+
         public void HandlePickableAreas(Color c)
         {
             for (int loop1 = 0; loop1 < roads.Length; loop1++)
@@ -509,6 +518,7 @@ namespace Expanze
             return Settings.mapPaths[(int)getType()];
         }
 
+        public int getValue() { return value; }
         public Settings.Types getType()
         {
             return this.type;

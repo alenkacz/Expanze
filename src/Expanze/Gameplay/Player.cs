@@ -61,6 +61,15 @@ namespace Expanze
             stone -= cost.stone;
         }
 
+        public void addSources(SourceCost amount)
+        {
+            corn += amount.corn;
+            wood += amount.wood;
+            stone += amount.stone;
+            meat += amount.meat;
+            ore += amount.ore;
+        }
+
         public void addSources(int wood, int stone, int corn, int meat, int ore)
         {
             this.corn += corn;

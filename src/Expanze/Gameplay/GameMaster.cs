@@ -53,6 +53,8 @@ namespace Expanze
             bool status = true;
             status &= changeActivePlaye();
 
+            if(state == GameMaster.State.StateGame)
+                GameState.map.getSources(activePlayer);
             return status;
         }
 
