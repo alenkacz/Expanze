@@ -169,6 +169,7 @@ namespace Expanze
                         }
                         else
                             effect.DiffuseColor = new Vector3(1.0f, 1.0f, 1.0f);
+
                         effect.World = transforms[mesh.ParentBone.Index] * mWorld;
                         effect.View = GameState.view;
                         effect.Projection = GameState.projection;
