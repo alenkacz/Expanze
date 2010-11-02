@@ -153,7 +153,7 @@ namespace Expanze
                 Matrix[] transforms = new Matrix[m.Bones.Count];
                 m.CopyAbsoluteBoneTransformsTo(transforms);
 
-                Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.01f, 0.0f)) * Matrix.CreateScale(0.05f) * world;
+                Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.01f, 0.0f)) * Matrix.CreateScale(0.032f) * world;
 
                 foreach (ModelMesh mesh in m.Meshes)
                 {
