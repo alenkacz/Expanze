@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Expanze
 {
@@ -35,8 +36,8 @@ namespace Expanze
 
         public bool startGame()
         {
-            players[0] = new Player(Settings.startScore, "Player1");
-            players[1] = new Player(Settings.startScore, "Player2");
+            players[0] = new Player(Settings.startScore, "Player1", Color.RoyalBlue);
+            players[1] = new Player(Settings.startScore, "Player2", Color.Red);
 
             activePlayerIndex = 0;
             activePlayer = players[activePlayerIndex];
