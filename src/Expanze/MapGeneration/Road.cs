@@ -37,6 +37,8 @@ namespace Expanze
             playerOwner = null;
         }
 
+        public static void resetCounter() { counter = 0; }
+
         public Player getOwner() { return playerOwner; }
 
         public void SetTownNeighbours(Town one, Town two)
@@ -47,23 +49,51 @@ namespace Expanze
 
         public void Draw(GameTime gameTime)
         {
-            if (pickActive || isBuild)
+            GameMaster gm = GameMaster.getInstance();
+            if ((pickActive && gm.getState() == GameMaster.State.StateGame) || isBuild)
             {
                 Model m = GameState.map.getRoadModel();
                 Matrix[] transforms = new Matrix[m.Bones.Count];
                 m.CopyAbsoluteBoneTransformsTo(transforms);
 
-                Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.01f, 0.0f)) * Matrix.CreateScale(0.3f) * world;
+                Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.1f, 0.0f)) * Matrix.CreateScale(0.023f) * world;
 
+                int a = 0;
+
+                Player player = playerOwner;
+                if (playerOwner == null)
+                    player = GameMaster.getInstance().getActivePlayer();
+                Vector3 color = player.getColor().ToVector3();
                 foreach (ModelMesh mesh in m.Meshes)
                 {
                     foreach (BasicEffect effect in mesh.Effects)
                     {
-                        effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
+                        effect.EnableDefaultLighting();
+                        effect.DirectionalLight0.Enabled = false;
+                        effect.DirectionalLight1.Enabled = true;
+                        effect.DirectionalLight1.DiffuseColor = new Vector3(0.3f, 0.3f, 0.3f);
+
+                        
+                        if (a % 5 == 1 || a % 5 == 2 || a % 5 == 3 || a == 4 || a == 5 || a == 15 || a == 14)
+                        {                         
+                            effect.EmissiveColor = color;
+                            effect.DiffuseColor = color;
+                            effect.AmbientLightColor = color / 2.0f;
+                        }
+                        else
+                        {
+                            effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
+                            if(a == 20)
+                                effect.DiffuseColor = new Vector3(1.0f, 1.0f, 1.0f);
+                            else
+                                effect.DiffuseColor = new Vector3(0.0f, 0.0f, 0.0f);
+                            effect.AmbientLightColor = new Vector3(0.0f, 0.0f, 0.0f);
+                        }
                         effect.World = transforms[mesh.ParentBone.Index] * mWorld;
                         effect.View = GameState.view;
                         effect.Projection = GameState.projection;
                     }
+                    a++;
                     mesh.Draw();
                 }
             }

@@ -47,6 +47,8 @@ namespace Expanze
             playerOwner = null;
         }
 
+        public static void resetCounter() { counter = 0; }
+
         public void setRoadNeighbours(Road road1, Road road2, Road road3)
         {
             roadNeighbour[0] = road1;
@@ -66,6 +68,47 @@ namespace Expanze
             hexaNeighbour[0] = hexa1;
             hexaNeighbour[1] = hexa2;
             hexaNeighbour[2] = hexa3;
+        }
+
+        public void CollectSources(Player player)
+        {
+            if (playerOwner != player)
+                return;
+
+            SourceCost cost = new SourceCost();
+            int amount;
+
+            foreach (Hexa hexa in hexaNeighbour)
+            {
+                if (hexa != null)
+                {
+                    amount = hexa.getValue();
+
+                    switch (hexa.getType())
+                    {
+                        case Settings.Types.Forest:
+                            cost = new SourceCost(amount, 0, 0, 0, 0);
+                            break;
+
+                        case Settings.Types.Stone:
+                            cost = new SourceCost(0, amount, 0, 0, 0);
+                            break;
+
+                        case Settings.Types.Cornfield :
+                            cost = new SourceCost(0, 0, amount, 0, 0);
+                            break;
+
+                        case Settings.Types.Pasture:
+                            cost = new SourceCost(0, 0, 0, amount, 0);
+                            break;
+
+                        case Settings.Types.Mountains:
+                            cost = new SourceCost(0, 0, 0, 0, amount);
+                            break;
+                    }
+                    player.addSources(cost);
+                }
+            }
         }
 
         public void BuildTown(Player player)
@@ -110,21 +153,23 @@ namespace Expanze
                 Matrix[] transforms = new Matrix[m.Bones.Count];
                 m.CopyAbsoluteBoneTransformsTo(transforms);
 
-                Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.01f, 0.0f)) * Matrix.CreateScale(0.05f) * world;
+                Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.01f, 0.0f)) * Matrix.CreateScale(0.00032f) * world;
 
                 foreach (ModelMesh mesh in m.Meshes)
                 {
                     foreach (BasicEffect effect in mesh.Effects)
                     {
+                        effect.EnableDefaultLighting();
                         if (pickActive)
                         {
-                            if(HasTownBuildNeighbour())
+                            if (!CanActivePlayerBuildTown())
                                 effect.DiffuseColor = new Vector3(1, 0.0f, 0);
                             else
                                 effect.DiffuseColor = new Vector3(0, 1.0f, 0);
                         }
                         else
                             effect.DiffuseColor = new Vector3(1.0f, 1.0f, 1.0f);
+
                         effect.World = transforms[mesh.ParentBone.Index] * mWorld;
                         effect.View = GameState.view;
                         effect.Projection = GameState.projection;
@@ -185,6 +230,38 @@ namespace Expanze
                 pickNewPress = false;
                 pickNewRelease = false;
             }
+
+            // create new town?
+            GameMaster gm = GameMaster.getInstance();
+            if (pickNewPress && CanActivePlayerBuildTown())
+            {
+                BuildTown(gm.getActivePlayer());
+                if (gm.getState() != GameMaster.State.StateGame)
+                {
+                    gm.nextTurn();
+                }
+                else
+                    gm.getActivePlayer().payForSomething(Settings.costTown);
+            }
+        }
+
+        private Boolean CanActivePlayerBuildTown()
+        {
+            GameMaster gm = GameMaster.getInstance();
+            if (gm.getState() == GameMaster.State.StateGame)
+            {
+                Player activePlayer = gm.getActivePlayer();
+                Boolean hasActivePlayerRoadNeighbour = false;
+
+                foreach(Road road in roadNeighbour)
+                {
+                    if (road != null && road.getOwner() == activePlayer)
+                        hasActivePlayerRoadNeighbour = true;
+                }
+
+                return !isBuild && !HasTownBuildNeighbour() && Settings.costTown.HasPlayerSources(activePlayer) && hasActivePlayerRoadNeighbour;
+            } else
+                return !isBuild && !HasTownBuildNeighbour();
         }
     }
 }

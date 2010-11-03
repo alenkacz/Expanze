@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Expanze
 {
@@ -9,6 +10,7 @@ namespace Expanze
     {
         private int money;
         private String name;
+        private Color color;
 
         private int corn = 0;
         private int wood = 0;
@@ -16,11 +18,14 @@ namespace Expanze
         private int meat = 0;
         private int stone = 0;
 
-        public Player(int score, String name)
+        public Player(int score, String name, Color color)
         {
+            this.color = color;
             this.money = score;
             this.name = name;
         }
+
+        public Color getColor() { return color; }
 
         public String getName()
         {
@@ -59,6 +64,15 @@ namespace Expanze
             ore -= cost.ore;
             meat -= cost.meat;
             stone -= cost.stone;
+        }
+
+        public void addSources(SourceCost amount)
+        {
+            corn += amount.corn;
+            wood += amount.wood;
+            stone += amount.stone;
+            meat += amount.meat;
+            ore += amount.ore;
         }
 
         public void addSources(int wood, int stone, int corn, int meat, int ore)
