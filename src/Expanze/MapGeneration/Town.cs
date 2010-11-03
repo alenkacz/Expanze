@@ -153,7 +153,9 @@ namespace Expanze
                 Matrix[] transforms = new Matrix[m.Bones.Count];
                 m.CopyAbsoluteBoneTransformsTo(transforms);
 
-                Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.01f, 0.0f)) * Matrix.CreateScale(0.00032f) * world;
+                Matrix rotation;
+                rotation = (number % 7 == 0) ? Matrix.Identity : Matrix.CreateRotationY((float)Math.PI * 2.0f / (float)(number % 7));
+                Matrix mWorld = rotation * Matrix.CreateTranslation(new Vector3(0.0f, 0.01f, 0.0f)) * Matrix.CreateScale(0.00032f) * world;
 
                 int a = 0;
 
@@ -174,9 +176,9 @@ namespace Expanze
 
                         if (a == 1 || a == 2)
                         {
-                            effect.EmissiveColor = color;
-                            effect.DiffuseColor = color;
-                            effect.AmbientLightColor = color / 2.0f;
+                            effect.EmissiveColor = color * 0.8f;
+                            effect.DiffuseColor = color * 0.9f;
+                            effect.AmbientLightColor = color / 3.0f;
                         }
                         else
                         {

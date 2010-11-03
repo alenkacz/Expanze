@@ -73,12 +73,12 @@ namespace Expanze
                         effect.DirectionalLight1.Enabled = true;
                         effect.DirectionalLight1.DiffuseColor = new Vector3(0.3f, 0.3f, 0.3f);
 
-                        
+                        // is it model part which is for flags? They have to be in player colors
                         if (a % 5 == 1 || a % 5 == 2 || a % 5 == 3 || a == 4 || a == 5 || a == 15 || a == 14)
                         {                         
-                            effect.EmissiveColor = color;
-                            effect.DiffuseColor = color;
-                            effect.AmbientLightColor = color / 2.0f;
+                            effect.EmissiveColor = color * 0.8f;
+                            effect.DiffuseColor = color * 0.9f;
+                            effect.AmbientLightColor = color / 3.0f;
                         }
                         else
                         {
@@ -90,6 +90,7 @@ namespace Expanze
                             effect.AmbientLightColor = new Vector3(0.7f, 0.7f, 0.7f);
                         }
 
+                        // if player wants to build new Road, can he? Show it in red/green color
                         if (pickActive && !isBuild)
                         {
                             if (!CanActivePlayerBuildRoad())
