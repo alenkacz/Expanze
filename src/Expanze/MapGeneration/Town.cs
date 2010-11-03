@@ -167,21 +167,39 @@ namespace Expanze
                     foreach (BasicEffect effect in mesh.Effects)
                     {
                         effect.EnableDefaultLighting();
-                        if (pickActive)
+                        effect.DirectionalLight0.Enabled = false;
+                        effect.DirectionalLight1.Enabled = true;
+                        effect.DirectionalLight1.DiffuseColor = new Vector3(0.3f, 0.3f, 0.3f);
+
+
+                        if (a == 1 || a == 2)
+                        {
+                            effect.EmissiveColor = color;
+                            effect.DiffuseColor = color;
+                            effect.AmbientLightColor = color / 2.0f;
+                        }
+                        else
+                        {
+                            effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
+                            effect.DiffuseColor = new Vector3(1.0f, 1.0f, 1.0f);
+                            effect.AmbientLightColor = new Vector3(0.8f, 0.8f, 0.8f);
+                        }
+                        
+                        if (pickActive && !isBuild)
                         {
                             if (!CanActivePlayerBuildTown())
                                 effect.DiffuseColor = new Vector3(1, 0.0f, 0);
                             else
                                 effect.DiffuseColor = new Vector3(0, 1.0f, 0);
                         }
-                        else
-                            effect.DiffuseColor = new Vector3(1.0f, 1.0f, 1.0f);
 
                         effect.World = transforms[mesh.ParentBone.Index] * mWorld;
                         effect.View = GameState.view;
                         effect.Projection = GameState.projection;
                     }
                     mesh.Draw();
+
+                    a++;
                 }
             }
         }

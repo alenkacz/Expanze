@@ -56,7 +56,7 @@ namespace Expanze
                 Matrix[] transforms = new Matrix[m.Bones.Count];
                 m.CopyAbsoluteBoneTransformsTo(transforms);
 
-                Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.1f, 0.0f)) * Matrix.CreateScale(0.023f) * world;
+                Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.01f, 0.0f)) * Matrix.CreateScale(0.023f) * world;
 
                 int a = 0;
 
@@ -87,8 +87,17 @@ namespace Expanze
                                 effect.DiffuseColor = new Vector3(1.0f, 1.0f, 1.0f);
                             else
                                 effect.DiffuseColor = new Vector3(0.0f, 0.0f, 0.0f);
-                            effect.AmbientLightColor = new Vector3(0.0f, 0.0f, 0.0f);
+                            effect.AmbientLightColor = new Vector3(0.7f, 0.7f, 0.7f);
                         }
+
+                        if (pickActive && !isBuild)
+                        {
+                            if (!CanActivePlayerBuildRoad())
+                                effect.DiffuseColor = new Vector3(1, 0.0f, 0);
+                            else
+                                effect.DiffuseColor = new Vector3(0, 1.0f, 0);
+                        }
+
                         effect.World = transforms[mesh.ParentBone.Index] * mWorld;
                         effect.View = GameState.view;
                         effect.Projection = GameState.projection;
@@ -173,23 +182,35 @@ namespace Expanze
                 pickNewPress = false;
                 pickNewRelease = false;
             }
-
-            GameMaster gm = GameMaster.getInstance();
+            
             if (pickNewPress)
             {
-                if (gm.getState() == GameMaster.State.StateGame)
+                if (CanActivePlayerBuildRoad())
                 {
+                    GameMaster gm = GameMaster.getInstance();
                     Player activePlayer = gm.getActivePlayer();
-                    if (!isBuild && 
-                        (IsActivePlayersRoadOnEndOfRoad(activePlayer) || IsActivePlayersTownOnEndOfRoad(activePlayer)) &&
-                        Settings.costRoad.HasPlayerSources(activePlayer))
-                    {
-                        activePlayer.payForSomething(Settings.costRoad);
-                        isBuild = true;
-                        playerOwner = activePlayer;
-                    }
+                    activePlayer.payForSomething(Settings.costRoad);
+                    isBuild = true;
+                    playerOwner = activePlayer;
                 }
             }
+        }
+
+        public Boolean CanActivePlayerBuildRoad()
+        {
+            GameMaster gm = GameMaster.getInstance();
+            if (gm.getState() == GameMaster.State.StateGame)
+            {
+                Player activePlayer = gm.getActivePlayer();
+                if (!isBuild &&
+                    (IsActivePlayersRoadOnEndOfRoad(activePlayer) || IsActivePlayersTownOnEndOfRoad(activePlayer)) &&
+                    Settings.costRoad.HasPlayerSources(activePlayer))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
