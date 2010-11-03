@@ -86,14 +86,16 @@ namespace Expanze
             mapComp = new Map(ScreenManager.Game);
             gameComponents.Add(mapComp);
 
-            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width - 180, ScreenManager.Game.GraphicsDevice.Viewport.Height - 50, GameState.gameFont, 150, 40, "button");
+            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width - 91, ScreenManager.Game.GraphicsDevice.Viewport.Height - 80, GameState.gameFont, 91, 80, "nextTurn");
             guiComponents.Add(changeTurnButton);
-            MenuButtonComponent menuHUDButton = new MenuButtonComponent(ScreenManager.Game, 10, 10, GameState.gameFont, 232, 225, "menu_button");
+            MenuButtonComponent menuHUDButton = new MenuButtonComponent(ScreenManager.Game, 10, 10, GameState.gameFont, 133, 121, "menu_button");
             guiComponents.Add(menuHUDButton);
-            MaterialsHUDComponent materialsHUDComp = new MaterialsHUDComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width/4, ScreenManager.Game.GraphicsDevice.Viewport.Height - 78, GameState.gameFont, 232, 225, "suroviny_hud");
+            MaterialsHUDComponent materialsHUDComp = new MaterialsHUDComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width/4, ScreenManager.Game.GraphicsDevice.Viewport.Height - 78, GameState.gameFont, 450, 79, "suroviny_hud");
             guiComponents.Add(materialsHUDComp);
-            GuiComponent usersHud = new GuiComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width -100, 0, GameState.gameFont, 232, 225, "suroviny_hud");
+            GuiComponent usersHud = new GuiComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width -391, 0, GameState.gameFont, 232, 225, "hud-top");
             guiComponents.Add(usersHud);
+            GuiComponent newMsg = new GuiComponent(ScreenManager.Game, 0, ScreenManager.Game.GraphicsDevice.Viewport.Height - 80, GameState.gameFont, 93, 80, "newmessage");
+            guiComponents.Add(newMsg);
             //gameComponents.Add(buttonComp);
 
             cursorComp = new CustomCursor(ScreenManager.Game);
@@ -306,7 +308,7 @@ namespace Expanze
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 
             spriteBatch.Begin();
-            spriteBatch.DrawString(GameState.hudMaterialsFont, gMaster.getActivePlayer().getName(), Settings.playerNamePosition, gMaster.getActivePlayer().getColor());
+            spriteBatch.DrawString(GameState.hudMaterialsFont, gMaster.getActivePlayer().getName(), Settings.playerNamePosition, Color.White);
             spriteBatch.End();
 
             // If the game is transitioning on or off, fade it out to black.
