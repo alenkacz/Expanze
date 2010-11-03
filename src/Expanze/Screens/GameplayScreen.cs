@@ -92,6 +92,8 @@ namespace Expanze
             guiComponents.Add(menuHUDButton);
             MaterialsHUDComponent materialsHUDComp = new MaterialsHUDComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width/4, ScreenManager.Game.GraphicsDevice.Viewport.Height - 78, GameState.gameFont, 232, 225, "suroviny_hud");
             guiComponents.Add(materialsHUDComp);
+            GuiComponent usersHud = new GuiComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width -100, 0, GameState.gameFont, 232, 225, "suroviny_hud");
+            guiComponents.Add(usersHud);
             //gameComponents.Add(buttonComp);
 
             cursorComp = new CustomCursor(ScreenManager.Game);
