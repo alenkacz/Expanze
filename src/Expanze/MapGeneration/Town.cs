@@ -155,6 +155,13 @@ namespace Expanze
 
                 Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.01f, 0.0f)) * Matrix.CreateScale(0.00032f) * world;
 
+                int a = 0;
+
+                Player player = playerOwner;
+                if (playerOwner == null)
+                    player = GameMaster.getInstance().getActivePlayer();
+                Vector3 color = player.getColor().ToVector3();
+
                 foreach (ModelMesh mesh in m.Meshes)
                 {
                     foreach (BasicEffect effect in mesh.Effects)
