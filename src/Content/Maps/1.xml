@@ -39,7 +39,7 @@
     </hexa>
     <hexa>
       <type>desert</type>
-      <number>24</number>
+      <number>0</number>
     </hexa>
     <hexa>
       <type>stone</type>
@@ -50,14 +50,14 @@
       <number>12</number>
     </hexa>
     <hexa>
-      <type>cornfield</type>
+      <type>pasture</type>
       <number>20</number>
     </hexa>
   </row>
   <row>
     <hexa>
       <type>nothing</type>
-      <number>16</number>
+      <number>0</number>
     </hexa>
     <hexa>
       <type>mountains</type>
@@ -90,11 +90,11 @@
       <number>12</number>
     </hexa>
     <hexa>
-      <type>cornfield</type>
+      <type>forest</type>
       <number>16</number>
     </hexa>
     <hexa>
-      <type>stone</type>
+      <type>mountains</type>
       <number>12</number>
     </hexa>
   </row>
