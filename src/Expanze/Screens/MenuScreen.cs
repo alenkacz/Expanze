@@ -30,8 +30,6 @@ namespace Expanze
         int selectedEntry = 0;
         string menuTitle;
 
-        CustomCursor cursorComp;
-
         #endregion
 
         #region Properties

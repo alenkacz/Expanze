@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace Expanze
 {
-    class CustomCursor : GameComponent
+    class CustomCursor : DrawableGameComponent
     {
         SpriteBatch spriteBatch;
         Texture2D myCursor;
@@ -16,12 +16,12 @@ namespace Expanze
         Vector2 spritePosition;
         Game myGame;
 
-        public CustomCursor(Game game)
+        public CustomCursor(Game game) : base(game)
         {
             myGame = game;
         }
 
-        public override void LoadContent()
+        protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
             myCursor = myGame.Content.Load<Texture2D>("cursor");

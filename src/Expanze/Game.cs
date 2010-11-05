@@ -22,6 +22,7 @@ namespace Expanze
 
         GraphicsDeviceManager graphics;
         ScreenManager screenManager;
+        CustomCursor cursorComp;
 
 
         // By preloading any assets used by UI rendering, we avoid framerate glitches
@@ -52,6 +53,9 @@ namespace Expanze
             screenManager = new ScreenManager(this);
 
             Components.Add(screenManager);
+
+            cursorComp = new CustomCursor(this);
+            Components.Add(cursorComp);
 
             // Activate the first screens.
             GameScreen[] gs = { new BackgroundScreen(), new MainMenuScreen() };
