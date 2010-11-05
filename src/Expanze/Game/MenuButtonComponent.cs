@@ -42,8 +42,7 @@ namespace Expanze
 
                 if ((mousex > spritePosition.X && mousex < spritePosition.X + width) && (mousey < spritePosition.Y + height && mousey > spritePosition.Y))//identify mouse over x y posotions for the button
                 {
-                    
-                    GameMaster.getInstance().setPaused();
+                    GameMaster.getInstance().setPausedNew(true);
                     pressed = true;
                 }
             }

@@ -16,6 +16,7 @@ namespace Expanze
         private int activePlayerIndex;
         private State state;
         private bool paused = false;
+        private bool pausedNew = false;
 
         private static GameMaster instance = null;
 
@@ -41,6 +42,9 @@ namespace Expanze
 
             activePlayerIndex = 0;
             activePlayer = players[activePlayerIndex];
+
+            pausedNew = false;
+            paused = false;
 
             state = State.StateFirstTown;
             return true;
@@ -68,19 +72,32 @@ namespace Expanze
             }
         }
 
-        public bool isPaused()
+        // NEPOCHOPIL JSEM SMYSL //
+        ///////////////////////////
+
+        public bool isPausedNew()
         {
-            if (this.paused)
+            if (this.pausedNew)
             {
-                this.paused = false;
+                this.pausedNew = false;
                 return true;
             }
             return false;
         }
 
-        public void setPaused()
+        public bool getPaused()
         {
-            this.paused = true;
+            return paused;
+        }
+
+        public void setPausedNew(Boolean paused)
+        {
+            this.pausedNew = paused;
+        }
+
+        public void setPaused(Boolean paused)
+        {
+            this.paused = paused;
         }
 
         public bool changeActivePlaye()

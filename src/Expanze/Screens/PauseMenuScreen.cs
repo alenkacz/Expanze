@@ -34,6 +34,7 @@ namespace Expanze
             
             // Hook up menu event handlers.
             resumeGameMenuEntry.Selected += OnCancel;
+            resumeGameMenuEntry.Selected += ResumeGameMenuEntrySelected;
             quitGameMenuEntry.Selected += QuitGameMenuEntrySelected;
 
             // Add entries to the menu.
@@ -46,6 +47,10 @@ namespace Expanze
 
         #region Handle Input
 
+        void ResumeGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        {
+            GameMaster.getInstance().setPaused(false);
+        }
 
         /// <summary>
         /// Event handler for when the Quit Game menu entry is selected.

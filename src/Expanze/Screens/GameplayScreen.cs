@@ -185,7 +185,6 @@ namespace Expanze
             
         }
 
-
         /// <summary>
         /// Lets the game respond to player input. Unlike the Update method,
         /// this will only be called when the gameplay screen is active.
@@ -208,8 +207,9 @@ namespace Expanze
             bool gamePadDisconnected = !gamePadState.IsConnected &&
                                        input.GamePadWasConnected[playerIndex];
 
-            if (input.IsPauseGame(ControllingPlayer) || gamePadDisconnected || GameMaster.getInstance().isPaused())
+            if (input.IsPauseGame(ControllingPlayer) || gamePadDisconnected || GameMaster.getInstance().isPausedNew())
             {
+                GameMaster.getInstance().setPaused(true);
                 ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
             }
             else

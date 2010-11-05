@@ -212,15 +212,17 @@ namespace Expanze
         {
             base.Update(gameTime);
 
-            ChangeCamera();
+            if (GameMaster.getInstance().getPaused())
+                return;
 
-            //angle = angle + gameTime.ElapsedGameTime.Milliseconds / 1000.0f * 1.0f;
-            if (angle > 360.0f)
-                angle -= 360.0f;
+            ChangeCamera();
         }
 
         public override void HandlePickableAreas(Color c)
         {
+            if (GameMaster.getInstance().getPaused())
+                return;
+
             for (int i = 0; i < hexaMap.Length; i++)
                 for (int j = 0; j < hexaMap[i].Length; j++)
                     if (hexaMap[i][j] != null)
@@ -229,6 +231,9 @@ namespace Expanze
 
         public override void DrawPickableAreas()
         {
+            if (GameMaster.getInstance().getPaused())
+                return;
+
             for (int i = 0; i < hexaMap.Length; i++)
                 for (int j = 0; j < hexaMap[i].Length; j++)
                     if (hexaMap[i][j] != null)
@@ -237,6 +242,9 @@ namespace Expanze
 
         public override void Draw2D()
         {
+            //if (GameMaster.getInstance().getPaused())
+            //    return;
+
             for (int i = 0; i < hexaMap.Length; i++)
             {
                 for (int j = 0; j < hexaMap[i].Length; j++)
@@ -251,6 +259,9 @@ namespace Expanze
 
         public override void Draw(GameTime gameTime)
         {
+            //if (GameMaster.getInstance().getPaused())
+            //    return;
+
             myGame.GraphicsDevice.BlendState = BlendState.Opaque;
             myGame.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
