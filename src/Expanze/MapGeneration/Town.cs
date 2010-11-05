@@ -238,7 +238,7 @@ namespace Expanze
 
                 if (GameState.CurrentMouseState.LeftButton == ButtonState.Pressed)
                 {
-                    if (!pickPress)
+                    if (!pickPress && GameState.LastMouseState.LeftButton != ButtonState.Pressed)
                         pickNewPress = true;
                     pickPress = true;
                 }
