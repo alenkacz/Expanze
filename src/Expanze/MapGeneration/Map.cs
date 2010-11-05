@@ -270,5 +270,38 @@ namespace Expanze
 
             base.Draw(gameTime);
         }
+
+        public static void SetPickVariables(Boolean isPickColor, PickVariables pickVars)
+        {
+            pickVars.wasClickAnywhereLast = pickVars.wasClickAnywhereNow;
+            pickVars.wasClickAnywhereNow = GameState.CurrentMouseState.LeftButton == ButtonState.Pressed;
+            if (isPickColor)
+            {
+                if (!pickVars.pickActive)
+                    pickVars.pickNewActive = true;
+                pickVars.pickActive = true;
+
+                if (GameState.CurrentMouseState.LeftButton == ButtonState.Pressed)
+                {
+                    if (!pickVars.wasClickAnywhereLast)
+                        pickVars.pickNewPress = true;
+                    pickVars.pickPress = true;
+                }
+                else
+                {
+                    if (pickVars.pickPress)
+                        pickVars.pickNewRelease = true;
+                    pickVars.pickPress = false;
+                }
+            }
+            else
+            {
+                pickVars.pickActive = false;
+                pickVars.pickPress = false;
+                pickVars.pickNewActive = false;
+                pickVars.pickNewPress = false;
+                pickVars.pickNewRelease = false;
+            }
+        }
     }
 }

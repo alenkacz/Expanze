@@ -21,11 +21,7 @@ namespace Expanze
         int value;      // how many sources will player get
         int number;     // from counter, useable for picking
         Color pickHexaColor;    // color o hexa in render texture
-        private Boolean pickActive = false;         // if mouse is over pickable area
-        private Boolean pickNewActive = false;      // if mouse is newly over pickable area
-        private Boolean pickNewPress = false;       // if mouse press on pickable area newly
-        private Boolean pickPress = false;          // if mouse press on pickable area
-        private Boolean pickNewRelease = false;     // if mouse is newly release above pickable area
+        private PickVariables pickVars;
 
         private Settings.Types type = Settings.Types.Water;
         private Hexa[] hexaNeighbours;      // neighbours of hexa, to index use RoadPos
@@ -50,6 +46,8 @@ namespace Expanze
             this.roads = new Road[(int)RoadPos.Count];
             this.townOwner = new Boolean[(int)TownPos.Count];
             this.roadOwner = new Boolean[(int)RoadPos.Count];
+
+            pickVars = new PickVariables();
         }
 
         public static void resetCounter() { counter = 0; }
@@ -397,7 +395,7 @@ namespace Expanze
                 foreach (BasicEffect effect in mesh.Effects)
                 {
                     effect.EnableDefaultLighting();
-                    if (pickActive)
+                    if (pickVars.pickActive)
                         effect.EmissiveColor = new Vector3(0.3f, 0.0f, 0.0f);
                     else
                         effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
@@ -471,33 +469,7 @@ namespace Expanze
                 }
             }
 
-            if (c == pickHexaColor)
-            {
-                if (!pickActive)
-                    pickNewActive = true;
-                pickActive = true;
-
-                if (GameState.CurrentMouseState.LeftButton == ButtonState.Pressed)
-                {
-                    if (!pickPress && GameState.LastMouseState.LeftButton != ButtonState.Pressed)
-                        pickNewPress = true;
-                    pickPress = true;
-                }
-                else
-                {
-                    if (pickPress)
-                        pickNewRelease = true;
-                    pickPress = false;
-                }
-            }
-            else
-            {
-                pickActive = false;
-                pickPress = false;
-                pickNewActive = false;
-                pickNewPress = false;
-                pickNewRelease = false;
-            }
+            Map.SetPickVariables(c == pickHexaColor, pickVars);
         }
 
         public string getModelPath()

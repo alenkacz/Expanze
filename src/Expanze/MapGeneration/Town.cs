@@ -19,15 +19,11 @@ namespace Expanze
         private int number;
         public static int counter = 0;
         private Color pickTownColor;
-        private Boolean pickActive = false;         // if mouse is over pickable area
-        private Boolean pickNewActive = false;      // if mouse is newly over pickable area
-        private Boolean pickNewPress = false;       // if mouse press on pickable area newly
-        private Boolean pickPress = false;          // if mouse press on pickable area
-        private Boolean pickNewRelease = false;     // if mouse is newly release above pickable area
+        private PickVariables pickVars;
 
         private Matrix world;
 
-        public Boolean getPickNewPress() {return pickNewPress;}
+        public Boolean getPickNewPress() { return pickVars.pickNewPress; }
         public bool getIsBuild() { return isBuild; }
         public Player getPlayerOwner() { return playerOwner; }
 
@@ -45,6 +41,8 @@ namespace Expanze
             hexaNeighbour = new Hexa[3];
 
             playerOwner = null;
+
+            pickVars = new PickVariables();
         }
 
         public static void resetCounter() { counter = 0; }
@@ -147,7 +145,7 @@ namespace Expanze
 
         public void Draw(GameTime gameTime)
         {
-            if (pickActive || isBuild)
+            if (pickVars.pickActive || isBuild)
             {
                 Model m = GameState.map.getTownModel();
                 Matrix[] transforms = new Matrix[m.Bones.Count];
@@ -186,8 +184,8 @@ namespace Expanze
                             effect.DiffuseColor = new Vector3(1.0f, 1.0f, 1.0f);
                             effect.AmbientLightColor = new Vector3(0.8f, 0.8f, 0.8f);
                         }
-                        
-                        if (pickActive && !isBuild)
+
+                        if (pickVars.pickActive && !isBuild)
                         {
                             if (!CanActivePlayerBuildTown())
                                 effect.DiffuseColor = new Vector3(1, 0.0f, 0);
@@ -230,37 +228,12 @@ namespace Expanze
 
         public void HandlePickableAreas(Color c)
         {
-            if (c == pickTownColor)
-            {
-                if (!pickActive)
-                    pickNewActive = true;
-                pickActive = true;
-
-                if (GameState.CurrentMouseState.LeftButton == ButtonState.Pressed)
-                {
-                    if (!pickPress && GameState.LastMouseState.LeftButton != ButtonState.Pressed)
-                        pickNewPress = true;
-                    pickPress = true;
-                }
-                else
-                {
-                    if (pickPress)
-                        pickNewRelease = true;
-                    pickPress = false;
-                }
-            }
-            else
-            {
-                pickActive = false;
-                pickPress = false;
-                pickNewActive = false;
-                pickNewPress = false;
-                pickNewRelease = false;
-            }
+            Map.SetPickVariables(c == pickTownColor, pickVars);
+            
 
             // create new town?
             GameMaster gm = GameMaster.getInstance();
-            if (pickNewPress && CanActivePlayerBuildTown())
+            if (pickVars.pickNewPress && CanActivePlayerBuildTown())
             {
                 BuildTown(gm.getActivePlayer());
                 if (gm.getState() != GameMaster.State.StateGame)
