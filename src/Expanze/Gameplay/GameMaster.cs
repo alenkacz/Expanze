@@ -15,7 +15,9 @@ namespace Expanze
         private Player activePlayer;
         private int activePlayerIndex;
         private State state;
+        // when is game paused and player see paused menu, he cant build towers etc
         private bool paused = false;
+        // used for open paused menu
         private bool pausedNew = false;
 
         private static GameMaster instance = null;
