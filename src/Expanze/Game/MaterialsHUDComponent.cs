@@ -30,13 +30,18 @@ namespace Expanze
             if (act.hasMaterialChanged())
             {
                 changeMaterials = true;
-
+                materialsChangeTime = 1000;
             }
 
-            if ((gameTime.ElapsedGameTime.TotalMilliseconds - materialsChangeTime) > 100)
+            if (changeMaterials)
             {
-                materialsChangeTime = 0;
-                changeMaterials = false;
+                materialsChangeTime -= gameTime.ElapsedGameTime.TotalMilliseconds;
+
+                if (materialsChangeTime < 0)
+                {
+                    materialsChangeTime = 0;
+                    changeMaterials = false;
+                }
             }
         }
 
@@ -61,36 +66,30 @@ namespace Expanze
             {
                 SourceCost sc = act.getMaterialChange();
 
+
                 if(sc.corn != 0) {
-                    spriteBatch.DrawString(GameState.materialsNewFont, sc.corn.ToString(), new Vector2(this.spritePosition.X + start, this.spritePosition.Y + 120), Color.Red);
+                    spriteBatch.DrawString(GameState.materialsNewFont, ((sc.corn > 0) ? "+" : "") + sc.corn.ToString(), new Vector2(this.spritePosition.X + start, this.spritePosition.Y + 120), (sc.corn > 0) ? Color.Green : Color.Red);
                 }
 
                 if (sc.meat != 0)
                 {
-                    spriteBatch.DrawString(GameState.materialsNewFont, sc.meat.ToString(), new Vector2(this.spritePosition.X + start + space, this.spritePosition.Y + 120), Color.Red);
+                    spriteBatch.DrawString(GameState.materialsNewFont, ((sc.meat > 0) ? "+" : "") + sc.meat.ToString(), new Vector2(this.spritePosition.X + start + space, this.spritePosition.Y + 120), (sc.meat > 0) ? Color.Green : Color.Red);
                 }
 
                 if (sc.ore != 0)
                 {
-                    spriteBatch.DrawString(GameState.materialsNewFont, sc.ore.ToString(), new Vector2(this.spritePosition.X + start + 3 * space, this.spritePosition.Y + 120), Color.Red);
+                    spriteBatch.DrawString(GameState.materialsNewFont, ((sc.ore > 0) ? "+" : "") + sc.ore.ToString(), new Vector2(this.spritePosition.X + start + 4 * space, this.spritePosition.Y + 120), (sc.ore > 0) ? Color.Green : Color.Red);
                 }
 
                 if (sc.wood != 0)
                 {
-                    spriteBatch.DrawString(GameState.materialsNewFont, sc.wood.ToString(), new Vector2(this.spritePosition.X + start, this.spritePosition.Y + 120), Color.Red);
+                    spriteBatch.DrawString(GameState.materialsNewFont, ((sc.wood > 0) ? "+" : "") + sc.wood.ToString(), new Vector2(this.spritePosition.X + start + 3 * space, this.spritePosition.Y + 120), (sc.wood > 0) ? Color.Green : Color.Red);
                 }
 
                 if (sc.stone != 0)
                 {
-                    spriteBatch.DrawString(GameState.materialsNewFont, sc.stone.ToString(), new Vector2(this.spritePosition.X + start + 4 * space, this.spritePosition.Y + 120), Color.Red);
+                    spriteBatch.DrawString(GameState.materialsNewFont, ((sc.stone > 0) ? "+" : "") + sc.stone.ToString(), new Vector2(this.spritePosition.X + start + 2 * space, this.spritePosition.Y + 120), (sc.stone > 0) ? Color.Green : Color.Red);
                 }
-
-                if (materialsChangeTime == 0)
-                {
-                    materialsChangeTime = gameTime.ElapsedGameTime.TotalMilliseconds;
-                }
-
-                changeMaterials = false;
             }
 
             spriteBatch.End();

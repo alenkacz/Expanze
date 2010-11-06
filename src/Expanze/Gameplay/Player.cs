@@ -66,7 +66,7 @@ namespace Expanze
 
         public void payForSomething(SourceCost cost)
         {
-            changeSources(cost.wood, cost.stone, cost.corn, cost.meat, cost.ore);
+            changeSources(-cost.wood, -cost.stone, -cost.corn, -cost.meat, -cost.ore);
 
             corn -= cost.corn;
             wood -= cost.wood;
