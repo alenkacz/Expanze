@@ -294,7 +294,7 @@ namespace Expanze
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 
             spriteBatch.Begin();
-            spriteBatch.DrawString(GameState.hudMaterialsFont, gMaster.getActivePlayer().getName(), Settings.playerNamePosition, Color.White);
+            spriteBatch.DrawString(GameState.gameFont, gMaster.getActivePlayer().getName(), Settings.playerNamePosition, Color.White);
             spriteBatch.End();
 
             // If the game is transitioning on or off, fade it out to black.
