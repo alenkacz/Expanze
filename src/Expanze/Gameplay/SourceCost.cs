@@ -13,13 +13,13 @@ namespace Expanze
         public int meat = 0;
         public int ore = 0;
 
-        public SourceCost()
+        public SourceCost(int amount)
         {
-            corn = 0;
-            wood = 0;
-            stone = 0;
-            meat = 0;
-            ore = 0;
+            corn = amount;
+            wood = amount;
+            stone = amount;
+            meat = amount;
+            ore = amount;
         }
 
         public SourceCost(int wood, int stone, int corn, int meat, int ore)
@@ -29,6 +29,11 @@ namespace Expanze
             this.stone = stone;
             this.meat = meat;
             this.ore = ore;
+        }
+
+        public static SourceCost operator +(SourceCost a, SourceCost b)
+        {
+            return new SourceCost(a.wood + b.wood, a.stone + b.stone, a.corn + b.corn, a.meat + b.meat, a.ore + b.ore);
         }
 
         public Boolean HasPlayerSources(Player player)
