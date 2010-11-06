@@ -170,8 +170,8 @@ namespace Expanze
 
                         if (a == 1 || a == 2)
                         {
-                            effect.EmissiveColor = color * 0.3f;
-                            effect.DiffuseColor = color * 0.7f;
+                            effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
+                            effect.DiffuseColor = color * 0.9f;
                             effect.AmbientLightColor = new Vector3(0.0533f, 0.0988f, 0.1819f);
                         }
                         else
