@@ -19,7 +19,7 @@ namespace Expanze
         public const int startScore = 15000;
 
         //position of player name on the gamescreen
-        public static Vector2 playerNamePosition = new Vector2(790,3);
+        public static Vector2 playerNamePosition = new Vector2(700,3);
 
         public static SourceCost costTown = new SourceCost(60, 60, 50, 50, 30);
         public static SourceCost costRoad = new SourceCost(0, 40, 0, 0, 50);
