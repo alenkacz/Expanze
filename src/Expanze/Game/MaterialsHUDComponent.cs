@@ -47,13 +47,27 @@ namespace Expanze
 
         public override void Draw(GameTime gameTime)
         {
+            base.Draw(gameTime);
+
+            Color c;
+            if (pick)
+                c = Color.Black;
+            else
+                c = Color.White;
+
             spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,null,null,null,null,Settings.spriteScale);
             spritePosition.Y = 750;
             spritePosition.X = 350;
 
             Player act = GameMaster.getInstance().getActivePlayer();
 
-            spriteBatch.Draw(myButton, spritePosition, Color.White);
+            spriteBatch.Draw(myButton, spritePosition, c);
+            if (pick)
+            {
+                spriteBatch.End();
+                return;
+            }
+
             spriteBatch.DrawString(GameState.hudMaterialsFont, act.getCorn().ToString(), new Vector2(this.spritePosition.X + start, this.spritePosition.Y + 100), Color.White);
             spriteBatch.DrawString(GameState.hudMaterialsFont, act.getMeat().ToString(), new Vector2(this.spritePosition.X + start + space, this.spritePosition.Y + 100), Color.White);
             spriteBatch.DrawString(GameState.hudMaterialsFont, act.getStone().ToString(), new Vector2(this.spritePosition.X + start + 2 * space, this.spritePosition.Y + 100), Color.White);

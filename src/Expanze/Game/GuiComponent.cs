@@ -20,8 +20,12 @@ namespace Expanze
         protected int height;
         protected String texture;
 
+        protected Boolean pick;
+
         public GuiComponent(Game game, int x, int y, SpriteFont font, int width, int height, String texture)
         {
+            pick = false;
+
             myGame = game;
             spritePosition.X = x;
             spritePosition.Y = y;
@@ -42,11 +46,22 @@ namespace Expanze
             base.Update(gameTime);
         }
 
+        public void Draw(GameTime gameTime, Boolean pick)
+        {
+            this.pick = pick;
+            Draw(gameTime);
+        }
+
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
-            spriteBatch.Draw(myButton,spritePosition, Color.White);
+            Color c;
+            if (pick)
+                c = Color.Black;
+            else
+                c = Color.White;
+            spriteBatch.Draw(myButton,spritePosition, c);
             spriteBatch.End();
         }
 

@@ -51,7 +51,12 @@ namespace Expanze
                 pressed = false;
             }
 
-            spriteBatch.Draw(myButton, spritePosition, Color.White);
+            Color c;
+            if (pick)
+                c = Color.Black;
+            else
+                c = Color.White;
+            spriteBatch.Draw(myButton, spritePosition, c);
             spriteBatch.End();
         }
     }

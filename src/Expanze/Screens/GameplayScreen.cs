@@ -257,6 +257,11 @@ namespace Expanze
                 gameComponent.DrawPickableAreas();
             }
 
+            foreach (GuiComponent guiComponent in guiComponents)
+            {
+                guiComponent.Draw(gameTime, true);
+            }
+
             //render to texture
             ScreenManager.GraphicsDevice.SetRenderTarget(null);
             shadowMap = renderTarget;
@@ -288,7 +293,7 @@ namespace Expanze
 
             foreach (GuiComponent guiComponent in guiComponents)
             {
-                guiComponent.Draw(gameTime);
+                guiComponent.Draw(gameTime, false);
             }
 
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
