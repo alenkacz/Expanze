@@ -25,6 +25,7 @@ namespace Expanze
 
             Player act = GameMaster.getInstance().getActivePlayer();
 
+
             spriteBatch.Draw(myButton, spritePosition, Color.White);
             spriteBatch.DrawString(GameState.hudMaterialsFont, act.getCorn().ToString(), new Vector2(this.spritePosition.X + start, this.spritePosition.Y + 55), Color.White);
             spriteBatch.DrawString(GameState.hudMaterialsFont, act.getMeat().ToString(), new Vector2(this.spritePosition.X + start + space, this.spritePosition.Y + 55), Color.White);

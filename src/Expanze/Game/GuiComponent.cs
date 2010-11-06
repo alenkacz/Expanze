@@ -46,7 +46,7 @@ namespace Expanze
         {
             base.Draw(gameTime);
             spriteBatch.Begin();
-            spriteBatch.Draw(myButton, spritePosition, Color.White);
+            spriteBatch.Draw(myButton,spritePosition, Color.White);
             spriteBatch.End();
         }
 

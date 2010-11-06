@@ -22,31 +22,38 @@ namespace Expanze
     {
         #region Fields
 
-        MenuEntry ungulateMenuEntry;
-        //MenuEntry languageMenuEntry;
-        //MenuEntry frobnicateMenuEntry;
-        //MenuEntry elfMenuEntry;
+        MenuEntry resolutionMenuEntry;
 
-        enum Ungulate
-        {
-            Test,
-            Test2,
-            Test3,
-        }
 
-        static Ungulate currentUngulate = Ungulate.Test;
+        static string[] resolution = new string[Settings.allResolutions.Length];
 
-        //static string[] languages = { "Test", "Test2", "Test3" };
-        //static int currentLanguage = 0;
-
-        //static bool frobnicate = true;
-
-        //static int elf = 23;
+        static int currentResolution = 0;
 
         #endregion
 
         #region Initialization
 
+        private void fillResolutionsMenu() {
+            int i = 0;
+            foreach( Vector2 res in Settings.allResolutions) {
+                resolution[i] = resolutionToString(res);
+                if(res.X == Settings.activeResolution.X && res.Y == Settings.activeResolution.Y) {
+                    currentResolution = i;
+                }
+                i++;
+            }
+        }
+
+        public string resolutionToString(Vector2 res)
+        {
+            return res.X + "x" + res.Y;
+        }
+
+        public Vector2 resolutionToVector(string res)
+        {
+            string[] s = res.Split("x".ToCharArray());
+            return new Vector2(int.Parse(s[0]),int.Parse(s[1]));
+        }
 
         /// <summary>
         /// Constructor.
@@ -54,28 +61,24 @@ namespace Expanze
         public OptionsMenuScreen()
             : base("Options")
         {
+            fillResolutionsMenu();
+
             // Create our menu entries.
-            ungulateMenuEntry = new MenuEntry(string.Empty);
-            //languageMenuEntry = new MenuEntry(string.Empty);
-            //frobnicateMenuEntry = new MenuEntry(string.Empty);
-            //elfMenuEntry = new MenuEntry(string.Empty);
+            resolutionMenuEntry = new MenuEntry(string.Empty);
 
             SetMenuEntryText();
 
+            MenuEntry apply = new MenuEntry("Apply Changes");
             MenuEntry back = new MenuEntry("Back");
 
             // Hook up menu event handlers.
-            ungulateMenuEntry.Selected += UngulateMenuEntrySelected;
-            //languageMenuEntry.Selected += LanguageMenuEntrySelected;
-            //frobnicateMenuEntry.Selected += FrobnicateMenuEntrySelected;
-            //elfMenuEntry.Selected += ElfMenuEntrySelected;
+            resolutionMenuEntry.Selected += UngulateMenuEntrySelected;
+            apply.Selected += ApplyChangesSelected;
             back.Selected += OnCancel;
             
             // Add entries to the menu.
-            MenuEntries.Add(ungulateMenuEntry);
-            //MenuEntries.Add(languageMenuEntry);
-            //MenuEntries.Add(frobnicateMenuEntry);
-            //MenuEntries.Add(elfMenuEntry);
+            MenuEntries.Add(resolutionMenuEntry);
+            MenuEntries.Add(apply);
             MenuEntries.Add(back);
         }
 
@@ -85,10 +88,7 @@ namespace Expanze
         /// </summary>
         void SetMenuEntryText()
         {
-            ungulateMenuEntry.Text = "Settings: " + currentUngulate;
-            //languageMenuEntry.Text = "Language: " + languages[currentLanguage];
-            //frobnicateMenuEntry.Text = "Frobnicate: " + (frobnicate ? "on" : "off");
-            //elfMenuEntry.Text = "elf: " + elf;
+            resolutionMenuEntry.Text = "Resolution: " + resolution[currentResolution];
         }
 
 
@@ -96,49 +96,35 @@ namespace Expanze
 
         #region Handle Input
 
+        /// <summary>
+        /// Event handler for when the Ungulate menu entry is selected.
+        /// </summary>
+        void ApplyChangesSelected(object sender, PlayerIndexEventArgs e)
+        {
+            string selected = resolution[currentResolution];
+
+            if (selected != resolutionToString(Settings.activeResolution))
+            {
+                //resolution was changed
+                GraphicsDeviceManager gdm = Settings.GraphicsDeviceManager;
+                Vector2 newRes = resolutionToVector(selected);
+                gdm.PreferredBackBufferWidth = (int)newRes.X;
+                gdm.PreferredBackBufferHeight = (int)newRes.Y;
+                Settings.activeResolution = newRes;
+                gdm.ApplyChanges();
+            }
+        }
+
 
         /// <summary>
         /// Event handler for when the Ungulate menu entry is selected.
         /// </summary>
         void UngulateMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            currentUngulate++;
+            currentResolution++;
 
-            if (currentUngulate > Ungulate.Test3)
-                currentUngulate = 0;
-
-            SetMenuEntryText();
-        }
-
-
-        /// <summary>
-        /// Event handler for when the Language menu entry is selected.
-        /// </summary>
-        void LanguageMenuEntrySelected(object sender, PlayerIndexEventArgs e)
-        {
-            //currentLanguage = (currentLanguage + 1) % languages.Length;
-
-            SetMenuEntryText();
-        }
-
-
-        /// <summary>
-        /// Event handler for when the Frobnicate menu entry is selected.
-        /// </summary>
-        void FrobnicateMenuEntrySelected(object sender, PlayerIndexEventArgs e)
-        {
-            //frobnicate = !frobnicate;
-
-            SetMenuEntryText();
-        }
-
-
-        /// <summary>
-        /// Event handler for when the Elf menu entry is selected.
-        /// </summary>
-        void ElfMenuEntrySelected(object sender, PlayerIndexEventArgs e)
-        {
-            //elf++;
+            if (currentResolution >= resolution.Length)
+                currentResolution = 0;
 
             SetMenuEntryText();
         }
