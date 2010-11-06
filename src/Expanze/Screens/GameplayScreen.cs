@@ -85,9 +85,9 @@ namespace Expanze
             mapComp = new Map(ScreenManager.Game);
             gameComponents.Add(mapComp);
 
-            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width-150, ScreenManager.Game.GraphicsDevice.Viewport.Height-150, GameState.gameFont, 147, 141, "nextTurn");
+            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), GameState.gameFont, Settings.scale(147), Settings.scale(141), "nextTurn");
             guiComponents.Add(changeTurnButton);
-            MenuButtonComponent menuHUDButton = new MenuButtonComponent(ScreenManager.Game, 10, 10, GameState.gameFont, Settings.scale(222), Settings.scale(225), "menu_button");
+            MenuButtonComponent menuHUDButton = new MenuButtonComponent(ScreenManager.Game, 20, 20, GameState.gameFont, Settings.scale(222), Settings.scale(225), "menu_button");
             guiComponents.Add(menuHUDButton);
             MaterialsHUDComponent materialsHUDComp = new MaterialsHUDComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width/4, ScreenManager.Game.GraphicsDevice.Viewport.Height - 78, GameState.gameFont, 757, 148, "suroviny_hud");
             guiComponents.Add(materialsHUDComp);

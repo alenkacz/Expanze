@@ -22,7 +22,7 @@ namespace Expanze
 
         public ButtonComponent(Game game, int x, int y, SpriteFont font, int width, int height, String texture) 
             : base(game,x,y,font,width,height,texture) {
-                scaledPos = new Vector2(Settings.scale(x),Settings.scale(y));
+                scaledPos = new Vector2(Settings.scale(x),Settings.scale(y)+100);
         }
 
         public override void Update(GameTime gameTime)
@@ -37,12 +37,12 @@ namespace Expanze
 
         public override void Draw(GameTime gameTime)
         {
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
 
             if (ButtonState.Pressed == mouseState.LeftButton && !pressed)
             {
 
-                if ((mousex > spritePosition.X && mousex < (spritePosition.X + width)) && (mousey < (spritePosition.Y + height) && mousey > spritePosition.Y))//identify mouse over x y posotions for the button
+                if ((mousex > scaledPos.X && mousex < (scaledPos.X + width)) && (mousey < (scaledPos.Y + height) && mousey > scaledPos.Y))//identify mouse over x y posotions for the button
                 {
                     GameMaster.getInstance().nextTurn();
                     pressed = true;
