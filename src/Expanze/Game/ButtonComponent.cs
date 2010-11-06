@@ -12,6 +12,8 @@ namespace Expanze
     {
         protected MouseState mouseState;
 
+        protected Vector2 scaledPos;
+
         protected int mousex;
         protected int mousey;
 
@@ -19,7 +21,9 @@ namespace Expanze
         protected bool pressed = false;
 
         public ButtonComponent(Game game, int x, int y, SpriteFont font, int width, int height, String texture) 
-            : base(game,x,y,font,width,height,texture) {}
+            : base(game,x,y,font,width,height,texture) {
+                scaledPos = new Vector2(Settings.scale(x),Settings.scale(y));
+        }
 
         public override void Update(GameTime gameTime)
         {
@@ -33,13 +37,12 @@ namespace Expanze
 
         public override void Draw(GameTime gameTime)
         {
-            base.Draw(gameTime);
             spriteBatch.Begin();
 
             if (ButtonState.Pressed == mouseState.LeftButton && !pressed)
             {
 
-                if ((mousex > spritePosition.X && mousex < (spritePosition.X + width) ) && (mousey < spritePosition.Y + height && mousey > spritePosition.Y))//identify mouse over x y posotions for the button
+                if ((mousex > spritePosition.X && mousex < (spritePosition.X + width)) && (mousey < (spritePosition.Y + height) && mousey > spritePosition.Y))//identify mouse over x y posotions for the button
                 {
                     GameMaster.getInstance().nextTurn();
                     pressed = true;

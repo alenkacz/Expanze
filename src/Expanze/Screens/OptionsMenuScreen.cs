@@ -128,6 +128,7 @@ namespace Expanze
                 gdm.PreferredBackBufferWidth = (int)newRes.X;
                 gdm.PreferredBackBufferHeight = (int)newRes.Y;
                 Settings.activeResolution = newRes;
+                Settings.spriteScale = Matrix.CreateScale(Settings.activeResolution.X / Settings.maximumResolution.X, Settings.activeResolution.Y / Settings.maximumResolution.Y, 1);
                 gdm.ApplyChanges();
             }
             else if (fullscreen != Settings.isFullscreen)
