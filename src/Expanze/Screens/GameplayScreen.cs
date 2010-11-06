@@ -210,7 +210,7 @@ namespace Expanze
             if (input.IsPauseGame(ControllingPlayer) || gamePadDisconnected || GameMaster.getInstance().isPausedNew())
             {
                 GameMaster.getInstance().setPaused(true);
-                ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
+                ScreenManager.AddScreen(new MarketMenuScreen(), ControllingPlayer);
             }
             else
             {
@@ -290,7 +290,6 @@ namespace Expanze
                 guiComponent.Draw(gameTime);
             }
 
-            // Our player and enemy are both actually just text strings.
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 
             spriteBatch.Begin();
