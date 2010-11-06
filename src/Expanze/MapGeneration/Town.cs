@@ -167,22 +167,16 @@ namespace Expanze
                     foreach (BasicEffect effect in mesh.Effects)
                     {
                         effect.EnableDefaultLighting();
-                        effect.DirectionalLight0.Enabled = false;
-                        effect.DirectionalLight1.Enabled = true;
-                        effect.DirectionalLight1.DiffuseColor = new Vector3(0.3f, 0.3f, 0.3f);
-
 
                         if (a == 1 || a == 2)
                         {
-                            effect.EmissiveColor = color * 0.8f;
-                            effect.DiffuseColor = color * 0.9f;
-                            effect.AmbientLightColor = color / 3.0f;
+                            effect.EmissiveColor = color * 0.3f;
+                            effect.DiffuseColor = color * 0.7f;
+                            effect.AmbientLightColor = new Vector3(0.0533f, 0.0988f, 0.1819f);
                         }
                         else
                         {
-                            effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
-                            effect.DiffuseColor = new Vector3(1.0f, 1.0f, 1.0f);
-                            effect.AmbientLightColor = new Vector3(0.8f, 0.8f, 0.8f);
+                            effect.DiffuseColor = new Vector3(0.64f, 0.64f, 0.64f);
                         }
 
                         if (pickVars.pickActive && !isBuild)

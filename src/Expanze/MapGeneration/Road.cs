@@ -74,7 +74,7 @@ namespace Expanze
                         // is it model part which is for flags? They have to be in player colors
                         if (a % 5 == 1 || a % 5 == 2 || a % 5 == 3 || a == 4 || a == 5 || a == 15 || a == 14)
                         {                         
-                            effect.EmissiveColor = color * 0.8f;
+                            effect.EmissiveColor = color * 0.5f;
                             effect.DiffuseColor = color * 0.9f;
                             effect.AmbientLightColor = color / 3.0f;
                         }
