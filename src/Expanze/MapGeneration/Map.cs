@@ -20,7 +20,6 @@ namespace Expanze
         Model townModel, roadModel;
 
         public Vector3 eye, target, up;
-        public float angle;
 
         Game myGame;
         ContentManager content;
