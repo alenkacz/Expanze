@@ -32,5 +32,7 @@ namespace Expanze
         }
 
         public static GraphicsDeviceManager GraphicsDeviceManager = null;
+
+        public static bool isFullscreen = false;
     }
 }

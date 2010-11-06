@@ -23,11 +23,14 @@ namespace Expanze
         #region Fields
 
         MenuEntry resolutionMenuEntry;
+        MenuEntry fullscreenMenuEntry;
 
 
         static string[] resolution = new string[Settings.allResolutions.Length];
+        static string[] fullscreen = {"No", "Yes"};
 
         static int currentResolution = 0;
+        static int isFullscreen = 0;
 
         #endregion
 
@@ -65,6 +68,7 @@ namespace Expanze
 
             // Create our menu entries.
             resolutionMenuEntry = new MenuEntry(string.Empty);
+            fullscreenMenuEntry = new MenuEntry(string.Empty);
 
             SetMenuEntryText();
 
@@ -72,14 +76,18 @@ namespace Expanze
             MenuEntry back = new MenuEntry("Back");
 
             // Hook up menu event handlers.
-            resolutionMenuEntry.Selected += UngulateMenuEntrySelected;
+            resolutionMenuEntry.Selected += ResolutionMenuEntrySelected;
+            fullscreenMenuEntry.Selected += FullscreenMenuEntrySelected;
             apply.Selected += ApplyChangesSelected;
             back.Selected += OnCancel;
             
             // Add entries to the menu.
             MenuEntries.Add(resolutionMenuEntry);
+            MenuEntries.Add(fullscreenMenuEntry);
             MenuEntries.Add(apply);
             MenuEntries.Add(back);
+
+            if (Settings.isFullscreen) { isFullscreen = 1; }
         }
 
 
@@ -89,6 +97,7 @@ namespace Expanze
         void SetMenuEntryText()
         {
             resolutionMenuEntry.Text = "Resolution: " + resolution[currentResolution];
+            fullscreenMenuEntry.Text = "Fullscreen: " + fullscreen[isFullscreen];
         }
 
 
@@ -102,15 +111,31 @@ namespace Expanze
         void ApplyChangesSelected(object sender, PlayerIndexEventArgs e)
         {
             string selected = resolution[currentResolution];
+            bool fullscreen = (isFullscreen == 0) ? false : true;
+            GraphicsDeviceManager gdm = Settings.GraphicsDeviceManager;
 
             if (selected != resolutionToString(Settings.activeResolution))
             {
+                if (fullscreen != Settings.isFullscreen)
+                {
+                    //fullscreen settings has changed
+                    gdm.IsFullScreen = fullscreen;
+                    Settings.isFullscreen = fullscreen;
+                }
+
                 //resolution was changed
-                GraphicsDeviceManager gdm = Settings.GraphicsDeviceManager;
                 Vector2 newRes = resolutionToVector(selected);
                 gdm.PreferredBackBufferWidth = (int)newRes.X;
                 gdm.PreferredBackBufferHeight = (int)newRes.Y;
                 Settings.activeResolution = newRes;
+                gdm.ApplyChanges();
+            }
+            else if (fullscreen != Settings.isFullscreen)
+            {
+                //only fullscreen settings has changes
+
+                gdm.IsFullScreen = fullscreen;
+                Settings.isFullscreen = fullscreen;
                 gdm.ApplyChanges();
             }
         }
@@ -119,7 +144,7 @@ namespace Expanze
         /// <summary>
         /// Event handler for when the Ungulate menu entry is selected.
         /// </summary>
-        void UngulateMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        void ResolutionMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
             currentResolution++;
 
@@ -129,6 +154,19 @@ namespace Expanze
             SetMenuEntryText();
         }
 
+
+        /// <summary>
+        /// Event handler for when the Ungulate menu entry is selected.
+        /// </summary>
+        void FullscreenMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        {
+            isFullscreen++;
+
+            if (isFullscreen >= fullscreen.Length)
+                isFullscreen = 0;
+
+            SetMenuEntryText();
+        }
 
         #endregion
     }

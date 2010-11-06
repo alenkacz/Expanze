@@ -20,9 +20,9 @@ namespace Expanze
 
         public override void Draw(GameTime gameTime)
         {
-            base.Draw(gameTime);
-            Matrix SpriteScale = Matrix.CreateScale(Settings.activeResolution.X/1440, Settings.activeResolution.Y/800, 1);
+            Matrix SpriteScale = Matrix.CreateScale(Settings.activeResolution.X / Settings.maximumResolution.X, Settings.activeResolution.Y / Settings.maximumResolution.Y, 1);
             spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,null,null,null,null,SpriteScale);
+            spritePosition.Y = 800;
 
             Player act = GameMaster.getInstance().getActivePlayer();
 
