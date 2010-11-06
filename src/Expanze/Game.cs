@@ -49,6 +49,7 @@ namespace Expanze
             Settings.GraphicsDeviceManager = graphics;
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 600;
+            graphics.ApplyChanges();
 
             // Create the screen manager component.
             screenManager = new ScreenManager(this);

@@ -11,6 +11,13 @@ namespace Expanze
         private int money;
         private String name;
         private Color color;
+        private bool materialChangeDisplayed = true;
+
+        private int prev_corn = 0;
+        private int prev_wood = 0;
+        private int prev_ore = 0;
+        private int prev_meat = 0;
+        private int prev_stone = 0;
 
         private int corn = 0;
         private int wood = 0;
@@ -59,6 +66,8 @@ namespace Expanze
 
         public void payForSomething(SourceCost cost)
         {
+            changeSources(cost.wood, cost.stone, cost.corn, cost.meat, cost.ore);
+
             corn -= cost.corn;
             wood -= cost.wood;
             ore -= cost.ore;
@@ -68,6 +77,8 @@ namespace Expanze
 
         public void addSources(SourceCost amount)
         {
+            changeSources(amount.wood, amount.stone, amount.corn, amount.meat, amount.ore);
+
             corn += amount.corn;
             wood += amount.wood;
             stone += amount.stone;
@@ -77,11 +88,41 @@ namespace Expanze
 
         public void addSources(int wood, int stone, int corn, int meat, int ore)
         {
+            changeSources(wood,stone,corn,meat,ore);
+
             this.corn += corn;
             this.wood += wood;
             this.ore += ore;
             this.meat += meat;
             this.stone += stone;
+        }
+        
+        /// <summary>
+        /// Remembers state of material from previous round, active when active player is changed
+        /// </summary>
+        public void changeSources(int wood, int stone, int corn, int meat, int ore)
+        {
+            if (materialChangeDisplayed)
+            {
+                prev_corn = corn;
+                prev_wood = wood;
+                prev_stone = stone;
+                prev_meat = meat;
+                prev_ore = ore;
+
+                materialChangeDisplayed = false;
+            }
+        }
+
+        public bool hasMaterialChanged()
+        {
+            return !materialChangeDisplayed;
+        }
+
+        public SourceCost getMaterialChange()
+        {
+            materialChangeDisplayed = true;
+            return new SourceCost(prev_wood,prev_stone,prev_corn,prev_meat,prev_ore);
         }
     }
 }

@@ -70,6 +70,7 @@ namespace Expanze
 
             GameState.gameFont = content.Load<SpriteFont>("gamefont");
             GameState.hudMaterialsFont = content.Load<SpriteFont>("hudMaterialsFont");
+            GameState.materialsNewFont = content.Load<SpriteFont>("materialsNewFont");
 
             //gamelogic
             gMaster.startGame();
@@ -92,8 +93,8 @@ namespace Expanze
             guiComponents.Add(materialsHUDComp);
             GuiComponent usersHud = new GuiComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width -391, 0, GameState.gameFont, 232, 225, "hud-top");
             guiComponents.Add(usersHud);
-            GuiComponent newMsg = new GuiComponent(ScreenManager.Game, 0, ScreenManager.Game.GraphicsDevice.Viewport.Height - 80, GameState.gameFont, 93, 80, "newmessage");
-            guiComponents.Add(newMsg);
+            //GuiComponent newMsg = new GuiComponent(ScreenManager.Game, 0, ScreenManager.Game.GraphicsDevice.Viewport.Height - 80, GameState.gameFont, 93, 80, "newmessage");
+            //guiComponents.Add(newMsg);
             //gameComponents.Add(buttonComp);
 
             foreach(GameComponent gameComponent in gameComponents)
@@ -210,7 +211,7 @@ namespace Expanze
             if (input.IsPauseGame(ControllingPlayer) || gamePadDisconnected || GameMaster.getInstance().isPausedNew())
             {
                 GameMaster.getInstance().setPaused(true);
-                ScreenManager.AddScreen(new MarketMenuScreen(), ControllingPlayer);
+                ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
             }
             else
             {

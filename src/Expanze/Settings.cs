@@ -18,13 +18,13 @@ namespace Expanze
         //score at the beginning
         public const int startScore = 15000;
 
-        //position of player name on the gamescreen
-        public static Vector2 playerNamePosition = new Vector2(790,3);
-
         public static SourceCost costTown = new SourceCost(60, 60, 50, 50, 30);
         public static SourceCost costRoad = new SourceCost(0, 40, 0, 0, 50);
 
         public static Vector2 activeResolution = new Vector2(800,600);
+
+        //position of player name on the gamescreen
+        public static Vector2 playerNamePosition = new Vector2(Settings.activeResolution.X-100, 3);
 
         public static float getScale()
         {
@@ -34,5 +34,7 @@ namespace Expanze
         public static GraphicsDeviceManager GraphicsDeviceManager = null;
 
         public static bool isFullscreen = false;
+
+        public static Matrix spriteScale = Matrix.CreateScale(Settings.activeResolution.X / Settings.maximumResolution.X, Settings.activeResolution.Y / Settings.maximumResolution.Y, 1);
     }
 }
