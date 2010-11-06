@@ -39,7 +39,7 @@ namespace Expanze
             if (ButtonState.Pressed == mouseState.LeftButton && !pressed)
             {
 
-                if ((mousex > (spritePosition.X * Settings.spriteScale.M11) && mousex < (spritePosition.X * Settings.spriteScale.M11 + width)) && (mousey < (spritePosition.Y* Settings.spriteScale.M11) + height && mousey > (spritePosition.Y* Settings.spriteScale.M11)))//identify mouse over x y posotions for the button
+                if ((mousex > spritePosition.X && mousex < (spritePosition.X + width) ) && (mousey < spritePosition.Y + height && mousey > spritePosition.Y))//identify mouse over x y posotions for the button
                 {
                     GameMaster.getInstance().nextTurn();
                     pressed = true;
