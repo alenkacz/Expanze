@@ -30,7 +30,7 @@ namespace Expanze
             if (act.hasMaterialChanged())
             {
                 changeMaterials = true;
-                materialsChangeTime = 1000;
+                materialsChangeTime = 1500;
             }
 
             if (changeMaterials)
