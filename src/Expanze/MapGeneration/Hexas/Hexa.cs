@@ -390,6 +390,8 @@ namespace Expanze
             rasterizerState.CullMode = CullMode.None;
             GameState.game.GraphicsDevice.RasterizerState = rasterizerState;
 
+            Matrix tempMatrix = (type == Settings.Types.Desert) ? Matrix.CreateScale(0.027f) : Matrix.CreateRotationZ((float)Math.PI);
+
             foreach (ModelMesh mesh in m.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
@@ -400,7 +402,7 @@ namespace Expanze
                     else
                         effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
 
-                    effect.World = Matrix.CreateRotationZ((float) Math.PI) * transforms[mesh.ParentBone.Index] * world;
+                    effect.World = transforms[mesh.ParentBone.Index] * tempMatrix * world;
                     effect.View = GameState.view;
                     effect.Projection = GameState.projection;
                 }
