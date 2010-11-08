@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
+using Expanze.MapGeneration;
 
 namespace Expanze
 {
@@ -44,7 +45,7 @@ namespace Expanze
 
                 if ((mousex > scaledPos.X && mousex < (scaledPos.X + width)) && (mousey < (scaledPos.Y + height) && mousey > scaledPos.Y))//identify mouse over x y posotions for the button
                 {
-                    if (GameMaster.getInstance().getState() == GameMaster.State.StateGame)
+                    if (GameMaster.getInstance().getState() == EGameState.StateGame)
                     {
                         GameMaster.getInstance().nextTurn();
                         pressed = true;

@@ -14,11 +14,6 @@ namespace Expanze
     /// </summary>
     class Hexa : IHexaGet
     {
-        // use for positioning roads and hexas too
-        public enum RoadPos { UpLeft, UpRight, MiddleLeft, MiddleRight, BottomLeft, BottomRight, Count };
-
-        public enum TownPos { Up, UpLeft, UpRight, BottomLeft, BottomRight, Bottom, Count };
-
         int value;      // how many sources will player get
         int hexaID;     // from counter, useable for picking
         Color pickHexaColor;    // color o hexa in render texture
@@ -492,6 +487,11 @@ namespace Expanze
         }
 
         public Town getTown(TownPos townPos)
+        {
+            return towns[(int)townPos];
+        }
+
+        public ITownGet getITown(TownPos townPos)
         {
             return towns[(int)townPos];
         }

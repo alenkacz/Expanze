@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Expanze.MapGeneration;
 
 namespace Expanze
 {
@@ -48,7 +49,7 @@ namespace Expanze
         public void Draw(GameTime gameTime)
         {
             GameMaster gm = GameMaster.getInstance();
-            if ((pickVars.pickActive && gm.getState() == GameMaster.State.StateGame) || isBuild)
+            if ((pickVars.pickActive && gm.getState() == EGameState.StateGame) || isBuild)
             {
                 Model m = GameState.map.getRoadModel();
                 Matrix[] transforms = new Matrix[m.Bones.Count];
@@ -172,7 +173,7 @@ namespace Expanze
         public Boolean CanActivePlayerBuildRoad()
         {
             GameMaster gm = GameMaster.getInstance();
-            if (gm.getState() == GameMaster.State.StateGame)
+            if (gm.getState() == EGameState.StateGame)
             {
                 Player activePlayer = gm.getActivePlayer();
                 if (!isBuild &&

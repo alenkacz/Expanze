@@ -28,7 +28,7 @@ namespace Expanze
         {
             // Create our menu entries.
             MenuEntry hotseatMenuEntry = new MenuEntry("Hot seat");
-            MenuEntry campaignMenuEntry = new MenuEntry("Sólo kampaň");
+            MenuEntry campaignMenuEntry = new MenuEntry("Umělá Inteligence");
             MenuEntry settingsMenuEntry = new MenuEntry("Nastavení");
             MenuEntry creatorsMenuEntry = new MenuEntry("Autoři");
             MenuEntry exitMenuEntry = new MenuEntry("Konec");

@@ -4,18 +4,17 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Expanze.AI;
+using Expanze.MapGeneration;
 
 namespace Expanze
 {
     class GameMaster
     {
-        public enum State {StateFirstTown, StateSecondTown, StateGame};
-
         private const int n_player = 2;
         private Player[] players = new Player[n_player];
         private Player activePlayer;
         private int activePlayerIndex;
-        private State state;
+        private EGameState state;
         // when is game paused and player see paused menu, he cant build towers etc
         private bool paused = false;
         // used for open paused menu
@@ -53,7 +52,7 @@ namespace Expanze
             pausedNew = false;
             paused = false;
 
-            state = State.StateFirstTown;
+            state = EGameState.StateFirstTown;
             return true;
         }
 
@@ -62,25 +61,27 @@ namespace Expanze
             if (activePlayer.getIsAI())
             {
                 componentAI.ResolveAI(GameState.map);
+                if (state == EGameState.StateGame)
+                    nextTurn();
             }
         }
 
         public Player getActivePlayer() { return activePlayer; }
-        public State getState() { return state; }
+        public EGameState getState() { return state; }
 
         public bool nextTurn()
         {
             bool status = true;
             status &= changeActivePlaye();
 
-            if(state == GameMaster.State.StateGame)
+            if(state == EGameState.StateGame)
             GameState.map.getSources(activePlayer);
             return status;
         }
 
         public void changeStateToStateGame()
         {
-            state = State.StateGame;
+            state = EGameState.StateGame;
             foreach (Player player in players)
             {
                 player.addSources(100, 100, 100, 100, 100);
@@ -114,18 +115,18 @@ namespace Expanze
 
         public bool changeActivePlaye()
         {
-            if (state == State.StateFirstTown || state == State.StateGame)
+            if (state == EGameState.StateFirstTown || state == EGameState.StateGame)
             {
                 activePlayerIndex++;
                 if (activePlayerIndex == n_player)
                 {
                     switch (state)
                     {
-                        case State.StateFirstTown :
+                        case EGameState.StateFirstTown :
                             activePlayerIndex--;
-                            state = State.StateSecondTown;
+                            state = EGameState.StateSecondTown;
                             break;
-                        case State.StateGame :
+                        case EGameState.StateGame :
                             activePlayerIndex = 0;
                             break;
                     }

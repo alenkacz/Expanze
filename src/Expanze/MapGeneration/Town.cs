@@ -9,7 +9,7 @@ using Expanze.MapGeneration;
 
 namespace Expanze
 {
-    class Town
+    class Town : ITownGet
     {
         private Player playerOwner;
         private bool isBuild;
@@ -238,7 +238,7 @@ namespace Expanze
         public Boolean CanActivePlayerBuildTown()
         {
             GameMaster gm = GameMaster.getInstance();
-            if (gm.getState() == GameMaster.State.StateGame)
+            if (gm.getState() == EGameState.StateGame)
             {
                 Player activePlayer = gm.getActivePlayer();
                 Boolean hasActivePlayerRoadNeighbour = false;

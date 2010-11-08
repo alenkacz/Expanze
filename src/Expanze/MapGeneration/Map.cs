@@ -68,39 +68,39 @@ namespace Expanze
 
                       // UP LEFT
                       if (i >= 1 && hexaMap[i - 1].Length > j)
-                          neighbours[(int)Hexa.RoadPos.UpLeft] = hexaMap[i - 1][j];
+                          neighbours[(int)RoadPos.UpLeft] = hexaMap[i - 1][j];
                       else
-                          neighbours[(int)Hexa.RoadPos.UpLeft] = null;
+                          neighbours[(int)RoadPos.UpLeft] = null;
 
                       // UP RIGHT
                       if (i >= 1 && j > 0 && hexaMap[i - 1].Length > j - 1)
-                          neighbours[(int)Hexa.RoadPos.UpRight] = hexaMap[i - 1][j - 1];
+                          neighbours[(int)RoadPos.UpRight] = hexaMap[i - 1][j - 1];
                       else
-                          neighbours[(int)Hexa.RoadPos.UpRight] = null;
+                          neighbours[(int)RoadPos.UpRight] = null;
 
                       // LEFT
                       if (hexaMap[i].Length > j + 1)
-                          neighbours[(int)Hexa.RoadPos.MiddleLeft] = hexaMap[i][j + 1];
+                          neighbours[(int)RoadPos.MiddleLeft] = hexaMap[i][j + 1];
                       else
-                          neighbours[(int)Hexa.RoadPos.MiddleLeft] = null;
+                          neighbours[(int)RoadPos.MiddleLeft] = null;
 
                       // RIGHT
                       if (j - 1 >= 0)
-                          neighbours[(int)Hexa.RoadPos.MiddleRight] = hexaMap[i][j - 1];
+                          neighbours[(int)RoadPos.MiddleRight] = hexaMap[i][j - 1];
                       else
-                          neighbours[(int)Hexa.RoadPos.MiddleRight] = null;
+                          neighbours[(int)RoadPos.MiddleRight] = null;
 
                       // BOTTOM LEFT
                       if (i + 1 < hexaMap.Length && hexaMap[i + 1].Length > j + 1)
-                          neighbours[(int)Hexa.RoadPos.BottomLeft] = hexaMap[i + 1][j + 1];
+                          neighbours[(int)RoadPos.BottomLeft] = hexaMap[i + 1][j + 1];
                       else
-                          neighbours[(int)Hexa.RoadPos.BottomLeft] = null;
+                          neighbours[(int)RoadPos.BottomLeft] = null;
 
                       // BOTTOM RIGHT
                       if (i + 1 < hexaMap.Length && hexaMap[i + 1].Length > j)
-                          neighbours[(int)Hexa.RoadPos.BottomRight] = hexaMap[i + 1][j];
+                          neighbours[(int)RoadPos.BottomRight] = hexaMap[i + 1][j];
                       else
-                          neighbours[(int)Hexa.RoadPos.BottomRight] = null;
+                          neighbours[(int)RoadPos.BottomRight] = null;
 
                       hexaMap[i][j].CreateTownsAndRoads(neighbours);
                   }
@@ -220,7 +220,7 @@ namespace Expanze
 
         public override void HandlePickableAreas(Color c)
         {
-            if (GameMaster.getInstance().getPaused())
+            if (GameMaster.getInstance().getPaused() || GameMaster.getInstance().getActivePlayer().getIsAI())
                 return;
 
             for (int i = 0; i < hexaMap.Length; i++)
@@ -298,7 +298,9 @@ namespace Expanze
         }
 
         /// ********************************
-        /// IHexaGet
+        /// IMapController
+
+        public EGameState GetState() { return GameMaster.getInstance().getState(); }
 
         public IHexaGet GetHexa(int x, int y)
         {
@@ -314,15 +316,16 @@ namespace Expanze
             if (town.CanActivePlayerBuildTown())
             {
                 town.BuildTown(gm.getActivePlayer());
-                if (gm.getState() != GameMaster.State.StateGame)
+                if (gm.getState() != EGameState.StateGame)
                 {
                     gm.nextTurn();
                 }
                 else
                     gm.getActivePlayer().payForSomething(Settings.costTown);
+                return true;
             }
 
-            return true;
+            return false;
         }
 
         /// IHexaGet
