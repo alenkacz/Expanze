@@ -60,7 +60,7 @@ namespace Expanze
         void HotseatMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
             LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
-                               new GameplayScreen());
+                               new GameplayScreen(false));
         }
 
         /// <summary>
@@ -68,8 +68,9 @@ namespace Expanze
         /// </summary>
         void CampaignMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
+            // now is used for AI
             LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
-                               new GameplayScreen());
+                               new GameplayScreen(true));
         }
 
 

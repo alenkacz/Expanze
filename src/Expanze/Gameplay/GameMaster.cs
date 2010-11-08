@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Expanze.AI;
 
 namespace Expanze
 {
@@ -19,6 +20,8 @@ namespace Expanze
         private bool paused = false;
         // used for open paused menu
         private bool pausedNew = false;
+
+        IComponentAI componentAI;
 
         private static GameMaster instance = null;
 
@@ -37,10 +40,12 @@ namespace Expanze
         /// </summary>
         private GameMaster() { }
 
-        public bool startGame()
+        public bool startGame(bool isAI)
         {
-            players[0] = new Player(Settings.startScore, "Player1", Color.RoyalBlue);
-            players[1] = new Player(Settings.startScore, "Player2", Color.Red);
+            players[0] = new Player(Settings.startScore, "Player1", Color.RoyalBlue, false);
+            players[1] = new Player(Settings.startScore, "Player2", Color.Red, isAI);
+
+            componentAI = new NoobAI();
 
             activePlayerIndex = 0;
             activePlayer = players[activePlayerIndex];
@@ -50,6 +55,14 @@ namespace Expanze
 
             state = State.StateFirstTown;
             return true;
+        }
+
+        public void Update()
+        {
+            if (activePlayer.getIsAI())
+            {
+                componentAI.ResolveAI(GameState.map);
+            }
         }
 
         public Player getActivePlayer() { return activePlayer; }
@@ -73,9 +86,6 @@ namespace Expanze
                 player.addSources(100, 100, 100, 100, 100);
             }
         }
-
-        // NEPOCHOPIL JSEM SMYSL //
-        ///////////////////////////
 
         public bool isPausedNew()
         {

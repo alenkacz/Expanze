@@ -25,13 +25,17 @@ namespace Expanze
         private int meat = 0;
         private int stone = 0;
 
-        public Player(int score, String name, Color color)
+        private bool isAI;  // is this player controlled by AI
+
+        public Player(int score, String name, Color color, bool isAI)
         {
             this.color = color;
             this.money = score;
             this.name = name;
+            this.isAI = isAI;
         }
 
+        public bool getIsAI() { return isAI; }
         public Color getColor() { return color; }
 
         public String getName()

@@ -13,7 +13,7 @@ namespace Expanze
         private Player playerOwner;
         private bool isBuild;
 
-        private int number;
+        private int roadID;
         public static int counter = 0;
         private Color pickRoadColor;
         private PickVariables pickVars;
@@ -25,7 +25,7 @@ namespace Expanze
         {
             this.world = world;
 
-            number = ++counter;
+            roadID = ++counter;
             this.pickRoadColor = new Color(0.0f, counter / 256.0f, 0.0f);
 
             neighbour = new Town[2];

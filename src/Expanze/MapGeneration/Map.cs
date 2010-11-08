@@ -6,13 +6,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Expanze.MapGeneration;
 
 namespace Expanze
 {
     /// <summary>
     /// Responsible for rendering game map
     /// </summary>
-    class Map : GameComponent
+    class Map : GameComponent, IMapController
     {
         const int N_MODEL = 7;
         Model[] hexaModel;
@@ -135,7 +136,7 @@ namespace Expanze
             return parser.getMap();
         }
 
-        public Model getHexaModel(Settings.Types type)
+        public Model getHexaModel(HexaType type)
         {
             return hexaModel[(int)type];
         }
@@ -159,13 +160,13 @@ namespace Expanze
                 content = new ContentManager(myGame.Services, "Content");
 
             hexaModel = new Model[N_MODEL];
-            hexaModel[(int)Settings.Types.Cornfield] = content.Load<Model>(Settings.mapPaths[(int) Settings.Types.Cornfield]);
-            hexaModel[(int)Settings.Types.Desert] = content.Load<Model>(Settings.mapPaths[(int) Settings.Types.Desert]);
-            hexaModel[(int)Settings.Types.Forest] = content.Load<Model>(Settings.mapPaths[(int)Settings.Types.Forest]);
-            hexaModel[(int)Settings.Types.Mountains] = content.Load<Model>(Settings.mapPaths[(int)Settings.Types.Mountains]);
-            hexaModel[(int)Settings.Types.Pasture] = content.Load<Model>(Settings.mapPaths[(int)Settings.Types.Pasture]);
-            hexaModel[(int)Settings.Types.Stone] = content.Load<Model>(Settings.mapPaths[(int)Settings.Types.Stone]);
-            hexaModel[(int)Settings.Types.Water] = content.Load<Model>(Settings.mapPaths[(int)Settings.Types.Water]);
+            hexaModel[(int)HexaType.Cornfield] = content.Load<Model>(Settings.mapPaths[(int) HexaType.Cornfield]);
+            hexaModel[(int)HexaType.Desert] = content.Load<Model>(Settings.mapPaths[(int) HexaType.Desert]);
+            hexaModel[(int)HexaType.Forest] = content.Load<Model>(Settings.mapPaths[(int)HexaType.Forest]);
+            hexaModel[(int)HexaType.Mountains] = content.Load<Model>(Settings.mapPaths[(int)HexaType.Mountains]);
+            hexaModel[(int)HexaType.Pasture] = content.Load<Model>(Settings.mapPaths[(int)HexaType.Pasture]);
+            hexaModel[(int)HexaType.Stone] = content.Load<Model>(Settings.mapPaths[(int)HexaType.Stone]);
+            hexaModel[(int)HexaType.Water] = content.Load<Model>(Settings.mapPaths[(int)HexaType.Water]);
             rectangleShape = content.Load<Model>("Shapes/rectangle");
             circleShape = content.Load<Model>("Shapes/circle");
             townModel = content.Load<Model>("Models/town");
@@ -280,6 +281,52 @@ namespace Expanze
 
             base.Draw(gameTime);
         }
+
+
+        private Town GetTownByID(int townID)
+        {
+            Town town = null;
+            for (int i = 0; i < hexaMap.Length; i++)
+                for (int j = 0; j < hexaMap[i].Length; j++)
+                    if (hexaMap[i][j] != null)
+                    {
+                        town= hexaMap[i][j].GetTownByID(townID);
+                        if (town != null)
+                            return town;
+                    }
+            return null;
+        }
+
+        /// ********************************
+        /// IHexaGet
+
+        public IHexaGet GetHexa(int x, int y)
+        {
+            return hexaMap[x][y];
+        }
+
+
+        public bool BuildTown(int townID)
+        {
+            Town town = GetTownByID(townID);
+
+            GameMaster gm = GameMaster.getInstance();
+            if (town.CanActivePlayerBuildTown())
+            {
+                town.BuildTown(gm.getActivePlayer());
+                if (gm.getState() != GameMaster.State.StateGame)
+                {
+                    gm.nextTurn();
+                }
+                else
+                    gm.getActivePlayer().payForSomething(Settings.costTown);
+            }
+
+            return true;
+        }
+
+        /// IHexaGet
+        /// ********************************
 
         public static void SetPickVariables(Boolean isPickColor, PickVariables pickVars)
         {

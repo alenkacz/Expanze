@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using Expanze.MapGeneration;
 
-namespace Expanze
+namespace Expanze.AI
 {
-    class WaterHexa : Hexa
+    interface IComponentAI
     {
-        public WaterHexa() : base(0, HexaType.Water)
-        {
-        }
+        void ResolveAI(IMapController mapController);
     }
 }

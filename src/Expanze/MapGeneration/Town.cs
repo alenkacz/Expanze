@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Expanze.MapGeneration;
 
 namespace Expanze
 {
@@ -16,13 +17,14 @@ namespace Expanze
         private Town[] townNeighbour; // two or 3 neighbours
         private Hexa[] hexaNeighbour; // 1 - 3 neighbours
 
-        private int number;
+        private int townID;
         public static int counter = 0;
         private Color pickTownColor;
         private PickVariables pickVars;
 
         private Matrix world;
 
+        public int getTownID() { return townID; }
         public Boolean getPickNewPress() { return pickVars.pickNewPress; }
         public bool getIsBuild() { return isBuild; }
         public Player getPlayerOwner() { return playerOwner; }
@@ -31,10 +33,10 @@ namespace Expanze
         {
             this.world = world;
 
-            number = ++counter;
+            townID = ++counter;
             isBuild = false;
 
-            this.pickTownColor = new Color(0.0f, 0.0f, this.number / 256.0f);
+            this.pickTownColor = new Color(0.0f, 0.0f, this.townID / 256.0f);
 
             roadNeighbour = new Road[3];
             townNeighbour = new Town[3];
@@ -84,23 +86,23 @@ namespace Expanze
 
                     switch (hexa.getType())
                     {
-                        case Settings.Types.Forest:
+                        case HexaType.Forest:
                             cost = cost + new SourceCost(amount, 0, 0, 0, 0);
                             break;
 
-                        case Settings.Types.Stone:
+                        case HexaType.Stone:
                             cost = cost + new SourceCost(0, amount, 0, 0, 0);
                             break;
 
-                        case Settings.Types.Cornfield :
+                        case HexaType.Cornfield :
                             cost = cost + new SourceCost(0, 0, amount, 0, 0);
                             break;
 
-                        case Settings.Types.Pasture:
+                        case HexaType.Pasture:
                             cost = cost + new SourceCost(0, 0, 0, amount, 0);
                             break;
 
-                        case Settings.Types.Mountains:
+                        case HexaType.Mountains:
                             cost = cost + new SourceCost(0, 0, 0, 0, amount);
                             break;
                     }
@@ -152,7 +154,7 @@ namespace Expanze
                 m.CopyAbsoluteBoneTransformsTo(transforms);
 
                 Matrix rotation;
-                rotation = (number % 7 == 0) ? Matrix.Identity : Matrix.CreateRotationY((float)Math.PI * 2.0f / (float)(number % 7));
+                rotation = (townID % 7 == 0) ? Matrix.Identity : Matrix.CreateRotationY((float)Math.PI * 2.0f / (float)(townID % 7));
                 Matrix mWorld = rotation * Matrix.CreateTranslation(new Vector3(0.0f, 0.01f, 0.0f)) * Matrix.CreateScale(0.00032f) * world;
 
                 int a = 0;
@@ -227,19 +229,13 @@ namespace Expanze
 
             // create new town?
             GameMaster gm = GameMaster.getInstance();
-            if (pickVars.pickNewPress && CanActivePlayerBuildTown())
+            if (pickVars.pickNewPress)
             {
-                BuildTown(gm.getActivePlayer());
-                if (gm.getState() != GameMaster.State.StateGame)
-                {
-                    gm.nextTurn();
-                }
-                else
-                    gm.getActivePlayer().payForSomething(Settings.costTown);
+                GameState.map.BuildTown(townID);
             }
         }
 
-        private Boolean CanActivePlayerBuildTown()
+        public Boolean CanActivePlayerBuildTown()
         {
             GameMaster gm = GameMaster.getInstance();
             if (gm.getState() == GameMaster.State.StateGame)

@@ -5,13 +5,14 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Expanze.MapGeneration;
 
 namespace Expanze
 {
     /// <summary>
     /// Containing information about one single hexa
     /// </summary>
-    class Hexa
+    class Hexa : IHexaGet
     {
         // use for positioning roads and hexas too
         public enum RoadPos { UpLeft, UpRight, MiddleLeft, MiddleRight, BottomLeft, BottomRight, Count };
@@ -19,11 +20,11 @@ namespace Expanze
         public enum TownPos { Up, UpLeft, UpRight, BottomLeft, BottomRight, Bottom, Count };
 
         int value;      // how many sources will player get
-        int number;     // from counter, useable for picking
+        int hexaID;     // from counter, useable for picking
         Color pickHexaColor;    // color o hexa in render texture
         private PickVariables pickVars;
 
-        private Settings.Types type = Settings.Types.Water;
+        private HexaType type = HexaType.Water;
         private Hexa[] hexaNeighbours;      // neighbours of hexa, to index use RoadPos
         private Town[] towns;               // possible towns on hexa, to index use Town Pos
         private Boolean[] townOwner;        // was this town made by this hexa? if was, this hexa will draw it, handle picking, get sources...
@@ -33,12 +34,12 @@ namespace Expanze
 
         private static int counter = 0;    // how many hexas are created
 
-        public Hexa() : this(0, Settings.Types.Water) { }
+        public Hexa() : this(0, HexaType.Water) { }
 
-        public Hexa( int value , Settings.Types type)
+        public Hexa(int value, HexaType type)
         {
-            this.number = ++counter;
-            this.pickHexaColor = new Color(this.number / 256.0f, 0.0f, 0.0f);
+            this.hexaID = ++counter;
+            this.pickHexaColor = new Color(this.hexaID / 256.0f, 0.0f, 0.0f);
             
             this.type = type;
             this.value = value;
@@ -63,7 +64,7 @@ namespace Expanze
             for (int loop1 = 0; loop1 < neighbours.Length; loop1++)
                 hexaNeighbours[loop1] = neighbours[loop1];
 
-            if (type == Settings.Types.Nothing || type == Settings.Types.Water)
+            if (type == HexaType.Nothing || type == HexaType.Water)
                 return;
 
             ///////////////////////
@@ -390,7 +391,7 @@ namespace Expanze
             rasterizerState.CullMode = CullMode.None;
             GameState.game.GraphicsDevice.RasterizerState = rasterizerState;
 
-            Matrix tempMatrix = (type == Settings.Types.Desert || type == Settings.Types.Forest) ? Matrix.CreateScale(0.00027f) : Matrix.CreateRotationZ((float)Math.PI);
+            Matrix tempMatrix = (type == HexaType.Desert || type == HexaType.Forest) ? Matrix.CreateScale(0.00027f) : Matrix.CreateRotationZ((float)Math.PI);
 
             foreach (ModelMesh mesh in m.Meshes)
             {
@@ -480,7 +481,7 @@ namespace Expanze
         }
 
         public int getValue() { return value; }
-        public Settings.Types getType()
+        public HexaType getType()
         {
             return this.type;
         }
@@ -493,6 +494,18 @@ namespace Expanze
         public Town getTown(TownPos townPos)
         {
             return towns[(int)townPos];
+        }
+
+        public Town GetTownByID(int townID)
+        {
+            for (int loop1 = 0; loop1 < towns.Length; loop1++)
+                if (townOwner[loop1])
+                {
+                    if (townID == towns[loop1].getTownID())
+                        return towns[loop1];
+                }
+
+            return null;
         }
     }
 }

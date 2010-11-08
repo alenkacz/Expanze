@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Expanze.MapGeneration;
 
 namespace Expanze
 {
@@ -10,25 +11,25 @@ namespace Expanze
     /// </summary>
     class HexaCreator
     {
-        public static Hexa create(Settings.Types type, int number)
+        public static Hexa create(HexaType type, int number)
         {
             switch (type)
             {
-                case Settings.Types.Cornfield:
+                case HexaType.Cornfield:
                     return new CornfieldHexa(number);
-                case Settings.Types.Desert:
+                case HexaType.Desert:
                     return new DesertHexa(number);
-                case Settings.Types.Forest:
+                case HexaType.Forest:
                     return new ForestHexa(number);
-                case Settings.Types.Mountains:
+                case HexaType.Mountains:
                     return new MountainsHexa(number);
-                case Settings.Types.Pasture:
+                case HexaType.Pasture:
                     return new PastureHexa(number);
-                case Settings.Types.Stone:
+                case HexaType.Stone:
                     return new StoneHexa(number);
-                case Settings.Types.Water:
+                case HexaType.Water:
                     return new WaterHexa();
-                case Settings.Types.Nothing:
+                case HexaType.Nothing:
                     return null;
                 default:
                     throw new Exception("XML file with map is broken.");

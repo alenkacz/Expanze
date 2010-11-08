@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Expanze.MapGeneration;
 
 namespace Expanze
 {
     class MountainsHexa : Hexa
     {
-        public MountainsHexa(int value) : base(value, Settings.Types.Mountains)
+        public MountainsHexa(int value) : base(value, HexaType.Mountains)
         {
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using Expanze.MapGeneration;
 
 namespace Expanze
 {
@@ -77,28 +78,28 @@ namespace Expanze
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        private Settings.Types decideType(String type)
+        private HexaType decideType(String type)
         {
             switch (type)
             {
                 case "cornfield":
-                    return Settings.Types.Cornfield;
+                    return HexaType.Cornfield;
                 case "forest":
-                    return Settings.Types.Forest;
+                    return HexaType.Forest;
                 case "desert":
-                    return Settings.Types.Desert;
+                    return HexaType.Desert;
                 case "mountains":
-                    return Settings.Types.Mountains;
+                    return HexaType.Mountains;
                 case "pasture":
-                    return Settings.Types.Pasture;
+                    return HexaType.Pasture;
                 case "stone":
-                    return Settings.Types.Stone;
+                    return HexaType.Stone;
                 case "water":
-                    return Settings.Types.Water;
+                    return HexaType.Water;
                 case "nothing" :
-                    return Settings.Types.Nothing;
+                    return HexaType.Nothing;
                 default :
-                    return Settings.Types.Null;
+                    return HexaType.Null;
             }
         }
     }
