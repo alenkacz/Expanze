@@ -390,7 +390,7 @@ namespace Expanze
             rasterizerState.CullMode = CullMode.None;
             GameState.game.GraphicsDevice.RasterizerState = rasterizerState;
 
-            Matrix tempMatrix = (type == Settings.Types.Desert) ? Matrix.CreateScale(0.027f) : Matrix.CreateRotationZ((float)Math.PI);
+            Matrix tempMatrix = (type == Settings.Types.Desert || type == Settings.Types.Forest) ? Matrix.CreateScale(0.00027f) : Matrix.CreateRotationZ((float)Math.PI);
 
             foreach (ModelMesh mesh in m.Meshes)
             {
