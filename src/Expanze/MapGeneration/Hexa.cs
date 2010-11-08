@@ -386,7 +386,11 @@ namespace Expanze
             rasterizerState.CullMode = CullMode.None;
             GameState.game.GraphicsDevice.RasterizerState = rasterizerState;
 
-            Matrix tempMatrix = (type == HexaType.Desert || type == HexaType.Forest) ? Matrix.CreateScale(0.00027f) : Matrix.CreateRotationZ((float)Math.PI);
+            Matrix rotation;
+            rotation = (hexaID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaID % 6));
+            Matrix tempMatrix = ((type == HexaType.Desert || type == HexaType.Forest || type == HexaType.Mountains) ? Matrix.CreateScale(0.00027f) * rotation : rotation * Matrix.CreateRotationZ((float)Math.PI));
+            
+            
 
             foreach (ModelMesh mesh in m.Meshes)
             {
