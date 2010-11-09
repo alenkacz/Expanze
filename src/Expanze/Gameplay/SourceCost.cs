@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Expanze
 {
-    class SourceCost
+    class SourceAll
     {
         public int corn = 0;
         public int wood = 0;
@@ -13,7 +13,7 @@ namespace Expanze
         public int meat = 0;
         public int ore = 0;
 
-        public SourceCost(int amount)
+        public SourceAll(int amount)
         {
             corn = amount;
             wood = amount;
@@ -22,7 +22,7 @@ namespace Expanze
             ore = amount;
         }
 
-        public SourceCost(int wood, int stone, int corn, int meat, int ore)
+        public SourceAll(int wood, int stone, int corn, int meat, int ore)
         {
             this.corn = corn;
             this.wood = wood;
@@ -31,9 +31,14 @@ namespace Expanze
             this.ore = ore;
         }
 
-        public static SourceCost operator +(SourceCost a, SourceCost b)
+        public static SourceAll operator +(SourceAll a, SourceAll b)
         {
-            return new SourceCost(a.wood + b.wood, a.stone + b.stone, a.corn + b.corn, a.meat + b.meat, a.ore + b.ore);
+            return new SourceAll(a.wood + b.wood, a.stone + b.stone, a.corn + b.corn, a.meat + b.meat, a.ore + b.ore);
+        }
+
+        public static SourceAll operator -(SourceAll a, SourceAll b)
+        {
+            return new SourceAll(a.wood - b.wood, a.stone - b.stone, a.corn - b.corn, a.meat - b.meat, a.ore - b.ore);
         }
 
         public Boolean HasPlayerSources(Player player)

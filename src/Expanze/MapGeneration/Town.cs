@@ -75,7 +75,7 @@ namespace Expanze
             if (playerOwner != player)
                 return;
 
-            SourceCost cost = new SourceCost(0);
+            SourceAll cost = new SourceAll(0);
             int amount;
 
             foreach (Hexa hexa in hexaNeighbour)
@@ -87,28 +87,28 @@ namespace Expanze
                     switch (hexa.getType())
                     {
                         case HexaType.Forest:
-                            cost = cost + new SourceCost(amount, 0, 0, 0, 0);
+                            cost = cost + new SourceAll(amount, 0, 0, 0, 0);
                             break;
 
                         case HexaType.Stone:
-                            cost = cost + new SourceCost(0, amount, 0, 0, 0);
+                            cost = cost + new SourceAll(0, amount, 0, 0, 0);
                             break;
 
                         case HexaType.Cornfield :
-                            cost = cost + new SourceCost(0, 0, amount, 0, 0);
+                            cost = cost + new SourceAll(0, 0, amount, 0, 0);
                             break;
 
                         case HexaType.Pasture:
-                            cost = cost + new SourceCost(0, 0, 0, amount, 0);
+                            cost = cost + new SourceAll(0, 0, 0, amount, 0);
                             break;
 
                         case HexaType.Mountains:
-                            cost = cost + new SourceCost(0, 0, 0, 0, amount);
+                            cost = cost + new SourceAll(0, 0, 0, 0, amount);
                             break;
                     }
                 }
             }
-            player.addSources(cost);
+            player.addSources(cost, TransactionState.TransactionMiddle);
         }
 
         public void BuildTown(Player player)

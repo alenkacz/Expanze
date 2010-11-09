@@ -86,7 +86,7 @@ namespace Expanze
             state = EGameState.StateGame;
             foreach (Player player in players)
             {
-                player.addSources(100, 100, 100, 100, 100);
+                player.addSources(new SourceAll(100), TransactionState.TransactionStart);
             }
         }
 

@@ -354,10 +354,13 @@ namespace Expanze
 
         public void Draw2D()
         {
-            BoundingFrustum frustum = new BoundingFrustum(GameState.view * GameState.projection);
-            ContainmentType type = frustum.Contains(Vector3.Transform(new Vector3(0.0f, 0.0f, 0.0f), world)) ;
+            if (type == HexaType.Desert)
+                return;
 
-            if (type != ContainmentType.Disjoint)
+            BoundingFrustum frustum = new BoundingFrustum(GameState.view * GameState.projection);
+            ContainmentType containmentType = frustum.Contains(Vector3.Transform(new Vector3(0.0f, 0.0f, 0.0f), world)) ;
+
+            if (containmentType != ContainmentType.Disjoint)
             {
                 Vector3 point3D = GameState.game.GraphicsDevice.Viewport.Project(new Vector3(0.0f, 0.0f, 0.0f), GameState.projection, GameState.view, world);
                 Vector2 point2D = new Vector2();

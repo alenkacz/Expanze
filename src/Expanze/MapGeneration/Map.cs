@@ -176,12 +176,14 @@ namespace Expanze
         // active player gets on start of his turn sources from mining buildings
         public void getSources(Player player)
         {
+            player.addSources(new SourceAll(0), TransactionState.TransactionStart);
             for (int i = 0; i < hexaMap.Length; i++)
                 for (int j = 0; j < hexaMap[i].Length; j++)
                     if (hexaMap[i][j] != null)
                     {
                         hexaMap[i][j].CollectSources(player);
                     }
+            player.addSources(new SourceAll(0), TransactionState.TransactionEnd);
         }
 
         public void ChangeCamera()

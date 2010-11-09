@@ -78,7 +78,7 @@ namespace Expanze
 
             if (changeMaterials)
             {
-                SourceCost sc = act.getMaterialChange();
+                SourceAll sc = act.getMaterialChange();
 
 
                 if(sc.corn != 0) {

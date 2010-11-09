@@ -6,33 +6,31 @@ using Microsoft.Xna.Framework;
 
 namespace Expanze
 {
+    public enum TransactionState {TransactionStart, TransactionMiddle, TransactionEnd };
     class Player
     {
         private int money;
         private String name;
         private Color color;
-        private bool materialChangeDisplayed = true;
+        private bool materialChanged;
 
-        private int prev_corn = 0;
-        private int prev_wood = 0;
-        private int prev_ore = 0;
-        private int prev_meat = 0;
-        private int prev_stone = 0;
-
-        private int corn = 0;
-        private int wood = 0;
-        private int ore = 0;
-        private int meat = 0;
-        private int stone = 0;
+        SourceAll prevSource;
+        SourceAll source;
+        SourceAll transactionSource;
 
         private bool isAI;  // is this player controlled by AI
 
         public Player(int score, String name, Color color, bool isAI)
         {
+            prevSource = new SourceAll(0);
+            source = new SourceAll(0);
+            transactionSource = new SourceAll(0);
             this.color = color;
             this.money = score;
             this.name = name;
             this.isAI = isAI;
+
+            materialChanged = false;
         }
 
         public bool getIsAI() { return isAI; }
@@ -45,60 +43,55 @@ namespace Expanze
 
         public int getCorn()
         {
-            return this.corn;
+            return source.corn;
         }
 
         public int getWood()
         {
-            return this.wood;
+            return source.wood;
         }
 
         public int getOre()
         {
-            return this.ore;
+            return source.ore;
         }
 
         public int getMeat()
         {
-            return this.meat;
+            return source.meat;
         }
 
         public int getStone()
         {
-            return this.stone;
+            return source.stone;
         }
 
-        public void payForSomething(SourceCost cost)
+        public void payForSomething(SourceAll cost)
         {
             changeSources(-cost.wood, -cost.stone, -cost.corn, -cost.meat, -cost.ore);
 
-            corn -= cost.corn;
-            wood -= cost.wood;
-            ore -= cost.ore;
-            meat -= cost.meat;
-            stone -= cost.stone;
+            source = source - cost;
         }
 
-        public void addSources(SourceCost amount)
+        public void addSources(SourceAll amount, TransactionState state)
         {
-            changeSources(amount.wood, amount.stone, amount.corn, amount.meat, amount.ore);
-
-            corn += amount.corn;
-            wood += amount.wood;
-            stone += amount.stone;
-            meat += amount.meat;
-            ore += amount.ore;
-        }
-
-        public void addSources(int wood, int stone, int corn, int meat, int ore)
-        {
-            changeSources(wood,stone,corn,meat,ore);
-
-            this.corn += corn;
-            this.wood += wood;
-            this.ore += ore;
-            this.meat += meat;
-            this.stone += stone;
+            switch (state)
+            {
+                case TransactionState.TransactionStart :
+                    if (transactionSource.Equals(new SourceAll(0)))
+                        transactionSource = amount;
+                    else
+                        transactionSource += amount;
+                    break;
+                case TransactionState.TransactionMiddle :
+                    transactionSource = transactionSource + amount;
+                    break;
+                case TransactionState.TransactionEnd :
+                    source = source + transactionSource;               
+                    changeSources(transactionSource.wood, transactionSource.stone, transactionSource.corn, transactionSource.meat, transactionSource.ore);
+                    transactionSource = new SourceAll(0);
+                    break;
+            }
         }
         
         /// <summary>
@@ -106,27 +99,20 @@ namespace Expanze
         /// </summary>
         public void changeSources(int wood, int stone, int corn, int meat, int ore)
         {
-            if (materialChangeDisplayed)
-            {
-                prev_corn = corn;
-                prev_wood = wood;
-                prev_stone = stone;
-                prev_meat = meat;
-                prev_ore = ore;
-
-                materialChangeDisplayed = false;
-            }
+            materialChanged = true;
+            prevSource = new SourceAll(wood, stone, corn, meat, ore);
         }
 
         public bool hasMaterialChanged()
         {
-            return !materialChangeDisplayed;
+            bool temp = materialChanged;
+            materialChanged = false;
+            return temp;
         }
 
-        public SourceCost getMaterialChange()
+        public SourceAll getMaterialChange()
         {
-            materialChangeDisplayed = true;
-            return new SourceCost(prev_wood,prev_stone,prev_corn,prev_meat,prev_ore);
+            return prevSource;
         }
     }
 }
