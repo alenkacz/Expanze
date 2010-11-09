@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Expanze.MapGeneration;
 
-namespace Expanze.AI
+namespace CorePlugin
 {
-    interface IComponentAI
+    public interface IComponentAI
     {
         void ResolveAI(IMapController mapController);
     }

@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-using Expanze.AI;
-using Expanze.MapGeneration;
+using CorePlugin;
 
 namespace Expanze
 {
@@ -44,7 +43,10 @@ namespace Expanze
             players[0] = new Player(Settings.startScore, "Player1", Color.RoyalBlue, false);
             players[1] = new Player(Settings.startScore, "Player2", Color.Red, isAI);
 
-            componentAI = new NoobAI();
+            foreach (IComponentAI AI in CoreProviderAI.AI)
+            {
+                componentAI = AI;
+            }
 
             activePlayerIndex = 0;
             activePlayer = players[activePlayerIndex];

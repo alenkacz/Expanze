@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Expanze.MapGeneration
+namespace CorePlugin
 {
-    interface ITownGet
+    public interface ITownGet
     {
         int getTownID();
     }

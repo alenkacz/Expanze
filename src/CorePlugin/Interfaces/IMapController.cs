@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Expanze.MapGeneration
+namespace CorePlugin
 {
     public enum EGameState { StateFirstTown, StateSecondTown, StateGame };
 
-    interface IMapController
+    public interface IMapController
     {
         IHexaGet GetHexa(int x, int y);
         bool BuildTown(int townID);

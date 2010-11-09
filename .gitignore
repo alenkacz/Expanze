@@ -4,7 +4,14 @@ app/Expanze/obj
 src/Expanze/bin
 
 src/Expanze/obj
+src/CorePlugin/bin
+
+src/CorePlugin/obj
+src/NoobAI/bin
+src/NoobAI/obj
 src/Content/obj
+*.user
+*.zip
 *.cachefile
 
 *.cach

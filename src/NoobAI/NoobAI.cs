@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Expanze;
-using Expanze.MapGeneration;
+using CorePlugin;
+using CorePlugin.Attributes;
 
-namespace Expanze.AI
+namespace NoobAI
 {
+    [PluginAttributeAI("Really dumb AI")]
     class NoobAI : IComponentAI
     {
         public void ResolveAI(IMapController mapController)

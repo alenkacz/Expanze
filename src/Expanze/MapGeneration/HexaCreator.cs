@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Expanze.MapGeneration;
+using CorePlugin;
 
 namespace Expanze
 {

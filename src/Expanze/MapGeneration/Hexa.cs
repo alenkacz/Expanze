@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Expanze.MapGeneration;
+using CorePlugin;
 
 namespace Expanze
 {
@@ -388,7 +388,7 @@ namespace Expanze
 
             Matrix rotation;
             rotation = (hexaID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaID % 6));
-            Matrix tempMatrix = ((type == HexaType.Desert || type == HexaType.Forest || type == HexaType.Mountains) ? Matrix.CreateScale(0.00027f) * rotation : rotation * Matrix.CreateRotationZ((float)Math.PI));
+            Matrix tempMatrix = ((type == HexaType.Desert || type == HexaType.Forest || type == HexaType.Mountains) ? Matrix.CreateScale(0.00027f) * rotation : Matrix.CreateRotationZ((float)Math.PI));
             
             
 
