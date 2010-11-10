@@ -11,6 +11,7 @@ namespace CorePlugin
     {
         IHexaGet GetHexa(int x, int y);
         bool BuildTown(int townID);
+        bool BuildRoad(int roadID);
         EGameState GetState();
     }
 }

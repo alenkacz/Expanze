@@ -39,6 +39,7 @@ namespace Expanze
         public static void resetCounter() { counter = 0; }
 
         public Player getOwner() { return playerOwner; }
+        public int getRoadID() { return roadID; }
 
         public void SetTownNeighbours(Town one, Town two)
         {
@@ -161,13 +162,15 @@ namespace Expanze
             {
                 if (CanActivePlayerBuildRoad())
                 {
-                    GameMaster gm = GameMaster.getInstance();
-                    Player activePlayer = gm.getActivePlayer();
-                    activePlayer.payForSomething(Settings.costRoad);
-                    isBuild = true;
-                    playerOwner = activePlayer;
+                    GameState.map.BuildRoad(roadID);
                 }
             }
+        }
+
+        public void BuildRoad(Player player)
+        {
+            playerOwner = player;
+            isBuild = true;
         }
 
         public Boolean CanActivePlayerBuildRoad()

@@ -493,6 +493,18 @@ namespace Expanze
             return roads[(int)roadPos];
         }
 
+        public Road GetRoadByID(int roadID)
+        {
+            for (int loop1 = 0; loop1 < roads.Length; loop1++)
+                if (roadOwner[loop1])
+                {
+                    if (roadID == roads[loop1].getRoadID())
+                        return roads[loop1];
+                }
+
+            return null;
+        }
+
         public Town getTown(TownPos townPos)
         {
             return towns[(int)townPos];
