@@ -28,6 +28,7 @@ namespace Expanze
         public Boolean getPickNewPress() { return pickVars.pickNewPress; }
         public bool getIsBuild() { return isBuild; }
         public Player getPlayerOwner() { return playerOwner; }
+        public ISourceAll getCost() { return Settings.costTown; }
 
         public Town(Matrix world)
         {
@@ -154,7 +155,7 @@ namespace Expanze
                 m.CopyAbsoluteBoneTransformsTo(transforms);
 
                 Matrix rotation;
-                rotation = (townID % 7 == 0) ? Matrix.Identity : Matrix.CreateRotationY((float)Math.PI * 2.0f / (float)(townID % 7));
+                rotation = (townID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (townID % 6));
                 Matrix mWorld = rotation * Matrix.CreateTranslation(new Vector3(0.0f, 0.01f, 0.0f)) * Matrix.CreateScale(0.00032f) * world;
 
                 int a = 0;

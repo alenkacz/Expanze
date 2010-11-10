@@ -299,6 +299,20 @@ namespace Expanze
             return null;
         }
 
+        private Road GetRoadByID(int roadID)
+        {
+            Road road = null;
+            for (int i = 0; i < hexaMap.Length; i++)
+                for (int j = 0; j < hexaMap[i].Length; j++)
+                    if (hexaMap[i][j] != null)
+                    {
+                        road = hexaMap[i][j].GetRoadByID(roadID);
+                        if (road != null)
+                            return road;
+                    }
+            return null;
+        }
+
         /// ********************************
         /// IMapController
 
@@ -309,6 +323,20 @@ namespace Expanze
             return hexaMap[x][y];
         }
 
+        public bool BuildRoad(int roadID)
+        {
+            Road road = GetRoadByID(roadID);
+
+            GameMaster gm = GameMaster.getInstance();
+            if (road.CanActivePlayerBuildRoad())
+            {
+                road.BuildRoad(gm.getActivePlayer());
+                gm.getActivePlayer().payForSomething(Settings.costRoad);
+                return true;
+            }
+
+            return false;
+        }
 
         public bool BuildTown(int townID)
         {

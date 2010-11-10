@@ -8,5 +8,6 @@ namespace CorePlugin
     public interface ITownGet
     {
         int getTownID();
+        ISourceAll getCost();
     }
 }

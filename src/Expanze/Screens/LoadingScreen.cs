@@ -35,6 +35,7 @@ namespace Expanze
 
         bool loadingIsSlow;
         bool otherScreensAreGone;
+        long loadingTime;
 
         GameScreen[] screensToLoad;
 
@@ -52,6 +53,7 @@ namespace Expanze
         {
             this.loadingIsSlow = loadingIsSlow;
             this.screensToLoad = screensToLoad;
+            loadingTime = 0;
 
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
         }
@@ -94,8 +96,6 @@ namespace Expanze
             // off, it is time to actually perform the load.
             if (otherScreensAreGone)
             {
-                ScreenManager.RemoveScreen(this);
-
                 foreach (GameScreen screen in screensToLoad)
                 {
                     if (screen != null)
@@ -108,6 +108,7 @@ namespace Expanze
                 // the  game timing mechanism that we have just finished a very
                 // long frame, and that it should not try to catch up.
                 ScreenManager.Game.ResetElapsedTime();
+                ScreenManager.RemoveScreen(this);
             }
         }
 
@@ -139,7 +140,18 @@ namespace Expanze
                 SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
                 SpriteFont font = ScreenManager.Font;
 
-                const string message = "Loading...";
+                loadingTime += gameTime.ElapsedGameTime.Milliseconds;
+                string message = "Loading";
+                long tempTime = loadingTime % 400;
+                if(tempTime < 100)
+                    message += "";
+                else
+                if (tempTime < 200)
+                    message += ".";
+                else if (tempTime < 300)
+                    message += "..";
+                else
+                    message += "...";
 
                 // Center the text in the viewport.
                 Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
