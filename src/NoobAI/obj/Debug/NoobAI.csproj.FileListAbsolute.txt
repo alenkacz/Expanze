@@ -1,7 +1,0 @@
-C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\src\NoobAI\bin\Debug\NoobAI.dll
-C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\src\NoobAI\bin\Debug\NoobAI.pdb
-C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\src\NoobAI\bin\Debug\CorePlugin.dll
-C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\src\NoobAI\bin\Debug\CorePlugin.pdb
-C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\src\NoobAI\obj\Debug\ResolveAssemblyReference.cache
-C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\src\NoobAI\obj\Debug\NoobAI.dll
-C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\src\NoobAI\obj\Debug\NoobAI.pdb

@@ -1,5 +1,0 @@
-C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\src\CorePlugin\bin\Debug\CorePlugin.dll
-C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\src\CorePlugin\bin\Debug\CorePlugin.pdb
-C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\src\CorePlugin\obj\Debug\ResolveAssemblyReference.cache
-C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\src\CorePlugin\obj\Debug\CorePlugin.dll
-C:\Users\Alenka\Documents\Visual Studio 2010\Projects\Expanze\Expanze\src\CorePlugin\obj\Debug\CorePlugin.pdb
