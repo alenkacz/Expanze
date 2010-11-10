@@ -20,7 +20,7 @@ namespace Expanze
     /// The pause menu comes up over the top of the game,
     /// giving the player options to resume or quit.
     /// </summary>
-    class MarketMenuScreen : GameScreen
+    class MarketScreen : GameScreen
     {
         List<GuiComponent> guiComponents = new List<GuiComponent>();
         ContentManager content;
@@ -31,7 +31,7 @@ namespace Expanze
         /// <summary>
         /// Constructor.
         /// </summary>
-        public MarketMenuScreen()
+        public MarketScreen()
         {
 
         }
@@ -93,6 +93,9 @@ namespace Expanze
         {
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
             spriteBatch.Begin();
+            ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
+                                              Color.White, 0, 0);
+
             foreach (GuiComponent guiComponent in guiComponents)
             {
                 guiComponent.Draw(gameTime);
