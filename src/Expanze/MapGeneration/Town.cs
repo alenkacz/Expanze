@@ -28,6 +28,7 @@ namespace Expanze
         public Boolean getPickNewPress() { return pickVars.pickNewPress; }
         public bool getIsBuild() { return isBuild; }
         public Player getPlayerOwner() { return playerOwner; }
+        public ISourceAll getCost() { return Settings.costTown; }
 
         public Town(Matrix world)
         {

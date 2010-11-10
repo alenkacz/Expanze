@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CorePlugin;
 
 namespace Expanze
 {
-    class SourceAll
+    class SourceAll : ISourceAll
     {
         public int corn = 0;
         public int wood = 0;
@@ -18,7 +19,7 @@ namespace Expanze
             corn = amount;
             wood = amount;
             stone = amount;
-            meat = amount;
+            meat = amount;;
             ore = amount;
         }
 
@@ -30,6 +31,12 @@ namespace Expanze
             this.meat = meat;
             this.ore = ore;
         }
+
+        public int getWood() { return wood; }
+        public int getStone() { return stone; }
+        public int getCorn() { return corn; }
+        public int getOre() { return ore; }
+        public int getMeat() { return meat; }
 
         public static SourceAll operator +(SourceAll a, SourceAll b)
         {
