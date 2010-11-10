@@ -23,7 +23,7 @@ namespace Expanze
 
         public ButtonComponent(Game game, int x, int y, SpriteFont font, int width, int height, String texture) 
             : base(game,x,y,font,width,height,texture) {
-                scaledPos = new Vector2(Settings.scale(x),Settings.scale(y)+100);
+                scaledPos = Settings.scale(new Vector2(x,y));
         }
 
         public override void Update(GameTime gameTime)

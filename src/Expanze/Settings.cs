@@ -8,7 +8,7 @@ namespace Expanze
 {
     static class Settings
     {
-        public static Vector2[] allResolutions = { new Vector2(800, 600), new Vector2(1024, 768), new Vector2(1366, 768) };
+        public static Vector2[] allResolutions = { new Vector2(800, 600), new Vector2(1024, 768), new Vector2(1280, 800), new Vector2(1366, 768) };
         public static Vector2 maximumResolution = new Vector2(1440,900);
 
         //indexed by enum Types
@@ -42,9 +42,19 @@ namespace Expanze
             playerNamePosition = new Vector2(Settings.activeResolution.X - 70, 5);
         }
 
-        public static int scale(float v)
+        public static Vector2 scale(Vector2 size)
         {
-            return (int)( spriteScale.M11 * v);
+            return new Vector2(size.X * spriteScale.M11,size.Y * spriteScale.M22);
+        }
+
+        public static int scaleW(float w)
+        {
+            return (int)(w * spriteScale.M11);
+        }
+
+        public static int scaleH(float h)
+        {
+            return (int)(h * spriteScale.M22);
         }
     }
 }
