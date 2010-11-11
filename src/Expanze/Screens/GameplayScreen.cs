@@ -206,6 +206,10 @@ namespace Expanze
                 ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
             }
 
+            if (GameMaster.getInstance().isWinnerNew())
+            {
+                ScreenManager.AddScreen(new VictoryScreen(), ControllingPlayer);
+            }
         }
 
 

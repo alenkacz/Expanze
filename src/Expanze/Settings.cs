@@ -17,8 +17,12 @@ namespace Expanze
         //score at the beginning
         public const int startScore = 15000;
 
+        // costs of infrastructure
         public static SourceAll costTown = new SourceAll(60, 60, 50, 50, 30);
         public static SourceAll costRoad = new SourceAll(0, 40, 0, 0, 50);
+
+        // goals
+        public static SourceAll costWin = new SourceAll(200, 100, 100, 100, 100);
 
         public static Vector2 activeResolution = new Vector2(800,600);
 

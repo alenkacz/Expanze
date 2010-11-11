@@ -19,6 +19,8 @@ namespace Expanze
         // used for open paused menu
         private bool pausedNew = false;
 
+        private bool winnerNew = false;
+
         IComponentAI componentAI;
 
         private static GameMaster instance = null;
@@ -70,15 +72,37 @@ namespace Expanze
 
         public Player getActivePlayer() { return activePlayer; }
         public EGameState getState() { return state; }
+        public bool isWinnerNew() { bool temp = winnerNew; winnerNew = false; return temp; }
 
         public bool nextTurn()
         {
             bool status = true;
+            if (state == EGameState.StateGame)
+            {
+                //checkWinner(activePlayer);
+            }
             status &= changeActivePlaye();
 
-            if(state == EGameState.StateGame)
-            GameState.map.getSources(activePlayer);
+            if (state == EGameState.StateGame)
+            {
+                GameState.map.getSources(activePlayer);
+
+            }
             return status;
+        }
+
+        public void checkWinner(Player player)
+        {
+            bool isWinner = false;
+            if (Settings.costWin.HasPlayerSources(player))
+            {     
+                isWinner = true;
+            }
+
+            if (isWinner)
+            {
+                winnerNew = true;
+            }
         }
 
         public void changeStateToStateGame()

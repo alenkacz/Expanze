@@ -36,6 +36,11 @@ namespace Expanze
         public bool getIsAI() { return isAI; }
         public Color getColor() { return color; }
 
+        public SourceAll getSource()
+        {
+            return source;
+        }
+
         public String getName()
         {
             return this.name;
@@ -90,6 +95,7 @@ namespace Expanze
                     source = source + transactionSource;               
                     changeSources(transactionSource.wood, transactionSource.stone, transactionSource.corn, transactionSource.meat, transactionSource.ore);
                     transactionSource = new SourceAll(0);
+                    GameMaster.getInstance().checkWinner(this);
                     break;
             }
         }
