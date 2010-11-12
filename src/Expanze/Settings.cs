@@ -26,6 +26,9 @@ namespace Expanze
 
         public static Vector2 activeResolution = new Vector2(800,600);
 
+        //position of player name on the gamescreen
+        public static Vector2 playerNamePosition = new Vector2(Settings.activeResolution.X-80, 10);
+
         public static float getScale()
         {
             return activeResolution.X / maximumResolution.X;
@@ -36,6 +39,12 @@ namespace Expanze
         public static bool isFullscreen = false;
 
         public static Matrix spriteScale = Matrix.CreateScale(Settings.activeResolution.X / Settings.maximumResolution.X, Settings.activeResolution.Y / Settings.maximumResolution.Y, 1);
+
+        public static void scaleChange()
+        {
+            spriteScale = Matrix.CreateScale(Settings.activeResolution.X / Settings.maximumResolution.X, Settings.activeResolution.Y / Settings.maximumResolution.Y, 1);
+            playerNamePosition = new Vector2(Settings.activeResolution.X - 70, 5);
+        }
 
         public static Vector2 scale(Vector2 size)
         {
@@ -51,8 +60,5 @@ namespace Expanze
         {
             return (int)(h * spriteScale.M22);
         }
-
-        //position of player name on the gamescreen
-        public static Vector2 playerNamePosition = new Vector2(Settings.maximumResolution.X - scaleW(500), scaleH(15));
     }
 }
