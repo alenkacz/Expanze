@@ -1,4 +1,4 @@
-ï»¿#region File Description
+#region File Description
 //-----------------------------------------------------------------------------
 // PauseMenuScreen.cs
 //
@@ -29,7 +29,7 @@ namespace Expanze
             : base("Victory")
         {
             // Create our menu entries.
-            MenuEntry quitGameMenuEntry = new MenuEntry("VÃ­tÄ›z -> Do menu");
+            MenuEntry quitGameMenuEntry = new MenuEntry("Vítìz -> Do menu");
 
             // Hook up menu event handlers.
             quitGameMenuEntry.Selected += QuitGameMenuEntrySelected;
@@ -72,4 +72,3 @@ namespace Expanze
         #endregion
     }
 }
-
