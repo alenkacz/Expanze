@@ -15,37 +15,26 @@ namespace Expanze
         private bool isBuild;
         private Road[] roadNeighbour; // two or 3 neighbours
         private Town[] townNeighbour; // two or 3 neighbours
-        private Hexa[] hexaNeighbour; // 1 - 3 neighbours
+        private HexaModel[] hexaNeighbour; // 1 - 3 neighbours
 
         private int townID;
         public static int counter = 0;
-        private Color pickTownColor;
-        private PickVariables pickVars;
-
-        private Matrix world;
 
         public int getTownID() { return townID; }
-        public Boolean getPickNewPress() { return pickVars.pickNewPress; }
         public bool getIsBuild() { return isBuild; }
         public Player getPlayerOwner() { return playerOwner; }
         public ISourceAll getCost() { return Settings.costTown; }
 
-        public Town(Matrix world)
+        public Town()
         {
-            this.world = world;
-
             townID = ++counter;
             isBuild = false;
 
-            this.pickTownColor = new Color(0.0f, 0.0f, this.townID / 256.0f);
-
             roadNeighbour = new Road[3];
             townNeighbour = new Town[3];
-            hexaNeighbour = new Hexa[3];
+            hexaNeighbour = new HexaModel[3];
 
             playerOwner = null;
-
-            pickVars = new PickVariables();
         }
 
         public static void resetCounter() { counter = 0; }
@@ -64,7 +53,7 @@ namespace Expanze
             townNeighbour[2] = town3;
         }
 
-        public void setHexaNeighbours(Hexa hexa1, Hexa hexa2, Hexa hexa3)
+        public void setHexaNeighbours(HexaModel hexa1, HexaModel hexa2, HexaModel hexa3)
         {
             hexaNeighbour[0] = hexa1;
             hexaNeighbour[1] = hexa2;
@@ -79,7 +68,7 @@ namespace Expanze
             SourceAll cost = new SourceAll(0);
             int amount;
 
-            foreach (Hexa hexa in hexaNeighbour)
+            foreach (HexaModel hexa in hexaNeighbour)
             {
                 if (hexa != null)
                 {
@@ -144,96 +133,6 @@ namespace Expanze
             }
 
             return false;
-        }
-
-        public void Draw(GameTime gameTime)
-        {
-            if (pickVars.pickActive || isBuild)
-            {
-                Model m = GameState.map.getTownModel();
-                Matrix[] transforms = new Matrix[m.Bones.Count];
-                m.CopyAbsoluteBoneTransformsTo(transforms);
-
-                Matrix rotation;
-                rotation = (townID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (townID % 6));
-                Matrix mWorld = rotation * Matrix.CreateTranslation(new Vector3(0.0f, 0.01f, 0.0f)) * Matrix.CreateScale(0.00032f) * world;
-
-                int a = 0;
-
-                Player player = playerOwner;
-                if (playerOwner == null)
-                    player = GameMaster.getInstance().getActivePlayer();
-                Vector3 color = player.getColor().ToVector3();
-
-                foreach (ModelMesh mesh in m.Meshes)
-                {
-                    foreach (BasicEffect effect in mesh.Effects)
-                    {
-                        effect.EnableDefaultLighting();
-
-                        if (a == 1 || a == 2)
-                        {
-                            effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
-                            effect.DiffuseColor = color * 0.9f;
-                            effect.AmbientLightColor = new Vector3(0.0533f, 0.0988f, 0.1819f);
-                        }
-                        else
-                        {
-                            effect.DiffuseColor = new Vector3(0.64f, 0.64f, 0.64f);
-                        }
-
-                        if (pickVars.pickActive && !isBuild)
-                        {
-                            if (!CanActivePlayerBuildTown())
-                                effect.DiffuseColor = new Vector3(1, 0.0f, 0);
-                            else
-                                effect.DiffuseColor = new Vector3(0, 1.0f, 0);
-                        }
-
-                        effect.World = transforms[mesh.ParentBone.Index] * mWorld;
-                        effect.View = GameState.view;
-                        effect.Projection = GameState.projection;
-                    }
-                    mesh.Draw();
-
-                    a++;
-                }
-            }
-        }
-
-        public void DrawPickableAreas()
-        {
-            Model m = GameState.map.getCircleShape();
-            Matrix[] transforms = new Matrix[m.Bones.Count];
-            m.CopyAbsoluteBoneTransformsTo(transforms);
-
-            Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.04f, 0.0f)) * Matrix.CreateScale(0.22f) * world;
-
-            foreach (ModelMesh mesh in m.Meshes)
-            {
-                foreach (BasicEffect effect in mesh.Effects)
-                {
-                    effect.LightingEnabled = true;
-                    effect.AmbientLightColor = pickTownColor.ToVector3();
-                    effect.World = transforms[mesh.ParentBone.Index] * mWorld;
-                    effect.View = GameState.view;
-                    effect.Projection = GameState.projection;
-                }
-                mesh.Draw();
-            }
-        }
-
-        public void HandlePickableAreas(Color c)
-        {
-            Map.SetPickVariables(c == pickTownColor, pickVars);
-            
-
-            // create new town?
-            GameMaster gm = GameMaster.getInstance();
-            if (pickVars.pickNewPress)
-            {
-                GameState.map.BuildTown(townID);
-            }
         }
 
         public Boolean CanActivePlayerBuildTown()

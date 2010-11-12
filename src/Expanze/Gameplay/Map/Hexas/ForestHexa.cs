@@ -6,9 +6,9 @@ using CorePlugin;
 
 namespace Expanze
 {
-    class MountainsHexa : Hexa
+    class ForestHexa : HexaModel
     {
-        public MountainsHexa(int value) : base(value, HexaType.Mountains)
+        public ForestHexa(int value) : base(value, HexaType.Forest)
         {
         }
     }

@@ -11,7 +11,7 @@ namespace Expanze
     /// </summary>
     class HexaCreator
     {
-        public static Hexa create(HexaType type, int number)
+        public static HexaModel create(HexaType type, int number)
         {
             switch (type)
             {

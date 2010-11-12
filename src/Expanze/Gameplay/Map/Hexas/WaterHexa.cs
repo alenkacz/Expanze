@@ -6,9 +6,9 @@ using CorePlugin;
 
 namespace Expanze
 {
-    class StoneHexa : Hexa
+    class WaterHexa : HexaModel
     {
-        public StoneHexa(int value) : base(value, HexaType.Stone)
+        public WaterHexa() : base(0, HexaType.Water)
         {
         }
     }

@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using CorePlugin;
 
-namespace Expanze
+namespace Expanze.Gameplay.Map
 {
     /// <summary>
     /// Responsible for rendering game map
@@ -27,7 +27,8 @@ namespace Expanze
 
         float aspectRatio;
 
-        Hexa[][] hexaMap;
+        HexaModel[][] hexaMapModel;
+        HexaView[][] hexaMapView;
 
         public Map(Game game)
         {
@@ -36,88 +37,99 @@ namespace Expanze
 
         private void CreateHexaWorldMatrices()
         {
-            Hexa.resetCounter();
+            HexaModel.resetCounter();
             Road.resetCounter();
             Town.resetCounter();
 
-            Matrix mWorld = Matrix.Identity * Matrix.CreateTranslation(new Vector3(-0.49f * hexaMap.Length / 2.0f, 0.0f, -0.56f * hexaMap[0].Length / 2.0f)); ;
-            for (int i = 0; i < hexaMap.Length; i++)
+            Matrix mWorld = Matrix.Identity * Matrix.CreateTranslation(new Vector3(-0.49f * hexaMapModel.Length / 2.0f, 0.0f, -0.56f * hexaMapModel[0].Length / 2.0f)); ;
+            for (int i = 0; i < hexaMapModel.Length; i++)
             {
-                for (int j = 0; j < hexaMap[i].Length; j++)
+                for (int j = 0; j < hexaMapModel[i].Length; j++)
                 {
-                    if (hexaMap[i][j] != null)
+                    if (hexaMapView[i][j] != null)
                     {
-                        hexaMap[i][j].setWorld(mWorld);
+                        hexaMapView[i][j].setWorld(mWorld);
                     }
                     mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, 0.56f));
                 }
-                mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.49f, 0.0f, -0.28f - 0.56f * hexaMap[i].Length));
+                mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.49f, 0.0f, -0.28f - 0.56f * hexaMapModel[i].Length));
             }
         }
 
         private void CreateTownsAndRoads()
         {
-            Hexa[] neighbours = new Hexa[6];
+            HexaModel[] neighbours = new HexaModel[6];
 
-            for (int i = 0; i < hexaMap.Length; ++i)
+            for (int i = 0; i < hexaMapModel.Length; ++i)
             {
-                  for (int j = 0; j < hexaMap[i].Length; ++j)
+                  for (int j = 0; j < hexaMapModel[i].Length; ++j)
                   {
-                      if (hexaMap[i][j] == null)
+                      if (hexaMapModel[i][j] == null)
                           continue;
 
                       // UP LEFT
-                      if (i >= 1 && hexaMap[i - 1].Length > j)
-                          neighbours[(int)RoadPos.UpLeft] = hexaMap[i - 1][j];
+                      if (i >= 1 && hexaMapModel[i - 1].Length > j)
+                          neighbours[(int)RoadPos.UpLeft] = hexaMapModel[i - 1][j];
                       else
                           neighbours[(int)RoadPos.UpLeft] = null;
 
                       // UP RIGHT
-                      if (i >= 1 && j > 0 && hexaMap[i - 1].Length > j - 1)
-                          neighbours[(int)RoadPos.UpRight] = hexaMap[i - 1][j - 1];
+                      if (i >= 1 && j > 0 && hexaMapModel[i - 1].Length > j - 1)
+                          neighbours[(int)RoadPos.UpRight] = hexaMapModel[i - 1][j - 1];
                       else
                           neighbours[(int)RoadPos.UpRight] = null;
 
                       // LEFT
-                      if (hexaMap[i].Length > j + 1)
-                          neighbours[(int)RoadPos.MiddleLeft] = hexaMap[i][j + 1];
+                      if (hexaMapModel[i].Length > j + 1)
+                          neighbours[(int)RoadPos.MiddleLeft] = hexaMapModel[i][j + 1];
                       else
                           neighbours[(int)RoadPos.MiddleLeft] = null;
 
                       // RIGHT
                       if (j - 1 >= 0)
-                          neighbours[(int)RoadPos.MiddleRight] = hexaMap[i][j - 1];
+                          neighbours[(int)RoadPos.MiddleRight] = hexaMapModel[i][j - 1];
                       else
                           neighbours[(int)RoadPos.MiddleRight] = null;
 
                       // BOTTOM LEFT
-                      if (i + 1 < hexaMap.Length && hexaMap[i + 1].Length > j + 1)
-                          neighbours[(int)RoadPos.BottomLeft] = hexaMap[i + 1][j + 1];
+                      if (i + 1 < hexaMapModel.Length && hexaMapModel[i + 1].Length > j + 1)
+                          neighbours[(int)RoadPos.BottomLeft] = hexaMapModel[i + 1][j + 1];
                       else
                           neighbours[(int)RoadPos.BottomLeft] = null;
 
                       // BOTTOM RIGHT
-                      if (i + 1 < hexaMap.Length && hexaMap[i + 1].Length > j)
-                          neighbours[(int)RoadPos.BottomRight] = hexaMap[i + 1][j];
+                      if (i + 1 < hexaMapModel.Length && hexaMapModel[i + 1].Length > j)
+                          neighbours[(int)RoadPos.BottomRight] = hexaMapModel[i + 1][j];
                       else
                           neighbours[(int)RoadPos.BottomRight] = null;
 
-                      hexaMap[i][j].CreateTownsAndRoads(neighbours);
+                      hexaMapModel[i][j].CreateTownsAndRoads(neighbours, hexaMapView[i][j]);
                   }
             }
         }
 
         public override void Initialize()
         {
-            hexaMap = getMap();
+            hexaMapModel = getMap();
+            hexaMapView = new HexaView[hexaMapModel.Length][];
+            for (int i = 0; i < hexaMapModel.Length; i++)
+            {
+                hexaMapView[i] = new HexaView[hexaMapModel[i].Length];
+                for (int j = 0; j < hexaMapModel[i].Length; j++)
+                {
+                    if (hexaMapModel[i][j] != null)
+                        hexaMapView[i][j] = new HexaView(hexaMapModel[i][j]);
+                }
+            }
+
             CreateHexaWorldMatrices(); // have to be before Create Towns and roads
             CreateTownsAndRoads();
-            for (int i = 0; i < hexaMap.Length; i++)
-                for (int j = 0; j < hexaMap[i].Length; j++)
-                    if (hexaMap[i][j] != null)
+            for (int i = 0; i < hexaMapModel.Length; i++)
+                for (int j = 0; j < hexaMapModel[i].Length; j++)
+                    if (hexaMapModel[i][j] != null)
                     {
-                        hexaMap[i][j].FindRoadNeighbours();
-                        hexaMap[i][j].FindTownNeighbours();
+                        hexaMapModel[i][j].FindRoadNeighbours();
+                        hexaMapModel[i][j].FindTownNeighbours();
                     }
 
             GameState.map = this;
@@ -130,7 +142,7 @@ namespace Expanze
             GameState.projection = Matrix.CreatePerspectiveFieldOfView((float)MathHelper.ToRadians(90), aspectRatio, 0.01f, 100.0f);
         }
 
-        private Hexa[][] getMap()
+        private HexaModel[][] getMap()
         {
             MapParser parser = new MapParser();
             return parser.getMap();
@@ -177,11 +189,11 @@ namespace Expanze
         public void getSources(Player player)
         {
             player.addSources(new SourceAll(0), TransactionState.TransactionStart);
-            for (int i = 0; i < hexaMap.Length; i++)
-                for (int j = 0; j < hexaMap[i].Length; j++)
-                    if (hexaMap[i][j] != null)
+            for (int i = 0; i < hexaMapModel.Length; i++)
+                for (int j = 0; j < hexaMapModel[i].Length; j++)
+                    if (hexaMapModel[i][j] != null)
                     {
-                        hexaMap[i][j].CollectSources(player);
+                        hexaMapModel[i][j].CollectSources(player);
                     }
             player.addSources(new SourceAll(0), TransactionState.TransactionEnd);
         }
@@ -225,10 +237,10 @@ namespace Expanze
             if (GameMaster.getInstance().getPaused() || GameMaster.getInstance().getActivePlayer().getIsAI())
                 return;
 
-            for (int i = 0; i < hexaMap.Length; i++)
-                for (int j = 0; j < hexaMap[i].Length; j++)
-                    if (hexaMap[i][j] != null)
-                        hexaMap[i][j].HandlePickableAreas(c);
+            for (int i = 0; i < hexaMapView.Length; i++)
+                for (int j = 0; j < hexaMapView[i].Length; j++)
+                    if (hexaMapView[i][j] != null)
+                        hexaMapView[i][j].HandlePickableAreas(c);
         }
 
         public override void DrawPickableAreas()
@@ -236,10 +248,10 @@ namespace Expanze
             if (GameMaster.getInstance().getPaused())
                 return;
 
-            for (int i = 0; i < hexaMap.Length; i++)
-                for (int j = 0; j < hexaMap[i].Length; j++)
-                    if (hexaMap[i][j] != null)
-                        hexaMap[i][j].DrawPickableAreas();
+            for (int i = 0; i < hexaMapView.Length; i++)
+                for (int j = 0; j < hexaMapView[i].Length; j++)
+                    if (hexaMapView[i][j] != null)
+                        hexaMapView[i][j].DrawPickableAreas();
         }
 
         public override void Draw2D()
@@ -247,13 +259,13 @@ namespace Expanze
             //if (GameMaster.getInstance().getPaused())
             //    return;
 
-            for (int i = 0; i < hexaMap.Length; i++)
+            for (int i = 0; i < hexaMapView.Length; i++)
             {
-                for (int j = 0; j < hexaMap[i].Length; j++)
+                for (int j = 0; j < hexaMapView[i].Length; j++)
                 {
-                    if (hexaMap[i][j] != null)
+                    if (hexaMapView[i][j] != null)
                     {
-                        hexaMap[i][j].Draw2D();
+                        hexaMapView[i][j].Draw2D();
                     }
                 }
             }
@@ -269,13 +281,13 @@ namespace Expanze
 
             GameState.view = Matrix.CreateLookAt(eye, target, up);
 
-            for (int i = 0; i < hexaMap.Length; i++)
+            for (int i = 0; i < hexaMapView.Length; i++)
             {
-                for (int j = 0; j < hexaMap[i].Length; j++)
+                for (int j = 0; j < hexaMapView[i].Length; j++)
                 {
-                    if (hexaMap[i][j] != null)
+                    if (hexaMapView[i][j] != null)
                     {
-                        hexaMap[i][j].Draw(gameTime);
+                        hexaMapView[i][j].Draw(gameTime);
                         //hexaMap[i][j].DrawPickableAreas();
                     }
                 }
@@ -288,11 +300,11 @@ namespace Expanze
         private Town GetTownByID(int townID)
         {
             Town town = null;
-            for (int i = 0; i < hexaMap.Length; i++)
-                for (int j = 0; j < hexaMap[i].Length; j++)
-                    if (hexaMap[i][j] != null)
+            for (int i = 0; i < hexaMapModel.Length; i++)
+                for (int j = 0; j < hexaMapModel[i].Length; j++)
+                    if (hexaMapModel[i][j] != null)
                     {
-                        town= hexaMap[i][j].GetTownByID(townID);
+                        town= hexaMapModel[i][j].GetTownByID(townID);
                         if (town != null)
                             return town;
                     }
@@ -302,11 +314,11 @@ namespace Expanze
         private Road GetRoadByID(int roadID)
         {
             Road road = null;
-            for (int i = 0; i < hexaMap.Length; i++)
-                for (int j = 0; j < hexaMap[i].Length; j++)
-                    if (hexaMap[i][j] != null)
+            for (int i = 0; i < hexaMapModel.Length; i++)
+                for (int j = 0; j < hexaMapModel[i].Length; j++)
+                    if (hexaMapModel[i][j] != null)
                     {
-                        road = hexaMap[i][j].GetRoadByID(roadID);
+                        road = hexaMapModel[i][j].GetRoadByID(roadID);
                         if (road != null)
                             return road;
                     }
@@ -320,7 +332,7 @@ namespace Expanze
 
         public IHexaGet GetHexa(int x, int y)
         {
-            return hexaMap[x][y];
+            return hexaMapModel[x][y];
         }
 
         public bool BuildRoad(int roadID)

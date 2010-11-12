@@ -6,7 +6,7 @@ using CorePlugin;
 
 namespace Expanze
 {
-    class PastureHexa : Hexa
+    class PastureHexa : HexaModel
     {
         public PastureHexa(int value) : base(value, HexaType.Pasture)
         {

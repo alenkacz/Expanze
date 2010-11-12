@@ -12,29 +12,25 @@ namespace Expanze
     /// <summary>
     /// Containing information about one single hexa
     /// </summary>
-    class Hexa : IHexaGet
+    class HexaModel : IHexaGet
     {
         int value;      // how many sources will player get
         int hexaID;     // from counter, useable for picking
-        Color pickHexaColor;    // color o hexa in render texture
-        private PickVariables pickVars;
+        private static int counter = 0;    // how many hexas are created
 
         private HexaType type = HexaType.Water;
-        private Hexa[] hexaNeighbours;      // neighbours of hexa, to index use RoadPos
+        private HexaModel[] hexaNeighbours;      // neighbours of hexa, to index use RoadPos
         private Town[] towns;               // possible towns on hexa, to index use Town Pos
         private Boolean[] townOwner;        // was this town made by this hexa? if was, this hexa will draw it, handle picking, get sources...
         private Road[] roads;               // possible roads on hexa, to index use RoadPos
         private Boolean[] roadOwner;        // was this road made by this hexa? if was, this hexa will draw it, handle picking...
-        private Matrix world;   // wordl position of Hex
 
-        private static int counter = 0;    // how many hexas are created
+        public HexaModel() : this(0, HexaType.Water) { }
 
-        public Hexa() : this(0, HexaType.Water) { }
-
-        public Hexa(int value, HexaType type)
+        public HexaModel(int value, HexaType type)
         {
             this.hexaID = ++counter;
-            this.pickHexaColor = new Color(this.hexaID / 256.0f, 0.0f, 0.0f);
+            
             
             this.type = type;
             this.value = value;
@@ -42,20 +38,13 @@ namespace Expanze
             this.roads = new Road[(int)RoadPos.Count];
             this.townOwner = new Boolean[(int)TownPos.Count];
             this.roadOwner = new Boolean[(int)RoadPos.Count];
-
-            pickVars = new PickVariables();
         }
 
         public static void resetCounter() { counter = 0; }
 
-        public void setWorld(Matrix m)
+        public void CreateTownsAndRoads(HexaModel[] neighbours, HexaView hexaView)
         {
-            world = m;
-        }
-
-        public void CreateTownsAndRoads(Hexa[] neighbours)
-        {
-            hexaNeighbours = new Hexa[neighbours.Length];
+            hexaNeighbours = new HexaModel[neighbours.Length];
             for (int loop1 = 0; loop1 < neighbours.Length; loop1++)
                 hexaNeighbours[loop1] = neighbours[loop1];
 
@@ -70,7 +59,8 @@ namespace Expanze
                 neighbours[(int)RoadPos.UpLeft].getRoad(RoadPos.BottomRight) == null)
             {
                 roadOwner[(int)RoadPos.UpLeft] = true;
-                roads[(int)RoadPos.UpLeft] = new Road(Matrix.CreateRotationY(-(float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(-0.25f, 0.0f, 0.14f)) * world);
+                roads[(int)RoadPos.UpLeft] = new Road();
+                hexaView.createRoadView(RoadPos.UpLeft, Matrix.CreateRotationY(-(float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(-0.25f, 0.0f, 0.14f)));
             }
             else
                 roads[(int)RoadPos.UpLeft] = neighbours[(int)RoadPos.UpLeft].getRoad(RoadPos.BottomRight);
@@ -79,7 +69,8 @@ namespace Expanze
                 neighbours[(int)RoadPos.UpRight].getRoad(RoadPos.BottomLeft) == null)
             {
                 roadOwner[(int)RoadPos.UpRight] = true;
-                roads[(int)RoadPos.UpRight] = new Road(Matrix.CreateRotationY((float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(-0.25f, 0.0f, -0.14f)) * world);
+                roads[(int)RoadPos.UpRight] = new Road();
+                hexaView.createRoadView(RoadPos.UpRight, Matrix.CreateRotationY((float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(-0.25f, 0.0f, -0.14f)));
             }
             else
                 roads[(int)RoadPos.UpRight] = neighbours[(int)RoadPos.UpRight].getRoad(RoadPos.BottomLeft);
@@ -88,7 +79,8 @@ namespace Expanze
                 neighbours[(int)RoadPos.MiddleLeft].getRoad(RoadPos.MiddleRight) == null)
             {
                 roadOwner[(int)RoadPos.MiddleLeft] = true;
-                roads[(int)RoadPos.MiddleLeft] = new Road(Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, 0.29f)) * world);
+                roads[(int)RoadPos.MiddleLeft] = new Road();
+                hexaView.createRoadView(RoadPos.MiddleLeft, Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, 0.29f)));
             }
             else
                 roads[(int)RoadPos.MiddleLeft] = neighbours[(int)RoadPos.MiddleLeft].getRoad(RoadPos.MiddleRight);
@@ -97,7 +89,8 @@ namespace Expanze
                 neighbours[(int)RoadPos.MiddleRight].getRoad(RoadPos.MiddleLeft) == null)
             {
                 roadOwner[(int)RoadPos.MiddleRight] = true;
-                roads[(int)RoadPos.MiddleRight] = new Road(Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, -0.28f)) * world);
+                roads[(int)RoadPos.MiddleRight] = new Road();
+                hexaView.createRoadView(RoadPos.MiddleRight, Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, -0.28f)));
             }
             else
                 roads[(int)RoadPos.MiddleRight] = neighbours[(int)RoadPos.MiddleRight].getRoad(RoadPos.MiddleLeft);
@@ -107,7 +100,8 @@ namespace Expanze
                 neighbours[(int)RoadPos.BottomLeft].getRoad(RoadPos.UpRight) == null)
             {
                 roadOwner[(int)RoadPos.BottomLeft] = true;
-                roads[(int)RoadPos.BottomLeft] = new Road(Matrix.CreateRotationY((float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(0.25f, 0.0f, 0.14f)) * world);
+                roads[(int)RoadPos.BottomLeft] = new Road();
+                hexaView.createRoadView(RoadPos.BottomLeft, Matrix.CreateRotationY((float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(0.25f, 0.0f, 0.14f)));
             }
             else
                 roads[(int)RoadPos.BottomLeft] = neighbours[(int)RoadPos.BottomLeft].getRoad(RoadPos.UpRight);
@@ -116,7 +110,8 @@ namespace Expanze
                 neighbours[(int)RoadPos.BottomRight].getRoad(RoadPos.UpLeft) == null)
             {
                 roadOwner[(int)RoadPos.BottomRight] = true;
-                roads[(int)RoadPos.BottomRight] = new Road(Matrix.CreateRotationY(-(float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(0.25f, 0.0f, -0.14f)) * world);
+                roads[(int)RoadPos.BottomRight] = new Road();
+                hexaView.createRoadView(RoadPos.BottomRight, Matrix.CreateRotationY(-(float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(0.25f, 0.0f, -0.14f)));
             }
             else
                 roads[(int)RoadPos.BottomRight] = neighbours[(int)RoadPos.BottomRight].getRoad(RoadPos.UpLeft);
@@ -130,7 +125,8 @@ namespace Expanze
                  neighbours[(int)RoadPos.UpRight].getTown(TownPos.BottomLeft) == null))
             {
                 townOwner[(int)TownPos.Up] = true;
-                towns[(int)TownPos.Up] = new Town(Matrix.CreateTranslation(new Vector3(-0.32f, 0.0f, 0.0f)) * world);
+                towns[(int)TownPos.Up] = new Town();
+                hexaView.createTownView(TownPos.Up, Matrix.CreateTranslation(new Vector3(-0.32f, 0.0f, 0.0f)));
             }
             else
                 if (neighbours[(int)RoadPos.UpLeft] != null && neighbours[(int)RoadPos.UpLeft].getTown(TownPos.BottomRight) != null)
@@ -144,7 +140,8 @@ namespace Expanze
                  neighbours[(int)RoadPos.BottomRight].getTown(TownPos.UpLeft) == null))
             {
                 townOwner[(int)TownPos.Bottom] = true;
-                towns[(int)TownPos.Bottom] = new Town(Matrix.CreateTranslation(new Vector3(0.32f, 0.0f, 0.0f)) * world);
+                towns[(int)TownPos.Bottom] = new Town();
+                hexaView.createTownView(TownPos.Bottom, Matrix.CreateTranslation(new Vector3(0.32f, 0.0f, 0.0f)));
             }
             else
                 towns[(int)TownPos.Bottom] = neighbours[(int)RoadPos.BottomLeft].getTown(TownPos.UpRight);
@@ -155,7 +152,8 @@ namespace Expanze
                 neighbours[(int)RoadPos.MiddleRight].getTown(TownPos.UpLeft) == null))
             {
                 townOwner[(int)TownPos.UpRight] = true;
-                towns[(int)TownPos.UpRight] = new Town(Matrix.CreateTranslation(new Vector3(-0.16f, 0.0f, -0.28f)) * world);
+                towns[(int)TownPos.UpRight] = new Town();
+                hexaView.createTownView(TownPos.UpRight, Matrix.CreateTranslation(new Vector3(-0.16f, 0.0f, -0.28f))); 
             }
             else
                 if (neighbours[(int)RoadPos.UpRight] != null && neighbours[(int)RoadPos.UpRight].getTown(TownPos.Bottom) != null)
@@ -169,7 +167,8 @@ namespace Expanze
                  neighbours[(int)RoadPos.MiddleLeft].getTown(TownPos.UpRight) == null))
             {
                 townOwner[(int)TownPos.UpLeft] = true;
-                towns[(int)TownPos.UpLeft] = new Town(Matrix.CreateTranslation(new Vector3(-0.16f, 0.0f, 0.28f)) * world);
+                towns[(int)TownPos.UpLeft] = new Town();
+                hexaView.createTownView(TownPos.UpLeft, Matrix.CreateTranslation(new Vector3(-0.16f, 0.0f, 0.28f)));
             }
             else
                 towns[(int)TownPos.UpLeft] = neighbours[(int)RoadPos.UpLeft].getTown(TownPos.Bottom);
@@ -180,7 +179,8 @@ namespace Expanze
                 neighbours[(int)RoadPos.MiddleRight].getTown(TownPos.BottomLeft) == null))
             {
                 townOwner[(int)TownPos.BottomRight] = true;
-                towns[(int)TownPos.BottomRight] = new Town(Matrix.CreateTranslation(new Vector3(0.16f, 0.0f, -0.28f)) * world);
+                towns[(int)TownPos.BottomRight] = new Town();
+                hexaView.createTownView(TownPos.BottomRight, Matrix.CreateTranslation(new Vector3(0.16f, 0.0f, -0.28f))); 
             }
             else
                 if (neighbours[(int)RoadPos.BottomRight] != null && neighbours[(int)RoadPos.BottomRight].getTown(TownPos.Bottom) != null)
@@ -194,7 +194,8 @@ namespace Expanze
                 neighbours[(int)RoadPos.MiddleLeft].getTown(TownPos.BottomRight) == null))
             {
                 townOwner[(int)TownPos.BottomLeft] = true;
-                towns[(int)TownPos.BottomLeft] = new Town(Matrix.CreateTranslation(new Vector3(0.16f, 0.0f, 0.28f)) * world);
+                towns[(int)TownPos.BottomLeft] = new Town();
+                hexaView.createTownView(TownPos.BottomLeft, Matrix.CreateTranslation(new Vector3(0.16f, 0.0f, 0.28f)));
             }
             else
                 if (neighbours[(int)RoadPos.BottomLeft] != null && neighbours[(int)RoadPos.BottomLeft].getTown(TownPos.Bottom) != null)
@@ -352,138 +353,11 @@ namespace Expanze
             }
         }
 
-        public void Draw2D()
-        {
-            if (type == HexaType.Desert)
-                return;
-
-            BoundingFrustum frustum = new BoundingFrustum(GameState.view * GameState.projection);
-            ContainmentType containmentType = frustum.Contains(Vector3.Transform(new Vector3(0.0f, 0.0f, 0.0f), world)) ;
-
-            if (containmentType != ContainmentType.Disjoint)
-            {
-                Vector3 point3D = GameState.game.GraphicsDevice.Viewport.Project(new Vector3(0.0f, 0.0f, 0.0f), GameState.projection, GameState.view, world);
-                Vector2 point2D = new Vector2();
-                point2D.X = point3D.X;
-                point2D.Y = point3D.Y;
-                SpriteBatch spriteBatch = GameState.spriteBatch;
-
-                Vector2 stringCenter = GameState.hudMaterialsFont.MeasureString(value + "") * 0.5f;
-
-                // now subtract the string center from the text position to find correct position 
-                point2D.X = (int)(point2D.X - stringCenter.X);
-                point2D.Y = (int)(point2D.Y - stringCenter.Y);
-
-                Color numberColor;
-                
-                spriteBatch.Begin();
-
-                spriteBatch.DrawString(GameState.hudMaterialsFont, value + "", new Vector2(point2D.X + 1, point2D.Y + 1), Color.Black);
-                if (pickVars.pickActive)
-                    numberColor = Color.BlueViolet;
-                else
-                    numberColor = Color.DarkRed;
-                spriteBatch.DrawString(GameState.hudMaterialsFont, value + "", point2D, numberColor);
-                spriteBatch.End();
-            }
-        }
-
-        public void Draw(GameTime gameTime)
-        {
-            Model m = GameState.map.getHexaModel(type);
-            Matrix[] transforms = new Matrix[m.Bones.Count];
-            m.CopyAbsoluteBoneTransformsTo(transforms);
-            RasterizerState rasterizerState = new RasterizerState();
-            rasterizerState.CullMode = CullMode.None;
-            GameState.game.GraphicsDevice.RasterizerState = rasterizerState;
-
-            Matrix rotation;
-            rotation = (hexaID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaID % 6));
-            Matrix tempMatrix = ((type == HexaType.Desert || type == HexaType.Forest || type == HexaType.Mountains) ? Matrix.CreateScale(0.00027f) * rotation : Matrix.CreateRotationZ((float)Math.PI));
-            
-            
-
-            foreach (ModelMesh mesh in m.Meshes)
-            {
-                foreach (BasicEffect effect in mesh.Effects)
-                {
-                    effect.EnableDefaultLighting();
-                    /*
-                    if (pickVars.pickActive)
-                        effect.EmissiveColor = new Vector3(0.3f, 0.0f, 0.0f);
-                    else
-                        effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
-                    */
-                    effect.World = transforms[mesh.ParentBone.Index] * tempMatrix * world;
-                    effect.View = GameState.view;
-                    effect.Projection = GameState.projection;
-                }
-                mesh.Draw();
-            }
-
-            for (int loop1 = 0; loop1 < roads.Length; loop1++)
-                if (roadOwner[loop1])
-                    roads[loop1].Draw(gameTime);
-
-
-            for (int loop1 = 0; loop1 < towns.Length; loop1++)
-                if (townOwner[loop1])
-                    towns[loop1].Draw(gameTime);
-        }
-
-        public void DrawPickableAreas()
-        {
-            Model m = GameState.map.getCircleShape();
-            Matrix[] transforms = new Matrix[m.Bones.Count];
-            m.CopyAbsoluteBoneTransformsTo(transforms);
-
-            Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, 0.0f)) * Matrix.CreateScale(0.8f) * world;
-            
-            foreach (ModelMesh mesh in m.Meshes)
-            {
-                foreach (BasicEffect effect in mesh.Effects)
-                {
-                    effect.LightingEnabled = true;
-                    effect.AmbientLightColor = pickHexaColor.ToVector3(); //new Vector3((float) number / counter, (float) number / counter, (float) number / counter);
-                    effect.World = transforms[mesh.ParentBone.Index] * mWorld;
-                    effect.View = GameState.view;
-                    effect.Projection = GameState.projection;
-                }
-                mesh.Draw();
-            }
-
-            for (int loop1 = 0; loop1 < roads.Length; loop1++)
-                if (roadOwner[loop1])
-                    roads[loop1].DrawPickableAreas();
-
-
-            for (int loop1 = 0; loop1 < towns.Length; loop1++)
-                if (townOwner[loop1])
-                    towns[loop1].DrawPickableAreas();
-        }
-
         public void CollectSources(Player player)
         {
             for (int loop1 = 0; loop1 < towns.Length; loop1++)
                 if (townOwner[loop1])
                     towns[loop1].CollectSources(player);
-        }
-
-        public void HandlePickableAreas(Color c)
-        {
-            for (int loop1 = 0; loop1 < roads.Length; loop1++)
-                if (roadOwner[loop1])
-                    roads[loop1].HandlePickableAreas(c);
-
-            for (int loop1 = 0; loop1 < towns.Length; loop1++)
-            {
-                if (townOwner[loop1])
-                {
-                    towns[loop1].HandlePickableAreas(c);
-                }
-            }
-
-            Map.SetPickVariables(c == pickHexaColor, pickVars);
         }
 
         public string getModelPath()
@@ -535,5 +409,9 @@ namespace Expanze
 
             return null;
         }
+
+        public int getID() { return hexaID; }
+        public Boolean getRoadOwner(int i) { return roadOwner[i]; }
+        public Boolean getTownOwner(int i) { return townOwner[i]; }
     }
 }

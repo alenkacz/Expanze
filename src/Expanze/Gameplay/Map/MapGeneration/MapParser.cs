@@ -16,27 +16,27 @@ namespace Expanze
             xDoc = new XmlDocument();
         }
 
-        public Hexa[][] getMap() 
+        public HexaModel[][] getMap() 
         {
             int number = getRandomMap();
             return this.parse(number);
         }
 
-        public Hexa[][] parse(int number)
+        public HexaModel[][] parse(int number)
         {
-            Hexa[][] map;
+            HexaModel[][] map;
 
             //TODO user number parameter
             xDoc.Load("Content/Maps/1.xml");
 
             XmlNodeList rows = xDoc.GetElementsByTagName("row");
-            map = new Hexa[rows.Count][];
+            map = new HexaModel[rows.Count][];
 
             String a = rows[1].InnerText;
 
             for (int i = 0; i < rows.Count; ++i)
             {
-                map[i] = new Hexa[rows[i].ChildNodes.Count];
+                map[i] = new HexaModel[rows[i].ChildNodes.Count];
                 XmlNodeList hexas = rows[i].ChildNodes;
 
                 for (int j = 0; j < hexas.Count; ++j)
