@@ -374,8 +374,16 @@ namespace Expanze
                 point2D.X = (int)(point2D.X - stringCenter.X);
                 point2D.Y = (int)(point2D.Y - stringCenter.Y);
 
+                Color numberColor;
+                
                 spriteBatch.Begin();
-                spriteBatch.DrawString(GameState.hudMaterialsFont, value + "", point2D, Color.DarkRed);
+
+                spriteBatch.DrawString(GameState.hudMaterialsFont, value + "", new Vector2(point2D.X + 1, point2D.Y + 1), Color.Black);
+                if (pickVars.pickActive)
+                    numberColor = Color.BlueViolet;
+                else
+                    numberColor = Color.DarkRed;
+                spriteBatch.DrawString(GameState.hudMaterialsFont, value + "", point2D, numberColor);
                 spriteBatch.End();
             }
         }
@@ -400,11 +408,12 @@ namespace Expanze
                 foreach (BasicEffect effect in mesh.Effects)
                 {
                     effect.EnableDefaultLighting();
+                    /*
                     if (pickVars.pickActive)
                         effect.EmissiveColor = new Vector3(0.3f, 0.0f, 0.0f);
                     else
                         effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
-
+                    */
                     effect.World = transforms[mesh.ParentBone.Index] * tempMatrix * world;
                     effect.View = GameState.view;
                     effect.Projection = GameState.projection;
@@ -428,7 +437,7 @@ namespace Expanze
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 
-            Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.05f, 0.0f)) * Matrix.CreateScale(0.6f) * world;
+            Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, 0.0f)) * Matrix.CreateScale(0.8f) * world;
             
             foreach (ModelMesh mesh in m.Meshes)
             {
