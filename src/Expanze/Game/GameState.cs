@@ -22,6 +22,7 @@ namespace Expanze
 
         public static SpriteBatch spriteBatch;
         public static SpriteFont gameFont;
+        public static SpriteFont playerNameFont;
         public static SpriteFont hudMaterialsFont;
         public static SpriteFont materialsNewFont;
     }

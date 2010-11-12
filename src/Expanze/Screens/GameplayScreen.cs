@@ -33,6 +33,9 @@ namespace Expanze
         RenderTarget2D renderTarget;
         Texture2D shadowMap;
 
+        //dummy texture for displaying players color in top hud
+        Texture2D playerColorTexture;
+
         ContentManager content;
         
         List<GameComponent> gameComponents = new List<GameComponent>();
@@ -73,8 +76,13 @@ namespace Expanze
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
 
             GameState.gameFont = content.Load<SpriteFont>("gamefont");
+            GameState.playerNameFont = content.Load<SpriteFont>("playername");
             GameState.hudMaterialsFont = content.Load<SpriteFont>("hudMaterialsFont");
             GameState.materialsNewFont = content.Load<SpriteFont>("materialsNewFont");
+
+            //playerColorTexture = new Texture2D(ScreenManager.GraphicsDevice, (int)Settings.playerColorSize.X, (int)Settings.playerColorSize.Y, false, SurfaceFormat.Color);
+            playerColorTexture = ScreenManager.Game.Content.Load<Texture2D>("pcolor");
+
 
             //gamelogic
             gMaster.startGame(isAI);
@@ -269,8 +277,12 @@ namespace Expanze
 
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 
-            spriteBatch.Begin();
-            spriteBatch.DrawString(GameState.gameFont, gMaster.getActivePlayer().getName(), Settings.playerNamePosition, Color.White);
+            //player name and color rectangle
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
+            
+            spriteBatch.DrawString(GameState.playerNameFont, gMaster.getActivePlayer().getName(), Settings.playerNamePosition, Color.White);
+            spriteBatch.Draw(playerColorTexture, Settings.playerColorPosition, gMaster.getActivePlayer().getColor());
+            
             spriteBatch.End();
 
             // If the game is transitioning on or off, fade it out to black.
