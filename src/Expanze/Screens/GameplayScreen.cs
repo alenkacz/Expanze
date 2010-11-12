@@ -72,7 +72,7 @@ namespace Expanze
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
 
             GameState.gameFont = content.Load<SpriteFont>("gamefont");
-            GameState.playerNameFont = content.Load<SpriteFont>("gamefont");
+            GameState.playerNameFont = content.Load<SpriteFont>("playername");
             GameState.hudMaterialsFont = content.Load<SpriteFont>("hudMaterialsFont");
             GameState.materialsNewFont = content.Load<SpriteFont>("materialsNewFont");
 
@@ -269,7 +269,7 @@ namespace Expanze
 
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
             spriteBatch.DrawString(GameState.playerNameFont, gMaster.getActivePlayer().getName(), Settings.playerNamePosition, Color.White);
             spriteBatch.End();
 
