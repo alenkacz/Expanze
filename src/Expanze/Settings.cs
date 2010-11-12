@@ -59,7 +59,7 @@ namespace Expanze
 
         //position of player name on the gamescreen
         public static Vector2 playerNamePosition = new Vector2(Settings.maximumResolution.X - scaleW(500), scaleH(15));
-        public static Vector2 playerColorPosition = new Vector2(Settings.maximumResolution.X - scaleW(600), scaleH(15));
+        public static Vector2 playerColorPosition = new Vector2(Settings.maximumResolution.X - scaleW(200), scaleH(28));
         public static Vector2 playerColorSize = new Vector2(scaleW(50), scaleH(50));
     }
 }

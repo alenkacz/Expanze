@@ -34,7 +34,6 @@ namespace Expanze
 
         //dummy texture for displaying players color in top hud
         Texture2D playerColorTexture;
-        Rectangle playerColorRectangle;
 
         ContentManager content;
         
@@ -80,8 +79,8 @@ namespace Expanze
             GameState.hudMaterialsFont = content.Load<SpriteFont>("hudMaterialsFont");
             GameState.materialsNewFont = content.Load<SpriteFont>("materialsNewFont");
 
-            playerColorTexture = new Texture2D(ScreenManager.GraphicsDevice, (int)Settings.playerColorSize.X, (int)Settings.playerColorSize.Y, false, SurfaceFormat.Color);
-            playerColorRectangle = new Rectangle(((int)Settings.playerColorPosition.X), ((int)Settings.playerColorPosition.X), (int)Settings.playerColorSize.X, (int)Settings.playerColorSize.Y);
+            //playerColorTexture = new Texture2D(ScreenManager.GraphicsDevice, (int)Settings.playerColorSize.X, (int)Settings.playerColorSize.Y, false, SurfaceFormat.Color);
+            playerColorTexture = ScreenManager.Game.Content.Load<Texture2D>("pcolor");
 
 
             //gamelogic
@@ -281,15 +280,7 @@ namespace Expanze
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
             
             spriteBatch.DrawString(GameState.playerNameFont, gMaster.getActivePlayer().getName(), Settings.playerNamePosition, Color.White);
-
-            Color[] playerColor = new Color[(int)Settings.playerColorSize.X * (int)Settings.playerColorSize.Y];//set the color to the amount of pixels in the textures
-            for (int i = 0; i < playerColor.Length; i++)//loop through all the colors setting them to whatever values we want
-            {
-                playerColor[i] = Color.Red;
-            }
-
-            playerColorTexture.SetData(playerColor);
-            spriteBatch.Draw(playerColorTexture, playerColorRectangle, Color.Red);
+            spriteBatch.Draw(playerColorTexture, Settings.playerColorPosition, gMaster.getActivePlayer().getColor());
             
             spriteBatch.End();
 
