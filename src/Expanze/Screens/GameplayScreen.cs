@@ -72,6 +72,7 @@ namespace Expanze
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
 
             GameState.gameFont = content.Load<SpriteFont>("gamefont");
+            GameState.playerNameFont = content.Load<SpriteFont>("playername");
             GameState.hudMaterialsFont = content.Load<SpriteFont>("hudMaterialsFont");
             GameState.materialsNewFont = content.Load<SpriteFont>("materialsNewFont");
 
@@ -269,7 +270,7 @@ namespace Expanze
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 
             spriteBatch.Begin();
-            spriteBatch.DrawString(GameState.gameFont, gMaster.getActivePlayer().getName(), Settings.playerNamePosition, Color.White);
+            spriteBatch.DrawString(GameState.playerNameFont, gMaster.getActivePlayer().getName(), Settings.playerNamePosition, Color.White);
             spriteBatch.End();
 
             // If the game is transitioning on or off, fade it out to black.

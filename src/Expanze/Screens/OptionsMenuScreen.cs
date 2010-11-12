@@ -128,7 +128,6 @@ namespace Expanze
                 gdm.PreferredBackBufferWidth = (int)newRes.X;
                 gdm.PreferredBackBufferHeight = (int)newRes.Y;
                 Settings.activeResolution = newRes;
-                Settings.scaleChange();
                 gdm.ApplyChanges();
             }
             else if (fullscreen != Settings.isFullscreen)
