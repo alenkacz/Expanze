@@ -50,6 +50,10 @@ namespace Expanze
                         GameMaster.getInstance().nextTurn();
                         pressed = true;
                     }
+                    else
+                    {
+                        GameState.windowPromt.showAlert("Nejdřív postav město.");
+                    }
                 }
             }
 

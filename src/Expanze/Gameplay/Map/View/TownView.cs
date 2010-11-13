@@ -24,7 +24,7 @@ namespace Expanze.Gameplay.Map.View
             this.pickTownColor = new Color(0.0f, 0.0f, townID / 256.0f);
             this.world = world;
 
-            pickVars = new PickVariables();
+            pickVars = new PickVariables(pickTownColor);
         }
 
         public Town getTownModel() { return model; }

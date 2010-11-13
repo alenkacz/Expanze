@@ -96,6 +96,8 @@ namespace Expanze
             GameState.game = ScreenManager.Game;
             mapComp = new Map(ScreenManager.Game);
             gameComponents.Add(mapComp);
+            GameState.windowPromt = new WindowPromt();
+            gameComponents.Add(GameState.windowPromt);
 
             ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), GameState.gameFont, Settings.scaleW(147), Settings.scaleH(141), "nextTurn");
             guiComponents.Add(changeTurnButton);

@@ -23,7 +23,7 @@ namespace Expanze.Gameplay.Map.View
             this.roadID = model.getRoadID();
             this.pickRoadColor = new Color(0.0f, roadID / 256.0f, 0.0f);
             this.world = world;
-            pickVars = new PickVariables();
+            pickVars = new PickVariables(pickRoadColor);
         }
 
         public void Draw(GameTime gameTime)
