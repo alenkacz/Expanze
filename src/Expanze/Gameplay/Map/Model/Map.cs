@@ -67,7 +67,8 @@ namespace Expanze.Gameplay.Map
 
         private void CreateTownsAndRoads()
         {
-            HexaModel[] neighbours = new HexaModel[6];
+            HexaModel[] neighboursModel = new HexaModel[6];
+            HexaView[] neighboursView = new HexaView[6];
 
             for (int i = 0; i < hexaMapModel.Length; ++i)
             {
@@ -78,41 +79,77 @@ namespace Expanze.Gameplay.Map
 
                       // UP LEFT
                       if (i >= 1 && hexaMapModel[i - 1].Length > j)
-                          neighbours[(int)RoadPos.UpLeft] = hexaMapModel[i - 1][j];
+                      {
+                          neighboursModel[(int)RoadPos.UpLeft] = hexaMapModel[i - 1][j];
+                          neighboursView[(int)RoadPos.UpLeft] = hexaMapView[i - 1][j];
+                      }
                       else
-                          neighbours[(int)RoadPos.UpLeft] = null;
+                      {
+                          neighboursModel[(int)RoadPos.UpLeft] = null;
+                          neighboursView[(int)RoadPos.UpLeft] = null;
+                      }
 
                       // UP RIGHT
                       if (i >= 1 && j > 0 && hexaMapModel[i - 1].Length > j - 1)
-                          neighbours[(int)RoadPos.UpRight] = hexaMapModel[i - 1][j - 1];
+                      {
+                          neighboursModel[(int)RoadPos.UpRight] = hexaMapModel[i - 1][j - 1];
+                          neighboursView[(int)RoadPos.UpRight] = hexaMapView[i - 1][j - 1];
+                      }
                       else
-                          neighbours[(int)RoadPos.UpRight] = null;
+                      {
+                          neighboursModel[(int)RoadPos.UpRight] = null;
+                          neighboursView[(int)RoadPos.UpRight] = null;
+                      }
 
                       // LEFT
                       if (hexaMapModel[i].Length > j + 1)
-                          neighbours[(int)RoadPos.MiddleLeft] = hexaMapModel[i][j + 1];
+                      {
+                          neighboursModel[(int)RoadPos.MiddleLeft] = hexaMapModel[i][j + 1];
+                          neighboursView[(int)RoadPos.MiddleLeft] = hexaMapView[i][j + 1];
+                      }
                       else
-                          neighbours[(int)RoadPos.MiddleLeft] = null;
+                      {
+                          neighboursModel[(int)RoadPos.MiddleLeft] = null;
+                          neighboursView[(int)RoadPos.MiddleLeft] = null;
+                      }
 
                       // RIGHT
                       if (j - 1 >= 0)
-                          neighbours[(int)RoadPos.MiddleRight] = hexaMapModel[i][j - 1];
+                      {
+                          neighboursModel[(int)RoadPos.MiddleRight] = hexaMapModel[i][j - 1];
+                          neighboursView[(int)RoadPos.MiddleRight] = hexaMapView[i][j - 1];
+                      }
                       else
-                          neighbours[(int)RoadPos.MiddleRight] = null;
+                      {
+                          neighboursModel[(int)RoadPos.MiddleRight] = null;
+                          neighboursView[(int)RoadPos.MiddleRight] = null;
+                      }
 
                       // BOTTOM LEFT
                       if (i + 1 < hexaMapModel.Length && hexaMapModel[i + 1].Length > j + 1)
-                          neighbours[(int)RoadPos.BottomLeft] = hexaMapModel[i + 1][j + 1];
+                      {
+                          neighboursModel[(int)RoadPos.BottomLeft] = hexaMapModel[i + 1][j + 1];
+                          neighboursView[(int)RoadPos.BottomLeft] = hexaMapView[i + 1][j + 1];
+                      }
                       else
-                          neighbours[(int)RoadPos.BottomLeft] = null;
+                      {
+                          neighboursModel[(int)RoadPos.BottomLeft] = null;
+                          neighboursView[(int)RoadPos.BottomLeft] = null;
+                      }
 
                       // BOTTOM RIGHT
                       if (i + 1 < hexaMapModel.Length && hexaMapModel[i + 1].Length > j)
-                          neighbours[(int)RoadPos.BottomRight] = hexaMapModel[i + 1][j];
+                      {
+                          neighboursModel[(int)RoadPos.BottomRight] = hexaMapModel[i + 1][j];
+                          neighboursView[(int)RoadPos.BottomRight] = hexaMapView[i + 1][j];
+                      }
                       else
-                          neighbours[(int)RoadPos.BottomRight] = null;
+                      {
+                          neighboursModel[(int)RoadPos.BottomRight] = null;
+                          neighboursView[(int)RoadPos.BottomRight] = null;
+                      }
 
-                      hexaMapModel[i][j].CreateTownsAndRoads(neighbours, hexaMapView[i][j]);
+                      hexaMapModel[i][j].CreateTownsAndRoads(neighboursModel, hexaMapView[i][j], neighboursView);
                   }
             }
         }
@@ -403,6 +440,20 @@ namespace Expanze.Gameplay.Map
                 }
                 else
                     gm.getActivePlayer().payForSomething(Settings.costTown);
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool buildBuildingInTown(int townID, int hexaID)
+        {
+            GameMaster gm = GameMaster.getInstance();
+            Town town = GetTownByID(townID);
+            int buildingPos = town.findBuildingByHexaID(hexaID);
+            if (town.canActivePlayerBuildBuildingInTown(buildingPos))
+            {
+                town.buildBuilding(buildingPos);
                 return true;
             }
 

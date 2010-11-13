@@ -43,20 +43,25 @@ namespace Expanze
             playerOwner = null;
         }
 
+        public int findBuildingByHexaID(int hexaID)
+        {
+            for (int loop1 = 0; loop1 < building.Length; loop1++)
+            {
+                if (hexaNeighbour[loop1] != null && hexaNeighbour[loop1].getID() == hexaID)
+                    return loop1;
+            }
+            return -1;
+        }
+
         public BuildingKind getBuildingKind(int hexaID)
         {
             if (!isBuild)
                 return BuildingKind.NoBuilding;
 
-            return BuildingKind.SourceBuilding;
+            int buildingPos = findBuildingByHexaID(hexaID);
 
-            /*
-            for(int loop1 = 0; loop1 < building.Length; loop1++)
-            {
-                if (hexaNeighbour[loop1] != null && hexaNeighbour[loop1].getID() == hexaID)
-                    return building[loop1];
-            }
-            return BuildingKind.NoBuilding;*/
+
+            return (buildingPos == -1) ? BuildingKind.NoBuilding : building[buildingPos];
         }
 
         public static void resetCounter() { counter = 0; }
@@ -157,6 +162,23 @@ namespace Expanze
             return false;
         }
 
+        public Boolean canActivePlayerBuildBuildingInTown(int pos)
+        {
+            GameMaster gm = GameMaster.getInstance();
+            if (gm.getState() == EGameState.StateGame)
+            {
+                if (building[pos] != BuildingKind.NoBuilding)
+                    return false;
+
+                if (gm.getActivePlayer() != playerOwner)
+                    return false;
+
+                return true;
+            }
+
+            return false;
+        }
+
         public Boolean CanActivePlayerBuildTown()
         {
             GameMaster gm = GameMaster.getInstance();
@@ -174,6 +196,11 @@ namespace Expanze
                 return !isBuild && !HasTownBuildNeighbour() && Settings.costTown.HasPlayerSources(activePlayer) && hasActivePlayerRoadNeighbour;
             } else
                 return !isBuild && !HasTownBuildNeighbour();
+        }
+
+        public void buildBuilding(int pos)
+        {
+            building[pos] = BuildingKind.SourceBuilding;
         }
     }
 }

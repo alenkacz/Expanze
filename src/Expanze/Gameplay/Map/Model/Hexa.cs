@@ -42,11 +42,11 @@ namespace Expanze
 
         public static void resetCounter() { counter = 0; }
 
-        public void CreateTownsAndRoads(HexaModel[] neighbours, HexaView hexaView)
+        public void CreateTownsAndRoads(HexaModel[] neighboursModel, HexaView hexaView, HexaView[] neighboursView)
         {
-            hexaNeighbours = new HexaModel[neighbours.Length];
-            for (int loop1 = 0; loop1 < neighbours.Length; loop1++)
-                hexaNeighbours[loop1] = neighbours[loop1];
+            hexaNeighbours = new HexaModel[neighboursModel.Length];
+            for (int loop1 = 0; loop1 < neighboursModel.Length; loop1++)
+                hexaNeighbours[loop1] = neighboursModel[loop1];
 
             if (type == HexaKind.Nothing || type == HexaKind.Water)
                 return;
@@ -55,153 +55,206 @@ namespace Expanze
             // Creating roads -> //
             ///////////////////////
             // Always make owns road or get reference from other roads (not sending reference to other hexas)
-            if (neighbours[(int)RoadPos.UpLeft] == null ||
-                neighbours[(int)RoadPos.UpLeft].getRoad(RoadPos.BottomRight) == null)
+            if (neighboursModel[(int)RoadPos.UpLeft] == null ||
+                neighboursModel[(int)RoadPos.UpLeft].getRoad(RoadPos.BottomRight) == null)
             {
                 roadOwner[(int)RoadPos.UpLeft] = true;
                 roads[(int)RoadPos.UpLeft] = new Road();
                 hexaView.createRoadView(RoadPos.UpLeft, Matrix.CreateRotationY(-(float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(-0.25f, 0.0f, 0.14f)));
             }
             else
-                roads[(int)RoadPos.UpLeft] = neighbours[(int)RoadPos.UpLeft].getRoad(RoadPos.BottomRight);
+            {
+                roads[(int)RoadPos.UpLeft] = neighboursModel[(int)RoadPos.UpLeft].getRoad(RoadPos.BottomRight);
+                hexaView.setRoadView(RoadPos.UpLeft, neighboursView[(int)RoadPos.UpLeft].getRoadView(RoadPos.BottomRight));
+            }
 
-            if (neighbours[(int)RoadPos.UpRight] == null ||
-                neighbours[(int)RoadPos.UpRight].getRoad(RoadPos.BottomLeft) == null)
+            if (neighboursModel[(int)RoadPos.UpRight] == null ||
+                neighboursModel[(int)RoadPos.UpRight].getRoad(RoadPos.BottomLeft) == null)
             {
                 roadOwner[(int)RoadPos.UpRight] = true;
                 roads[(int)RoadPos.UpRight] = new Road();
                 hexaView.createRoadView(RoadPos.UpRight, Matrix.CreateRotationY((float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(-0.25f, 0.0f, -0.14f)));
             }
             else
-                roads[(int)RoadPos.UpRight] = neighbours[(int)RoadPos.UpRight].getRoad(RoadPos.BottomLeft);
+            {
+                roads[(int)RoadPos.UpRight] = neighboursModel[(int)RoadPos.UpRight].getRoad(RoadPos.BottomLeft);
+                hexaView.setRoadView(RoadPos.UpRight, neighboursView[(int)RoadPos.UpRight].getRoadView(RoadPos.BottomLeft));
+            }
 
-            if (neighbours[(int)RoadPos.MiddleLeft] == null ||
-                neighbours[(int)RoadPos.MiddleLeft].getRoad(RoadPos.MiddleRight) == null)
+            if (neighboursModel[(int)RoadPos.MiddleLeft] == null ||
+                neighboursModel[(int)RoadPos.MiddleLeft].getRoad(RoadPos.MiddleRight) == null)
             {
                 roadOwner[(int)RoadPos.MiddleLeft] = true;
                 roads[(int)RoadPos.MiddleLeft] = new Road();
                 hexaView.createRoadView(RoadPos.MiddleLeft, Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, 0.29f)));
             }
             else
-                roads[(int)RoadPos.MiddleLeft] = neighbours[(int)RoadPos.MiddleLeft].getRoad(RoadPos.MiddleRight);
+            {
+                roads[(int)RoadPos.MiddleLeft] = neighboursModel[(int)RoadPos.MiddleLeft].getRoad(RoadPos.MiddleRight);
+                hexaView.setRoadView(RoadPos.MiddleLeft, neighboursView[(int)RoadPos.MiddleLeft].getRoadView(RoadPos.MiddleRight));
+            }
 
-            if (neighbours[(int)RoadPos.MiddleRight] == null ||
-                neighbours[(int)RoadPos.MiddleRight].getRoad(RoadPos.MiddleLeft) == null)
+            if (neighboursModel[(int)RoadPos.MiddleRight] == null ||
+                neighboursModel[(int)RoadPos.MiddleRight].getRoad(RoadPos.MiddleLeft) == null)
             {
                 roadOwner[(int)RoadPos.MiddleRight] = true;
                 roads[(int)RoadPos.MiddleRight] = new Road();
                 hexaView.createRoadView(RoadPos.MiddleRight, Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, -0.28f)));
             }
             else
-                roads[(int)RoadPos.MiddleRight] = neighbours[(int)RoadPos.MiddleRight].getRoad(RoadPos.MiddleLeft);
+            {
+                roads[(int)RoadPos.MiddleRight] = neighboursModel[(int)RoadPos.MiddleRight].getRoad(RoadPos.MiddleLeft);
+                hexaView.setRoadView(RoadPos.MiddleRight, neighboursView[(int)RoadPos.MiddleRight].getRoadView(RoadPos.MiddleLeft));
+            }
 
-
-            if (neighbours[(int)RoadPos.BottomLeft] == null ||
-                neighbours[(int)RoadPos.BottomLeft].getRoad(RoadPos.UpRight) == null)
+            if (neighboursModel[(int)RoadPos.BottomLeft] == null ||
+                neighboursModel[(int)RoadPos.BottomLeft].getRoad(RoadPos.UpRight) == null)
             {
                 roadOwner[(int)RoadPos.BottomLeft] = true;
                 roads[(int)RoadPos.BottomLeft] = new Road();
                 hexaView.createRoadView(RoadPos.BottomLeft, Matrix.CreateRotationY((float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(0.25f, 0.0f, 0.14f)));
             }
             else
-                roads[(int)RoadPos.BottomLeft] = neighbours[(int)RoadPos.BottomLeft].getRoad(RoadPos.UpRight);
-
-            if (neighbours[(int)RoadPos.BottomRight] == null ||
-                neighbours[(int)RoadPos.BottomRight].getRoad(RoadPos.UpLeft) == null)
+            {
+                roads[(int)RoadPos.BottomLeft] = neighboursModel[(int)RoadPos.BottomLeft].getRoad(RoadPos.UpRight);
+                hexaView.setRoadView(RoadPos.BottomLeft, neighboursView[(int)RoadPos.BottomLeft].getRoadView(RoadPos.UpRight));
+            }
+            if (neighboursModel[(int)RoadPos.BottomRight] == null ||
+                neighboursModel[(int)RoadPos.BottomRight].getRoad(RoadPos.UpLeft) == null)
             {
                 roadOwner[(int)RoadPos.BottomRight] = true;
                 roads[(int)RoadPos.BottomRight] = new Road();
                 hexaView.createRoadView(RoadPos.BottomRight, Matrix.CreateRotationY(-(float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(0.25f, 0.0f, -0.14f)));
             }
             else
-                roads[(int)RoadPos.BottomRight] = neighbours[(int)RoadPos.BottomRight].getRoad(RoadPos.UpLeft);
-            
+            {
+                roads[(int)RoadPos.BottomRight] = neighboursModel[(int)RoadPos.BottomRight].getRoad(RoadPos.UpLeft);
+                hexaView.setRoadView(RoadPos.BottomRight, neighboursView[(int)RoadPos.BottomRight].getRoadView(RoadPos.UpLeft));
+            }
+
             ///////////////////////
             // Creating tows ->  //
             ///////////////////////
-            if ((neighbours[(int)RoadPos.UpLeft] == null ||
-                 neighbours[(int)RoadPos.UpLeft].getTown(TownPos.BottomRight) == null) &&
-                (neighbours[(int)RoadPos.UpRight] == null ||
-                 neighbours[(int)RoadPos.UpRight].getTown(TownPos.BottomLeft) == null))
+            if ((neighboursModel[(int)RoadPos.UpLeft] == null ||
+                 neighboursModel[(int)RoadPos.UpLeft].getTown(TownPos.BottomRight) == null) &&
+                (neighboursModel[(int)RoadPos.UpRight] == null ||
+                 neighboursModel[(int)RoadPos.UpRight].getTown(TownPos.BottomLeft) == null))
             {
                 townOwner[(int)TownPos.Up] = true;
                 towns[(int)TownPos.Up] = new Town();
                 hexaView.createTownView(TownPos.Up, Matrix.CreateTranslation(new Vector3(-0.32f, 0.0f, 0.0f)));
             }
             else
-                if (neighbours[(int)RoadPos.UpLeft] != null && neighbours[(int)RoadPos.UpLeft].getTown(TownPos.BottomRight) != null)
-                    towns[(int)TownPos.Up] = neighbours[(int)RoadPos.UpLeft].getTown(TownPos.BottomRight);
+            {
+                if (neighboursModel[(int)RoadPos.UpLeft] != null && neighboursModel[(int)RoadPos.UpLeft].getTown(TownPos.BottomRight) != null)
+                {
+                    towns[(int)TownPos.Up] = neighboursModel[(int)RoadPos.UpLeft].getTown(TownPos.BottomRight);
+                    hexaView.setTownView(TownPos.Up, neighboursView[(int)RoadPos.UpLeft].getTownView(TownPos.BottomRight));
+                }
                 else
-                    towns[(int)TownPos.Up] = neighbours[(int)RoadPos.UpRight].getTown(TownPos.BottomLeft);
+                {
+                    towns[(int)TownPos.Up] = neighboursModel[(int)RoadPos.UpRight].getTown(TownPos.BottomLeft);
+                    hexaView.setTownView(TownPos.Up, neighboursView[(int)RoadPos.UpRight].getTownView(TownPos.BottomLeft));
+                }
+            }
 
-            if ((neighbours[(int)RoadPos.BottomLeft] == null ||
-                 neighbours[(int)RoadPos.BottomLeft].getTown(TownPos.UpRight) == null) &&
-                (neighbours[(int)RoadPos.BottomRight] == null ||
-                 neighbours[(int)RoadPos.BottomRight].getTown(TownPos.UpLeft) == null))
+            if ((neighboursModel[(int)RoadPos.BottomLeft] == null ||
+                 neighboursModel[(int)RoadPos.BottomLeft].getTown(TownPos.UpRight) == null) &&
+                (neighboursModel[(int)RoadPos.BottomRight] == null ||
+                 neighboursModel[(int)RoadPos.BottomRight].getTown(TownPos.UpLeft) == null))
             {
                 townOwner[(int)TownPos.Bottom] = true;
                 towns[(int)TownPos.Bottom] = new Town();
                 hexaView.createTownView(TownPos.Bottom, Matrix.CreateTranslation(new Vector3(0.32f, 0.0f, 0.0f)));
             }
             else
-                towns[(int)TownPos.Bottom] = neighbours[(int)RoadPos.BottomLeft].getTown(TownPos.UpRight);
+            {
+                towns[(int)TownPos.Bottom] = neighboursModel[(int)RoadPos.BottomLeft].getTown(TownPos.UpRight);
+                hexaView.setTownView(TownPos.Bottom, neighboursView[(int)RoadPos.BottomLeft].getTownView(TownPos.UpRight));
+            }
 
-            if ((neighbours[(int)RoadPos.UpRight] == null ||
-                neighbours[(int)RoadPos.UpRight].getTown(TownPos.Bottom) == null) &&
-               (neighbours[(int)RoadPos.MiddleRight] == null ||
-                neighbours[(int)RoadPos.MiddleRight].getTown(TownPos.UpLeft) == null))
+            if ((neighboursModel[(int)RoadPos.UpRight] == null ||
+                neighboursModel[(int)RoadPos.UpRight].getTown(TownPos.Bottom) == null) &&
+               (neighboursModel[(int)RoadPos.MiddleRight] == null ||
+                neighboursModel[(int)RoadPos.MiddleRight].getTown(TownPos.UpLeft) == null))
             {
                 townOwner[(int)TownPos.UpRight] = true;
                 towns[(int)TownPos.UpRight] = new Town();
-                hexaView.createTownView(TownPos.UpRight, Matrix.CreateTranslation(new Vector3(-0.16f, 0.0f, -0.28f))); 
+                hexaView.createTownView(TownPos.UpRight, Matrix.CreateTranslation(new Vector3(-0.16f, 0.0f, -0.28f)));
             }
             else
-                if (neighbours[(int)RoadPos.UpRight] != null && neighbours[(int)RoadPos.UpRight].getTown(TownPos.Bottom) != null)
-                    towns[(int)TownPos.UpRight] = neighbours[(int)RoadPos.UpRight].getTown(TownPos.Bottom);
+            {
+                if (neighboursModel[(int)RoadPos.UpRight] != null && neighboursModel[(int)RoadPos.UpRight].getTown(TownPos.Bottom) != null)
+                {
+                    towns[(int)TownPos.UpRight] = neighboursModel[(int)RoadPos.UpRight].getTown(TownPos.Bottom);
+                    hexaView.setTownView(TownPos.UpRight, neighboursView[(int)RoadPos.UpRight].getTownView(TownPos.Bottom));
+                }
                 else
-                    towns[(int)TownPos.UpRight] = neighbours[(int)RoadPos.MiddleRight].getTown(TownPos.UpLeft);
+                {
+                    towns[(int)TownPos.UpRight] = neighboursModel[(int)RoadPos.MiddleRight].getTown(TownPos.UpLeft);
+                    hexaView.setTownView(TownPos.UpRight, neighboursView[(int)RoadPos.MiddleRight].getTownView(TownPos.UpLeft));
+                }
+            }
 
-            if ((neighbours[(int)RoadPos.UpLeft] == null ||
-                 neighbours[(int)RoadPos.UpLeft].getTown(TownPos.Bottom) == null) &&
-                (neighbours[(int)RoadPos.MiddleLeft] == null ||
-                 neighbours[(int)RoadPos.MiddleLeft].getTown(TownPos.UpRight) == null))
+            if ((neighboursModel[(int)RoadPos.UpLeft] == null ||
+                 neighboursModel[(int)RoadPos.UpLeft].getTown(TownPos.Bottom) == null) &&
+                (neighboursModel[(int)RoadPos.MiddleLeft] == null ||
+                 neighboursModel[(int)RoadPos.MiddleLeft].getTown(TownPos.UpRight) == null))
             {
                 townOwner[(int)TownPos.UpLeft] = true;
                 towns[(int)TownPos.UpLeft] = new Town();
                 hexaView.createTownView(TownPos.UpLeft, Matrix.CreateTranslation(new Vector3(-0.16f, 0.0f, 0.28f)));
             }
             else
-                towns[(int)TownPos.UpLeft] = neighbours[(int)RoadPos.UpLeft].getTown(TownPos.Bottom);
+            {
+                towns[(int)TownPos.UpLeft] = neighboursModel[(int)RoadPos.UpLeft].getTown(TownPos.Bottom);
+                hexaView.setTownView(TownPos.UpLeft, neighboursView[(int)RoadPos.UpLeft].getTownView(TownPos.Bottom));
+            }
 
-            if ((neighbours[(int)RoadPos.BottomRight] == null ||
-                neighbours[(int)RoadPos.BottomRight].getTown(TownPos.Up) == null) &&
-               (neighbours[(int)RoadPos.MiddleRight] == null ||
-                neighbours[(int)RoadPos.MiddleRight].getTown(TownPos.BottomLeft) == null))
+            if ((neighboursModel[(int)RoadPos.BottomRight] == null ||
+                neighboursModel[(int)RoadPos.BottomRight].getTown(TownPos.Up) == null) &&
+               (neighboursModel[(int)RoadPos.MiddleRight] == null ||
+                neighboursModel[(int)RoadPos.MiddleRight].getTown(TownPos.BottomLeft) == null))
             {
                 townOwner[(int)TownPos.BottomRight] = true;
                 towns[(int)TownPos.BottomRight] = new Town();
-                hexaView.createTownView(TownPos.BottomRight, Matrix.CreateTranslation(new Vector3(0.16f, 0.0f, -0.28f))); 
+                hexaView.createTownView(TownPos.BottomRight, Matrix.CreateTranslation(new Vector3(0.16f, 0.0f, -0.28f)));
             }
             else
-                if (neighbours[(int)RoadPos.BottomRight] != null && neighbours[(int)RoadPos.BottomRight].getTown(TownPos.Bottom) != null)
-                    towns[(int)TownPos.BottomRight] = neighbours[(int)RoadPos.BottomRight].getTown(TownPos.Up);
+            {
+                if (neighboursModel[(int)RoadPos.BottomRight] != null && neighboursModel[(int)RoadPos.BottomRight].getTown(TownPos.Bottom) != null)
+                {
+                    towns[(int)TownPos.BottomRight] = neighboursModel[(int)RoadPos.BottomRight].getTown(TownPos.Up);
+                    hexaView.setTownView(TownPos.BottomRight, neighboursView[(int)RoadPos.BottomRight].getTownView(TownPos.Up));
+                }
                 else
-                    towns[(int)TownPos.BottomRight] = neighbours[(int)RoadPos.MiddleRight].getTown(TownPos.BottomLeft);
-
-            if ((neighbours[(int)RoadPos.BottomLeft] == null ||
-                neighbours[(int)RoadPos.BottomLeft].getTown(TownPos.Up) == null) &&
-               (neighbours[(int)RoadPos.MiddleLeft] == null ||
-                neighbours[(int)RoadPos.MiddleLeft].getTown(TownPos.BottomRight) == null))
+                {
+                    towns[(int)TownPos.BottomRight] = neighboursModel[(int)RoadPos.MiddleRight].getTown(TownPos.BottomLeft);
+                    hexaView.setTownView(TownPos.BottomRight, neighboursView[(int)RoadPos.MiddleRight].getTownView(TownPos.BottomLeft));
+                }
+            }
+            if ((neighboursModel[(int)RoadPos.BottomLeft] == null ||
+                neighboursModel[(int)RoadPos.BottomLeft].getTown(TownPos.Up) == null) &&
+               (neighboursModel[(int)RoadPos.MiddleLeft] == null ||
+                neighboursModel[(int)RoadPos.MiddleLeft].getTown(TownPos.BottomRight) == null))
             {
                 townOwner[(int)TownPos.BottomLeft] = true;
                 towns[(int)TownPos.BottomLeft] = new Town();
                 hexaView.createTownView(TownPos.BottomLeft, Matrix.CreateTranslation(new Vector3(0.16f, 0.0f, 0.28f)));
             }
             else
-                if (neighbours[(int)RoadPos.BottomLeft] != null && neighbours[(int)RoadPos.BottomLeft].getTown(TownPos.Bottom) != null)
-                    towns[(int)TownPos.BottomLeft] = neighbours[(int)RoadPos.BottomLeft].getTown(TownPos.Up);
+            {
+                if (neighboursModel[(int)RoadPos.BottomLeft] != null && neighboursModel[(int)RoadPos.BottomLeft].getTown(TownPos.Bottom) != null)
+                {
+                    towns[(int)TownPos.BottomLeft] = neighboursModel[(int)RoadPos.BottomLeft].getTown(TownPos.Up);
+                    hexaView.setTownView(TownPos.BottomLeft, neighboursView[(int)RoadPos.BottomLeft].getTownView(TownPos.Up));
+                }
                 else
-                    towns[(int)TownPos.BottomLeft] = neighbours[(int)RoadPos.MiddleLeft].getTown(TownPos.BottomRight);
+                {
+                    towns[(int)TownPos.BottomLeft] = neighboursModel[(int)RoadPos.MiddleLeft].getTown(TownPos.BottomRight);
+                    hexaView.setTownView(TownPos.BottomLeft, neighboursView[(int)RoadPos.MiddleLeft].getTownView(TownPos.BottomRight));
+                }
+            }
         }
 
         public void FindTownNeighbours()

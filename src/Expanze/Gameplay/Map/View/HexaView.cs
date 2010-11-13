@@ -43,9 +43,23 @@ namespace Expanze
             roadView[(int)pos] = new RoadView(model.getRoad(pos), relative * world);
         }
 
+        public RoadView getRoadView(RoadPos pos) { return roadView[(int)pos]; }
+
+        public void setRoadView(RoadPos pos, RoadView road)
+        {
+            roadView[(int)pos] = road;
+        }
+
         public void createTownView(TownPos pos, Matrix relative)
         {
             townView[(int)pos] = new TownView(model.getTown(pos), relative * world);
+        }
+
+        public TownView getTownView(TownPos pos) { return townView[(int)pos]; }
+
+        public void setTownView(TownPos pos, TownView town)
+        {
+            townView[(int)pos] = town;
         }
 
         public void Draw2D()
@@ -180,6 +194,17 @@ namespace Expanze
             }
 
             Map.SetPickVariables(c == pickHexaColor, pickVars);
+
+            if (pickVars.pickNewPress)
+            {
+                for (int loop1 = 0; loop1 < townView.Length; loop1++)
+                {
+                    if (townView[loop1].getIsMarked())
+                    {
+                        GameState.map.buildBuildingInTown(townView[loop1].getTownModel().getTownID(), hexaID);
+                    }
+                }
+            }
         }
     }
 }

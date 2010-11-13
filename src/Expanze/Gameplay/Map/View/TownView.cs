@@ -27,6 +27,8 @@ namespace Expanze.Gameplay.Map.View
             pickVars = new PickVariables();
         }
 
+        public Town getTownModel() { return model; }
+        public Boolean getIsMarked() { return pickTownID == townID; }
         public Boolean getPickNewPress() { return pickVars.pickNewPress; }
 
         public void draw(GameTime gameTime)
