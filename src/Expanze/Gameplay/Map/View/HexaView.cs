@@ -12,14 +12,14 @@ namespace Expanze
 {
     class HexaView
     {
-        int                           hexaID;           // from counter, useable for picking
+        protected int                           hexaID;           // from counter, useable for picking
         Color                         pickHexaColor;    // color o hexa in render texture
-        private PickVariables         pickVars;
+        protected PickVariables         pickVars;
         protected Matrix                world;   // wordl position of Hex
         protected HexaModel model;    // reference to model
-        private RoadView[] roadView;
-        private TownView[] townView;
-        private HexaType type;
+        protected RoadView[] roadView;
+        protected TownView[] townView;
+        protected HexaType type;
         public HexaView(HexaModel model)
         {
             this.model = model;
