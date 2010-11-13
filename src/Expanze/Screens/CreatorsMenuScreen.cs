@@ -39,8 +39,8 @@ namespace Expanze
         {
             // Create our menu entries.
             alenaMenuEntry = new MenuEntry(string.Empty);
-            lukasMenuEntry = new MenuEntry(string.Empty);
             pavlaMenuEntry = new MenuEntry(string.Empty);
+            lukasMenuEntry = new MenuEntry(string.Empty);
 
             SetMenuEntryText();
 
@@ -62,16 +62,10 @@ namespace Expanze
         /// </summary>
         void SetMenuEntryText()
         {
-            pavlaMenuEntry.Text = "Lukáš Beran - teamleader";
+            lukasMenuEntry.Text = "Lukáš Beran - teamleader, programátor";
             alenaMenuEntry.Text = "Alena Varkočková - programátorka";
-            lukasMenuEntry.Text = "Pavla Balíková - grafička";
+            pavlaMenuEntry.Text = "Pavla Balíková - grafička";
         }
-
-
-        #endregion
-
-        #region Handle Input
-
 
 
         #endregion
