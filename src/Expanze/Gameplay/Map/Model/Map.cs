@@ -17,7 +17,11 @@ namespace Expanze.Gameplay.Map
     {
         const int N_MODEL = 7;
         Model[] hexaModel;
-        Model rectangleShape, circleShape;
+        public const int SHAPE_RECTANGLE = 0;
+        public const int SHAPE_CIRCLE = 1;
+        public const int SHAPE_SPHERE = 2;
+        public const int N_SHAPE_MODEL = 3;
+        Model[] shapeModel;
         Model townModel, roadModel;
 
         public Vector3 eye, target, up;
@@ -156,14 +160,9 @@ namespace Expanze.Gameplay.Map
         public Model getTownModel() { return townModel; }
         public Model getRoadModel() { return roadModel; }
 
-        public Model getRectangleShape()
+        public Model getShape(int shapeID)
         {
-            return rectangleShape;
-        }
-
-        public Model getCircleShape()
-        {
-            return circleShape;
+            return shapeModel[shapeID];
         }
 
         public override void LoadContent()
@@ -179,8 +178,13 @@ namespace Expanze.Gameplay.Map
             hexaModel[(int)HexaType.Pasture] = content.Load<Model>(Settings.mapPaths[(int)HexaType.Pasture]);
             hexaModel[(int)HexaType.Stone] = content.Load<Model>(Settings.mapPaths[(int)HexaType.Stone]);
             hexaModel[(int)HexaType.Water] = content.Load<Model>(Settings.mapPaths[(int)HexaType.Water]);
-            rectangleShape = content.Load<Model>("Shapes/rectangle");
-            circleShape = content.Load<Model>("Shapes/circle");
+
+            shapeModel = new Model[N_SHAPE_MODEL];
+
+            shapeModel[SHAPE_RECTANGLE] = content.Load<Model>("Shapes/rectangle");
+            shapeModel[SHAPE_CIRCLE] = content.Load<Model>("Shapes/circle");
+            shapeModel[SHAPE_SPHERE] = content.Load<Model>("Shapes/sphere");
+
             townModel = content.Load<Model>("Models/town");
             roadModel = content.Load<Model>("Models/road");
         }

@@ -90,7 +90,7 @@ namespace Expanze.Gameplay.Map.View
 
         public void DrawPickableAreas()
         {
-            Model m = GameState.map.getRectangleShape();
+            Model m = GameState.map.getShape(Map.SHAPE_RECTANGLE);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 

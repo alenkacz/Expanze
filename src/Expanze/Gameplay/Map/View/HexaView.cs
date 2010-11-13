@@ -129,7 +129,7 @@ namespace Expanze
 
         public void DrawPickableAreas()
         {
-            Model m = GameState.map.getCircleShape();
+            Model m = GameState.map.getShape(Map.SHAPE_CIRCLE);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 
