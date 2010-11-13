@@ -9,6 +9,9 @@
 
 #region Using Statements
 using Microsoft.Xna.Framework;
+using System;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 #endregion
 
 namespace Expanze
@@ -17,55 +20,129 @@ namespace Expanze
     /// The pause menu comes up over the top of the game,
     /// giving the player options to resume or quit.
     /// </summary>
-    class VictoryScreen : MenuScreen
+    class VictoryScreen : GameScreen
     {
+        #region Fields
+
+        bool userCancelled = false;
+
+        GameScreen[] screensToLoad;
+
+        #endregion
+
         #region Initialization
 
 
         /// <summary>
-        /// Constructor.
+        /// The constructor is private: loading screens should
+        /// be activated via the static Load method instead.
         /// </summary>
-        public VictoryScreen()
-            : base("Victory")
+        private VictoryScreen(ScreenManager screenManager,
+                              GameScreen[] screensToLoad)
         {
-            // Create our menu entries.
-            MenuEntry quitGameMenuEntry = new MenuEntry("Vítìz -> Do menu");
+            this.screensToLoad = screensToLoad;
+        }
 
-            // Hook up menu event handlers.
-            quitGameMenuEntry.Selected += QuitGameMenuEntrySelected;
 
-            MenuEntries.Add(quitGameMenuEntry);
+        /// <summary>
+        /// Activates the loading screen.
+        /// </summary>
+        public static void Load(ScreenManager screenManager, bool loadingIsSlow,
+                                PlayerIndex? controllingPlayer,
+                                params GameScreen[] screensToLoad)
+        {
+            // Tell all the current screens to transition off.
+            foreach (GameScreen screen in screenManager.GetScreens())
+                screen.ExitScreen();
+
+            // Create and activate the loading screen.
+            VictoryScreen loadingScreen = new VictoryScreen(screenManager,
+                                                            screensToLoad);
+
+            screenManager.AddScreen(loadingScreen, controllingPlayer);
         }
 
 
         #endregion
 
-        #region Handle Input
+        #region Update and Draw
 
         /// <summary>
-        /// Event handler for when the Quit Game menu entry is selected.
+        /// Lets the game respond to player input. Unlike the Update method,
+        /// this will only be called when the gameplay screen is active.
         /// </summary>
-        void QuitGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        public override void HandleInput(InputState input)
         {
-            const string message = "Are you sure you want to quit this game?";
+            if (input == null)
+                throw new ArgumentNullException("input");
 
-            MessageBoxScreen confirmQuitMessageBox = new MessageBoxScreen(message);
+            // Look up inputs for the active player profile.
+            int playerIndex = (int)ControllingPlayer.Value;
 
-            confirmQuitMessageBox.Accepted += ConfirmQuitMessageBoxAccepted;
+            KeyboardState keyboardState = input.CurrentKeyboardStates[playerIndex];
+            MouseState mouseState = input.CurrentMouseState;
 
-            ScreenManager.AddScreen(confirmQuitMessageBox, ControllingPlayer);
+            if (keyboardState.IsKeyDown(Keys.Escape) || keyboardState.IsKeyDown(Keys.Enter))
+            {
+                userCancelled = true;
+            }
         }
 
 
         /// <summary>
-        /// Event handler for when the user selects ok on the "are you sure
-        /// you want to quit" message box. This uses the loading screen to
-        /// transition from the game back to the main menu screen.
+        /// Updates the loading screen.
         /// </summary>
-        void ConfirmQuitMessageBoxAccepted(object sender, PlayerIndexEventArgs e)
+        public override void Update(GameTime gameTime, bool otherScreenHasFocus,
+                                                       bool coveredByOtherScreen)
         {
-            LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(),
-                                                           new MainMenuScreen());
+            base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+
+            // If all the previous screens have finished transitioning
+            // off, it is time to actually perform the load.
+            if (userCancelled)
+            {
+                foreach (GameScreen screen in screensToLoad)
+                {
+                    if (screen != null)
+                    {
+                        ScreenManager.AddScreen(screen, ControllingPlayer);
+                    }
+                }
+
+                // Once the load has finished, we use ResetElapsedTime to tell
+                // the  game timing mechanism that we have just finished a very
+                // long frame, and that it should not try to catch up.
+                ScreenManager.Game.ResetElapsedTime();
+                ScreenManager.RemoveScreen(this);
+            }
+        }
+
+
+        /// <summary>
+        /// Draws the loading screen.
+        /// </summary>
+        public override void Draw(GameTime gameTime)
+        {
+
+
+                SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
+                SpriteFont font = ScreenManager.Font;
+
+                String message = "Victory!!!";
+
+                // Center the text in the viewport.
+                Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
+                Vector2 viewportSize = new Vector2(viewport.Width, viewport.Height);
+                Vector2 textSize = font.MeasureString(message);
+                Vector2 textPosition = (viewportSize - textSize) / 2;
+
+                Color color = Color.White * TransitionAlpha;
+
+                // Draw the text.
+                spriteBatch.Begin();
+                spriteBatch.DrawString(font, message, textPosition, color);
+                spriteBatch.End();
+            
         }
 
 

@@ -17,6 +17,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Expanze.Gameplay.Map;
+using CorePlugin;
 #endregion
 
 namespace Expanze
@@ -99,16 +100,18 @@ namespace Expanze
             GameState.windowPromt = new WindowPromt();
             gameComponents.Add(GameState.windowPromt);
 
-            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), GameState.gameFont, Settings.scaleW(147), Settings.scaleH(141), "nextTurn");
+            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), new Rectangle(Settings.scaleW((int)(Settings.maximumResolution.X - 80)), Settings.scaleH((int)(Settings.maximumResolution.Y - 80)),Settings.scaleW(60),Settings.scaleH(60)), GameState.gameFont, Settings.scaleW(147), Settings.scaleH(141), "nextTurn");
+            changeTurnButton.Actions += ChangeTurnButtonAction;
             guiComponents.Add(changeTurnButton);
-            MenuButtonComponent menuHUDButton = new MenuButtonComponent(ScreenManager.Game, 20, 20, GameState.gameFont, Settings.scaleW(222), Settings.scaleH(225), "menu_button");
+            ButtonComponent menuHUDButton = new ButtonComponent(ScreenManager.Game, Settings.scaleW(20), Settings.scaleH(20), new Rectangle(Settings.scaleW(20),Settings.scaleH(20),Settings.scaleW(80),Settings.scaleH(80)), GameState.gameFont, Settings.scaleW(222), Settings.scaleH(225), "menu_button");
+            menuHUDButton.Actions += MenuButtonAction;
             guiComponents.Add(menuHUDButton);
             MaterialsHUDComponent materialsHUDComp = new MaterialsHUDComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width/4, ScreenManager.Game.GraphicsDevice.Viewport.Height - 78, GameState.gameFont, 757, 148, "suroviny_hud");
             guiComponents.Add(materialsHUDComp);
             GuiComponent usersHud = new GuiComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 670), 10, GameState.gameFont, Settings.scaleW(660), Settings.scaleH(46), "hud-top");
             guiComponents.Add(usersHud);
-            //GuiComponent newMsg = new GuiComponent(ScreenManager.Game, 0, ScreenManager.Game.GraphicsDevice.Viewport.Height - 80, GameState.gameFont, 93, 80, "newmessage");
-            //guiComponents.Add(newMsg);
+            GuiComponent newMsg = new GuiComponent(ScreenManager.Game, Settings.scaleW(30), (int)(Settings.maximumResolution.Y - 176), GameState.gameFont, Settings.scaleW(151), Settings.scaleH(156), "newmessage");
+            guiComponents.Add(newMsg);
             //gameComponents.Add(buttonComp);
 
             foreach(GameComponent gameComponent in gameComponents)
@@ -150,6 +153,29 @@ namespace Expanze
             }
         }
 
+
+        #endregion
+
+        #region HUDEventHandlers
+
+        /// <summary>
+        /// Event handler for when the menu button is selected
+        /// </summary>
+        void MenuButtonAction(object sender, PlayerIndexEventArgs e)
+        {
+            GameMaster.getInstance().setPausedNew(true);
+        }
+
+        /// <summary>
+        /// Event handler for when the menu button is selected
+        /// </summary>
+        void ChangeTurnButtonAction(object sender, PlayerIndexEventArgs e)
+        {
+            if (GameMaster.getInstance().getState() == EGameState.StateGame)
+            {
+                GameMaster.getInstance().nextTurn();
+            }
+        }
 
         #endregion
 
@@ -219,9 +245,11 @@ namespace Expanze
 
             if (GameMaster.getInstance().isWinnerNew())
             {
-                ScreenManager.AddScreen(new VictoryScreen(), ControllingPlayer);
+                VictoryScreen.Load(ScreenManager, true, ControllingPlayer,
+                               new GameScreen[] { new BackgroundScreen(), new MainMenuScreen() });
             }
         }
+
 
 
         /// <summary>
