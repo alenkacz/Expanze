@@ -37,6 +37,7 @@ namespace Expanze
         }
 
         public static GraphicsDeviceManager GraphicsDeviceManager = null;
+        public static Game Game = null;
 
         public static bool isFullscreen = false;
 
