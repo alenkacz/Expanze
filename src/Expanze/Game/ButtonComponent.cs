@@ -13,7 +13,7 @@ namespace Expanze
     {
         protected MouseState mouseState;
 
-        protected Vector2 scaledPos;
+        protected Rectangle clickablePos;
 
         protected int mousex;
         protected int mousey;
@@ -21,9 +21,26 @@ namespace Expanze
         //button still pressed
         protected bool pressed = false;
 
-        public ButtonComponent(Game game, int x, int y, SpriteFont font, int width, int height, String texture) 
-            : base(game,x,y,font,width,height,texture) {
-                scaledPos = Settings.scale(new Vector2(x,y));
+        /// <summary>
+        /// Event raised when the menu entry is selected.
+        /// </summary>
+        public event EventHandler<PlayerIndexEventArgs> Actions;
+
+        /// <summary>
+        /// Method for raising the Selected event.
+        /// </summary>
+        protected internal virtual void OnSelectEntry(PlayerIndex playerIndex)
+        {
+            if (Actions != null)
+                Actions(this, new PlayerIndexEventArgs(playerIndex));
+        }
+
+
+        public ButtonComponent(Game game, int x, int y, Rectangle clickablePosition, SpriteFont font, int width, int height, String texture)
+            : base(game, x, y, font, width, height, texture)
+        {
+            //clickablePos = new Rectangle(Settings.scaleW(clickablePosition.Left), Settings.scaleH(clickablePosition.Top), Settings.scaleW(clickablePosition.Right - clickablePosition.Left), Settings.scaleH(clickablePosition.Bottom - clickablePosition.Top));
+            clickablePos = clickablePosition;
         }
 
         public override void Update(GameTime gameTime)
@@ -43,17 +60,11 @@ namespace Expanze
             if (ButtonState.Pressed == mouseState.LeftButton && !pressed)
             {
 
-                if ((mousex > scaledPos.X && mousex < (scaledPos.X + width)) && (mousey < (scaledPos.Y + height) && mousey > scaledPos.Y))//identify mouse over x y posotions for the button
+                if ((mousex > clickablePos.Left && mousex < (clickablePos.Right)) && (mousey < (clickablePos.Bottom) && mousey > clickablePos.Top))//identify mouse over x y posotions for the button
                 {
-                    if (GameMaster.getInstance().getState() == EGameState.StateGame)
-                    {
-                        GameMaster.getInstance().nextTurn();
-                        pressed = true;
-                    }
-                    else
-                    {
-                        GameState.windowPromt.showAlert("Nejdřív postav město.");
-                    }
+                    if (Actions != null)
+                        Actions(null, new PlayerIndexEventArgs(new PlayerIndex()));
+                    pressed = true;
                 }
             }
 
@@ -73,3 +84,4 @@ namespace Expanze
         }
     }
 }
+

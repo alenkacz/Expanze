@@ -175,6 +175,10 @@ namespace Expanze
             {
                 GameMaster.getInstance().nextTurn();
             }
+            else
+            {
+                GameState.windowPromt.showAlert("Musíš nejdøíve postavit mìsto.");
+            }
         }
 
         #endregion
