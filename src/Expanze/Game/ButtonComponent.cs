@@ -36,10 +36,11 @@ namespace Expanze
         }
 
 
-        public ButtonComponent(Game game, int x, int y, Rectangle clickablePosition, SpriteFont font, int width, int height, String texture) 
-            : base(game,x,y,font,width,height,texture) {
-                //clickablePos = new Rectangle(Settings.scaleW(clickablePosition.Left), Settings.scaleH(clickablePosition.Top), Settings.scaleW(clickablePosition.Right - clickablePosition.Left), Settings.scaleH(clickablePosition.Bottom - clickablePosition.Top));
-                clickablePos = clickablePosition;
+        public ButtonComponent(Game game, int x, int y, Rectangle clickablePosition, SpriteFont font, int width, int height, String texture)
+            : base(game, x, y, font, width, height, texture)
+        {
+            //clickablePos = new Rectangle(Settings.scaleW(clickablePosition.Left), Settings.scaleH(clickablePosition.Top), Settings.scaleW(clickablePosition.Right - clickablePosition.Left), Settings.scaleH(clickablePosition.Bottom - clickablePosition.Top));
+            clickablePos = clickablePosition;
         }
 
         public override void Update(GameTime gameTime)
@@ -83,3 +84,4 @@ namespace Expanze
         }
     }
 }
+

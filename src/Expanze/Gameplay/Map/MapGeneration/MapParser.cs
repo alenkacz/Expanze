@@ -78,28 +78,28 @@ namespace Expanze
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        private HexaType decideType(String type)
+        private HexaKind decideType(String type)
         {
             switch (type)
             {
                 case "cornfield":
-                    return HexaType.Cornfield;
+                    return HexaKind.Cornfield;
                 case "forest":
-                    return HexaType.Forest;
+                    return HexaKind.Forest;
                 case "desert":
-                    return HexaType.Desert;
+                    return HexaKind.Desert;
                 case "mountains":
-                    return HexaType.Mountains;
+                    return HexaKind.Mountains;
                 case "pasture":
-                    return HexaType.Pasture;
+                    return HexaKind.Pasture;
                 case "stone":
-                    return HexaType.Stone;
+                    return HexaKind.Stone;
                 case "water":
-                    return HexaType.Water;
+                    return HexaKind.Water;
                 case "nothing" :
-                    return HexaType.Nothing;
+                    return HexaKind.Nothing;
                 default :
-                    return HexaType.Null;
+                    return HexaKind.Null;
             }
         }
     }

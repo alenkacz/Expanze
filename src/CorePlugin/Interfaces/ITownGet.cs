@@ -5,6 +5,7 @@ using System.Text;
 
 namespace CorePlugin
 {
+    public enum BuildingKind { NoBuilding, SourceBuilding }
     public interface ITownGet
     {
         int getTownID();

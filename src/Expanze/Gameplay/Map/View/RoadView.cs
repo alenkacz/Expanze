@@ -23,7 +23,7 @@ namespace Expanze.Gameplay.Map.View
             this.roadID = model.getRoadID();
             this.pickRoadColor = new Color(0.0f, roadID / 256.0f, 0.0f);
             this.world = world;
-            pickVars = new PickVariables();
+            pickVars = new PickVariables(pickRoadColor);
         }
 
         public void Draw(GameTime gameTime)
@@ -90,7 +90,7 @@ namespace Expanze.Gameplay.Map.View
 
         public void DrawPickableAreas()
         {
-            Model m = GameState.map.getRectangleShape();
+            Model m = GameState.map.getShape(Map.SHAPE_RECTANGLE);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 

@@ -11,7 +11,8 @@ namespace Expanze
         public static bool isActive = false;
         private static MarketComponent instance = null;
 
-        private MarketComponent() 
+        private MarketComponent()
+
         :base(Settings.Game,100,10,GameState.gameFont,300,300,"market_bg"){ }
 
         public static MarketComponent getInstance() {

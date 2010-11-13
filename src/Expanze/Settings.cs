@@ -20,6 +20,11 @@ namespace Expanze
         // costs of infrastructure
         public static SourceAll costTown = new SourceAll(60, 60, 50, 50, 30);
         public static SourceAll costRoad = new SourceAll(0, 40, 0, 0, 50);
+        public static SourceAll costMine = new SourceAll(0, 50, 0, 50, 0);
+        public static SourceAll costSaw = new SourceAll(0, 0, 0, 50, 50);
+        public static SourceAll costMill = new SourceAll(50, 50, 0, 0, 0);
+        public static SourceAll costStephard = new SourceAll(0, 0, 50, 0, 50);
+        public static SourceAll costQuarry = new SourceAll(50, 0, 50, 0, 0);
 
         // goals
         public static SourceAll costWin = new SourceAll(200, 100, 100, 100, 100);

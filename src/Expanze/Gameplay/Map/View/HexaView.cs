@@ -12,22 +12,22 @@ namespace Expanze
 {
     class HexaView
     {
-        int                           hexaID;           // from counter, useable for picking
+        protected int                           hexaID;           // from counter, useable for picking
         Color                         pickHexaColor;    // color o hexa in render texture
-        private PickVariables         pickVars;
-        private Matrix                world;   // wordl position of Hex
-        private HexaModel model;    // reference to model
-        private RoadView[] roadView;
-        private TownView[] townView;
-        private HexaType type;
+        protected PickVariables         pickVars;
+        protected Matrix                world;   // wordl position of Hex
+        protected HexaModel model;    // reference to model
+        protected RoadView[] roadView;
+        protected TownView[] townView;
+        protected HexaKind kind;
         public HexaView(HexaModel model)
         {
             this.model = model;
             this.hexaID = model.getID();
-            this.type = model.getType();
+            this.kind = model.getType();
             this.pickHexaColor = new Color(this.hexaID / 256.0f, 0.0f, 0.0f);
-            
-            pickVars = new PickVariables();
+
+            pickVars = new PickVariables(pickHexaColor);
 
             roadView = new RoadView[(int) RoadPos.Count];
             townView = new TownView[(int) TownPos.Count];
@@ -43,14 +43,28 @@ namespace Expanze
             roadView[(int)pos] = new RoadView(model.getRoad(pos), relative * world);
         }
 
+        public RoadView getRoadView(RoadPos pos) { return roadView[(int)pos]; }
+
+        public void setRoadView(RoadPos pos, RoadView road)
+        {
+            roadView[(int)pos] = road;
+        }
+
         public void createTownView(TownPos pos, Matrix relative)
         {
             townView[(int)pos] = new TownView(model.getTown(pos), relative * world);
         }
 
+        public TownView getTownView(TownPos pos) { return townView[(int)pos]; }
+
+        public void setTownView(TownPos pos, TownView town)
+        {
+            townView[(int)pos] = town;
+        }
+
         public void Draw2D()
         {
-            if (type == HexaType.Desert)
+            if (kind == HexaKind.Desert)
                 return;
 
             BoundingFrustum frustum = new BoundingFrustum(GameState.view * GameState.projection);
@@ -86,7 +100,7 @@ namespace Expanze
 
         public void Draw(GameTime gameTime)
         {
-            Model m = GameState.map.getHexaModel(type);
+            Model m = GameState.map.getHexaModel(kind);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
             RasterizerState rasterizerState = new RasterizerState();
@@ -95,7 +109,7 @@ namespace Expanze
 
             Matrix rotation;
             rotation = (hexaID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaID % 6));
-            Matrix tempMatrix = ((type == HexaType.Desert || type == HexaType.Forest || type == HexaType.Mountains) ? Matrix.CreateScale(0.00027f) * rotation : Matrix.CreateRotationZ((float)Math.PI));
+            Matrix tempMatrix = ((kind == HexaKind.Desert || kind == HexaKind.Forest || kind == HexaKind.Mountains) ? Matrix.CreateScale(0.00027f) * rotation : Matrix.CreateRotationZ((float)Math.PI));
 
 
 
@@ -117,6 +131,8 @@ namespace Expanze
                 mesh.Draw();
             }
 
+            DrawBuildings(gameTime);
+
             for (int loop1 = 0; loop1 < roadView.Length; loop1++)
                 if (model.getRoadOwner(loop1))
                     roadView[loop1].Draw(gameTime);
@@ -124,12 +140,17 @@ namespace Expanze
 
             for (int loop1 = 0; loop1 < roadView.Length; loop1++)
                 if (model.getTownOwner(loop1))
-                    townView[loop1].Draw(gameTime);
+                    townView[loop1].draw(gameTime);
+        }
+
+        public virtual void DrawBuildings(GameTime gameTime)
+        {
+
         }
 
         public void DrawPickableAreas()
         {
-            Model m = GameState.map.getCircleShape();
+            Model m = GameState.map.getShape(Map.SHAPE_CIRCLE);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 
@@ -155,7 +176,7 @@ namespace Expanze
 
             for (int loop1 = 0; loop1 < townView.Length; loop1++)
                 if (model.getTownOwner(loop1))
-                    townView[loop1].DrawPickableAreas();
+                    townView[loop1].drawPickableAreas();
         }
 
         public void HandlePickableAreas(Color c)
@@ -168,11 +189,22 @@ namespace Expanze
             {
                 if (model.getTownOwner(loop1))
                 {
-                    townView[loop1].HandlePickableAreas(c);
+                    townView[loop1].handlePickableAreas(c);
                 }
             }
 
             Map.SetPickVariables(c == pickHexaColor, pickVars);
+
+            if (pickVars.pickNewPress)
+            {
+                for (int loop1 = 0; loop1 < townView.Length; loop1++)
+                {
+                    if (townView[loop1].getIsMarked())
+                    {
+                        GameState.map.buildBuildingInTown(townView[loop1].getTownModel().getTownID(), hexaID);
+                    }
+                }
+            }
         }
     }
 }
