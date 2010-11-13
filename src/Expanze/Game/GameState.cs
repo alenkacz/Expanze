@@ -20,7 +20,10 @@ namespace Expanze
         public static Game game;
         public static Map map;
 
+        public static WindowPromt windowPromt;
+
         public static SpriteBatch spriteBatch;
+
         public static SpriteFont gameFont;
         public static SpriteFont playerNameFont;
         public static SpriteFont hudMaterialsFont;

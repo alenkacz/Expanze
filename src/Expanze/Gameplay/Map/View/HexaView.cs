@@ -26,8 +26,8 @@ namespace Expanze
             this.hexaID = model.getID();
             this.kind = model.getType();
             this.pickHexaColor = new Color(this.hexaID / 256.0f, 0.0f, 0.0f);
-            
-            pickVars = new PickVariables();
+
+            pickVars = new PickVariables(pickHexaColor);
 
             roadView = new RoadView[(int) RoadPos.Count];
             townView = new TownView[(int) TownPos.Count];
