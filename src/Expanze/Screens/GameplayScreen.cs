@@ -98,10 +98,10 @@ namespace Expanze
             mapComp = new Map(ScreenManager.Game);
             gameComponents.Add(mapComp);
 
-            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), GameState.gameFont, Settings.scaleW(147), Settings.scaleH(141), "nextTurn");
+            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), new Rectangle(Settings.scaleW((int)(Settings.maximumResolution.X - 80)), Settings.scaleH((int)(Settings.maximumResolution.Y - 80)),Settings.scaleW(60),Settings.scaleH(60)), GameState.gameFont, Settings.scaleW(147), Settings.scaleH(141), "nextTurn");
             changeTurnButton.Actions += ChangeTurnButtonAction;
             guiComponents.Add(changeTurnButton);
-            ButtonComponent menuHUDButton = new ButtonComponent(ScreenManager.Game, 20, 20, GameState.gameFont, Settings.scaleW(222), Settings.scaleH(225), "menu_button");
+            ButtonComponent menuHUDButton = new ButtonComponent(ScreenManager.Game, Settings.scaleW(20), Settings.scaleH(20), new Rectangle(Settings.scaleW(20),Settings.scaleH(20),Settings.scaleW(80),Settings.scaleH(80)), GameState.gameFont, Settings.scaleW(222), Settings.scaleH(225), "menu_button");
             menuHUDButton.Actions += MenuButtonAction;
             guiComponents.Add(menuHUDButton);
             MaterialsHUDComponent materialsHUDComp = new MaterialsHUDComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width/4, ScreenManager.Game.GraphicsDevice.Viewport.Height - 78, GameState.gameFont, 757, 148, "suroviny_hud");
