@@ -217,7 +217,8 @@ namespace Expanze
 
             if (GameMaster.getInstance().isWinnerNew())
             {
-                ScreenManager.AddScreen(new VictoryScreen(), ControllingPlayer);
+                VictoryScreen.Load(ScreenManager, true, ControllingPlayer,
+                               new GameScreen[] { new BackgroundScreen(), new MainMenuScreen() });
             }
         }
 

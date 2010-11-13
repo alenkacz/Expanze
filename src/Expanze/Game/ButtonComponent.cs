@@ -21,6 +21,21 @@ namespace Expanze
         //button still pressed
         protected bool pressed = false;
 
+        /// <summary>
+        /// Event raised when the menu entry is selected.
+        /// </summary>
+        public event EventHandler<PlayerIndexEventArgs> Selected;
+
+        /// <summary>
+        /// Method for raising the Selected event.
+        /// </summary>
+        protected internal virtual void OnSelectEntry(PlayerIndex playerIndex)
+        {
+            if (Selected != null)
+                Selected(this, new PlayerIndexEventArgs(playerIndex));
+        }
+
+
         public ButtonComponent(Game game, int x, int y, SpriteFont font, int width, int height, String texture) 
             : base(game,x,y,font,width,height,texture) {
                 scaledPos = Settings.scale(new Vector2(x,y));
