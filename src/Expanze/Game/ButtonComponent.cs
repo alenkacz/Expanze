@@ -24,15 +24,15 @@ namespace Expanze
         /// <summary>
         /// Event raised when the menu entry is selected.
         /// </summary>
-        public event EventHandler<PlayerIndexEventArgs> Selected;
+        public event EventHandler<PlayerIndexEventArgs> Actions;
 
         /// <summary>
         /// Method for raising the Selected event.
         /// </summary>
         protected internal virtual void OnSelectEntry(PlayerIndex playerIndex)
         {
-            if (Selected != null)
-                Selected(this, new PlayerIndexEventArgs(playerIndex));
+            if (Actions != null)
+                Actions(this, new PlayerIndexEventArgs(playerIndex));
         }
 
 

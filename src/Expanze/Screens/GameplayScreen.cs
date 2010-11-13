@@ -100,13 +100,14 @@ namespace Expanze
             ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), GameState.gameFont, Settings.scaleW(147), Settings.scaleH(141), "nextTurn");
             guiComponents.Add(changeTurnButton);
             MenuButtonComponent menuHUDButton = new MenuButtonComponent(ScreenManager.Game, 20, 20, GameState.gameFont, Settings.scaleW(222), Settings.scaleH(225), "menu_button");
+            //menuHUDButton.Actions += MenuButtonAction;
             guiComponents.Add(menuHUDButton);
             MaterialsHUDComponent materialsHUDComp = new MaterialsHUDComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width/4, ScreenManager.Game.GraphicsDevice.Viewport.Height - 78, GameState.gameFont, 757, 148, "suroviny_hud");
             guiComponents.Add(materialsHUDComp);
             GuiComponent usersHud = new GuiComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 670), 10, GameState.gameFont, Settings.scaleW(660), Settings.scaleH(46), "hud-top");
             guiComponents.Add(usersHud);
-            //GuiComponent newMsg = new GuiComponent(ScreenManager.Game, 0, ScreenManager.Game.GraphicsDevice.Viewport.Height - 80, GameState.gameFont, 93, 80, "newmessage");
-            //guiComponents.Add(newMsg);
+            GuiComponent newMsg = new GuiComponent(ScreenManager.Game, Settings.scaleW(30), (int)(Settings.maximumResolution.Y - 176), GameState.gameFont, Settings.scaleW(151), Settings.scaleH(156), "newmessage");
+            guiComponents.Add(newMsg);
             //gameComponents.Add(buttonComp);
 
             foreach(GameComponent gameComponent in gameComponents)
@@ -221,6 +222,15 @@ namespace Expanze
                                new GameScreen[] { new BackgroundScreen(), new MainMenuScreen() });
             }
         }
+
+        /// <summary>
+        /// Event handler for when the Play Game menu entry is selected.
+        /// </summary>
+        void MenuButtonAction(object sender, PlayerIndexEventArgs e)
+        {
+            GameMaster.getInstance().setPausedNew(true);
+        }
+
 
 
         /// <summary>
