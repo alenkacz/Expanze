@@ -108,7 +108,12 @@ namespace Expanze
             guiComponents.Add(materialsHUDComp);
             GuiComponent usersHud = new GuiComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 670), 10, GameState.gameFont, Settings.scaleW(660), Settings.scaleH(46), "hud-top");
             guiComponents.Add(usersHud);
-            GuiComponent newMsg = new GuiComponent(ScreenManager.Game, Settings.scaleW(30), (int)(Settings.maximumResolution.Y - 176), GameState.gameFont, Settings.scaleW(151), Settings.scaleH(156), "newmessage");
+            MarketComponent marketHud = MarketComponent.getInstance();
+            guiComponents.Add(marketHud);
+            //GuiComponent marketHud = new GuiComponent(ScreenManager.Game, 100, 10, GameState.gameFont, Settings.scaleW(500), Settings.scaleH(500), "market_bg");
+            //guiComponents.Add(marketHud);
+            ButtonComponent newMsg = new ButtonComponent(ScreenManager.Game, Settings.scaleW(30), (int)(Settings.maximumResolution.Y - 176), new Rectangle(Settings.scaleW(30), Settings.scaleH((int)(Settings.maximumResolution.Y - 176)),Settings.scaleW(70),Settings.scaleH(70)), GameState.gameFont, Settings.scaleW(151), Settings.scaleH(156), "newmessage");
+            newMsg.Actions += MarketButtonAction;
             guiComponents.Add(newMsg);
             //gameComponents.Add(buttonComp);
 
@@ -123,6 +128,9 @@ namespace Expanze
                 guiComponent.Initialize();
                 guiComponent.LoadContent();
             }
+
+            MarketComponent.getInstance().Initialize();
+            MarketComponent.getInstance().LoadContent();
 
             //simulating loading screens
             //Thread.Sleep(1000);
@@ -149,6 +157,8 @@ namespace Expanze
             {
                 guiComponent.UnloadContent();
             }
+
+            MarketComponent.getInstance().UnloadContent();
         }
 
 
@@ -172,6 +182,22 @@ namespace Expanze
             if (GameMaster.getInstance().getState() == EGameState.StateGame)
             {
                 GameMaster.getInstance().nextTurn();
+            }
+        }
+
+        /// <summary>
+        /// Event handler for when the market button is selected
+        /// </summary>
+        void MarketButtonAction(object sender, PlayerIndexEventArgs e)
+        {
+            if (MarketComponent.isActive)
+            {
+                MarketComponent.isActive = false;
+                //guiComponents.Remove(MarketComponent.getInstance());
+            }
+            else
+            {
+                MarketComponent.isActive = true;
             }
         }
 
@@ -208,6 +234,8 @@ namespace Expanze
                 {
                     guiComponent.Update(gameTime);
                 }
+
+                MarketComponent.getInstance().Update(gameTime);
             }
 
             
@@ -267,6 +295,11 @@ namespace Expanze
             foreach (GuiComponent guiComponent in guiComponents)
             {
                 guiComponent.Draw(gameTime, true);
+            }
+
+            if (MarketComponent.isActive)
+            {
+                MarketComponent.getInstance().Draw(gameTime, true);
             }
 
             //render to texture

@@ -22,6 +22,8 @@ namespace Expanze
 
         protected Boolean pick;
 
+        public GuiComponent() { }
+
         public GuiComponent(Game game, int x, int y, SpriteFont font, int width, int height, String texture)
         {
             pick = false;

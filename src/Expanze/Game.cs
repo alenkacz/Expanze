@@ -47,6 +47,7 @@ namespace Expanze
 
             graphics = new GraphicsDeviceManager(this);
             Settings.GraphicsDeviceManager = graphics;
+            Settings.Game = this;
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 600;
             graphics.ApplyChanges();
