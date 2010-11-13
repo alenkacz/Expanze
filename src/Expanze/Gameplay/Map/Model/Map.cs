@@ -25,7 +25,8 @@ namespace Expanze.Gameplay.Map
         Model[] shapeModel;
         Model townModel, roadModel;
 
-        Model[] mountaisCoverModel;
+        Model[] mountainsCoverModel;
+        Model[] mountainsMineModel;
 
 
         public Vector3 eye, target, up;
@@ -129,10 +130,10 @@ namespace Expanze.Gameplay.Map
                     {
                         switch (hexaMapModel[i][j].getType())
                         {
-                            case HexaType.Mountains :
+                            case HexaKind.Mountains :
                                 hexaMapView[i][j] = new MountainsView(hexaMapModel[i][j]);
                                 break;
-                            case HexaType.Cornfield :
+                            case HexaKind.Cornfield :
                                 hexaMapView[i][j] = new CornfieldView(hexaMapModel[i][j]);
                                 break;
                             default :
@@ -169,12 +170,13 @@ namespace Expanze.Gameplay.Map
             return parser.getMap();
         }
 
-        public Model getHexaModel(HexaType type)
+        public Model getHexaModel(HexaKind type)
         {
             return hexaModel[(int)type];
         }
 
-        public Model[] getMountainsCover() { return mountaisCoverModel; }
+        public Model getMountainsCover(int i) { return mountainsCoverModel[i]; }
+        public Model getMountainsSourceBuildingModel(int i) { return mountainsMineModel[i]; }
         public Model getTownModel() { return townModel; }
         public Model getRoadModel() { return roadModel; }
 
@@ -189,13 +191,13 @@ namespace Expanze.Gameplay.Map
                 content = new ContentManager(myGame.Services, "Content");
 
             hexaModel = new Model[N_MODEL];
-            hexaModel[(int)HexaType.Cornfield] = content.Load<Model>(Settings.mapPaths[(int) HexaType.Cornfield]);
-            hexaModel[(int)HexaType.Desert] = content.Load<Model>(Settings.mapPaths[(int) HexaType.Desert]);
-            hexaModel[(int)HexaType.Forest] = content.Load<Model>(Settings.mapPaths[(int)HexaType.Forest]);
-            hexaModel[(int)HexaType.Mountains] = content.Load<Model>(Settings.mapPaths[(int)HexaType.Mountains]);
-            hexaModel[(int)HexaType.Pasture] = content.Load<Model>(Settings.mapPaths[(int)HexaType.Pasture]);
-            hexaModel[(int)HexaType.Stone] = content.Load<Model>(Settings.mapPaths[(int)HexaType.Stone]);
-            hexaModel[(int)HexaType.Water] = content.Load<Model>(Settings.mapPaths[(int)HexaType.Water]);
+            hexaModel[(int)HexaKind.Cornfield] = content.Load<Model>(Settings.mapPaths[(int) HexaKind.Cornfield]);
+            hexaModel[(int)HexaKind.Desert] = content.Load<Model>(Settings.mapPaths[(int) HexaKind.Desert]);
+            hexaModel[(int)HexaKind.Forest] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Forest]);
+            hexaModel[(int)HexaKind.Mountains] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Mountains]);
+            hexaModel[(int)HexaKind.Pasture] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Pasture]);
+            hexaModel[(int)HexaKind.Stone] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Stone]);
+            hexaModel[(int)HexaKind.Water] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Water]);
 
             shapeModel = new Model[N_SHAPE_MODEL];
 
@@ -203,12 +205,20 @@ namespace Expanze.Gameplay.Map
             shapeModel[SHAPE_CIRCLE] = content.Load<Model>("Shapes/circle");
             shapeModel[SHAPE_SPHERE] = content.Load<Model>("Shapes/sphere");
 
-            mountaisCoverModel = new Model[5];
-            mountaisCoverModel[0] = content.Load<Model>("Models/cover1");
-            mountaisCoverModel[1] = content.Load<Model>("Models/cover2");
-            mountaisCoverModel[2] = content.Load<Model>("Models/cover3");
-            mountaisCoverModel[3] = content.Load<Model>("Models/cover4");
-            mountaisCoverModel[4] = content.Load<Model>("Models/cover5");
+            mountainsCoverModel = new Model[5];
+            mountainsCoverModel[0] = content.Load<Model>("Models/cover4");
+            mountainsCoverModel[1] = content.Load<Model>("Models/cover5");
+            mountainsCoverModel[2] = content.Load<Model>("Models/cover1");
+            mountainsCoverModel[3] = content.Load<Model>("Models/cover2");
+            mountainsCoverModel[4] = content.Load<Model>("Models/cover3");
+
+            mountainsMineModel = new Model[6];
+            mountainsMineModel[0] = content.Load<Model>("Models/mine5");
+            mountainsMineModel[1] = content.Load<Model>("Models/mine6");
+            mountainsMineModel[2] = content.Load<Model>("Models/mine1");
+            mountainsMineModel[3] = content.Load<Model>("Models/mine2");
+            mountainsMineModel[4] = content.Load<Model>("Models/mine3");
+            mountainsMineModel[5] = content.Load<Model>("Models/mine4");
 
             townModel = content.Load<Model>("Models/town");
             roadModel = content.Load<Model>("Models/road");

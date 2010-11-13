@@ -11,25 +11,25 @@ namespace Expanze
     /// </summary>
     class HexaCreator
     {
-        public static HexaModel create(HexaType type, int number)
+        public static HexaModel create(HexaKind type, int number)
         {
             switch (type)
             {
-                case HexaType.Cornfield:
+                case HexaKind.Cornfield:
                     return new CornfieldHexa(number);
-                case HexaType.Desert:
+                case HexaKind.Desert:
                     return new DesertHexa(number);
-                case HexaType.Forest:
+                case HexaKind.Forest:
                     return new ForestHexa(number);
-                case HexaType.Mountains:
+                case HexaKind.Mountains:
                     return new MountainsHexa(number);
-                case HexaType.Pasture:
+                case HexaKind.Pasture:
                     return new PastureHexa(number);
-                case HexaType.Stone:
+                case HexaKind.Stone:
                     return new StoneHexa(number);
-                case HexaType.Water:
+                case HexaKind.Water:
                     return new WaterHexa();
-                case HexaType.Nothing:
+                case HexaKind.Nothing:
                     return null;
                 default:
                     throw new Exception("XML file with map is broken.");

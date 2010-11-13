@@ -18,16 +18,16 @@ namespace Expanze
         int hexaID;     // from counter, useable for picking
         private static int counter = 0;    // how many hexas are created
 
-        private HexaType type = HexaType.Water;
+        private HexaKind type = HexaKind.Water;
         private HexaModel[] hexaNeighbours;      // neighbours of hexa, to index use RoadPos
         private Town[] towns;               // possible towns on hexa, to index use Town Pos
         private Boolean[] townOwner;        // was this town made by this hexa? if was, this hexa will draw it, handle picking, get sources...
         private Road[] roads;               // possible roads on hexa, to index use RoadPos
         private Boolean[] roadOwner;        // was this road made by this hexa? if was, this hexa will draw it, handle picking...
 
-        public HexaModel() : this(0, HexaType.Water) { }
+        public HexaModel() : this(0, HexaKind.Water) { }
 
-        public HexaModel(int value, HexaType type)
+        public HexaModel(int value, HexaKind type)
         {
             this.hexaID = ++counter;
             
@@ -48,7 +48,7 @@ namespace Expanze
             for (int loop1 = 0; loop1 < neighbours.Length; loop1++)
                 hexaNeighbours[loop1] = neighbours[loop1];
 
-            if (type == HexaType.Nothing || type == HexaType.Water)
+            if (type == HexaKind.Nothing || type == HexaKind.Water)
                 return;
 
             ///////////////////////
@@ -357,7 +357,7 @@ namespace Expanze
         {
             for (int loop1 = 0; loop1 < towns.Length; loop1++)
                 if (townOwner[loop1])
-                    towns[loop1].CollectSources(player);
+                    towns[loop1].collectSources(player);
         }
 
         public string getModelPath()
@@ -366,7 +366,7 @@ namespace Expanze
         }
 
         public int getValue() { return value; }
-        public HexaType getType()
+        public HexaKind getType()
         {
             return this.type;
         }

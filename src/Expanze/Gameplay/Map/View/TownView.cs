@@ -29,7 +29,7 @@ namespace Expanze.Gameplay.Map.View
 
         public Boolean getPickNewPress() { return pickVars.pickNewPress; }
 
-        public void Draw(GameTime gameTime)
+        public void draw(GameTime gameTime)
         {
             if (pickVars.pickActive || model.getIsBuild())
             {
@@ -101,7 +101,7 @@ namespace Expanze.Gameplay.Map.View
             }
         }
 
-        public void DrawPickableAreas()
+        public void drawPickableAreas()
         {
             Model m = GameState.map.getShape(Map.SHAPE_CIRCLE);
             Matrix[] transforms = new Matrix[m.Bones.Count];
@@ -123,7 +123,7 @@ namespace Expanze.Gameplay.Map.View
             }
         }
 
-        public void HandlePickableAreas(Color c)
+        public void handlePickableAreas(Color c)
         {
             Map.SetPickVariables(c == pickTownColor, pickVars);
 

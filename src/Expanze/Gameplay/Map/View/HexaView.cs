@@ -19,12 +19,12 @@ namespace Expanze
         protected HexaModel model;    // reference to model
         protected RoadView[] roadView;
         protected TownView[] townView;
-        protected HexaType type;
+        protected HexaKind kind;
         public HexaView(HexaModel model)
         {
             this.model = model;
             this.hexaID = model.getID();
-            this.type = model.getType();
+            this.kind = model.getType();
             this.pickHexaColor = new Color(this.hexaID / 256.0f, 0.0f, 0.0f);
             
             pickVars = new PickVariables();
@@ -50,7 +50,7 @@ namespace Expanze
 
         public void Draw2D()
         {
-            if (type == HexaType.Desert)
+            if (kind == HexaKind.Desert)
                 return;
 
             BoundingFrustum frustum = new BoundingFrustum(GameState.view * GameState.projection);
@@ -86,7 +86,7 @@ namespace Expanze
 
         public void Draw(GameTime gameTime)
         {
-            Model m = GameState.map.getHexaModel(type);
+            Model m = GameState.map.getHexaModel(kind);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
             RasterizerState rasterizerState = new RasterizerState();
@@ -95,7 +95,7 @@ namespace Expanze
 
             Matrix rotation;
             rotation = (hexaID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaID % 6));
-            Matrix tempMatrix = ((type == HexaType.Desert || type == HexaType.Forest || type == HexaType.Mountains) ? Matrix.CreateScale(0.00027f) * rotation : Matrix.CreateRotationZ((float)Math.PI));
+            Matrix tempMatrix = ((kind == HexaKind.Desert || kind == HexaKind.Forest || kind == HexaKind.Mountains) ? Matrix.CreateScale(0.00027f) * rotation : Matrix.CreateRotationZ((float)Math.PI));
 
 
 
@@ -126,7 +126,7 @@ namespace Expanze
 
             for (int loop1 = 0; loop1 < roadView.Length; loop1++)
                 if (model.getTownOwner(loop1))
-                    townView[loop1].Draw(gameTime);
+                    townView[loop1].draw(gameTime);
         }
 
         public virtual void DrawBuildings(GameTime gameTime)
@@ -162,7 +162,7 @@ namespace Expanze
 
             for (int loop1 = 0; loop1 < townView.Length; loop1++)
                 if (model.getTownOwner(loop1))
-                    townView[loop1].DrawPickableAreas();
+                    townView[loop1].drawPickableAreas();
         }
 
         public void HandlePickableAreas(Color c)
@@ -175,7 +175,7 @@ namespace Expanze
             {
                 if (model.getTownOwner(loop1))
                 {
-                    townView[loop1].HandlePickableAreas(c);
+                    townView[loop1].handlePickableAreas(c);
                 }
             }
 
