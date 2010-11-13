@@ -451,9 +451,11 @@ namespace Expanze.Gameplay.Map
             GameMaster gm = GameMaster.getInstance();
             Town town = GetTownByID(townID);
             int buildingPos = town.findBuildingByHexaID(hexaID);
-            if (town.canActivePlayerBuildBuildingInTown(buildingPos))
+            HexaModel hexa = town.getHexa(buildingPos);
+            if (town.canActivePlayerBuildBuildingInTown(buildingPos, hexa.getSourceBuildingCost()))
             {
                 town.buildBuilding(buildingPos);
+                gm.getActivePlayer().payForSomething(hexa.getSourceBuildingCost());
                 return true;
             }
 

@@ -17,6 +17,7 @@ namespace Expanze
         int value;      // how many sources will player get
         int hexaID;     // from counter, useable for picking
         private static int counter = 0;    // how many hexas are created
+        SourceAll sourceBuildingCost;
 
         private HexaKind type = HexaKind.Water;
         private HexaModel[] hexaNeighbours;      // neighbours of hexa, to index use RoadPos
@@ -25,13 +26,13 @@ namespace Expanze
         private Road[] roads;               // possible roads on hexa, to index use RoadPos
         private Boolean[] roadOwner;        // was this road made by this hexa? if was, this hexa will draw it, handle picking...
 
-        public HexaModel() : this(0, HexaKind.Water) { }
+        public HexaModel() : this(0, HexaKind.Water, new SourceAll(0)) { }
 
-        public HexaModel(int value, HexaKind type)
+        public HexaModel(int value, HexaKind type, SourceAll sourceBuildingCost)
         {
             this.hexaID = ++counter;
-            
-            
+
+            this.sourceBuildingCost = sourceBuildingCost;
             this.type = type;
             this.value = value;
             this.towns = new Town[(int) TownPos.Count];
@@ -466,5 +467,6 @@ namespace Expanze
         public int getID() { return hexaID; }
         public Boolean getRoadOwner(int i) { return roadOwner[i]; }
         public Boolean getTownOwner(int i) { return townOwner[i]; }
+        public SourceAll getSourceBuildingCost() { return sourceBuildingCost; }
     }
 }

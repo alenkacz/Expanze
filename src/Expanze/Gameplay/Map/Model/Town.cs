@@ -25,6 +25,7 @@ namespace Expanze
         public bool getIsBuild() { return isBuild; }
         public Player getPlayerOwner() { return playerOwner; }
         public ISourceAll getCost() { return Settings.costTown; }
+        public HexaModel getHexa(int pos) { return hexaNeighbour[pos]; }
 
         public Town()
         {
@@ -162,7 +163,7 @@ namespace Expanze
             return false;
         }
 
-        public Boolean canActivePlayerBuildBuildingInTown(int pos)
+        public Boolean canActivePlayerBuildBuildingInTown(int pos, SourceAll cost)
         {
             GameMaster gm = GameMaster.getInstance();
             if (gm.getState() == EGameState.StateGame)
@@ -171,6 +172,12 @@ namespace Expanze
                     return false;
 
                 if (gm.getActivePlayer() != playerOwner)
+                    return false;
+
+                if (!cost.HasPlayerSources(gm.getActivePlayer()))
+                    return false;
+
+                if (cost == new SourceAll(0))
                     return false;
 
                 return true;
