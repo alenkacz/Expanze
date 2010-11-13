@@ -60,11 +60,9 @@ namespace Expanze
 
                 if ((mousex > scaledPos.X && mousex < (scaledPos.X + width)) && (mousey < (scaledPos.Y + height) && mousey > scaledPos.Y))//identify mouse over x y posotions for the button
                 {
-                    if (GameMaster.getInstance().getState() == EGameState.StateGame)
-                    {
-                        GameMaster.getInstance().nextTurn();
-                        pressed = true;
-                    }
+                    if (Actions != null)
+                        Actions(null, new PlayerIndexEventArgs(new PlayerIndex()));
+                    pressed = true;
                 }
             }
 

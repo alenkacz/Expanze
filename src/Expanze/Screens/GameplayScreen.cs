@@ -17,6 +17,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Expanze.Gameplay.Map;
+using CorePlugin;
 #endregion
 
 namespace Expanze
@@ -98,9 +99,10 @@ namespace Expanze
             gameComponents.Add(mapComp);
 
             ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), GameState.gameFont, Settings.scaleW(147), Settings.scaleH(141), "nextTurn");
+            changeTurnButton.Actions += ChangeTurnButtonAction;
             guiComponents.Add(changeTurnButton);
-            MenuButtonComponent menuHUDButton = new MenuButtonComponent(ScreenManager.Game, 20, 20, GameState.gameFont, Settings.scaleW(222), Settings.scaleH(225), "menu_button");
-            //menuHUDButton.Actions += MenuButtonAction;
+            ButtonComponent menuHUDButton = new ButtonComponent(ScreenManager.Game, 20, 20, GameState.gameFont, Settings.scaleW(222), Settings.scaleH(225), "menu_button");
+            menuHUDButton.Actions += MenuButtonAction;
             guiComponents.Add(menuHUDButton);
             MaterialsHUDComponent materialsHUDComp = new MaterialsHUDComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width/4, ScreenManager.Game.GraphicsDevice.Viewport.Height - 78, GameState.gameFont, 757, 148, "suroviny_hud");
             guiComponents.Add(materialsHUDComp);
@@ -149,6 +151,29 @@ namespace Expanze
             }
         }
 
+
+        #endregion
+
+        #region HUDEventHandlers
+
+        /// <summary>
+        /// Event handler for when the menu button is selected
+        /// </summary>
+        void MenuButtonAction(object sender, PlayerIndexEventArgs e)
+        {
+            GameMaster.getInstance().setPausedNew(true);
+        }
+
+        /// <summary>
+        /// Event handler for when the menu button is selected
+        /// </summary>
+        void ChangeTurnButtonAction(object sender, PlayerIndexEventArgs e)
+        {
+            if (GameMaster.getInstance().getState() == EGameState.StateGame)
+            {
+                GameMaster.getInstance().nextTurn();
+            }
+        }
 
         #endregion
 
@@ -221,14 +246,6 @@ namespace Expanze
                 VictoryScreen.Load(ScreenManager, true, ControllingPlayer,
                                new GameScreen[] { new BackgroundScreen(), new MainMenuScreen() });
             }
-        }
-
-        /// <summary>
-        /// Event handler for when the Play Game menu entry is selected.
-        /// </summary>
-        void MenuButtonAction(object sender, PlayerIndexEventArgs e)
-        {
-            GameMaster.getInstance().setPausedNew(true);
         }
 
 
