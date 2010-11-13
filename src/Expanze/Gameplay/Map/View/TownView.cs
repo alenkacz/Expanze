@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using CorePlugin;
 
 namespace Expanze.Gameplay.Map.View
 {
     class TownView
     {
+        private static int pickTownID = -1;
         private int townID;
         private Color pickTownColor;
         private PickVariables pickVars;
@@ -25,9 +27,11 @@ namespace Expanze.Gameplay.Map.View
             pickVars = new PickVariables();
         }
 
+        public Town getTownModel() { return model; }
+        public Boolean getIsMarked() { return pickTownID == townID; }
         public Boolean getPickNewPress() { return pickVars.pickNewPress; }
 
-        public void Draw(GameTime gameTime)
+        public void draw(GameTime gameTime)
         {
             if (pickVars.pickActive || model.getIsBuild())
             {
@@ -79,12 +83,29 @@ namespace Expanze.Gameplay.Map.View
 
                     a++;
                 }
+
+                if (pickTownID == townID)
+                {
+                    m = GameState.map.getShape(Map.SHAPE_SPHERE);
+                    mWorld = Matrix.CreateScale(0.0001f) * Matrix.CreateTranslation(new Vector3(0.0f, 0.15f, 0.0f)) * world;
+                    foreach (ModelMesh mesh in m.Meshes)
+                    {
+                        foreach (BasicEffect effect in mesh.Effects)
+                        {
+                            effect.EnableDefaultLighting();
+                            effect.World = transforms[mesh.ParentBone.Index] * mWorld;
+                            effect.View = GameState.view;
+                            effect.Projection = GameState.projection;
+                        }
+                        mesh.Draw();
+                    }
+                }
             }
         }
 
-        public void DrawPickableAreas()
+        public void drawPickableAreas()
         {
-            Model m = GameState.map.getCircleShape();
+            Model m = GameState.map.getShape(Map.SHAPE_CIRCLE);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 
@@ -104,7 +125,7 @@ namespace Expanze.Gameplay.Map.View
             }
         }
 
-        public void HandlePickableAreas(Color c)
+        public void handlePickableAreas(Color c)
         {
             Map.SetPickVariables(c == pickTownColor, pickVars);
 
@@ -112,7 +133,10 @@ namespace Expanze.Gameplay.Map.View
             GameMaster gm = GameMaster.getInstance();
             if (pickVars.pickNewPress)
             {
-                GameState.map.BuildTown(townID);
+                if (model.getIsBuild() && GameMaster.getInstance().getState() == EGameState.StateGame)
+                    pickTownID = townID;
+                else
+                    GameState.map.BuildTown(townID) ;
             }
         }
     }

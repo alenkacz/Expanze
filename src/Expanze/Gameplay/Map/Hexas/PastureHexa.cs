@@ -8,7 +8,7 @@ namespace Expanze
 {
     class PastureHexa : HexaModel
     {
-        public PastureHexa(int value) : base(value, HexaType.Pasture)
+        public PastureHexa(int value) : base(value, HexaKind.Pasture, Settings.costStephard)
         {
         }
     }

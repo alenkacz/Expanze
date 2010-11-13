@@ -8,7 +8,7 @@ namespace Expanze
 {
     class WaterHexa : HexaModel
     {
-        public WaterHexa() : base(0, HexaType.Water)
+        public WaterHexa() : base(0, HexaKind.Water, new SourceAll(0))
         {
         }
     }
