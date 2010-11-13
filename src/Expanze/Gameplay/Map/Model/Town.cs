@@ -16,6 +16,7 @@ namespace Expanze
         private Road[] roadNeighbour; // two or 3 neighbours
         private Town[] townNeighbour; // two or 3 neighbours
         private HexaModel[] hexaNeighbour; // 1 - 3 neighbours
+        private BuildingKind[] building;    // corresponds with hexaNeighbour
 
         private int townID;
         public static int counter = 0;
@@ -24,6 +25,7 @@ namespace Expanze
         public bool getIsBuild() { return isBuild; }
         public Player getPlayerOwner() { return playerOwner; }
         public ISourceAll getCost() { return Settings.costTown; }
+        public HexaModel getHexa(int pos) { return hexaNeighbour[pos]; }
 
         public Town()
         {
@@ -33,8 +35,34 @@ namespace Expanze
             roadNeighbour = new Road[3];
             townNeighbour = new Town[3];
             hexaNeighbour = new HexaModel[3];
+            building = new BuildingKind[3];
+            for(int loop1 = 0; loop1 < building.Length; loop1++)
+                building[loop1] = BuildingKind.NoBuilding;
+
+            //building[1] = BuildingKind.SourceBuilding;
 
             playerOwner = null;
+        }
+
+        public int findBuildingByHexaID(int hexaID)
+        {
+            for (int loop1 = 0; loop1 < building.Length; loop1++)
+            {
+                if (hexaNeighbour[loop1] != null && hexaNeighbour[loop1].getID() == hexaID)
+                    return loop1;
+            }
+            return -1;
+        }
+
+        public BuildingKind getBuildingKind(int hexaID)
+        {
+            if (!isBuild)
+                return BuildingKind.NoBuilding;
+
+            int buildingPos = findBuildingByHexaID(hexaID);
+
+
+            return (buildingPos == -1) ? BuildingKind.NoBuilding : building[buildingPos];
         }
 
         public static void resetCounter() { counter = 0; }
@@ -60,7 +88,7 @@ namespace Expanze
             hexaNeighbour[2] = hexa3;
         }
 
-        public void CollectSources(Player player)
+        public void collectSources(Player player)
         {
             if (playerOwner != player)
                 return;
@@ -76,23 +104,23 @@ namespace Expanze
 
                     switch (hexa.getType())
                     {
-                        case HexaType.Forest:
+                        case HexaKind.Forest:
                             cost = cost + new SourceAll(amount, 0, 0, 0, 0);
                             break;
 
-                        case HexaType.Stone:
+                        case HexaKind.Stone:
                             cost = cost + new SourceAll(0, amount, 0, 0, 0);
                             break;
 
-                        case HexaType.Cornfield :
+                        case HexaKind.Cornfield :
                             cost = cost + new SourceAll(0, 0, amount, 0, 0);
                             break;
 
-                        case HexaType.Pasture:
+                        case HexaKind.Pasture:
                             cost = cost + new SourceAll(0, 0, 0, amount, 0);
                             break;
 
-                        case HexaType.Mountains:
+                        case HexaKind.Mountains:
                             cost = cost + new SourceAll(0, 0, 0, 0, amount);
                             break;
                     }
@@ -135,6 +163,29 @@ namespace Expanze
             return false;
         }
 
+        public Boolean canActivePlayerBuildBuildingInTown(int pos, SourceAll cost)
+        {
+            GameMaster gm = GameMaster.getInstance();
+            if (gm.getState() == EGameState.StateGame)
+            {
+                if (building[pos] != BuildingKind.NoBuilding)
+                    return false;
+
+                if (gm.getActivePlayer() != playerOwner)
+                    return false;
+
+                if (!cost.HasPlayerSources(gm.getActivePlayer()))
+                    return false;
+
+                if (cost == new SourceAll(0))
+                    return false;
+
+                return true;
+            }
+
+            return false;
+        }
+
         public Boolean CanActivePlayerBuildTown()
         {
             GameMaster gm = GameMaster.getInstance();
@@ -152,6 +203,11 @@ namespace Expanze
                 return !isBuild && !HasTownBuildNeighbour() && Settings.costTown.HasPlayerSources(activePlayer) && hasActivePlayerRoadNeighbour;
             } else
                 return !isBuild && !HasTownBuildNeighbour();
+        }
+
+        public void buildBuilding(int pos)
+        {
+            building[pos] = BuildingKind.SourceBuilding;
         }
     }
 }
