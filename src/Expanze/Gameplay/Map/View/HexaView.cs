@@ -15,8 +15,8 @@ namespace Expanze
         int                           hexaID;           // from counter, useable for picking
         Color                         pickHexaColor;    // color o hexa in render texture
         private PickVariables         pickVars;
-        private Matrix                world;   // wordl position of Hex
-        private HexaModel model;    // reference to model
+        protected Matrix                world;   // wordl position of Hex
+        protected HexaModel model;    // reference to model
         private RoadView[] roadView;
         private TownView[] townView;
         private HexaType type;
@@ -117,6 +117,8 @@ namespace Expanze
                 mesh.Draw();
             }
 
+            DrawBuildings(gameTime);
+
             for (int loop1 = 0; loop1 < roadView.Length; loop1++)
                 if (model.getRoadOwner(loop1))
                     roadView[loop1].Draw(gameTime);
@@ -125,6 +127,11 @@ namespace Expanze
             for (int loop1 = 0; loop1 < roadView.Length; loop1++)
                 if (model.getTownOwner(loop1))
                     townView[loop1].Draw(gameTime);
+        }
+
+        public virtual void DrawBuildings(GameTime gameTime)
+        {
+
         }
 
         public void DrawPickableAreas()

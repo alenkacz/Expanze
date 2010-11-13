@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using CorePlugin;
+using Expanze.Gameplay.Map;
 
 namespace Expanze.Gameplay.Map
 {
@@ -23,6 +24,9 @@ namespace Expanze.Gameplay.Map
         public const int N_SHAPE_MODEL = 3;
         Model[] shapeModel;
         Model townModel, roadModel;
+
+        Model[] mountaisCoverModel;
+
 
         public Vector3 eye, target, up;
 
@@ -122,7 +126,20 @@ namespace Expanze.Gameplay.Map
                 for (int j = 0; j < hexaMapModel[i].Length; j++)
                 {
                     if (hexaMapModel[i][j] != null)
-                        hexaMapView[i][j] = new HexaView(hexaMapModel[i][j]);
+                    {
+                        switch (hexaMapModel[i][j].getType())
+                        {
+                            case HexaType.Mountains :
+                                hexaMapView[i][j] = new MountainsView(hexaMapModel[i][j]);
+                                break;
+                            case HexaType.Cornfield :
+                                hexaMapView[i][j] = new CornfieldView(hexaMapModel[i][j]);
+                                break;
+                            default :
+                                hexaMapView[i][j] = new HexaView(hexaMapModel[i][j]);
+                                break;
+                        }             
+                    }
                 }
             }
 
@@ -157,6 +174,7 @@ namespace Expanze.Gameplay.Map
             return hexaModel[(int)type];
         }
 
+        public Model[] getMountainsCover() { return mountaisCoverModel; }
         public Model getTownModel() { return townModel; }
         public Model getRoadModel() { return roadModel; }
 
@@ -184,6 +202,13 @@ namespace Expanze.Gameplay.Map
             shapeModel[SHAPE_RECTANGLE] = content.Load<Model>("Shapes/rectangle");
             shapeModel[SHAPE_CIRCLE] = content.Load<Model>("Shapes/circle");
             shapeModel[SHAPE_SPHERE] = content.Load<Model>("Shapes/sphere");
+
+            mountaisCoverModel = new Model[5];
+            mountaisCoverModel[0] = content.Load<Model>("Models/cover1");
+            mountaisCoverModel[1] = content.Load<Model>("Models/cover2");
+            mountaisCoverModel[2] = content.Load<Model>("Models/cover3");
+            mountaisCoverModel[3] = content.Load<Model>("Models/cover4");
+            mountaisCoverModel[4] = content.Load<Model>("Models/cover5");
 
             townModel = content.Load<Model>("Models/town");
             roadModel = content.Load<Model>("Models/road");
