@@ -117,9 +117,15 @@ namespace Expanze.Gameplay.Map.View
 
             if (pickVars.pickNewPress)
             {
+                WindowPromt wP = GameState.windowPromt;
                 if (model.CanActivePlayerBuildRoad())
                 {
-                    GameState.map.BuildRoad(roadID);
+                    wP.showPromt(Strings.PROMT_TITLE_WANT_TO_BUILD_ROAD, wP.BuildRoad, Settings.costRoad);
+                    wP.setArgInt1(roadID);
+                }
+                else
+                {
+                    wP.showAlert(Strings.ALERT_TITLE_NOT_ENOUGH_SOURCES);
                 }
             }
         }

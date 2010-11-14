@@ -136,7 +136,22 @@ namespace Expanze.Gameplay.Map.View
                 if (model.getIsBuild() && GameMaster.getInstance().getState() == EGameState.StateGame)
                     pickTownID = townID;
                 else
-                    GameState.map.BuildTown(townID) ;
+                {
+                    if (GameMaster.getInstance().getState() == EGameState.StateGame)
+                    {
+                        WindowPromt wP = GameState.windowPromt;
+                        if (model.CanActivePlayerBuildTown())
+                        {
+                            wP.showPromt(Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN, wP.BuildTown, Settings.costTown);
+                            wP.setArgInt1(townID);
+                        }
+                        else
+                        {
+                            wP.showAlert(Strings.ALERT_TITLE_NOT_ENOUGH_SOURCES);
+                        }
+                    } else
+                        GameState.map.BuildTown(townID);
+                }
             }
         }
     }

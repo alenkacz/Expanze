@@ -9,6 +9,7 @@ using Expanze.Gameplay.Map;
 
 namespace Expanze
 {
+    enum WindowKind { Promt, Alert };
     class WindowPromt : GameComponent
     {
         private SpriteBatch spriteBatch;
@@ -25,8 +26,14 @@ namespace Expanze
         private PickVariables yesPick;
         private ContentManager content;
 
+        private WindowKind kind;
+        public delegate void ActionDelegate();
+        ActionDelegate action;
         private String text;
-        
+        private int argInt1;
+        private int argInt2;
+        private SourceAll winCost;
+
         public WindowPromt()
         {
             spriteBatch = GameState.spriteBatch;
@@ -37,9 +44,21 @@ namespace Expanze
             yesPick = new PickVariables(Color.Tomato);
         }
 
+        public void showPromt(String text, ActionDelegate action, SourceAll winCost)
+        {
+            this.winCost = winCost; // if is not used, its SourceAll(0);
+            this.text = text;
+            this.action = action;
+            kind = WindowKind.Promt;
+            active = true;
+        }
+
+        public void setArgInt1(int arg) { argInt1 = arg; }
+        public void setArgInt2(int arg) { argInt2 = arg; }
         public void showAlert(String text)
         {
             this.text = text;
+            kind = WindowKind.Alert;
             active = true;
         }
 
@@ -73,7 +92,18 @@ namespace Expanze
             Map.SetPickVariables(c == yesPick.pickColor, yesPick);
 
             if (yesPick.pickNewPress)
+            {
+                yesPick.pickNewPress = false;
                 active = false;
+                if (kind == WindowKind.Promt)
+                {
+                    action();
+                }
+            } else if(noPick.pickNewPress)
+            {
+                noPick.pickNewPress = false;
+                active = false;
+            }
         }
 
         override public void DrawPickableAreas()
@@ -106,10 +136,37 @@ namespace Expanze
                 else
                     spriteBatch.Draw(no, noPos, Color.White);
                 spriteBatch.DrawString(GameState.materialsNewFont, text, new Vector2(bgPos.X + 20, bgPos.Y + 100), Color.LightBlue);
+
+                if (kind == WindowKind.Promt)
+                {
+                    if (winCost != new SourceAll(0))
+                    {
+                        spriteBatch.DrawString(GameState.materialsNewFont, winCost.corn.ToString(), new Vector2(bgPos.X + 30, bgPos.Y + 200), Color.White);
+                        spriteBatch.DrawString(GameState.materialsNewFont, winCost.meat.ToString(), new Vector2(bgPos.X + 90, bgPos.Y + 200), Color.White);
+                        spriteBatch.DrawString(GameState.materialsNewFont, winCost.stone.ToString(), new Vector2(bgPos.X + 150, bgPos.Y + 200), Color.White);
+                        spriteBatch.DrawString(GameState.materialsNewFont, winCost.wood.ToString(), new Vector2(bgPos.X + 210, bgPos.Y + 200), Color.White);
+                        spriteBatch.DrawString(GameState.materialsNewFont, winCost.ore.ToString(), new Vector2(bgPos.X + 270, bgPos.Y + 200), Color.White);
+                    }
+                }
+
                 spriteBatch.End();
             }
         }
 
+        public void BuildTown()
+        {
+            if (!GameState.map.BuildTown(argInt1))
+            {
+                
+            }
+        }
 
+        public void BuildRoad()
+        {
+            if (!GameState.map.BuildRoad(argInt1))
+            {
+                
+            }
+        }
     }
 }
