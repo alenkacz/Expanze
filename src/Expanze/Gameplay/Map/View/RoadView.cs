@@ -78,14 +78,15 @@ namespace Expanze.Gameplay.Map.View
                         }
 
                         // if player wants to build new Road, can he? Show it in red/green color
-                        /*
+                        
                         if (pickVars.pickActive && !isBuildView)
                         {
                             if (model.CanActivePlayerBuildRoad() != RoadBuildError.OK)
-                                effect.DiffuseColor = new Vector3(1, 0.0f, 0);
+                                effect.EmissiveColor = new Vector3(0.5f, 0.0f, 0);
                             else
-                                effect.DiffuseColor = new Vector3(0, 1.0f, 0);
-                        }*/
+                                effect.EmissiveColor = new Vector3(0, 0.5f, 0);
+                        } else
+                            effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
 
                         effect.World = transforms[mesh.ParentBone.Index] * mWorld;
                         effect.View = GameState.view;

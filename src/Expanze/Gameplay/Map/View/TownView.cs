@@ -75,15 +75,16 @@ namespace Expanze.Gameplay.Map
                         {
                             //effect.DiffuseColor = new Vector3(0.64f, 0.64f, 0.64f);
                         }
-                        /*
+                        
                         if (pickVars.pickActive && !isBuildView)
                         {
                             if (model.CanActivePlayerBuildTown() != TownBuildError.OK &&
                                 !(model.getIsBuild() && !isBuildView))
-                                effect.DiffuseColor = new Vector3(1, 0.0f, 0);
+                                effect.EmissiveColor = new Vector3(0.5f, 0.0f, 0);
                             else
-                                effect.DiffuseColor = new Vector3(0, 1.0f, 0);
-                        }*/
+                                effect.EmissiveColor = new Vector3(0, 0.5f, 0);
+                        } else
+                            effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
 
                         effect.World = transforms[mesh.ParentBone.Index] * mWorld;
                         effect.View = GameState.view;
@@ -145,9 +146,9 @@ namespace Expanze.Gameplay.Map
             {
                 if (model.getIsBuild() && GameMaster.getInstance().getState() == EGameState.StateGame)
                 {
-                    if (pickTownID == townID)
-                        pickTownID = -1;
-                    else
+                    //if (pickTownID == townID)
+                    //    pickTownID = -1;
+                    //else
                         pickTownID = townID;
                 }
                 else
