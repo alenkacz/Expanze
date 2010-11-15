@@ -199,9 +199,27 @@ namespace Expanze
             {
                 for (int loop1 = 0; loop1 < townView.Length; loop1++)
                 {
-                    if (townView[loop1].getIsMarked())
+                    if (townView[loop1].getIsMarked() && 
+                        kind != HexaKind.Desert &&
+                        kind != HexaKind.Nothing &&
+                        kind != HexaKind.Water &&
+                        kind != HexaKind.Null)
                     {
-                        GameState.map.buildBuildingInTown(townView[loop1].getTownModel().getTownID(), hexaID);
+                        WindowPromt wP = GameState.windowPromt;
+
+                        String title = "";
+                        switch (kind)
+                        {
+                            case HexaKind.Mountains: title = Strings.PROMT_TITLE_WANT_TO_BUILD_MINE; break;
+                            case HexaKind.Forest: title = Strings.PROMT_TITLE_WANT_TO_BUILD_SAW; break;
+                            case HexaKind.Cornfield: title = Strings.PROMT_TITLE_WANT_TO_BUILD_MILL; break;
+                            case HexaKind.Pasture: title = Strings.PROMT_TITLE_WANT_TO_BUILD_STEPHERD; break;
+                            case HexaKind.Stone: title = Strings.PROMT_TITLE_WANT_TO_BUILD_QUARRY; break;
+                        }
+
+                        wP.showPromt(title, wP.BuildBuildingInTown, model.getSourceBuildingCost());
+                        wP.setArgInt1(townView[loop1].getTownModel().getTownID());
+                        wP.setArgInt2(hexaID);
                     }
                 }
             }

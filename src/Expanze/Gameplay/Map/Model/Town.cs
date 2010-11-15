@@ -163,27 +163,29 @@ namespace Expanze
             return false;
         }
 
-        public Boolean canActivePlayerBuildBuildingInTown(int pos, SourceAll cost)
+        public BuildingBuildError canActivePlayerBuildBuildingInTown(int pos, SourceAll cost)
         {
             GameMaster gm = GameMaster.getInstance();
             if (gm.getState() == EGameState.StateGame)
             {
                 if (building[pos] != BuildingKind.NoBuilding)
-                    return false;
+                    return BuildingBuildError.AlreadyBuild;
 
                 if (gm.getActivePlayer() != playerOwner)
-                    return false;
+                    return BuildingBuildError.NotOwner;
 
                 if (!cost.HasPlayerSources(gm.getActivePlayer()))
-                    return false;
+                    return BuildingBuildError.NoSources;
 
                 if (cost == new SourceAll(0))
-                    return false;
+                {
+                    // WHAT?
+                }
 
-                return true;
+                return BuildingBuildError.OK;
             }
 
-            return false;
+            return BuildingBuildError.NoSources;
         }
 
         public TownBuildError CanActivePlayerBuildTown()

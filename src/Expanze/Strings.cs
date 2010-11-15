@@ -7,6 +7,8 @@ namespace Expanze
 {
     static class Strings
     {
+
+
         public static string ALERT_TITLE_NOT_ENOUGH_SOURCES = "Nemáš dostatek surovin.";
         
         // Town building alerts
@@ -18,8 +20,17 @@ namespace Expanze
         public static string ALERT_TITLE_ROAD_IS_BUILD = "Cesta již postavena.";
         public static string ALERT_TITLE_NO_ROAD_OR_TOWN_IS_CLOSE = "Žádná tvoje cesta či město v blízkosti";
 
+        // Source buildings building
+        public static string ALERT_TITLE_NOT_TOWN_OWNER = "To není tvé město.";
+        public static string ALERT_TITLE_BUILDING_IS_BUILD = "Už tu stojí budova.";
 
-        public static string PROMT_TITLE_WANT_TO_BUILD_TOWN = "Chceš postavit město?";
-        public static string PROMT_TITLE_WANT_TO_BUILD_ROAD = "Chceš postavit cestu?";
+        public static string PROMT_TITLE_WANT_TO_BUILD_TOWN = "Město";
+        public static string PROMT_TITLE_WANT_TO_BUILD_ROAD = "Cesta";
+
+        public static string PROMT_TITLE_WANT_TO_BUILD_MINE = "Důl na rudu";
+        public static string PROMT_TITLE_WANT_TO_BUILD_QUARRY = "Kamenný lom";
+        public static string PROMT_TITLE_WANT_TO_BUILD_SAW = "Pila";
+        public static string PROMT_TITLE_WANT_TO_BUILD_MILL = "Větrný mlýn";
+        public static string PROMT_TITLE_WANT_TO_BUILD_STEPHERD = "Chatrč pastevce";
     }
 }

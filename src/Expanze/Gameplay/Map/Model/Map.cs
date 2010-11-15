@@ -504,20 +504,20 @@ namespace Expanze.Gameplay.Map
             return error;
         }
 
-        public bool buildBuildingInTown(int townID, int hexaID)
+        public BuildingBuildError buildBuildingInTown(int townID, int hexaID)
         {
             GameMaster gm = GameMaster.getInstance();
             Town town = GetTownByID(townID);
             int buildingPos = town.findBuildingByHexaID(hexaID);
             HexaModel hexa = town.getHexa(buildingPos);
-            if (town.canActivePlayerBuildBuildingInTown(buildingPos, hexa.getSourceBuildingCost()))
+            BuildingBuildError error = town.canActivePlayerBuildBuildingInTown(buildingPos, hexa.getSourceBuildingCost());
+            if (error == BuildingBuildError.OK)
             {
                 town.buildBuilding(buildingPos);
                 gm.getActivePlayer().payForSomething(hexa.getSourceBuildingCost());
-                return true;
             }
 
-            return false;
+            return error;
         }
 
         /// IHexaGet

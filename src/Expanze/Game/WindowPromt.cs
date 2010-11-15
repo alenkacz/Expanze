@@ -188,5 +188,21 @@ namespace Expanze
                     break;
             }
         }
+
+        public void BuildBuildingInTown()
+        {
+            switch (GameState.map.buildBuildingInTown(argInt1, argInt2))
+            {
+                case BuildingBuildError.AlreadyBuild :
+                    showAlert(Strings.ALERT_TITLE_BUILDING_IS_BUILD);
+                    break;
+                case BuildingBuildError.NoSources:
+                    showAlert(Strings.ALERT_TITLE_NOT_ENOUGH_SOURCES);
+                    break;
+                case BuildingBuildError.NotOwner:
+                    showAlert(Strings.ALERT_TITLE_NOT_TOWN_OWNER);
+                    break;
+            }
+        }
     }
 }
