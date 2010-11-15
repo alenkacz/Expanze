@@ -68,21 +68,23 @@ namespace Expanze
             isBuild = true;
         }
 
-        public Boolean CanActivePlayerBuildRoad()
+        public RoadBuildError CanActivePlayerBuildRoad()
         {
             GameMaster gm = GameMaster.getInstance();
             if (gm.getState() == EGameState.StateGame)
             {
                 Player activePlayer = gm.getActivePlayer();
-                if (!isBuild &&
-                    (IsActivePlayersRoadOnEndOfRoad(activePlayer) || IsActivePlayersTownOnEndOfRoad(activePlayer)) &&
-                    Settings.costRoad.HasPlayerSources(activePlayer))
-                {
-                    return true;
-                }
+
+                if (isBuild)
+                    return RoadBuildError.AlreadyBuild;
+                if(!IsActivePlayersRoadOnEndOfRoad(activePlayer) && !IsActivePlayersTownOnEndOfRoad(activePlayer))
+                    return RoadBuildError.NoPlayerRoadOrTown;
+                if(!Settings.costRoad.HasPlayerSources(activePlayer))
+                    return RoadBuildError.NoSources;
+                return RoadBuildError.OK;
             }
 
-            return false;
+            return RoadBuildError.OK;
         }
     }
 }

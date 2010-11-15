@@ -461,12 +461,13 @@ namespace Expanze.Gameplay.Map
             return hexaMapModel[x][y];
         }
 
-        public bool BuildRoad(int roadID)
+        public RoadBuildError BuildRoad(int roadID)
         {
             Road road = GetRoadByID(roadID);
 
             GameMaster gm = GameMaster.getInstance();
-            if (road.CanActivePlayerBuildRoad())
+            RoadBuildError error = road.CanActivePlayerBuildRoad();
+            if (error == RoadBuildError.OK)
             {
                 road.BuildRoad(gm.getActivePlayer());
 
@@ -474,18 +475,18 @@ namespace Expanze.Gameplay.Map
                 viewQueue.Add(item);
 
                 gm.getActivePlayer().payForSomething(Settings.costRoad);
-                return true;
             }
 
-            return false;
+            return error;
         }
 
-        public bool BuildTown(int townID)
+        public TownBuildError BuildTown(int townID)
         {
             Town town = GetTownByID(townID);
 
             GameMaster gm = GameMaster.getInstance();
-            if (town.CanActivePlayerBuildTown())
+            TownBuildError error = town.CanActivePlayerBuildTown();
+            if (error == TownBuildError.OK)
             {
                 town.BuildTown(gm.getActivePlayer());
 
@@ -498,10 +499,9 @@ namespace Expanze.Gameplay.Map
                 }
                 else
                     gm.getActivePlayer().payForSomething(Settings.costTown);
-                return true;
             }
 
-            return false;
+            return error;
         }
 
         public bool buildBuildingInTown(int townID, int hexaID)

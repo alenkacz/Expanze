@@ -186,7 +186,7 @@ namespace Expanze
             return false;
         }
 
-        public Boolean CanActivePlayerBuildTown()
+        public TownBuildError CanActivePlayerBuildTown()
         {
             GameMaster gm = GameMaster.getInstance();
             if (gm.getState() == EGameState.StateGame)
@@ -200,10 +200,26 @@ namespace Expanze
                         hasActivePlayerRoadNeighbour = true;
                 }
 
-                return !isBuild && !HasTownBuildNeighbour() && Settings.costTown.HasPlayerSources(activePlayer) && hasActivePlayerRoadNeighbour;
+                if (isBuild)
+                    return TownBuildError.AlreadyBuild;
+                if (HasTownBuildNeighbour())
+                    return TownBuildError.OtherTownIsClose;
+                if (!Settings.costTown.HasPlayerSources(activePlayer))
+                    return TownBuildError.NoSources;
+                if (!hasActivePlayerRoadNeighbour)
+                    return TownBuildError.NoPlayerRoad;
+
+                return TownBuildError.OK;
             }
             else
-                return !isBuild && !HasTownBuildNeighbour();
+            {
+                if (isBuild)
+                    return TownBuildError.AlreadyBuild;
+                if (HasTownBuildNeighbour())
+                    return TownBuildError.OtherTownIsClose;
+
+                return TownBuildError.OK;
+            }
         }
 
         public void buildBuilding(int pos)

@@ -5,6 +5,7 @@ using System.Text;
 
 namespace CorePlugin
 {
+    public enum TownBuildError { OK, NoSources, AlreadyBuild, OtherTownIsClose, NoPlayerRoad }
     public enum BuildingKind { NoBuilding, SourceBuilding }
     public interface ITownGet
     {

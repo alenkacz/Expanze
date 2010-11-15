@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Expanze.Gameplay.Map;
+using CorePlugin;
 
 namespace Expanze
 {
@@ -155,17 +156,36 @@ namespace Expanze
 
         public void BuildTown()
         {
-            if (!GameState.map.BuildTown(argInt1))
+            switch(GameState.map.BuildTown(argInt1))
             {
-                
+                case TownBuildError.AlreadyBuild :
+                    showAlert(Strings.ALERT_TITLE_TOWN_IS_BUILD);
+                    break;
+                case TownBuildError.NoSources :
+                    showAlert(Strings.ALERT_TITLE_NOT_ENOUGH_SOURCES);
+                    break;
+                case TownBuildError.NoPlayerRoad:
+                    showAlert(Strings.ALERT_TITLE_NO_ROAD_IS_CLOSE);
+                    break;
+                case TownBuildError.OtherTownIsClose:
+                    showAlert(Strings.ALERT_TITLE_OTHER_TOWN_IS_CLOSE);
+                    break;
             }
         }
 
         public void BuildRoad()
         {
-            if (!GameState.map.BuildRoad(argInt1))
+            switch (GameState.map.BuildRoad(argInt1))
             {
-                
+                case RoadBuildError.NoSources:
+                    showAlert(Strings.ALERT_TITLE_NOT_ENOUGH_SOURCES);
+                    break;
+                case RoadBuildError.AlreadyBuild:
+                    showAlert(Strings.ALERT_TITLE_ROAD_IS_BUILD);
+                    break;
+                case RoadBuildError.NoPlayerRoadOrTown:
+                    showAlert(Strings.ALERT_TITLE_NO_ROAD_OR_TOWN_IS_CLOSE);
+                    break;
             }
         }
     }

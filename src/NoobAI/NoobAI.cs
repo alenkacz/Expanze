@@ -15,7 +15,7 @@ namespace NoobAI
             if (mapController.GetState() == EGameState.StateFirstTown)
             {
                 int id = mapController.GetHexa(0, 0).getITown(TownPos.Up).getTownID();
-                if (mapController.BuildTown(id) == false)
+                if (mapController.BuildTown(id) != TownBuildError.OK)
                 {
                     mapController.BuildTown(12);
                 }

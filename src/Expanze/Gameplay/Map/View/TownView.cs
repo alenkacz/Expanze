@@ -74,7 +74,7 @@ namespace Expanze.Gameplay.Map
 
                         if (pickVars.pickActive && !isBuildView)
                         {
-                            if (!model.CanActivePlayerBuildTown() &&
+                            if (model.CanActivePlayerBuildTown() != TownBuildError.OK &&
                                 !(model.getIsBuild() && !isBuildView))
                                 effect.DiffuseColor = new Vector3(1, 0.0f, 0);
                             else
@@ -143,22 +143,16 @@ namespace Expanze.Gameplay.Map
                     pickTownID = townID;
                 else
                 {
+                    WindowPromt wP = GameState.windowPromt;
                     if (GameMaster.getInstance().getState() == EGameState.StateGame)
                     {
-                        WindowPromt wP = GameState.windowPromt;
-                        if (model.CanActivePlayerBuildTown())
-                        {
-                            wP.showPromt(Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN, wP.BuildTown, Settings.costTown);
-                            wP.setArgInt1(townID);
-                        }
-                        else
-                        {
-                            wP.showAlert(Strings.ALERT_TITLE_NOT_ENOUGH_SOURCES);
-                        }
+                        wP.showPromt(Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN, wP.BuildTown, Settings.costTown);
+                        wP.setArgInt1(townID);  
                     }
                     else
                     {
-                        GameState.map.BuildTown(townID);
+                        wP.showPromt(Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN, wP.BuildTown, new SourceAll(0));
+                        wP.setArgInt1(townID); 
                     }
                 }
             }

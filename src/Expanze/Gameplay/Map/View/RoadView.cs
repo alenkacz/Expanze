@@ -78,7 +78,7 @@ namespace Expanze.Gameplay.Map.View
                         // if player wants to build new Road, can he? Show it in red/green color
                         if (pickVars.pickActive && !isBuildView)
                         {
-                            if (!model.CanActivePlayerBuildRoad())
+                            if (model.CanActivePlayerBuildRoad() != RoadBuildError.OK)
                                 effect.DiffuseColor = new Vector3(1, 0.0f, 0);
                             else
                                 effect.DiffuseColor = new Vector3(0, 1.0f, 0);
@@ -123,15 +123,11 @@ namespace Expanze.Gameplay.Map.View
 
             if (pickVars.pickNewPress)
             {
-                WindowPromt wP = GameState.windowPromt;
-                if (model.CanActivePlayerBuildRoad())
+                if (GameMaster.getInstance().getState() == EGameState.StateGame)
                 {
+                    WindowPromt wP = GameState.windowPromt;
                     wP.showPromt(Strings.PROMT_TITLE_WANT_TO_BUILD_ROAD, wP.BuildRoad, Settings.costRoad);
                     wP.setArgInt1(roadID);
-                }
-                else
-                {
-                    wP.showAlert(Strings.ALERT_TITLE_NOT_ENOUGH_SOURCES);
                 }
             }
         }
