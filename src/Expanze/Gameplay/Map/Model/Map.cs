@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using CorePlugin;
 using Expanze.Gameplay.Map;
+using Expanze.Gameplay.Map.View;
 
 namespace Expanze.Gameplay.Map
 {
@@ -16,7 +17,7 @@ namespace Expanze.Gameplay.Map
     /// </summary>
     class Map : GameComponent, IMapController
     {
-        const int N_MODEL = 7;
+        public const int N_MODEL = 7;
         Model[] hexaModel;
         public const int SHAPE_RECTANGLE = 0;
         public const int SHAPE_CIRCLE = 1;
@@ -29,10 +30,11 @@ namespace Expanze.Gameplay.Map
         Model[] mountainsMineModel;
 
 
-        public Vector3 eye, target, up;
+        private Vector3 eye, target, up;
 
         Game myGame;
         ContentManager content;
+        ViewQueue viewQueue;
 
         float aspectRatio;
 
@@ -42,6 +44,7 @@ namespace Expanze.Gameplay.Map
         public Map(Game game)
         {
             myGame = game;
+            viewQueue = new ViewQueue(this);
         }
 
         private void CreateHexaWorldMatrices()
@@ -156,6 +159,8 @@ namespace Expanze.Gameplay.Map
 
         public override void Initialize()
         {
+            viewQueue.Clear();
+
             hexaMapModel = getMap();
             hexaMapView = new HexaView[hexaMapModel.Length][];
             for (int i = 0; i < hexaMapModel.Length; i++)
@@ -306,6 +311,8 @@ namespace Expanze.Gameplay.Map
                 return;
 
             ChangeCamera();
+
+            viewQueue.Update(gameTime);
         }
 
         public override void HandlePickableAreas(Color c)
@@ -373,6 +380,34 @@ namespace Expanze.Gameplay.Map
         }
 
 
+        private TownView GetTownViewByID(int townID)
+        {
+            TownView town = null;
+            for (int i = 0; i < hexaMapView.Length; i++)
+                for (int j = 0; j < hexaMapView[i].Length; j++)
+                    if (hexaMapView[i][j] != null)
+                    {
+                        town = hexaMapView[i][j].GetTownByID(townID);
+                        if (town != null)
+                            return town;
+                    }
+            return null;
+        }
+
+        private RoadView GetRoadViewByID(int roadID)
+        {
+            RoadView road = null;
+            for (int i = 0; i < hexaMapView.Length; i++)
+                for (int j = 0; j < hexaMapView[i].Length; j++)
+                    if (hexaMapView[i][j] != null)
+                    {
+                        road = hexaMapView[i][j].GetRoadViewByID(roadID);
+                        if (road != null)
+                            return road;
+                    }
+            return null;
+        }
+
         private Town GetTownByID(int townID)
         {
             Town town = null;
@@ -401,6 +436,21 @@ namespace Expanze.Gameplay.Map
             return null;
         }
 
+        // View building //
+        /// ///////////////
+
+        public void BuildTownView(int townID)
+        {
+            TownView townView = GetTownViewByID(townID);
+            townView.setIsBuild(true);
+        }
+
+        public void BuildRoadView(int roadID)
+        {
+            RoadView roadView = GetRoadViewByID(roadID);
+            roadView.setIsBuild(true);
+        }
+
         /// ********************************
         /// IMapController
 
@@ -419,6 +469,10 @@ namespace Expanze.Gameplay.Map
             if (road.CanActivePlayerBuildRoad())
             {
                 road.BuildRoad(gm.getActivePlayer());
+
+                ItemQueue item = new ItemQueue(ItemKind.BuildRoad, roadID);
+                viewQueue.Add(item);
+
                 gm.getActivePlayer().payForSomething(Settings.costRoad);
                 return true;
             }
@@ -434,6 +488,10 @@ namespace Expanze.Gameplay.Map
             if (town.CanActivePlayerBuildTown())
             {
                 town.BuildTown(gm.getActivePlayer());
+
+                ItemQueue item = new ItemQueue(ItemKind.BuildTown, townID);
+                viewQueue.Add(item);
+
                 if (gm.getState() != EGameState.StateGame)
                 {
                     gm.nextTurn();

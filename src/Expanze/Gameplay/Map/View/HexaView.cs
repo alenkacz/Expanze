@@ -206,5 +206,29 @@ namespace Expanze
                 }
             }
         }
+
+        public RoadView GetRoadViewByID(int roadID)
+        {
+            for (int loop1 = 0; loop1 < roadView.Length; loop1++)
+                if (model.getRoadOwner(loop1))
+                {
+                    if (roadID == roadView[loop1].getRoadID())
+                        return roadView[loop1];
+                }
+
+            return null;
+        }
+
+        public TownView GetTownByID(int townID)
+        {
+            for (int loop1 = 0; loop1 < townView.Length; loop1++)
+                if (model.getTownOwner(loop1))
+                {
+                    if (townID == townView[loop1].getTownID())
+                        return townView[loop1];
+                }
+
+            return null;
+        }
     }
 }

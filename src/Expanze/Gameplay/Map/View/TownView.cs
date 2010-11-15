@@ -6,12 +6,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using CorePlugin;
 
-namespace Expanze.Gameplay.Map.View
+namespace Expanze.Gameplay.Map
 {
     class TownView
     {
         private static int pickTownID = -1;
         private int townID;
+        private bool isBuildView;       // Could be diffrent from model Town isBuild, first is in model true but it is not draw, it waits
+
         private Color pickTownColor;
         private PickVariables pickVars;
         private Town model;
@@ -27,13 +29,16 @@ namespace Expanze.Gameplay.Map.View
             pickVars = new PickVariables(pickTownColor);
         }
 
+        public int getTownID() { return townID; }
         public Town getTownModel() { return model; }
         public Boolean getIsMarked() { return pickTownID == townID; }
         public Boolean getPickNewPress() { return pickVars.pickNewPress; }
 
+        public void setIsBuild(bool isBuild) { this.isBuildView = isBuild; }
+
         public void draw(GameTime gameTime)
         {
-            if (pickVars.pickActive || model.getIsBuild())
+            if (pickVars.pickActive || isBuildView)
             {
                 Model m = GameState.map.getTownModel();
                 Matrix[] transforms = new Matrix[m.Bones.Count];
@@ -67,9 +72,10 @@ namespace Expanze.Gameplay.Map.View
                             effect.DiffuseColor = new Vector3(0.64f, 0.64f, 0.64f);
                         }
 
-                        if (pickVars.pickActive && !model.getIsBuild())
+                        if (pickVars.pickActive && !isBuildView)
                         {
-                            if (!model.CanActivePlayerBuildTown())
+                            if (!model.CanActivePlayerBuildTown() &&
+                                !(model.getIsBuild() && !isBuildView))
                                 effect.DiffuseColor = new Vector3(1, 0.0f, 0);
                             else
                                 effect.DiffuseColor = new Vector3(0, 1.0f, 0);
@@ -149,8 +155,11 @@ namespace Expanze.Gameplay.Map.View
                         {
                             wP.showAlert(Strings.ALERT_TITLE_NOT_ENOUGH_SOURCES);
                         }
-                    } else
+                    }
+                    else
+                    {
                         GameState.map.BuildTown(townID);
+                    }
                 }
             }
         }

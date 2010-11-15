@@ -11,6 +11,8 @@ namespace Expanze.Gameplay.Map.View
 {
     class RoadView
     {
+        private bool isBuildView;
+
         private Color pickRoadColor;
         private PickVariables pickVars;
         private Matrix world;
@@ -24,12 +26,16 @@ namespace Expanze.Gameplay.Map.View
             this.pickRoadColor = new Color(0.0f, roadID / 256.0f, 0.0f);
             this.world = world;
             pickVars = new PickVariables(pickRoadColor);
+            isBuildView = false;
         }
+
+        public int getRoadID() { return roadID; }
+        public void setIsBuild(bool isBuild) { isBuildView = isBuild; }
 
         public void Draw(GameTime gameTime)
         {
             GameMaster gm = GameMaster.getInstance();
-            if ((pickVars.pickActive && gm.getState() == EGameState.StateGame) || model.getIsBuild())
+            if ((pickVars.pickActive && gm.getState() == EGameState.StateGame) || isBuildView)
             {
                 Model m = GameState.map.getRoadModel();
                 Matrix[] transforms = new Matrix[m.Bones.Count];
@@ -70,7 +76,7 @@ namespace Expanze.Gameplay.Map.View
                         }
 
                         // if player wants to build new Road, can he? Show it in red/green color
-                        if (pickVars.pickActive && !model.getIsBuild())
+                        if (pickVars.pickActive && !isBuildView)
                         {
                             if (!model.CanActivePlayerBuildRoad())
                                 effect.DiffuseColor = new Vector3(1, 0.0f, 0);
