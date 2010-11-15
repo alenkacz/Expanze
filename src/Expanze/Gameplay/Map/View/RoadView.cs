@@ -55,8 +55,8 @@ namespace Expanze.Gameplay.Map.View
                     {
                         effect.LightingEnabled = true;
                         effect.DirectionalLight0.Direction = GameState.LightDirection;
-                        effect.DirectionalLight0.DiffuseColor = new Vector3(0.9f, 0.9f, 0.9f);
-                        effect.DirectionalLight0.SpecularColor = new Vector3(0.1f, 0.1f, 0.0f);
+                        effect.DirectionalLight0.DiffuseColor = GameState.LightDiffusionColor;
+                        effect.DirectionalLight0.SpecularColor = GameState.LightSpecularColor;
                         effect.DirectionalLight0.Enabled = true;
 
                         // is it model part which is for flags? They have to be in player colors
@@ -82,9 +82,13 @@ namespace Expanze.Gameplay.Map.View
                         if (pickVars.pickActive && !isBuildView)
                         {
                             if (model.CanActivePlayerBuildRoad() != RoadBuildError.OK)
-                                effect.EmissiveColor = new Vector3(0.5f, 0.0f, 0);
+                            {
+                                if (!(a % 5 == 1 || a % 5 == 2 || a % 5 == 3 || a == 4 || a == 5 || a == 15 || a == 14))
+                                    effect.EmissiveColor = new Vector3(0.5f, 0.0f, 0);
+                            }
                             else
-                                effect.EmissiveColor = new Vector3(0, 0.5f, 0);
+                                if (!(a % 5 == 1 || a % 5 == 2 || a % 5 == 3 || a == 4 || a == 5 || a == 15 || a == 14))
+                                    effect.EmissiveColor = new Vector3(0, 0.5f, 0);
                         } else
                             effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
 

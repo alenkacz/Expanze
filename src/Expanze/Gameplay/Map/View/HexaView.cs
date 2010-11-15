@@ -109,7 +109,7 @@ namespace Expanze
 
             Matrix rotation;
             rotation = (hexaID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaID % 6));
-            Matrix tempMatrix = ((kind == HexaKind.Desert || kind == HexaKind.Forest || kind == HexaKind.Mountains) ? Matrix.CreateScale(0.00027f) * rotation : Matrix.CreateRotationZ((float)Math.PI));
+            Matrix tempMatrix = ((kind == HexaKind.Desert || kind == HexaKind.Forest || kind == HexaKind.Mountains) ? Matrix.CreateScale(0.00028f) * rotation : Matrix.CreateRotationZ((float)Math.PI));
 
 
 
@@ -124,8 +124,8 @@ namespace Expanze
                     //effect.SpecularColor = new Vector3(0.0f, 0.0f, 0.0f);
                     effect.LightingEnabled = true;
                     effect.DirectionalLight0.Direction = GameState.LightDirection;
-                    effect.DirectionalLight0.DiffuseColor = new Vector3(1.0f, 1.0f, 1.0f);
-                    effect.DirectionalLight0.SpecularColor = new Vector3(0.1f, 0.1f, 0.0f);
+                    effect.DirectionalLight0.DiffuseColor = GameState.LightDiffusionColor;
+                    effect.DirectionalLight0.SpecularColor = GameState.LightSpecularColor;
                     effect.DirectionalLight0.Enabled = true;
 
                     /*

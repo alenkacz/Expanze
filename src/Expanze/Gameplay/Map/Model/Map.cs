@@ -53,7 +53,9 @@ namespace Expanze.Gameplay.Map
             Road.resetCounter();
             Town.resetCounter();
 
-            Matrix mWorld = Matrix.Identity * Matrix.CreateTranslation(new Vector3(-0.49f * hexaMapModel.Length / 2.0f, 0.0f, -0.56f * hexaMapModel[0].Length / 2.0f)); ;
+            float dx = 0.569f;
+            float dy = 0.493f;
+            Matrix mWorld = Matrix.Identity * Matrix.CreateTranslation(new Vector3(-dy * hexaMapModel.Length / 2.0f, 0.0f, -dx * hexaMapModel[0].Length / 2.0f)); ;
             for (int i = 0; i < hexaMapModel.Length; i++)
             {
                 for (int j = 0; j < hexaMapModel[i].Length; j++)
@@ -62,9 +64,9 @@ namespace Expanze.Gameplay.Map
                     {
                         hexaMapView[i][j].setWorld(mWorld);
                     }
-                    mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, 0.56f));
+                    mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, dx));
                 }
-                mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.49f, 0.0f, -0.28f - 0.56f * hexaMapModel[i].Length));
+                mWorld = mWorld * Matrix.CreateTranslation(new Vector3(dy, 0.0f, -dx / 2.0f - dx * hexaMapModel[i].Length));
             }
         }
 
@@ -311,6 +313,9 @@ namespace Expanze.Gameplay.Map
             if (lightAngle > 360.0f)
                 lightAngle -= 360.0f;
             GameState.LightDirection = new Vector3(-1.0f, -0.5f, (float) Math.Cos(MathHelper.ToRadians(lightAngle)));
+            float tempF = (float) Math.Abs(Math.Cos(MathHelper.ToRadians(lightAngle))) / 4.0f;
+            GameState.LightDiffusionColor = new Vector3(1.0f, 1.0f - tempF, 1.0f - tempF);
+            GameState.LightSpecularColor = new Vector3(0.2f, 0.1f, 0.1f);
         }
 
         public override void Update(GameTime gameTime)

@@ -48,8 +48,8 @@ namespace Expanze.Gameplay.Map
                     {
                         effect.LightingEnabled = true;
                         effect.DirectionalLight0.Direction = GameState.LightDirection;
-                        effect.DirectionalLight0.DiffuseColor = new Vector3(1.0f, 1.0f, 1.0f);
-                        effect.DirectionalLight0.SpecularColor = new Vector3(0.1f, 0.1f, 0.0f);
+                        effect.DirectionalLight0.DiffuseColor = GameState.LightDiffusionColor;
+                        effect.DirectionalLight0.SpecularColor = GameState.LightSpecularColor;
                         effect.DirectionalLight0.Enabled = true;
                         effect.World = transforms[mesh.ParentBone.Index] * tempMatrix * world;
                         effect.View = GameState.view;

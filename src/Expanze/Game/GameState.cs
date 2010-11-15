@@ -14,6 +14,8 @@ namespace Expanze
         public static Matrix view;
         public static Matrix projection;
         public static Vector3 LightDirection;
+        public static Vector3 LightDiffusionColor;
+        public static Vector3 LightSpecularColor;
 
         public static MouseState CurrentMouseState;
         public static MouseState LastMouseState;

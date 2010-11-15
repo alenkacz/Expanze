@@ -61,8 +61,8 @@ namespace Expanze.Gameplay.Map
                     {
                         effect.LightingEnabled = true;
                         effect.DirectionalLight0.Direction = GameState.LightDirection;
-                        effect.DirectionalLight0.DiffuseColor = new Vector3(0.9f, 0.9f, 0.9f);
-                        effect.DirectionalLight0.SpecularColor = new Vector3(0.1f, 0.1f, 0.0f);
+                        effect.DirectionalLight0.DiffuseColor = GameState.LightDiffusionColor;
+                        effect.DirectionalLight0.SpecularColor = GameState.LightSpecularColor;
                         effect.DirectionalLight0.Enabled = true;
 
                         if (a == 1 || a == 2)
@@ -80,9 +80,15 @@ namespace Expanze.Gameplay.Map
                         {
                             if (model.CanActivePlayerBuildTown() != TownBuildError.OK &&
                                 !(model.getIsBuild() && !isBuildView))
-                                effect.EmissiveColor = new Vector3(0.5f, 0.0f, 0);
+                            {
+                                if (a != 1 && a != 2)
+                                    effect.EmissiveColor = new Vector3(0.5f, 0.0f, 0);
+                            }
                             else
-                                effect.EmissiveColor = new Vector3(0, 0.5f, 0);
+                            {
+                                if (a != 1 && a != 2)
+                                    effect.EmissiveColor = new Vector3(0, 0.5f, 0);
+                            }
                         } else
                             effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
 
