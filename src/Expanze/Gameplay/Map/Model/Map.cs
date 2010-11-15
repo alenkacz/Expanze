@@ -202,6 +202,7 @@ namespace Expanze.Gameplay.Map
             target = new Vector3(0.0f, 0.0f, 0.0f);
             up = new Vector3(0.1f, 0.8f, 0.0f);
             eye = new Vector3(0.4f, 1.5f, 0.0f);
+            GameState.LightDirection = new Vector3(-1.0f, -0.5f, 0.0f);
             GameState.view = Matrix.CreateLookAt(eye, target, up);
             GameState.projection = Matrix.CreatePerspectiveFieldOfView((float)MathHelper.ToRadians(90), aspectRatio, 0.01f, 100.0f);
         }
@@ -303,6 +304,15 @@ namespace Expanze.Gameplay.Map
             }
         }
 
+        float lightAngle = 0;
+        public void ChangeLight(GameTime gameTime)
+        {
+            lightAngle += gameTime.ElapsedGameTime.Milliseconds / 30.0f;
+            if (lightAngle > 360.0f)
+                lightAngle -= 360.0f;
+            GameState.LightDirection = new Vector3(-1.0f, -0.5f, (float) Math.Cos(MathHelper.ToRadians(lightAngle)));
+        }
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
@@ -311,6 +321,7 @@ namespace Expanze.Gameplay.Map
                 return;
 
             ChangeCamera();
+            ChangeLight(gameTime);
 
             viewQueue.Update(gameTime);
         }

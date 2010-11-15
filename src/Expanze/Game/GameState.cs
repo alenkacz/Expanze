@@ -13,6 +13,7 @@ namespace Expanze
     {
         public static Matrix view;
         public static Matrix projection;
+        public static Vector3 LightDirection;
 
         public static MouseState CurrentMouseState;
         public static MouseState LastMouseState;

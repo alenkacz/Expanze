@@ -53,10 +53,11 @@ namespace Expanze.Gameplay.Map.View
                 {
                     foreach (BasicEffect effect in mesh.Effects)
                     {
-                        effect.EnableDefaultLighting();
-                        effect.DirectionalLight0.Enabled = false;
-                        effect.DirectionalLight1.Enabled = true;
-                        effect.DirectionalLight1.DiffuseColor = new Vector3(0.3f, 0.3f, 0.3f);
+                        effect.LightingEnabled = true;
+                        effect.DirectionalLight0.Direction = GameState.LightDirection;
+                        effect.DirectionalLight0.DiffuseColor = new Vector3(0.9f, 0.9f, 0.9f);
+                        effect.DirectionalLight0.SpecularColor = new Vector3(0.1f, 0.1f, 0.0f);
+                        effect.DirectionalLight0.Enabled = true;
 
                         // is it model part which is for flags? They have to be in player colors
                         if (a % 5 == 1 || a % 5 == 2 || a % 5 == 3 || a == 4 || a == 5 || a == 15 || a == 14)
@@ -67,22 +68,24 @@ namespace Expanze.Gameplay.Map.View
                         }
                         else
                         {
+                            /*
                             effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
                             if (a == 20)
                                 effect.DiffuseColor = new Vector3(1.0f, 1.0f, 1.0f);
                             else
                                 effect.DiffuseColor = new Vector3(0.0f, 0.0f, 0.0f);
-                            effect.AmbientLightColor = new Vector3(0.7f, 0.7f, 0.7f);
+                            effect.AmbientLightColor = new Vector3(0.7f, 0.7f, 0.7f);*/
                         }
 
                         // if player wants to build new Road, can he? Show it in red/green color
+                        /*
                         if (pickVars.pickActive && !isBuildView)
                         {
                             if (model.CanActivePlayerBuildRoad() != RoadBuildError.OK)
                                 effect.DiffuseColor = new Vector3(1, 0.0f, 0);
                             else
                                 effect.DiffuseColor = new Vector3(0, 1.0f, 0);
-                        }
+                        }*/
 
                         effect.World = transforms[mesh.ParentBone.Index] * mWorld;
                         effect.View = GameState.view;

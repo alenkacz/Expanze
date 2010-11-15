@@ -59,7 +59,11 @@ namespace Expanze.Gameplay.Map
                 {
                     foreach (BasicEffect effect in mesh.Effects)
                     {
-                        effect.EnableDefaultLighting();
+                        effect.LightingEnabled = true;
+                        effect.DirectionalLight0.Direction = GameState.LightDirection;
+                        effect.DirectionalLight0.DiffuseColor = new Vector3(0.9f, 0.9f, 0.9f);
+                        effect.DirectionalLight0.SpecularColor = new Vector3(0.1f, 0.1f, 0.0f);
+                        effect.DirectionalLight0.Enabled = true;
 
                         if (a == 1 || a == 2)
                         {
@@ -69,9 +73,9 @@ namespace Expanze.Gameplay.Map
                         }
                         else
                         {
-                            effect.DiffuseColor = new Vector3(0.64f, 0.64f, 0.64f);
+                            //effect.DiffuseColor = new Vector3(0.64f, 0.64f, 0.64f);
                         }
-
+                        /*
                         if (pickVars.pickActive && !isBuildView)
                         {
                             if (model.CanActivePlayerBuildTown() != TownBuildError.OK &&
@@ -79,7 +83,7 @@ namespace Expanze.Gameplay.Map
                                 effect.DiffuseColor = new Vector3(1, 0.0f, 0);
                             else
                                 effect.DiffuseColor = new Vector3(0, 1.0f, 0);
-                        }
+                        }*/
 
                         effect.World = transforms[mesh.ParentBone.Index] * mWorld;
                         effect.View = GameState.view;
@@ -140,19 +144,24 @@ namespace Expanze.Gameplay.Map
             if (pickVars.pickNewPress)
             {
                 if (model.getIsBuild() && GameMaster.getInstance().getState() == EGameState.StateGame)
-                    pickTownID = townID;
+                {
+                    if (pickTownID == townID)
+                        pickTownID = -1;
+                    else
+                        pickTownID = townID;
+                }
                 else
                 {
                     WindowPromt wP = GameState.windowPromt;
                     if (GameMaster.getInstance().getState() == EGameState.StateGame)
                     {
                         wP.showPromt(Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN, wP.BuildTown, Settings.costTown);
-                        wP.setArgInt1(townID);  
+                        wP.setArgInt1(townID);
                     }
                     else
                     {
                         wP.showPromt(Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN, wP.BuildTown, new SourceAll(0));
-                        wP.setArgInt1(townID); 
+                        wP.setArgInt1(townID);
                     }
                 }
             }
