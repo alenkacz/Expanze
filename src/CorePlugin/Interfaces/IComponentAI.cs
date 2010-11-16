@@ -7,6 +7,7 @@ namespace CorePlugin
 {
     public interface IComponentAI
     {
-        void ResolveAI(IMapController mapController);
+        void InitAIComponent(IMapController mapController);
+        void ResolveAI();
     }
 }

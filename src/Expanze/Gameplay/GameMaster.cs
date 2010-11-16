@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using CorePlugin;
+using Expanze.Gameplay.Map;
 
 namespace Expanze
 {
@@ -20,6 +21,8 @@ namespace Expanze
         private bool pausedNew = false;
 
         private bool winnerNew = false;
+
+        private Map map;
 
         IComponentAI componentAI;
 
@@ -38,16 +41,19 @@ namespace Expanze
         /// <summary>
         /// Private constructor because of the Singleton
         /// </summary>
-        private GameMaster() { }
+        private GameMaster() {}
 
-        public bool startGame(bool isAI)
+        public bool startGame(bool isAI, Map map)
         {
+            this.map = map; 
+
             players[0] = new Player(Settings.startScore, "Player1", Color.RoyalBlue, false);
             players[1] = new Player(Settings.startScore, "Player2", Color.Red, isAI);
 
             foreach (IComponentAI AI in CoreProviderAI.AI)
             {
                 componentAI = AI;
+                componentAI.InitAIComponent(map);
             }
 
             activePlayerIndex = 0;
@@ -64,7 +70,7 @@ namespace Expanze
         {
             if (activePlayer.getIsAI())
             {
-                componentAI.ResolveAI(GameState.map);
+                componentAI.ResolveAI();
                 if (state == EGameState.StateGame)
                     nextTurn();
             }

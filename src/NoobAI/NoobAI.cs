@@ -10,7 +10,14 @@ namespace NoobAI
     [PluginAttributeAI("Really dumb AI")]
     class NoobAI : IComponentAI
     {
-        public void ResolveAI(IMapController mapController)
+        IMapController mapController;
+
+        public void InitAIComponent(IMapController mapController)
+        {
+            this.mapController = mapController;
+        }
+
+        public void ResolveAI()
         {
             if (mapController.GetState() == EGameState.StateFirstTown)
             {
