@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using CorePlugin;
 using Expanze.Gameplay.Map;
+using System.Threading;
 
 namespace Expanze
 {
@@ -24,7 +25,11 @@ namespace Expanze
 
         private Map map;
 
-        IComponentAI componentAI;
+        private ThreadStart actualAIStart;
+        private Thread actualAIThread;
+        private const int AI_TIME = 5000;   // this is time which have each plugin each turn to resolve AI
+        private int actualAITime;           // how much time has AI before it will be aborted
+
 
         private static GameMaster instance = null;
 
@@ -45,17 +50,18 @@ namespace Expanze
 
         public bool startGame(bool isAI, Map map)
         {
-            this.map = map; 
+            this.map = map;
 
-            players[0] = new Player(Settings.startScore, "Player1", Color.RoyalBlue, false);
-            players[1] = new Player(Settings.startScore, "Player2", Color.Red, isAI);
-
+            IComponentAI componentAI = null;
             foreach (IComponentAI AI in CoreProviderAI.AI)
             {
                 componentAI = AI;
                 componentAI.InitAIComponent(map);
             }
 
+            players[0] = new Player("Player1", Color.RoyalBlue, null);
+            players[1] = new Player("Player2", Color.Red, (isAI) ? componentAI : null);
+            
             activePlayerIndex = 0;
             activePlayer = players[activePlayerIndex];
 
@@ -66,13 +72,18 @@ namespace Expanze
             return true;
         }
 
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             if (activePlayer.getIsAI())
             {
-                componentAI.ResolveAI();
-                if (state == EGameState.StateGame)
-                    nextTurn();
+                actualAITime -= gameTime.ElapsedGameTime.Milliseconds;
+                if (actualAITime < 0)
+                    actualAIThread.Abort();
+
+                if (!actualAIThread.IsAlive && map.getIsViewQueueClear())
+                {
+                       NextTurn();
+                }
             }
         }
 
@@ -80,7 +91,25 @@ namespace Expanze
         public EGameState getState() { return state; }
         public bool isWinnerNew() { bool temp = winnerNew; winnerNew = false; return temp; }
 
-        public bool nextTurn()
+        private bool StartTurn()
+        {
+            if (state == EGameState.StateGame)
+            {
+                GameState.map.getSources(activePlayer);
+            }
+
+            if (activePlayer.getIsAI())
+            {
+                actualAIStart = new ThreadStart(activePlayer.getComponentAI().ResolveAI);
+                actualAIThread = new Thread(actualAIStart);
+                actualAIThread.Start();
+                actualAITime = AI_TIME;
+            }
+
+            return true;
+        }
+
+        public bool NextTurn()
         {
             bool status = true;
             if (state == EGameState.StateGame)
@@ -89,11 +118,7 @@ namespace Expanze
             }
             status &= changeActivePlaye();
 
-            if (state == EGameState.StateGame)
-            {
-                GameState.map.getSources(activePlayer);
-
-            }
+            status &= StartTurn();
             return status;
         }
 

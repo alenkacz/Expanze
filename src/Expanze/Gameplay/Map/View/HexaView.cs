@@ -117,12 +117,8 @@ namespace Expanze
             {
                 foreach (BasicEffect effect in mesh.Effects)
                 {
-                    //effect.EnableDefaultLighting();
-                    //effect.AmbientLightColor = new Vector3(0.0f, 0.0f, 0.0f);
-                    //effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
-                    //effect.DiffuseColor = new Vector3(0.8f, 0.8f, 0.8f);
-                    //effect.SpecularColor = new Vector3(0.0f, 0.0f, 0.0f);
                     effect.LightingEnabled = true;
+                    effect.AmbientLightColor = GameState.MaterialAmbientColor;
                     effect.DirectionalLight0.Direction = GameState.LightDirection;
                     effect.DirectionalLight0.DiffuseColor = GameState.LightDiffusionColor;
                     effect.DirectionalLight0.SpecularColor = GameState.LightSpecularColor;

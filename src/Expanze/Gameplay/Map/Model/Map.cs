@@ -47,6 +47,11 @@ namespace Expanze.Gameplay.Map
             viewQueue = new ViewQueue(this);
         }
 
+        public bool getIsViewQueueClear()
+        {
+            return viewQueue.getIsClear();
+        }
+
         private void CreateHexaWorldMatrices()
         {
             HexaModel.resetCounter();
@@ -204,6 +209,7 @@ namespace Expanze.Gameplay.Map
             target = new Vector3(0.0f, 0.0f, 0.0f);
             up = new Vector3(0.1f, 0.8f, 0.0f);
             eye = new Vector3(0.4f, 1.5f, 0.0f);
+            GameState.MaterialAmbientColor = new Vector3(0.2f, 0.2f, 0.2f);
             GameState.LightDirection = new Vector3(-1.0f, -0.5f, 0.0f);
             GameState.view = Matrix.CreateLookAt(eye, target, up);
             GameState.projection = Matrix.CreatePerspectiveFieldOfView((float)MathHelper.ToRadians(90), aspectRatio, 0.01f, 100.0f);
@@ -333,7 +339,7 @@ namespace Expanze.Gameplay.Map
 
         public override void HandlePickableAreas(Color c)
         {
-            if (GameMaster.getInstance().getPaused() || GameMaster.getInstance().getActivePlayer().getIsAI())
+            if (GameMaster.getInstance().getPaused())
                 return;
 
             for (int i = 0; i < hexaMapView.Length; i++)
@@ -511,7 +517,8 @@ namespace Expanze.Gameplay.Map
 
                 if (gm.getState() != EGameState.StateGame)
                 {
-                    gm.nextTurn();
+                    if(!gm.getActivePlayer().getIsAI())
+                        gm.NextTurn();
                 }
                 else
                     gm.getActivePlayer().payForSomething(Settings.costTown);

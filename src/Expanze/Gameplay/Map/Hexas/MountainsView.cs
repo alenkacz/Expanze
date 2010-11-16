@@ -47,6 +47,7 @@ namespace Expanze.Gameplay.Map
                     foreach (BasicEffect effect in mesh.Effects)
                     {
                         effect.LightingEnabled = true;
+                        effect.AmbientLightColor = GameState.MaterialAmbientColor;
                         effect.DirectionalLight0.Direction = GameState.LightDirection;
                         effect.DirectionalLight0.DiffuseColor = GameState.LightDiffusionColor;
                         effect.DirectionalLight0.SpecularColor = GameState.LightSpecularColor;

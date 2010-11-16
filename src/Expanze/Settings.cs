@@ -13,9 +13,6 @@ namespace Expanze
 
         //indexed by enum Types
         public static String[] mapPaths = new String[] { "Models/yellowhex", "Models/brownhex", "Models/greyhex", "Models/greenhex", "Models/redhex", "Models/orangehex", "Models/bluehex" };
-        
-        //score at the beginning
-        public const int startScore = 15000;
 
         // costs of infrastructure
         public static SourceAll costTown = new SourceAll(60, 60, 50, 50, 30);

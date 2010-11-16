@@ -3,37 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using CorePlugin;
 
 namespace Expanze
 {
     public enum TransactionState {TransactionStart, TransactionMiddle, TransactionEnd };
     class Player
     {
-        private int money;
         private String name;
         private Color color;
         private bool materialChanged;
 
-        SourceAll prevSource;
+        SourceAll prevSource;       // Source before last source change (for example before paying for something, collecting resources
         SourceAll source;
         SourceAll transactionSource;
 
-        private bool isAI;  // is this player controlled by AI
+        IComponentAI componentAI;   // is null if player is NOT controled by computer but is controled by human
 
-        public Player(int score, String name, Color color, bool isAI)
+        public Player(String name, Color color, IComponentAI componentAI)
         {
             prevSource = new SourceAll(0);
             source = new SourceAll(0);
             transactionSource = new SourceAll(0);
             this.color = color;
-            this.money = score;
             this.name = name;
-            this.isAI = isAI;
+            this.componentAI = componentAI;
 
             materialChanged = false;
         }
 
-        public bool getIsAI() { return isAI; }
+        public IComponentAI getComponentAI() { return componentAI; }
+        public bool getIsAI() { return componentAI != null; }
         public Color getColor() { return color; }
 
         public SourceAll getSource()

@@ -69,5 +69,10 @@ namespace Expanze.Gameplay.Map
                 lastEnque = ENQUEUE_TIME;
             }
         }
+
+        public bool getIsClear()
+        {
+            return queue.Count == 0;
+        }
     }
 }

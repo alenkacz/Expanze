@@ -30,6 +30,9 @@ namespace NoobAI
             else if (mapController.GetState() == EGameState.StateSecondTown)
             {
                 mapController.BuildTown(31);
+                while (true)
+                {
+                }
             }
         }
     }

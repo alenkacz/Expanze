@@ -184,7 +184,7 @@ namespace Expanze
         {
             if (GameMaster.getInstance().getState() == EGameState.StateGame)
             {
-                GameMaster.getInstance().nextTurn();
+                GameMaster.getInstance().NextTurn();
             }
             else
             {
@@ -235,7 +235,7 @@ namespace Expanze
                     gameComponent.Update(gameTime);
                 }
 
-                gMaster.Update();
+                gMaster.Update(gameTime);
 
                 foreach (GuiComponent guiComponent in guiComponents)
                 {
