@@ -56,11 +56,15 @@ namespace Expanze
             foreach (IComponentAI AI in CoreProviderAI.AI)
             {
                 componentAI = AI;
-                componentAI.InitAIComponent(map);
+                //componentAI.InitAIComponent(map);
             }
+            IComponentAI componentAI1 = componentAI.Clone();
+            componentAI1.InitAIComponent(map);
+            IComponentAI componentAI2 = componentAI.Clone();
+            componentAI2.InitAIComponent(map);
 
-            players[0] = new Player("Player1", Color.RoyalBlue, null);
-            players[1] = new Player("Player2", Color.Red, (isAI) ? componentAI : null);
+            players[0] = new Player("Player1", Color.RoyalBlue, (isAI) ? componentAI1 : null);
+            players[1] = new Player("Player2", Color.Red, (isAI) ? componentAI2 : null);
             
             activePlayerIndex = 0;
             activePlayer = players[activePlayerIndex];
@@ -69,6 +73,7 @@ namespace Expanze
             paused = false;
 
             state = EGameState.StateFirstTown;
+
             return true;
         }
 
@@ -91,7 +96,7 @@ namespace Expanze
         public EGameState getState() { return state; }
         public bool isWinnerNew() { bool temp = winnerNew; winnerNew = false; return temp; }
 
-        private bool StartTurn()
+        public bool StartTurn()
         {
             if (state == EGameState.StateGame)
             {

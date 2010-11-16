@@ -9,5 +9,6 @@ namespace CorePlugin
     {
         void InitAIComponent(IMapController mapController);
         void ResolveAI();
+        IComponentAI Clone();
     }
 }

@@ -213,6 +213,8 @@ namespace Expanze.Gameplay.Map
             GameState.LightDirection = new Vector3(-1.0f, -0.5f, 0.0f);
             GameState.view = Matrix.CreateLookAt(eye, target, up);
             GameState.projection = Matrix.CreatePerspectiveFieldOfView((float)MathHelper.ToRadians(90), aspectRatio, 0.01f, 100.0f);
+
+            GameMaster.getInstance().StartTurn();
         }
 
         private HexaModel[][] getMap()

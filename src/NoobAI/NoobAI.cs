@@ -22,18 +22,33 @@ namespace NoobAI
             if (mapController.GetState() == EGameState.StateFirstTown)
             {
                 int id = mapController.GetHexa(0, 0).getITown(TownPos.Up).getTownID();
-                if (mapController.BuildTown(id) != TownBuildError.OK)
+                for (int loop1 = 13; loop1 < 50; loop1 += 5)
                 {
-                    mapController.BuildTown(12);
+                    if (mapController.BuildTown(loop1) == TownBuildError.OK)
+                    {
+                        break;
+                    }
                 }
             }
             else if (mapController.GetState() == EGameState.StateSecondTown)
             {
-                mapController.BuildTown(31);
+                for(int loop1 = 20; loop1 < 50; loop1 += 5)
+                {
+                    if (mapController.BuildTown(loop1) == TownBuildError.OK)
+                    {
+                        break;
+                    }
+                }
                 while (true)
                 {
                 }
             }
+        }
+
+        public IComponentAI Clone()
+        {
+            IComponentAI component = new NoobAI();
+            return component;
         }
     }
 }
