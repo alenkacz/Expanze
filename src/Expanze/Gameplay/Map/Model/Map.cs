@@ -58,8 +58,8 @@ namespace Expanze.Gameplay.Map
             Road.resetCounter();
             Town.resetCounter();
 
-            float dx = 0.569f;
-            float dy = 0.493f;
+            float dx = 0.56f;
+            float dy = 0.49f;
             Matrix mWorld = Matrix.Identity * Matrix.CreateTranslation(new Vector3(-dy * hexaMapModel.Length / 2.0f, 0.0f, -dx * hexaMapModel[0].Length / 2.0f)); ;
             for (int i = 0; i < hexaMapModel.Length; i++)
             {
@@ -307,8 +307,8 @@ namespace Expanze.Gameplay.Map
             {
                 eye.Y += (GameState.CurrentMouseState.ScrollWheelValue - GameState.LastMouseState.ScrollWheelValue) / 500.0f;
 
-                if (eye.Y < 0.1f)
-                    eye.Y = 0.1f;
+                if (eye.Y < 0.2f)
+                    eye.Y = 0.2f;
                 if(eye.Y > 2.8f)
                     eye.Y = 2.8f;
             }
@@ -560,7 +560,7 @@ namespace Expanze.Gameplay.Map
 
                 if (GameState.CurrentMouseState.LeftButton == ButtonState.Pressed)
                 {
-                    if (!pickVars.wasClickAnywhereLast)
+                    if (!pickVars.wasClickAnywhereLast && !pickVars.pickPress)
                         pickVars.pickNewPress = true;
                     pickVars.pickPress = true;
                 }

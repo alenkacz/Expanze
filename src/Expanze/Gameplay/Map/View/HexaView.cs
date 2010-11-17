@@ -201,7 +201,7 @@ namespace Expanze
 
             Map.SetPickVariables(c == pickHexaColor, pickVars);
 
-            if (pickVars.pickNewRelease)
+            if (pickVars.pickNewPress)
             {
                 for (int loop1 = 0; loop1 < townView.Length; loop1++)
                 {

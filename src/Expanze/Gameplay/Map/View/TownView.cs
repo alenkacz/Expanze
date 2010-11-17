@@ -150,25 +150,46 @@ namespace Expanze.Gameplay.Map
             GameMaster gm = GameMaster.getInstance();
             if (pickVars.pickNewPress)
             {
+                pickVars.pickNewPress = false;
                 if (model.getIsBuild() && GameMaster.getInstance().getState() == EGameState.StateGame)
                 {
-                    //if (pickTownID == townID)
-                    //    pickTownID = -1;
-                    //else
+                    if (pickTownID == townID)
+                        pickTownID = -1;
+                    else
                         pickTownID = townID;
                 }
                 else
                 {
                     WindowPromt wP = GameState.windowPromt;
-                    if (GameMaster.getInstance().getState() == EGameState.StateGame)
+
+
+                    switch (model.CanActivePlayerBuildTown())
                     {
-                        wP.showPromt(Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN, wP.BuildTown, Settings.costTown);
-                        wP.setArgInt1(townID);
-                    }
-                    else
-                    {
-                        wP.showPromt(Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN, wP.BuildTown, new SourceAll(0));
-                        wP.setArgInt1(townID);
+                        case TownBuildError.AlreadyBuild:
+                            wP.showAlert(Strings.ALERT_TITLE_TOWN_IS_BUILD);
+                            break;
+                        case TownBuildError.NoSources:
+                            wP.showAlert(Strings.ALERT_TITLE_NOT_ENOUGH_SOURCES);
+                            break;
+                        case TownBuildError.NoPlayerRoad:
+                            wP.showAlert(Strings.ALERT_TITLE_NO_ROAD_IS_CLOSE);
+                            break;
+                        case TownBuildError.OtherTownIsClose:
+                            wP.showAlert(Strings.ALERT_TITLE_OTHER_TOWN_IS_CLOSE);
+                            break;
+
+                        case TownBuildError.OK :
+                            if (GameMaster.getInstance().getState() == EGameState.StateGame)
+                            {
+                                wP.showPromt(Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN, wP.BuildTown, Settings.costTown);
+                                wP.setArgInt1(townID);
+                            }
+                            else
+                            {
+                                wP.showPromt(Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN, wP.BuildTown, new SourceAll(0));
+                                wP.setArgInt1(townID);
+                            }
+                            break;
                     }
                 }
             }

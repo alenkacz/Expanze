@@ -134,8 +134,23 @@ namespace Expanze.Gameplay.Map.View
                 if (GameMaster.getInstance().getState() == EGameState.StateGame)
                 {
                     WindowPromt wP = GameState.windowPromt;
-                    wP.showPromt(Strings.PROMT_TITLE_WANT_TO_BUILD_ROAD, wP.BuildRoad, Settings.costRoad);
-                    wP.setArgInt1(roadID);
+
+                    switch (model.CanActivePlayerBuildRoad())
+                    {
+                        case RoadBuildError.NoSources:
+                            wP.showAlert(Strings.ALERT_TITLE_NOT_ENOUGH_SOURCES);
+                            break;
+                        case RoadBuildError.AlreadyBuild:
+                            wP.showAlert(Strings.ALERT_TITLE_ROAD_IS_BUILD);
+                            break;
+                        case RoadBuildError.NoPlayerRoadOrTown:
+                            wP.showAlert(Strings.ALERT_TITLE_NO_ROAD_OR_TOWN_IS_CLOSE);
+                            break;
+                        case RoadBuildError.OK :
+                            wP.showPromt(Strings.PROMT_TITLE_WANT_TO_BUILD_ROAD, wP.BuildRoad, Settings.costRoad);
+                            wP.setArgInt1(roadID);
+                            break;
+                    }
                 }
             }
         }
