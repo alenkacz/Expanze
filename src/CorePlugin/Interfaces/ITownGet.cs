@@ -12,5 +12,7 @@ namespace CorePlugin
     {
         int getTownID();
         ISourceAll getCost();
+        IHexaGet getIHexaGet(int pos);
+        TownBuildError CanActivePlayerBuildTown();
     }
 }

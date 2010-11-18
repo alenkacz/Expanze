@@ -7,7 +7,8 @@ namespace CorePlugin
 {
     public enum RoadBuildError { OK, NoSources, AlreadyBuild, NoPlayerRoadOrTown }
 
-    interface IRoadGet
+    public interface IRoadGet
     {
+
     }
 }

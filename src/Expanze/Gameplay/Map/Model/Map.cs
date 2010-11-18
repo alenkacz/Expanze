@@ -446,6 +446,16 @@ namespace Expanze.Gameplay.Map
             return null;
         }
 
+        public ITownGet GetITownGetByID(int townID)
+        {
+            return GetTownByID(townID);
+        }
+
+        public IRoadGet GetIRoadGetByID(int roadID)
+        {
+            return GetRoadByID(roadID);
+        }
+
         private Road GetRoadByID(int roadID)
         {
             Road road = null;
@@ -478,6 +488,8 @@ namespace Expanze.Gameplay.Map
         /// ********************************
         /// IMapController
 
+        public int GetMaxRoadID() { return Road.getRoadCount(); }
+        public int GetMaxTownID() { return Town.getTownCount(); }
         public EGameState GetState() { return GameMaster.getInstance().getState(); }
 
         public IHexaGet GetHexa(int x, int y)

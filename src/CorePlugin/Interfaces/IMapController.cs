@@ -12,6 +12,10 @@ namespace CorePlugin
         IHexaGet GetHexa(int x, int y);
         TownBuildError BuildTown(int townID);
         RoadBuildError BuildRoad(int roadID);
+        int GetMaxTownID();
+        ITownGet GetITownGetByID(int townID);
+        int GetMaxRoadID();
+        IRoadGet GetIRoadGetByID(int roadID);
         EGameState GetState();
     }
 }
