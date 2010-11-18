@@ -395,7 +395,7 @@ namespace Expanze.Gameplay.Map
                     if (hexaMapView[i][j] != null)
                     {
                         hexaMapView[i][j].Draw(gameTime);
-                        //hexaMap[i][j].DrawPickableAreas();
+                        //hexaMapView[i][j].DrawPickableAreas();
                     }
                 }
             }
