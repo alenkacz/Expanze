@@ -124,6 +124,9 @@ namespace Expanze
             status &= changeActivePlaye();
 
             status &= StartTurn();
+
+            map.NextTurn();
+
             return status;
         }
 

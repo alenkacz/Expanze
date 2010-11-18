@@ -344,6 +344,9 @@ namespace Expanze.Gameplay.Map
             if (GameMaster.getInstance().getPaused())
                 return;
 
+            if (GameMaster.getInstance().getActivePlayer().getComponentAI() != null)
+                return;
+
             for (int i = 0; i < hexaMapView.Length; i++)
                 for (int j = 0; j < hexaMapView[i].Length; j++)
                     if (hexaMapView[i][j] != null)
@@ -403,6 +406,14 @@ namespace Expanze.Gameplay.Map
             base.Draw(gameTime);
         }
 
+        public void NextTurn()
+        {
+            if (viewQueue.getIsClear())
+            {
+                ItemQueue item = new ItemQueue(ItemKind.NextTurn, 0);
+                viewQueue.Add(item);
+            }
+        }
 
         private TownView GetTownViewByID(int townID)
         {
