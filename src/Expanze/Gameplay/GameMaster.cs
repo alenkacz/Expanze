@@ -175,6 +175,19 @@ namespace Expanze
             this.paused = paused;
         }
 
+        public void doMaterialConversion(HexaKind from, HexaKind to, Player p)
+        {
+            int rate = p.getConversionRate();
+
+            //remove material from player
+            SourceAll cost = createSourceAllCost(from, rate);
+            p.payForSomething(cost);
+
+            //add new material
+            SourceAll get = createSourceAllCost(to, 1);
+            p.addSources(get, TransactionState.TransactionEnd);
+        }
+
         public bool changeActivePlaye()
         {
             if (state == EGameState.StateFirstTown || state == EGameState.StateGame)
