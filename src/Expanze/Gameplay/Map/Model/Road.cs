@@ -9,7 +9,7 @@ using CorePlugin;
 
 namespace Expanze
 {
-    class Road
+    class Road : IRoadGet
     {
         private Player playerOwner;
         private bool isBuild;
@@ -30,6 +30,7 @@ namespace Expanze
 
         public static void resetCounter() { counter = 0; }
 
+        public static int getRoadCount() { return counter; }    // number of roads
         public Player getOwner() { return playerOwner; }
         public int getRoadID() { return roadID; }
         public bool getIsBuild() { return isBuild; }

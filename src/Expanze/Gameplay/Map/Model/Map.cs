@@ -344,6 +344,9 @@ namespace Expanze.Gameplay.Map
             if (GameMaster.getInstance().getPaused())
                 return;
 
+            if (GameMaster.getInstance().getActivePlayer().getComponentAI() != null)
+                return;
+
             for (int i = 0; i < hexaMapView.Length; i++)
                 for (int j = 0; j < hexaMapView[i].Length; j++)
                     if (hexaMapView[i][j] != null)
@@ -395,7 +398,7 @@ namespace Expanze.Gameplay.Map
                     if (hexaMapView[i][j] != null)
                     {
                         hexaMapView[i][j].Draw(gameTime);
-                        //hexaMap[i][j].DrawPickableAreas();
+                        //hexaMapView[i][j].DrawPickableAreas();
                     }
                 }
             }
@@ -403,6 +406,14 @@ namespace Expanze.Gameplay.Map
             base.Draw(gameTime);
         }
 
+        public void NextTurn()
+        {
+            if (viewQueue.getIsClear())
+            {
+                ItemQueue item = new ItemQueue(ItemKind.NextTurn, 0);
+                viewQueue.Add(item);
+            }
+        }
 
         private TownView GetTownViewByID(int townID)
         {
@@ -446,6 +457,16 @@ namespace Expanze.Gameplay.Map
             return null;
         }
 
+        public ITownGet GetITownGetByID(int townID)
+        {
+            return GetTownByID(townID);
+        }
+
+        public IRoadGet GetIRoadGetByID(int roadID)
+        {
+            return GetRoadByID(roadID);
+        }
+
         private Road GetRoadByID(int roadID)
         {
             Road road = null;
@@ -478,6 +499,8 @@ namespace Expanze.Gameplay.Map
         /// ********************************
         /// IMapController
 
+        public int GetMaxRoadID() { return Road.getRoadCount(); }
+        public int GetMaxTownID() { return Town.getTownCount(); }
         public EGameState GetState() { return GameMaster.getInstance().getState(); }
 
         public IHexaGet GetHexa(int x, int y)

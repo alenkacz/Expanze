@@ -43,6 +43,8 @@ namespace Expanze
 
         public static void resetCounter() { counter = 0; }
 
+        public int getCurrentSource() { return value; }
+
         public void CreateTownsAndRoads(HexaModel[] neighboursModel, HexaView hexaView, HexaView[] neighboursView)
         {
             hexaNeighbours = new HexaModel[neighboursModel.Length];
