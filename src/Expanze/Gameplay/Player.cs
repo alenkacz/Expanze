@@ -17,6 +17,7 @@ namespace Expanze
         SourceAll prevSource;       // Source before last source change (for example before paying for something, collecting resources
         SourceAll source;
         SourceAll transactionSource;
+        int conversionRate;
 
         IComponentAI componentAI;   // is null if player is NOT controled by computer but is controled by human
 
@@ -25,6 +26,7 @@ namespace Expanze
             prevSource = new SourceAll(0);
             source = new SourceAll(0);
             transactionSource = new SourceAll(0);
+            this.conversionRate = Settings.conversionRate;
             this.color = color;
             this.name = name;
             this.componentAI = componentAI;
@@ -35,6 +37,11 @@ namespace Expanze
         public IComponentAI getComponentAI() { return componentAI; }
         public bool getIsAI() { return componentAI != null; }
         public Color getColor() { return color; }
+
+        public int getConversionRate()
+        {
+            return this.conversionRate;
+        }
 
         public SourceAll getSource()
         {

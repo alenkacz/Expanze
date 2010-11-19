@@ -37,6 +37,7 @@ namespace Expanze
         public static Game Game = null;
 
         public static bool isFullscreen = false;
+        public static int conversionRate = 4;
 
         public static Matrix spriteScale = Matrix.CreateScale(Settings.activeResolution.X / Settings.maximumResolution.X, Settings.activeResolution.Y / Settings.maximumResolution.Y, 1);
 
