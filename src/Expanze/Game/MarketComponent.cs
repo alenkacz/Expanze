@@ -30,9 +30,9 @@ namespace Expanze
         #region Initialization
         private MarketComponent()
 
-            : base(Settings.Game, 300, 10, GameState.gameFont, 500, 500, "market_bg")
+            : base(Settings.Game, Settings.scaleW(200), Settings.scaleH(Settings.maximumResolution.Y-Settings.scaleH(400)), GameState.gameFont, 700, 400, "market_bg")
         {
-            this.range = new Rectangle(300, 10, 500, 500);
+            this.range = new Rectangle(Settings.scaleW(200), Settings.scaleH(Settings.maximumResolution.Y - Settings.scaleH(400)), Settings.scaleW(700), Settings.scaleH(400));
         }
 
         public static MarketComponent getInstance()
@@ -52,7 +52,7 @@ namespace Expanze
             this.createFirstRow();
             this.createSecondRow();
 
-            ButtonComponent change_button = new ButtonComponent(Settings.Game, range.Right - 100, (int)(range.Bottom - 150), new Rectangle(), GameState.gameFont, Settings.scaleW(85), Settings.scaleH(23), "change-button");
+            ButtonComponent change_button = new ButtonComponent(Settings.Game, range.Right - 100, (int)(range.Bottom+50), new Rectangle(), GameState.gameFont, Settings.scaleW(85), Settings.scaleH(23), "change-button");
             change_button.Actions += ChangeButtonAction;
             this.content.Add(change_button);
 
