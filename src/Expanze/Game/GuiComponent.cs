@@ -19,6 +19,7 @@ namespace Expanze
         protected int width;
         protected int height;
         protected String texture;
+        protected bool picked;
 
         protected Boolean pick;
 
@@ -65,6 +66,16 @@ namespace Expanze
                 c = Color.White;
             spriteBatch.Draw(myButton,spritePosition, c);
             spriteBatch.End();
+        }
+
+        public void setPicked(Boolean picked)
+        {
+            this.picked = picked;
+        }
+
+        public bool getPicked()
+        {
+            return this.picked;
         }
 
 
