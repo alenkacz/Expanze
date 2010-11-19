@@ -18,6 +18,8 @@ namespace NoobAI
         int oreHexa;
         int stoneHexa;
 
+        int turn;
+        
         public void InitAIComponent(IMapController mapController)
         {
             this.mapController = mapController;
@@ -27,6 +29,7 @@ namespace NoobAI
             meatHexa = 0;
             oreHexa = 0;
             stoneHexa = 0;
+            turn = 0;
         }
 
         public void ResolveAI()
@@ -39,12 +42,51 @@ namespace NoobAI
             {
                 BuildTown(FindBestFreeTownID());
             }
+            else
+            {
+                turn++;
+                BuildRandomTown();
+                if(turn % 5 == 0)
+                    BuildRandomRoad();
+            }
         }
 
         public IComponentAI Clone()
         {
             IComponentAI component = new NoobAI();
             return component;
+        }
+
+        public void BuildRandomTown()
+        {
+            int maxTownID = mapController.GetMaxTownID();
+
+            for (int loop1 = maxTownID; loop1 > 0; loop1--)
+            {
+                ITownGet town = mapController.GetITownGetByID(loop1);
+
+                if (town.CanActivePlayerBuildTown() == TownBuildError.OK)
+                {
+                    mapController.BuildTown(loop1);
+                    break;
+                }
+            }
+        }
+
+        public void BuildRandomRoad()
+        {
+             int maxRoadID = mapController.GetMaxRoadID();
+
+             for (int loop1 = maxRoadID; loop1 > 0; loop1--)
+             {
+                 IRoadGet road = mapController.GetIRoadGetByID(loop1);
+
+                 if (road.CanActivePlayerBuildRoad() == RoadBuildError.OK)
+                 {
+                     mapController.BuildRoad(loop1);
+                     break ;
+                 }
+             }
         }
 
         public void BuildTown(int id)

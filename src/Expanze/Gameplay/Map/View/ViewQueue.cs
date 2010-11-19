@@ -28,7 +28,7 @@ namespace Expanze.Gameplay.Map
         Queue<ItemQueue> queue;
         Map map;
 
-        private const int ENQUEUE_TIME = 600;
+        private const int ENQUEUE_TIME = 100;
         private int lastEnque;
 
         public ViewQueue(Map map)
