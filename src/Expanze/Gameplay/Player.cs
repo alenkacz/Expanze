@@ -99,6 +99,7 @@ namespace Expanze
                     transactionSource = transactionSource + amount;
                     break;
                 case TransactionState.TransactionEnd :
+                    transactionSource = transactionSource + amount;
                     source = source + transactionSource;               
                     changeSources(transactionSource.wood, transactionSource.stone, transactionSource.corn, transactionSource.meat, transactionSource.ore);
                     transactionSource = new SourceAll(0);
