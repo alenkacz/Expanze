@@ -24,7 +24,7 @@ namespace Expanze
         public static SourceAll costQuarry = new SourceAll(50, 0, 50, 0, 0);
 
         // goals
-        public static SourceAll costWin = new SourceAll(200, 100, 100, 100, 100);
+        public static SourceAll costWin = new SourceAll(20000, 100000, 10000, 10000, 10000);
 
         public static Vector2 activeResolution = new Vector2(800,600);
 

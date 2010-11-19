@@ -25,7 +25,9 @@ namespace Expanze
         public bool getIsBuild() { return isBuild; }
         public Player getPlayerOwner() { return playerOwner; }
         public ISourceAll getCost() { return Settings.costTown; }
+        public IHexaGet getIHexaGet(int pos) { return getHexa(pos); }
         public HexaModel getHexa(int pos) { return hexaNeighbour[pos]; }
+        public static int getTownCount() { return counter; }    // number of towns
 
         public Town()
         {

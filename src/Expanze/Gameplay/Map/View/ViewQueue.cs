@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace Expanze.Gameplay.Map
 {
-    public enum ItemKind{BuildTown, BuildRoad};
+    public enum ItemKind{BuildTown, BuildRoad, NextTurn};
 
     class ItemQueue
     {
@@ -28,7 +28,7 @@ namespace Expanze.Gameplay.Map
         Queue<ItemQueue> queue;
         Map map;
 
-        private const int ENQUEUE_TIME = 1000;
+        private const int ENQUEUE_TIME = 100;
         private int lastEnque;
 
         public ViewQueue(Map map)
@@ -64,6 +64,8 @@ namespace Expanze.Gameplay.Map
 
                     case ItemKind.BuildRoad :
                         map.BuildRoadView(item.getArg1());
+                        break;
+                    case ItemKind.NextTurn :
                         break;
                 }
                 lastEnque = ENQUEUE_TIME;
