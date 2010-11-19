@@ -11,14 +11,14 @@ namespace Expanze
 {
     class Road : IRoadGet
     {
-        private Player playerOwner;     // owner of road, if road is not build, owner is null
-        private bool isBuild;           // is build this road? or it is only place for road
+        private Player playerOwner;     /// owner of road, if road is not build, owner is null
+        private bool isBuild;           /// is build this road? or it is only place for road
 
-        private int roadID;             // unique ID for road, use for picking and for searching concreate roads
-                                        // roadID starts with one and the last one is equals counter
-        public static int counter = 0;  // count of possible roads in the map
+        private int roadID;             /// unique ID for road, use for picking and for searching concreate roads
+                                        /// roadID starts with one and the last one is equals counter
+        public static int counter = 0;  /// count of possible roads in the map
 
-        private Town[] neighbour;       // every road must have two town neighbours
+        private Town[] neighbour;       /// every road must have two town neighbours
 
         public Road()
         {
