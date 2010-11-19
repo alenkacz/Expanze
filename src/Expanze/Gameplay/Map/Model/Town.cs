@@ -11,15 +11,15 @@ namespace Expanze
 {
     class Town : ITownGet
     {
-        private Player playerOwner;
-        private bool isBuild;
-        private Road[] roadNeighbour; // two or 3 neighbours
-        private Town[] townNeighbour; // two or 3 neighbours
-        private HexaModel[] hexaNeighbour; // 1 - 3 neighbours
-        private BuildingKind[] building; // corresponds with hexaNeighbour
+        private Player playerOwner; /// owner of this town, if null no player owns town on this place
+        private bool isBuild;       /// is there town or it is only place for possible town
+        private Road[] roadNeighbour; /// two or 3 neighbours
+        private Town[] townNeighbour; /// two or 3 neighbours
+        private HexaModel[] hexaNeighbour; /// 1 - 3 neighbours
+        private BuildingKind[] building; /// indeces corresponds with hexaNeighbour indeces
 
-        private int townID;
-        public static int counter = 0;
+        private int townID;             /// unique ID of town place, from 1 to counter
+        public static int counter = 0;  /// how many town places are on the map
 
         public int getTownID() { return townID; }
         public bool getIsBuild() { return isBuild; }
