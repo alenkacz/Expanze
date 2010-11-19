@@ -67,8 +67,8 @@ namespace Expanze
                                 params GameScreen[] screensToLoad)
         {
             // Tell all the current screens to transition off.
-            foreach (GameScreen screen in screenManager.GetScreens())
-                screen.ExitScreen();
+            //foreach (GameScreen screen in screenManager.GetScreens())
+                //screen.ExitScreen();
 
             // Create and activate the loading screen.
             LoadingScreen loadingScreen = new LoadingScreen(screenManager,

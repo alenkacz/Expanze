@@ -20,7 +20,7 @@ namespace Expanze
     /// The pause menu comes up over the top of the game,
     /// giving the player options to resume or quit.
     /// </summary>
-    class MarketScreen : GameScreen
+    class HotSeatScreen : MenuScreen
     {
         List<GuiComponent> guiComponents = new List<GuiComponent>();
         ContentManager content;
@@ -31,7 +31,8 @@ namespace Expanze
         /// <summary>
         /// Constructor.
         /// </summary>
-        public MarketScreen()
+        public HotSeatScreen()
+            :base("Test")
         {
 
         }
@@ -45,8 +46,9 @@ namespace Expanze
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
 
 
-            //ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width - 91, ScreenManager.Game.GraphicsDevice.Viewport.Height - 80, GameState.gameFont, 91, 80, "nextTurn");
-            //guiComponents.Add(changeTurnButton);
+            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width - 91, ScreenManager.Game.GraphicsDevice.Viewport.Height - 80, new Rectangle(), GameState.gameFont, 91, 80, "nextTurn");
+            changeTurnButton.Actions += StartGameSelected;
+            guiComponents.Add(changeTurnButton);
 
             foreach (GuiComponent guiComponent in guiComponents)
             {
@@ -84,7 +86,18 @@ namespace Expanze
 
         #endregion
 
-        #region Handle Input
+        /// <summary>
+        /// Event handler for when the Play Game menu entry is selected.
+        /// </summary>
+        void StartGameSelected(object sender, PlayerIndexEventArgs e)
+        {
+            //ScreenManager.RemoveScreen(this);
+            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
+                               new GameplayScreen(false));
+            //ScreenManager.AddScreen(new GameplayScreen(false),PlayerIndex.One);
+        }
+
+        #region Draw
 
         /// <summary>
         /// Draws the menu.
