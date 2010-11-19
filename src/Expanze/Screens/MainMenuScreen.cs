@@ -59,7 +59,10 @@ namespace Expanze
         /// </summary>
         void HotseatMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            ScreenManager.AddScreen(new HotSeatScreen(), e.PlayerIndex);
+            //HotSeatScreen.Load(ScreenManager, e.PlayerIndex);
+            
+            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
+                               new GameplayScreen(false));
         }
 
         /// <summary>

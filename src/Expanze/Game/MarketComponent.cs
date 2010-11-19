@@ -220,7 +220,7 @@ namespace Expanze
 
             foreach (GuiComponent g in content)
             {
-                g.Draw(gameTime,true);
+                g.Draw(gameTime);
             }
         }
 

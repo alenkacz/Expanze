@@ -31,10 +31,26 @@ namespace Expanze
         /// <summary>
         /// Constructor.
         /// </summary>
-        public HotSeatScreen()
+        private HotSeatScreen()
             :base("Test")
         {
 
+        }
+
+        /// <summary>
+        /// Activates the loading screen.
+        /// </summary>
+        public static void Load(ScreenManager screenManager,
+                                PlayerIndex? controllingPlayer)
+        {
+            // Tell all the current screens to transition off.
+            foreach (GameScreen screen in screenManager.GetScreens())
+                screen.ExitScreen();
+
+            // Create and activate the loading screen.
+            HotSeatScreen loadingScreen = new HotSeatScreen();
+
+            screenManager.AddScreen(loadingScreen, controllingPlayer);
         }
 
         /// <summary>
@@ -94,6 +110,7 @@ namespace Expanze
             //ScreenManager.RemoveScreen(this);
             LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
                                new GameplayScreen(false));
+            ScreenManager.RemoveScreen(this);
             //ScreenManager.AddScreen(new GameplayScreen(false),PlayerIndex.One);
         }
 
