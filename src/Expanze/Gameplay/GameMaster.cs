@@ -188,6 +188,34 @@ namespace Expanze
             p.addSources(get, TransactionState.TransactionEnd);
         }
 
+        protected SourceAll createSourceAllCost(HexaKind kind, int rate)
+        {
+            if (kind == HexaKind.Forest)
+            {
+                return new SourceAll(rate, 0, 0, 0, 0);
+            }
+            else if (kind == HexaKind.Stone)
+            {
+                return new SourceAll(0, rate, 0, 0, 0);
+            }
+            else if (kind == HexaKind.Cornfield)
+            {
+                return new SourceAll(0, 0, rate, 0, 0);
+            }
+            else if (kind == HexaKind.Pasture)
+            {
+                return new SourceAll(0, 0, 0, rate, 0);
+            }
+            else if (kind == HexaKind.Mountains)
+            {
+                return new SourceAll(0, 0, 0, 0, rate);
+            }
+            else
+            {
+                return new SourceAll(0, 0, 0, 0, 0);
+            }
+        }
+
         public bool changeActivePlaye()
         {
             if (state == EGameState.StateFirstTown || state == EGameState.StateGame)
