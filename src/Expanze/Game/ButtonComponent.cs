@@ -18,6 +18,9 @@ namespace Expanze
         protected int mousex;
         protected int mousey;
 
+        //type of the hexa - for materials buttons only
+        HexaKind type;
+
         //button still pressed
         protected bool pressed = false;
 
@@ -39,8 +42,38 @@ namespace Expanze
         public ButtonComponent(Game game, int x, int y, Rectangle clickablePosition, SpriteFont font, int width, int height, String texture)
             : base(game, x, y, font, width, height, texture)
         {
+            this.type = HexaKind.Null;
+            this.init(clickablePosition, x, y, width, height);
+        }
+
+        public ButtonComponent(Game game, int x, int y, Rectangle clickablePosition, SpriteFont font, int width, int height, String texture, HexaKind type)
+            : base(game, x, y, font, width, height, texture)
+        {
+            this.type = type;
+            this.init(clickablePosition, x, y, width, height);
+        }
+
+        private void init(Rectangle clickablePosition, int x, int y, int width, int height)
+        {
             //clickablePos = new Rectangle(Settings.scaleW(clickablePosition.Left), Settings.scaleH(clickablePosition.Top), Settings.scaleW(clickablePosition.Right - clickablePosition.Left), Settings.scaleH(clickablePosition.Bottom - clickablePosition.Top));
-            clickablePos = clickablePosition;
+            if (clickablePos.Top == clickablePos.Bottom && clickablePos.Bottom == 0)
+            {
+                //rectangle not specifies, whole place is clickable
+                clickablePos = new Rectangle(Settings.scaleW(x), Settings.scaleH(y), width, height);
+            }
+            else
+            {
+                clickablePos = clickablePosition;
+            }
+        }
+
+        /// <summary>
+        /// Returns type of the hexa which is button representing
+        /// </summary>
+        /// <returns>HexaKind</returns>
+        public HexaKind getType()
+        {
+            return this.type;
         }
 
         public override void Update(GameTime gameTime)
@@ -63,7 +96,7 @@ namespace Expanze
                 if ((mousex > clickablePos.Left && mousex < (clickablePos.Right)) && (mousey < (clickablePos.Bottom) && mousey > clickablePos.Top))//identify mouse over x y posotions for the button
                 {
                     if (Actions != null)
-                        Actions(null, new PlayerIndexEventArgs(new PlayerIndex()));
+                        Actions(this, new PlayerIndexEventArgs(new PlayerIndex()));
                     pressed = true;
                 }
             }
@@ -74,8 +107,8 @@ namespace Expanze
             }
 
             Color c;
-            if (pick)
-                c = Color.Black;
+            if (picked)
+                c = Color.Green;
             else
                 c = Color.White;
 
@@ -84,4 +117,3 @@ namespace Expanze
         }
     }
 }
-
