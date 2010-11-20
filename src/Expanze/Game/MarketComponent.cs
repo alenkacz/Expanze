@@ -145,9 +145,15 @@ namespace Expanze
         {
             ButtonComponent btn = (ButtonComponent)sender;
 
+            if (disallowChangingSameTypes(btn))
+            {
+                return;
+            }
+
             //reset - only one button from the row can be picked
             if (toButtons.Contains(btn))
             {
+
                 foreach (ButtonComponent b in toButtons)
                 {
                     b.setPicked(false);
@@ -163,6 +169,42 @@ namespace Expanze
             }
 
             btn.setPicked(!btn.getPicked());
+        }
+
+        /// <summary>
+        /// Method is responsible for disapproving changing same material for same material - like corn for corn
+        /// </summary>
+        /// <returns>true if we should disallow clicking</returns>
+        bool disallowChangingSameTypes(ButtonComponent btn)
+        {
+            if (fromButtons.Contains(btn))
+            {
+
+                foreach (ButtonComponent b in toButtons)
+                {
+                    //trying to find selected button
+                    if (b.getPicked())
+                    {
+                        if (b.getType() == btn.getType()) { return true; }
+                        //we can break because only one button can be selected
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                foreach (ButtonComponent b in fromButtons)
+                {
+                    //trying to find selected button
+                    if (b.getPicked())
+                    {
+                        if (b.getType() == btn.getType()) { return true; }
+                        //we can break because only one button can be selected
+                        break;
+                    }
+                }
+            }
+            return false;
         }
 
         /// <summary>
