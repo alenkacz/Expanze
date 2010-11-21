@@ -549,6 +549,33 @@ namespace Expanze.Gameplay.Map
 
                 if (gm.getState() != EGameState.StateGame)
                 {
+                    SourceAll source = new SourceAll(0);
+                    HexaModel hexa;
+                    gm.getActivePlayer().addSources(new SourceAll(0), TransactionState.TransactionStart);
+                    for(int loop1 = 0; loop1 < 3; loop1++)
+                    {
+                        if ((hexa = town.getHexa(loop1)) != null)
+                        {
+                            switch(hexa.getType())
+                            {
+                                case HexaKind.Cornfield :
+                                    source = Settings.costMill; break;
+                                case HexaKind.Forest:
+                                    source = Settings.costSaw; break;
+                                case HexaKind.Mountains:
+                                    source = Settings.costMine; break;
+                                case HexaKind.Pasture:
+                                    source = Settings.costStephard; break;
+                                case HexaKind.Stone:
+                                    source = Settings.costQuarry; break;
+                                default :
+                                    source = new SourceAll(0); break;
+                            }
+                            gm.getActivePlayer().addSources(source,TransactionState.TransactionMiddle);
+                        }
+                    }
+                    gm.getActivePlayer().addSources(new SourceAll(0), TransactionState.TransactionEnd);
+
                     if(!gm.getActivePlayer().getIsAI())
                         gm.NextTurn();
                 }
