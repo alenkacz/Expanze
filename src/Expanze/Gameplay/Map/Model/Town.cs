@@ -98,13 +98,14 @@ namespace Expanze
             SourceAll cost = new SourceAll(0);
             int amount;
 
-            foreach (HexaModel hexa in hexaNeighbour)
+            for(int loop1 = 0; loop1 < 3; loop1++)
             {
-                if (hexa != null)
+                if (hexaNeighbour[loop1] != null &&
+                    building[loop1] == BuildingKind.SourceBuilding)
                 {
-                    amount = hexa.getValue();
+                    amount = hexaNeighbour[loop1].getValue();
 
-                    switch (hexa.getType())
+                    switch (hexaNeighbour[loop1].getType())
                     {
                         case HexaKind.Forest:
                             cost = cost + new SourceAll(amount, 0, 0, 0, 0);

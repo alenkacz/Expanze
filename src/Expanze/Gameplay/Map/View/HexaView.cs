@@ -160,6 +160,7 @@ namespace Expanze
                 //rotation = Matrix.Identity;
                 Matrix tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
 
+                int roofID = -1;
                 switch(model.getTown((CorePlugin.TownPos)loop1).getBuildingKind(model.getID()))
                 {
                     case BuildingKind.NoBuilding :
@@ -173,6 +174,7 @@ namespace Expanze
                             //    break;
                             default :
                                 m = GameState.map.getSourceBuildingModel(Map.PASTURE_HOUSE);
+                                roofID = 0;
                                 break;
                         }
                         break;
@@ -187,10 +189,19 @@ namespace Expanze
                 Matrix[] transforms = new Matrix[m.Bones.Count];
                 m.CopyAbsoluteBoneTransformsTo(transforms);
 
+                int a = 0;
                 foreach (ModelMesh mesh in m.Meshes)
                 {
                     foreach (BasicEffect effect in mesh.Effects)
                     {
+                        if (a == roofID)
+                        {
+                            Vector3 color = model.getTown((CorePlugin.TownPos)loop1).getPlayerOwner().getColor().ToVector3();
+                            effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
+                            effect.DiffuseColor = color * 0.6f;
+                            effect.AmbientLightColor = color * 0.3f;
+                        }
+
                         effect.LightingEnabled = true;
                         effect.AmbientLightColor = GameState.MaterialAmbientColor;
                         effect.DirectionalLight0.Direction = GameState.LightDirection;
@@ -201,6 +212,7 @@ namespace Expanze
                         effect.View = GameState.view;
                         effect.Projection = GameState.projection;
                     }
+                    a++;
                     mesh.Draw();
                 }
             }
