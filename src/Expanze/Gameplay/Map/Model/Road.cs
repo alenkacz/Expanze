@@ -107,10 +107,5 @@ namespace Expanze
 
             return RoadBuildError.OK;
         }
-
-        RoadBuildError IRoadGet.CanActivePlayerBuildRoad()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
