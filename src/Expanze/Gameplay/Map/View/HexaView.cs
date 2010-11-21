@@ -151,7 +151,59 @@ namespace Expanze
 
         public virtual void DrawBuildings(GameTime gameTime)
         {
+            for (int loop1 = 0; loop1 < 6; loop1++)
+            {
+                Model m;
+                Matrix rotation;
 
+                rotation = (loop1 == 2) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * -(loop1 - 2));
+                //rotation = Matrix.Identity;
+                Matrix tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
+
+                switch(model.getTown((CorePlugin.TownPos)loop1).getBuildingKind(model.getID()))
+                {
+                    case BuildingKind.NoBuilding :
+                        m = null;
+                        break;
+                    case BuildingKind.SourceBuilding :
+                        switch (kind)
+                        {
+                            //case HexaKind.Cornfield :
+                            //    m = GameState.map.getSourceBuildingModel(Map.MILL_HOUSE);
+                            //    break;
+                            default :
+                                m = GameState.map.getSourceBuildingModel(Map.PASTURE_HOUSE);
+                                break;
+                        }
+                        break;
+                    default :
+                        m = null;
+                        break;
+                }
+                
+                if(m == null)
+                    continue;
+
+                Matrix[] transforms = new Matrix[m.Bones.Count];
+                m.CopyAbsoluteBoneTransformsTo(transforms);
+
+                foreach (ModelMesh mesh in m.Meshes)
+                {
+                    foreach (BasicEffect effect in mesh.Effects)
+                    {
+                        effect.LightingEnabled = true;
+                        effect.AmbientLightColor = GameState.MaterialAmbientColor;
+                        effect.DirectionalLight0.Direction = GameState.LightDirection;
+                        effect.DirectionalLight0.DiffuseColor = GameState.LightDiffusionColor;
+                        effect.DirectionalLight0.SpecularColor = GameState.LightSpecularColor;
+                        effect.DirectionalLight0.Enabled = true;
+                        effect.World = transforms[mesh.ParentBone.Index] * tempMatrix * world;
+                        effect.View = GameState.view;
+                        effect.Projection = GameState.projection;
+                    }
+                    mesh.Draw();
+                }
+            }
         }
 
         public void DrawPickableAreas()

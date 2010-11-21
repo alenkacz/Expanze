@@ -25,7 +25,9 @@ namespace Expanze.Gameplay.Map
         public const int N_SHAPE_MODEL = 3;
         Model[] shapeModel;
         Model townModel, roadModel;
-
+        public const int PASTURE_HOUSE = 0;
+        public const int MILL_HOUSE = 1;
+        Model[] sourceBuildingModel;
         Model[] mountainsCoverModel;
         Model[] mountainsMineModel;
 
@@ -230,6 +232,7 @@ namespace Expanze.Gameplay.Map
 
         public Model getMountainsCover(int i) { return mountainsCoverModel[i]; }
         public Model getMountainsSourceBuildingModel(int i) { return mountainsMineModel[i]; }
+        public Model getSourceBuildingModel(int i) { return sourceBuildingModel[i]; }
         public Model getTownModel() { return townModel; }
         public Model getRoadModel() { return roadModel; }
 
@@ -257,6 +260,10 @@ namespace Expanze.Gameplay.Map
             shapeModel[SHAPE_RECTANGLE] = content.Load<Model>("Shapes/rectangle");
             shapeModel[SHAPE_CIRCLE] = content.Load<Model>("Shapes/circle");
             shapeModel[SHAPE_SPHERE] = content.Load<Model>("Shapes/sphere");
+
+            sourceBuildingModel = new Model[2];
+            sourceBuildingModel[PASTURE_HOUSE] = content.Load<Model>("Models/pastureHouse");
+            sourceBuildingModel[MILL_HOUSE] = content.Load<Model>("Models/mill");
 
             mountainsCoverModel = new Model[5];
             mountainsCoverModel[0] = content.Load<Model>("Models/cover4");
