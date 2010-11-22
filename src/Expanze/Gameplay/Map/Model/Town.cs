@@ -135,6 +135,7 @@ namespace Expanze
         public void BuildTown(Player player)
         {
             playerOwner = player;
+            player.addPoints(Settings.pointsTown);
             isBuild = true;
         }
 

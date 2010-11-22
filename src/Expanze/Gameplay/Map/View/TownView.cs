@@ -189,8 +189,9 @@ namespace Expanze.Gameplay.Map
                             }
                             else
                             {
-                                wP.showPromt(Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN, wP.BuildTown, new SourceAll(0));
-                                wP.setArgInt1(townID);
+                                GameState.map.BuildTown(townID);
+                                //wP.showPromt(Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN, wP.BuildTown, new SourceAll(0));
+                                //wP.setArgInt1(townID);
                             }
                             break;
                     }

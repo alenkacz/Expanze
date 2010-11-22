@@ -27,7 +27,10 @@ namespace Expanze
         public static SourceAll costQuarry = new SourceAll(50, 0, 50, 0, 0);
 
         // goals
-        public static SourceAll costWin = new SourceAll(20000, 100000, 10000, 10000, 10000);
+        public const int pointsWin = 40; /// how much points have to have player to win
+        public const int pointsTown = 5; /// points for new town
+        public const int pointsRoad = 1; /// points for new road
+
 
         public static Vector2 activeResolution = new Vector2(800,600);
 

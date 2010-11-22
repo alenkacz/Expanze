@@ -174,7 +174,7 @@ namespace Expanze
                             //    break;
                             default :
                                 m = GameState.map.getSourceBuildingModel(Map.PASTURE_HOUSE);
-                                roofID = 0;
+                                //roofID = 0;
                                 break;
                         }
                         break;

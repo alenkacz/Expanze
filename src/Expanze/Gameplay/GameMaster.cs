@@ -133,8 +133,8 @@ namespace Expanze
         public void checkWinner(Player player)
         {
             bool isWinner = false;
-            if (Settings.costWin.HasPlayerSources(player))
-            {     
+            if (player.getPoints() >= Settings.pointsWin)
+            {
                 isWinner = true;
             }
 

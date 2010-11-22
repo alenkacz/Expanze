@@ -83,6 +83,7 @@ namespace Expanze
         {
             playerOwner = player;
             isBuild = true;
+            player.addPoints(Settings.pointsRoad);
         }
 
         /// <summary>

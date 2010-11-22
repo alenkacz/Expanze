@@ -352,7 +352,8 @@ namespace Expanze
 
             //player name and color rectangle
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
-            
+
+            spriteBatch.DrawString(GameState.playerNameFont, gMaster.getActivePlayer().getPoints().ToString(), new Vector2(Settings.playerNamePosition.X - 300, Settings.playerNamePosition.Y), Color.White);
             spriteBatch.DrawString(GameState.playerNameFont, gMaster.getActivePlayer().getName(), Settings.playerNamePosition, Color.White);
             spriteBatch.Draw(playerColorTexture, Settings.playerColorPosition, gMaster.getActivePlayer().getColor());
             
