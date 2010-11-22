@@ -272,10 +272,11 @@ namespace Expanze
         {
             base.Draw(gameTime);
 
-            foreach (GuiComponent g in content)
-            {
-                g.Draw(gameTime);
-            }
+            if(!pick)
+                foreach (GuiComponent g in content)
+                {
+                    g.Draw(gameTime);
+                }
         }
 
         #endregion
