@@ -74,8 +74,10 @@ namespace Expanze
             {
                 Vector3 point3D = GameState.game.GraphicsDevice.Viewport.Project(new Vector3(0.0f, 0.0f, 0.0f), GameState.projection, GameState.view, world);
                 Vector2 point2D = new Vector2();
+                Vector2 posHammers = new Vector2();
                 point2D.X = point3D.X;
                 point2D.Y = point3D.Y;
+                posHammers = point2D;
                 SpriteBatch spriteBatch = GameState.spriteBatch;
 
                 Vector2 stringCenter = GameState.hudMaterialsFont.MeasureString(model.getValue() + "") * 0.5f;
@@ -88,12 +90,29 @@ namespace Expanze
 
                 spriteBatch.Begin();
 
-                spriteBatch.DrawString(GameState.hudMaterialsFont, model.getValue() + "", new Vector2(point2D.X + 1, point2D.Y + 1), Color.Black);
+                bool drawNumber = true;
+                foreach (TownView town in townView)
+                {
+                    if (town.getIsMarked())
+                    {
+                        drawNumber = false;
+                        break;
+                    }
+                }
+                if (drawNumber)
+                    spriteBatch.DrawString(GameState.hudMaterialsFont, model.getValue() + "", new Vector2(point2D.X + 1, point2D.Y + 1), Color.Black);
+                
                 if (pickVars.pickActive)
                     numberColor = Color.BlueViolet;
                 else
                     numberColor = Color.DarkRed;
-                spriteBatch.DrawString(GameState.hudMaterialsFont, model.getValue() + "", point2D, numberColor);
+
+                if (drawNumber)
+                    spriteBatch.DrawString(GameState.hudMaterialsFont, model.getValue() + "", point2D, numberColor);
+                else {
+                    Texture2D text = GameState.map.getHudTexture((pickVars.pickActive) ? Map.HUD_HAMMERS_ACTIVE : Map.HUD_HAMMERS_PASSIVE);
+                    spriteBatch.Draw(text, new Vector2(posHammers.X - (text.Width >> 1), posHammers.Y - (text.Height >> 1)), Color.White);
+                }
                 spriteBatch.End();
             }
         }
@@ -109,7 +128,7 @@ namespace Expanze
 
             Matrix rotation;
             rotation = (hexaID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaID % 6));
-            Matrix tempMatrix = ((kind == HexaKind.Desert || kind == HexaKind.Forest || kind == HexaKind.Mountains || kind == HexaKind.Pasture) ? Matrix.CreateScale(0.00028f) * rotation : Matrix.CreateRotationZ((float)Math.PI));
+            Matrix tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
 
 
 
@@ -169,9 +188,9 @@ namespace Expanze
                     case BuildingKind.SourceBuilding :
                         switch (kind)
                         {
-                            //case HexaKind.Cornfield :
-                            //    m = GameState.map.getSourceBuildingModel(Map.MILL_HOUSE);
-                            //    break;
+                            case HexaKind.Cornfield :
+                                m = GameState.map.getSourceBuildingModel(Map.MILL_HOUSE);
+                                break;
                             default :
                                 m = GameState.map.getSourceBuildingModel(Map.PASTURE_HOUSE);
                                 //roofID = 0;
