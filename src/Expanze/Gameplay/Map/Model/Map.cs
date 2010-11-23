@@ -31,6 +31,10 @@ namespace Expanze.Gameplay.Map
         Model[] mountainsCoverModel;
         Model[] mountainsMineModel;
 
+        public const int HUD_HAMMERS_PASSIVE = 0;
+        public const int HUD_HAMMERS_ACTIVE = 1;
+        public const int HUD_NUMBER = 2;
+        Texture2D[] hud;
 
         private Vector3 eye, target, up;
 
@@ -54,14 +58,19 @@ namespace Expanze.Gameplay.Map
             return viewQueue.getIsClear();
         }
 
+        public Texture2D getHudTexture(int id)
+        {
+            return hud[id];
+        }
+
         private void CreateHexaWorldMatrices()
         {
             HexaModel.resetCounter();
             Road.resetCounter();
             Town.resetCounter();
 
-            float dx = 0.56f;
-            float dy = 0.49f;
+            float dx = 0.592f;
+            float dy = 0.513f;
             Matrix mWorld = Matrix.Identity * Matrix.CreateTranslation(new Vector3(-dy * hexaMapModel.Length / 2.0f, 0.0f, -dx * hexaMapModel[0].Length / 2.0f)); ;
             for (int i = 0; i < hexaMapModel.Length; i++)
             {
@@ -246,6 +255,10 @@ namespace Expanze.Gameplay.Map
             if (content == null)
                 content = new ContentManager(myGame.Services, "Content");
 
+            hud = new Texture2D[HUD_NUMBER];
+            hud[HUD_HAMMERS_PASSIVE] = content.Load<Texture2D>("HUD/hammer");
+            hud[HUD_HAMMERS_ACTIVE] = content.Load<Texture2D>("HUD/hammeractive"); 
+
             hexaModel = new Model[N_MODEL];
             hexaModel[(int)HexaKind.Cornfield] = content.Load<Model>(Settings.mapPaths[(int) HexaKind.Cornfield]);
             hexaModel[(int)HexaKind.Desert] = content.Load<Model>(Settings.mapPaths[(int) HexaKind.Desert]);
@@ -263,7 +276,7 @@ namespace Expanze.Gameplay.Map
 
             sourceBuildingModel = new Model[2];
             sourceBuildingModel[PASTURE_HOUSE] = content.Load<Model>("Models/pastureHouse");
-            sourceBuildingModel[MILL_HOUSE] = content.Load<Model>("Models/mill");
+            sourceBuildingModel[MILL_HOUSE] = content.Load<Model>("Models/millnew");
 
             mountainsCoverModel = new Model[5];
             mountainsCoverModel[0] = content.Load<Model>("Models/cover4");
@@ -330,7 +343,7 @@ namespace Expanze.Gameplay.Map
             GameState.LightDirection = new Vector3(-1.0f, -0.5f, (float) Math.Cos(MathHelper.ToRadians(lightAngle)));
             float tempF = (float) Math.Abs(Math.Cos(MathHelper.ToRadians(lightAngle))) / 4.0f;
             GameState.LightDiffusionColor = new Vector3(1.0f, 1.0f - tempF, 1.0f - tempF);
-            GameState.LightSpecularColor = new Vector3(0.2f, 0.1f, 0.1f);
+            GameState.LightSpecularColor = new Vector3(0.4f, 0.2f, 0.2f);
         }
 
         public override void Update(GameTime gameTime)
