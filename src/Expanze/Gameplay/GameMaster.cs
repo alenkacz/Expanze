@@ -182,7 +182,7 @@ namespace Expanze
         {
             int rate = p.getConversionRate();
 
-            if (!this.isMaterialAvailable(from)) { return; }
+            if (!this.isMaterialAvailable(from,rate)) { return; }
 
             //remove material from player
             SourceAll cost = createSourceAllCost(from, -rate);
@@ -198,27 +198,27 @@ namespace Expanze
         /// Checks whether user has enough resources from the type he wants to change in market
         /// </summary>
         /// <returns></returns>
-        protected bool isMaterialAvailable(HexaKind from)
+        protected bool isMaterialAvailable(HexaKind from, int rate)
         {
             if (from == HexaKind.Cornfield)
             {
-                return (getActivePlayer().getCorn() > 0) ? true : false;
+                return (getActivePlayer().getCorn() >= rate) ? true : false;
             }
             else if ( from == HexaKind.Pasture )
             {
-                return (getActivePlayer().getMeat() > 0) ? true : false;
+                return (getActivePlayer().getMeat() >= rate) ? true : false;
             } 
             else if( from == HexaKind.Mountains ) 
             {
-                return (getActivePlayer().getOre() > 0) ? true : false;
+                return (getActivePlayer().getOre() >= rate) ? true : false;
             }
             else if( from == HexaKind.Stone ) 
             {
-                return (getActivePlayer().getStone() > 0) ? true : false;
+                return (getActivePlayer().getStone() >= rate) ? true : false;
             }
             else if ( from == HexaKind.Forest )
             {
-                return (getActivePlayer().getWood() > 0) ? true : false;
+                return (getActivePlayer().getWood() >= rate) ? true : false;
             }
             else
             {
