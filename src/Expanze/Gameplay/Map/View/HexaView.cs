@@ -91,11 +91,13 @@ namespace Expanze
                 spriteBatch.Begin();
 
                 bool drawNumber = true;
+                Town tempTown = null;
                 foreach (TownView town in townView)
                 {
                     if (town.getIsMarked())
                     {
                         drawNumber = false;
+                        tempTown = town.getTownModel();
                         break;
                     }
                 }
@@ -110,7 +112,12 @@ namespace Expanze
                 if (drawNumber)
                     spriteBatch.DrawString(GameState.hudMaterialsFont, model.getValue() + "", point2D, numberColor);
                 else {
-                    Texture2D text = GameState.map.getHudTexture((pickVars.pickActive) ? Map.HUD_HAMMERS_ACTIVE : Map.HUD_HAMMERS_PASSIVE);
+                    Texture2D text;
+                    if(tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding)
+                        text = GameState.map.getHudTexture((pickVars.pickActive) ? Map.HUD_HAMMERS_ACTIVE : Map.HUD_HAMMERS_PASSIVE);
+                    else
+                        text = GameState.map.getHudTexture((pickVars.pickActive) ? Map.HUD_INFO_ACTIVE : Map.HUD_INFO_PASSIVE);
+
                     spriteBatch.Draw(text, new Vector2(posHammers.X - (text.Width >> 1), posHammers.Y - (text.Height >> 1)), Color.White);
                 }
                 spriteBatch.End();

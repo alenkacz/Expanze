@@ -33,7 +33,9 @@ namespace Expanze.Gameplay.Map
 
         public const int HUD_HAMMERS_PASSIVE = 0;
         public const int HUD_HAMMERS_ACTIVE = 1;
-        public const int HUD_NUMBER = 2;
+        public const int HUD_INFO_PASSIVE = 2;
+        public const int HUD_INFO_ACTIVE = 3;
+        public const int HUD_NUMBER = 4;
         Texture2D[] hud;
 
         private Vector3 eye, target, up;
@@ -257,7 +259,9 @@ namespace Expanze.Gameplay.Map
 
             hud = new Texture2D[HUD_NUMBER];
             hud[HUD_HAMMERS_PASSIVE] = content.Load<Texture2D>("HUD/hammer");
-            hud[HUD_HAMMERS_ACTIVE] = content.Load<Texture2D>("HUD/hammeractive"); 
+            hud[HUD_HAMMERS_ACTIVE] = content.Load<Texture2D>("HUD/hammeractive");
+            hud[HUD_INFO_PASSIVE] = content.Load<Texture2D>("HUD/info");
+            hud[HUD_INFO_ACTIVE] = content.Load<Texture2D>("HUD/infoactive"); 
 
             hexaModel = new Model[N_MODEL];
             hexaModel[(int)HexaKind.Cornfield] = content.Load<Model>(Settings.mapPaths[(int) HexaKind.Cornfield]);
