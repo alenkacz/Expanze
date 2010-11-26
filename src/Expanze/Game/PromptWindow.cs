@@ -84,8 +84,8 @@ namespace Expanze
             textureSource[3] = content.Load<Texture2D>("HUD/swood");
             textureSource[4] = content.Load<Texture2D>("HUD/sore");
 
-            bgPos = new Vector2((Settings.activeResolution.X - background.Width) / 2,
-                                   (Settings.activeResolution.Y - background.Height) / 2);
+            bgPos = new Vector2((Settings.maximumResolution.X - background.Width) / 2,
+                                   (Settings.maximumResolution.Y - background.Height) / 2);
             int border = 50;
             yesPos = new Vector2(bgPos.X + border, bgPos.Y + background.Height - border - yes.Height);
             noPos = new Vector2(bgPos.X - no.Width - border + background.Width, bgPos.Y + background.Height - border - no.Height);
@@ -128,6 +128,7 @@ namespace Expanze
 
         override public void Draw2D()
         {
+            //drawingPickableAreas = true;
             if (active)
             {
                 Color color;
@@ -136,7 +137,8 @@ namespace Expanze
                 else
                     color = Color.White;
 
-                spriteBatch.Begin();
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
+            
                 spriteBatch.Draw(background, bgPos, color);
 
                 if (drawingPickableAreas)
