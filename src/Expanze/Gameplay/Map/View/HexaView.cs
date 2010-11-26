@@ -101,7 +101,8 @@ namespace Expanze
                         break;
                     }
                 }
-                if (drawNumber)
+                if (drawNumber ||
+                    tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.getPlayerOwner() != GameMaster.getInstance().getActivePlayer())
                     spriteBatch.DrawString(GameState.hudMaterialsFont, model.getValue() + "", new Vector2(point2D.X + 1, point2D.Y + 1), Color.Black);
                 
                 if (pickVars.pickActive)
@@ -109,11 +110,12 @@ namespace Expanze
                 else
                     numberColor = Color.DarkRed;
 
-                if (drawNumber)
+                if (drawNumber ||
+                    tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.getPlayerOwner() != GameMaster.getInstance().getActivePlayer())
                     spriteBatch.DrawString(GameState.hudMaterialsFont, model.getValue() + "", point2D, numberColor);
                 else {
                     Texture2D text;
-                    if(tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding)
+                    if(tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.getPlayerOwner() == GameMaster.getInstance().getActivePlayer())
                         text = GameState.map.getHudTexture((pickVars.pickActive) ? Map.HUD_HAMMERS_ACTIVE : Map.HUD_HAMMERS_PASSIVE);
                     else
                         text = GameState.map.getHudTexture((pickVars.pickActive) ? Map.HUD_INFO_ACTIVE : Map.HUD_INFO_PASSIVE);
@@ -299,23 +301,27 @@ namespace Expanze
                         kind != HexaKind.Desert &&
                         kind != HexaKind.Nothing &&
                         kind != HexaKind.Water &&
-                        kind != HexaKind.Null)
+                        kind != HexaKind.Null && 
+                        townView[loop1].getTownModel().getPlayerOwner() == GameMaster.getInstance().getActivePlayer())
                     {
                         WindowPromt wP = GameState.windowPromt;
 
-                        String title = "";
-                        switch (kind)
+                        if (townView[loop1].getTownModel().getBuildingKind(hexaID) == BuildingKind.NoBuilding)
                         {
-                            case HexaKind.Mountains: title = Strings.PROMT_TITLE_WANT_TO_BUILD_MINE; break;
-                            case HexaKind.Forest: title = Strings.PROMT_TITLE_WANT_TO_BUILD_SAW; break;
-                            case HexaKind.Cornfield: title = Strings.PROMT_TITLE_WANT_TO_BUILD_MILL; break;
-                            case HexaKind.Pasture: title = Strings.PROMT_TITLE_WANT_TO_BUILD_STEPHERD; break;
-                            case HexaKind.Stone: title = Strings.PROMT_TITLE_WANT_TO_BUILD_QUARRY; break;
-                        }
+                            String title = "";
+                            switch (kind)
+                            {
+                                case HexaKind.Mountains: title = Strings.PROMT_TITLE_WANT_TO_BUILD_MINE; break;
+                                case HexaKind.Forest: title = Strings.PROMT_TITLE_WANT_TO_BUILD_SAW; break;
+                                case HexaKind.Cornfield: title = Strings.PROMT_TITLE_WANT_TO_BUILD_MILL; break;
+                                case HexaKind.Pasture: title = Strings.PROMT_TITLE_WANT_TO_BUILD_STEPHERD; break;
+                                case HexaKind.Stone: title = Strings.PROMT_TITLE_WANT_TO_BUILD_QUARRY; break;
+                            }
 
-                        wP.showPromt(title, wP.BuildBuildingInTown, model.getSourceBuildingCost());
-                        wP.setArgInt1(townView[loop1].getTownModel().getTownID());
-                        wP.setArgInt2(hexaID);
+                            wP.showPromt(title, wP.BuildBuildingInTown, model.getSourceBuildingCost());
+                            wP.setArgInt1(townView[loop1].getTownModel().getTownID());
+                            wP.setArgInt2(hexaID);
+                        }
                     }
                 }
             }
