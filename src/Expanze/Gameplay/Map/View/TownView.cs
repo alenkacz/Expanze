@@ -8,6 +8,21 @@ using CorePlugin;
 
 namespace Expanze.Gameplay.Map
 {
+    class TownPromptItem : PromptItem
+    {
+        int townID;
+
+        public TownPromptItem(int townID, String title, String description, SourceAll cost, Texture2D icon) : base(title, description, cost, icon)
+        {
+            this.townID = townID;
+        }
+
+        public override void Execute()
+        {
+            GameState.map.BuildTown(townID);
+        }
+    }
+
     class TownView
     {
         private static int pickTownID = -1;
@@ -184,8 +199,12 @@ namespace Expanze.Gameplay.Map
                         case TownBuildError.OK :
                             if (GameMaster.getInstance().getState() == EGameState.StateGame)
                             {
-                                wP.showPromt(Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN, wP.BuildTown, Settings.costTown);
-                                wP.setArgInt1(townID);
+                                PromptWindow.Inst().showPrompt(Strings.PROMPT_TITLE_BUILDING,
+                                    new TownPromptItem(townID,
+                                                       Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN,
+                                                       "",
+                                                       Settings.costTown,
+                                                       null));
                             }
                             else
                             {

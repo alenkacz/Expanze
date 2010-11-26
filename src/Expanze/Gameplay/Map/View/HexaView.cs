@@ -10,6 +10,25 @@ using Expanze.Gameplay.Map;
 
 namespace Expanze
 {
+
+    class BuildingPromptItem : PromptItem
+    {
+        int townID;
+        int hexaID;
+
+        public BuildingPromptItem(int townID, int hexaID, String title, String description, SourceAll cost, Texture2D icon)
+            : base(title, description, cost, icon)
+        {
+            this.townID = townID;
+            this.hexaID = hexaID;
+        }
+
+        public override void Execute()
+        {
+            GameState.map.buildBuildingInTown(townID, hexaID);
+        }
+    }
+
     class HexaView
     {
         protected int                           hexaID;           // from counter, useable for picking
@@ -318,9 +337,13 @@ namespace Expanze
                                 case HexaKind.Stone: title = Strings.PROMT_TITLE_WANT_TO_BUILD_QUARRY; break;
                             }
 
-                            wP.showPromt(title, wP.BuildBuildingInTown, model.getSourceBuildingCost());
-                            wP.setArgInt1(townView[loop1].getTownModel().getTownID());
-                            wP.setArgInt2(hexaID);
+                            PromptWindow.Inst().showPrompt(Strings.PROMPT_TITLE_BUILDING,
+                                    new BuildingPromptItem(townView[loop1].getTownModel().getTownID(),
+                                                       hexaID,
+                                                       title,
+                                                       "",
+                                                       model.getSourceBuildingCost(),
+                                                       null));
                         }
                     }
                 }

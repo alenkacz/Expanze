@@ -98,6 +98,7 @@ namespace Expanze
             gameComponents.Add(mapComp);
             GameState.windowPromt = new WindowPromt();
             gameComponents.Add(GameState.windowPromt);
+            gameComponents.Add(PromptWindow.Inst());
             //gamelogic
             gMaster.startGame(isAI, mapComp);
 

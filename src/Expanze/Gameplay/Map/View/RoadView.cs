@@ -9,6 +9,22 @@ using CorePlugin;
 
 namespace Expanze.Gameplay.Map.View
 {
+    class RoadPromptItem : PromptItem
+    {
+        int roadID;
+
+        public RoadPromptItem(int roadID, String title, String description, SourceAll cost, Texture2D icon)
+            : base(title, description, cost, icon)
+        {
+            this.roadID = roadID;
+        }
+
+        public override void Execute()
+        {
+            GameState.map.BuildRoad(roadID);
+        }
+    }
+
     class RoadView
     {
         private bool isBuildView;
@@ -147,8 +163,12 @@ namespace Expanze.Gameplay.Map.View
                             wP.showAlert(Strings.ALERT_TITLE_NO_ROAD_OR_TOWN_IS_CLOSE);
                             break;
                         case RoadBuildError.OK :
-                            wP.showPromt(Strings.PROMT_TITLE_WANT_TO_BUILD_ROAD, wP.BuildRoad, Settings.costRoad);
-                            wP.setArgInt1(roadID);
+                            PromptWindow.Inst().showPrompt(Strings.PROMPT_TITLE_BUILDING,
+                                    new RoadPromptItem(roadID,
+                                                       Strings.PROMT_TITLE_WANT_TO_BUILD_ROAD,
+                                                       "",
+                                                       Settings.costRoad,
+                                                       null));
                             break;
                     }
                 }
