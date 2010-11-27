@@ -206,7 +206,7 @@ namespace Expanze
                 Model m;
                 Matrix rotation;
 
-                rotation = (loop1 == 2) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * -(loop1 - 2));
+                rotation = (loop1 == 4) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * -(loop1 - 4));
                 //rotation = Matrix.Identity;
                 Matrix tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
 
