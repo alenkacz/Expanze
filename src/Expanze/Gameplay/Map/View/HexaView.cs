@@ -7,6 +7,7 @@ using Expanze.Gameplay.Map.View;
 using CorePlugin;
 using Microsoft.Xna.Framework.Graphics;
 using Expanze.Gameplay.Map;
+using Expanze.Gameplay;
 
 namespace Expanze
 {
@@ -328,22 +329,35 @@ namespace Expanze
                         if (townView[loop1].getTownModel().getBuildingKind(hexaID) == BuildingKind.NoBuilding)
                         {
                             String title = "";
+                            Texture2D icon = null;
                             switch (kind)
                             {
-                                case HexaKind.Mountains: title = Strings.PROMT_TITLE_WANT_TO_BUILD_MINE; break;
-                                case HexaKind.Forest: title = Strings.PROMT_TITLE_WANT_TO_BUILD_SAW; break;
-                                case HexaKind.Cornfield: title = Strings.PROMT_TITLE_WANT_TO_BUILD_MILL; break;
-                                case HexaKind.Pasture: title = Strings.PROMT_TITLE_WANT_TO_BUILD_STEPHERD; break;
-                                case HexaKind.Stone: title = Strings.PROMT_TITLE_WANT_TO_BUILD_QUARRY; break;
+                                case HexaKind.Mountains: title = Strings.PROMT_TITLE_WANT_TO_BUILD_MINE; 
+                                                         icon = GameResources.Inst().getHudTexture(GameResources.HUD_ICON_MINE); break;
+                                case HexaKind.Forest: title = Strings.PROMT_TITLE_WANT_TO_BUILD_SAW; 
+                                                      icon = GameResources.Inst().getHudTexture(GameResources.HUD_ICON_SAW); break;
+                                case HexaKind.Cornfield: title = Strings.PROMT_TITLE_WANT_TO_BUILD_MILL;
+                                                         icon = GameResources.Inst().getHudTexture(GameResources.HUD_ICON_MILL); break;
+                                case HexaKind.Pasture: title = Strings.PROMT_TITLE_WANT_TO_BUILD_STEPHERD;
+                                                       icon = GameResources.Inst().getHudTexture(GameResources.HUD_ICON_STEPHERD); break;
+                                case HexaKind.Stone: title = Strings.PROMT_TITLE_WANT_TO_BUILD_QUARRY;
+                                                     icon = GameResources.Inst().getHudTexture(GameResources.HUD_ICON_QUARRY); break;
                             }
 
-                            PromptWindow.Inst().showPrompt(Strings.PROMPT_TITLE_BUILDING,
-                                    new BuildingPromptItem(townView[loop1].getTownModel().getTownID(),
+                            int townID = townView[loop1].getTownModel().getTownID();
+                            PromptWindow.Inst().showPrompt(Strings.PROMPT_TITLE_BUILDING, true);
+                            PromptWindow.Inst().addPromptItem(
+                                    new BuildingPromptItem(townID,
                                                        hexaID,
                                                        title,
                                                        "",
                                                        model.getSourceBuildingCost(),
-                                                       null));
+                                                       icon));
+
+                            if (kind != HexaKind.Mountains)
+                            {
+                                PromptWindow.Inst().addPromptItem(FortModel.getPromptItem(townID, hexaID));
+                            }
                         }
                     }
                 }

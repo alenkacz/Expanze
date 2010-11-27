@@ -25,6 +25,7 @@ namespace Expanze
         public static SourceAll costMill = new SourceAll(50, 50, 0, 0, 0);
         public static SourceAll costStephard = new SourceAll(0, 0, 50, 0, 50);
         public static SourceAll costQuarry = new SourceAll(50, 0, 50, 0, 0);
+        public static SourceAll costFort = new SourceAll(50, 30, 0, 0, 0);
 
         // goals
         public const int pointsWin = 40; /// how much points have to have player to win

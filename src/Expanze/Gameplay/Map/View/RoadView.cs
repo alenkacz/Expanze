@@ -163,7 +163,8 @@ namespace Expanze.Gameplay.Map.View
                             wP.showAlert(Strings.ALERT_TITLE_NO_ROAD_OR_TOWN_IS_CLOSE);
                             break;
                         case RoadBuildError.OK :
-                            PromptWindow.Inst().showPrompt(Strings.PROMPT_TITLE_BUILDING,
+                            PromptWindow.Inst().showPrompt(Strings.PROMPT_TITLE_BUILDING, false);
+                            PromptWindow.Inst().addPromptItem(
                                     new RoadPromptItem(roadID,
                                                        Strings.PROMT_TITLE_WANT_TO_BUILD_ROAD,
                                                        "",

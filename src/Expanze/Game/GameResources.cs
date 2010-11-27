@@ -33,7 +33,15 @@ namespace Expanze
         public const int HUD_HAMMERS_ACTIVE = 1;
         public const int HUD_INFO_PASSIVE = 2;
         public const int HUD_INFO_ACTIVE = 3;
-        public const int HUD_NUMBER = 4;
+        public const int HUD_ICON_FORT = 4;
+        public const int HUD_ICON_MARKET = 5;
+        public const int HUD_ICON_MILL = 6;
+        public const int HUD_ICON_MINE = 7;
+        public const int HUD_ICON_MONASTERY = 8;
+        public const int HUD_ICON_QUARRY = 9;
+        public const int HUD_ICON_SAW = 10;
+        public const int HUD_ICON_STEPHERD = 11;
+        public const int HUD_NUMBER = 12;
         Texture2D[] hud;
 
 
@@ -79,6 +87,14 @@ namespace Expanze
             hud[HUD_HAMMERS_ACTIVE] = content.Load<Texture2D>("HUD/hammeractive");
             hud[HUD_INFO_PASSIVE] = content.Load<Texture2D>("HUD/info");
             hud[HUD_INFO_ACTIVE] = content.Load<Texture2D>("HUD/infoactive");
+            hud[HUD_ICON_FORT] = content.Load<Texture2D>("HUD/ic_fort");
+            hud[HUD_ICON_MARKET] = content.Load<Texture2D>("HUD/ic_market");
+            hud[HUD_ICON_MILL] = content.Load<Texture2D>("HUD/ic_mill");
+            hud[HUD_ICON_MINE] = content.Load<Texture2D>("HUD/ic_mine");
+            hud[HUD_ICON_MONASTERY] = content.Load<Texture2D>("HUD/ic_monastery");
+            hud[HUD_ICON_QUARRY] = content.Load<Texture2D>("HUD/ic_quarry");
+            hud[HUD_ICON_SAW] = content.Load<Texture2D>("HUD/ic_saw");
+            hud[HUD_ICON_STEPHERD] = content.Load<Texture2D>("HUD/ic_stepherd");
 
             hexaModel = new Model[N_MODEL];
             hexaModel[(int)HexaKind.Cornfield] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Cornfield]);

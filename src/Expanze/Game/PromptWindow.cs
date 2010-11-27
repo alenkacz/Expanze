@@ -18,7 +18,8 @@ namespace Expanze
         private Texture2D background;
         private Texture2D no;
         private Texture2D yes;
-        private Texture2D pickTexture;
+        private Texture2D pickTextOK;
+        private Texture2D pickTextIcon;
 
         private Texture2D[] textureSource;
 
@@ -29,9 +30,11 @@ namespace Expanze
         private PickVariables yesPick;
         private ContentManager content;
 
+        bool showIcons;
         int activeItem;
         String title;
         List<PromptItem> itemList;
+        List<PickVariables> itemPick;
 
         private static PromptWindow instance = null;
 
@@ -55,13 +58,22 @@ namespace Expanze
             yesPick = new PickVariables(Color.Aquamarine);
 
             itemList = new List<PromptItem>();
+            itemPick = new List<PickVariables>();
         }
 
-        public void showPrompt(String title, PromptItem item)
+        public void addPromptItem(PromptItem item)
+        {
+            itemList.Add(item);
+            int size = itemList.Count;
+            itemPick.Add(new PickVariables(new Color(size / 256.0f, size / 256.0f, 0.0f)));
+        }
+        public void showPrompt(String title, bool showIcons)
         {
             this.title = title;
+            this.showIcons = showIcons;
             itemList.Clear();
-            itemList.Add(item);
+            itemPick.Clear();
+
             active = true;
             activeItem = 0;
         }
@@ -76,7 +88,8 @@ namespace Expanze
             background = content.Load<Texture2D>("HUD/WindowPromt");
             no = content.Load<Texture2D>("HUD/NOPromt");
             yes = content.Load<Texture2D>("HUD/OKPromt");
-            pickTexture = content.Load<Texture2D>("HUD/PickPromt");
+            pickTextOK = content.Load<Texture2D>("HUD/PickPromt");
+            pickTextIcon = content.Load<Texture2D>("HUD/PickIcon");
             textureSource = new Texture2D[5];
             textureSource[0] = content.Load<Texture2D>("HUD/scorn");
             textureSource[1] = content.Load<Texture2D>("HUD/smeat");
@@ -103,6 +116,15 @@ namespace Expanze
             {
                 Map.SetPickVariables(c == noPick.pickColor, noPick);
                 Map.SetPickVariables(c == yesPick.pickColor, yesPick);
+
+                for (int loop1 = 0; loop1 < itemPick.Count; loop1++)
+                {
+                    Map.SetPickVariables(c == itemPick[loop1].pickColor, itemPick[loop1]);
+                    if (itemPick[loop1].pickNewPress)
+                    {
+                        activeItem = loop1;
+                    }
+                }
 
                 if (yesPick.pickNewPress)
                 {
@@ -142,23 +164,50 @@ namespace Expanze
                 spriteBatch.Draw(background, bgPos, color);
 
                 if (drawingPickableAreas)
-                    spriteBatch.Draw(pickTexture, yesPos, yesPick.pickColor);
+                    spriteBatch.Draw(pickTextOK, yesPos, yesPick.pickColor);
                 else
                     spriteBatch.Draw(yes, yesPos, Color.White);
 
                 if (drawingPickableAreas)
-                    spriteBatch.Draw(pickTexture, noPos, noPick.pickColor);
+                    spriteBatch.Draw(pickTextOK, noPos, noPick.pickColor);
                 else
                     spriteBatch.Draw(no, noPos, Color.White);
 
                 float titleWidth = GameState.materialsNewFont.MeasureString(title).X;
-                spriteBatch.DrawString(GameState.materialsNewFont, title, new Vector2(bgPos.X + (background.Width - titleWidth) / 2, bgPos.Y + 30), Color.LightBlue);
+                spriteBatch.DrawString(GameState.materialsNewFont, title, new Vector2(bgPos.X + (background.Width - titleWidth) / 2, bgPos.Y + 20), Color.LightBlue);
 
-                spriteBatch.DrawString(GameState.materialsNewFont, itemList[activeItem].getTitle(), new Vector2(bgPos.X + 20, bgPos.Y + 100), Color.LightBlue);
+                if(showIcons)
+                    DrawIcons();
 
-                DrawSources();
+                spriteBatch.DrawString(GameState.materialsNewFont, itemList[activeItem].getTitle(), new Vector2(bgPos.X + 20, bgPos.Y + 120), Color.LightBlue);
+
+                if (!drawingPickableAreas)
+                    DrawSources();
 
                 spriteBatch.End();
+            }
+        }
+
+        void DrawIcons()
+        {
+            if (itemList[0].getIcon() == null)
+                return;
+
+            float border = 26.0f;
+            float iconsWidth = -border;
+            for (int loop1 = 0; loop1 < itemList.Count; loop1++)
+            {
+                iconsWidth += itemList[loop1].getIcon().Width + border;
+            }
+            Vector2 iconPosition = new Vector2(bgPos.X + ((background.Width - iconsWidth) / 2), bgPos.Y + 60.0f);
+
+            for (int loop1 = 0; loop1 < itemList.Count; loop1++)
+            {
+                if(drawingPickableAreas)
+                    spriteBatch.Draw(pickTextIcon, iconPosition, itemPick[loop1].pickColor);
+                else
+                    spriteBatch.Draw(itemList[loop1].getIcon(), iconPosition, Color.White);
+                iconPosition += new Vector2(itemList[loop1].getIcon().Width + 10.0f, 0.0f);
             }
         }
 

@@ -199,7 +199,8 @@ namespace Expanze.Gameplay.Map
                         case TownBuildError.OK :
                             if (GameMaster.getInstance().getState() == EGameState.StateGame)
                             {
-                                PromptWindow.Inst().showPrompt(Strings.PROMPT_TITLE_BUILDING,
+                                PromptWindow.Inst().showPrompt(Strings.PROMPT_TITLE_BUILDING, false);
+                                PromptWindow.Inst().addPromptItem(
                                     new TownPromptItem(townID,
                                                        Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN,
                                                        "",
