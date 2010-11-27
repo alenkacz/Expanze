@@ -84,7 +84,7 @@ namespace Expanze
         public override void UnloadContent()
         {
             base.UnloadContent();
-            content.Dispose();
+            //content.Dispose();
         }
 
         public override void HandlePickableAreas(Color c)
