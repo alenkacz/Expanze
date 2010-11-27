@@ -26,6 +26,14 @@ namespace Expanze
         public static SourceAll costStephard = new SourceAll(0, 0, 50, 0, 50);
         public static SourceAll costQuarry = new SourceAll(50, 0, 50, 0, 0);
         public static SourceAll costFort = new SourceAll(50, 30, 0, 0, 0);
+        public static SourceAll costMarket = new SourceAll(0, 0, 20, 100, 0);
+        public static SourceAll costMonastery = new SourceAll(0, 40, 80, 0, 0);
+        // costs of actions
+        public static SourceAll costFortParade = new SourceAll(50, 50, 50, 50, 50);
+        public static SourceAll costFortHexa = new SourceAll(0, 0, 80, 50, 80);
+        public static SourceAll costFortSources = new SourceAll(0, 50, 0, 50, 80);
+        public static SourceAll costFortCapture = new SourceAll(50, 50, 0, 50, 100);
+
 
         // goals
         public const int pointsWin = 40; /// how much points have to have player to win

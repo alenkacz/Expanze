@@ -9,9 +9,20 @@ namespace Expanze.Gameplay
 
     class FortModel
     {
-        public static BuildingPromptItem getPromptItem(int townID, int hexaID)
+        public static void setPromptWindowToFort()
         {
-            return new BuildingPromptItem(townID, hexaID, BuildingKind.FortBuilding, "Pevnost", "Pevnost", Settings.costFort, GameResources.Inst().getHudTexture(GameResources.HUD_ICON_FORT));
+            PromptWindow win = PromptWindow.Inst();
+            GameResources res = GameResources.Inst();
+            win.showPrompt("Pevnost", true);
+            win.addPromptItem(new PromptItem("Obsaď pole", "Popis", Settings.costFortCapture, res.getHudTexture(HUDTexture.IconFortCapture)));
+            win.addPromptItem(new PromptItem("Ponič pole", "Popis", Settings.costFortHexa, res.getHudTexture(HUDTexture.IconFortHexa)));
+            win.addPromptItem(new PromptItem("Znič suroviny", "Popis", Settings.costFortSources, res.getHudTexture(HUDTexture.IconFortSources)));
+            win.addPromptItem(new PromptItem("Armádní přehlídka", "Popis", Settings.costFortParade, res.getHudTexture(HUDTexture.IconFortParade)));
+        }
+
+        public static BuildingPromptItem getPromptItemBuildFort(int townID, int hexaID)
+        {
+            return new BuildingPromptItem(townID, hexaID, BuildingKind.FortBuilding, "Pevnost", "Pevnost", Settings.costFort, GameResources.Inst().getHudTexture(HUDTexture.IconFort));
         }
     }
 }

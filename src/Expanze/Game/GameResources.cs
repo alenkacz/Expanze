@@ -9,6 +9,22 @@ using Microsoft.Xna.Framework;
 
 namespace Expanze
 {
+    public enum HUDTexture
+    {
+        HammersPassive, HammersActive, InfoPassive, InfoActive, IconActive,
+        IconFort, IconMarket, IconMill, IconMine, IconMonastery, IconQuarry, IconSaw, IconStepherd,
+        IconCorn1, IconCorn2, IconMeat1, IconMeat2, IconStone1, IconStone2, IconWood1, IconWood2,
+        IconOre1, IconOre2, 
+        IconFortParade, IconFortCapture, IconFortSources, IconFortHexa,
+        HUDCount
+    }
+
+    public enum BuildingModel
+    {
+        PastureHouse, Mill, Fort, Market, Monastery, 
+        CountModel
+    }
+
     class GameResources
     {
         private static GameResources instance = null;
@@ -23,26 +39,9 @@ namespace Expanze
         public const int N_SHAPE_MODEL = 3;
         Model[] shapeModel;
         Model townModel, roadModel;
-        public const int PASTURE_HOUSE = 0;
-        public const int MILL_HOUSE = 1;
-        public const int FORT = 2;
         Model[] buildingModel;
         Model[] mountainsCoverModel;
         Model[] mountainsMineModel;
-
-        public const int HUD_HAMMERS_PASSIVE = 0;
-        public const int HUD_HAMMERS_ACTIVE = 1;
-        public const int HUD_INFO_PASSIVE = 2;
-        public const int HUD_INFO_ACTIVE = 3;
-        public const int HUD_ICON_FORT = 4;
-        public const int HUD_ICON_MARKET = 5;
-        public const int HUD_ICON_MILL = 6;
-        public const int HUD_ICON_MINE = 7;
-        public const int HUD_ICON_MONASTERY = 8;
-        public const int HUD_ICON_QUARRY = 9;
-        public const int HUD_ICON_SAW = 10;
-        public const int HUD_ICON_STEPHERD = 11;
-        public const int HUD_NUMBER = 12;
         Texture2D[] hud;
 
 
@@ -66,10 +65,10 @@ namespace Expanze
             return hexaModel[(int)type];
         }
 
-        public Texture2D getHudTexture(int id) { return hud[id]; }
+        public Texture2D getHudTexture(HUDTexture id) { return hud[(int) id]; }
         public Model getMountainsCover(int i) { return mountainsCoverModel[i]; }
         public Model getMountainsSourceBuildingModel(int i) { return mountainsMineModel[i]; }
-        public Model getBuildingModel(int i) { return buildingModel[i]; }
+        public Model getBuildingModel(BuildingModel id) { return buildingModel[(int) id]; }
         public Model getTownModel() { return townModel; }
         public Model getRoadModel() { return roadModel; }
 
@@ -83,19 +82,34 @@ namespace Expanze
             if (content == null)
                 content = new ContentManager(game.Services, "Content");
 
-            hud = new Texture2D[HUD_NUMBER];
-            hud[HUD_HAMMERS_PASSIVE] = content.Load<Texture2D>("HUD/hammer");
-            hud[HUD_HAMMERS_ACTIVE] = content.Load<Texture2D>("HUD/hammeractive");
-            hud[HUD_INFO_PASSIVE] = content.Load<Texture2D>("HUD/info");
-            hud[HUD_INFO_ACTIVE] = content.Load<Texture2D>("HUD/infoactive");
-            hud[HUD_ICON_FORT] = content.Load<Texture2D>("HUD/ic_fort");
-            hud[HUD_ICON_MARKET] = content.Load<Texture2D>("HUD/ic_market");
-            hud[HUD_ICON_MILL] = content.Load<Texture2D>("HUD/ic_mill");
-            hud[HUD_ICON_MINE] = content.Load<Texture2D>("HUD/ic_mine");
-            hud[HUD_ICON_MONASTERY] = content.Load<Texture2D>("HUD/ic_monastery");
-            hud[HUD_ICON_QUARRY] = content.Load<Texture2D>("HUD/ic_quarry");
-            hud[HUD_ICON_SAW] = content.Load<Texture2D>("HUD/ic_saw");
-            hud[HUD_ICON_STEPHERD] = content.Load<Texture2D>("HUD/ic_stepherd");
+            hud = new Texture2D[(int) HUDTexture.HUDCount];
+            hud[(int)HUDTexture.IconActive] = content.Load<Texture2D>("HUD/ic_active");
+            hud[(int)HUDTexture.HammersPassive] = content.Load<Texture2D>("HUD/hammer");
+            hud[(int)HUDTexture.HammersActive] = content.Load<Texture2D>("HUD/hammeractive");
+            hud[(int)HUDTexture.InfoPassive] = content.Load<Texture2D>("HUD/info");
+            hud[(int)HUDTexture.InfoActive] = content.Load<Texture2D>("HUD/infoactive");
+            hud[(int)HUDTexture.IconFort] = content.Load<Texture2D>("HUD/ic_fort");
+            hud[(int)HUDTexture.IconMarket] = content.Load<Texture2D>("HUD/ic_market");
+            hud[(int)HUDTexture.IconMill] = content.Load<Texture2D>("HUD/ic_mill");
+            hud[(int)HUDTexture.IconMine] = content.Load<Texture2D>("HUD/ic_mine");
+            hud[(int)HUDTexture.IconMonastery] = content.Load<Texture2D>("HUD/ic_monastery");
+            hud[(int)HUDTexture.IconQuarry] = content.Load<Texture2D>("HUD/ic_quarry");
+            hud[(int)HUDTexture.IconSaw] = content.Load<Texture2D>("HUD/ic_saw");
+            hud[(int)HUDTexture.IconStepherd] = content.Load<Texture2D>("HUD/ic_stepherd");
+            hud[(int)HUDTexture.IconCorn1] = content.Load<Texture2D>("HUD/ic_corn1");
+            hud[(int)HUDTexture.IconMeat1] = content.Load<Texture2D>("HUD/ic_meat1");
+            hud[(int)HUDTexture.IconStone1] = content.Load<Texture2D>("HUD/ic_stone1");
+            hud[(int)HUDTexture.IconWood1] = content.Load<Texture2D>("HUD/ic_wood1");
+            hud[(int)HUDTexture.IconOre1] = content.Load<Texture2D>("HUD/ic_ore1");
+            hud[(int)HUDTexture.IconCorn2] = content.Load<Texture2D>("HUD/ic_corn2");
+            hud[(int)HUDTexture.IconMeat2] = content.Load<Texture2D>("HUD/ic_meat2");
+            hud[(int)HUDTexture.IconStone2] = content.Load<Texture2D>("HUD/ic_stone2");
+            hud[(int)HUDTexture.IconWood2] = content.Load<Texture2D>("HUD/ic_wood2");
+            hud[(int)HUDTexture.IconOre2] = content.Load<Texture2D>("HUD/ic_ore2");
+            hud[(int)HUDTexture.IconFortCapture] = content.Load<Texture2D>("HUD/ic_fort_capture");
+            hud[(int)HUDTexture.IconFortHexa] = content.Load<Texture2D>("HUD/ic_fort_hexa");
+            hud[(int)HUDTexture.IconFortParade] = content.Load<Texture2D>("HUD/ic_fort_parade");
+            hud[(int)HUDTexture.IconFortSources] = content.Load<Texture2D>("HUD/ic_fort_sources");
 
             hexaModel = new Model[N_MODEL];
             hexaModel[(int)HexaKind.Cornfield] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Cornfield]);
@@ -112,10 +126,12 @@ namespace Expanze
             shapeModel[SHAPE_CIRCLE] = content.Load<Model>("Shapes/circle");
             shapeModel[SHAPE_SPHERE] = content.Load<Model>("Shapes/sphere");
 
-            buildingModel = new Model[3];
-            buildingModel[PASTURE_HOUSE] = content.Load<Model>("Models/pastureHouse");
-            buildingModel[MILL_HOUSE] = content.Load<Model>("Models/millnew");
-            buildingModel[FORT] = content.Load<Model>("Models/fort");
+            buildingModel = new Model[(int) BuildingModel.CountModel];
+            buildingModel[(int) BuildingModel.PastureHouse] = content.Load<Model>("Models/pastureHouse");
+            buildingModel[(int) BuildingModel.Mill] = content.Load<Model>("Models/millnew");
+            buildingModel[(int) BuildingModel.Fort] = content.Load<Model>("Models/fort");
+            buildingModel[(int) BuildingModel.Market] = content.Load<Model>("Models/market");
+            buildingModel[(int) BuildingModel.Monastery] = content.Load<Model>("Models/monastery");
 
             mountainsCoverModel = new Model[5];
             mountainsCoverModel[0] = content.Load<Model>("Models/cover4");

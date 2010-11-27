@@ -138,9 +138,9 @@ namespace Expanze
                 else {
                     Texture2D text;
                     if(tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.getPlayerOwner() == GameMaster.getInstance().getActivePlayer())
-                        text = GameResources.Inst().getHudTexture((pickVars.pickActive) ? GameResources.HUD_HAMMERS_ACTIVE : GameResources.HUD_HAMMERS_PASSIVE);
+                        text = GameResources.Inst().getHudTexture((pickVars.pickActive) ? HUDTexture.HammersActive : HUDTexture.HammersPassive);
                     else
-                        text = GameResources.Inst().getHudTexture((pickVars.pickActive) ? GameResources.HUD_INFO_ACTIVE : GameResources.HUD_INFO_PASSIVE);
+                        text = GameResources.Inst().getHudTexture((pickVars.pickActive) ? HUDTexture.InfoActive : HUDTexture.InfoPassive);
 
                     spriteBatch.Draw(text, new Vector2(posHammers.X - (text.Width >> 1), posHammers.Y - (text.Height >> 1)), Color.White);
                 }
@@ -220,18 +220,23 @@ namespace Expanze
                         switch (kind)
                         {
                             case HexaKind.Cornfield :
-                                m = GameResources.Inst().getBuildingModel(GameResources.MILL_HOUSE);
+                                m = GameResources.Inst().getBuildingModel(BuildingModel.Mill);
                                 break;
                             default :
-                                m = GameResources.Inst().getBuildingModel(GameResources.PASTURE_HOUSE);
+                                m = GameResources.Inst().getBuildingModel(BuildingModel.PastureHouse);
                                 //roofID = 0;
                                 break;
                         }
                         break;
                     case BuildingKind.FortBuilding :
-                        m = GameResources.Inst().getBuildingModel(GameResources.FORT);
+                        m = GameResources.Inst().getBuildingModel(BuildingModel.Fort);
                         break;
-
+                    case BuildingKind.MarketBuilding:
+                        m = GameResources.Inst().getBuildingModel(BuildingModel.Market);
+                        break;
+                    case BuildingKind.MonasteryBuilding:
+                        m = GameResources.Inst().getBuildingModel(BuildingModel.Monastery);
+                        break;
                     default :
                         m = null;
                         break;
@@ -332,39 +337,48 @@ namespace Expanze
                     {
                         WindowPromt wP = GameState.windowPromt;
 
-                        if (townView[loop1].getTownModel().getBuildingKind(hexaID) == BuildingKind.NoBuilding)
+                        switch(townView[loop1].getTownModel().getBuildingKind(hexaID))
                         {
-                            String title = "";
-                            Texture2D icon = null;
-                            switch (kind)
-                            {
-                                case HexaKind.Mountains: title = Strings.PROMT_TITLE_WANT_TO_BUILD_MINE; 
-                                                         icon = GameResources.Inst().getHudTexture(GameResources.HUD_ICON_MINE); break;
-                                case HexaKind.Forest: title = Strings.PROMT_TITLE_WANT_TO_BUILD_SAW; 
-                                                      icon = GameResources.Inst().getHudTexture(GameResources.HUD_ICON_SAW); break;
-                                case HexaKind.Cornfield: title = Strings.PROMT_TITLE_WANT_TO_BUILD_MILL;
-                                                         icon = GameResources.Inst().getHudTexture(GameResources.HUD_ICON_MILL); break;
-                                case HexaKind.Pasture: title = Strings.PROMT_TITLE_WANT_TO_BUILD_STEPHERD;
-                                                       icon = GameResources.Inst().getHudTexture(GameResources.HUD_ICON_STEPHERD); break;
-                                case HexaKind.Stone: title = Strings.PROMT_TITLE_WANT_TO_BUILD_QUARRY;
-                                                     icon = GameResources.Inst().getHudTexture(GameResources.HUD_ICON_QUARRY); break;
-                            }
+                            case BuildingKind.NoBuilding :
+                                String title = "";
+                                Texture2D icon = null;
+                                switch (kind)
+                                {
+                                    case HexaKind.Mountains: title = Strings.PROMT_TITLE_WANT_TO_BUILD_MINE;
+                                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconMine); break;
+                                    case HexaKind.Forest: title = Strings.PROMT_TITLE_WANT_TO_BUILD_SAW;
+                                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconSaw); break;
+                                    case HexaKind.Cornfield: title = Strings.PROMT_TITLE_WANT_TO_BUILD_MILL;
+                                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconMill); break;
+                                    case HexaKind.Pasture: title = Strings.PROMT_TITLE_WANT_TO_BUILD_STEPHERD;
+                                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconStepherd); break;
+                                    case HexaKind.Stone: title = Strings.PROMT_TITLE_WANT_TO_BUILD_QUARRY;
+                                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconQuarry); break;
+                                }
 
-                            int townID = townView[loop1].getTownModel().getTownID();
-                            PromptWindow.Inst().showPrompt(Strings.PROMPT_TITLE_BUILDING, true);
-                            PromptWindow.Inst().addPromptItem(
-                                    new BuildingPromptItem(townID,
-                                                       hexaID,
-                                                       BuildingKind.SourceBuilding,
-                                                       title,
-                                                       "",
-                                                       model.getSourceBuildingCost(),
-                                                       icon));
+                                int townID = townView[loop1].getTownModel().getTownID();
+                                PromptWindow.Inst().showPrompt(Strings.PROMPT_TITLE_BUILDING, true);
+                                PromptWindow.Inst().addPromptItem(
+                                        new BuildingPromptItem(townID,
+                                                           hexaID,
+                                                           BuildingKind.SourceBuilding,
+                                                           title,
+                                                           "",
+                                                           model.getSourceBuildingCost(),
+                                                           icon));
 
-                            if (kind != HexaKind.Mountains)
-                            {
-                                PromptWindow.Inst().addPromptItem(FortModel.getPromptItem(townID, hexaID));
-                            }
+                                if (kind != HexaKind.Mountains)
+                                {
+                                    PromptWindow.Inst().addPromptItem(MonasteryModel.getPromptItemBuildMonastery(townID, hexaID));
+                                    PromptWindow.Inst().addPromptItem(MarketModel.getPromptItemBuildMarket(townID, hexaID));
+                                    PromptWindow.Inst().addPromptItem(FortModel.getPromptItemBuildFort(townID, hexaID));
+                                }
+                                break;
+                            
+
+                            case BuildingKind.FortBuilding :
+                                FortModel.setPromptWindowToFort();
+                                break;
                         }
                     }
                 }

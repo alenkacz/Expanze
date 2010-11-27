@@ -179,7 +179,7 @@ namespace Expanze
                 if(showIcons)
                     DrawIcons();
 
-                spriteBatch.DrawString(GameState.materialsNewFont, itemList[activeItem].getTitle(), new Vector2(bgPos.X + 20, bgPos.Y + 120), Color.LightBlue);
+                spriteBatch.DrawString(GameState.materialsNewFont, itemList[activeItem].getTitle(), new Vector2(bgPos.X + 20, bgPos.Y + 140), Color.LightBlue);
 
                 if (!drawingPickableAreas)
                     DrawSources();
@@ -203,10 +203,16 @@ namespace Expanze
 
             for (int loop1 = 0; loop1 < itemList.Count; loop1++)
             {
-                if(drawingPickableAreas)
+                if (drawingPickableAreas)
                     spriteBatch.Draw(pickTextIcon, iconPosition, itemPick[loop1].pickColor);
                 else
+                {
                     spriteBatch.Draw(itemList[loop1].getIcon(), iconPosition, Color.White);
+                    if (activeItem == loop1)
+                    {
+                        spriteBatch.Draw(GameResources.Inst().getHudTexture(HUDTexture.IconActive), iconPosition, Color.White);
+                    }
+                }
                 iconPosition += new Vector2(itemList[loop1].getIcon().Width + 10.0f, 0.0f);
             }
         }
