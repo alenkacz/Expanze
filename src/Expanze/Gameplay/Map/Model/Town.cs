@@ -228,9 +228,9 @@ namespace Expanze
             }
         }
 
-        public void buildBuilding(int pos)
+        public void buildBuilding(int pos, BuildingKind kind)
         {
-            building[pos] = BuildingKind.SourceBuilding;
+            building[pos] = kind;
         }
     }
 }

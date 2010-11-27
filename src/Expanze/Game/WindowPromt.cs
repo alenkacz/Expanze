@@ -194,7 +194,7 @@ namespace Expanze
 
         public void BuildBuildingInTown()
         {
-            switch (GameState.map.buildBuildingInTown(argInt1, argInt2))
+            switch (GameState.map.buildBuildingInTown(argInt1, argInt2, BuildingKind.SourceBuilding))
             {
                 case BuildingBuildError.AlreadyBuild :
                     showAlert(Strings.ALERT_TITLE_BUILDING_IS_BUILD);

@@ -16,17 +16,19 @@ namespace Expanze
     {
         int townID;
         int hexaID;
+        BuildingKind kind;
 
-        public BuildingPromptItem(int townID, int hexaID, String title, String description, SourceAll cost, Texture2D icon)
+        public BuildingPromptItem(int townID, int hexaID, BuildingKind kind, String title, String description, SourceAll cost, Texture2D icon)
             : base(title, description, cost, icon)
         {
             this.townID = townID;
             this.hexaID = hexaID;
+            this.kind = kind;
         }
 
         public override void Execute()
         {
-            GameState.map.buildBuildingInTown(townID, hexaID);
+            GameState.map.buildBuildingInTown(townID, hexaID, kind);
         }
     }
 
@@ -218,14 +220,18 @@ namespace Expanze
                         switch (kind)
                         {
                             case HexaKind.Cornfield :
-                                m = GameResources.Inst().getSourceBuildingModel(GameResources.MILL_HOUSE);
+                                m = GameResources.Inst().getBuildingModel(GameResources.MILL_HOUSE);
                                 break;
                             default :
-                                m = GameResources.Inst().getSourceBuildingModel(GameResources.PASTURE_HOUSE);
+                                m = GameResources.Inst().getBuildingModel(GameResources.PASTURE_HOUSE);
                                 //roofID = 0;
                                 break;
                         }
                         break;
+                    case BuildingKind.FortBuilding :
+                        m = GameResources.Inst().getBuildingModel(GameResources.FORT);
+                        break;
+
                     default :
                         m = null;
                         break;
@@ -349,6 +355,7 @@ namespace Expanze
                             PromptWindow.Inst().addPromptItem(
                                     new BuildingPromptItem(townID,
                                                        hexaID,
+                                                       BuildingKind.SourceBuilding,
                                                        title,
                                                        "",
                                                        model.getSourceBuildingCost(),

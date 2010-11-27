@@ -25,7 +25,8 @@ namespace Expanze
         Model townModel, roadModel;
         public const int PASTURE_HOUSE = 0;
         public const int MILL_HOUSE = 1;
-        Model[] sourceBuildingModel;
+        public const int FORT = 2;
+        Model[] buildingModel;
         Model[] mountainsCoverModel;
         Model[] mountainsMineModel;
 
@@ -68,7 +69,7 @@ namespace Expanze
         public Texture2D getHudTexture(int id) { return hud[id]; }
         public Model getMountainsCover(int i) { return mountainsCoverModel[i]; }
         public Model getMountainsSourceBuildingModel(int i) { return mountainsMineModel[i]; }
-        public Model getSourceBuildingModel(int i) { return sourceBuildingModel[i]; }
+        public Model getBuildingModel(int i) { return buildingModel[i]; }
         public Model getTownModel() { return townModel; }
         public Model getRoadModel() { return roadModel; }
 
@@ -111,9 +112,10 @@ namespace Expanze
             shapeModel[SHAPE_CIRCLE] = content.Load<Model>("Shapes/circle");
             shapeModel[SHAPE_SPHERE] = content.Load<Model>("Shapes/sphere");
 
-            sourceBuildingModel = new Model[2];
-            sourceBuildingModel[PASTURE_HOUSE] = content.Load<Model>("Models/pastureHouse");
-            sourceBuildingModel[MILL_HOUSE] = content.Load<Model>("Models/millnew");
+            buildingModel = new Model[3];
+            buildingModel[PASTURE_HOUSE] = content.Load<Model>("Models/pastureHouse");
+            buildingModel[MILL_HOUSE] = content.Load<Model>("Models/millnew");
+            buildingModel[FORT] = content.Load<Model>("Models/fort");
 
             mountainsCoverModel = new Model[5];
             mountainsCoverModel[0] = content.Load<Model>("Models/cover4");

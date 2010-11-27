@@ -516,17 +516,30 @@ namespace Expanze.Gameplay.Map
             return error;
         }
 
-        public BuildingBuildError buildBuildingInTown(int townID, int hexaID)
+        public BuildingBuildError buildBuildingInTown(int townID, int hexaID, BuildingKind kind)
         {
             GameMaster gm = GameMaster.getInstance();
             Town town = GetTownByID(townID);
             int buildingPos = town.findBuildingByHexaID(hexaID);
             HexaModel hexa = town.getHexa(buildingPos);
-            BuildingBuildError error = town.canActivePlayerBuildBuildingInTown(buildingPos, hexa.getSourceBuildingCost());
+
+            SourceAll buildingCost = new SourceAll(0);
+            switch (kind)
+            {
+                case BuildingKind.SourceBuilding:
+                    buildingCost = hexa.getSourceBuildingCost();
+                    break;
+
+                case BuildingKind.FortBuilding:
+                    buildingCost = Settings.costFort;
+                    break;
+            }
+
+            BuildingBuildError error = town.canActivePlayerBuildBuildingInTown(buildingPos, buildingCost);
             if (error == BuildingBuildError.OK)
             {
-                town.buildBuilding(buildingPos);
-                gm.getActivePlayer().payForSomething(hexa.getSourceBuildingCost());
+                town.buildBuilding(buildingPos, kind);
+                gm.getActivePlayer().payForSomething(buildingCost);
             }
 
             return error;
