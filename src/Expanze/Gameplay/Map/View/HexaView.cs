@@ -135,9 +135,9 @@ namespace Expanze
                 else {
                     Texture2D text;
                     if(tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.getPlayerOwner() == GameMaster.getInstance().getActivePlayer())
-                        text = GameState.map.getHudTexture((pickVars.pickActive) ? Map.HUD_HAMMERS_ACTIVE : Map.HUD_HAMMERS_PASSIVE);
+                        text = GameResources.Inst().getHudTexture((pickVars.pickActive) ? GameResources.HUD_HAMMERS_ACTIVE : GameResources.HUD_HAMMERS_PASSIVE);
                     else
-                        text = GameState.map.getHudTexture((pickVars.pickActive) ? Map.HUD_INFO_ACTIVE : Map.HUD_INFO_PASSIVE);
+                        text = GameResources.Inst().getHudTexture((pickVars.pickActive) ? GameResources.HUD_INFO_ACTIVE : GameResources.HUD_INFO_PASSIVE);
 
                     spriteBatch.Draw(text, new Vector2(posHammers.X - (text.Width >> 1), posHammers.Y - (text.Height >> 1)), Color.White);
                 }
@@ -147,7 +147,7 @@ namespace Expanze
 
         public void Draw(GameTime gameTime)
         {
-            Model m = GameState.map.getHexaModel(kind);
+            Model m = GameResources.Inst().getHexaModel(kind);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
             RasterizerState rasterizerState = new RasterizerState();
@@ -217,10 +217,10 @@ namespace Expanze
                         switch (kind)
                         {
                             case HexaKind.Cornfield :
-                                m = GameState.map.getSourceBuildingModel(Map.MILL_HOUSE);
+                                m = GameResources.Inst().getSourceBuildingModel(GameResources.MILL_HOUSE);
                                 break;
                             default :
-                                m = GameState.map.getSourceBuildingModel(Map.PASTURE_HOUSE);
+                                m = GameResources.Inst().getSourceBuildingModel(GameResources.PASTURE_HOUSE);
                                 //roofID = 0;
                                 break;
                         }
@@ -267,7 +267,7 @@ namespace Expanze
 
         public void DrawPickableAreas()
         {
-            Model m = GameState.map.getShape(Map.SHAPE_CIRCLE);
+            Model m = GameResources.Inst().getShape(GameResources.SHAPE_CIRCLE);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 

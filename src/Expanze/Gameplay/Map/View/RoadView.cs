@@ -53,7 +53,7 @@ namespace Expanze.Gameplay.Map.View
             GameMaster gm = GameMaster.getInstance();
             if ((pickVars.pickActive && gm.getState() == EGameState.StateGame) || isBuildView)
             {
-                Model m = GameState.map.getRoadModel();
+                Model m = GameResources.Inst().getRoadModel();
                 Matrix[] transforms = new Matrix[m.Bones.Count];
                 m.CopyAbsoluteBoneTransformsTo(transforms);
 
@@ -120,7 +120,7 @@ namespace Expanze.Gameplay.Map.View
 
         public void DrawPickableAreas()
         {
-            Model m = GameState.map.getShape(Map.SHAPE_RECTANGLE);
+            Model m = GameResources.Inst().getShape(GameResources.SHAPE_RECTANGLE);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 

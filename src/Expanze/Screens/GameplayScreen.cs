@@ -87,6 +87,8 @@ namespace Expanze
 
             Map mapComp;
             GameState.game = ScreenManager.Game;
+            GameResources.Inst().LoadContent();
+
             mapComp = new Map(ScreenManager.Game);
             gameComponents.Add(mapComp);
             GameState.windowPromt = new WindowPromt();
