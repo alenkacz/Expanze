@@ -445,6 +445,15 @@ namespace Expanze.Gameplay.Map
             return hexaMapModel[x][y];
         }
 
+        public void BuyUpgradeInSpecialBuilding(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber)
+        {
+            GameMaster gm = GameMaster.getInstance();
+            Town town = GetTownByID(townID);
+            SpecialBuilding building = town.getSpecialBuilding(hexaID);
+            building.BuyUpgrade(upgradeKind, upgradeNumber);
+            gm.getActivePlayer().payForSomething(building.getUpgradeCost(upgradeKind, upgradeNumber));
+        }
+
         public RoadBuildError BuildRoad(int roadID)
         {
             Road road = GetRoadByID(roadID);

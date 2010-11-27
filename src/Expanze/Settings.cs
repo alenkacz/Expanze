@@ -33,7 +33,28 @@ namespace Expanze
         public static SourceAll costFortHexa = new SourceAll(0, 0, 80, 50, 80);
         public static SourceAll costFortSources = new SourceAll(0, 50, 0, 50, 80);
         public static SourceAll costFortCapture = new SourceAll(50, 50, 0, 50, 100);
-
+        // costs of market upgrades
+        public static SourceAll costMarketCorn1 = new SourceAll(0, 0, 90, 0, 0);
+        public static SourceAll costMarketCorn2 = new SourceAll(0, 0, 60, 60, 0);
+        public static SourceAll costMarketMeat1 = new SourceAll(0, 0, 0, 90, 0);
+        public static SourceAll costMarketMeat2 = new SourceAll(0, 0, 0, 60, 60);
+        public static SourceAll costMarketStone1 = new SourceAll(0, 90, 0, 0, 0);
+        public static SourceAll costMarketStone2 = new SourceAll(0, 60, 60, 0, 0);
+        public static SourceAll costMarketWood1 = new SourceAll(90, 0, 0, 0, 0);
+        public static SourceAll costMarketWood2 = new SourceAll(60, 60, 0, 0, 0);
+        public static SourceAll costMarketOre1 = new SourceAll(0, 0, 0, 0, 90);
+        public static SourceAll costMarketOre2 = new SourceAll(60, 0, 0, 0, 60);
+        // costs of monastery upgrades
+        public static SourceAll costMonasteryCorn1 = new SourceAll(40, 30, 0, 0, 0);
+        public static SourceAll costMonasteryCorn2 = new SourceAll(0, 0, 30, 30, 40);
+        public static SourceAll costMonasteryMeat1 = new SourceAll(0, 0, 30, 0, 40);
+        public static SourceAll costMonasteryMeat2 = new SourceAll(30, 40, 0, 30, 0);
+        public static SourceAll costMonasteryStone1 = new SourceAll(30, 0, 40, 0, 0);
+        public static SourceAll costMonasteryStone2 = new SourceAll(0, 30, 0, 40, 40);
+        public static SourceAll costMonasteryWood1 = new SourceAll(0, 0, 0, 40, 30);
+        public static SourceAll costMonasteryWood2 = new SourceAll(30, 30, 40, 0, 0);
+        public static SourceAll costMonasteryOre1 = new SourceAll(0, 40, 0, 30, 0);
+        public static SourceAll costMonasteryOre2 = new SourceAll(40, 0, 30, 0, 30);
 
         // goals
         public const int pointsWin = 40; /// how much points have to have player to win

@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using CorePlugin;
+using Expanze.Gameplay;
 
 namespace Expanze
 {
@@ -16,7 +17,8 @@ namespace Expanze
         private Road[] roadNeighbour; /// two or 3 neighbours
         private Town[] townNeighbour; /// two or 3 neighbours
         private HexaModel[] hexaNeighbour; /// 1 - 3 neighbours
-        private BuildingKind[] building; /// indeces corresponds with hexaNeighbour indeces
+        private BuildingKind[] buildingKind; /// indeces corresponds with hexaNeighbour indeces
+        private SpecialBuilding[] building; /// indeces corresponds with hexaNeighbour indeces
 
         private int townID;             /// unique ID of town place, from 1 to counter
         public static int counter = 0;  /// how many town places are on the map
@@ -37,9 +39,11 @@ namespace Expanze
             roadNeighbour = new Road[3];
             townNeighbour = new Town[3];
             hexaNeighbour = new HexaModel[3];
-            building = new BuildingKind[3];
-            for (int loop1 = 0; loop1 < building.Length; loop1++)
-                building[loop1] = BuildingKind.NoBuilding;
+            buildingKind = new BuildingKind[3];
+            building = new SpecialBuilding[3];
+
+            for (int loop1 = 0; loop1 < buildingKind.Length; loop1++)
+                buildingKind[loop1] = BuildingKind.NoBuilding;
 
             //building[1] = BuildingKind.SourceBuilding;
 
@@ -48,7 +52,7 @@ namespace Expanze
 
         public int findBuildingByHexaID(int hexaID)
         {
-            for (int loop1 = 0; loop1 < building.Length; loop1++)
+            for (int loop1 = 0; loop1 < buildingKind.Length; loop1++)
             {
                 if (hexaNeighbour[loop1] != null && hexaNeighbour[loop1].getID() == hexaID)
                     return loop1;
@@ -63,8 +67,17 @@ namespace Expanze
 
             int buildingPos = findBuildingByHexaID(hexaID);
 
+            return (buildingPos == -1) ? BuildingKind.NoBuilding : buildingKind[buildingPos];
+        }
 
-            return (buildingPos == -1) ? BuildingKind.NoBuilding : building[buildingPos];
+        public SpecialBuilding getSpecialBuilding(int hexaID)
+        {
+            if (!isBuild)
+                return null;
+
+            int buildingPos = findBuildingByHexaID(hexaID);
+
+            return (buildingPos == -1) ? null : building[buildingPos];
         }
 
         public static void resetCounter() { counter = 0; }
@@ -101,7 +114,7 @@ namespace Expanze
             for(int loop1 = 0; loop1 < 3; loop1++)
             {
                 if (hexaNeighbour[loop1] != null &&
-                    building[loop1] == BuildingKind.SourceBuilding)
+                    buildingKind[loop1] == BuildingKind.SourceBuilding)
                 {
                     amount = hexaNeighbour[loop1].getValue();
 
@@ -172,7 +185,7 @@ namespace Expanze
             GameMaster gm = GameMaster.getInstance();
             if (gm.getState() == EGameState.StateGame)
             {
-                if (building[pos] != BuildingKind.NoBuilding)
+                if (buildingKind[pos] != BuildingKind.NoBuilding)
                     return BuildingBuildError.AlreadyBuild;
 
                 if (gm.getActivePlayer() != playerOwner)
@@ -230,7 +243,18 @@ namespace Expanze
 
         public void buildBuilding(int pos, BuildingKind kind)
         {
-            building[pos] = kind;
+            buildingKind[pos] = kind;
+            switch (kind)
+            {
+                case BuildingKind.MarketBuilding :
+                    building[pos] = new MarketModel(townID, hexaNeighbour[pos].getID());
+                    break;
+                case BuildingKind.MonasteryBuilding :
+                    building[pos] = new MonasteryModel(townID, hexaNeighbour[pos].getID());
+                    break;
+            }
         }
+
+
     }
 }

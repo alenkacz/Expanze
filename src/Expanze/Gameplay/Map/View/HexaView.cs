@@ -379,6 +379,13 @@ namespace Expanze
                             case BuildingKind.FortBuilding :
                                 FortModel.setPromptWindowToFort();
                                 break;
+
+                            case BuildingKind.SourceBuilding :
+                                break;
+
+                            default :
+                                townView[loop1].getTownModel().getSpecialBuilding(hexaID).setPromptWindow();
+                                break;
                         }
                     }
                 }
