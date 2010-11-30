@@ -21,7 +21,7 @@ namespace Expanze
 
     public enum BuildingModel
     {
-        PastureHouse, Mill, Fort, Market, Monastery, 
+        PastureHouse, Saw, Mill, Fort, Market, Monastery, 
         CountModel
     }
 
@@ -128,6 +128,7 @@ namespace Expanze
 
             buildingModel = new Model[(int) BuildingModel.CountModel];
             buildingModel[(int) BuildingModel.PastureHouse] = content.Load<Model>("Models/pastureHouse");
+            buildingModel[(int) BuildingModel.Saw] = content.Load<Model>("Models/saw");
             buildingModel[(int) BuildingModel.Mill] = content.Load<Model>("Models/millnew");
             buildingModel[(int) BuildingModel.Fort] = content.Load<Model>("Models/fort");
             buildingModel[(int) BuildingModel.Market] = content.Load<Model>("Models/market");

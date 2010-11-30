@@ -222,6 +222,9 @@ namespace Expanze
                             case HexaKind.Cornfield :
                                 m = GameResources.Inst().getBuildingModel(BuildingModel.Mill);
                                 break;
+                            case HexaKind.Forest :
+                                m = GameResources.Inst().getBuildingModel(BuildingModel.Saw);
+                                break;
                             default :
                                 m = GameResources.Inst().getBuildingModel(BuildingModel.PastureHouse);
                                 //roofID = 0;

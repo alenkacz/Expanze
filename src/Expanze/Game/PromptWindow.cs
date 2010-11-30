@@ -99,7 +99,7 @@ namespace Expanze
 
             bgPos = new Vector2((Settings.maximumResolution.X - background.Width) / 2,
                                    (Settings.maximumResolution.Y - background.Height) / 2);
-            int border = 50;
+            int border = 30;
             yesPos = new Vector2(bgPos.X + border, bgPos.Y + background.Height - border - yes.Height);
             noPos = new Vector2(bgPos.X - no.Width - border + background.Width, bgPos.Y + background.Height - border - no.Height);
         }
@@ -179,7 +179,7 @@ namespace Expanze
                 if(showIcons)
                     DrawIcons();
 
-                spriteBatch.DrawString(GameState.materialsNewFont, itemList[activeItem].getTitle(), new Vector2(bgPos.X + 20, bgPos.Y + 140), Color.LightBlue);
+                spriteBatch.DrawString(GameState.materialsNewFont, itemList[activeItem].getTitle(), new Vector2(bgPos.X + 15, bgPos.Y + 150), Color.LightBlue);
 
                 if (!drawingPickableAreas)
                     DrawSources();
@@ -193,7 +193,7 @@ namespace Expanze
             if (itemList[0].getIcon() == null)
                 return;
 
-            float border = 26.0f;
+            float border = 15.0f;
             float iconsWidth = -border;
             for (int loop1 = 0; loop1 < itemList.Count; loop1++)
             {
@@ -213,7 +213,7 @@ namespace Expanze
                         spriteBatch.Draw(GameResources.Inst().getHudTexture(HUDTexture.IconActive), iconPosition, Color.White);
                     }
                 }
-                iconPosition += new Vector2(itemList[loop1].getIcon().Width + 10.0f, 0.0f);
+                iconPosition += new Vector2(itemList[loop1].getIcon().Width + border, 0.0f);
             }
         }
 
@@ -229,7 +229,7 @@ namespace Expanze
             }
 
             float startX = bgPos.X + ((background.Width - sourcesWidth) / 2);
-            float startY = bgPos.Y + background.Height - textureSource[0].Height - 120;
+            float startY = bgPos.Y + background.Height - textureSource[0].Height - 110;
 
             for (int loop1 = 0; loop1 < 5; loop1++)
             {
