@@ -62,7 +62,9 @@ namespace Expanze
             HotSeatScreen.Load(ScreenManager, e.PlayerIndex);
             
             //LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
-            //                   new GameplayScreen(false));
+            //                   new GameplayScreen(false))s;
+
+
         }
 
         /// <summary>

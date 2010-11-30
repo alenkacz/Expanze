@@ -112,7 +112,6 @@ namespace Expanze
             }
         }
 
-
         /// <summary>
         /// Draws the loading screen.
         /// </summary>

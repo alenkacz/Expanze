@@ -48,6 +48,22 @@ namespace Expanze
             return new SourceAll(a.wood - b.wood, a.stone - b.stone, a.corn - b.corn, a.meat - b.meat, a.ore - b.ore);
         }
 
+        public int this[int index]
+        {
+            get
+            {
+                switch(index)
+                {
+                    case 0: return corn;
+                    case 1: return meat;
+                    case 2: return stone;
+                    case 3: return wood;
+                    case 4: return ore;
+                    default: return -1;
+                }
+            }
+        }
+
         public Boolean HasPlayerSources(Player player)
         {
             return player.getCorn() >= corn &&

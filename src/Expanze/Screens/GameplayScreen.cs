@@ -43,7 +43,7 @@ namespace Expanze
         List<GuiComponent> guiComponents = new List<GuiComponent>();
 
         bool isAI;
-
+        bool isGameLoaded;
 
 
         Random random = new Random();
@@ -67,11 +67,7 @@ namespace Expanze
 
         }
 
-
-        /// <summary>
-        /// Load graphics content for the game.
-        /// </summary>
-        public override void LoadContent()
+        public void LoadAllThread()
         {
             if (content == null)
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
@@ -84,30 +80,30 @@ namespace Expanze
             //playerColorTexture = new Texture2D(ScreenManager.GraphicsDevice, (int)Settings.playerColorSize.X, (int)Settings.playerColorSize.Y, false, SurfaceFormat.Color);
             playerColorTexture = ScreenManager.Game.Content.Load<Texture2D>("pcolor");
 
-
-           
-
             //render to texture
             PresentationParameters pp = ScreenManager.GraphicsDevice.PresentationParameters;
             renderTarget = new RenderTarget2D(ScreenManager.GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight, false, ScreenManager.GraphicsDevice.DisplayMode.Format, pp.DepthStencilFormat);
             //renderTarget = new RenderTarget2D(ScreenManager.GraphicsDevice, 1024, 1024, false, ScreenManager.GraphicsDevice.DisplayMode.Format, pp.DepthStencilFormat);
-    
+
             Map mapComp;
             GameState.game = ScreenManager.Game;
+            GameResources.Inst().LoadContent();
+
             mapComp = new Map(ScreenManager.Game);
             gameComponents.Add(mapComp);
             GameState.windowPromt = new WindowPromt();
             gameComponents.Add(GameState.windowPromt);
+            gameComponents.Add(PromptWindow.Inst());
             //gamelogic
             gMaster.startGame(isAI, mapComp);
 
-            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), new Rectangle(Settings.scaleW((int)(Settings.maximumResolution.X - 80)), Settings.scaleH((int)(Settings.maximumResolution.Y - 80)),Settings.scaleW(60),Settings.scaleH(60)), GameState.gameFont, Settings.scaleW(147), Settings.scaleH(141), "nextTurn");
+            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), new Rectangle(Settings.scaleW((int)(Settings.maximumResolution.X - 80)), Settings.scaleH((int)(Settings.maximumResolution.Y - 80)), Settings.scaleW(60), Settings.scaleH(60)), GameState.gameFont, Settings.scaleW(147), Settings.scaleH(141), "nextTurn");
             changeTurnButton.Actions += ChangeTurnButtonAction;
             guiComponents.Add(changeTurnButton);
-            ButtonComponent menuHUDButton = new ButtonComponent(ScreenManager.Game, Settings.scaleW(20), Settings.scaleH(20), new Rectangle(Settings.scaleW(20),Settings.scaleH(20),Settings.scaleW(80),Settings.scaleH(80)), GameState.gameFont, Settings.scaleW(222), Settings.scaleH(225), "menu_button");
+            ButtonComponent menuHUDButton = new ButtonComponent(ScreenManager.Game, Settings.scaleW(20), Settings.scaleH(20), new Rectangle(Settings.scaleW(20), Settings.scaleH(20), Settings.scaleW(80), Settings.scaleH(80)), GameState.gameFont, Settings.scaleW(222), Settings.scaleH(225), "menu_button");
             menuHUDButton.Actions += MenuButtonAction;
             guiComponents.Add(menuHUDButton);
-            MaterialsHUDComponent materialsHUDComp = new MaterialsHUDComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width/4, ScreenManager.Game.GraphicsDevice.Viewport.Height - 78, GameState.gameFont, 757, 148, "suroviny_hud");
+            MaterialsHUDComponent materialsHUDComp = new MaterialsHUDComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width / 4, ScreenManager.Game.GraphicsDevice.Viewport.Height - 78, GameState.gameFont, 757, 148, "suroviny_hud");
             guiComponents.Add(materialsHUDComp);
             GuiComponent usersHud = new GuiComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 670), 10, GameState.gameFont, Settings.scaleW(660), Settings.scaleH(46), "hud-top");
             guiComponents.Add(usersHud);
@@ -115,12 +111,12 @@ namespace Expanze
             //guiComponents.Add(marketHud);
             //GuiComponent marketHud = new GuiComponent(ScreenManager.Game, 100, 10, GameState.gameFont, Settings.scaleW(500), Settings.scaleH(500), "market_bg");
             //guiComponents.Add(marketHud);
-            ButtonComponent newMsg = new ButtonComponent(ScreenManager.Game, Settings.scaleW(30), (int)(Settings.maximumResolution.Y - 176), new Rectangle(Settings.scaleW(30), Settings.scaleH((int)(Settings.maximumResolution.Y - 176)),Settings.scaleW(70),Settings.scaleH(70)), GameState.gameFont, Settings.scaleW(151), Settings.scaleH(156), "newmessage");
+            ButtonComponent newMsg = new ButtonComponent(ScreenManager.Game, Settings.scaleW(30), (int)(Settings.maximumResolution.Y - 176), new Rectangle(Settings.scaleW(30), Settings.scaleH((int)(Settings.maximumResolution.Y - 176)), Settings.scaleW(70), Settings.scaleH(70)), GameState.gameFont, Settings.scaleW(151), Settings.scaleH(156), "newmessage");
             newMsg.Actions += MarketButtonAction;
             guiComponents.Add(newMsg);
             //gameComponents.Add(buttonComp);
 
-            foreach(GameComponent gameComponent in gameComponents)
+            foreach (GameComponent gameComponent in gameComponents)
             {
                 gameComponent.Initialize();
                 gameComponent.LoadContent();
@@ -142,6 +138,25 @@ namespace Expanze
             // timing mechanism that we have just finished a very long frame, and that
             // it should not try to catch up.
             ScreenManager.Game.ResetElapsedTime();
+
+            isGameLoaded = true;
+        }
+
+
+        /// <summary>
+        /// Load graphics content for the game.
+        /// </summary>
+        public override void LoadContent()
+        {
+            isGameLoaded = false;
+            ThreadStart loadingThreadStart = new ThreadStart(this.LoadAllThread);
+            Thread loadingThread = new Thread(loadingThreadStart);
+            loadingThread.Start();
+
+            while (!isGameLoaded)
+            {
+                Thread.Sleep(100);
+            }
         }
 
 
@@ -220,6 +235,7 @@ namespace Expanze
         public override void Update(GameTime gameTime, bool otherScreenHasFocus,
                                                        bool coveredByOtherScreen)
         {
+
             base.Update(gameTime, otherScreenHasFocus, false);
 
             // Gradually fade in or out depending on whether we are covered by the pause screen.
@@ -290,6 +306,7 @@ namespace Expanze
         /// </summary>
         public override void Draw(GameTime gameTime)
         {
+
             //render to texture
             ScreenManager.GraphicsDevice.SetRenderTarget(renderTarget);
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
@@ -352,7 +369,8 @@ namespace Expanze
 
             //player name and color rectangle
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
-            
+
+            spriteBatch.DrawString(GameState.playerNameFont, gMaster.getActivePlayer().getPoints().ToString(), new Vector2(Settings.playerNamePosition.X - 300, Settings.playerNamePosition.Y), Color.White);
             spriteBatch.DrawString(GameState.playerNameFont, gMaster.getActivePlayer().getName(), Settings.playerNamePosition, Color.White);
             spriteBatch.Draw(playerColorTexture, Settings.playerColorPosition, gMaster.getActivePlayer().getColor());
             

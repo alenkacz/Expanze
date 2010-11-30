@@ -21,6 +21,8 @@ namespace Expanze
         public static string ALERT_TITLE_NO_ROAD_OR_TOWN_IS_CLOSE = "Žádná tvoje cesta či město v blízkosti";
 
         // Source buildings building
+        public static string PROMPT_TITLE_BUILDING = "Stavění";
+
         public static string ALERT_TITLE_NOT_TOWN_OWNER = "To není tvé město.";
         public static string ALERT_TITLE_BUILDING_IS_BUILD = "Už tu stojí budova.";
 

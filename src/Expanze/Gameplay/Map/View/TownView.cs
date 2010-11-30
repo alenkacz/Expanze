@@ -8,6 +8,21 @@ using CorePlugin;
 
 namespace Expanze.Gameplay.Map
 {
+    class TownPromptItem : PromptItem
+    {
+        int townID;
+
+        public TownPromptItem(int townID, String title, String description, SourceAll cost, Texture2D icon) : base(title, description, cost, icon)
+        {
+            this.townID = townID;
+        }
+
+        public override void Execute()
+        {
+            GameState.map.BuildTown(townID);
+        }
+    }
+
     class TownView
     {
         private static int pickTownID = -1;
@@ -40,7 +55,7 @@ namespace Expanze.Gameplay.Map
         {
             if (pickVars.pickActive || isBuildView)
             {
-                Model m = GameState.map.getTownModel();
+                Model m = GameResources.Inst().getTownModel();
                 Matrix[] transforms = new Matrix[m.Bones.Count];
                 m.CopyAbsoluteBoneTransformsTo(transforms);
 
@@ -65,14 +80,17 @@ namespace Expanze.Gameplay.Map
                         effect.DirectionalLight0.SpecularColor = GameState.LightSpecularColor;
                         effect.DirectionalLight0.Enabled = true;
 
-                        if (a == 1 || a == 2)
+                        if (a == 0)
                         {
                             effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
                             effect.DiffuseColor = color * 0.9f;
-                            effect.AmbientLightColor = new Vector3(0.0533f, 0.0988f, 0.1819f);
+                            effect.AmbientLightColor = color * 0.3f;
                         }
-                        else
+                        else if(a == 2)
                         {
+                            effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
+                            effect.DiffuseColor = color * 0.6f;
+                            effect.AmbientLightColor = color * 0.3f;
                             //effect.DiffuseColor = new Vector3(0.64f, 0.64f, 0.64f);
                         }
                         
@@ -81,12 +99,12 @@ namespace Expanze.Gameplay.Map
                             if (model.CanActivePlayerBuildTown() != TownBuildError.OK &&
                                 !(model.getIsBuild() && !isBuildView))
                             {
-                                if (a != 1 && a != 2)
+                                if (a != 0)
                                     effect.EmissiveColor = new Vector3(0.5f, 0.0f, 0);
                             }
                             else
                             {
-                                if (a != 1 && a != 2)
+                                if (a != 0)
                                     effect.EmissiveColor = new Vector3(0, 0.5f, 0);
                             }
                         } else
@@ -101,9 +119,9 @@ namespace Expanze.Gameplay.Map
                     a++;
                 }
 
-                if (pickTownID == townID)
+                if (pickTownID == townID || (pickVars.pickActive && isBuildView))
                 {
-                    m = GameState.map.getShape(Map.SHAPE_SPHERE);
+                    m = GameResources.Inst().getShape(GameResources.SHAPE_SPHERE);
                     mWorld = Matrix.CreateScale(0.0001f) * Matrix.CreateTranslation(new Vector3(0.0f, 0.15f, 0.0f)) * world;
                     foreach (ModelMesh mesh in m.Meshes)
                     {
@@ -122,7 +140,7 @@ namespace Expanze.Gameplay.Map
 
         public void drawPickableAreas()
         {
-            Model m = GameState.map.getShape(Map.SHAPE_CIRCLE);
+            Model m = GameResources.Inst().getShape(GameResources.SHAPE_CIRCLE);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 
@@ -181,13 +199,19 @@ namespace Expanze.Gameplay.Map
                         case TownBuildError.OK :
                             if (GameMaster.getInstance().getState() == EGameState.StateGame)
                             {
-                                wP.showPromt(Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN, wP.BuildTown, Settings.costTown);
-                                wP.setArgInt1(townID);
+                                PromptWindow.Inst().showPrompt(Strings.PROMPT_TITLE_BUILDING, false);
+                                PromptWindow.Inst().addPromptItem(
+                                    new TownPromptItem(townID,
+                                                       Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN,
+                                                       "",
+                                                       Settings.costTown,
+                                                       null));
                             }
                             else
                             {
-                                wP.showPromt(Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN, wP.BuildTown, new SourceAll(0));
-                                wP.setArgInt1(townID);
+                                GameState.map.BuildTown(townID);
+                                //wP.showPromt(Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN, wP.BuildTown, new SourceAll(0));
+                                //wP.setArgInt1(townID);
                             }
                             break;
                     }

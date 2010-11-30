@@ -9,6 +9,22 @@ using CorePlugin;
 
 namespace Expanze.Gameplay.Map.View
 {
+    class RoadPromptItem : PromptItem
+    {
+        int roadID;
+
+        public RoadPromptItem(int roadID, String title, String description, SourceAll cost, Texture2D icon)
+            : base(title, description, cost, icon)
+        {
+            this.roadID = roadID;
+        }
+
+        public override void Execute()
+        {
+            GameState.map.BuildRoad(roadID);
+        }
+    }
+
     class RoadView
     {
         private bool isBuildView;
@@ -37,11 +53,11 @@ namespace Expanze.Gameplay.Map.View
             GameMaster gm = GameMaster.getInstance();
             if ((pickVars.pickActive && gm.getState() == EGameState.StateGame) || isBuildView)
             {
-                Model m = GameState.map.getRoadModel();
+                Model m = GameResources.Inst().getRoadModel();
                 Matrix[] transforms = new Matrix[m.Bones.Count];
                 m.CopyAbsoluteBoneTransformsTo(transforms);
 
-                Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.01f, 0.0f)) * Matrix.CreateScale(0.023f) * world;
+                Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.01f, 0.0f)) * Matrix.CreateScale(0.019f) * world;
 
                 int a = 0;
 
@@ -104,7 +120,7 @@ namespace Expanze.Gameplay.Map.View
 
         public void DrawPickableAreas()
         {
-            Model m = GameState.map.getShape(Map.SHAPE_RECTANGLE);
+            Model m = GameResources.Inst().getShape(GameResources.SHAPE_RECTANGLE);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 
@@ -147,8 +163,13 @@ namespace Expanze.Gameplay.Map.View
                             wP.showAlert(Strings.ALERT_TITLE_NO_ROAD_OR_TOWN_IS_CLOSE);
                             break;
                         case RoadBuildError.OK :
-                            wP.showPromt(Strings.PROMT_TITLE_WANT_TO_BUILD_ROAD, wP.BuildRoad, Settings.costRoad);
-                            wP.setArgInt1(roadID);
+                            PromptWindow.Inst().showPrompt(Strings.PROMPT_TITLE_BUILDING, false);
+                            PromptWindow.Inst().addPromptItem(
+                                    new RoadPromptItem(roadID,
+                                                       Strings.PROMT_TITLE_WANT_TO_BUILD_ROAD,
+                                                       "",
+                                                       Settings.costRoad,
+                                                       null));
                             break;
                     }
                 }

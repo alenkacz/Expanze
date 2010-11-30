@@ -74,17 +74,17 @@ namespace Expanze
             no = content.Load<Texture2D>("HUD/NOPromt");
             yes = content.Load<Texture2D>("HUD/OKPromt");
             pickTexture = content.Load<Texture2D>("HUD/PickPromt");
-            bgPos = new Vector2((Settings.activeResolution.X - background.Width) / 2,
-                                   (Settings.activeResolution.Y - background.Height) / 2);
+            bgPos = new Vector2((Settings.maximumResolution.X - background.Width) / 2,
+                                   (Settings.maximumResolution.Y - background.Height) / 2);
             int border = 50;
-            yesPos = new Vector2(bgPos.X + border, bgPos.Y + background.Height - border - yes.Height);
-            noPos = new Vector2(bgPos.X - no.Width - border + background.Width, bgPos.Y + background.Height - border - no.Height);
+            yesPos = new Vector2(bgPos.X + (background.Width - yes.Width) / 2, bgPos.Y + background.Height - border - yes.Height);
+            noPos = new Vector2(bgPos.X + (background.Width - yes.Width) / 2, bgPos.Y + background.Height - border - no.Height);
         }
 
         public override void UnloadContent()
         {
             base.UnloadContent();
-            content.Dispose();
+            //content.Dispose();
         }
 
         public override void HandlePickableAreas(Color c)
@@ -116,6 +116,7 @@ namespace Expanze
 
         override public void Draw2D()
         {
+            //drawingPickableAreas = true;
             if (active)
             {
                 Color color;
@@ -124,13 +125,15 @@ namespace Expanze
                 else
                     color = Color.White;
 
-                spriteBatch.Begin();
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
+            
                 spriteBatch.Draw(background, bgPos, color);
 
+                /*
                 if (drawingPickableAreas)
                     spriteBatch.Draw(pickTexture, yesPos, yesPick.pickColor);
                 else
-                    spriteBatch.Draw(yes, yesPos, Color.White);
+                    spriteBatch.Draw(yes, yesPos, Color.White);*/
 
                 if (drawingPickableAreas)
                     spriteBatch.Draw(pickTexture, noPos, noPick.pickColor);
@@ -191,7 +194,7 @@ namespace Expanze
 
         public void BuildBuildingInTown()
         {
-            switch (GameState.map.buildBuildingInTown(argInt1, argInt2))
+            switch (GameState.map.buildBuildingInTown(argInt1, argInt2, BuildingKind.SourceBuilding))
             {
                 case BuildingBuildError.AlreadyBuild :
                     showAlert(Strings.ALERT_TITLE_BUILDING_IS_BUILD);

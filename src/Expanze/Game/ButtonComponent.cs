@@ -84,11 +84,6 @@ namespace Expanze
 
             mousex = mouseState.X;
             mousey = mouseState.Y;
-        }
-
-        public override void Draw(GameTime gameTime)
-        {
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
 
             if (ButtonState.Pressed == mouseState.LeftButton && !pressed)
             {
@@ -105,6 +100,13 @@ namespace Expanze
             {
                 pressed = false;
             }
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
+
+            
 
             Color c;
             if (picked)

@@ -13,6 +13,7 @@ namespace Expanze
         private String name;
         private Color color;
         private bool materialChanged;
+        private int points;
 
         SourceAll prevSource;       // Source before last source change (for example before paying for something, collecting resources
         SourceAll source;
@@ -23,6 +24,7 @@ namespace Expanze
 
         public Player(String name, Color color, IComponentAI componentAI)
         {
+            points = 0;
             prevSource = new SourceAll(0);
             source = new SourceAll(0);
             transactionSource = new SourceAll(0);
@@ -37,6 +39,13 @@ namespace Expanze
         public IComponentAI getComponentAI() { return componentAI; }
         public bool getIsAI() { return componentAI != null; }
         public Color getColor() { return color; }
+
+        public void addPoints(int add) { 
+            points += add;
+            GameMaster.getInstance().checkWinner(this);
+        }
+
+        public int getPoints() { return points; }
 
         public int getConversionRate()
         {

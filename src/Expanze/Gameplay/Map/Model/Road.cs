@@ -83,6 +83,7 @@ namespace Expanze
         {
             playerOwner = player;
             isBuild = true;
+            player.addPoints(Settings.pointsRoad);
         }
 
         /// <summary>
@@ -106,11 +107,6 @@ namespace Expanze
             }
 
             return RoadBuildError.OK;
-        }
-
-        RoadBuildError IRoadGet.CanActivePlayerBuildRoad()
-        {
-            throw new NotImplementedException();
         }
     }
 }

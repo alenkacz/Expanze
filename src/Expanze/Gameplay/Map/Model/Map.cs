@@ -17,23 +17,9 @@ namespace Expanze.Gameplay.Map
     /// </summary>
     class Map : GameComponent, IMapController
     {
-        public const int N_MODEL = 7;
-        Model[] hexaModel;
-        public const int SHAPE_RECTANGLE = 0;
-        public const int SHAPE_CIRCLE = 1;
-        public const int SHAPE_SPHERE = 2;
-        public const int N_SHAPE_MODEL = 3;
-        Model[] shapeModel;
-        Model townModel, roadModel;
-
-        Model[] mountainsCoverModel;
-        Model[] mountainsMineModel;
-
-
         private Vector3 eye, target, up;
 
         Game myGame;
-        ContentManager content;
         ViewQueue viewQueue;
 
         float aspectRatio;
@@ -58,8 +44,8 @@ namespace Expanze.Gameplay.Map
             Road.resetCounter();
             Town.resetCounter();
 
-            float dx = 0.56f;
-            float dy = 0.49f;
+            float dx = 0.592f;
+            float dy = 0.513f;
             Matrix mWorld = Matrix.Identity * Matrix.CreateTranslation(new Vector3(-dy * hexaMapModel.Length / 2.0f, 0.0f, -dx * hexaMapModel[0].Length / 2.0f)); ;
             for (int i = 0; i < hexaMapModel.Length; i++)
             {
@@ -223,58 +209,9 @@ namespace Expanze.Gameplay.Map
             return parser.getMap();
         }
 
-        public Model getHexaModel(HexaKind type)
-        {
-            return hexaModel[(int)type];
-        }
-
-        public Model getMountainsCover(int i) { return mountainsCoverModel[i]; }
-        public Model getMountainsSourceBuildingModel(int i) { return mountainsMineModel[i]; }
-        public Model getTownModel() { return townModel; }
-        public Model getRoadModel() { return roadModel; }
-
-        public Model getShape(int shapeID)
-        {
-            return shapeModel[shapeID];
-        }
-
         public override void LoadContent()
         {
-            if (content == null)
-                content = new ContentManager(myGame.Services, "Content");
 
-            hexaModel = new Model[N_MODEL];
-            hexaModel[(int)HexaKind.Cornfield] = content.Load<Model>(Settings.mapPaths[(int) HexaKind.Cornfield]);
-            hexaModel[(int)HexaKind.Desert] = content.Load<Model>(Settings.mapPaths[(int) HexaKind.Desert]);
-            hexaModel[(int)HexaKind.Forest] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Forest]);
-            hexaModel[(int)HexaKind.Mountains] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Mountains]);
-            hexaModel[(int)HexaKind.Pasture] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Pasture]);
-            hexaModel[(int)HexaKind.Stone] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Stone]);
-            hexaModel[(int)HexaKind.Water] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Water]);
-
-            shapeModel = new Model[N_SHAPE_MODEL];
-
-            shapeModel[SHAPE_RECTANGLE] = content.Load<Model>("Shapes/rectangle");
-            shapeModel[SHAPE_CIRCLE] = content.Load<Model>("Shapes/circle");
-            shapeModel[SHAPE_SPHERE] = content.Load<Model>("Shapes/sphere");
-
-            mountainsCoverModel = new Model[5];
-            mountainsCoverModel[0] = content.Load<Model>("Models/cover4");
-            mountainsCoverModel[1] = content.Load<Model>("Models/cover5");
-            mountainsCoverModel[2] = content.Load<Model>("Models/cover1");
-            mountainsCoverModel[3] = content.Load<Model>("Models/cover2");
-            mountainsCoverModel[4] = content.Load<Model>("Models/cover3");
-
-            mountainsMineModel = new Model[6];
-            mountainsMineModel[0] = content.Load<Model>("Models/mine5");
-            mountainsMineModel[1] = content.Load<Model>("Models/mine6");
-            mountainsMineModel[2] = content.Load<Model>("Models/mine1");
-            mountainsMineModel[3] = content.Load<Model>("Models/mine2");
-            mountainsMineModel[4] = content.Load<Model>("Models/mine3");
-            mountainsMineModel[5] = content.Load<Model>("Models/mine4");
-
-            townModel = content.Load<Model>("Models/town");
-            roadModel = content.Load<Model>("Models/road");
         }
 
         // active player gets on start of his turn sources from mining buildings
@@ -323,7 +260,7 @@ namespace Expanze.Gameplay.Map
             GameState.LightDirection = new Vector3(-1.0f, -0.5f, (float) Math.Cos(MathHelper.ToRadians(lightAngle)));
             float tempF = (float) Math.Abs(Math.Cos(MathHelper.ToRadians(lightAngle))) / 4.0f;
             GameState.LightDiffusionColor = new Vector3(1.0f, 1.0f - tempF, 1.0f - tempF);
-            GameState.LightSpecularColor = new Vector3(0.2f, 0.1f, 0.1f);
+            GameState.LightSpecularColor = new Vector3(0.4f, 0.2f, 0.2f);
         }
 
         public override void Update(GameTime gameTime)
@@ -508,6 +445,15 @@ namespace Expanze.Gameplay.Map
             return hexaMapModel[x][y];
         }
 
+        public void BuyUpgradeInSpecialBuilding(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber)
+        {
+            GameMaster gm = GameMaster.getInstance();
+            Town town = GetTownByID(townID);
+            SpecialBuilding building = town.getSpecialBuilding(hexaID);
+            building.BuyUpgrade(upgradeKind, upgradeNumber);
+            gm.getActivePlayer().payForSomething(building.getUpgradeCost(upgradeKind, upgradeNumber));
+        }
+
         public RoadBuildError BuildRoad(int roadID)
         {
             Road road = GetRoadByID(roadID);
@@ -542,6 +488,33 @@ namespace Expanze.Gameplay.Map
 
                 if (gm.getState() != EGameState.StateGame)
                 {
+                    SourceAll source = new SourceAll(0);
+                    HexaModel hexa;
+                    gm.getActivePlayer().addSources(new SourceAll(0), TransactionState.TransactionStart);
+                    for(int loop1 = 0; loop1 < 3; loop1++)
+                    {
+                        if ((hexa = town.getHexa(loop1)) != null)
+                        {
+                            switch(hexa.getType())
+                            {
+                                case HexaKind.Cornfield :
+                                    source = Settings.costMill; break;
+                                case HexaKind.Forest:
+                                    source = Settings.costSaw; break;
+                                case HexaKind.Mountains:
+                                    source = Settings.costMine; break;
+                                case HexaKind.Pasture:
+                                    source = Settings.costStephard; break;
+                                case HexaKind.Stone:
+                                    source = Settings.costQuarry; break;
+                                default :
+                                    source = new SourceAll(0); break;
+                            }
+                            gm.getActivePlayer().addSources(source,TransactionState.TransactionMiddle);
+                        }
+                    }
+                    gm.getActivePlayer().addSources(new SourceAll(0), TransactionState.TransactionEnd);
+
                     if(!gm.getActivePlayer().getIsAI())
                         gm.NextTurn();
                 }
@@ -552,17 +525,30 @@ namespace Expanze.Gameplay.Map
             return error;
         }
 
-        public BuildingBuildError buildBuildingInTown(int townID, int hexaID)
+        public BuildingBuildError buildBuildingInTown(int townID, int hexaID, BuildingKind kind)
         {
             GameMaster gm = GameMaster.getInstance();
             Town town = GetTownByID(townID);
             int buildingPos = town.findBuildingByHexaID(hexaID);
             HexaModel hexa = town.getHexa(buildingPos);
-            BuildingBuildError error = town.canActivePlayerBuildBuildingInTown(buildingPos, hexa.getSourceBuildingCost());
+
+            SourceAll buildingCost = new SourceAll(0);
+            switch (kind)
+            {
+                case BuildingKind.SourceBuilding:
+                    buildingCost = hexa.getSourceBuildingCost();
+                    break;
+
+                case BuildingKind.FortBuilding:
+                    buildingCost = Settings.costFort;
+                    break;
+            }
+
+            BuildingBuildError error = town.canActivePlayerBuildBuildingInTown(buildingPos, buildingCost);
             if (error == BuildingBuildError.OK)
             {
-                town.buildBuilding(buildingPos);
-                gm.getActivePlayer().payForSomething(hexa.getSourceBuildingCost());
+                town.buildBuilding(buildingPos, kind);
+                gm.getActivePlayer().payForSomething(buildingCost);
             }
 
             return error;

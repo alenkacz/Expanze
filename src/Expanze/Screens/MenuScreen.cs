@@ -212,6 +212,7 @@ namespace Expanze
         /// </summary>
         public override void Draw(GameTime gameTime)
         {
+
             // make sure our entries are in the right place before we draw them
             UpdateMenuEntryLocations();
 
