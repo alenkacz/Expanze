@@ -30,9 +30,9 @@ namespace Expanze
         #region Initialization
         private MarketComponent()
 
-            : base(Settings.Game, 200, (int)Settings.maximumResolution.Y-600, GameState.gameFont, Settings.scaleW(700), Settings.scaleH(400), "market_bg")
+            : base(Settings.Game, 200, (int)Settings.maximumResolution.Y-600, GameState.gameFont, Settings.scaleW(658), Settings.scaleH(446), "market-bg")
         {
-            this.range = new Rectangle(200, (int)Settings.maximumResolution.Y - 600, 700, 400);
+            this.range = new Rectangle(200, (int)Settings.maximumResolution.Y - 600, 658, 446);
         }
 
         public static MarketComponent getInstance()

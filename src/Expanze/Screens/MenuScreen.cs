@@ -162,7 +162,7 @@ namespace Expanze
             float transitionOffset = (float)Math.Pow(TransitionPosition, 2);
 
             // start at Y = 175; each X value is generated per entry
-            Vector2 position = new Vector2(0f, Settings.activeResolution.X/4);
+            Vector2 position = new Vector2(0f, (int)Settings.scaleH(300));
 
             // update each menu entry's location in turn
             for (int i = 0; i < menuEntries.Count; i++)
