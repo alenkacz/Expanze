@@ -12,7 +12,7 @@ namespace Expanze
     class GameMaster
     {
         private const int n_player = 2;
-        private Player[] players = new Player[n_player];
+        private List<Player> players = new List<Player>();
         private Player activePlayer;
         private int activePlayerIndex;
         private EGameState state;
@@ -253,6 +253,11 @@ namespace Expanze
             {
                 return new SourceAll(0, 0, 0, 0, 0);
             }
+        }
+
+        public void addPlayer(Player p)
+        {
+            players.Add(p);
         }
 
         public bool changeActivePlaye()

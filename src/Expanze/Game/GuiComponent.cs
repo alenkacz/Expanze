@@ -67,7 +67,9 @@ namespace Expanze
                 c = Color.Black;
             else
                 c = Color.White;
-            spriteBatch.Draw(myButton,spritePosition, c);
+            if( myButton != null )
+                spriteBatch.Draw(myButton,spritePosition, c);
+
             spriteBatch.End();
         }
 

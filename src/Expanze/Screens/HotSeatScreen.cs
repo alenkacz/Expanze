@@ -26,6 +26,10 @@ namespace Expanze
         ContentManager content;
         Texture2D playerColorTexture;
         Vector2 colorPosition;
+        //space between player rows
+        readonly int playerSpace = 80;
+
+        List<ButtonComponent> playerButtons = new List<ButtonComponent>();
 
         #region Initialization
 
@@ -35,7 +39,7 @@ namespace Expanze
         /// </summary>
         private HotSeatScreen(bool isAI)
         {
-
+            colorPosition = new Vector2(50, 100);
         }
 
         /// <summary>
@@ -68,8 +72,16 @@ namespace Expanze
             ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), new Rectangle(), GameState.gameFont, Settings.scaleW(147), Settings.scaleH(141), "nextTurn");
             changeTurnButton.Actions += StartGameSelected;
             guiComponents.Add(changeTurnButton);
-            ButtonComponent p1Switch = new ButtonComponent(ScreenManager.Game, 800, 500, GameState.playerNameFont, 200, 200, null, Settings.PlayerState);
-            guiComponents.Add(p1Switch);
+
+            int counter = 0;
+
+            foreach (Color c in Settings.playerColors)
+            {
+                PlayerSettingRowComponent p1Switch = new PlayerSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameState.playerNameFont, 200, 200, c);
+                guiComponents.Add(p1Switch);
+                colorPosition.Y += playerSpace;
+                counter++;
+            }
 
             foreach (GuiComponent guiComponent in guiComponents)
             {
@@ -114,11 +126,20 @@ namespace Expanze
         /// </summary>
         void StartGameSelected(object sender, PlayerIndexEventArgs e)
         {
+            saveScreenData();
+
             //ScreenManager.RemoveScreen(this);
             LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
                                new GameplayScreen(false));
             ScreenManager.RemoveScreen(this);
-            //ScreenManager.AddScreen(new GameplayScreen(false),PlayerIndex.One);
+        }
+
+        private void saveScreenData()
+        {
+            foreach (ButtonComponent b in playerButtons)
+            {
+
+            }
         }
 
         #region Draw
@@ -130,18 +151,9 @@ namespace Expanze
         {
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 
-            colorPosition = new Vector2(50, 100);
-
             spriteBatch.Begin();
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
                                               Color.Black, 0, 0);
-
-            foreach (Color c in Settings.playerColors)
-            {
-                spriteBatch.Draw(playerColorTexture, colorPosition, c);
-                spriteBatch.DrawString(GameState.playerNameFont, "Player", new Vector2(colorPosition.X + 100,colorPosition.Y), Color.White);
-                colorPosition.Y += 80;
-            }
 
             foreach (GuiComponent guiComponent in guiComponents)
             {
