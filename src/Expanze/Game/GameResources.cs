@@ -42,6 +42,8 @@ namespace Expanze
         Model[] buildingModel;
         Model[] mountainsCoverModel;
         Model[] mountainsMineModel;
+        Model[] stoneCoverModel;
+        Model[] stoneQuarryModel;
         Texture2D[] hud;
 
 
@@ -68,6 +70,8 @@ namespace Expanze
         public Texture2D getHudTexture(HUDTexture id) { return hud[(int) id]; }
         public Model getMountainsCover(int i) { return mountainsCoverModel[i]; }
         public Model getMountainsSourceBuildingModel(int i) { return mountainsMineModel[i]; }
+        public Model getStoneCover(int i) { return stoneCoverModel[i]; }
+        public Model getStoneSourceBuildingModel(int i) { return stoneQuarryModel[i]; }
         public Model getBuildingModel(BuildingModel id) { return buildingModel[(int) id]; }
         public Model getTownModel() { return townModel; }
         public Model getRoadModel() { return roadModel; }
@@ -148,6 +152,22 @@ namespace Expanze
             mountainsMineModel[3] = content.Load<Model>("Models/mine2");
             mountainsMineModel[4] = content.Load<Model>("Models/mine3");
             mountainsMineModel[5] = content.Load<Model>("Models/mine4");
+
+            stoneCoverModel = new Model[6];
+            stoneCoverModel[0] = content.Load<Model>("Models/krytka5");
+            stoneCoverModel[1] = content.Load<Model>("Models/krytka6");
+            stoneCoverModel[2] = content.Load<Model>("Models/krytka1");
+            stoneCoverModel[3] = content.Load<Model>("Models/krytka2");
+            stoneCoverModel[4] = content.Load<Model>("Models/krytka3");
+            stoneCoverModel[5] = content.Load<Model>("Models/krytka4");
+
+            stoneQuarryModel = new Model[6];
+            stoneQuarryModel[0] = content.Load<Model>("Models/lom_model5");
+            stoneQuarryModel[1] = content.Load<Model>("Models/lom_model6");
+            stoneQuarryModel[2] = content.Load<Model>("Models/lom_model1");
+            stoneQuarryModel[3] = content.Load<Model>("Models/lom_model2");
+            stoneQuarryModel[4] = content.Load<Model>("Models/lom_model3");
+            stoneQuarryModel[5] = content.Load<Model>("Models/lom_model4");
 
             townModel = content.Load<Model>("Models/town");
             roadModel = content.Load<Model>("Models/road");
