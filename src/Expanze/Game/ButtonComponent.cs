@@ -151,6 +151,17 @@ namespace Expanze
             return switchTexts.ElementAt(activeText);
         }
 
+        public void setPosition(Vector2 v) 
+        {
+            spritePosition = v;
+        }
+
+        public void incrementPosition()
+        {
+            spritePosition.X += 30;
+            this.init(new Rectangle(),(int)spritePosition.X,(int)spritePosition.Y,width,height);
+        }
+
         public override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);

@@ -20,6 +20,8 @@ namespace Expanze
         List<ButtonComponent> toButtons = new List<ButtonComponent>();
         List<GuiComponent> content = new List<GuiComponent>();
 
+        MarketSliderComponent marketSlider;
+
         //size of the button
         Vector2 buttonSize = new Vector2(57, 60);
         //space between buttons
@@ -72,6 +74,9 @@ namespace Expanze
 
             GuiComponent secondRow = new GuiComponent(Settings.Game, range.Left + w_space, (int)(range.Top + topMargin + buttonSize.Y + 2 * space + 10), GameState.gameFont, Settings.scaleW(77), Settings.scaleH(14), "za_co_vymenit");
             this.content.Add(secondRow);
+
+            marketSlider = new MarketSliderComponent(Settings.Game, range.Left + 50, (int)(range.Top + topMargin + buttonSize.Y + 4 * space + 10), GameState.gameFont);
+            this.content.Add(marketSlider);
 
             foreach (GuiComponent g in content)
             {
