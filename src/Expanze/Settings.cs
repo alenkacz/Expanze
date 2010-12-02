@@ -104,5 +104,13 @@ namespace Expanze
 
         //possible colors 
         public static List<Color> playerColors = new List<Color> { Color.Red, Color.Blue, Color.Yellow, Color.White, Color.Green, Color.Orange };
+    
+        //possible game modes
+        public static List<String> PlayerState = new List<String>
+        {
+            "AI",
+            "Human",
+            "Nonactive"
+        };
     }
 }

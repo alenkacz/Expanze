@@ -20,7 +20,7 @@ namespace Expanze
     /// The pause menu comes up over the top of the game,
     /// giving the player options to resume or quit.
     /// </summary>
-    class HotSeatScreen : MenuScreen
+    class HotSeatScreen : GameScreen
     {
         List<GuiComponent> guiComponents = new List<GuiComponent>();
         ContentManager content;
@@ -33,8 +33,7 @@ namespace Expanze
         /// <summary>
         /// Constructor.
         /// </summary>
-        private HotSeatScreen()
-            :base("Test")
+        private HotSeatScreen(bool isAI)
         {
 
         }
@@ -50,8 +49,9 @@ namespace Expanze
                 screen.ExitScreen();
 
             // Create and activate the loading screen.
-            HotSeatScreen loadingScreen = new HotSeatScreen();
+            HotSeatScreen loadingScreen = new HotSeatScreen(false);
 
+            screenManager.AddScreen(new BackgroundScreen(), controllingPlayer);
             screenManager.AddScreen(loadingScreen, controllingPlayer);
         }
 
@@ -63,10 +63,13 @@ namespace Expanze
             if (content == null)
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
 
+            GameState.playerNameFont = content.Load<SpriteFont>("playername");
 
-            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width - 91, ScreenManager.Game.GraphicsDevice.Viewport.Height - 80, new Rectangle(), GameState.gameFont, 91, 80, "nextTurn");
+            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), new Rectangle(), GameState.gameFont, Settings.scaleW(147), Settings.scaleH(141), "nextTurn");
             changeTurnButton.Actions += StartGameSelected;
             guiComponents.Add(changeTurnButton);
+            ButtonComponent p1Switch = new ButtonComponent(ScreenManager.Game, 800, 500, GameState.playerNameFont, 200, 200, null, Settings.PlayerState);
+            guiComponents.Add(p1Switch);
 
             foreach (GuiComponent guiComponent in guiComponents)
             {
@@ -136,6 +139,7 @@ namespace Expanze
             foreach (Color c in Settings.playerColors)
             {
                 spriteBatch.Draw(playerColorTexture, colorPosition, c);
+                spriteBatch.DrawString(GameState.playerNameFont, "Player", new Vector2(colorPosition.X + 100,colorPosition.Y), Color.White);
                 colorPosition.Y += 80;
             }
 

@@ -41,7 +41,10 @@ namespace Expanze
         public override void LoadContent()
         {
             spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
-            myButton = myGame.Content.Load<Texture2D>(texture);
+            if (texture != null)
+            {
+                myButton = myGame.Content.Load<Texture2D>(texture);
+            }
         }
 
         public override void Update(GameTime gameTime)

@@ -15,6 +15,9 @@ namespace Expanze
 
         protected Rectangle clickablePos;
 
+        List<String> switchTexts = null;
+        int activeText = 0;
+
         protected int mousex;
         protected int mousey;
 
@@ -51,6 +54,13 @@ namespace Expanze
         {
             this.type = type;
             this.init(clickablePosition, x, y, width, height);
+        }
+
+        public ButtonComponent(Game game, int x, int y, SpriteFont font, int width, int height, String texture, List<String> texts)
+            : base(game, x, y, font, width, height, texture)
+        {
+            switchTexts = texts;
+            this.init(new Rectangle(), x, y, width, height);
         }
 
         private void init(Rectangle clickablePosition, int x, int y, int width, int height)
@@ -92,6 +102,7 @@ namespace Expanze
                 {
                     if (Actions != null)
                         Actions(this, new PlayerIndexEventArgs(new PlayerIndex()));
+                        nextText();
                     pressed = true;
                 }
             }
@@ -99,6 +110,17 @@ namespace Expanze
             if (pressed && ButtonState.Pressed != mouseState.LeftButton)
             {
                 pressed = false;
+            }
+        }
+
+        /// <summary>
+        /// Switches between all texts
+        /// </summary>
+        public void nextText()
+        {
+            if (++activeText >= switchTexts.Count)
+            {
+                activeText = 0;
             }
         }
 
@@ -113,8 +135,16 @@ namespace Expanze
                 c = Color.Green;
             else
                 c = Color.White;
+            if (myButton != null)
+            {
+                spriteBatch.Draw(myButton, spritePosition, c);
+            }
 
-            spriteBatch.Draw(myButton, spritePosition, c);
+            if (switchTexts != null)
+            {
+                spriteBatch.DrawString(gameFont, switchTexts.ElementAt(activeText), spritePosition, Color.White);
+            }
+
             spriteBatch.End();
         }
     }
