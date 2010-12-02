@@ -104,7 +104,10 @@ namespace Expanze
                 {
                     if (Actions != null)
                         Actions(this, new PlayerIndexEventArgs(new PlayerIndex()));
+                    
+                    if( switchTexts != null )
                         nextText();
+                    
                     pressed = true;
                 }
             }
@@ -136,6 +139,14 @@ namespace Expanze
             {
                 activeText = index;
             }
+        }
+
+        /// <summary>
+        /// Returns actually selected text
+        /// </summary>
+        public String getSelectedState()
+        {
+            return switchTexts.ElementAt(activeText);
         }
 
         public override void Draw(GameTime gameTime)

@@ -19,6 +19,7 @@ namespace Expanze
         Texture2D playerColorTexture;
         Color playerColor;
         ButtonComponent playerState;
+        String name = "Player";
 
         public PlayerSettingRowComponent(Game game, int x, int y, SpriteFont font, int width, int height, Color c) 
             : base(game,x,y,font,width,height,null) 
@@ -37,6 +38,21 @@ namespace Expanze
         public void setIndexOfText(int index)
         {
             playerState.setActiveTextIndex(index);
+        }
+
+
+        public Player getPlayerSettings()
+        {
+            if ("Neaktivní" != playerState.getSelectedState())
+            {
+                if ("Hráč" == playerState.getSelectedState())
+                    return new Player(name, playerColor, null);
+                else
+                    return null;
+                //TODO start AI game
+            }
+
+            return null;
         }
 
         public override void Draw(GameTime gameTime)
@@ -58,7 +74,7 @@ namespace Expanze
             }
 
             spriteBatch.Draw(playerColorTexture, spritePosition, playerColor);
-            spriteBatch.DrawString(GameState.playerNameFont, "Player", new Vector2(spritePosition.X + 100, spritePosition.Y), Color.White);
+            spriteBatch.DrawString(GameState.playerNameFont, name, new Vector2(spritePosition.X + 100, spritePosition.Y), Color.White);
             playerState.Draw(gameTime);
 
             spriteBatch.End();

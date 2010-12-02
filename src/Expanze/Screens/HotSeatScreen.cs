@@ -28,6 +28,7 @@ namespace Expanze
         Vector2 colorPosition;
         //space between player rows
         readonly int playerSpace = 80;
+        List<PlayerSettingRowComponent> playersSettings = new List<PlayerSettingRowComponent>();
 
         List<ButtonComponent> playerButtons = new List<ButtonComponent>();
 
@@ -55,7 +56,6 @@ namespace Expanze
             // Create and activate the loading screen.
             HotSeatScreen loadingScreen = new HotSeatScreen(false);
 
-            screenManager.AddScreen(new BackgroundScreen(), controllingPlayer);
             screenManager.AddScreen(loadingScreen, controllingPlayer);
         }
 
@@ -77,14 +77,15 @@ namespace Expanze
 
             foreach (Color c in Settings.playerColors)
             {
-                PlayerSettingRowComponent p1Switch = new PlayerSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameState.playerNameFont, 200, 200, c);
-                guiComponents.Add(p1Switch);
+                PlayerSettingRowComponent pSwitch = new PlayerSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameState.playerNameFont, 200, 200, c);
+                guiComponents.Add(pSwitch);
+                playersSettings.Add(pSwitch);
                 colorPosition.Y += playerSpace;
 
                 if (counter > 1)
                 {
                     //only two players are active by default
-                    p1Switch.setIndexOfText(Settings.PlayerState.IndexOf("Neaktivní"));
+                    pSwitch.setIndexOfText(Settings.PlayerState.IndexOf("Neaktivní"));
                 }
 
                 counter++;
@@ -143,9 +144,14 @@ namespace Expanze
 
         private void saveScreenData()
         {
-            foreach (ButtonComponent b in playerButtons)
+            foreach (PlayerSettingRowComponent p in playersSettings)
             {
+                Player pl = p.getPlayerSettings();
 
+                if (pl != null)
+                {
+                    GameMaster.getInstance().addPlayer(pl);
+                }
             }
         }
 

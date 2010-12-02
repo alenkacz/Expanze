@@ -11,7 +11,7 @@ namespace Expanze
 {
     class GameMaster
     {
-        private const int n_player = 2;
+        private int n_player = 0;
         private List<Player> players = new List<Player>();
         private Player activePlayer;
         private int activePlayerIndex;
@@ -63,11 +63,11 @@ namespace Expanze
             IComponentAI componentAI2 = componentAI.Clone();
             componentAI2.InitAIComponent(map);
 
-            players[0] = new Player("Player1", Color.RoyalBlue, (isAI) ? componentAI1 : null);
-            players[1] = new Player("Player2", Color.Red, (isAI) ? componentAI2 : null);
+            //players[0] = new Player("Player1", Color.RoyalBlue, (isAI) ? componentAI1 : null);
+            //players[1] = new Player("Player2", Color.Red, (isAI) ? componentAI2 : null);
             
             activePlayerIndex = 0;
-            activePlayer = players[activePlayerIndex];
+            activePlayer = players.ElementAt(activePlayerIndex);
 
             pausedNew = false;
             paused = false;
@@ -258,6 +258,7 @@ namespace Expanze
         public void addPlayer(Player p)
         {
             players.Add(p);
+            ++n_player;
         }
 
         public bool changeActivePlaye()
