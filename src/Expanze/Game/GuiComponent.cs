@@ -83,6 +83,10 @@ namespace Expanze
             return this.picked;
         }
 
+        public void changePosition(Vector2 p) 
+        {
+            spritePosition = p;
+        }
 
     }
 }
