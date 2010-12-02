@@ -171,6 +171,9 @@ namespace Expanze.Gameplay.Map
                             case HexaKind.Cornfield :
                                 hexaMapView[i][j] = new CornfieldView(hexaMapModel[i][j]);
                                 break;
+                            case HexaKind.Stone :
+                                hexaMapView[i][j] = new StoneView(hexaMapModel[i][j]);
+                                break;
                             default :
                                 hexaMapView[i][j] = new HexaView(hexaMapModel[i][j]);
                                 break;
