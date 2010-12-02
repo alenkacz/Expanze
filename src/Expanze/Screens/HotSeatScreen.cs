@@ -111,6 +111,11 @@ namespace Expanze
                 playersSettings.Add(pSwitch);
                 colorPosition.Y += playerSpace;
 
+                if (counter > 1)
+                {
+                    pSwitch.setIndexOfText(Settings.PlayerState.IndexOf("Neaktivní"));
+                }
+
                 counter++;
             }
 
