@@ -20,9 +20,10 @@ namespace Expanze
         List<GuiComponent> content = new List<GuiComponent>();
 
         //size of the button
-        Vector2 buttonSize = new Vector2(120, 120);
+        Vector2 buttonSize = new Vector2(57, 60);
         //space between buttons
-        int space = 20;
+        int space = 50;
+        int w_space = 20;
         Rectangle range;
 
         #endregion
@@ -52,13 +53,16 @@ namespace Expanze
             this.createFirstRow();
             this.createSecondRow();
 
-            ButtonComponent change_button = new ButtonComponent(Settings.Game, range.Right - 200, (int)(range.Bottom-50), new Rectangle(), GameState.gameFont, Settings.scaleW(160), Settings.scaleH(45), "change-button");
+            ButtonComponent change_button = new ButtonComponent(Settings.Game, range.Left + 180, (int)(range.Bottom-80), new Rectangle(), GameState.gameFont, Settings.scaleW(104), Settings.scaleH(45), "HUD/OKPromt");
             change_button.Actions += ChangeButtonAction;
             this.content.Add(change_button);
 
-            ButtonComponent exit_button = new ButtonComponent(Settings.Game, range.Right-42, (int)(range.Top + Settings.scaleH(29)), new Rectangle(), GameState.gameFont, Settings.scaleW(42), Settings.scaleH(29), "close");
+            ButtonComponent exit_button = new ButtonComponent(Settings.Game, range.Left + 400, (int)(range.Bottom - 80), new Rectangle(), GameState.gameFont, Settings.scaleW(104), Settings.scaleH(46), "HUD/NOPromt");
             exit_button.Actions += CloseButtonAction;
             this.content.Add(exit_button);
+
+            GuiComponent firstRow = new GuiComponent(Settings.Game, range.Left + w_space, (int)(range.Top + space),GameState.gameFont, Settings.scaleW(170), Settings.scaleH(37), "co_vymenit");
+            this.content.Add(firstRow);
 
             foreach (GuiComponent g in content)
             {
@@ -73,19 +77,19 @@ namespace Expanze
         protected void createFirstRow()
         {
             //top row
-            ButtonComponent corn_button = new ButtonComponent(Settings.Game, range.Left + 2 * space, (int)(range.Top + space), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "obili-button", HexaKind.Cornfield);
+            ButtonComponent corn_button = new ButtonComponent(Settings.Game, range.Left + w_space, (int)(range.Top + space), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "market_corn", HexaKind.Cornfield);
             corn_button.Actions += MaterialButtonAction;
             this.content.Add(corn_button);
-            ButtonComponent brick_button = new ButtonComponent(Settings.Game, (int)(range.Left + buttonSize.X + space), (int)(range.Top + space), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "cihla-button", HexaKind.Stone);
+            ButtonComponent brick_button = new ButtonComponent(Settings.Game, (int)(range.Left + buttonSize.X + 2 * w_space), (int)(range.Top + space), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "market_stone", HexaKind.Stone);
             brick_button.Actions += MaterialButtonAction;
             this.content.Add(brick_button);
-            ButtonComponent wood_button = new ButtonComponent(Settings.Game, (int)(range.Left + 2 * buttonSize.X + space), (int)(range.Top + space), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "drevo-button", HexaKind.Forest);
+            ButtonComponent wood_button = new ButtonComponent(Settings.Game, (int)(range.Left + 2 * buttonSize.X + 3 * w_space), (int)(range.Top + space), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "market_wood", HexaKind.Forest);
             wood_button.Actions += MaterialButtonAction;
             this.content.Add(wood_button);
-            ButtonComponent stone_button = new ButtonComponent(Settings.Game, (int)(range.Left + 3 * buttonSize.X + space), (int)(range.Top + space), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "kamen-button", HexaKind.Mountains);
+            ButtonComponent stone_button = new ButtonComponent(Settings.Game, (int)(range.Left + 3 * buttonSize.X + 4 * w_space), (int)(range.Top + space), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "market_ore", HexaKind.Mountains);
             stone_button.Actions += MaterialButtonAction;
             this.content.Add(stone_button);
-            ButtonComponent sheep_button = new ButtonComponent(Settings.Game, (int)(range.Left + 4 * buttonSize.X + space), (int)(range.Top + space), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "ovce-button", HexaKind.Pasture);
+            ButtonComponent sheep_button = new ButtonComponent(Settings.Game, (int)(range.Left + 4 * buttonSize.X + 5 * w_space), (int)(range.Top + space), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "market_meat", HexaKind.Pasture);
             sheep_button.Actions += MaterialButtonAction;
             this.content.Add(sheep_button);
 
@@ -102,19 +106,19 @@ namespace Expanze
         protected void createSecondRow()
         {
             //bottom row
-            ButtonComponent corn_button = new ButtonComponent(Settings.Game, range.Left + 2 * space, (int)(range.Top + buttonSize.Y + 2 * space), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "obili-button",HexaKind.Cornfield);
+            ButtonComponent corn_button = new ButtonComponent(Settings.Game, range.Left + w_space, (int)(range.Top + buttonSize.Y + 2 * space), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "market_corn", HexaKind.Cornfield);
             corn_button.Actions += MaterialButtonAction;
             this.content.Add(corn_button);
-            ButtonComponent brick_button = new ButtonComponent(Settings.Game, (int)(range.Left + buttonSize.X + space), (int)(range.Top + buttonSize.Y + 2 * space), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "cihla-button",HexaKind.Stone);
+            ButtonComponent brick_button = new ButtonComponent(Settings.Game, (int)(range.Left + buttonSize.X + 2 * w_space), (int)(range.Top + buttonSize.Y + 2 * space), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "market_stone", HexaKind.Stone);
             brick_button.Actions += MaterialButtonAction;
             this.content.Add(brick_button);
-            ButtonComponent wood_button = new ButtonComponent(Settings.Game, (int)(range.Left + 2 * buttonSize.X + space), (int)(range.Top + buttonSize.Y + 2 * space), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "drevo-button",HexaKind.Forest);
+            ButtonComponent wood_button = new ButtonComponent(Settings.Game, (int)(range.Left + 2 * buttonSize.X + 3 * w_space), (int)(range.Top + buttonSize.Y + 2 * space), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "market_wood", HexaKind.Forest);
             wood_button.Actions += MaterialButtonAction;
             this.content.Add(wood_button);
-            ButtonComponent stone_button = new ButtonComponent(Settings.Game, (int)(range.Left + 3 * buttonSize.X + space), (int)(range.Top + buttonSize.Y + 2 * space), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "kamen-button",HexaKind.Mountains);
+            ButtonComponent stone_button = new ButtonComponent(Settings.Game, (int)(range.Left + 3 * buttonSize.X + 4 * w_space), (int)(range.Top + buttonSize.Y + 2 * space), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "market_ore", HexaKind.Mountains);
             stone_button.Actions += MaterialButtonAction;
             this.content.Add(stone_button);
-            ButtonComponent sheep_button = new ButtonComponent(Settings.Game, (int)(range.Left + 4 * buttonSize.X + space), (int)(range.Top + buttonSize.Y + 2 * space), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "ovce-button", HexaKind.Pasture);
+            ButtonComponent sheep_button = new ButtonComponent(Settings.Game, (int)(range.Left + 4 * buttonSize.X + 5 * w_space), (int)(range.Top + buttonSize.Y + 2 * space), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "market_meat", HexaKind.Pasture);
             sheep_button.Actions += MaterialButtonAction;
             this.content.Add(sheep_button);
 

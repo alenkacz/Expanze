@@ -17,6 +17,7 @@ namespace Expanze
 
         List<String> switchTexts = null;
         int activeText = 0;
+        Texture2D pickedTexture;
 
         protected int mousex;
         protected int mousey;
@@ -70,6 +71,7 @@ namespace Expanze
             {
                 //rectangle not specifies, whole place is clickable
                 clickablePos = new Rectangle(Settings.scaleW(x), Settings.scaleH(y), width, height);
+                pickedTexture = myGame.Content.Load<Texture2D>("HUD/ic_active");
             }
             else
             {
@@ -153,16 +155,17 @@ namespace Expanze
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
 
-            
-
             Color c;
-            if (picked)
-                c = Color.Green;
-            else
-                c = Color.White;
+            c = Color.White;
+
             if (myButton != null)
             {
                 spriteBatch.Draw(myButton, spritePosition, c);
+
+                if (picked)
+                {
+                    spriteBatch.Draw(pickedTexture, spritePosition, c);
+                }
             }
 
             if (switchTexts != null)
