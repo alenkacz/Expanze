@@ -77,7 +77,7 @@ namespace Expanze
 
             foreach (Color c in Settings.playerColors)
             {
-                PlayerSettingRowComponent pSwitch = new PlayerSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameState.playerNameFont, 200, 200, c);
+                PlayerSettingRowComponent pSwitch = new PlayerSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameState.playerNameFont, 200, 200, c, "Player" + (counter+1));
                 guiComponents.Add(pSwitch);
                 playersSettings.Add(pSwitch);
                 colorPosition.Y += playerSpace;

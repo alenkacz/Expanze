@@ -21,11 +21,12 @@ namespace Expanze
         ButtonComponent playerState;
         String name = "Player";
 
-        public PlayerSettingRowComponent(Game game, int x, int y, SpriteFont font, int width, int height, Color c) 
+        public PlayerSettingRowComponent(Game game, int x, int y, SpriteFont font, int width, int height, Color c,String name) 
             : base(game,x,y,font,width,height,null) 
         {
             playerColorTexture = game.Content.Load<Texture2D>("pcolor");
             playerColor = c;
+            this.name = name;
             playerState = new ButtonComponent(game, x + 300, y, font, 200, 50, null, Settings.PlayerState);
         }
 
