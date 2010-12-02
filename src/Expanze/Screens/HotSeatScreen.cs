@@ -24,6 +24,8 @@ namespace Expanze
     {
         List<GuiComponent> guiComponents = new List<GuiComponent>();
         ContentManager content;
+        Texture2D playerColorTexture;
+        Vector2 colorPosition;
 
         #region Initialization
 
@@ -71,6 +73,8 @@ namespace Expanze
                 guiComponent.Initialize();
                 guiComponent.LoadContent();
             }
+
+            playerColorTexture = ScreenManager.Game.Content.Load<Texture2D>("pcolor");
 
             ScreenManager.Game.ResetElapsedTime();
         }
@@ -122,9 +126,18 @@ namespace Expanze
         public override void Draw(GameTime gameTime)
         {
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
+
+            colorPosition = new Vector2(50, 100);
+
             spriteBatch.Begin();
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
-                                              Color.White, 0, 0);
+                                              Color.Black, 0, 0);
+
+            foreach (Color c in Settings.playerColors)
+            {
+                spriteBatch.Draw(playerColorTexture, colorPosition, c);
+                colorPosition.Y += 80;
+            }
 
             foreach (GuiComponent guiComponent in guiComponents)
             {

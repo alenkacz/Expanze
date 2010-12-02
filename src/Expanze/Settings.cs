@@ -101,5 +101,8 @@ namespace Expanze
         public static Vector2 playerNamePosition = new Vector2(Settings.maximumResolution.X - scaleW(500), scaleH(15));
         public static Vector2 playerColorPosition = new Vector2(Settings.maximumResolution.X - scaleW(200), scaleH(28));
         public static Vector2 playerColorSize = new Vector2(scaleW(50), scaleH(50));
+
+        //possible colors 
+        public static List<Color> playerColors = new List<Color> { Color.Red, Color.Blue, Color.Yellow, Color.White, Color.Green, Color.Orange };
     }
 }
