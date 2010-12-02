@@ -80,6 +80,13 @@ namespace Expanze
                 PlayerSettingRowComponent p1Switch = new PlayerSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameState.playerNameFont, 200, 200, c);
                 guiComponents.Add(p1Switch);
                 colorPosition.Y += playerSpace;
+
+                if (counter > 1)
+                {
+                    //only two players are active by default
+                    p1Switch.setIndexOfText(Settings.PlayerState.IndexOf("Neaktivní"));
+                }
+
                 counter++;
             }
 

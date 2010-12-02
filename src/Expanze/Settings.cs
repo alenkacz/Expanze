@@ -108,9 +108,9 @@ namespace Expanze
         //possible game modes
         public static List<String> PlayerState = new List<String>
         {
-            "AI",
-            "Human",
-            "Nonactive"
+            "Hráč",
+            "Umělá inteligence",
+            "Neaktivní"
         };
     }
 }

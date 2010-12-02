@@ -75,6 +75,8 @@ namespace Expanze
             {
                 clickablePos = clickablePosition;
             }
+
+            spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
         }
 
         /// <summary>
@@ -121,6 +123,18 @@ namespace Expanze
             if (++activeText >= switchTexts.Count)
             {
                 activeText = 0;
+            }
+        }
+
+        /// <summary>
+        /// Sets index of active text
+        /// </summary>
+        /// <param name="index">index of the text</param>
+        public void setActiveTextIndex(int index)
+        {
+            if (index < switchTexts.Count)
+            {
+                activeText = index;
             }
         }
 

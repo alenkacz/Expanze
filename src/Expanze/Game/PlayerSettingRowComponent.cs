@@ -18,17 +18,25 @@ namespace Expanze
         List<ButtonComponent> playerButtons = new List<ButtonComponent>();
         Texture2D playerColorTexture;
         Color playerColor;
+        ButtonComponent playerState;
 
         public PlayerSettingRowComponent(Game game, int x, int y, SpriteFont font, int width, int height, Color c) 
             : base(game,x,y,font,width,height,null) 
         {
             playerColorTexture = game.Content.Load<Texture2D>("pcolor");
             playerColor = c;
+            playerState = new ButtonComponent(game, x + 300, y, font, 200, 50, null, Settings.PlayerState);
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            playerState.Update(gameTime);
+        }
+
+        public void setIndexOfText(int index)
+        {
+            playerState.setActiveTextIndex(index);
         }
 
         public override void Draw(GameTime gameTime)
@@ -49,8 +57,9 @@ namespace Expanze
                 return;
             }
 
-            spriteBatch.Draw(playerColorTexture, spritePosition, c);
+            spriteBatch.Draw(playerColorTexture, spritePosition, playerColor);
             spriteBatch.DrawString(GameState.playerNameFont, "Player", new Vector2(spritePosition.X + 100, spritePosition.Y), Color.White);
+            playerState.Draw(gameTime);
 
             spriteBatch.End();
         }
