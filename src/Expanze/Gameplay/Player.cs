@@ -18,7 +18,11 @@ namespace Expanze
         SourceAll prevSource;       // Source before last source change (for example before paying for something, collecting resources
         SourceAll source;
         SourceAll transactionSource;
-        int conversionRate;
+        int conversionRateCorn;
+        int conversionRateStone;
+        int conversionRateOre;
+        int conversionRateMeat;
+        int conversionRateWood;
 
         IComponentAI componentAI;   // is null if player is NOT controled by computer but is controled by human
 
@@ -28,7 +32,13 @@ namespace Expanze
             prevSource = new SourceAll(0);
             source = new SourceAll(0);
             transactionSource = new SourceAll(0);
-            this.conversionRate = Settings.conversionRate;
+
+            this.conversionRateCorn = Settings.conversionRateCorn;
+            conversionRateStone = Settings.conversionRateStone;
+            conversionRateOre = Settings.conversionRateOre;
+            conversionRateMeat = Settings.conversionRateMeat;
+            conversionRateWood = Settings.conversionRateWood;
+
             this.color = color;
             this.name = name;
             this.componentAI = componentAI;
@@ -47,9 +57,28 @@ namespace Expanze
 
         public int getPoints() { return points; }
 
-        public int getConversionRate()
+        public int getConversionRate(HexaKind h)
         {
-            return this.conversionRate;
+            switch (h)
+            {
+                case HexaKind.Cornfield:
+                    return conversionRateCorn;
+                    break;
+                case HexaKind.Forest:
+                    return conversionRateWood;
+                    break;
+                case HexaKind.Mountains:
+                    return conversionRateOre;
+                    break;
+                case HexaKind.Pasture:
+                    return conversionRateMeat;
+                    break;
+                case HexaKind.Stone:
+                    return conversionRateStone;
+                    break;
+            }
+
+            return -1;
         }
 
         public SourceAll getSource()

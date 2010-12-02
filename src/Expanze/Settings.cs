@@ -73,7 +73,11 @@ namespace Expanze
         public static Game Game = null;
 
         public static bool isFullscreen = false;
-        public static int conversionRate = 4;
+        public static int conversionRateCorn = 4;
+        public static int conversionRateStone = 4;
+        public static int conversionRateOre = 4;
+        public static int conversionRateMeat = 4;
+        public static int conversionRateWood = 4;
 
         public static Matrix spriteScale = Matrix.CreateScale(Settings.activeResolution.X / Settings.maximumResolution.X, Settings.activeResolution.Y / Settings.maximumResolution.Y, 1);
 

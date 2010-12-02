@@ -62,6 +62,7 @@ namespace Expanze
         {
             switchTexts = texts;
             this.init(new Rectangle(), x, y, width, height);
+            spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
         }
 
         private void init(Rectangle clickablePosition, int x, int y, int width, int height)
@@ -77,8 +78,6 @@ namespace Expanze
             {
                 clickablePos = clickablePosition;
             }
-
-            spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
         }
 
         /// <summary>
@@ -159,7 +158,7 @@ namespace Expanze
         public void incrementPosition()
         {
             spritePosition.X += 30;
-            this.init(new Rectangle(),(int)spritePosition.X,(int)spritePosition.Y,width,height);
+            clickablePos = new Rectangle((int)spritePosition.X, (int)spritePosition.Y, width, height);
         }
 
         public override void Draw(GameTime gameTime)

@@ -180,7 +180,7 @@ namespace Expanze
 
         public void doMaterialConversion(HexaKind from, HexaKind to, Player p)
         {
-            int rate = p.getConversionRate();
+            int rate = p.getConversionRate(from);
 
             if (!this.isMaterialAvailable(from,rate)) { return; }
 
