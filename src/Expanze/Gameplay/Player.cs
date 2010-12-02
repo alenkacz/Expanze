@@ -63,19 +63,14 @@ namespace Expanze
             {
                 case HexaKind.Cornfield:
                     return conversionRateCorn;
-                    break;
                 case HexaKind.Forest:
                     return conversionRateWood;
-                    break;
                 case HexaKind.Mountains:
                     return conversionRateOre;
-                    break;
                 case HexaKind.Pasture:
                     return conversionRateMeat;
-                    break;
                 case HexaKind.Stone:
                     return conversionRateStone;
-                    break;
             }
 
             return -1;

@@ -61,6 +61,11 @@ namespace Expanze
             itemPick = new List<PickVariables>();
         }
 
+        public bool getIsActive()
+        {
+            return active;
+        }
+
         public void addPromptItem(PromptItem item)
         {
             itemList.Add(item);

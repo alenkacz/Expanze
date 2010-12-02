@@ -232,15 +232,19 @@ namespace Expanze.Gameplay.Map
 
         public void ChangeCamera()
         {
-            if (GameState.CurrentMouseState.LeftButton == ButtonState.Pressed)
+            if(!PromptWindow.Inst().getIsActive() &&
+               !MarketComponent.getInstance().getIsActive())
             {
-                float dx = (GameState.CurrentMouseState.X - GameState.LastMouseState.X) / 100.0f;
-                eye.Z += dx;
-                target.Z += dx;
+                if (GameState.CurrentMouseState.LeftButton == ButtonState.Pressed)
+                {
+                    float dx = (GameState.CurrentMouseState.X - GameState.LastMouseState.X) / 100.0f;
+                    eye.Z += dx;
+                    target.Z += dx;
 
-                float dy = (GameState.CurrentMouseState.Y - GameState.LastMouseState.Y) / 100.0f;
-                eye.X -= dy;
-                target.X -= dy;
+                    float dy = (GameState.CurrentMouseState.Y - GameState.LastMouseState.Y) / 100.0f;
+                    eye.X -= dy;
+                    target.X -= dy;
+                }
             }
 
             if (GameState.CurrentMouseState.ScrollWheelValue - GameState.LastMouseState.ScrollWheelValue != 0)

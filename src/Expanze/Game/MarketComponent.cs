@@ -51,6 +51,11 @@ namespace Expanze
             return instance;
         }
 
+        public bool getIsActive()
+        {
+            return isActive;
+        }
+
         public override void Initialize()
         {
             base.Initialize();
