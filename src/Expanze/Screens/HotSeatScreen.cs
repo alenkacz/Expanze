@@ -30,6 +30,7 @@ namespace Expanze
         readonly int playerSpace = 80;
         List<PlayerSettingRowComponent> playersSettings = new List<PlayerSettingRowComponent>();
         List<ButtonComponent> addButtons = new List<ButtonComponent>();
+        List<ButtonComponent> remButtons = new List<ButtonComponent>();
 
         int activeNumberOfPlayers = 2;
 
@@ -89,6 +90,19 @@ namespace Expanze
             addBtn4.Actions += AddPlayerSelected;
             addButtons.Add(addBtn4);
 
+            ButtonComponent remBtn1 = new ButtonComponent(ScreenManager.Game, (int)colorPosition.X + 104, (int)(colorPosition.Y + activeNumberOfPlayers * playerSpace), new Rectangle(), GameState.gameFont, Settings.scaleW(104), Settings.scaleH(45), "HUD/OKPromt");
+            remBtn1.Actions += RemovePlayerSelected;
+            remButtons.Add(remBtn1);
+            ButtonComponent remBtn2 = new ButtonComponent(ScreenManager.Game, (int)colorPosition.X + 104, (int)(colorPosition.Y + (activeNumberOfPlayers + 1) * playerSpace), new Rectangle(), GameState.gameFont, Settings.scaleW(104), Settings.scaleH(45), "HUD/OKPromt");
+            remBtn2.Actions += RemovePlayerSelected;
+            remButtons.Add(remBtn2);
+            ButtonComponent remBtn3 = new ButtonComponent(ScreenManager.Game, (int)colorPosition.X + 104, (int)(colorPosition.Y + (activeNumberOfPlayers + 2) * playerSpace), new Rectangle(), GameState.gameFont, Settings.scaleW(104), Settings.scaleH(45), "HUD/OKPromt");
+            remBtn3.Actions += RemovePlayerSelected;
+            remButtons.Add(remBtn3);
+            ButtonComponent remBtn4 = new ButtonComponent(ScreenManager.Game, (int)colorPosition.X + 104, (int)(colorPosition.Y + (activeNumberOfPlayers + 3) * playerSpace), new Rectangle(), GameState.gameFont, Settings.scaleW(104), Settings.scaleH(45), "HUD/OKPromt");
+            remBtn4.Actions += RemovePlayerSelected;
+            remButtons.Add(remBtn4);
+
             int counter = 0;
 
             foreach (Color c in Settings.playerColors)
@@ -113,6 +127,12 @@ namespace Expanze
             }
 
             foreach (ButtonComponent p in addButtons)
+            {
+                p.Initialize();
+                p.LoadContent();
+            }
+
+            foreach (ButtonComponent p in remButtons)
             {
                 p.Initialize();
                 p.LoadContent();
@@ -144,6 +164,11 @@ namespace Expanze
             {
                 b.UnloadContent();
             }
+
+            foreach (ButtonComponent b in remButtons)
+            {
+                b.UnloadContent();
+            }
         }
 
         public override void Update(GameTime gameTime, bool otherScreenHasFocus,
@@ -162,6 +187,11 @@ namespace Expanze
             }
 
             foreach (ButtonComponent b in addButtons)
+            {
+                b.Update(gameTime);
+            }
+
+            foreach (ButtonComponent b in remButtons)
             {
                 b.Update(gameTime);
             }
@@ -189,6 +219,14 @@ namespace Expanze
         void AddPlayerSelected(object sender, PlayerIndexEventArgs e)
         {
             ++activeNumberOfPlayers;
+        }
+
+        /// <summary>
+        /// Event handler for when the Play Game menu entry is selected.
+        /// </summary>
+        void RemovePlayerSelected(object sender, PlayerIndexEventArgs e)
+        {
+            --activeNumberOfPlayers;
         }
 
         private void saveScreenData()
@@ -231,6 +269,8 @@ namespace Expanze
             {
                 int count = activeNumberOfPlayers - 2;
                 addButtons.ToArray()[count].Draw(gameTime);
+                if( activeNumberOfPlayers > 2 )
+                    remButtons.ToArray()[count].Draw(gameTime);
             }
 
             spriteBatch.End();
