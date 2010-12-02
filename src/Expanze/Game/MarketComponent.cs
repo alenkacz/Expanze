@@ -12,6 +12,7 @@ namespace Expanze
     {
         #region Properties
         public static bool isActive = false;
+        private bool wasActive = false;
         private static MarketComponent instance = null;
 
         //list of to and from buttons - top and bottom row
@@ -197,7 +198,7 @@ namespace Expanze
                     //trying to find selected button
                     if (b.getPicked())
                     {
-                        if (b.getType() == btn.getType()) { return true; }
+                        if (b.getType() == btn.getType()) { b.setPicked(false); return false; }
                         //we can break because only one button can be selected
                         break;
                     }
@@ -277,6 +278,22 @@ namespace Expanze
             foreach (GuiComponent g in content)
             {
                 g.Update(gameTime);
+            }
+
+            if (wasActive != isActive)
+            {
+                // reset when user opens or closes market window
+                foreach (ButtonComponent b in fromButtons)
+                {
+                    b.setPicked(false);
+                }
+
+                foreach (ButtonComponent b in toButtons)
+                {
+                    b.setPicked(false);
+                }
+
+                wasActive = isActive;
             }
         }
 
