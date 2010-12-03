@@ -27,25 +27,9 @@ namespace Expanze
         public RadioButtonComponent(Game game, int x, int y, SpriteFont font, int width, int height, String texture)
             : base(game, x, y, font, width, height, texture) 
         {
+            spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
             this.clickablePos = new Rectangle(x, y, width, height);
             activeTexture = game.Content.Load<Texture2D>("radiobutton_active");
-
-            spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-        }
-
-        public override void LoadContent()
-        {
-            base.LoadContent();
-        }
-
-        public override void UnloadContent()
-        {
-            base.UnloadContent();
         }
 
         public override void Update(GameTime gameTime)
@@ -74,8 +58,6 @@ namespace Expanze
 
         public override void Draw(GameTime gameTime)
         {
-            base.Draw(gameTime);
-
             Color c;
             if (pick)
                 c = Color.Black;
@@ -84,7 +66,7 @@ namespace Expanze
 
             spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,null,null,null,null,Settings.spriteScale);
 
-            //spriteBatch.Draw(myButton, spritePosition, playerColor);
+            spriteBatch.Draw(activeTexture, spritePosition, playerColor);
 
             if (this.selected)
             {

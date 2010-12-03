@@ -20,7 +20,7 @@ namespace Expanze
         // if true, it means that this click was already catched - fix because add/rem buttons are on the same place
         private bool alreadyChanged = false;
 
-        RadioButtonComponent radio;
+        ButtonComponent radio;
 
         String title = "";
         String selected = "";
@@ -33,19 +33,7 @@ namespace Expanze
             this.options = options;
             this.selected = this.options.ElementAt(0);
 
-            radio = new RadioButtonComponent(Settings.Game, x + 100, y, GameState.playerNameFont, 40, 40, "radiobutton_bg");
-
-            spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-        }
-
-        public override void LoadContent()
-        {
-            base.LoadContent();
+            radio = new ButtonComponent(Settings.Game, 500, 300, new Rectangle(), GameState.playerNameFont, 40, 40, "radiobutton_bg");
         }
 
         public override void Update(GameTime gameTime)

@@ -11,7 +11,7 @@ namespace Expanze
     class GuiComponent : GameComponent
     {
         protected SpriteBatch spriteBatch;
-        protected Texture2D myButton;
+        public Texture2D myButton;
         protected Vector2 spritePosition;
         protected Game myGame;
         protected SpriteFont gameFont;

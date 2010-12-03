@@ -49,6 +49,7 @@ namespace Expanze
         {
             this.type = HexaKind.Null;
             this.init(clickablePosition, x, y, width, height);
+            spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
         }
 
         public ButtonComponent(Game game, int x, int y, Rectangle clickablePosition, SpriteFont font, int width, int height, String texture, HexaKind type)
@@ -56,6 +57,7 @@ namespace Expanze
         {
             this.type = type;
             this.init(clickablePosition, x, y, width, height);
+            spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
         }
 
         public ButtonComponent(Game game, int x, int y, Rectangle clickablePosition, SpriteFont font, int width, int height, String texture, String nonactiveTexture, HexaKind type)
@@ -64,6 +66,7 @@ namespace Expanze
             this.type = type;
             this.init(clickablePosition, x, y, width, height);
             this.nonactiveTexture = myGame.Content.Load<Texture2D>(nonactiveTexture);
+            spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
         }
 
         public ButtonComponent(Game game, int x, int y, SpriteFont font, int width, int height, String texture, List<String> texts)
