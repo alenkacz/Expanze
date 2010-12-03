@@ -44,6 +44,10 @@
   </row>
   <row>
     <hexa>
+      <type>nothing</type>
+      <number>0</number>
+    </hexa>
+    <hexa>
       <type>mountains</type>
       <number>20</number>
     </hexa>
@@ -59,7 +63,11 @@
   <row>
     <hexa>
       <type>nothing</type>
-      <number>12</number>
+      <number>0</number>
+    </hexa>
+    <hexa>
+      <type>nothing</type>
+      <number>0</number>
     </hexa>
     <hexa>
       <type>mountains</type>
