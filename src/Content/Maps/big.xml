@@ -6,6 +6,32 @@
       <number>12</number>
     </hexa>
     <hexa>
+      <type>nothing</type>
+      <number>16</number>
+    </hexa>
+    <hexa>
+      <type>nothing</type>
+      <number>12</number>
+    </hexa>
+    <hexa>
+      <type>mountains</type>
+      <number>12</number>
+    </hexa>
+    <hexa>
+      <type>forest</type>
+      <number>16</number>
+    </hexa>
+  </row>
+  <row>
+    <hexa>
+      <type>cornfield</type>
+      <number>12</number>
+    </hexa>
+    <hexa>
+      <type>cornfield</type>
+      <number>12</number>
+    </hexa>
+    <hexa>
       <type>forest</type>
       <number>8</number>
     </hexa>
@@ -15,6 +41,10 @@
     </hexa>
   </row>
   <row>
+    <hexa>
+      <type>cornfield</type>
+      <number>12</number>
+    </hexa>
     <hexa>
       <type>cornfield</type>
       <number>24</number>
@@ -33,6 +63,10 @@
     </hexa>
   </row>
   <row>
+    <hexa>
+      <type>cornfield</type>
+      <number>12</number>
+    </hexa>
     <hexa>
       <type>pasture</type>
       <number>8</number>
@@ -56,6 +90,10 @@
   </row>
   <row>
     <hexa>
+      <type>cornfield</type>
+      <number>12</number>
+    </hexa>
+    <hexa>
       <type>nothing</type>
       <number>0</number>
     </hexa>
@@ -78,6 +116,10 @@
   </row>
   <row>
     <hexa>
+      <type>cornfield</type>
+      <number>12</number>
+    </hexa>
+    <hexa>
       <type>nothing</type>
       <number>16</number>
     </hexa>
@@ -96,6 +138,28 @@
     <hexa>
       <type>mountains</type>
       <number>12</number>
+    </hexa>
+  </row>
+  <row>
+    <hexa>
+      <type>cornfield</type>
+      <number>12</number>
+    </hexa>
+    <hexa>
+      <type>nothing</type>
+      <number>16</number>
+    </hexa>
+    <hexa>
+      <type>nothing</type>
+      <number>12</number>
+    </hexa>
+    <hexa>
+      <type>mountains</type>
+      <number>12</number>
+    </hexa>
+    <hexa>
+      <type>forest</type>
+      <number>16</number>
     </hexa>
   </row>
 </map>

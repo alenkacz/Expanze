@@ -27,7 +27,7 @@ namespace Expanze
             HexaModel[][] map;
 
             //TODO user number parameter
-            xDoc.Load("Content/Maps/" + "small" + ".xml");
+            xDoc.Load("Content/Maps/" + "big" + ".xml");
 
             XmlNodeList rows = xDoc.GetElementsByTagName("row");
             map = new HexaModel[rows.Count][];
