@@ -161,5 +161,24 @@ namespace Expanze
         {
             return prevSource;
         }
+
+        public bool haveEnoughMaterial(HexaKind k)
+        {
+            switch (k)
+            {
+                case HexaKind.Cornfield:
+                    return getCorn() > getConversionRate(k);
+                case HexaKind.Forest:
+                    return getWood() > getConversionRate(k);
+                case HexaKind.Mountains:
+                    return getOre() > getConversionRate(k);
+                case HexaKind.Pasture:
+                    return getMeat() > getConversionRate(k);
+                case HexaKind.Stone:
+                    return getStone() > getConversionRate(k);
+            }
+
+            return false;
+        }
     }
 }

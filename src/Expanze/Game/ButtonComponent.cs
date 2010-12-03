@@ -18,12 +18,13 @@ namespace Expanze
         List<String> switchTexts = null;
         int activeText = 0;
         Texture2D pickedTexture;
+        Texture2D nonactiveTexture = null;
 
         protected int mousex;
         protected int mousey;
 
         //type of the hexa - for materials buttons only
-        HexaKind type;
+        HexaKind type = HexaKind.Null;
 
         //button still pressed
         protected bool pressed = false;
@@ -55,6 +56,14 @@ namespace Expanze
         {
             this.type = type;
             this.init(clickablePosition, x, y, width, height);
+        }
+
+        public ButtonComponent(Game game, int x, int y, Rectangle clickablePosition, SpriteFont font, int width, int height, String texture, String nonactiveTexture, HexaKind type)
+            : base(game, x, y, font, width, height, texture)
+        {
+            this.type = type;
+            this.init(clickablePosition, x, y, width, height);
+            this.nonactiveTexture = myGame.Content.Load<Texture2D>(nonactiveTexture);
         }
 
         public ButtonComponent(Game game, int x, int y, SpriteFont font, int width, int height, String texture, List<String> texts)
@@ -161,6 +170,11 @@ namespace Expanze
             clickablePos = new Rectangle((int)spritePosition.X, (int)spritePosition.Y, width, height);
         }
 
+        public bool isActive()
+        {
+            return GameMaster.getInstance().getActivePlayer().haveEnoughMaterial(type);
+        }
+
         public override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
@@ -170,7 +184,22 @@ namespace Expanze
 
             if (myButton != null)
             {
-                spriteBatch.Draw(myButton, spritePosition, c);
+
+                if (type != HexaKind.Null)
+                {
+                    if (!GameMaster.getInstance().getActivePlayer().haveEnoughMaterial(type) && nonactiveTexture != null)
+                    {
+                        spriteBatch.Draw(nonactiveTexture, spritePosition, c);
+                    }
+                    else
+                    {
+                        spriteBatch.Draw(myButton, spritePosition, c);
+                    }
+                }
+                else
+                {
+                    spriteBatch.Draw(myButton, spritePosition, c);
+                }
 
                 if (picked)
                 {
