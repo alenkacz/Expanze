@@ -113,8 +113,9 @@ namespace Expanze
         public static List<String> PlayerState = new List<String>
         {
             "Hráč",
-            "Umělá inteligence",
-            "Neaktivní"
+            "AI - jednoduché",
+            "AI - střední",
+            "AI - těžké"
         };
     }
 }

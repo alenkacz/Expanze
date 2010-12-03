@@ -77,32 +77,6 @@ namespace Expanze
             changeTurnButton.Actions += StartGameSelected;
             guiComponents.Add(changeTurnButton);
 
-            ButtonComponent addBtn1 = new ButtonComponent(ScreenManager.Game, (int)colorPosition.X, (int)(colorPosition.Y + activeNumberOfPlayers*playerSpace), new Rectangle(), GameState.gameFont, Settings.scaleW(104), Settings.scaleH(45), "HUD/OKPromt");
-            addBtn1.Actions += AddPlayerSelected;
-            addButtons.Add(addBtn1);
-            ButtonComponent addBtn2 = new ButtonComponent(ScreenManager.Game, (int)colorPosition.X, (int)(colorPosition.Y + (activeNumberOfPlayers+1) * playerSpace), new Rectangle(), GameState.gameFont, Settings.scaleW(104), Settings.scaleH(45), "HUD/OKPromt");
-            addBtn2.Actions += AddPlayerSelected;
-            addButtons.Add(addBtn2);
-            ButtonComponent addBtn3 = new ButtonComponent(ScreenManager.Game, (int)colorPosition.X, (int)(colorPosition.Y + (activeNumberOfPlayers + 2) * playerSpace), new Rectangle(), GameState.gameFont, Settings.scaleW(104), Settings.scaleH(45), "HUD/OKPromt");
-            addBtn3.Actions += AddPlayerSelected;
-            addButtons.Add(addBtn3);
-            ButtonComponent addBtn4 = new ButtonComponent(ScreenManager.Game, (int)colorPosition.X, (int)(colorPosition.Y + (activeNumberOfPlayers + 3) * playerSpace), new Rectangle(), GameState.gameFont, Settings.scaleW(104), Settings.scaleH(45), "HUD/OKPromt");
-            addBtn4.Actions += AddPlayerSelected;
-            addButtons.Add(addBtn4);
-
-            ButtonComponent remBtn1 = new ButtonComponent(ScreenManager.Game, (int)colorPosition.X + 104, (int)(colorPosition.Y + activeNumberOfPlayers * playerSpace), new Rectangle(), GameState.gameFont, Settings.scaleW(104), Settings.scaleH(45), "HUD/OKPromt");
-            remBtn1.Actions += RemovePlayerSelected;
-            remButtons.Add(remBtn1);
-            ButtonComponent remBtn2 = new ButtonComponent(ScreenManager.Game, (int)colorPosition.X + 104, (int)(colorPosition.Y + (activeNumberOfPlayers + 1) * playerSpace), new Rectangle(), GameState.gameFont, Settings.scaleW(104), Settings.scaleH(45), "HUD/OKPromt");
-            remBtn2.Actions += RemovePlayerSelected;
-            remButtons.Add(remBtn2);
-            ButtonComponent remBtn3 = new ButtonComponent(ScreenManager.Game, (int)colorPosition.X + 104, (int)(colorPosition.Y + (activeNumberOfPlayers + 2) * playerSpace), new Rectangle(), GameState.gameFont, Settings.scaleW(104), Settings.scaleH(45), "HUD/OKPromt");
-            remBtn3.Actions += RemovePlayerSelected;
-            remButtons.Add(remBtn3);
-            ButtonComponent remBtn4 = new ButtonComponent(ScreenManager.Game, (int)colorPosition.X + 104, (int)(colorPosition.Y + (activeNumberOfPlayers + 3) * playerSpace), new Rectangle(), GameState.gameFont, Settings.scaleW(104), Settings.scaleH(45), "HUD/OKPromt");
-            remBtn4.Actions += RemovePlayerSelected;
-            remButtons.Add(remBtn4);
-
             int counter = 0;
 
             foreach (Color c in Settings.playerColors)
@@ -111,9 +85,10 @@ namespace Expanze
                 playersSettings.Add(pSwitch);
                 colorPosition.Y += playerSpace;
 
-                if (counter > 1)
+                if (counter <= 1)
                 {
-                    pSwitch.setIndexOfText(Settings.PlayerState.IndexOf("Neaktivní"));
+                    // first two users are active
+                    pSwitch.setActive(true);
                 }
 
                 counter++;
@@ -188,17 +163,7 @@ namespace Expanze
 
             foreach (PlayerSettingRowComponent p in playersSettings)
             {
-                p.Initialize();
-            }
-
-            foreach (ButtonComponent b in addButtons)
-            {
-                b.Update(gameTime);
-            }
-
-            foreach (ButtonComponent b in remButtons)
-            {
-                b.Update(gameTime);
+                p.Update(gameTime);
             }
         }
 
@@ -218,21 +183,6 @@ namespace Expanze
             ScreenManager.RemoveScreen(this);
         }
 
-        /// <summary>
-        /// Event handler for when the Play Game menu entry is selected.
-        /// </summary>
-        void AddPlayerSelected(object sender, PlayerIndexEventArgs e)
-        {
-            ++activeNumberOfPlayers;
-        }
-
-        /// <summary>
-        /// Event handler for when the Play Game menu entry is selected.
-        /// </summary>
-        void RemovePlayerSelected(object sender, PlayerIndexEventArgs e)
-        {
-            --activeNumberOfPlayers;
-        }
 
         private void saveScreenData()
         {
@@ -265,17 +215,9 @@ namespace Expanze
                 guiComponent.Draw(gameTime);
             }
 
-            for (int i = 0; i < activeNumberOfPlayers; i++)
+            foreach (PlayerSettingRowComponent p in playersSettings)
             {
-                playersSettings.ToArray()[i].Draw(gameTime);
-            }
-
-            if (activeNumberOfPlayers < 6)
-            {
-                int count = activeNumberOfPlayers - 2;
-                addButtons.ToArray()[count].Draw(gameTime);
-                if( activeNumberOfPlayers > 2 )
-                    remButtons.ToArray()[count].Draw(gameTime);
+                p.Draw(gameTime);
             }
 
             spriteBatch.End();
