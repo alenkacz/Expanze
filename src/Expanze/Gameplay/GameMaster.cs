@@ -56,7 +56,10 @@ namespace Expanze
             foreach (IComponentAI AI in CoreProviderAI.AI)
             {
                 componentAI = AI;
-                //componentAI.InitAIComponent(map);
+
+                // little help for alenka
+                // String name = AI.GetAIName();
+                
             }
             IComponentAI componentAI1 = componentAI.Clone();
             componentAI1.InitAIComponent(map.GetMapController());

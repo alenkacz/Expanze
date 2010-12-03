@@ -19,7 +19,12 @@ namespace NoobAI
         int stoneHexa;
 
         int turn;
-        
+
+        public String GetAIName()
+        {
+            return "Noob AI";
+        }
+
         public void InitAIComponent(IMapController mapController)
         {
             this.mapController = mapController;
