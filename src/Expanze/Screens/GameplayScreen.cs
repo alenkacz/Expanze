@@ -212,14 +212,19 @@ namespace Expanze
         /// </summary>
         void MarketButtonAction(object sender, PlayerIndexEventArgs e)
         {
-            if (MarketComponent.isActive)
+            // market can not be opened during first phase of the game - building first towns
+            if (GameMaster.getInstance().getState() == EGameState.StateGame)
             {
-                MarketComponent.isActive = false;
-                //guiComponents.Remove(MarketComponent.getInstance());
-            }
-            else
-            {
-                MarketComponent.isActive = true;
+
+                if (MarketComponent.isActive)
+                {
+                    MarketComponent.isActive = false;
+                    //guiComponents.Remove(MarketComponent.getInstance());
+                }
+                else
+                {
+                    MarketComponent.isActive = true;
+                }
             }
         }
 
