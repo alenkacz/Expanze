@@ -21,7 +21,7 @@ namespace Expanze.Gameplay.Map.View
 
         public override void Execute()
         {
-            GameState.map.BuildRoad(roadID);
+            GameState.map.GetMapController().BuildRoad(roadID);
         }
     }
 

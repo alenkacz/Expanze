@@ -34,14 +34,14 @@ namespace Expanze.Gameplay.Map
     class ViewQueue
     {
         Queue<ItemQueue> queue; /// queue of player actions
-        Map map; /// reference to map
+        MapView mapView; /// reference to map
 
         private const int ENQUEUE_TIME = 100; /// Delay time between two actions
         private int lastEnque;  /// how much time last to new enque from queue
 
-        public ViewQueue(Map map)
+        public ViewQueue(MapView mapView)
         {
-            this.map = map;
+            this.mapView = mapView;
             queue = new Queue<ItemQueue>();
             lastEnque = 0;
             queue.Clear();
@@ -78,11 +78,11 @@ namespace Expanze.Gameplay.Map
                 switch (item.getItemKind())
                 {
                     case ItemKind.BuildTown :
-                        map.BuildTownView(item.getArg1());
+                        mapView.BuildTownView(item.getArg1());
                         break;
 
                     case ItemKind.BuildRoad :
-                        map.BuildRoadView(item.getArg1());
+                        mapView.BuildRoadView(item.getArg1());
                         break;
                     case ItemKind.NextTurn :
                         break;

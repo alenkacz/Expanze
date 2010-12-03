@@ -28,7 +28,7 @@ namespace Expanze
 
         public override void Execute()
         {
-            GameState.map.buildBuildingInTown(townID, hexaID, kind);
+            GameState.map.GetMapController().BuildBuildingInTown(townID, hexaID, kind);
         }
     }
 

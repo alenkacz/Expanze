@@ -59,9 +59,9 @@ namespace Expanze
                 //componentAI.InitAIComponent(map);
             }
             IComponentAI componentAI1 = componentAI.Clone();
-            componentAI1.InitAIComponent(map);
+            componentAI1.InitAIComponent(map.GetMapController());
             IComponentAI componentAI2 = componentAI.Clone();
-            componentAI2.InitAIComponent(map);
+            componentAI2.InitAIComponent(map.GetMapController());
 
             //players[0] = new Player("Player1", Color.RoyalBlue, (isAI) ? componentAI1 : null);
             //players[1] = new Player("Player2", Color.Red, (isAI) ? componentAI2 : null);
@@ -91,7 +91,7 @@ namespace Expanze
                 if (actualAITime < 0)
                     actualAIThread.Abort();
 
-                if (!actualAIThread.IsAlive && map.getIsViewQueueClear())
+                if (!actualAIThread.IsAlive && map.GetMapView().getIsViewQueueClear())
                 {
                        NextTurn();
                 }
