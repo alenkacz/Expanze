@@ -1,101 +1,84 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <map>
-  <row>
-    <hexa>
-      <type>cornfield</type>
-      <number>12</number>
-    </hexa>
-    <hexa>
-      <type>forest</type>
-      <number>8</number>
-    </hexa>
-    <hexa>
-      <type>cornfield</type>
-      <number>16</number>
-    </hexa>
-  </row>
-  <row>
-    <hexa>
-      <type>cornfield</type>
-      <number>24</number>
-    </hexa>
-    <hexa>
-      <type>mountains</type>
-      <number>20</number>
-    </hexa>
-    <hexa>
-      <type>forest</type>
-      <number>16</number>
-    </hexa>
-    <hexa>
-      <type>pasture</type>
-      <number>12</number>
-    </hexa>
-  </row>
-  <row>
-    <hexa>
-      <type>pasture</type>
-      <number>8</number>
-    </hexa>
-    <hexa>
-      <type>desert</type>
-      <number>0</number>
-    </hexa>
-    <hexa>
-      <type>stone</type>
-      <number>16</number>
-    </hexa>
-    <hexa>
-      <type>cornfield</type>
-      <number>12</number>
-    </hexa>
-    <hexa>
-      <type>pasture</type>
-      <number>20</number>
-    </hexa>
-  </row>
-  <row>
-    <hexa>
-      <type>nothing</type>
-      <number>0</number>
-    </hexa>
-    <hexa>
-      <type>mountains</type>
-      <number>20</number>
-    </hexa>
-    <hexa>
-      <type>stone</type>
-      <number>8</number>
-    </hexa>
-    <hexa>
-      <type>stone</type>
-      <number>12</number>
-    </hexa>
-    <hexa>
-      <type>cornfield</type>
-      <number>8</number>
-    </hexa>
-  </row>
-  <row>
-    <hexa>
-      <type>nothing</type>
-      <number>16</number>
-    </hexa>
-    <hexa>
-      <type>nothing</type>
-      <number>12</number>
-    </hexa>
-    <hexa>
-      <type>mountains</type>
-      <number>12</number>
-    </hexa>
-    <hexa>
-      <type>forest</type>
-      <number>16</number>
-    </hexa>
-    <hexa>
-      <type>mountains</type>
-      <number>12</number>
-    </hexa>
-  </row>
+  <settings>
+    <productivity type="low">
+      <items value="8">8</items>
+      <items value="12">7</items>
+      <items value="16">4</items>
+      <items value="20">0</items>
+      <items value="24">0</items>
+    </productivity>
+    <productivity type="medium">
+      <items value="8">4</items>
+      <items value="12">4</items>
+      <items value="16">4</items>
+      <items value="20">4</items>
+      <items value="24">3</items>
+    </productivity>
+    <productivity type="high">
+      <items value="8">0</items>
+      <items value="12">0</items>
+      <items value="16">7</items>
+      <items value="20">7</items>
+      <items value="24">5</items>
+    </productivity>
+    <mapType type="normal">
+      <hexaType type="cornfield">3</hexaType>
+      <hexaType type="forest">4</hexaType>
+      <hexaType type="mountains">3</hexaType>
+      <hexaType type="pasture">4</hexaType>
+      <hexaType type="stone">3</hexaType>
+      <hexaType type="desert">2</hexaType>
+    </mapType>
+    <mapType type="lowland">
+      <hexaType type="cornfield">5</hexaType>
+      <hexaType type="forest">5</hexaType>
+      <hexaType type="mountains">2</hexaType>
+      <hexaType type="pasture">5</hexaType>
+      <hexaType type="stone">2</hexaType>
+      <hexaType type="desert">0</hexaType>
+    </mapType>
+    <mapType type="wasteland">
+      <hexaType type="cornfield">2</hexaType>
+      <hexaType type="forest">4</hexaType>
+      <hexaType type="mountains">5</hexaType>
+      <hexaType type="pasture">2</hexaType>
+      <hexaType type="stone">5</hexaType>
+      <hexaType type="desert">1</hexaType>
+    </mapType>
+  </settings>
+  <map-definition>
+    <row>
+      <hexa />
+      <hexa />
+      <hexa />
+    </row>
+    <row>
+      <hexa />
+      <hexa />
+      <hexa />
+      <hexa />
+    </row>
+    <row>
+      <hexa />
+      <hexa />
+      <hexa />
+      <hexa />
+      <hexa />
+    </row>
+    <row>
+      <hexa type="space" />
+      <hexa />
+      <hexa />
+      <hexa />
+      <hexa />
+    </row>
+    <row>
+      <hexa type="space" />
+      <hexa type="space" />
+      <hexa />
+      <hexa />
+      <hexa />
+    </row>
+  </map-definition>
 </map>

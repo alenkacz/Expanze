@@ -42,7 +42,7 @@ namespace Expanze
             activeMapTypes = lowlandMapTypes;
 
             //TODO user number parameter
-            xDoc.Load("Content/Maps/" + "small" + ".xml");
+            xDoc.Load("Content/Maps/" + "big" + ".xml");
 
             XmlNodeList productivities = xDoc.GetElementsByTagName("productivity");
             XmlNodeList mapTypes = xDoc.GetElementsByTagName("mapType");
