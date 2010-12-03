@@ -46,6 +46,9 @@ namespace Expanze
         private HotSeatScreen(bool isAI)
         {
             colorPosition = new Vector2(50, 100);
+
+            // clearing all players in case of several game in one program launch
+            GameMaster.getInstance().deleteAllPlayers();
         }
 
         /// <summary>

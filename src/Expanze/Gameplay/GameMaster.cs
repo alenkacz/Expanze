@@ -77,6 +77,12 @@ namespace Expanze
             return true;
         }
 
+        public void deleteAllPlayers()
+        {
+            players = new List<Player>();
+            n_player = 0;
+        }
+
         public void Update(GameTime gameTime)
         {
             if (activePlayer.getIsAI())
