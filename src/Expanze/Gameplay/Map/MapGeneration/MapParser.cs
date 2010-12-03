@@ -27,7 +27,7 @@ namespace Expanze
             HexaModel[][] map;
 
             //TODO user number parameter
-            xDoc.Load("Content/Maps/" + number + ".xml");
+            xDoc.Load("Content/Maps/" + "small" + ".xml");
 
             XmlNodeList rows = xDoc.GetElementsByTagName("row");
             map = new HexaModel[rows.Count][];
@@ -70,7 +70,7 @@ namespace Expanze
         {
             //TODO write some actual code here
             System.Random generator = new System.Random();
-            return 2; // generator.Next(getNumberOfMaps() - 1) + 1;
+            return 1; // generator.Next(getNumberOfMaps() - 1) + 1;
         }
 
         /// <summary>
