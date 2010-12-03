@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace Expanze
 {
@@ -119,10 +120,10 @@ namespace Expanze
             base.Draw(gameTime);
 
             Color c;
-            if (pick)
-                c = Color.Black;
-            else
+            if (active)
                 c = Color.White;
+            else
+                c = Color.Gray;
 
             spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,null,null,null,null,Settings.spriteScale);
 
@@ -141,7 +142,7 @@ namespace Expanze
                 addButton.Draw(gameTime);
             }
 
-            spriteBatch.DrawString(GameState.playerNameFont, name, new Vector2(spritePosition.X + 200, spritePosition.Y), Color.White);
+            spriteBatch.DrawString(GameState.playerNameFont, name, new Vector2(spritePosition.X + 200, spritePosition.Y), c);
             spriteBatch.Draw(playerColorTexture, new Vector2(spritePosition.X + 500, spritePosition.Y), playerColor);
 
             playerState.Draw(gameTime);

@@ -43,28 +43,12 @@ namespace Expanze
         /// <summary>
         /// Constructor.
         /// </summary>
-        private HotSeatScreen(bool isAI)
+        public HotSeatScreen()
         {
             colorPosition = new Vector2(50, 100);
 
             // clearing all players in case of several game in one program launch
             GameMaster.getInstance().deleteAllPlayers();
-        }
-
-        /// <summary>
-        /// Activates the loading screen.
-        /// </summary>
-        public static void Load(ScreenManager screenManager,
-                                PlayerIndex? controllingPlayer)
-        {
-            // Tell all the current screens to transition off.
-            foreach (GameScreen screen in screenManager.GetScreens())
-                screen.ExitScreen();
-
-            // Create and activate the loading screen.
-            HotSeatScreen loadingScreen = new HotSeatScreen(false);
-
-            screenManager.AddScreen(loadingScreen, controllingPlayer);
         }
 
         /// <summary>
@@ -221,8 +205,6 @@ namespace Expanze
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 
             spriteBatch.Begin();
-            ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
-                                              Color.Black, 0, 0);
 
             foreach (GuiComponent guiComponent in guiComponents)
             {
