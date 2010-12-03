@@ -11,6 +11,12 @@ namespace Expanze
     {
         XmlDocument xDoc;
 
+        Dictionary<int,int> lowProductivityList = new Dictionary<int,int>();
+        Dictionary<int, int> mediumProductivityList = new Dictionary<int, int>();
+        Dictionary<int, int> highProductivityList = new Dictionary<int, int>();
+
+        Dictionary<int, int> activeProductivityList;
+
         public MapParser()
         {
             xDoc = new XmlDocument();
@@ -25,9 +31,15 @@ namespace Expanze
         public HexaModel[][] parse(int number)
         {
             HexaModel[][] map;
+            // TODO should be done programatically
+            activeProductivityList = highProductivityList;
 
             //TODO user number parameter
             xDoc.Load("Content/Maps/" + "small" + ".xml");
+
+            XmlNodeList productivities = xDoc.GetElementsByTagName("productivity");
+
+            this.parseProductivity(productivities);
 
             XmlNodeList rows = xDoc.GetElementsByTagName("row");
             map = new HexaModel[rows.Count][];
@@ -42,14 +54,116 @@ namespace Expanze
                 for (int j = 0; j < hexas.Count; ++j)
                 {
                     XmlNode type = hexas[j].SelectSingleNode("type");
-                    XmlNode hexanum = hexas[j].SelectSingleNode("number");
+                    int hexanum = 0;
 
-                    map[i][j] = HexaCreator.create(decideType(type.InnerText), int.Parse(hexanum.InnerText));
+                    if (decideType(type.InnerText) != HexaKind.Nothing)
+                    {
+                        hexanum = getRandomProductivity();
+                    }
+
+
+                    map[i][j] = HexaCreator.create(decideType(type.InnerText), hexanum);
                 }
                 
             }
 
             return map;
+        }
+
+        /// <summary>
+        /// Returns randomly selected productivity value from loaded list
+        /// </summary>
+        /// <returns>value of productivity</returns>
+        private int getRandomProductivity()
+        {
+            System.Random generator = new System.Random();
+            int index = 0;
+            int type = 0;
+
+            if (!ranOutOfProductivities())
+            {
+
+                while (true)
+                {
+                    // trying to find nonzero random type
+                    index = generator.Next(activeProductivityList.Count);
+
+                    if (activeProductivityList.ElementAt(index).Value > 0)
+                    {
+                        type = activeProductivityList.ElementAt(index).Key;
+                        break;
+                    }
+                }
+
+                // decrement number of available productivity numbers
+                --activeProductivityList[type];
+
+                return type;
+            }
+
+            return 0;
+        }
+
+        /// <summary>
+        /// Checks whether there are some productivitiy points available - fix for indefinite loop, bad map design
+        /// </summary>
+        /// <returns>true if there are no productivity points left</returns>
+        private bool ranOutOfProductivities()
+        {
+            foreach (int i in activeProductivityList.Values)
+            {
+                if (i > 0) return false;
+            }
+
+            return true;
+        }
+
+        private void parseProductivity(XmlNodeList xml)
+        {
+            foreach (XmlNode x in xml)
+            {
+                XmlAttributeCollection attCol = x.Attributes;
+                XmlNodeList items = x.ChildNodes;
+
+                foreach (XmlAttribute a in attCol)
+                {
+                    if (a.Value == "low" && a.Name == "type")
+                    {
+                        fillProductivityList(items,lowProductivityList);
+                    }
+                    else if (a.Value == "medium" && a.Name == "type")
+                    {
+                        fillProductivityList(items, mediumProductivityList);
+                    }
+                    else if (a.Value == "high" && a.Name == "type")
+                    {
+                        fillProductivityList(items, highProductivityList);
+                    }
+                    else
+                    {
+                        // TODO some exception should be triggered
+                    }
+                }
+            }
+        }
+
+        private void fillProductivityList(XmlNodeList items, Dictionary<int,int> list)
+        {
+            foreach (XmlNode x in items)
+            {
+                XmlAttributeCollection attCol = x.Attributes;
+                int productivity = 0;
+
+                foreach (XmlAttribute a in attCol)
+                {
+                    if (a.Name == "value")
+                    {
+                        productivity = Int32.Parse(a.Value);
+                    }
+                }
+
+                list.Add(productivity, Int32.Parse(x.InnerText));
+            }
         }
 
         /// <summary>

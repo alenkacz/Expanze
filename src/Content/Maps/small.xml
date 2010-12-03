@@ -1,81 +1,106 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <map>
-  <row>
-    <hexa>
-      <type>cornfield</type>
-      <number>12</number>
-    </hexa>
-    <hexa>
-      <type>forest</type>
-      <number>8</number>
-    </hexa>
-  </row>
-  <row>
-    <hexa>
-      <type>mountains</type>
-      <number>20</number>
-    </hexa>
-    <hexa>
-      <type>forest</type>
-      <number>16</number>
-    </hexa>
-    <hexa>
-      <type>pasture</type>
-      <number>12</number>
-    </hexa>
-  </row>
-  <row>
-    <hexa>
-      <type>desert</type>
-      <number>0</number>
-    </hexa>
-    <hexa>
-      <type>stone</type>
-      <number>16</number>
-    </hexa>
-    <hexa>
-      <type>cornfield</type>
-      <number>12</number>
-    </hexa>
-    <hexa>
-      <type>pasture</type>
-      <number>20</number>
-    </hexa>
-  </row>
-  <row>
-    <hexa>
-      <type>nothing</type>
-      <number>0</number>
-    </hexa>
-    <hexa>
-      <type>mountains</type>
-      <number>20</number>
-    </hexa>
-    <hexa>
-      <type>stone</type>
-      <number>8</number>
-    </hexa>
-    <hexa>
-      <type>stone</type>
-      <number>12</number>
-    </hexa>
-  </row>
-  <row>
-    <hexa>
-      <type>nothing</type>
-      <number>0</number>
-    </hexa>
-    <hexa>
-      <type>nothing</type>
-      <number>0</number>
-    </hexa>
-    <hexa>
-      <type>mountains</type>
-      <number>12</number>
-    </hexa>
-    <hexa>
-      <type>forest</type>
-      <number>16</number>
-    </hexa>
-  </row>
+  <settings>
+    <productivity type="low">
+      <items value="8">6</items>
+      <items value="12">5</items>
+      <items value="16">3</items>
+      <items value="20">0</items>
+      <items value="24">0</items>
+    </productivity>
+    <productivity type="medium">
+      <items value="8">3</items>
+      <items value="12">3</items>
+      <items value="16">3</items>
+      <items value="20">3</items>
+      <items value="24">2</items>
+    </productivity>
+    <productivity type="high">
+      <items value="8">0</items>
+      <items value="12">0</items>
+      <items value="16">6</items>
+      <items value="20">5</items>
+      <items value="24">3</items>
+    </productivity>
+  </settings>
+  <map-definition>
+    <row>
+      <hexa>
+        <type>cornfield</type>
+        <number>12</number>
+      </hexa>
+      <hexa>
+        <type>forest</type>
+        <number>8</number>
+      </hexa>
+    </row>
+    <row>
+      <hexa>
+        <type>mountains</type>
+        <number>20</number>
+      </hexa>
+      <hexa>
+        <type>forest</type>
+        <number>16</number>
+      </hexa>
+      <hexa>
+        <type>pasture</type>
+        <number>12</number>
+      </hexa>
+    </row>
+    <row>
+      <hexa>
+        <type>desert</type>
+        <number>0</number>
+      </hexa>
+      <hexa>
+        <type>stone</type>
+        <number>16</number>
+      </hexa>
+      <hexa>
+        <type>cornfield</type>
+        <number>12</number>
+      </hexa>
+      <hexa>
+        <type>pasture</type>
+        <number>20</number>
+      </hexa>
+    </row>
+    <row>
+      <hexa>
+        <type>nothing</type>
+        <number>0</number>
+      </hexa>
+      <hexa>
+        <type>mountains</type>
+        <number>20</number>
+      </hexa>
+      <hexa>
+        <type>stone</type>
+        <number>8</number>
+      </hexa>
+      <hexa>
+        <type>stone</type>
+        <number>12</number>
+      </hexa>
+    </row>
+    <row>
+      <hexa>
+        <type>nothing</type>
+        <number>0</number>
+      </hexa>
+      <hexa>
+        <type>nothing</type>
+        <number>0</number>
+      </hexa>
+      <hexa>
+        <type>mountains</type>
+        <number>12</number>
+      </hexa>
+      <hexa>
+        <type>forest</type>
+        <number>16</number>
+      </hexa>
+    </row>
+  </map-definition>
 </map>
