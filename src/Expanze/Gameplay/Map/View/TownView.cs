@@ -19,7 +19,7 @@ namespace Expanze.Gameplay.Map
 
         public override void Execute()
         {
-            GameState.map.BuildTown(townID);
+            GameState.map.GetMapController().BuildTown(townID);
         }
     }
 
@@ -209,7 +209,7 @@ namespace Expanze.Gameplay.Map
                             }
                             else
                             {
-                                GameState.map.BuildTown(townID);
+                                GameState.map.GetMapController().BuildTown(townID);
                                 //wP.showPromt(Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN, wP.BuildTown, new SourceAll(0));
                                 //wP.setArgInt1(townID);
                             }

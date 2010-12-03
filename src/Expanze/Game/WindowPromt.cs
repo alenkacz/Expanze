@@ -159,6 +159,7 @@ namespace Expanze
 
         public void BuildTown()
         {
+            /*
             switch(GameState.map.BuildTown(argInt1))
             {
                 case TownBuildError.AlreadyBuild :
@@ -173,11 +174,12 @@ namespace Expanze
                 case TownBuildError.OtherTownIsClose:
                     showAlert(Strings.ALERT_TITLE_OTHER_TOWN_IS_CLOSE);
                     break;
-            }
+            }*/
         }
 
         public void BuildRoad()
         {
+            /*
             switch (GameState.map.BuildRoad(argInt1))
             {
                 case RoadBuildError.NoSources:
@@ -189,12 +191,13 @@ namespace Expanze
                 case RoadBuildError.NoPlayerRoadOrTown:
                     showAlert(Strings.ALERT_TITLE_NO_ROAD_OR_TOWN_IS_CLOSE);
                     break;
-            }
+            }*/
         }
 
         public void BuildBuildingInTown()
         {
-            switch (GameState.map.buildBuildingInTown(argInt1, argInt2, BuildingKind.SourceBuilding))
+            /*
+            switch (GameState.map.BuildBuildingInTown(argInt1, argInt2, BuildingKind.SourceBuilding))
             {
                 case BuildingBuildError.AlreadyBuild :
                     showAlert(Strings.ALERT_TITLE_BUILDING_IS_BUILD);
@@ -206,6 +209,7 @@ namespace Expanze
                     showAlert(Strings.ALERT_TITLE_NOT_TOWN_OWNER);
                     break;
             }
+             */
         }
     }
 }

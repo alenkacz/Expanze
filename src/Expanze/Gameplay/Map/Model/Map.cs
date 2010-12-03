@@ -15,56 +15,40 @@ namespace Expanze.Gameplay.Map
     /// <summary>
     /// Responsible for rendering game map
     /// </summary>
-    class Map : GameComponent, IMapController
+    class Map : GameComponent
     {
         private Vector3 eye, target, up;
 
         Game myGame;
-        ViewQueue viewQueue;
 
         float aspectRatio;
 
         HexaModel[][] hexaMapModel;
-        HexaView[][] hexaMapView;
+        MapView mapView;
+        MapController mapController;
 
         public Map(Game game)
         {
             myGame = game;
-            viewQueue = new ViewQueue(this);
+            mapView = new MapView(this);
+            mapController = new MapController(this, mapView);
         }
 
-        public bool getIsViewQueueClear()
-        {
-            return viewQueue.getIsClear();
-        }
+        public MapController GetMapController() { return mapController; }
+        public MapView GetMapView() { return mapView; }
+        public HexaModel[][] GetHexaMapModel() { return hexaMapModel; }
 
         private void CreateHexaWorldMatrices()
         {
-            HexaModel.resetCounter();
-            Road.resetCounter();
-            Town.resetCounter();
-
-            float dx = 0.592f;
-            float dy = 0.513f;
-            Matrix mWorld = Matrix.Identity * Matrix.CreateTranslation(new Vector3(-dy * hexaMapModel.Length / 2.0f, 0.0f, -dx * hexaMapModel[0].Length / 2.0f)); ;
-            for (int i = 0; i < hexaMapModel.Length; i++)
-            {
-                for (int j = 0; j < hexaMapModel[i].Length; j++)
-                {
-                    if (hexaMapView[i][j] != null)
-                    {
-                        hexaMapView[i][j].setWorld(mWorld);
-                    }
-                    mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, dx));
-                }
-                mWorld = mWorld * Matrix.CreateTranslation(new Vector3(dy, 0.0f, -dx / 2.0f - dx * hexaMapModel[i].Length));
-            }
+            mapView.CreateHexaWorldMatrices();
         }
 
         private void CreateTownsAndRoads()
         {
             HexaModel[] neighboursModel = new HexaModel[6];
             HexaView[] neighboursView = new HexaView[6];
+
+            HexaView[][] hexaMapView = mapView.GetHexaMapView();
 
             for (int i = 0; i < hexaMapModel.Length; ++i)
             {
@@ -152,35 +136,9 @@ namespace Expanze.Gameplay.Map
 
         public override void Initialize()
         {
-            viewQueue.Clear();
-
             hexaMapModel = getMap();
-            hexaMapView = new HexaView[hexaMapModel.Length][];
-            for (int i = 0; i < hexaMapModel.Length; i++)
-            {
-                hexaMapView[i] = new HexaView[hexaMapModel[i].Length];
-                for (int j = 0; j < hexaMapModel[i].Length; j++)
-                {
-                    if (hexaMapModel[i][j] != null)
-                    {
-                        switch (hexaMapModel[i][j].getType())
-                        {
-                            case HexaKind.Mountains :
-                                hexaMapView[i][j] = new MountainsView(hexaMapModel[i][j]);
-                                break;
-                            case HexaKind.Cornfield :
-                                hexaMapView[i][j] = new CornfieldView(hexaMapModel[i][j]);
-                                break;
-                            case HexaKind.Stone :
-                                hexaMapView[i][j] = new StoneView(hexaMapModel[i][j]);
-                                break;
-                            default :
-                                hexaMapView[i][j] = new HexaView(hexaMapModel[i][j]);
-                                break;
-                        }             
-                    }
-                }
-            }
+
+            mapView.Initialize();
 
             CreateHexaWorldMatrices(); // have to be before Create Towns and roads
             CreateTownsAndRoads();
@@ -280,7 +238,7 @@ namespace Expanze.Gameplay.Map
             ChangeCamera();
             ChangeLight(gameTime);
 
-            viewQueue.Update(gameTime);
+            mapView.Update(gameTime);
         }
 
         public override void HandlePickableAreas(Color c)
@@ -291,10 +249,7 @@ namespace Expanze.Gameplay.Map
             if (GameMaster.getInstance().getActivePlayer().getComponentAI() != null)
                 return;
 
-            for (int i = 0; i < hexaMapView.Length; i++)
-                for (int j = 0; j < hexaMapView[i].Length; j++)
-                    if (hexaMapView[i][j] != null)
-                        hexaMapView[i][j].HandlePickableAreas(c);
+            mapView.HandlePickableAreas(c);
         }
 
         public override void DrawPickableAreas()
@@ -302,27 +257,12 @@ namespace Expanze.Gameplay.Map
             if (GameMaster.getInstance().getPaused())
                 return;
 
-            for (int i = 0; i < hexaMapView.Length; i++)
-                for (int j = 0; j < hexaMapView[i].Length; j++)
-                    if (hexaMapView[i][j] != null)
-                        hexaMapView[i][j].DrawPickableAreas();
+            mapView.DrawPickableAreas();
         }
 
         public override void Draw2D()
         {
-            //if (GameMaster.getInstance().getPaused())
-            //    return;
-
-            for (int i = 0; i < hexaMapView.Length; i++)
-            {
-                for (int j = 0; j < hexaMapView[i].Length; j++)
-                {
-                    if (hexaMapView[i][j] != null)
-                    {
-                        hexaMapView[i][j].Draw2D();
-                    }
-                }
-            }
+            mapView.Draw2D();
         }
 
         public override void Draw(GameTime gameTime)
@@ -335,59 +275,26 @@ namespace Expanze.Gameplay.Map
 
             GameState.view = Matrix.CreateLookAt(eye, target, up);
 
-            for (int i = 0; i < hexaMapView.Length; i++)
-            {
-                for (int j = 0; j < hexaMapView[i].Length; j++)
-                {
-                    if (hexaMapView[i][j] != null)
-                    {
-                        hexaMapView[i][j].Draw(gameTime);
-                        //hexaMapView[i][j].DrawPickableAreas();
-                    }
-                }
-            }
+            mapView.Draw(gameTime);
 
             base.Draw(gameTime);
         }
 
         public void NextTurn()
         {
-            if (viewQueue.getIsClear())
+            if (mapView.getIsViewQueueClear())
             {
                 ItemQueue item = new ItemQueue(ItemKind.NextTurn, 0);
-                viewQueue.Add(item);
+                mapView.AddToViewQueue(item);
             }
         }
 
-        private TownView GetTownViewByID(int townID)
+        public HexaModel GetHexaModel(int i, int j)
         {
-            TownView town = null;
-            for (int i = 0; i < hexaMapView.Length; i++)
-                for (int j = 0; j < hexaMapView[i].Length; j++)
-                    if (hexaMapView[i][j] != null)
-                    {
-                        town = hexaMapView[i][j].GetTownByID(townID);
-                        if (town != null)
-                            return town;
-                    }
-            return null;
+            return hexaMapModel[i][j];
         }
 
-        private RoadView GetRoadViewByID(int roadID)
-        {
-            RoadView road = null;
-            for (int i = 0; i < hexaMapView.Length; i++)
-                for (int j = 0; j < hexaMapView[i].Length; j++)
-                    if (hexaMapView[i][j] != null)
-                    {
-                        road = hexaMapView[i][j].GetRoadViewByID(roadID);
-                        if (road != null)
-                            return road;
-                    }
-            return null;
-        }
-
-        private Town GetTownByID(int townID)
+        public Town GetTownByID(int townID)
         {
             Town town = null;
             for (int i = 0; i < hexaMapModel.Length; i++)
@@ -401,17 +308,7 @@ namespace Expanze.Gameplay.Map
             return null;
         }
 
-        public ITownGet GetITownGetByID(int townID)
-        {
-            return GetTownByID(townID);
-        }
-
-        public IRoadGet GetIRoadGetByID(int roadID)
-        {
-            return GetRoadByID(roadID);
-        }
-
-        private Road GetRoadByID(int roadID)
+        public Road GetRoadByID(int roadID)
         {
             Road road = null;
             for (int i = 0; i < hexaMapModel.Length; i++)
@@ -428,138 +325,12 @@ namespace Expanze.Gameplay.Map
         // View building //
         /// ///////////////
 
-        public void BuildTownView(int townID)
-        {
-            TownView townView = GetTownViewByID(townID);
-            townView.setIsBuild(true);
-        }
-
-        public void BuildRoadView(int roadID)
-        {
-            RoadView roadView = GetRoadViewByID(roadID);
-            roadView.setIsBuild(true);
-        }
+        
 
         /// ********************************
         /// IMapController
 
-        public int GetMaxRoadID() { return Road.getRoadCount(); }
-        public int GetMaxTownID() { return Town.getTownCount(); }
-        public EGameState GetState() { return GameMaster.getInstance().getState(); }
-
-        public IHexaGet GetHexa(int x, int y)
-        {
-            return hexaMapModel[x][y];
-        }
-
-        public void BuyUpgradeInSpecialBuilding(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber)
-        {
-            GameMaster gm = GameMaster.getInstance();
-            Town town = GetTownByID(townID);
-            SpecialBuilding building = town.getSpecialBuilding(hexaID);
-            building.BuyUpgrade(upgradeKind, upgradeNumber);
-            gm.getActivePlayer().payForSomething(building.getUpgradeCost(upgradeKind, upgradeNumber));
-        }
-
-        public RoadBuildError BuildRoad(int roadID)
-        {
-            Road road = GetRoadByID(roadID);
-
-            GameMaster gm = GameMaster.getInstance();
-            RoadBuildError error = road.CanActivePlayerBuildRoad();
-            if (error == RoadBuildError.OK)
-            {
-                road.BuildRoad(gm.getActivePlayer());
-
-                ItemQueue item = new ItemQueue(ItemKind.BuildRoad, roadID);
-                viewQueue.Add(item);
-
-                gm.getActivePlayer().payForSomething(Settings.costRoad);
-            }
-
-            return error;
-        }
-
-        public TownBuildError BuildTown(int townID)
-        {
-            Town town = GetTownByID(townID);
-
-            GameMaster gm = GameMaster.getInstance();
-            TownBuildError error = town.CanActivePlayerBuildTown();
-            if (error == TownBuildError.OK)
-            {
-                town.BuildTown(gm.getActivePlayer());
-
-                ItemQueue item = new ItemQueue(ItemKind.BuildTown, townID);
-                viewQueue.Add(item);
-
-                if (gm.getState() != EGameState.StateGame)
-                {
-                    SourceAll source = new SourceAll(0);
-                    HexaModel hexa;
-                    gm.getActivePlayer().addSources(new SourceAll(0), TransactionState.TransactionStart);
-                    for(int loop1 = 0; loop1 < 3; loop1++)
-                    {
-                        if ((hexa = town.getHexa(loop1)) != null)
-                        {
-                            switch(hexa.getType())
-                            {
-                                case HexaKind.Cornfield :
-                                    source = Settings.costMill; break;
-                                case HexaKind.Forest:
-                                    source = Settings.costSaw; break;
-                                case HexaKind.Mountains:
-                                    source = Settings.costMine; break;
-                                case HexaKind.Pasture:
-                                    source = Settings.costStephard; break;
-                                case HexaKind.Stone:
-                                    source = Settings.costQuarry; break;
-                                default :
-                                    source = new SourceAll(0); break;
-                            }
-                            gm.getActivePlayer().addSources(source,TransactionState.TransactionMiddle);
-                        }
-                    }
-                    gm.getActivePlayer().addSources(new SourceAll(0), TransactionState.TransactionEnd);
-
-                    if(!gm.getActivePlayer().getIsAI())
-                        gm.NextTurn();
-                }
-                else
-                    gm.getActivePlayer().payForSomething(Settings.costTown);
-            }
-
-            return error;
-        }
-
-        public BuildingBuildError buildBuildingInTown(int townID, int hexaID, BuildingKind kind)
-        {
-            GameMaster gm = GameMaster.getInstance();
-            Town town = GetTownByID(townID);
-            int buildingPos = town.findBuildingByHexaID(hexaID);
-            HexaModel hexa = town.getHexa(buildingPos);
-
-            SourceAll buildingCost = new SourceAll(0);
-            switch (kind)
-            {
-                case BuildingKind.SourceBuilding:
-                    buildingCost = hexa.getSourceBuildingCost();
-                    break;
-
-                case BuildingKind.FortBuilding:
-                    buildingCost = Settings.costFort;
-                    break;
-            }
-
-            BuildingBuildError error = town.canActivePlayerBuildBuildingInTown(buildingPos, buildingCost);
-            if (error == BuildingBuildError.OK)
-            {
-                town.buildBuilding(buildingPos, kind);
-                gm.getActivePlayer().payForSomething(buildingCost);
-            }
-
-            return error;
-        }
+        
 
         /// IHexaGet
         /// ********************************

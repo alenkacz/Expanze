@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
+using CorePlugin;
 
 namespace Expanze.Gameplay
 {
-    public enum UpgradeKind { FirstUpgrade, SecondUpgrade }
-
     class SpecialBuildingPromptItem : PromptItem
     {
         int townID;         /// where is special building?
@@ -26,7 +25,7 @@ namespace Expanze.Gameplay
 
         public override void Execute()
         {
-            GameState.map.BuyUpgradeInSpecialBuilding(townID, hexaID, upgradeKind, upgradeNumber);
+            GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, upgradeKind, upgradeNumber);
         }
     }
 
