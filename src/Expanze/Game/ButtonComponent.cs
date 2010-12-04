@@ -14,6 +14,7 @@ namespace Expanze
         protected MouseState mouseState;
 
         protected Rectangle clickablePos;
+        bool previouslyNotPressed = true;
 
         List<String> switchTexts = null;
         int activeText = 0;
@@ -113,7 +114,7 @@ namespace Expanze
             if (ButtonState.Pressed == mouseState.LeftButton && !pressed)
             {
 
-                if ((mousex > clickablePos.Left && mousex < (clickablePos.Right)) && (mousey < (clickablePos.Bottom) && mousey > clickablePos.Top))//identify mouse over x y posotions for the button
+                if ((mousex > clickablePos.Left && mousex < (clickablePos.Right)) && (mousey < (clickablePos.Bottom) && mousey > clickablePos.Top && previouslyNotPressed))//identify mouse over x y posotions for the button
                 {
                     if (Actions != null)
                         Actions(this, new PlayerIndexEventArgs(new PlayerIndex()));
@@ -123,7 +124,15 @@ namespace Expanze
                     
                     pressed = true;
                 }
+
+                previouslyNotPressed = false;
             }
+
+            if (ButtonState.Pressed != mouseState.LeftButton)
+            {
+                previouslyNotPressed = true;
+            }
+
 
             if (pressed && ButtonState.Pressed != mouseState.LeftButton)
             {

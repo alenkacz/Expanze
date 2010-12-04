@@ -22,6 +22,7 @@ namespace Expanze
         private bool selected = false;
         Texture2D activeTexture;
         Texture2D bgTexture;
+        bool previouslyNotPressed = true;
 
         Rectangle range;
 
