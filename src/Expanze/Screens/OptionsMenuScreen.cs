@@ -1,4 +1,4 @@
-#region File Description
+﻿#region File Description
 //-----------------------------------------------------------------------------
 // OptionsMenuScreen.cs
 //
@@ -27,7 +27,7 @@ namespace Expanze
 
 
         static string[] resolution = new string[Settings.allResolutions.Length];
-        static string[] fullscreen = {"No", "Yes"};
+        static string[] fullscreen = {"Ne", "Ano"};
 
         static int currentResolution = 0;
         static int isFullscreen = 0;
@@ -62,7 +62,7 @@ namespace Expanze
         /// Constructor.
         /// </summary>
         public OptionsMenuScreen()
-            : base("Options")
+            : base("Nastavení")
         {
             fillResolutionsMenu();
 
@@ -72,8 +72,8 @@ namespace Expanze
 
             SetMenuEntryText();
 
-            MenuEntry apply = new MenuEntry("Apply Changes");
-            MenuEntry back = new MenuEntry("Back");
+            MenuEntry apply = new MenuEntry("Aktivovat změny");
+            MenuEntry back = new MenuEntry("Zpět");
 
             // Hook up menu event handlers.
             resolutionMenuEntry.Selected += ResolutionMenuEntrySelected;
@@ -96,7 +96,7 @@ namespace Expanze
         /// </summary>
         void SetMenuEntryText()
         {
-            resolutionMenuEntry.Text = "Resolution: " + resolution[currentResolution];
+            resolutionMenuEntry.Text = "Rozlišení: " + resolution[currentResolution];
             fullscreenMenuEntry.Text = "Fullscreen: " + fullscreen[isFullscreen];
         }
 

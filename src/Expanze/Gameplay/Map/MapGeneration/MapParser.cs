@@ -72,7 +72,15 @@ namespace Expanze
                     if (!isEmpty)
                     {
                         type = getRandomType();
-                        hexanum = getRandomProductivity();
+
+                        if (type == HexaKind.Desert)
+                        {
+                            hexanum = 0;
+                        }
+                        else
+                        {
+                            hexanum = getRandomProductivity();
+                        }
                     }
                     else
                     {

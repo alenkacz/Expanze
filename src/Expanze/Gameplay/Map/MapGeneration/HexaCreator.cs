@@ -18,7 +18,7 @@ namespace Expanze
                 case HexaKind.Cornfield:
                     return new CornfieldHexa(number);
                 case HexaKind.Desert:
-                    return new DesertHexa(number);
+                    return new DesertHexa();
                 case HexaKind.Forest:
                     return new ForestHexa(number);
                 case HexaKind.Mountains:
