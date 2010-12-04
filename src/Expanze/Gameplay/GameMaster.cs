@@ -53,7 +53,10 @@ namespace Expanze
         public bool startGame(bool isAI, Map map)
         {
             this.map = map;
-            Settings.startResources = new SourceAll(gameSettings.getPoints());
+            if( gameSettings != null )
+                Settings.startResources = new SourceAll(gameSettings.getPoints());
+
+            n_player = players.Count;
 
             IComponentAI componentAI = null;
             foreach (IComponentAI AI in CoreProviderAI.AI)
@@ -88,6 +91,13 @@ namespace Expanze
             gameSettings = new GameSettings(points,mapType,mapSize,mapWealth);
         }
 
+        public void prepareQuickGame()
+        {
+            this.resetGameSettings();
+            this.players.Add(new Player("Player1",Color.Red,null));
+            this.players.Add(new Player("Player2", Color.Blue, null));
+        }
+
         public GameSettings getGameSettings()
         {
             if (gameSettings != null)
@@ -96,7 +106,7 @@ namespace Expanze
             }
             else
             {
-                return new GameSettings(100,"normální","střední","střední");
+                return new GameSettings(50,"normální","střední","střední");
             }
         }
 

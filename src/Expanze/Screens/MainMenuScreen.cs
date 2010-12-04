@@ -28,21 +28,21 @@ namespace Expanze
         {
             // Create our menu entries.
             MenuEntry hotseatMenuEntry = new MenuEntry("Hot seat");
-            MenuEntry campaignMenuEntry = new MenuEntry("Umělá Inteligence");
+            MenuEntry quickMenuEntry = new MenuEntry("Rychlá hra");
             MenuEntry settingsMenuEntry = new MenuEntry("Nastavení");
             MenuEntry creatorsMenuEntry = new MenuEntry("Autoři");
             MenuEntry exitMenuEntry = new MenuEntry("Konec");
 
             // Hook up menu event handlers.
             hotseatMenuEntry.Selected += HotseatMenuEntrySelected;
-            campaignMenuEntry.Selected += CampaignMenuEntrySelected;
+            quickMenuEntry.Selected += QuickMenuEntrySelected;
             settingsMenuEntry.Selected += SettingsMenuEntrySelected;
             creatorsMenuEntry.Selected += CreatorsMenuEntrySelected;
             exitMenuEntry.Selected += OnCancel;
 
             // Add entries to the menu.
+            MenuEntries.Add(quickMenuEntry);
             MenuEntries.Add(hotseatMenuEntry);
-            MenuEntries.Add(campaignMenuEntry);
             MenuEntries.Add(settingsMenuEntry);
             MenuEntries.Add(creatorsMenuEntry);
             MenuEntries.Add(exitMenuEntry);
@@ -67,11 +67,14 @@ namespace Expanze
         /// <summary>
         /// Event handler for when the Play Game menu entry is selected.
         /// </summary>
-        void CampaignMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        void QuickMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
+            // reset to the default state
+            GameMaster.getInstance().prepareQuickGame();
+
             // now is used for AI
             LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
-                               new GameplayScreen(true));
+                               new GameplayScreen(false));
         }
 
 
