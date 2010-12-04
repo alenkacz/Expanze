@@ -15,6 +15,11 @@ namespace Expanze
         const int space = 150;
         int start = 60;
 
+        MouseState mouseState;
+        int mousex;
+        int mousey;
+        bool pressed = false;
+
         // active player
         private bool active = false;
         // if true, it means that this click was already catched - fix because add/rem buttons are on the same place
@@ -55,6 +60,43 @@ namespace Expanze
             radio1.Update(gameTime);
             radio2.Update(gameTime);
             radio3.Update(gameTime);
+
+            mouseState = Mouse.GetState();
+
+            mousex = mouseState.X;
+            mousey = mouseState.Y;
+
+            if (ButtonState.Pressed == mouseState.LeftButton && !pressed)
+            {
+                pressed = true;
+
+                if (radio1.isInRange(mousex, mousey))
+                {
+                    radio2.setSelected(false);
+                    radio3.setSelected(false);
+
+                    radio1.clicked();
+                }
+                else if (radio2.isInRange(mousex, mousey))
+                {
+                    radio1.setSelected(false);
+                    radio3.setSelected(false);
+
+                    radio2.clicked();
+                }
+                else if (radio3.isInRange(mousex, mousey))
+                {
+                    radio2.setSelected(false);
+                    radio1.setSelected(false);
+
+                    radio3.clicked();
+                }
+            }
+
+            if (pressed && ButtonState.Pressed != mouseState.LeftButton)
+            {
+                pressed = false;
+            }
         }
 
         public override void Draw(GameTime gameTime)
