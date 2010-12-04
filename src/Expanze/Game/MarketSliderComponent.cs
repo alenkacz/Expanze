@@ -51,8 +51,8 @@ namespace Expanze
             this.width = width;
             this.texture = texture;
 
-            sliderPosition = new Vector2(x + 50, y);
-            clickablePos = new Rectangle(Settings.scaleW(x + 50), Settings.scaleH(y), sliderW, sliderH);
+            sliderPosition = new Vector2(x + 50, y - 10);
+            clickablePos = new Rectangle(Settings.scaleW(x + 50), Settings.scaleH(y-10), sliderW, sliderH);
             range = new Rectangle(Settings.scaleW(x), Settings.scaleH(y), Settings.scaleW(width), Settings.scaleH(height));
         }
 
