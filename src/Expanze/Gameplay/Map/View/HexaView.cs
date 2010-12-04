@@ -86,8 +86,8 @@ namespace Expanze
 
         public void Draw2D()
         {
-            if (kind == HexaKind.Desert)
-                return;
+            //if (kind == HexaKind.Desert)
+            //    return;
 
             BoundingFrustum frustum = new BoundingFrustum(GameState.view * GameState.projection);
             ContainmentType containmentType = frustum.Contains(Vector3.Transform(new Vector3(0.0f, 0.0f, 0.0f), world));
@@ -332,7 +332,7 @@ namespace Expanze
                 for (int loop1 = 0; loop1 < townView.Length; loop1++)
                 {
                     if (townView[loop1].getIsMarked() && 
-                        kind != HexaKind.Desert &&
+                        /*kind != HexaKind.Desert &&*/
                         kind != HexaKind.Nothing &&
                         kind != HexaKind.Water &&
                         kind != HexaKind.Null && 
@@ -381,7 +381,8 @@ namespace Expanze
 
                                 int townID = townView[loop1].getTownModel().getTownID();
                                 PromptWindow.Inst().showPrompt(titleWindow, true);
-                                PromptWindow.Inst().addPromptItem(
+                                if(kind != HexaKind.Desert)
+                                    PromptWindow.Inst().addPromptItem(
                                         new BuildingPromptItem(townID,
                                                            hexaID,
                                                            BuildingKind.SourceBuilding,
