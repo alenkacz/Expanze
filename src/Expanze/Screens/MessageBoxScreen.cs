@@ -1,4 +1,4 @@
-#region File Description
+﻿#region File Description
 //-----------------------------------------------------------------------------
 // MessageBoxScreen.cs
 //
@@ -54,8 +54,8 @@ namespace Expanze
         /// </summary>
         public MessageBoxScreen(string message, bool includeUsageText)
         {
-            const string usageText = "\nA button, Space, Enter = ok" +
-                                     "\nB button, Esc = cancel"; 
+            const string usageText = "\nAno - stiskněte A, Mezerník nebo Enter" +
+                                     "\nNe - stiskněte B nebo Esc"; 
             
             if (includeUsageText)
                 this.message = message + usageText;
@@ -144,7 +144,7 @@ namespace Expanze
             // The background includes a border somewhat larger than the text itself.
             const int hPad = 32;
             const int vPad = 16;
-
+            
             Rectangle backgroundRectangle = new Rectangle((int)textPosition.X - hPad,
                                                           (int)textPosition.Y - vPad,
                                                           (int)textSize.X + hPad * 2,

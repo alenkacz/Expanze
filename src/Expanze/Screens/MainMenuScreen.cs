@@ -100,7 +100,7 @@ namespace Expanze
         /// </summary>
         protected override void OnCancel(PlayerIndex playerIndex)
         {
-            const string message = "Are you sure you want to exit this sample?";
+            const string message = "Jste si jisti, že chcete hru ukončit?";
 
             MessageBoxScreen confirmExitMessageBox = new MessageBoxScreen(message);
 
