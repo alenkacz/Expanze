@@ -22,7 +22,7 @@ namespace Expanze
 
         // Road building alerts
         public static string ALERT_TITLE_ROAD_IS_BUILD = "Cesta již postavena.";
-        public static string ALERT_TITLE_NO_ROAD_OR_TOWN_IS_CLOSE = "Žádná tvoje cesta či město v blízkosti";
+        public static string ALERT_TITLE_NO_ROAD_OR_TOWN_IS_CLOSE = "Žádná tvoje cesta či město v blízkosti.";
 
         // Source buildings building
         public static string HEXA_TRI = "Rozcestí";

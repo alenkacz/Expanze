@@ -105,7 +105,7 @@ namespace Expanze
 
             bgPos = new Vector2((Settings.maximumResolution.X - background.Width) / 2,
                                    (Settings.maximumResolution.Y - background.Height) / 2);
-            int borderX = 100;
+            int borderX = 150;
             int borderY = 20;
             yesPos = new Vector2(bgPos.X + borderX, bgPos.Y + background.Height - borderY - yes.Height);
             noPos = new Vector2(bgPos.X - no.Width - borderX + background.Width, bgPos.Y + background.Height - borderY - no.Height);
@@ -170,10 +170,13 @@ namespace Expanze
             
                 spriteBatch.Draw(background, bgPos, color);
 
-                if (drawingPickableAreas)
-                    spriteBatch.Draw(pickTextOK, yesPos, yesPick.pickColor);
-                else
-                    spriteBatch.Draw(yes, yesPos, Color.White);
+                if (itemList[activeItem].TryExecute() == null) // it means that it is ok
+                {
+                    if (drawingPickableAreas)
+                        spriteBatch.Draw(pickTextOK, yesPos, yesPick.pickColor);
+                    else
+                        spriteBatch.Draw(yes, yesPos, Color.White);
+                }
 
                 if (drawingPickableAreas)
                     spriteBatch.Draw(pickTextOK, noPos, noPick.pickColor);
@@ -189,9 +192,15 @@ namespace Expanze
                 spriteBatch.DrawString(GameState.medievalMedium, itemList[activeItem].getTitle(), new Vector2(bgPos.X + 20, bgPos.Y + 160), Color.LightBlue);
                 TextWrapping.DrawStringIntoRectangle(itemList[activeItem].getDescription(),
                     GameState.medievalSmall, Color.LightSteelBlue, bgPos.X + 20, bgPos.Y + 195, background.Width - 40);
-                //TextWrapping.DrawStringIntoRectangle("Jiné město v blízkosti.",
-                //    GameState.medievalSmall, Color.IndianRed, bgPos.X + 10, bgPos.Y + 240, background.Width - 20);
 
+                String error = itemList[activeItem].TryExecute();
+                if (error != null)
+                {
+                    TextWrapping.DrawStringIntoRectangle(error,
+                     GameState.medievalSmall, Color.DarkSlateGray, bgPos.X + 22, bgPos.Y + 267, background.Width - 40);
+                    TextWrapping.DrawStringIntoRectangle(error,
+                     GameState.medievalSmall, Color.Red, bgPos.X + 20, bgPos.Y + 265, background.Width - 40);
+                }
                 if (!drawingPickableAreas)
                     DrawSources();
 

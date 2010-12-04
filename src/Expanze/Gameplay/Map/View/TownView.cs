@@ -21,6 +21,20 @@ namespace Expanze.Gameplay.Map
         {
             GameState.map.GetMapController().BuildTown(townID);
         }
+
+        public override string TryExecute()
+        {
+            Town town = GameState.map.GetTownByID(townID);
+            TownBuildError error = town.CanActivePlayerBuildTown();
+            switch (error)
+            {
+                case TownBuildError.AlreadyBuild: return Strings.ALERT_TITLE_TOWN_IS_BUILD;
+                case TownBuildError.NoPlayerRoad: return Strings.ALERT_TITLE_NO_ROAD_IS_CLOSE;
+                case TownBuildError.OtherTownIsClose: return Strings.ALERT_TITLE_OTHER_TOWN_IS_CLOSE;
+                case TownBuildError.NoSources: return "";
+            }
+            return base.TryExecute();
+        }
     }
 
     class TownView

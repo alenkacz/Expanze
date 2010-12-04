@@ -23,6 +23,19 @@ namespace Expanze.Gameplay.Map.View
         {
             GameState.map.GetMapController().BuildRoad(roadID);
         }
+
+        public override string TryExecute()
+        {
+            Road road = GameState.map.GetRoadByID(roadID);
+            RoadBuildError error = road.CanActivePlayerBuildRoad();
+            switch (error)
+            {
+                case RoadBuildError.AlreadyBuild: return Strings.ALERT_TITLE_ROAD_IS_BUILD;
+                case RoadBuildError.NoPlayerRoadOrTown: return Strings.ALERT_TITLE_NO_ROAD_OR_TOWN_IS_CLOSE;
+                case RoadBuildError.NoSources: return "";
+            }
+            return base.TryExecute();
+        }
     }
 
     class RoadView
