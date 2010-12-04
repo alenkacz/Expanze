@@ -116,7 +116,8 @@ namespace Expanze
                 if (hexaNeighbour[loop1] != null &&
                     buildingKind[loop1] == BuildingKind.SourceBuilding)
                 {
-                    amount = hexaNeighbour[loop1].getValue();
+                    float multiply = (building[loop1].GetIsUpgrade(UpgradeKind.SecondUpgrade, 0)) ? 2.0f : (building[loop1].GetIsUpgrade(UpgradeKind.FirstUpgrade, 0)) ? 1.5f : 1.0f;
+                    amount = (int) (hexaNeighbour[loop1].getValue() * multiply);
 
                     switch (hexaNeighbour[loop1].getType())
                     {
@@ -180,9 +181,36 @@ namespace Expanze
             return false;
         }
 
-        public BuildingBuildError canActivePlayerBuildBuildingInTown(int pos, SourceAll cost)
+        public SourceAll GetBuildingCost(int pos, BuildingKind kind)
+        {
+            SourceAll cost = new SourceAll(0);
+            switch (kind)
+            {
+                case BuildingKind.SourceBuilding:
+                    cost = hexaNeighbour[pos].getSourceBuildingCost();
+                    break;
+
+                case BuildingKind.FortBuilding:
+                    cost = Settings.costFort;
+                    break;
+
+                case BuildingKind.MarketBuilding:
+                    cost = Settings.costMarket;
+                    break;
+
+                case BuildingKind.MonasteryBuilding:
+                    cost = Settings.costMonastery;
+                    break;
+            }
+            return cost;
+        }
+
+        public BuildingBuildError canActivePlayerBuildBuildingInTown(int pos, BuildingKind kind)
         {
             GameMaster gm = GameMaster.getInstance();
+
+            SourceAll cost = GetBuildingCost(pos, kind);        
+            
             if (gm.getState() == EGameState.StateGame)
             {
                 if (buildingKind[pos] != BuildingKind.NoBuilding)
@@ -246,6 +274,10 @@ namespace Expanze
             buildingKind[pos] = kind;
             switch (kind)
             {
+                case BuildingKind.SourceBuilding :
+                    building[pos] = new SourceBuildingModel(townID, hexaNeighbour[pos].getID());
+                    break;
+
                 case BuildingKind.MarketBuilding :
                     building[pos] = new MarketModel(townID, hexaNeighbour[pos].getID());
                     break;

@@ -66,6 +66,11 @@ namespace Expanze
             return isActive;
         }
 
+        public void setIsActive(bool active)
+        {
+            isActive = active;
+        }
+
         public override void Initialize()
         {
             base.Initialize();

@@ -30,6 +30,22 @@ namespace Expanze
         {
             GameState.map.GetMapController().BuildBuildingInTown(townID, hexaID, kind);
         }
+
+        public override string TryExecute()
+        {
+            GameMaster gm = GameMaster.getInstance();
+            Town town = GameState.map.GetTownByID(townID);
+            int buildingPos = town.findBuildingByHexaID(hexaID);
+            HexaModel hexa = town.getHexa(buildingPos);
+
+            BuildingBuildError error = town.canActivePlayerBuildBuildingInTown(buildingPos, kind);
+            switch (error)
+            {
+                case BuildingBuildError.NoSources: return "";
+            }
+
+            return base.TryExecute();
+        }
     }
 
     class HexaView
@@ -338,8 +354,6 @@ namespace Expanze
                         kind != HexaKind.Null && 
                         townView[loop1].getTownModel().getPlayerOwner() == GameMaster.getInstance().getActivePlayer())
                     {
-                        WindowPromt wP = GameState.windowPromt;
-
                         switch(townView[loop1].getTownModel().getBuildingKind(hexaID))
                         {
                             case BuildingKind.NoBuilding :
@@ -402,9 +416,6 @@ namespace Expanze
 
                             case BuildingKind.FortBuilding :
                                 FortModel.setPromptWindowToFort();
-                                break;
-
-                            case BuildingKind.SourceBuilding :
                                 break;
 
                             default :

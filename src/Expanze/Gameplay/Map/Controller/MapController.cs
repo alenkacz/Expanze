@@ -15,6 +15,9 @@ namespace Expanze.Gameplay.Map
         {
             this.map = map;
             this.mapView = mapView;
+
+            PromptWindow.Inst().setIsActive(false);
+            MarketComponent.getInstance().setIsActive(false);
         }
 
         public ITownGet GetITownGetByID(int townID)
@@ -36,13 +39,19 @@ namespace Expanze.Gameplay.Map
             return map.GetHexaModel(x, y);
         }
 
-        public void BuyUpgradeInSpecialBuilding(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber)
+        public BuyingUpgradeError BuyUpgradeInSpecialBuilding(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber)
         {
             GameMaster gm = GameMaster.getInstance();
             Town town = map.GetTownByID(townID);
             SpecialBuilding building = town.getSpecialBuilding(hexaID);
-            building.BuyUpgrade(upgradeKind, upgradeNumber);
-            gm.getActivePlayer().payForSomething(building.getUpgradeCost(upgradeKind, upgradeNumber));
+
+            BuyingUpgradeError error = building.CanActivePlayerBuyUpgrade(upgradeKind, upgradeNumber);
+            if (error == BuyingUpgradeError.OK)
+            {
+                building.BuyUpgrade(upgradeKind, upgradeNumber);
+                gm.getActivePlayer().payForSomething(building.getUpgradeCost(upgradeKind, upgradeNumber));
+            }
+            return error;
         }
 
         public RoadBuildError BuildRoad(int roadID)
@@ -71,23 +80,11 @@ namespace Expanze.Gameplay.Map
             int buildingPos = town.findBuildingByHexaID(hexaID);
             HexaModel hexa = town.getHexa(buildingPos);
 
-            SourceAll buildingCost = new SourceAll(0);
-            switch (kind)
-            {
-                case BuildingKind.SourceBuilding:
-                    buildingCost = hexa.getSourceBuildingCost();
-                    break;
-
-                case BuildingKind.FortBuilding:
-                    buildingCost = Settings.costFort;
-                    break;
-            }
-
-            BuildingBuildError error = town.canActivePlayerBuildBuildingInTown(buildingPos, buildingCost);
+            BuildingBuildError error = town.canActivePlayerBuildBuildingInTown(buildingPos, kind);
             if (error == BuildingBuildError.OK)
             {
                 town.buildBuilding(buildingPos, kind);
-                gm.getActivePlayer().payForSomething(buildingCost);
+                gm.getActivePlayer().payForSomething(town.GetBuildingCost(buildingPos, kind));
             }
 
             return error;

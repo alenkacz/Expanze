@@ -24,6 +24,10 @@ namespace Expanze
         public static string ALERT_TITLE_ROAD_IS_BUILD = "Cesta již postavena.";
         public static string ALERT_TITLE_NO_ROAD_OR_TOWN_IS_CLOSE = "Žádná tvoje cesta či město v blízkosti.";
 
+        // Special building alerts
+        public static string ALERT_TITLE_NO_UPGRADE = "Prvně musíš vynaleznout pokrok v kláštěře.";
+        public static string ALERT_TITLE_MAX_UPGRADES = "Už máš zakoupené 3 pokroky.";
+
         // Source buildings building
         public static string HEXA_TRI = "Rozcestí";
         public static string HEXA_DUO = "Údolí";
@@ -45,14 +49,39 @@ namespace Expanze
 
         public static string PROMT_TITLE_WANT_TO_BUILD_MINE = "Důl na rudu";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_MINE = "Horníci budou pro tebe těžit z dolu rudu. Po vynalezení pokroku z Kláštera lze důl vylepšit, aby těžba byla ještě vyšší.";
+        public static string PROMPT_TITLE_WANT_TO_UPGRADE_1_MINE = "Vozíky na rudu";
+        public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_MINE = "Pořídíš-li horníkům nové vozíky, budou pracovat o 50% lépe";
+        public static string PROMPT_TITLE_WANT_TO_UPGRADE_2_MINE = "Nové helmy";
+        public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_MINE = "Horníci s novými helmami nebudou tak často na marodce. Zisky rudy o 100% lepší.";
+
         public static string PROMT_TITLE_WANT_TO_BUILD_QUARRY = "Kamenný lom";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_QUARRY = "Horníci budou těžit stavební kámen.  Po vynalezení pokroku z Kláštera jim to půjde líp.";
+        public static string PROMPT_TITLE_WANT_TO_UPGRADE_1_QUARRY = "Lepší krumpáče";
+        public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_QUARRY = "Pořídíš-li horníkům lepší krumpáče, budou pracovat o 50% lépe";
+        public static string PROMPT_TITLE_WANT_TO_UPGRADE_2_QUARRY = "Trhavina";
+        public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_QUARRY = "Horníci s trhavinou dovedou divy. Zisky kamene o 100% lepší.";
+       
         public static string PROMT_TITLE_WANT_TO_BUILD_SAW = "Pila";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_SAW = "Dřevorubci natahají z lesa dřevo.  Po vynalezení pokroku z Kláštera bude těžba účinější.";
+        public static string PROMPT_TITLE_WANT_TO_UPGRADE_1_SAW = "Sekery";
+        public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_SAW = "Pořídíš-li dřevorupcům sekery, budou pracovat o 50% lépe";
+        public static string PROMPT_TITLE_WANT_TO_UPGRADE_2_SAW = "Tažní koně";
+        public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_SAW = "Tažní koně velice urychlí práci. Zisky dřeva o 100% lepší.";
+
+        
         public static string PROMT_TITLE_WANT_TO_BUILD_MILL = "Větrný mlýn";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_MILL = "Mlynář z pole získá spoustu obilí. Po vynalezení pokroku z Kláštera lze mlýn vylepšit, aby zisky byly vyšší.";
+        public static string PROMPT_TITLE_WANT_TO_UPGRADE_1_MILL = "Zázračné hnojivo";
+        public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_MILL = "S hnojivem ti roste obilí o 50% víc.";
+        public static string PROMPT_TITLE_WANT_TO_UPGRADE_2_MILL = "Nové lopaty";
+        public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_MILL = "Mlýnské lopaty urychlí zpracování obilí o 100%.";
+      
         public static string PROMT_TITLE_WANT_TO_BUILD_STEPHERD = "Chatrč pastevce";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_STEPHERD = "Pastevec ti bude dodávat mnoho oveček.  Po vynalezení pokroku z Kláštera budeš mít ovcí mnohem víc.";
+        public static string PROMPT_TITLE_WANT_TO_UPGRADE_1_STEPHERD = "Krmivo pro ovce";
+        public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_STEPHERD = "Jen tráva nestačí, s krmivem jich bude o 50% víc.";
+        public static string PROMPT_TITLE_WANT_TO_UPGRADE_2_STEPHERD = "Naslouchej ovcím";
+        public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_STEPHERD = "Pastevec se naučí ovcím naslouchat, bude jich dvakrát tolik.";
 
         public static string PROMPT_TITLE_WANT_TO_BUILD_FORT = "Pevnost";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_FORT = "Z pevnosti můžeš poslat vojsko poničit nějaké pole, obsadit důl, zničit suroviny protihráči, nebo získat body za vojenskou přehlídku.";
