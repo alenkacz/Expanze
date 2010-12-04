@@ -34,5 +34,14 @@ namespace Expanze
         {
 
         }
+
+        /// <summary>
+        /// Tells if it is possible to Execute(), for example if player has sources on it.
+        /// </summary>
+        /// <returns>Reason why is it not possible to execute or null if it is OK, "" for no sources</returns>
+        public virtual String TryExecute()
+        {
+            return null;
+        }
     }
 }

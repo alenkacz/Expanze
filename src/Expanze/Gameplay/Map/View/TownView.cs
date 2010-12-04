@@ -21,6 +21,20 @@ namespace Expanze.Gameplay.Map
         {
             GameState.map.GetMapController().BuildTown(townID);
         }
+
+        public override string TryExecute()
+        {
+            Town town = GameState.map.GetTownByID(townID);
+            TownBuildError error = town.CanActivePlayerBuildTown();
+            switch (error)
+            {
+                case TownBuildError.AlreadyBuild: return Strings.ALERT_TITLE_TOWN_IS_BUILD;
+                case TownBuildError.NoPlayerRoad: return Strings.ALERT_TITLE_NO_ROAD_IS_CLOSE;
+                case TownBuildError.OtherTownIsClose: return Strings.ALERT_TITLE_OTHER_TOWN_IS_CLOSE;
+                case TownBuildError.NoSources: return "";
+            }
+            return base.TryExecute();
+        }
     }
 
     class TownView
@@ -178,43 +192,20 @@ namespace Expanze.Gameplay.Map
                 }
                 else
                 {
-                    WindowPromt wP = GameState.windowPromt;
-
-
-                    switch (model.CanActivePlayerBuildTown())
-                    {
-                        case TownBuildError.AlreadyBuild:
-                            wP.showAlert(Strings.ALERT_TITLE_TOWN_IS_BUILD);
-                            break;
-                        case TownBuildError.NoSources:
-                            wP.showAlert(Strings.ALERT_TITLE_NOT_ENOUGH_SOURCES);
-                            break;
-                        case TownBuildError.NoPlayerRoad:
-                            wP.showAlert(Strings.ALERT_TITLE_NO_ROAD_IS_CLOSE);
-                            break;
-                        case TownBuildError.OtherTownIsClose:
-                            wP.showAlert(Strings.ALERT_TITLE_OTHER_TOWN_IS_CLOSE);
-                            break;
-
-                        case TownBuildError.OK :
-                            if (GameMaster.getInstance().getState() == EGameState.StateGame)
-                            {
-                                PromptWindow.Inst().showPrompt(Strings.PROMPT_TITLE_BUILDING, false);
-                                PromptWindow.Inst().addPromptItem(
-                                    new TownPromptItem(townID,
-                                                       Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN,
-                                                       "",
-                                                       Settings.costTown,
-                                                       null));
-                            }
-                            else
-                            {
-                                GameState.map.GetMapController().BuildTown(townID);
-                                //wP.showPromt(Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN, wP.BuildTown, new SourceAll(0));
-                                //wP.setArgInt1(townID);
-                            }
-                            break;
-                    }
+                        if (GameMaster.getInstance().getState() == EGameState.StateGame)
+                        {
+                            PromptWindow.Inst().showPrompt(Strings.HEXA_TRI, true);
+                            PromptWindow.Inst().addPromptItem(
+                                new TownPromptItem(townID,
+                                                    Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN,
+                                                    Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_TOWN,
+                                                    Settings.costTown,
+                                                    GameResources.Inst().getHudTexture(HUDTexture.IconTown)));
+                        }
+                        else
+                        {
+                            GameState.map.GetMapController().BuildTown(townID);
+                        }
                 }
             }
         }

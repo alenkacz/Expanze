@@ -32,5 +32,8 @@ namespace Expanze
         public static SpriteFont playerNameFont;
         public static SpriteFont hudMaterialsFont;
         public static SpriteFont materialsNewFont;
+        public static SpriteFont medievalSmall;
+        public static SpriteFont medievalMedium;
+        public static SpriteFont medievalBig;
     }
 }

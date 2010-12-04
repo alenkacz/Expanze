@@ -12,7 +12,7 @@ namespace Expanze
     public enum HUDTexture
     {
         HammersPassive, HammersActive, InfoPassive, InfoActive, IconActive,
-        IconFort, IconMarket, IconMill, IconMine, IconMonastery, IconQuarry, IconSaw, IconStepherd,
+        IconTown, IconRoad, IconFort, IconMarket, IconMill, IconMine, IconMonastery, IconQuarry, IconSaw, IconStepherd,
         IconCorn1, IconCorn2, IconMeat1, IconMeat2, IconStone1, IconStone2, IconWood1, IconWood2,
         IconOre1, IconOre2, 
         IconFortParade, IconFortCapture, IconFortSources, IconFortHexa,
@@ -92,6 +92,8 @@ namespace Expanze
             hud[(int)HUDTexture.HammersActive] = content.Load<Texture2D>("HUD/hammeractive");
             hud[(int)HUDTexture.InfoPassive] = content.Load<Texture2D>("HUD/info");
             hud[(int)HUDTexture.InfoActive] = content.Load<Texture2D>("HUD/infoactive");
+            hud[(int)HUDTexture.IconTown] = content.Load<Texture2D>("HUD/ic_town");
+            hud[(int)HUDTexture.IconRoad] = content.Load<Texture2D>("HUD/ic_road");
             hud[(int)HUDTexture.IconFort] = content.Load<Texture2D>("HUD/ic_fort");
             hud[(int)HUDTexture.IconMarket] = content.Load<Texture2D>("HUD/ic_market");
             hud[(int)HUDTexture.IconMill] = content.Load<Texture2D>("HUD/ic_mill");

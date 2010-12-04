@@ -76,6 +76,9 @@ namespace Expanze
             GameState.playerNameFont = content.Load<SpriteFont>("playername");
             GameState.hudMaterialsFont = content.Load<SpriteFont>("hudMaterialsFont");
             GameState.materialsNewFont = content.Load<SpriteFont>("materialsNewFont");
+            GameState.medievalSmall = content.Load<SpriteFont>("Fonts/medievalSmall");
+            GameState.medievalMedium = content.Load<SpriteFont>("Fonts/medievalMedium");
+            GameState.medievalBig = content.Load<SpriteFont>("Fonts/medievalBig");
 
             //playerColorTexture = new Texture2D(ScreenManager.GraphicsDevice, (int)Settings.playerColorSize.X, (int)Settings.playerColorSize.Y, false, SurfaceFormat.Color);
             playerColorTexture = ScreenManager.Game.Content.Load<Texture2D>("pcolor");

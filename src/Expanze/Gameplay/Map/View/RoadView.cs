@@ -23,6 +23,19 @@ namespace Expanze.Gameplay.Map.View
         {
             GameState.map.GetMapController().BuildRoad(roadID);
         }
+
+        public override string TryExecute()
+        {
+            Road road = GameState.map.GetRoadByID(roadID);
+            RoadBuildError error = road.CanActivePlayerBuildRoad();
+            switch (error)
+            {
+                case RoadBuildError.AlreadyBuild: return Strings.ALERT_TITLE_ROAD_IS_BUILD;
+                case RoadBuildError.NoPlayerRoadOrTown: return Strings.ALERT_TITLE_NO_ROAD_OR_TOWN_IS_CLOSE;
+                case RoadBuildError.NoSources: return "";
+            }
+            return base.TryExecute();
+        }
     }
 
     class RoadView
@@ -149,29 +162,13 @@ namespace Expanze.Gameplay.Map.View
             {
                 if (GameMaster.getInstance().getState() == EGameState.StateGame)
                 {
-                    WindowPromt wP = GameState.windowPromt;
-
-                    switch (model.CanActivePlayerBuildRoad())
-                    {
-                        case RoadBuildError.NoSources:
-                            wP.showAlert(Strings.ALERT_TITLE_NOT_ENOUGH_SOURCES);
-                            break;
-                        case RoadBuildError.AlreadyBuild:
-                            wP.showAlert(Strings.ALERT_TITLE_ROAD_IS_BUILD);
-                            break;
-                        case RoadBuildError.NoPlayerRoadOrTown:
-                            wP.showAlert(Strings.ALERT_TITLE_NO_ROAD_OR_TOWN_IS_CLOSE);
-                            break;
-                        case RoadBuildError.OK :
-                            PromptWindow.Inst().showPrompt(Strings.PROMPT_TITLE_BUILDING, false);
-                            PromptWindow.Inst().addPromptItem(
-                                    new RoadPromptItem(roadID,
-                                                       Strings.PROMT_TITLE_WANT_TO_BUILD_ROAD,
-                                                       "",
-                                                       Settings.costRoad,
-                                                       null));
-                            break;
-                    }
+                    PromptWindow.Inst().showPrompt(Strings.HEXA_DUO, true);
+                    PromptWindow.Inst().addPromptItem(
+                            new RoadPromptItem(roadID,
+                                                Strings.PROMT_TITLE_WANT_TO_BUILD_ROAD,
+                                                Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_ROAD,
+                                                Settings.costRoad,
+                                                GameResources.Inst().getHudTexture(HUDTexture.IconRoad)));             
                 }
             }
         }

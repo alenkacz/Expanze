@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Expanze.Gameplay.Map;
 using CorePlugin;
+using Expanze.Utils;
 
 namespace Expanze
 {
@@ -104,9 +105,10 @@ namespace Expanze
 
             bgPos = new Vector2((Settings.maximumResolution.X - background.Width) / 2,
                                    (Settings.maximumResolution.Y - background.Height) / 2);
-            int border = 30;
-            yesPos = new Vector2(bgPos.X + border, bgPos.Y + background.Height - border - yes.Height);
-            noPos = new Vector2(bgPos.X - no.Width - border + background.Width, bgPos.Y + background.Height - border - no.Height);
+            int borderX = 150;
+            int borderY = 20;
+            yesPos = new Vector2(bgPos.X + borderX, bgPos.Y + background.Height - borderY - yes.Height);
+            noPos = new Vector2(bgPos.X - no.Width - borderX + background.Width, bgPos.Y + background.Height - borderY - no.Height);
         }
 
         public override void UnloadContent()
@@ -168,24 +170,37 @@ namespace Expanze
             
                 spriteBatch.Draw(background, bgPos, color);
 
-                if (drawingPickableAreas)
-                    spriteBatch.Draw(pickTextOK, yesPos, yesPick.pickColor);
-                else
-                    spriteBatch.Draw(yes, yesPos, Color.White);
+                if (itemList[activeItem].TryExecute() == null) // it means that it is ok
+                {
+                    if (drawingPickableAreas)
+                        spriteBatch.Draw(pickTextOK, yesPos, yesPick.pickColor);
+                    else
+                        spriteBatch.Draw(yes, yesPos, Color.White);
+                }
 
                 if (drawingPickableAreas)
                     spriteBatch.Draw(pickTextOK, noPos, noPick.pickColor);
                 else
                     spriteBatch.Draw(no, noPos, Color.White);
 
-                float titleWidth = GameState.materialsNewFont.MeasureString(title).X;
-                spriteBatch.DrawString(GameState.materialsNewFont, title, new Vector2(bgPos.X + (background.Width - titleWidth) / 2, bgPos.Y + 20), Color.LightBlue);
+                float titleWidth = GameState.medievalBig.MeasureString(title).X;
+                spriteBatch.DrawString(GameState.medievalBig, title, new Vector2(bgPos.X + (background.Width - titleWidth) / 2, bgPos.Y + 20), Color.LightBlue);
 
                 if(showIcons)
                     DrawIcons();
 
-                spriteBatch.DrawString(GameState.materialsNewFont, itemList[activeItem].getTitle(), new Vector2(bgPos.X + 15, bgPos.Y + 150), Color.LightBlue);
+                spriteBatch.DrawString(GameState.medievalMedium, itemList[activeItem].getTitle(), new Vector2(bgPos.X + 20, bgPos.Y + 160), Color.LightBlue);
+                TextWrapping.DrawStringIntoRectangle(itemList[activeItem].getDescription(),
+                    GameState.medievalSmall, Color.LightSteelBlue, bgPos.X + 20, bgPos.Y + 195, background.Width - 40);
 
+                String error = itemList[activeItem].TryExecute();
+                if (error != null)
+                {
+                    TextWrapping.DrawStringIntoRectangle(error,
+                     GameState.medievalSmall, Color.DarkSlateGray, bgPos.X + 22, bgPos.Y + 267, background.Width - 40);
+                    TextWrapping.DrawStringIntoRectangle(error,
+                     GameState.medievalSmall, Color.Red, bgPos.X + 20, bgPos.Y + 265, background.Width - 40);
+                }
                 if (!drawingPickableAreas)
                     DrawSources();
 
@@ -234,14 +249,14 @@ namespace Expanze
             }
 
             float startX = bgPos.X + ((background.Width - sourcesWidth) / 2);
-            float startY = bgPos.Y + background.Height - textureSource[0].Height - 110;
+            float startY = bgPos.Y + background.Height - textureSource[0].Height - 85;
 
             for (int loop1 = 0; loop1 < 5; loop1++)
             {
                 if (itemList[activeItem].getCost()[loop1] != 0)
                 {
                     spriteBatch.Draw(textureSource[loop1], new Vector2(startX, startY), Color.White);
-                    spriteBatch.DrawString(GameState.materialsNewFont, itemList[activeItem].getCost()[loop1].ToString(), new Vector2(startX + (textureSource[loop1].Width >> 1) - 10, startY + 65), Color.White);         
+                    spriteBatch.DrawString(GameState.materialsNewFont, itemList[activeItem].getCost()[loop1].ToString(), new Vector2(startX + (textureSource[loop1].Width >> 1) + 5, startY + 45), Color.White);         
                     startX += textureSource[loop1].Width + border;
                 }
             }
