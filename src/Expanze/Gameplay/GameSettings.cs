@@ -23,6 +23,11 @@ namespace Expanze
             this.mapWealth = mapWealth.ToLower();
         }
 
+        public int getPoints()
+        {
+            return points;
+        }
+
         public string getMapSize() 
         {
             if (mapSize == "malá")

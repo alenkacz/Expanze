@@ -53,6 +53,7 @@ namespace Expanze
         public bool startGame(bool isAI, Map map)
         {
             this.map = map;
+            Settings.startResources = new SourceAll(gameSettings.getPoints());
 
             IComponentAI componentAI = null;
             foreach (IComponentAI AI in CoreProviderAI.AI)
@@ -182,7 +183,7 @@ namespace Expanze
             state = EGameState.StateGame;
             foreach (Player player in players)
             {
-                player.addSources(new SourceAll(100), TransactionState.TransactionStart);
+                player.addSources(Settings.startResources, TransactionState.TransactionStart);
             }
         }
 
