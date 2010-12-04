@@ -29,7 +29,8 @@ namespace Expanze
         public RadioButtonComponent(Game game, int x, int y, SpriteFont font, int width, int height)
         {
             myGame = game;
-            this.clickablePos = new Rectangle(Settings.scaleW(x), Settings.scaleH(y), width, height);
+            //also text after radiobutton should be clickable
+            this.clickablePos = new Rectangle(Settings.scaleW(x), Settings.scaleH(y), width + Settings.scaleW(150), height);
             spritePosition = new Vector2(x, y);
         }
 
