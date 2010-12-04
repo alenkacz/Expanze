@@ -209,5 +209,37 @@ namespace Expanze
 
             return 0;
         }
+
+        internal void SetSourceBuildingUpdate(UpgradeKind upgradeKind, int upgradeNumber)
+        {
+            upgradeSourceBuilding[upgradeNumber] = upgradeKind;
+        }
+
+        internal void SetMarketRate(UpgradeKind upgradeKind, int upgradeNumber)
+        {
+            switch (upgradeKind)
+            {
+                case UpgradeKind.FirstUpgrade :
+                    switch (upgradeNumber)
+                    {
+                        case 0: conversionRateCorn = 3; break;
+                        case 1: conversionRateMeat = 3; break;
+                        case 2: conversionRateStone = 3; break;
+                        case 3: conversionRateWood = 3; break;
+                        case 4: conversionRateOre = 3; break;
+                    }
+                    break;
+                case UpgradeKind.SecondUpgrade :
+                    switch (upgradeNumber)
+                    {
+                        case 0: conversionRateCorn =2; break;
+                        case 1: conversionRateMeat = 2; break;
+                        case 2: conversionRateStone = 2; break;
+                        case 3: conversionRateWood = 2; break;
+                        case 4: conversionRateOre = 2; break;
+                    }
+                    break;
+            }
+        }
     }
 }

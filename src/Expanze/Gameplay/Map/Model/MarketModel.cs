@@ -18,6 +18,21 @@ namespace Expanze.Gameplay
             this.hexaID = hexaID;
         }
 
+        public override Texture2D GetIconActive()
+        {
+            return GameResources.Inst().getHudTexture(HUDTexture.IconMarketActive);
+        }
+
+        public override Texture2D GetIconPassive()
+        {
+            return GameResources.Inst().getHudTexture(HUDTexture.IconMarket);
+        }
+
+        protected override void ApplyEffect(UpgradeKind upgradeKind, int upgradeNumber)
+        {
+            GameMaster.getInstance().getActivePlayer().SetMarketRate(upgradeKind, upgradeNumber);
+        }
+
         public override void setPromptWindow()
         {
             PromptWindow win = PromptWindow.Inst();

@@ -141,8 +141,10 @@ namespace Expanze
                 }
                 if (drawNumber ||
                     tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.getPlayerOwner() != GameMaster.getInstance().getActivePlayer())
-                    spriteBatch.DrawString(GameState.hudMaterialsFont, model.getValue() + "", new Vector2(point2D.X + 1, point2D.Y + 1), Color.Black);
-                
+                {
+                    if (model.getValue() != 0) // desert
+                        spriteBatch.DrawString(GameState.hudMaterialsFont, model.getValue() + "", new Vector2(point2D.X + 1, point2D.Y + 1), Color.Black);
+                }
                 if (pickVars.pickActive)
                     numberColor = Color.BlueViolet;
                 else
@@ -150,15 +152,46 @@ namespace Expanze
 
                 if (drawNumber ||
                     tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.getPlayerOwner() != GameMaster.getInstance().getActivePlayer())
-                    spriteBatch.DrawString(GameState.hudMaterialsFont, model.getValue() + "", point2D, numberColor);
-                else {
+                {
+                    if (model.getValue() != 0) // desert
+                        spriteBatch.DrawString(GameState.hudMaterialsFont, model.getValue() + "", point2D, numberColor);
+                }
+                else
+                {
                     Texture2D text;
-                    if(tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.getPlayerOwner() == GameMaster.getInstance().getActivePlayer())
-                        text = GameResources.Inst().getHudTexture((pickVars.pickActive) ? HUDTexture.HammersActive : HUDTexture.HammersPassive);
+                    if (tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.getPlayerOwner() == GameMaster.getInstance().getActivePlayer())
+                    {
+                        text = GameResources.Inst().getHudTexture(HUDTexture.HammersPassive);
+                        spriteBatch.Draw(text, new Vector2(posHammers.X - (text.Width >> 1), posHammers.Y - (text.Height >> 1)), Color.White);
+                        if (!pickVars.pickActive)
+                        {
+                            text = GameResources.Inst().getHudTexture(HUDTexture.HammersActive);
+                            spriteBatch.Draw(text, new Vector2(posHammers.X - (text.Width >> 1), posHammers.Y - (text.Height >> 1)), Color.White);
+                        }
+                    }
                     else
-                        text = GameResources.Inst().getHudTexture((pickVars.pickActive) ? HUDTexture.InfoActive : HUDTexture.InfoPassive);
-
-                    spriteBatch.Draw(text, new Vector2(posHammers.X - (text.Width >> 1), posHammers.Y - (text.Height >> 1)), Color.White);
+                    {
+                        if (tempTown.getBuildingKind(hexaID) == BuildingKind.FortBuilding)
+                        {
+                            text = FortModel.GetIconPassive();
+                            spriteBatch.Draw(text, new Vector2(posHammers.X - (text.Width >> 1), posHammers.Y - (text.Height >> 1)), Color.White);
+                            if (!pickVars.pickActive)
+                            {
+                                text = FortModel.GetIconActive();
+                                spriteBatch.Draw(text, new Vector2(posHammers.X - (text.Width >> 1), posHammers.Y - (text.Height >> 1)), Color.White);
+                            }
+                        }
+                        else
+                        {
+                            text = tempTown.getSpecialBuilding(hexaID).GetIconPassive();
+                            spriteBatch.Draw(text, new Vector2(posHammers.X - (text.Width >> 1), posHammers.Y - (text.Height >> 1)), Color.White);
+                            if (!pickVars.pickActive)
+                            {
+                                text = tempTown.getSpecialBuilding(hexaID).GetIconActive();
+                                spriteBatch.Draw(text, new Vector2(posHammers.X - (text.Width >> 1), posHammers.Y - (text.Height >> 1)), Color.White);
+                            }
+                        }
+                    }
                 }
                 spriteBatch.End();
             }

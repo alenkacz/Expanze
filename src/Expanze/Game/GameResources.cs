@@ -12,7 +12,15 @@ namespace Expanze
     public enum HUDTexture
     {
         HammersPassive, HammersActive, InfoPassive, InfoActive, IconActive,
-        IconTown, IconRoad, IconFort, IconMarket, IconMill, IconMine, IconMonastery, IconQuarry, IconSaw, IconStepherd,
+        IconTown, IconRoad, 
+        IconFort, IconFortActive,
+        IconMarket, IconMarketActive,
+        IconMill, IconMill1, IconMill2, IconMillActive,
+        IconMine, IconMine1, IconMine2, IconMineActive,
+        IconMonastery, IconMonasteryActive,
+        IconQuarry, IconQuarry1, IconQuarry2, IconQuarryActive,
+        IconSaw, IconSaw1, IconSaw2, IconSawActive,
+        IconStepherd, IconStepherd1, IconStepherd2, IconStepherdActive,
         IconCorn1, IconCorn2, IconMeat1, IconMeat2, IconStone1, IconStone2, IconWood1, IconWood2,
         IconOre1, IconOre2, 
         IconFortParade, IconFortCapture, IconFortSources, IconFortHexa,
@@ -95,13 +103,31 @@ namespace Expanze
             hud[(int)HUDTexture.IconTown] = content.Load<Texture2D>("HUD/ic_town");
             hud[(int)HUDTexture.IconRoad] = content.Load<Texture2D>("HUD/ic_road");
             hud[(int)HUDTexture.IconFort] = content.Load<Texture2D>("HUD/ic_fort");
+            hud[(int)HUDTexture.IconFortActive] = content.Load<Texture2D>("HUD/ic_fort_active");
             hud[(int)HUDTexture.IconMarket] = content.Load<Texture2D>("HUD/ic_market");
+            hud[(int)HUDTexture.IconMarketActive] = content.Load<Texture2D>("HUD/ic_market_active");
             hud[(int)HUDTexture.IconMill] = content.Load<Texture2D>("HUD/ic_mill");
+            hud[(int)HUDTexture.IconMill1] = content.Load<Texture2D>("HUD/ic_mill1");
+            hud[(int)HUDTexture.IconMill2] = content.Load<Texture2D>("HUD/ic_mill2");
+            hud[(int)HUDTexture.IconMillActive] = content.Load<Texture2D>("HUD/ic_mill_active");
             hud[(int)HUDTexture.IconMine] = content.Load<Texture2D>("HUD/ic_mine");
+            hud[(int)HUDTexture.IconMine1] = content.Load<Texture2D>("HUD/ic_mine1");
+            hud[(int)HUDTexture.IconMine2] = content.Load<Texture2D>("HUD/ic_mine2");
+            hud[(int)HUDTexture.IconMineActive] = content.Load<Texture2D>("HUD/ic_mine_active");
             hud[(int)HUDTexture.IconMonastery] = content.Load<Texture2D>("HUD/ic_monastery");
+            hud[(int)HUDTexture.IconMonasteryActive] = content.Load<Texture2D>("HUD/ic_monastery_active");
             hud[(int)HUDTexture.IconQuarry] = content.Load<Texture2D>("HUD/ic_quarry");
+            hud[(int)HUDTexture.IconQuarry1] = content.Load<Texture2D>("HUD/ic_quarry1");
+            hud[(int)HUDTexture.IconQuarry2] = content.Load<Texture2D>("HUD/ic_quarry2");
+            hud[(int)HUDTexture.IconQuarryActive] = content.Load<Texture2D>("HUD/ic_quarry_active");
             hud[(int)HUDTexture.IconSaw] = content.Load<Texture2D>("HUD/ic_saw");
+            hud[(int)HUDTexture.IconSaw1] = content.Load<Texture2D>("HUD/ic_saw1");
+            hud[(int)HUDTexture.IconSaw2] = content.Load<Texture2D>("HUD/ic_saw2");
+            hud[(int)HUDTexture.IconSawActive] = content.Load<Texture2D>("HUD/ic_saw_active");
             hud[(int)HUDTexture.IconStepherd] = content.Load<Texture2D>("HUD/ic_stepherd");
+            hud[(int)HUDTexture.IconStepherd1] = content.Load<Texture2D>("HUD/ic_stepherd1");
+            hud[(int)HUDTexture.IconStepherd2] = content.Load<Texture2D>("HUD/ic_stepherd2");
+            hud[(int)HUDTexture.IconStepherdActive] = content.Load<Texture2D>("HUD/ic_stepherd_active");
             hud[(int)HUDTexture.IconCorn1] = content.Load<Texture2D>("HUD/ic_corn1");
             hud[(int)HUDTexture.IconMeat1] = content.Load<Texture2D>("HUD/ic_meat1");
             hud[(int)HUDTexture.IconStone1] = content.Load<Texture2D>("HUD/ic_stone1");

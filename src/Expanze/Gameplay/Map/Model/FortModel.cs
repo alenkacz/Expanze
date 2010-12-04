@@ -3,12 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CorePlugin;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Expanze.Gameplay
 {
 
     class FortModel
     {
+        public static Texture2D GetIconActive()
+        {
+            return GameResources.Inst().getHudTexture(HUDTexture.IconFortActive);
+        }
+
+        public static Texture2D GetIconPassive()
+        {
+            return GameResources.Inst().getHudTexture(HUDTexture.IconFort);
+        }
+
         public static void setPromptWindowToFort()
         {
             PromptWindow win = PromptWindow.Inst();

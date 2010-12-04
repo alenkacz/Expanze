@@ -91,10 +91,16 @@ namespace Expanze.Gameplay
                     break;
             }
             upgradeCount++;
+
+            ApplyEffect(kind, upgradeNumber);
         }
 
         abstract public void setPromptWindow();
         abstract public SourceAll getUpgradeCost(UpgradeKind upgradeKind, int upgradeNumber);
+        abstract public Texture2D GetIconActive();
+        abstract public Texture2D GetIconPassive();
+        abstract protected void ApplyEffect(UpgradeKind upgradeKind, int upgradeNumber);
+        
 
         public virtual BuyingUpgradeError CanActivePlayerBuyUpgrade(UpgradeKind upgradeKind, int upgradeNumber)
         {
