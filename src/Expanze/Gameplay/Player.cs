@@ -180,5 +180,24 @@ namespace Expanze
 
             return false;
         }
+
+        public int getMaterialNumber(HexaKind k)
+        {
+            switch (k)
+            {
+                case HexaKind.Cornfield:
+                    return getCorn();
+                case HexaKind.Forest:
+                    return getWood();
+                case HexaKind.Mountains:
+                    return getOre();
+                case HexaKind.Pasture:
+                    return getMeat();
+                case HexaKind.Stone:
+                    return getStone();
+            }
+
+            return 0;
+        }
     }
 }

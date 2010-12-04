@@ -347,11 +347,15 @@ namespace Expanze
             if (toSelectKind != HexaKind.Null)
             {
                 spriteBatch.Draw(marketKindsTextures[toSelectKind],toIconPosition,Color.White);
+                int count = GameMaster.getInstance().getActivePlayer().getMaterialNumber(toSelectKind);
+                spriteBatch.DrawString(GameState.gameFont, count.ToString(), new Vector2(toIconPosition.X, toIconPosition.Y+Settings.scaleH(90)), Color.White);
             }
 
             if (fromSelectKind != HexaKind.Null)
             {
                 spriteBatch.Draw(marketKindsTextures[fromSelectKind], fromIconPosition, Color.White);
+                int count = GameMaster.getInstance().getActivePlayer().getMaterialNumber(fromSelectKind);
+                spriteBatch.DrawString(GameState.gameFont, count.ToString(), new Vector2(fromIconPosition.X, fromIconPosition.Y + Settings.scaleH(90)), Color.White);
             }
         }
 
