@@ -18,6 +18,12 @@ namespace Expanze
         Vector2 sliderPosition;
         Rectangle range;
 
+        protected int mousex;
+        protected int mousey;
+        protected MouseState mouseState;
+        bool pressed = false;
+        Rectangle clickablePos;
+
        protected SpriteBatch spriteBatch;
         public Texture2D myButton;
         protected Vector2 spritePosition;
@@ -46,6 +52,7 @@ namespace Expanze
             this.texture = texture;
 
             sliderPosition = new Vector2(x + 50, y);
+            clickablePos = new Rectangle(Settings.scaleW(x + 50), Settings.scaleH(y), width, height);
         }
 
         public override void LoadContent()
@@ -62,6 +69,30 @@ namespace Expanze
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            mouseState = Mouse.GetState();
+
+            mousex = mouseState.X;
+            mousey = mouseState.Y;
+
+            if (ButtonState.Pressed == mouseState.LeftButton && !pressed)
+            {
+
+                if ((mousex > clickablePos.Left && mousex < (clickablePos.Right)) && (mousey < (clickablePos.Bottom) && mousey > clickablePos.Top))//identify mouse over x y posotions for the button
+                {
+                    pressed = true;
+                }
+            }
+
+            if (pressed && ButtonState.Pressed == mouseState.LeftButton)
+            {
+                sliderPosition.X = mousex / Settings.spriteScale.M11;
+            }
+
+            if (pressed && ButtonState.Pressed != mouseState.LeftButton)
+            {
+                pressed = false;
+            }
         }
 
         public void Draw(GameTime gameTime, Boolean pick)
