@@ -28,7 +28,7 @@ namespace Expanze
         Texture2D playerColorTexture;
         Vector2 colorPosition;
         //space between player rows
-        readonly int playerSpace = 80;
+        readonly int playerSpace = 50;
         List<PlayerSettingRowComponent> playersSettings = new List<PlayerSettingRowComponent>();
         List<MapSettingRowComponent> mapSettings = new List<MapSettingRowComponent>();
         List<ButtonComponent> addButtons = new List<ButtonComponent>();
@@ -52,7 +52,7 @@ namespace Expanze
         /// </summary>
         public HotSeatScreen()
         {
-            colorPosition = new Vector2(50, 100);
+            colorPosition = new Vector2(150, 100);
 
             // clearing all players in case of several game in one program launch
             GameMaster.getInstance().deleteAllPlayers();
@@ -68,9 +68,13 @@ namespace Expanze
 
             GameState.playerNameFont = content.Load<SpriteFont>("playername");
 
-            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), new Rectangle(), GameState.gameFont, Settings.scaleW(147), Settings.scaleH(141), "nextTurn");
+            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 150), (int)(Settings.maximumResolution.Y - 200), new Rectangle(), GameState.gameFont, Settings.scaleW(79), Settings.scaleH(66), "HUD/hotseat_hra_button");
             changeTurnButton.Actions += StartGameSelected;
             guiComponents.Add(changeTurnButton);
+
+            ButtonComponent backButton = new ButtonComponent(ScreenManager.Game, 60, (int)(Settings.maximumResolution.Y - 200), new Rectangle(), GameState.gameFont, Settings.scaleW(79), Settings.scaleH(66), "HUD/hotseat_back");
+            backButton.Actions += BackSelected;
+            guiComponents.Add(backButton);
 
             int counter = 0;
 
@@ -88,6 +92,9 @@ namespace Expanze
 
                 counter++;
             }
+
+            //margin betweent sections
+            colorPosition.Y += 80;
 
             points = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameState.gameFont, 400, 200, "Počet bodů", new List<String>() { "50", "75", "100" });
             mapType = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 50, GameState.gameFont, 400, 200, "Druh mapy", new List<String>() { "Normální", "Nížiny", "Pustina" });
@@ -185,6 +192,17 @@ namespace Expanze
             //ScreenManager.RemoveScreen(this);
             LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
                                new GameplayScreen(false));
+            ScreenManager.RemoveScreen(this);
+        }
+
+        /// <summary>
+        /// Event handler for when the Back button is selected
+        /// </summary>
+        void BackSelected(object sender, PlayerIndexEventArgs e)
+        {
+            ScreenManager.AddScreen(new BackgroundScreen(), e.PlayerIndex);
+            ScreenManager.AddScreen(new MainMenuScreen(), e.PlayerIndex);
+
             ScreenManager.RemoveScreen(this);
         }
 

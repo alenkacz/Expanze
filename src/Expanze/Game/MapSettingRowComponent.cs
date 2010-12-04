@@ -45,9 +45,9 @@ namespace Expanze
         {
             base.LoadContent();
 
-            radio1 = new RadioButtonComponent(Settings.Game, (int)(spritePosition.X + 350), (int)spritePosition.Y + 10, GameState.playerNameFont, Settings.scaleW(27), Settings.scaleH(28));
-            radio2 = new RadioButtonComponent(Settings.Game, (int)(spritePosition.X + 550), (int)spritePosition.Y + 10, GameState.playerNameFont, Settings.scaleW(27), Settings.scaleH(28));
-            radio3 = new RadioButtonComponent(Settings.Game, (int)(spritePosition.X + 750), (int)spritePosition.Y + 10, GameState.playerNameFont, Settings.scaleW(27), Settings.scaleH(28));
+            radio1 = new RadioButtonComponent(Settings.Game, (int)(spritePosition.X + 400), (int)spritePosition.Y + 10, GameState.playerNameFont, Settings.scaleW(27), Settings.scaleH(28));
+            radio2 = new RadioButtonComponent(Settings.Game, (int)(spritePosition.X + 650), (int)spritePosition.Y + 10, GameState.playerNameFont, Settings.scaleW(27), Settings.scaleH(28));
+            radio3 = new RadioButtonComponent(Settings.Game, (int)(spritePosition.X + 900), (int)spritePosition.Y + 10, GameState.playerNameFont, Settings.scaleW(27), Settings.scaleH(28));
 
             radio1.clicked(); //first one will be selected by default
 
@@ -138,7 +138,7 @@ namespace Expanze
             foreach (String s in options)
             {
                 // nessesary spacing
-                position.X += 200;
+                position.X += 250;
                 
                 spriteBatch.DrawString(GameState.playerNameFont, s, position, Color.White);
             }
