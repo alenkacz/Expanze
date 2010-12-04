@@ -21,7 +21,7 @@ namespace Expanze.Gameplay
         {
             PromptWindow win = PromptWindow.Inst();
             GameResources res = GameResources.Inst();
-            win.showPrompt("Klášter", true);
+            win.showPrompt(Strings.PROMPT_TITLE_WANT_TO_BUILD_MONASTERY, true);
             if(upgradeFirst[0] == false)
                 win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, "Vylepšení mlýna 1", "Popis", Settings.costMonasteryCorn1, res.getHudTexture(HUDTexture.IconCorn1)));
             else
@@ -75,7 +75,7 @@ namespace Expanze.Gameplay
 
         public static BuildingPromptItem getPromptItemBuildMonastery(int townID, int hexaID)
         {
-            return new BuildingPromptItem(townID, hexaID, BuildingKind.MonasteryBuilding, "Klášter", "Klášter", Settings.costMonastery, GameResources.Inst().getHudTexture(HUDTexture.IconMonastery));
+            return new BuildingPromptItem(townID, hexaID, BuildingKind.MonasteryBuilding, Strings.PROMPT_TITLE_WANT_TO_BUILD_MONASTERY, Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_MONASTERY, Settings.costMonastery, GameResources.Inst().getHudTexture(HUDTexture.IconMonastery));
         }
     }
 }

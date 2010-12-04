@@ -184,7 +184,7 @@ namespace Expanze.Gameplay.Map
                             PromptWindow.Inst().addPromptItem(
                                 new TownPromptItem(townID,
                                                     Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN,
-                                                    "",
+                                                    Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_TOWN,
                                                     Settings.costTown,
                                                     GameResources.Inst().getHudTexture(HUDTexture.IconTown)));
                         }

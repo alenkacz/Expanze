@@ -22,7 +22,7 @@ namespace Expanze.Gameplay
         {
             PromptWindow win = PromptWindow.Inst();
             GameResources res = GameResources.Inst();
-            win.showPrompt("Tržiště", true);
+            win.showPrompt(Strings.PROMPT_TITLE_WANT_TO_BUILD_MARKET, true);
             if(upgradeFirst[0] == false)
                 win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, "Výměna obilí 1", "Popis", Settings.costMarketCorn1, res.getHudTexture(HUDTexture.IconCorn1)));
             else
@@ -76,7 +76,7 @@ namespace Expanze.Gameplay
 
         public static BuildingPromptItem getPromptItemBuildMarket(int townID, int hexaID)
         {
-            return new BuildingPromptItem(townID, hexaID, BuildingKind.MarketBuilding, "Tržiště", "Trhy", Settings.costMarket, GameResources.Inst().getHudTexture(HUDTexture.IconMarket));
+            return new BuildingPromptItem(townID, hexaID, BuildingKind.MarketBuilding, Strings.PROMPT_TITLE_WANT_TO_BUILD_MARKET, Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_MARKET, Settings.costMarket, GameResources.Inst().getHudTexture(HUDTexture.IconMarket));
         }
     }
 }

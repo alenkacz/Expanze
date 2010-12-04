@@ -13,7 +13,7 @@ namespace Expanze.Gameplay
         {
             PromptWindow win = PromptWindow.Inst();
             GameResources res = GameResources.Inst();
-            win.showPrompt("Pevnost", true);
+            win.showPrompt(Strings.PROMPT_TITLE_WANT_TO_BUILD_FORT, true);
             win.addPromptItem(new PromptItem("Obsaď pole", "Popis", Settings.costFortCapture, res.getHudTexture(HUDTexture.IconFortCapture)));
             win.addPromptItem(new PromptItem("Ponič pole", "Popis", Settings.costFortHexa, res.getHudTexture(HUDTexture.IconFortHexa)));
             win.addPromptItem(new PromptItem("Znič suroviny", "Popis", Settings.costFortSources, res.getHudTexture(HUDTexture.IconFortSources)));
@@ -22,7 +22,7 @@ namespace Expanze.Gameplay
 
         public static BuildingPromptItem getPromptItemBuildFort(int townID, int hexaID)
         {
-            return new BuildingPromptItem(townID, hexaID, BuildingKind.FortBuilding, "Pevnost", "Pevnost", Settings.costFort, GameResources.Inst().getHudTexture(HUDTexture.IconFort));
+            return new BuildingPromptItem(townID, hexaID, BuildingKind.FortBuilding, Strings.PROMPT_TITLE_WANT_TO_BUILD_FORT, Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_FORT, Settings.costFort, GameResources.Inst().getHudTexture(HUDTexture.IconFort));
         }
     }
 }

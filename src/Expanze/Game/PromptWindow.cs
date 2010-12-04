@@ -187,10 +187,10 @@ namespace Expanze
                     DrawIcons();
 
                 spriteBatch.DrawString(GameState.medievalMedium, itemList[activeItem].getTitle(), new Vector2(bgPos.X + 20, bgPos.Y + 160), Color.LightBlue);
-                TextWrapping.DrawStringIntoRectangle("Potřebné pro stavbu dalších budov.",
-                    GameState.medievalSmall, Color.LightSteelBlue, bgPos.X + 10, bgPos.Y + 190, background.Width - 20);
-                TextWrapping.DrawStringIntoRectangle("Jiné město v blízkosti.",
-                    GameState.medievalSmall, Color.IndianRed, bgPos.X + 10, bgPos.Y + 240, background.Width - 20);
+                TextWrapping.DrawStringIntoRectangle(itemList[activeItem].getDescription(),
+                    GameState.medievalSmall, Color.LightSteelBlue, bgPos.X + 20, bgPos.Y + 195, background.Width - 40);
+                //TextWrapping.DrawStringIntoRectangle("Jiné město v blízkosti.",
+                //    GameState.medievalSmall, Color.IndianRed, bgPos.X + 10, bgPos.Y + 240, background.Width - 20);
 
                 if (!drawingPickableAreas)
                     DrawSources();
@@ -240,14 +240,14 @@ namespace Expanze
             }
 
             float startX = bgPos.X + ((background.Width - sourcesWidth) / 2);
-            float startY = bgPos.Y + background.Height - textureSource[0].Height - 110;
+            float startY = bgPos.Y + background.Height - textureSource[0].Height - 85;
 
             for (int loop1 = 0; loop1 < 5; loop1++)
             {
                 if (itemList[activeItem].getCost()[loop1] != 0)
                 {
                     spriteBatch.Draw(textureSource[loop1], new Vector2(startX, startY), Color.White);
-                    spriteBatch.DrawString(GameState.materialsNewFont, itemList[activeItem].getCost()[loop1].ToString(), new Vector2(startX + (textureSource[loop1].Width >> 1) - 10, startY + 65), Color.White);         
+                    spriteBatch.DrawString(GameState.materialsNewFont, itemList[activeItem].getCost()[loop1].ToString(), new Vector2(startX + (textureSource[loop1].Width >> 1) + 5, startY + 45), Color.White);         
                     startX += textureSource[loop1].Width + border;
                 }
             }

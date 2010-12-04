@@ -153,7 +153,7 @@ namespace Expanze.Gameplay.Map.View
                     PromptWindow.Inst().addPromptItem(
                             new RoadPromptItem(roadID,
                                                 Strings.PROMT_TITLE_WANT_TO_BUILD_ROAD,
-                                                "",
+                                                Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_ROAD,
                                                 Settings.costRoad,
                                                 GameResources.Inst().getHudTexture(HUDTexture.IconRoad)));             
                 }

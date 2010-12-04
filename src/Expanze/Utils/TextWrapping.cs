@@ -40,8 +40,8 @@ namespace Expanze.Utils
                 if(drawRow)
                 {
                     GameState.spriteBatch.DrawString(font, row, new Vector2(x, rowY), color);
-                    row = word;
-                    rowWidth = font.MeasureString(word).X;
+                    row = word + " ";
+                    rowWidth = font.MeasureString(word + " ").X;
                     rowY += font.LineSpacing;
                 }
                 textCopy = textCopy.Substring(spaceIndex + 1);
