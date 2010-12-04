@@ -13,7 +13,7 @@ namespace Expanze
         Texture2D sliderTexture;
 
         int sliderW = 24;
-        int siderH = 36;
+        int sliderH = 36;
 
         Vector2 sliderPosition;
         Rectangle range;
@@ -52,7 +52,8 @@ namespace Expanze
             this.texture = texture;
 
             sliderPosition = new Vector2(x + 50, y);
-            clickablePos = new Rectangle(Settings.scaleW(x + 50), Settings.scaleH(y), width, height);
+            clickablePos = new Rectangle(Settings.scaleW(x + 50), Settings.scaleH(y), sliderW, sliderH);
+            range = new Rectangle(Settings.scaleW(x), Settings.scaleH(y), Settings.scaleW(width), Settings.scaleH(height));
         }
 
         public override void LoadContent()
@@ -86,12 +87,21 @@ namespace Expanze
 
             if (pressed && ButtonState.Pressed == mouseState.LeftButton)
             {
-                sliderPosition.X = mousex / Settings.spriteScale.M11;
+                moveSlider(((int)(mousex / Settings.spriteScale.M11)));
             }
 
             if (pressed && ButtonState.Pressed != mouseState.LeftButton)
             {
                 pressed = false;
+                clickablePos = new Rectangle(Settings.scaleW(sliderPosition.X), Settings.scaleH(sliderPosition.Y), sliderW, sliderH);
+            }
+        }
+
+        private void moveSlider(int pos)
+        {
+            if (Settings.scaleW(pos) < range.Right && Settings.scaleW(pos) > range.Left)
+            {
+                sliderPosition.X = pos;
             }
         }
 
