@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Expanze.Gameplay.Map;
 using CorePlugin;
+using Expanze.Utils;
 
 namespace Expanze
 {
@@ -104,9 +105,10 @@ namespace Expanze
 
             bgPos = new Vector2((Settings.maximumResolution.X - background.Width) / 2,
                                    (Settings.maximumResolution.Y - background.Height) / 2);
-            int border = 30;
-            yesPos = new Vector2(bgPos.X + border, bgPos.Y + background.Height - border - yes.Height);
-            noPos = new Vector2(bgPos.X - no.Width - border + background.Width, bgPos.Y + background.Height - border - no.Height);
+            int borderX = 100;
+            int borderY = 20;
+            yesPos = new Vector2(bgPos.X + borderX, bgPos.Y + background.Height - borderY - yes.Height);
+            noPos = new Vector2(bgPos.X - no.Width - borderX + background.Width, bgPos.Y + background.Height - borderY - no.Height);
         }
 
         public override void UnloadContent()
@@ -178,13 +180,17 @@ namespace Expanze
                 else
                     spriteBatch.Draw(no, noPos, Color.White);
 
-                float titleWidth = GameState.materialsNewFont.MeasureString(title).X;
-                spriteBatch.DrawString(GameState.materialsNewFont, title, new Vector2(bgPos.X + (background.Width - titleWidth) / 2, bgPos.Y + 20), Color.LightBlue);
+                float titleWidth = GameState.medievalBig.MeasureString(title).X;
+                spriteBatch.DrawString(GameState.medievalBig, title, new Vector2(bgPos.X + (background.Width - titleWidth) / 2, bgPos.Y + 20), Color.LightBlue);
 
                 if(showIcons)
                     DrawIcons();
 
-                spriteBatch.DrawString(GameState.materialsNewFont, itemList[activeItem].getTitle(), new Vector2(bgPos.X + 15, bgPos.Y + 150), Color.LightBlue);
+                spriteBatch.DrawString(GameState.medievalMedium, itemList[activeItem].getTitle(), new Vector2(bgPos.X + 20, bgPos.Y + 160), Color.LightBlue);
+                TextWrapping.DrawStringIntoRectangle("Potřebné pro stavbu dalších budov.",
+                    GameState.medievalSmall, Color.LightSteelBlue, bgPos.X + 10, bgPos.Y + 190, background.Width - 20);
+                TextWrapping.DrawStringIntoRectangle("Jiné město v blízkosti.",
+                    GameState.medievalSmall, Color.IndianRed, bgPos.X + 10, bgPos.Y + 240, background.Width - 20);
 
                 if (!drawingPickableAreas)
                     DrawSources();

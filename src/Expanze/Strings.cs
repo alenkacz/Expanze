@@ -7,7 +7,11 @@ namespace Expanze
 {
     static class Strings
     {
+        // Menu strings
 
+        public static string MENU_LOADING_LOADING = "Načítání obsahu";
+
+        //
 
         public static string ALERT_TITLE_NOT_ENOUGH_SOURCES = "Nemáš dostatek surovin.";
         
@@ -21,6 +25,8 @@ namespace Expanze
         public static string ALERT_TITLE_NO_ROAD_OR_TOWN_IS_CLOSE = "Žádná tvoje cesta či město v blízkosti";
 
         // Source buildings building
+        public static string HEXA_TRI = "Rozcestí";
+        public static string HEXA_DUO = "Údolí";
         public static string HEXA_NAME_MOUNTAINS = "Rudnaté hory";
         public static string HEXA_NAME_PASTURE = "Pastvina";
         public static string HEXA_NAME_STONE = "Kamenná mohyla";
@@ -28,8 +34,6 @@ namespace Expanze
         public static string HEXA_NAME_CORNFIELD = "Obilné pole";
         public static string HEXA_NAME_DESERT = "Poušť";
 
-
-        public static string PROMPT_TITLE_BUILDING = "Stavění";
 
         public static string ALERT_TITLE_NOT_TOWN_OWNER = "To není tvé město.";
         public static string ALERT_TITLE_BUILDING_IS_BUILD = "Už tu stojí budova.";
