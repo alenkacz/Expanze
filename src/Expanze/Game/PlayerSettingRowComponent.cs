@@ -145,7 +145,8 @@ namespace Expanze
             spriteBatch.DrawString(GameState.playerNameFont, name, new Vector2(spritePosition.X + 200, spritePosition.Y), c);
             spriteBatch.Draw(playerColorTexture, new Vector2(spritePosition.X + 500, spritePosition.Y), playerColor);
 
-            playerState.Draw(gameTime);
+            if( active )
+                playerState.Draw(gameTime);
 
             spriteBatch.End();
         }
