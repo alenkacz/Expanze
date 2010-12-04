@@ -58,6 +58,8 @@ namespace Expanze
 
         public override void LoadContent()
         {
+            base.LoadContent();
+
             spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
             if (texture != null)
             {

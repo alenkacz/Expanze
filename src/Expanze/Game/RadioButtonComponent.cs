@@ -8,10 +8,13 @@ using Microsoft.Xna.Framework;
 
 namespace Expanze
 {
-    class RadioButtonComponent : GuiComponent
+    class RadioButtonComponent : GameComponent
     {
 
         Color playerColor;
+        protected SpriteBatch spriteBatch;
+        protected Vector2 spritePosition;
+        protected Game myGame;
 
         MouseState mouseState;
         int mousex;
@@ -21,15 +24,24 @@ namespace Expanze
 
         private bool selected = false;
         Texture2D activeTexture;
+        Texture2D bgTexture;
 
         Rectangle range;
 
-        public RadioButtonComponent(Game game, int x, int y, SpriteFont font, int width, int height, String texture)
-            : base(game, x, y, font, width, height, texture) 
+        public RadioButtonComponent(Game game, int x, int y, SpriteFont font, int width, int height)
         {
-            spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
+            myGame = game;
             this.clickablePos = new Rectangle(x, y, width, height);
-            activeTexture = game.Content.Load<Texture2D>("radiobutton_active");
+            spritePosition = new Vector2(x, y);
+        }
+
+        public override void LoadContent()
+        {
+            base.LoadContent();
+
+            spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
+            activeTexture = myGame.Content.Load<Texture2D>("radiobutton_active");
+            bgTexture = myGame.Content.Load<Texture2D>("radiobutton_bg");
         }
 
         public override void Update(GameTime gameTime)
@@ -46,6 +58,7 @@ namespace Expanze
 
                 if ((mousex > clickablePos.Left && mousex < (clickablePos.Right)) && (mousey < (clickablePos.Bottom) && mousey > clickablePos.Top))//identify mouse over x y posotions for the button
                 {
+                    this.selected = true;
                     pressed = true;
                 }
             }
@@ -58,19 +71,18 @@ namespace Expanze
 
         public override void Draw(GameTime gameTime)
         {
-            Color c;
-            if (pick)
-                c = Color.Black;
-            else
-                c = Color.White;
+            base.Draw(gameTime);
+
+            Color c; 
+            c = Color.White;
 
             spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,null,null,null,null,Settings.spriteScale);
 
-            spriteBatch.Draw(activeTexture, spritePosition, playerColor);
+            spriteBatch.Draw(bgTexture, spritePosition, Color.White);
 
             if (this.selected)
             {
-                spriteBatch.Draw(activeTexture, spritePosition, playerColor);
+                spriteBatch.Draw(activeTexture, spritePosition, Color.White);
             }
 
             spriteBatch.End();
