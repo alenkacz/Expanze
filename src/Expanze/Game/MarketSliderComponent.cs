@@ -113,6 +113,17 @@ namespace Expanze
             }
         }
 
+        public void resetSlider() 
+        {
+            sliderPosition.X = spritePosition.X;
+            this.fromType = HexaKind.Null;
+            this.toType = HexaKind.Null;
+            this.fromTypeCount = 0;
+            this.fromConvertedCount = 0;
+            this.toTypeCount = 0;
+            this.toConvertedCount = 0;
+        }
+
         private void moveSlider(int pos)
         {
             if (Settings.scaleW(pos) < (range.Right - Settings.scaleW(24)) && Settings.scaleW(pos) > range.Left)

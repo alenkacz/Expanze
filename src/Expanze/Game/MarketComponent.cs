@@ -280,40 +280,6 @@ namespace Expanze
 
             GameMaster.getInstance().doMaterialConversion(fromSelectKind, toSelectKind, GameMaster.getInstance().getActivePlayer(),actualFrom - convertedFrom,convertedTo-actualTo);
             MarketComponent.isActive = false;
-
-            /*ButtonComponent btn = (ButtonComponent)sender;
-            ButtonComponent selectedFrom = null;
-            ButtonComponent selectedTo = null;
-
-            foreach (ButtonComponent b in fromButtons)
-            {
-                if (b.getPicked()) { selectedFrom = b; break; }
-            }
-
-            foreach (ButtonComponent b in toButtons)
-            {
-                if (b.getPicked()) { selectedTo = b; break; }
-            }
-
-            HexaKind fromType = HexaKind.Null;
-            HexaKind toType = HexaKind.Null;
-
-            if (selectedTo != null && selectedFrom != null)
-            {
-                fromType = selectedFrom.getType();
-                toType = selectedTo.getType();
-            }
-            else
-            {
-                WindowPromt alert = new WindowPromt();
-                alert.showAlert("You must choose from both rows of buttons");
-            }
-
-            if (fromType != HexaKind.Null && toType != HexaKind.Null)
-            {
-                GameMaster.getInstance().doMaterialConversion(fromType, toType, GameMaster.getInstance().getActivePlayer());
-            }*/
-
         }
 
         /// <summary>
@@ -348,6 +314,10 @@ namespace Expanze
                 {
                     b.setPicked(false);
                 }
+
+                fromSelectKind = HexaKind.Null;
+                toSelectKind = HexaKind.Null;
+                marketSlider.resetSlider();
 
                 wasActive = isActive;
             }
