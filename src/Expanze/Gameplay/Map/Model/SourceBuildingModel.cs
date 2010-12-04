@@ -22,6 +22,8 @@ namespace Expanze.Gameplay
         Texture2D upgrade2icon;
         SourceAll upgrade1cost;
         SourceAll upgrade2cost;
+        SourceBuildingKind buildingKind;
+
 
         public SourceBuildingModel(int townID, int hexaID)
         {
@@ -38,6 +40,7 @@ namespace Expanze.Gameplay
             switch (hexa.getType())
             {
                 case HexaKind.Mountains:
+                    buildingKind = SourceBuildingKind.Mine;
                     titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_MINE;
                     upgrade1Title = Strings.PROMPT_TITLE_WANT_TO_UPGRADE_1_MINE;
                     upgrade2Title = Strings.PROMPT_TITLE_WANT_TO_UPGRADE_2_MINE;
@@ -47,6 +50,7 @@ namespace Expanze.Gameplay
                     upgrade2icon = GameResources.Inst().getHudTexture(HUDTexture.IconMine);
                     break;
                 case HexaKind.Forest:
+                    buildingKind = SourceBuildingKind.Saw;
                     titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_SAW;
                     upgrade1Title = Strings.PROMPT_TITLE_WANT_TO_UPGRADE_1_SAW;
                     upgrade2Title = Strings.PROMPT_TITLE_WANT_TO_UPGRADE_2_SAW;
@@ -56,6 +60,7 @@ namespace Expanze.Gameplay
                     upgrade2icon = GameResources.Inst().getHudTexture(HUDTexture.IconSaw);
                     break;
                 case HexaKind.Cornfield:
+                    buildingKind = SourceBuildingKind.Mill;
                     titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_MILL;
                     upgrade1Title = Strings.PROMPT_TITLE_WANT_TO_UPGRADE_1_MILL;
                     upgrade2Title = Strings.PROMPT_TITLE_WANT_TO_UPGRADE_2_MILL;
@@ -65,6 +70,7 @@ namespace Expanze.Gameplay
                     upgrade2icon = GameResources.Inst().getHudTexture(HUDTexture.IconMill);
                     break;
                 case HexaKind.Pasture:
+                    buildingKind = SourceBuildingKind.Stepherd;
                     titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_STEPHERD;
                     upgrade1Title = Strings.PROMPT_TITLE_WANT_TO_UPGRADE_1_STEPHERD;
                     upgrade2Title = Strings.PROMPT_TITLE_WANT_TO_UPGRADE_2_STEPHERD;
@@ -74,6 +80,7 @@ namespace Expanze.Gameplay
                     upgrade2icon = GameResources.Inst().getHudTexture(HUDTexture.IconStepherd);
                     break;
                 case HexaKind.Stone:
+                    buildingKind = SourceBuildingKind.Quarry;
                     titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_QUARRY;
                     upgrade1Title = Strings.PROMPT_TITLE_WANT_TO_UPGRADE_1_QUARRY;
                     upgrade2Title = Strings.PROMPT_TITLE_WANT_TO_UPGRADE_2_QUARRY;
@@ -94,6 +101,24 @@ namespace Expanze.Gameplay
                 win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, upgrade1Title, upgrade1Description, upgrade1cost, upgrade1icon));
             else
                 win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 0, upgrade2Title, upgrade2Description, upgrade2cost, upgrade2icon));
+        }
+
+        public override BuyingUpgradeError CanActivePlayerBuyUpgrade(UpgradeKind upgradeKind, int upgradeNumber)
+        {
+            GameMaster gm = GameMaster.getInstance();
+            Player activePlayer = gm.getActivePlayer();
+
+            if (activePlayer.GetSourceBuildingUpgrade(buildingKind) == UpgradeKind.NoUpgrade ||
+                (activePlayer.GetSourceBuildingUpgrade(buildingKind) == UpgradeKind.FirstUpgrade &&
+                 upgradeKind == UpgradeKind.SecondUpgrade))
+            {
+                return BuyingUpgradeError.NoUpgrade;
+            }
+
+            if (!getUpgradeCost(upgradeKind, upgradeNumber).HasPlayerSources(activePlayer))
+                return BuyingUpgradeError.NoSources;
+
+            return BuyingUpgradeError.OK;
         }
 
         public override SourceAll getUpgradeCost(UpgradeKind upgradeKind, int upgradeNumber)

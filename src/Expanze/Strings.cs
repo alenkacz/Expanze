@@ -25,6 +25,7 @@ namespace Expanze
         public static string ALERT_TITLE_NO_ROAD_OR_TOWN_IS_CLOSE = "Žádná tvoje cesta či město v blízkosti.";
 
         // Special building alerts
+        public static string ALERT_TITLE_NO_UPGRADE = "Prvně musíš vynaleznout pokrok v kláštěře.";
         public static string ALERT_TITLE_MAX_UPGRADES = "Už máš zakoupené 3 pokroky.";
 
         // Source buildings building

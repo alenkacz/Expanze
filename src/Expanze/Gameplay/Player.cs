@@ -18,11 +18,14 @@ namespace Expanze
         SourceAll prevSource;       // Source before last source change (for example before paying for something, collecting resources
         SourceAll source;
         SourceAll transactionSource;
+
+
         int conversionRateCorn;
         int conversionRateStone;
         int conversionRateOre;
         int conversionRateMeat;
         int conversionRateWood;
+        UpgradeKind[] upgradeSourceBuilding;
 
         IComponentAI componentAI;   // is null if player is NOT controled by computer but is controled by human
 
@@ -33,11 +36,17 @@ namespace Expanze
             source = new SourceAll(0);
             transactionSource = new SourceAll(0);
 
-            this.conversionRateCorn = Settings.conversionRateCorn;
+            conversionRateCorn = Settings.conversionRateCorn;
             conversionRateStone = Settings.conversionRateStone;
             conversionRateOre = Settings.conversionRateOre;
             conversionRateMeat = Settings.conversionRateMeat;
             conversionRateWood = Settings.conversionRateWood;
+
+            upgradeSourceBuilding = new UpgradeKind[(int) SourceBuildingKind.Count];
+            for (int loop1 = 0; loop1 < (int)SourceBuildingKind.Count; loop1++)
+            {
+                upgradeSourceBuilding[loop1] = UpgradeKind.NoUpgrade;
+            }
 
             this.color = color;
             this.name = name;
@@ -49,6 +58,7 @@ namespace Expanze
         public IComponentAI getComponentAI() { return componentAI; }
         public bool getIsAI() { return componentAI != null; }
         public Color getColor() { return color; }
+        public UpgradeKind GetSourceBuildingUpgrade(SourceBuildingKind kind) { return upgradeSourceBuilding[(int)kind]; }
 
         public void addPoints(int add) { 
             points += add;

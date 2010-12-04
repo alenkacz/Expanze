@@ -39,6 +39,7 @@ namespace Expanze.Gameplay
             {
                 case BuyingUpgradeError.NoSources: return "";
                 case BuyingUpgradeError.MaxUpgrades: return Strings.ALERT_TITLE_MAX_UPGRADES;
+                case BuyingUpgradeError.NoUpgrade: return Strings.ALERT_TITLE_NO_UPGRADE;
             }
 
             return base.TryExecute();
@@ -95,7 +96,7 @@ namespace Expanze.Gameplay
         abstract public void setPromptWindow();
         abstract public SourceAll getUpgradeCost(UpgradeKind upgradeKind, int upgradeNumber);
 
-        public BuyingUpgradeError CanActivePlayerBuyUpgrade(UpgradeKind upgradeKind, int upgradeNumber)
+        public virtual BuyingUpgradeError CanActivePlayerBuyUpgrade(UpgradeKind upgradeKind, int upgradeNumber)
         {
             GameMaster gm = GameMaster.getInstance();
             Player activePlayer = gm.getActivePlayer();
