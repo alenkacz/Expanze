@@ -99,6 +99,22 @@ namespace Expanze
             }
         }
 
+        public String getSelectedSettings()
+        {
+            if (radio1.isSelected())
+            {
+                return options[0];
+            }
+            else if (radio2.isSelected())
+            {
+                return options[1];
+            }
+            else
+            {
+                return options[2];
+            }
+        }
+
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);

@@ -61,9 +61,14 @@ namespace Expanze
             this.selected = b;
         }
 
+        public bool isSelected()
+        {
+            return this.selected;
+        }
+
         public void clicked()
         {
-            this.selected = !this.selected;
+            this.selected = true;
         }
 
         public override void Draw(GameTime gameTime)
