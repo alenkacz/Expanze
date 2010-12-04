@@ -65,6 +65,19 @@ namespace Expanze.Gameplay
             }
         }
 
+        public bool GetIsUpgrade(UpgradeKind kind, int upgradeNumber)
+        {
+            switch (kind)
+            {
+                case UpgradeKind.FirstUpgrade:
+                    return upgradeFirst[upgradeNumber];
+                case UpgradeKind.SecondUpgrade:
+                    return upgradeSecond[upgradeNumber];
+            }
+
+            return false;
+        }
+
         public void BuyUpgrade(UpgradeKind kind, int upgradeNumber)
         {
             switch (kind)

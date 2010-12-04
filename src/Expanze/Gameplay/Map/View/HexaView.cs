@@ -354,8 +354,6 @@ namespace Expanze
                         kind != HexaKind.Null && 
                         townView[loop1].getTownModel().getPlayerOwner() == GameMaster.getInstance().getActivePlayer())
                     {
-                        WindowPromt wP = GameState.windowPromt;
-
                         switch(townView[loop1].getTownModel().getBuildingKind(hexaID))
                         {
                             case BuildingKind.NoBuilding :
@@ -418,9 +416,6 @@ namespace Expanze
 
                             case BuildingKind.FortBuilding :
                                 FortModel.setPromptWindowToFort();
-                                break;
-
-                            case BuildingKind.SourceBuilding :
                                 break;
 
                             default :
