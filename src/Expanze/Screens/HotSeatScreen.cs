@@ -30,12 +30,19 @@ namespace Expanze
         //space between player rows
         readonly int playerSpace = 80;
         List<PlayerSettingRowComponent> playersSettings = new List<PlayerSettingRowComponent>();
+        List<MapSettingRowComponent> mapSettings = new List<MapSettingRowComponent>();
         List<ButtonComponent> addButtons = new List<ButtonComponent>();
         List<ButtonComponent> remButtons = new List<ButtonComponent>();
 
         int activeNumberOfPlayers = 2;
 
         List<ButtonComponent> playerButtons = new List<ButtonComponent>();
+
+        MapSettingRowComponent points;
+        MapSettingRowComponent mapType;
+        MapSettingRowComponent mapSize;
+        MapSettingRowComponent wealth;
+
 
         #region Initialization
 
@@ -82,10 +89,10 @@ namespace Expanze
                 counter++;
             }
 
-            MapSettingRowComponent points = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameState.gameFont, 400, 200, "Počet bodů", new List<String>() { "50", "75", "100" });
-            MapSettingRowComponent mapType = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 50, GameState.gameFont, 400, 200, "Druh mapy", new List<String>() { "Normální", "Nížiny", "Pustina" });
-            MapSettingRowComponent mapSize = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 100, GameState.gameFont, 400, 200, "Velikost mapy", new List<String>() { "Malá", "Střední", "Velká" });
-            MapSettingRowComponent wealth = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 150, GameState.gameFont, 400, 200, "Bohatství surovin", new List<String>() { "Nízké", "Střední", "Vysoké" });
+            points = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameState.gameFont, 400, 200, "Počet bodů", new List<String>() { "50", "75", "100" });
+            mapType = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 50, GameState.gameFont, 400, 200, "Druh mapy", new List<String>() { "Normální", "Nížiny", "Pustina" });
+            mapSize = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 100, GameState.gameFont, 400, 200, "Velikost mapy", new List<String>() { "Malá", "Střední", "Velká" });
+            wealth = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 150, GameState.gameFont, 400, 200, "Bohatství surovin", new List<String>() { "Nízké", "Střední", "Vysoké" });
 
             guiComponents.Add(points);
             guiComponents.Add(mapType);
@@ -193,6 +200,14 @@ namespace Expanze
                     GameMaster.getInstance().addPlayer(pl);
                 }
             }
+
+            int point = Int16.Parse(points.getSelectedSettings());
+            String type = mapType.getSelectedSettings();
+            String size = mapSize.getSelectedSettings();
+            String wealthMap = wealth.getSelectedSettings();
+
+            GameMaster.getInstance().resetGameSettings();
+            GameMaster.getInstance().setGameSettings(point,type,size,wealthMap);
         }
 
         #region Draw

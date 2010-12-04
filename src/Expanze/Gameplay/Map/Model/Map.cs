@@ -167,7 +167,8 @@ namespace Expanze.Gameplay.Map
         private HexaModel[][] getMap()
         {
             MapParser parser = new MapParser();
-            return parser.getMap();
+            GameSettings gs = GameMaster.getInstance().getGameSettings();
+            return parser.getMap(gs.getMapSize(), gs.getMapType(), gs.getMapWealth());
         }
 
         public override void LoadContent()

@@ -8,69 +8,83 @@ using Microsoft.Xna.Framework;
 
 namespace Expanze
 {
-    class RadioButtonComponent : GuiComponent
+    class RadioButtonComponent : GameComponent
     {
 
         Color playerColor;
+        protected SpriteBatch spriteBatch;
+        protected Vector2 spritePosition;
+        protected Game myGame;
 
-        MouseState mouseState;
-        int mousex;
-        int mousey;
         protected Rectangle clickablePos;
         bool pressed = false;
 
         private bool selected = false;
         Texture2D activeTexture;
+        Texture2D bgTexture;
 
         Rectangle range;
 
-        public RadioButtonComponent(Game game, int x, int y, SpriteFont font, int width, int height, String texture)
-            : base(game, x, y, font, width, height, texture) 
+        public RadioButtonComponent(Game game, int x, int y, SpriteFont font, int width, int height)
         {
+            myGame = game;
+            this.clickablePos = new Rectangle(Settings.scaleW(x), Settings.scaleH(y), width, height);
+            spritePosition = new Vector2(x, y);
+        }
+
+        public override void LoadContent()
+        {
+            base.LoadContent();
+
             spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
-            this.clickablePos = new Rectangle(x, y, width, height);
-            activeTexture = game.Content.Load<Texture2D>("radiobutton_active");
+            activeTexture = myGame.Content.Load<Texture2D>("radiobutton_active");
+            bgTexture = myGame.Content.Load<Texture2D>("radiobutton_bg");
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+        }
 
-            mouseState = Mouse.GetState();
-
-            mousex = mouseState.X;
-            mousey = mouseState.Y;
-
-            if (ButtonState.Pressed == mouseState.LeftButton && !pressed)
+        public bool isInRange(int mousex, int mousey)
+        {
+            if ((mousex > clickablePos.Left && mousex < (clickablePos.Right)) && (mousey < (clickablePos.Bottom) && mousey > clickablePos.Top))//identify mouse over x y posotions for the button
             {
-
-                if ((mousex > clickablePos.Left && mousex < (clickablePos.Right)) && (mousey < (clickablePos.Bottom) && mousey > clickablePos.Top))//identify mouse over x y posotions for the button
-                {
-                    pressed = true;
-                }
+                return true;
             }
 
-            if (pressed && ButtonState.Pressed != mouseState.LeftButton)
-            {
-                pressed = false;
-            }
+            return false;
+        }
+
+        public void setSelected(bool b) 
+        {
+            this.selected = b;
+        }
+
+        public bool isSelected()
+        {
+            return this.selected;
+        }
+
+        public void clicked()
+        {
+            this.selected = true;
         }
 
         public override void Draw(GameTime gameTime)
         {
-            Color c;
-            if (pick)
-                c = Color.Black;
-            else
-                c = Color.White;
+            base.Draw(gameTime);
+
+            Color c; 
+            c = Color.White;
 
             spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,null,null,null,null,Settings.spriteScale);
 
-            spriteBatch.Draw(activeTexture, spritePosition, playerColor);
+            spriteBatch.Draw(bgTexture, spritePosition, Color.White);
 
             if (this.selected)
             {
-                spriteBatch.Draw(activeTexture, spritePosition, playerColor);
+                spriteBatch.Draw(activeTexture, new Vector2((int)spritePosition.X + 3, (int)spritePosition.Y + 6), Color.White);
             }
 
             spriteBatch.End();

@@ -15,7 +15,7 @@ namespace Expanze
         public static String[] mapPaths = new String[] { "Models/yellowhex", "Models/brownhex", "Models/greyhex", "Models/greenhex", "Models/redhex", "Models/orangehex", "Models/bluehex" };
 
         //// resources which get player on start
-        //public static SourceAll startResources = new SourceAll(150);
+        public static SourceAll startResources = new SourceAll(100);
 
         // costs of infrastructure
         public static SourceAll costTown = new SourceAll(60, 60, 50, 50, 30);

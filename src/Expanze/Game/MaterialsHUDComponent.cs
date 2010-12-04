@@ -21,6 +21,11 @@ namespace Expanze
         public MaterialsHUDComponent(Game game, int x, int y, SpriteFont font, int width, int height, String texture) 
             : base(game,x,y,font,width,height,texture) {}
 
+        public override void LoadContent()
+        {
+            base.LoadContent();
+        }
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);

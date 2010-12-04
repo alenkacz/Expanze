@@ -31,6 +31,13 @@ namespace Expanze
         int topMargin = 40;
         Rectangle range;
 
+        HexaKind toSelectKind = HexaKind.Null;
+        HexaKind fromSelectKind = HexaKind.Null;
+
+        Dictionary<HexaKind,Texture2D> marketKindsTextures = new Dictionary<HexaKind,Texture2D>();
+        Vector2 toIconPosition;
+        Vector2 fromIconPosition;
+
         #endregion
 
         #region Initialization
@@ -39,6 +46,9 @@ namespace Expanze
             : base(Settings.Game, 200, (int)Settings.maximumResolution.Y-600, GameState.gameFont, Settings.scaleW(658), Settings.scaleH(446), "market-bg")
         {
             this.range = new Rectangle(200, (int)Settings.maximumResolution.Y - 600, 658, 446);
+
+            toIconPosition = new Vector2(this.range.Right - 100, (int)(range.Top + topMargin + buttonSize.Y + 3 * space + 30));
+            fromIconPosition = new Vector2(this.range.Left + 30, (int)(range.Top + topMargin + buttonSize.Y + 3 * space + 30));
         }
 
         public static MarketComponent getInstance()
@@ -63,6 +73,8 @@ namespace Expanze
             this.createFirstRow();
             this.createSecondRow();
 
+            fillMarketKindTextures();
+
             ButtonComponent change_button = new ButtonComponent(Settings.Game, range.Left + 180, (int)(range.Bottom-80), new Rectangle(), GameState.gameFont, Settings.scaleW(104), Settings.scaleH(45), "HUD/OKPromt");
             change_button.Actions += ChangeButtonAction;
             this.content.Add(change_button);
@@ -80,14 +92,26 @@ namespace Expanze
             GuiComponent secondRow = new GuiComponent(Settings.Game, range.Left + 3 * w_space, (int)(range.Top + topMargin + buttonSize.Y + 2 * space + 10), GameState.gameFont, Settings.scaleW(77), Settings.scaleH(14), "za_co_vymenit");
             this.content.Add(secondRow);
 
-            marketSlider = new MarketSliderComponent(Settings.Game, range.Left + 50, (int)(range.Top + topMargin + buttonSize.Y + 4 * space + 10), GameState.gameFont);
-            this.content.Add(marketSlider);
+            marketSlider = new MarketSliderComponent(Settings.Game, range.Left + 130, (int)(range.Top + topMargin + buttonSize.Y + 4 * space + 10), GameState.gameFont,392,16,"slider_market");
+            //this.content.Add(marketSlider);
 
             foreach (GuiComponent g in content)
             {
                 g.Initialize();
                 g.LoadContent();
             }
+
+            marketSlider.Initialize(); marketSlider.LoadContent();
+        }
+
+        private void fillMarketKindTextures()
+        {
+            marketKindsTextures = new Dictionary<HexaKind, Texture2D>();
+            marketKindsTextures.Add(HexaKind.Cornfield,Settings.Game.Content.Load<Texture2D>("corn_market"));
+            marketKindsTextures.Add(HexaKind.Stone, Settings.Game.Content.Load<Texture2D>("stone_market"));
+            marketKindsTextures.Add(HexaKind.Mountains, Settings.Game.Content.Load<Texture2D>("ore_market"));
+            marketKindsTextures.Add(HexaKind.Pasture, Settings.Game.Content.Load<Texture2D>("meat_market"));
+            marketKindsTextures.Add(HexaKind.Forest, Settings.Game.Content.Load<Texture2D>("wood_market"));
         }
 
         /// <summary>
@@ -181,6 +205,8 @@ namespace Expanze
                 {
                     b.setPicked(false);
                 }
+
+                toSelectKind = btn.getType();
             }
             else
             {
@@ -189,6 +215,8 @@ namespace Expanze
                 {
                     b.setPicked(false);
                 }
+
+                fromSelectKind = btn.getType();
             }
 
             btn.setPicked(!btn.getPicked());
@@ -208,7 +236,12 @@ namespace Expanze
                     //trying to find selected button
                     if (b.getPicked())
                     {
-                        if (b.getType() == btn.getType()) { b.setPicked(false); return false; }
+                        if (b.getType() == btn.getType()) { 
+                            // first row has bigger priority
+                            b.setPicked(false);
+                            toSelectKind = HexaKind.Null;
+                            return false; 
+                        }
                         //we can break because only one button can be selected
                         break;
                     }
@@ -305,17 +338,41 @@ namespace Expanze
 
                 wasActive = isActive;
             }
+
+            marketSlider.Update(gameTime);
+        }
+
+        private void drawSelectedKind()
+        {
+            if (toSelectKind != HexaKind.Null)
+            {
+                spriteBatch.Draw(marketKindsTextures[toSelectKind],toIconPosition,Color.White);
+            }
+
+            if (fromSelectKind != HexaKind.Null)
+            {
+                spriteBatch.Draw(marketKindsTextures[fromSelectKind], fromIconPosition, Color.White);
+            }
         }
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
             base.Draw(gameTime);
 
-            if(!pick)
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
+
+            if (!pick)
+            {
                 foreach (GuiComponent g in content)
                 {
                     g.Draw(gameTime);
                 }
+
+                marketSlider.Draw(gameTime);
+                drawSelectedKind();
+            }
+
+            spriteBatch.End();
         }
 
         #endregion

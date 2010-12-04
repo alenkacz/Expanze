@@ -33,6 +33,8 @@ namespace Expanze
 
         private static GameMaster instance = null;
 
+        private GameSettings gameSettings;
+
         public static GameMaster getInstance()
         {
             if (instance == null)
@@ -51,6 +53,7 @@ namespace Expanze
         public bool startGame(bool isAI, Map map)
         {
             this.map = map;
+            Settings.startResources = new SourceAll(gameSettings.getPoints());
 
             IComponentAI componentAI = null;
             foreach (IComponentAI AI in CoreProviderAI.AI)
@@ -78,6 +81,28 @@ namespace Expanze
             state = EGameState.StateFirstTown;
 
             return true;
+        }
+
+        public void setGameSettings(int points, string mapType, string mapSize, string mapWealth)
+        {
+            gameSettings = new GameSettings(points,mapType,mapSize,mapWealth);
+        }
+
+        public GameSettings getGameSettings()
+        {
+            if (gameSettings != null)
+            {
+                return gameSettings;
+            }
+            else
+            {
+                return new GameSettings(100,"normální","střední","střední");
+            }
+        }
+
+        public void resetGameSettings()
+        {
+            gameSettings = null;
         }
 
         public void deleteAllPlayers()
@@ -158,7 +183,7 @@ namespace Expanze
             state = EGameState.StateGame;
             foreach (Player player in players)
             {
-                player.addSources(new SourceAll(100), TransactionState.TransactionStart);
+                player.addSources(Settings.startResources, TransactionState.TransactionStart);
             }
         }
 
