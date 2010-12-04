@@ -67,6 +67,11 @@ namespace Expanze
             return active;
         }
 
+        public void setIsActive(bool active)
+        {
+            this.active = active;
+        }
+
         public void addPromptItem(PromptItem item)
         {
             itemList.Add(item);
@@ -251,12 +256,13 @@ namespace Expanze
             float startX = bgPos.X + ((background.Width - sourcesWidth) / 2);
             float startY = bgPos.Y + background.Height - textureSource[0].Height - 85;
 
+            SourceAll playerSource = GameMaster.getInstance().getActivePlayer().getSource();
             for (int loop1 = 0; loop1 < 5; loop1++)
             {
                 if (itemList[activeItem].getCost()[loop1] != 0)
                 {
                     spriteBatch.Draw(textureSource[loop1], new Vector2(startX, startY), Color.White);
-                    spriteBatch.DrawString(GameState.materialsNewFont, itemList[activeItem].getCost()[loop1].ToString(), new Vector2(startX + (textureSource[loop1].Width >> 1) + 5, startY + 45), Color.White);         
+                    spriteBatch.DrawString(GameState.materialsNewFont, itemList[activeItem].getCost()[loop1].ToString(), new Vector2(startX + (textureSource[loop1].Width >> 1) + 5, startY + 45), (playerSource[loop1] >= itemList[activeItem].getCost()[loop1]) ? Color.White : Color.DarkRed);         
                     startX += textureSource[loop1].Width + border;
                 }
             }

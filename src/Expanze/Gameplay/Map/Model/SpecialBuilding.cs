@@ -38,6 +38,7 @@ namespace Expanze.Gameplay
             switch (error)
             {
                 case BuyingUpgradeError.NoSources: return "";
+                case BuyingUpgradeError.MaxUpgrades: return Strings.ALERT_TITLE_MAX_UPGRADES;
             }
 
             return base.TryExecute();
@@ -48,11 +49,14 @@ namespace Expanze.Gameplay
     {
         protected bool[] upgradeFirst;
         protected bool[] upgradeSecond;
+        const int upgradeMax = 3;   /// upgradeCount limit
+        int upgradeCount;           /// how many upgrades player has bought in this building?
 
         public SpecialBuilding()
         {
             upgradeFirst = new bool[5];
             upgradeSecond = new bool[5];
+            upgradeCount = 0;
 
             for (int loop1 = 0; loop1 < upgradeFirst.Length; loop1++)
             {
@@ -72,6 +76,7 @@ namespace Expanze.Gameplay
                     upgradeSecond[upgradeNumber] = true;
                     break;
             }
+            upgradeCount++;
         }
 
         abstract public void setPromptWindow();
@@ -81,6 +86,10 @@ namespace Expanze.Gameplay
         {
             GameMaster gm = GameMaster.getInstance();
             Player activePlayer = gm.getActivePlayer();
+
+            if (upgradeCount == upgradeMax)
+                return BuyingUpgradeError.MaxUpgrades;
+
             if (!getUpgradeCost(upgradeKind, upgradeNumber).HasPlayerSources(activePlayer))
                 return BuyingUpgradeError.NoSources;
 

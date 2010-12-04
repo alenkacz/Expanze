@@ -141,6 +141,7 @@ namespace Expanze
 
                 loadingTime += gameTime.ElapsedGameTime.Milliseconds;
                 string message = Strings.MENU_LOADING_LOADING;
+                /*
                 long tempTime = loadingTime % 400;
                 if(tempTime < 100)
                     message += "";
@@ -150,7 +151,7 @@ namespace Expanze
                 else if (tempTime < 300)
                     message += "..";
                 else
-                    message += "...";
+                    message += "...";*/
 
                 // Center the text in the viewport.
                 Viewport viewport = ScreenManager.GraphicsDevice.Viewport;

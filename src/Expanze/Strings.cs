@@ -24,6 +24,9 @@ namespace Expanze
         public static string ALERT_TITLE_ROAD_IS_BUILD = "Cesta již postavena.";
         public static string ALERT_TITLE_NO_ROAD_OR_TOWN_IS_CLOSE = "Žádná tvoje cesta či město v blízkosti.";
 
+        // Special building alerts
+        public static string ALERT_TITLE_MAX_UPGRADES = "Už máš zakoupené 3 pokroky.";
+
         // Source buildings building
         public static string HEXA_TRI = "Rozcestí";
         public static string HEXA_DUO = "Údolí";

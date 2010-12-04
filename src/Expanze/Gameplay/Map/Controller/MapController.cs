@@ -15,6 +15,9 @@ namespace Expanze.Gameplay.Map
         {
             this.map = map;
             this.mapView = mapView;
+
+            PromptWindow.Inst().setIsActive(false);
+            MarketComponent.getInstance().setIsActive(false);
         }
 
         public ITownGet GetITownGetByID(int townID)
