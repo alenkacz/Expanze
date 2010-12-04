@@ -207,6 +207,7 @@ namespace Expanze
                 }
 
                 toSelectKind = btn.getType();
+                marketSlider.setToType(toSelectKind);
             }
             else
             {
@@ -217,6 +218,7 @@ namespace Expanze
                 }
 
                 fromSelectKind = btn.getType();
+                marketSlider.setFromType(fromSelectKind);
             }
 
             btn.setPicked(!btn.getPicked());
@@ -240,6 +242,7 @@ namespace Expanze
                             // first row has bigger priority
                             b.setPicked(false);
                             toSelectKind = HexaKind.Null;
+                            marketSlider.setToType(HexaKind.Null);
                             return false; 
                         }
                         //we can break because only one button can be selected
@@ -268,7 +271,17 @@ namespace Expanze
         /// </summary>
         void ChangeButtonAction(object sender, PlayerIndexEventArgs e)
         {
-            ButtonComponent btn = (ButtonComponent)sender;
+
+            int actualFrom = GameMaster.getInstance().getActivePlayer().getMaterialNumber(fromSelectKind);
+            int actualTo = GameMaster.getInstance().getActivePlayer().getMaterialNumber(toSelectKind);
+
+            int convertedFrom = marketSlider.getConvertedFrom();
+            int convertedTo = marketSlider.getConvertedTo();
+
+            GameMaster.getInstance().doMaterialConversion(fromSelectKind, toSelectKind, GameMaster.getInstance().getActivePlayer(),actualFrom - convertedFrom,convertedTo-actualTo);
+            MarketComponent.isActive = false;
+
+            /*ButtonComponent btn = (ButtonComponent)sender;
             ButtonComponent selectedFrom = null;
             ButtonComponent selectedTo = null;
 
@@ -299,7 +312,7 @@ namespace Expanze
             if (fromType != HexaKind.Null && toType != HexaKind.Null)
             {
                 GameMaster.getInstance().doMaterialConversion(fromType, toType, GameMaster.getInstance().getActivePlayer());
-            }
+            }*/
 
         }
 
@@ -347,15 +360,15 @@ namespace Expanze
             if (toSelectKind != HexaKind.Null)
             {
                 spriteBatch.Draw(marketKindsTextures[toSelectKind],toIconPosition,Color.White);
-                int count = GameMaster.getInstance().getActivePlayer().getMaterialNumber(toSelectKind);
-                spriteBatch.DrawString(GameState.gameFont, count.ToString(), new Vector2(toIconPosition.X, toIconPosition.Y+Settings.scaleH(90)), Color.White);
+                //int count = GameMaster.getInstance().getActivePlayer().getMaterialNumber(toSelectKind);
+                //spriteBatch.DrawString(GameState.gameFont, count.ToString(), new Vector2(toIconPosition.X, toIconPosition.Y+Settings.scaleH(90)), Color.White);
             }
 
             if (fromSelectKind != HexaKind.Null)
             {
                 spriteBatch.Draw(marketKindsTextures[fromSelectKind], fromIconPosition, Color.White);
-                int count = GameMaster.getInstance().getActivePlayer().getMaterialNumber(fromSelectKind);
-                spriteBatch.DrawString(GameState.gameFont, count.ToString(), new Vector2(fromIconPosition.X, fromIconPosition.Y + Settings.scaleH(90)), Color.White);
+                //int count = GameMaster.getInstance().getActivePlayer().getMaterialNumber(fromSelectKind);
+                //spriteBatch.DrawString(GameState.gameFont, count.ToString(), new Vector2(fromIconPosition.X, fromIconPosition.Y + Settings.scaleH(90)), Color.White);
             }
         }
 

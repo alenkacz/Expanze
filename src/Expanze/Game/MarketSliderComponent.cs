@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
+using CorePlugin;
 
 namespace Expanze
 {
@@ -34,6 +35,15 @@ namespace Expanze
         protected int height;
         protected String texture;
         protected bool picked;
+
+        HexaKind fromType = HexaKind.Null;
+        HexaKind toType = HexaKind.Null;
+
+        int fromTypeCount = 0;
+        int toTypeCount = 0;
+
+        int fromConvertedCount = 0;
+        int toConvertedCount = 0;
 
         protected Boolean pick;
 
@@ -89,7 +99,11 @@ namespace Expanze
 
             if (pressed && ButtonState.Pressed == mouseState.LeftButton)
             {
-                moveSlider(((int)(mousex / Settings.spriteScale.M11)));
+                if (fromType != HexaKind.Null && toType != HexaKind.Null)
+                {
+                    // disable moving when both materials are not selected
+                    moveSlider(((int)(mousex / Settings.spriteScale.M11)));
+                }
             }
 
             if (pressed && ButtonState.Pressed != mouseState.LeftButton)
@@ -101,10 +115,48 @@ namespace Expanze
 
         private void moveSlider(int pos)
         {
-            if (Settings.scaleW(pos) < range.Right && Settings.scaleW(pos) > range.Left)
+            if (Settings.scaleW(pos) < (range.Right - Settings.scaleW(24)) && Settings.scaleW(pos) > range.Left)
             {
+                int unit = getSliderUnit();
+                int converted = (int)(spritePosition.X - pos)/unit;
+
+                if (converted < 0) converted = -converted;
+
+                this.fromConvertedCount = this.fromTypeCount - converted * Settings.getConversionRate(fromType);
+                this.toConvertedCount = this.toTypeCount + converted;
+
                 sliderPosition.X = pos;
             }
+        }
+
+        public int getConvertedFrom()
+        {
+            return this.fromConvertedCount;
+        }
+
+        public int getConvertedTo() 
+        {
+            return toConvertedCount;
+        }
+
+        private int getSliderUnit()
+        {
+            int count = GameMaster.getInstance().getActivePlayer().getMaterialNumber(fromType)/Settings.getConversionRate(fromType);
+            return width / count;
+        }
+
+        public void setFromType(HexaKind k)
+        {
+            this.fromType = k;
+            this.fromTypeCount = GameMaster.getInstance().getActivePlayer().getMaterialNumber(fromType);
+            this.fromConvertedCount = fromTypeCount;
+        }
+
+        public void setToType(HexaKind k)
+        {
+            toType = k;
+            this.toTypeCount = GameMaster.getInstance().getActivePlayer().getMaterialNumber(toType);
+            this.toConvertedCount = toTypeCount;
         }
 
         public void Draw(GameTime gameTime, Boolean pick)
@@ -126,6 +178,16 @@ namespace Expanze
                 spriteBatch.Draw(myButton,spritePosition, c);
 
             spriteBatch.Draw(sliderTexture, sliderPosition, c);
+
+            if (fromType != HexaKind.Null)
+            {
+                spriteBatch.DrawString(GameState.gameFont, fromConvertedCount.ToString(), new Vector2(spritePosition.X - 100, spritePosition.Y + Settings.scaleH(50)), Color.White);
+            }
+
+            if (toType != HexaKind.Null)
+            {
+                spriteBatch.DrawString(GameState.gameFont, toConvertedCount.ToString(), new Vector2(spritePosition.X + width + 50, spritePosition.Y + Settings.scaleH(50)), Color.White);
+            }
 
             spriteBatch.End();
         }

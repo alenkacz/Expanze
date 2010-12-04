@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using CorePlugin;
 
 namespace Expanze
 {
@@ -78,6 +79,25 @@ namespace Expanze
         public static int conversionRateOre = 4;
         public static int conversionRateMeat = 4;
         public static int conversionRateWood = 4;
+
+        public static int getConversionRate( HexaKind k ) 
+        {
+            switch (k)
+            {
+                case HexaKind.Cornfield:
+                    return conversionRateCorn;
+                case HexaKind.Stone:
+                    return conversionRateStone;
+                case HexaKind.Mountains:
+                    return conversionRateOre;
+                case HexaKind.Pasture:
+                    return conversionRateMeat;
+                case HexaKind.Forest:
+                    return conversionRateWood;
+                default:
+                    return 0;
+            }
+        }
 
         public static Matrix spriteScale = Matrix.CreateScale(Settings.activeResolution.X / Settings.maximumResolution.X, Settings.activeResolution.Y / Settings.maximumResolution.Y, 1);
 

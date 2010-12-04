@@ -222,19 +222,19 @@ namespace Expanze
             this.paused = paused;
         }
 
-        public void doMaterialConversion(HexaKind from, HexaKind to, Player p)
+        public void doMaterialConversion(HexaKind from, HexaKind to, Player p, int fromAmount, int toAmount)
         {
             int rate = p.getConversionRate(from);
 
             if (!this.isMaterialAvailable(from,rate)) { return; }
 
             //remove material from player
-            SourceAll cost = createSourceAllCost(from, -rate);
+            SourceAll cost = createSourceAllCost(from, -fromAmount);
             p.addSources(cost,TransactionState.TransactionStart);
             
 
             //add new material
-            SourceAll get = createSourceAllCost(to, 1);
+            SourceAll get = createSourceAllCost(to, toAmount);
             p.addSources(get, TransactionState.TransactionEnd);
         }
 
