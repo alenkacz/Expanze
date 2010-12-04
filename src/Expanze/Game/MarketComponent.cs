@@ -80,14 +80,16 @@ namespace Expanze
             GuiComponent secondRow = new GuiComponent(Settings.Game, range.Left + 3 * w_space, (int)(range.Top + topMargin + buttonSize.Y + 2 * space + 10), GameState.gameFont, Settings.scaleW(77), Settings.scaleH(14), "za_co_vymenit");
             this.content.Add(secondRow);
 
-            marketSlider = new MarketSliderComponent(Settings.Game, range.Left + 50, (int)(range.Top + topMargin + buttonSize.Y + 4 * space + 10), GameState.gameFont);
-            this.content.Add(marketSlider);
+            marketSlider = new MarketSliderComponent(Settings.Game, range.Left + 50, (int)(range.Top + topMargin + buttonSize.Y + 4 * space + 10), GameState.gameFont,24,36,"slider_market");
+            //this.content.Add(marketSlider);
 
             foreach (GuiComponent g in content)
             {
                 g.Initialize();
                 g.LoadContent();
             }
+
+            marketSlider.Initialize(); marketSlider.LoadContent();
         }
 
         /// <summary>
@@ -305,17 +307,23 @@ namespace Expanze
 
                 wasActive = isActive;
             }
+
+            marketSlider.Update(gameTime);
         }
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
             base.Draw(gameTime);
 
-            if(!pick)
+            if (!pick)
+            {
                 foreach (GuiComponent g in content)
                 {
                     g.Draw(gameTime);
                 }
+
+                marketSlider.Draw(gameTime);
+            }
         }
 
         #endregion
