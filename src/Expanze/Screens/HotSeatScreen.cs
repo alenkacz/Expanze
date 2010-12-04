@@ -205,7 +205,6 @@ namespace Expanze
             String type = mapType.getSelectedSettings();
             String size = mapSize.getSelectedSettings();
             String wealthMap = wealth.getSelectedSettings();
-            guiComponents.Add(points);
 
             GameMaster.getInstance().resetGameSettings();
             GameMaster.getInstance().setGameSettings(point,type,size,wealthMap);

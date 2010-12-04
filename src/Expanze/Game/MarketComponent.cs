@@ -106,6 +106,7 @@ namespace Expanze
 
         private void fillMarketKindTextures()
         {
+            marketKindsTextures = new Dictionary<HexaKind, Texture2D>();
             marketKindsTextures.Add(HexaKind.Cornfield,Settings.Game.Content.Load<Texture2D>("corn_market"));
             marketKindsTextures.Add(HexaKind.Stone, Settings.Game.Content.Load<Texture2D>("stone_market"));
             marketKindsTextures.Add(HexaKind.Mountains, Settings.Game.Content.Load<Texture2D>("ore_market"));

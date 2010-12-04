@@ -48,6 +48,9 @@ namespace Expanze
             radio1 = new RadioButtonComponent(Settings.Game, (int)(spritePosition.X + 350), (int)spritePosition.Y + 10, GameState.playerNameFont, 40, 40);
             radio2 = new RadioButtonComponent(Settings.Game, (int)(spritePosition.X + 550), (int)spritePosition.Y + 10, GameState.playerNameFont, 40, 40);
             radio3 = new RadioButtonComponent(Settings.Game, (int)(spritePosition.X + 750), (int)spritePosition.Y + 10, GameState.playerNameFont, 40, 40);
+
+            radio1.clicked(); //first one will be selected by default
+
             radio1.LoadContent();
             radio2.LoadContent();
             radio3.LoadContent();

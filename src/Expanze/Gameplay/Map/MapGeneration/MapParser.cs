@@ -28,21 +28,20 @@ namespace Expanze
             xDoc = new XmlDocument();
         }
 
-        public HexaModel[][] getMap() 
+        public HexaModel[][] getMap(string mapSize, string mapType, string mapWealth) 
         {
-            int number = getRandomMap();
-            return this.parse(number);
+            return this.parse(mapSize,mapType,mapWealth);
         }
 
-        public HexaModel[][] parse(int number)
+        public HexaModel[][] parse(string mapSize, string mapType, string mapWealth)
         {
             HexaModel[][] map;
-            // TODO should be done programatically
-            activeProductivityList = highProductivityList;
-            activeMapTypes = lowlandMapTypes;
 
             //TODO user number parameter
-            xDoc.Load("Content/Maps/" + "big" + ".xml");
+            xDoc.Load("Content/Maps/" + mapSize + ".xml");
+
+            decideProductivity(mapWealth);
+            decideMapType(mapType);
 
             XmlNodeList productivities = xDoc.GetElementsByTagName("productivity");
             XmlNodeList mapTypes = xDoc.GetElementsByTagName("mapType");
@@ -87,6 +86,37 @@ namespace Expanze
             }
 
             return map;
+        }
+
+        private void decideProductivity(string s) {
+
+            if (s == "low")
+            {
+                activeProductivityList = lowProductivityList;
+            }
+            else if (s == "medium")
+            {
+                activeProductivityList = mediumProductivityList;
+            }
+            else
+            {
+                activeProductivityList = highProductivityList;
+            }
+        }
+
+        private void decideMapType(string s) {
+            if (s == "normal")
+            {
+                activeMapTypes = normalMapTypes;
+            }
+            else if (s == "lowland")
+            {
+                activeMapTypes = lowlandMapTypes;
+            }
+            else
+            {
+                activeMapTypes = wastelandMapTypes;
+            }
         }
 
         /// <summary>
@@ -137,7 +167,7 @@ namespace Expanze
                 while (true)
                 {
                     // trying to find nonzero random type
-                    index = generator.Next(activeProductivityList.Count);
+                    index = generator.Next(activeMapTypes.Count);
 
                     if (activeMapTypes.ElementAt(index).Value > 0)
                     {
