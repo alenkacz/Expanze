@@ -180,9 +180,36 @@ namespace Expanze
             return false;
         }
 
-        public BuildingBuildError canActivePlayerBuildBuildingInTown(int pos, SourceAll cost)
+        public SourceAll GetBuildingCost(int pos, BuildingKind kind)
+        {
+            SourceAll cost = new SourceAll(0);
+            switch (kind)
+            {
+                case BuildingKind.SourceBuilding:
+                    cost = hexaNeighbour[pos].getSourceBuildingCost();
+                    break;
+
+                case BuildingKind.FortBuilding:
+                    cost = Settings.costFort;
+                    break;
+
+                case BuildingKind.MarketBuilding:
+                    cost = Settings.costMarket;
+                    break;
+
+                case BuildingKind.MonasteryBuilding:
+                    cost = Settings.costMonastery;
+                    break;
+            }
+            return cost;
+        }
+
+        public BuildingBuildError canActivePlayerBuildBuildingInTown(int pos, BuildingKind kind)
         {
             GameMaster gm = GameMaster.getInstance();
+
+            SourceAll cost = GetBuildingCost(pos, kind);        
+            
             if (gm.getState() == EGameState.StateGame)
             {
                 if (buildingKind[pos] != BuildingKind.NoBuilding)

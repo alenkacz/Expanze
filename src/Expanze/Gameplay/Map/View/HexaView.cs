@@ -30,6 +30,22 @@ namespace Expanze
         {
             GameState.map.GetMapController().BuildBuildingInTown(townID, hexaID, kind);
         }
+
+        public override string TryExecute()
+        {
+            GameMaster gm = GameMaster.getInstance();
+            Town town = GameState.map.GetTownByID(townID);
+            int buildingPos = town.findBuildingByHexaID(hexaID);
+            HexaModel hexa = town.getHexa(buildingPos);
+
+            BuildingBuildError error = town.canActivePlayerBuildBuildingInTown(buildingPos, kind);
+            switch (error)
+            {
+                case BuildingBuildError.NoSources: return "";
+            }
+
+            return base.TryExecute();
+        }
     }
 
     class HexaView

@@ -27,9 +27,24 @@ namespace Expanze.Gameplay
         {
             GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, upgradeKind, upgradeNumber);
         }
+
+        public override string TryExecute()
+        {
+            GameMaster gm = GameMaster.getInstance();
+            Town town = GameState.map.GetTownByID(townID);
+            SpecialBuilding building = town.getSpecialBuilding(hexaID);
+
+            BuyingUpgradeError error = building.CanActivePlayerBuyUpgrade(upgradeKind, upgradeNumber);
+            switch (error)
+            {
+                case BuyingUpgradeError.NoSources: return "";
+            }
+
+            return base.TryExecute();
+        }
     }
 
-    abstract class SpecialBuilding
+    abstract class SpecialBuilding : ISpecialBuildingGet
     {
         protected bool[] upgradeFirst;
         protected bool[] upgradeSecond;
@@ -61,5 +76,15 @@ namespace Expanze.Gameplay
 
         abstract public void setPromptWindow();
         abstract public SourceAll getUpgradeCost(UpgradeKind upgradeKind, int upgradeNumber);
+
+        public BuyingUpgradeError CanActivePlayerBuyUpgrade(UpgradeKind upgradeKind, int upgradeNumber)
+        {
+            GameMaster gm = GameMaster.getInstance();
+            Player activePlayer = gm.getActivePlayer();
+            if (!getUpgradeCost(upgradeKind, upgradeNumber).HasPlayerSources(activePlayer))
+                return BuyingUpgradeError.NoSources;
+
+            return BuyingUpgradeError.OK;
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace CorePlugin
         TownBuildError BuildTown(int townID);
         RoadBuildError BuildRoad(int roadID);
         BuildingBuildError BuildBuildingInTown(int townID, int hexaID, BuildingKind kind);
-        void BuyUpgradeInSpecialBuilding(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber);
+        BuyingUpgradeError BuyUpgradeInSpecialBuilding(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber);
         int GetMaxTownID();
         ITownGet GetITownGetByID(int townID);
         int GetMaxRoadID();
