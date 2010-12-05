@@ -83,7 +83,7 @@ namespace Expanze
              * Loading AI 
              */
             List<String> AIname = new List<String>();
-            AIname.Add(Strings.MENU_HOT_SCREEN_NO_AI);
+            AIname.Add(Strings.MENU_HOT_SEAT_NO_AI);
             foreach (IComponentAI AI in CoreProviderAI.AI)
             {
                 AIname.Add(AI.GetAIName());

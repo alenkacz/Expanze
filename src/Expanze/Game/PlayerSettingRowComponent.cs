@@ -64,7 +64,7 @@ namespace Expanze
         {
             if (active)
             {
-                if (Strings.MENU_HOT_SCREEN_NO_AI == playerState.getSelectedState())
+                if (Strings.MENU_HOT_SEAT_NO_AI == playerState.getSelectedState())
                     return new Player(name, playerColor, null);
                 else
                 {

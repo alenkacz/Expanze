@@ -170,7 +170,7 @@ namespace Expanze
         public void checkWinner(Player player)
         {
             bool isWinner = false;
-            if (player.getPoints() >= Settings.pointsWin)
+            if (player.getPoints() >= gameSettings.getPoints())
             {
                 isWinner = true;
             }

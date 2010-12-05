@@ -128,7 +128,7 @@ namespace Expanze
                 SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
                 SpriteFont font = ScreenManager.Font;
 
-                String message = "Victory!!!";
+                String message = "Vítìzství! A prohra jiného.";
 
                 // Center the text in the viewport.
                 Viewport viewport = ScreenManager.GraphicsDevice.Viewport;

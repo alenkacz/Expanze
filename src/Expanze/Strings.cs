@@ -7,8 +7,12 @@ namespace Expanze
 {
     static class Strings
     {
+
         // Menu strings
-        public static string MENU_HOT_SCREEN_NO_AI = "Hráč";
+        public static string MENU_HOT_SEAT_NO_AI = "Hráč";
+
+        public static string MENU_PAUSE_GAME_ITEM_RESUME = "Zpět do hry";
+        public static string MENU_PAUSE_GAME_ITEM_QUIT_GAME = "Ukončit hru";
 
         public static string MENU_LOADING_LOADING = "Načítání obsahu";
 

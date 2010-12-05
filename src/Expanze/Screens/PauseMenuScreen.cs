@@ -29,8 +29,8 @@ namespace Expanze
             : base("Paused")
         {
             // Create our menu entries.
-            MenuEntry resumeGameMenuEntry = new MenuEntry("Resume Game");
-            MenuEntry quitGameMenuEntry = new MenuEntry("Quit Game");
+            MenuEntry resumeGameMenuEntry = new MenuEntry(Strings.MENU_PAUSE_GAME_ITEM_RESUME);
+            MenuEntry quitGameMenuEntry = new MenuEntry(Strings.MENU_PAUSE_GAME_ITEM_QUIT_GAME);
             
             // Hook up menu event handlers.
             resumeGameMenuEntry.Selected += OnCancel;

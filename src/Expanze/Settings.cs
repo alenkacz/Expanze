@@ -58,7 +58,6 @@ namespace Expanze
         public static SourceAll costMonasteryOre2 = new SourceAll(40, 0, 30, 0, 30);
 
         // goals
-        public const int pointsWin = 40; /// how much points have to have player to win
         public const int pointsTown = 5; /// points for new town
         public const int pointsRoad = 1; /// points for new road
 
@@ -132,7 +131,7 @@ namespace Expanze
         //possible game modes
         public static List<String> PlayerState = new List<String>
         {
-            Strings.MENU_HOT_SCREEN_NO_AI,
+            Strings.MENU_HOT_SEAT_NO_AI,
             "AI - jednoduché",
             "AI - střední",
             "AI - těžké"
