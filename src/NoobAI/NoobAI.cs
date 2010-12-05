@@ -51,17 +51,24 @@ namespace NoobAI
             else
             {
                 TryChangeSources();
-                for (int loop1 = 0; loop1 < 200; loop1++)
+                turn++;
+                BuildAllPossibleSourceBuilding();
+                BuildRandomTown();
+                if (turn % 4 == 0)
                 {
-                    for (int loop2 = 0; loop2 < 200; loop2++)
+                    for (int loop1 = 0; loop1 < 3; loop1++)
                     {
-                        mapController.BuildBuildingInTown(loop1, loop2, BuildingKind.SourceBuilding);
+                        if (BuildRandomRoad())
+                        {
+                            TryChangeSources();
+                            if (BuildRandomTown())
+                            {
+                                TryChangeSources();
+                                BuildAllPossibleSourceBuilding();
+                            }
+                        }
                     }
                 }
-                turn++;
-                BuildRandomTown();
-                if(turn % 5 == 0)
-                    BuildRandomRoad();
             }
         }
 
@@ -97,7 +104,18 @@ namespace NoobAI
             }
         }
 
-        public void BuildRandomTown()
+        public void BuildAllPossibleSourceBuilding()
+        {
+            for (int loop1 = 1; loop1 < 200; loop1++)
+            {
+                for (int loop2 = 1; loop2 < 200; loop2++)
+                {
+                    mapController.BuildBuildingInTown(loop1, loop2, BuildingKind.SourceBuilding);
+                }
+            }
+        }
+
+        public bool BuildRandomTown()
         {
             int maxTownID = mapController.GetMaxTownID();
 
@@ -108,12 +126,13 @@ namespace NoobAI
                 if (town.CanActivePlayerBuildTown() == TownBuildError.OK)
                 {
                     mapController.BuildTown(loop1);
-                    break;
+                    return true;
                 }
             }
+            return false;
         }
 
-        public void BuildRandomRoad()
+        public bool BuildRandomRoad()
         {
              int maxRoadID = mapController.GetMaxRoadID();
 
@@ -132,9 +151,10 @@ namespace NoobAI
                  if (road != null && road.CanActivePlayerBuildRoad() == RoadBuildError.OK)
                  {
                      mapController.BuildRoad(roadID);
-                     break ;
+                     return true;
                  }
              }
+             return false;
         }
 
         public void BuildTown(int id)
