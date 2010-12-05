@@ -8,7 +8,7 @@ using CorePlugin;
 namespace Expanze
 {
     public enum TransactionState {TransactionStart, TransactionMiddle, TransactionEnd };
-    class Player
+    class Player : IPlayerGet
     {
         private String name;
         private Color color;
@@ -86,7 +86,7 @@ namespace Expanze
             return -1;
         }
 
-        public SourceAll getSource()
+        public ISourceAll GetSource()
         {
             return source;
         }

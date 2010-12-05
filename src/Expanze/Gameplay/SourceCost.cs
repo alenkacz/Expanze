@@ -72,5 +72,31 @@ namespace Expanze
                    player.getStone() >= stone &&
                    player.getWood() >= wood;
         }
+
+        public SourceKind IntToKind(int index)
+        {
+            switch (index)
+            {
+                case 0: return SourceKind.Corn;
+                case 1: return SourceKind.Meat;
+                case 2: return SourceKind.Stone;
+                case 3: return SourceKind.Wood;
+                case 4: return SourceKind.Ore;
+                default: return SourceKind.Count; // shouldnt happened;
+            }
+        }
+
+        public int Get(SourceKind sourceKind)
+        {
+            switch (sourceKind)
+            {
+                case SourceKind.Corn: return corn;
+                case SourceKind.Meat: return meat;
+                case SourceKind.Ore: return ore;
+                case SourceKind.Stone: return stone;
+                case SourceKind.Wood: return wood;
+                default: return 0;
+            }
+        }
     }
 }

@@ -256,7 +256,7 @@ namespace Expanze
             float startX = bgPos.X + ((background.Width - sourcesWidth) / 2);
             float startY = bgPos.Y + background.Height - textureSource[0].Height - 85;
 
-            SourceAll playerSource = GameMaster.getInstance().getActivePlayer().getSource();
+            ISourceAll playerSource = GameMaster.getInstance().getActivePlayer().GetSource();
             for (int loop1 = 0; loop1 < 5; loop1++)
             {
                 if (itemList[activeItem].getCost()[loop1] != 0)

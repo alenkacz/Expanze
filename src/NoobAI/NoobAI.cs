@@ -34,7 +34,8 @@ namespace NoobAI
             meatHexa = 0;
             oreHexa = 0;
             stoneHexa = 0;
-            turn = 0;
+            Random random = new Random();
+            turn = random.Next() % 5;
         }
 
         public void ResolveAI()
@@ -49,6 +50,7 @@ namespace NoobAI
             }
             else
             {
+                TryChangeSources();
                 for (int loop1 = 0; loop1 < 200; loop1++)
                 {
                     for (int loop2 = 0; loop2 < 200; loop2++)
@@ -67,6 +69,32 @@ namespace NoobAI
         {
             IComponentAI component = new NoobAI();
             return component;
+        }
+
+        private void TryChangeSources()
+        {
+            SourceKind minKind = SourceKind.Count, maxKind = SourceKind.Count;
+            int min = 10000, max = -1;
+            ISourceAll source = mapController.GetPlayerMe().GetSource();
+
+            for(int loop1 = 0; loop1 < (int) SourceKind.Count; loop1++)
+            {
+                if (source[loop1] > max)
+                {
+                    max = source[loop1];
+                    maxKind = source.IntToKind(loop1);
+                }
+                if (source[loop1] < min)
+                {
+                    min = source[loop1];
+                    minKind = source.IntToKind(loop1);
+                }
+            }
+
+            if (max > 200 && min < 100)
+            {
+                mapController.ChangeSources(maxKind, minKind, 100);
+            }
         }
 
         public void BuildRandomTown()

@@ -30,13 +30,36 @@ namespace Expanze.Gameplay.Map
             return map.GetRoadByID(roadID);
         }
 
+        public IPlayerGet GetPlayerMe() { return GameMaster.getInstance().getActivePlayer(); }
         public int GetMaxRoadID() { return Road.getRoadCount(); }
         public int GetMaxTownID() { return Town.getTownCount(); }
         public EGameState GetState() { return GameMaster.getInstance().getState(); }
+        public IHexaGet GetHexa(int x, int y) { return map.GetHexaModel(x, y); }
 
-        public IHexaGet GetHexa(int x, int y)
+        private HexaKind SourceKindToHexaKind(SourceKind source)
         {
-            return map.GetHexaModel(x, y);
+            switch (source)
+            {
+                case SourceKind.Corn: return HexaKind.Cornfield;
+                case SourceKind.Meat: return HexaKind.Pasture;
+                case SourceKind.Ore: return HexaKind.Mountains;
+                case SourceKind.Stone: return HexaKind.Stone;
+                case SourceKind.Wood: return HexaKind.Forest;
+                default :
+                    return HexaKind.Nothing; // shouldnt happened
+            }
+        }
+
+        public ChangingSourcesError ChangeSources(SourceKind fromSource, SourceKind toSource, int fromAmount)
+        {
+            GameMaster gm = GameMaster.getInstance();
+            int rate = gm.getActivePlayer().getConversionRate(SourceKindToHexaKind(fromSource));
+            if (fromAmount > gm.getActivePlayer().GetSource().Get(fromSource))
+                return ChangingSourcesError.NotEnoughFromSource;
+
+            gm.doMaterialConversion(SourceKindToHexaKind(fromSource), SourceKindToHexaKind(toSource), gm.getActivePlayer(), fromAmount - (fromAmount % rate), fromAmount / rate);
+
+            return ChangingSourcesError.OK;
         }
 
         public BuyingUpgradeError BuyUpgradeInSpecialBuilding(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber)

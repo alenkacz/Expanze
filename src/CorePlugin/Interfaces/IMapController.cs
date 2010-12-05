@@ -11,15 +11,23 @@ namespace CorePlugin
 
     public interface IMapController
     {
-        IHexaGet GetHexa(int x, int y);
         TownBuildError BuildTown(int townID);
         RoadBuildError BuildRoad(int roadID);
         BuildingBuildError BuildBuildingInTown(int townID, int hexaID, BuildingKind kind);
         BuyingUpgradeError BuyUpgradeInSpecialBuilding(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber);
+        ChangingSourcesError ChangeSources(SourceKind fromSource, SourceKind toSource, int fromAmount);
+
+        IPlayerGet GetPlayerMe();
+        IHexaGet GetHexa(int x, int y);
+        /// Min ID is 1 (not 0!)
+        /// <returns>Max ID of possible town</returns>
         int GetMaxTownID();
         ITownGet GetITownGetByID(int townID);
+        /// Min ID is 1 (not 0!)
+        /// <returns>Max ID of possible road</returns>
         int GetMaxRoadID();
         IRoadGet GetIRoadGetByID(int roadID);
+        
         EGameState GetState();
     }
 }

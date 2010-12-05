@@ -5,6 +5,8 @@ using System.Text;
 
 namespace CorePlugin
 {
+    public enum SourceKind { Corn, Meat, Stone, Wood, Ore, Count };
+    public enum ChangingSourcesError { OK, NotEnoughFromSource};
     public interface ISourceAll
     {
         int getWood();
@@ -12,5 +14,11 @@ namespace CorePlugin
         int getMeat();
         int getStone();
         int getCorn();
+        int Get(SourceKind sourceKind);
+        SourceKind IntToKind(int index);
+        int this[int index]
+        {
+            get;
+        }
     }
 }
