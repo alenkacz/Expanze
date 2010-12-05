@@ -2,25 +2,25 @@
 <map>
   <settings>
     <productivity type="low">
-      <items value="8">11</items>
+      <items value="8">8</items>
       <items value="12">10</items>
       <items value="16">9</items>
-      <items value="20">0</items>
+      <items value="20">3</items>
       <items value="24">0</items>
     </productivity>
     <productivity type="medium">
-      <items value="8">6</items>
+      <items value="8">4</items>
       <items value="12">6</items>
-      <items value="16">6</items>
+      <items value="16">10</items>
       <items value="20">6</items>
-      <items value="24">6</items>
+      <items value="24">4</items>
     </productivity>
     <productivity type="high">
       <items value="8">0</items>
-      <items value="12">0</items>
-      <items value="16">10</items>
-      <items value="20">10</items>
-      <items value="24">10</items>
+      <items value="12">2</items>
+      <items value="16">9</items>
+      <items value="20">11</items>
+      <items value="24">8</items>
     </productivity>
     <mapType type="normal">
       <hexaType type="cornfield">5</hexaType>
@@ -33,18 +33,18 @@
     <mapType type="lowland">
       <hexaType type="cornfield">8</hexaType>
       <hexaType type="forest">8</hexaType>
-      <hexaType type="mountains">4</hexaType>
+      <hexaType type="mountains">3</hexaType>
       <hexaType type="pasture">8</hexaType>
-      <hexaType type="stone">2</hexaType>
+      <hexaType type="stone">3</hexaType>
       <hexaType type="desert">0</hexaType>
     </mapType>
     <mapType type="wasteland">
-      <hexaType type="cornfield">3</hexaType>
-      <hexaType type="forest">6</hexaType>
+      <hexaType type="cornfield">2</hexaType>
+      <hexaType type="forest">2</hexaType>
       <hexaType type="mountains">8</hexaType>
-      <hexaType type="pasture">3</hexaType>
+      <hexaType type="pasture">2</hexaType>
       <hexaType type="stone">8</hexaType>
-      <hexaType type="desert">2</hexaType>
+      <hexaType type="desert">8</hexaType>
     </mapType>
   </settings>
   <map-definition>

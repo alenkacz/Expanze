@@ -8,6 +8,7 @@ namespace Expanze
     static class Strings
     {
         // Menu strings
+        public static string MENU_HOT_SCREEN_NO_AI = "Hráč";
 
         public static string MENU_LOADING_LOADING = "Načítání obsahu";
 

@@ -132,7 +132,7 @@ namespace Expanze
         //possible game modes
         public static List<String> PlayerState = new List<String>
         {
-            "Hráč",
+            Strings.MENU_HOT_SCREEN_NO_AI,
             "AI - jednoduché",
             "AI - střední",
             "AI - těžké"

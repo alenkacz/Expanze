@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using CorePlugin;
 
 namespace Expanze
 {
@@ -63,11 +64,22 @@ namespace Expanze
         {
             if (active)
             {
-                if ("Hráč" == playerState.getSelectedState())
+                if (Strings.MENU_HOT_SCREEN_NO_AI == playerState.getSelectedState())
                     return new Player(name, playerColor, null);
                 else
-                    return null;
-                //TODO start AI game
+                {
+                    IComponentAI componentAI = null;
+                    foreach (IComponentAI AI in CoreProviderAI.AI)
+                    {
+                        if (AI.GetAIName().CompareTo(playerState.getSelectedState()) == 0)
+                        {
+                            componentAI = AI;
+                            break;
+                        }
+                    }
+                    IComponentAI componentAICopy = componentAI.Clone();
+                    return new Player(name, playerColor, componentAICopy);
+                }
             }
 
             return null;

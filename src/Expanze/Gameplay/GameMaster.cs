@@ -58,22 +58,15 @@ namespace Expanze
 
             n_player = players.Count;
 
-            IComponentAI componentAI = null;
-            foreach (IComponentAI AI in CoreProviderAI.AI)
+            IComponentAI AI;
+            foreach (Player player in players)
             {
-                componentAI = AI;
-
-                // little help for alenka
-                // String name = AI.GetAIName();
-                
+                AI = player.getComponentAI();
+                if (AI != null) // its computer then
+                {
+                    AI.InitAIComponent(map.GetMapController());
+                }
             }
-            IComponentAI componentAI1 = componentAI.Clone();
-            componentAI1.InitAIComponent(map.GetMapController());
-            IComponentAI componentAI2 = componentAI.Clone();
-            componentAI2.InitAIComponent(map.GetMapController());
-
-            //players[0] = new Player("Player1", Color.RoyalBlue, (isAI) ? componentAI1 : null);
-            //players[1] = new Player("Player2", Color.Red, (isAI) ? componentAI2 : null);
             
             activePlayerIndex = 0;
             activePlayer = players.ElementAt(activePlayerIndex);

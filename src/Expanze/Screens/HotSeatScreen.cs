@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using System;
+using CorePlugin;
 #endregion
 
 namespace Expanze
@@ -77,6 +78,21 @@ namespace Expanze
             guiComponents.Add(backButton);
 
             int counter = 0;
+
+            /*
+             * Loading AI 
+             */
+            List<String> AIname = new List<String>();
+            AIname.Add(Strings.MENU_HOT_SCREEN_NO_AI);
+            foreach (IComponentAI AI in CoreProviderAI.AI)
+            {
+                AIname.Add(AI.GetAIName());
+            }
+            Settings.PlayerState = AIname;
+
+            /*
+             * 
+             */
 
             foreach (Color c in Settings.playerColors)
             {

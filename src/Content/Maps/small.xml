@@ -2,16 +2,16 @@
 <map>
   <settings>
     <productivity type="low">
-      <items value="8">6</items>
+      <items value="8">3</items>
       <items value="12">5</items>
-      <items value="16">3</items>
+      <items value="16">6</items>
       <items value="20">0</items>
       <items value="24">0</items>
     </productivity>
     <productivity type="medium">
-      <items value="8">3</items>
+      <items value="8">2</items>
       <items value="12">3</items>
-      <items value="16">3</items>
+      <items value="16">4</items>
       <items value="20">3</items>
       <items value="24">2</items>
     </productivity>
@@ -40,11 +40,11 @@
     </mapType>
     <mapType type="wasteland">
       <hexaType type="cornfield">1</hexaType>
-      <hexaType type="forest">3</hexaType>
+      <hexaType type="forest">1</hexaType>
       <hexaType type="mountains">4</hexaType>
       <hexaType type="pasture">1</hexaType>
       <hexaType type="stone">4</hexaType>
-      <hexaType type="desert">1</hexaType>
+      <hexaType type="desert">3</hexaType>
     </mapType>
   </settings>
   <map-definition>
