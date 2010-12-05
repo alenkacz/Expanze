@@ -77,8 +77,16 @@ namespace Expanze.Gameplay.Map
         {
             GameMaster gm = GameMaster.getInstance();
             Town town = map.GetTownByID(townID);
+            if (town == null)
+                return BuildingBuildError.TownDoesntExist;
+
             int buildingPos = town.findBuildingByHexaID(hexaID);
+            if (buildingPos == -1)
+                return BuildingBuildError.TownHasNoHexaWithThatHexaID;
+
             HexaModel hexa = town.getHexa(buildingPos);
+            if (hexa.getType() == HexaKind.Desert && kind == BuildingKind.SourceBuilding)
+                return BuildingBuildError.NoSourceBuildingForDesert;
 
             BuildingBuildError error = town.canActivePlayerBuildBuildingInTown(buildingPos, kind);
             if (error == BuildingBuildError.OK)

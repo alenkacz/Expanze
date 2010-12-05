@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CorePlugin
 {
-    public enum BuildingBuildError { OK, NoSources, AlreadyBuild, NotOwner }
+    public enum BuildingBuildError { OK, NoSources, AlreadyBuild, NotOwner, TownDoesntExist, TownHasNoHexaWithThatHexaID, NoSourceBuildingForDesert }
     public enum TownBuildError { OK, NoSources, AlreadyBuild, OtherTownIsClose, NoPlayerRoad }
     public enum BuildingKind { NoBuilding, SourceBuilding, FortBuilding, MarketBuilding, MonasteryBuilding }
     public interface ITownGet

@@ -49,6 +49,13 @@ namespace NoobAI
             }
             else
             {
+                for (int loop1 = 0; loop1 < 200; loop1++)
+                {
+                    for (int loop2 = 0; loop2 < 200; loop2++)
+                    {
+                        mapController.BuildBuildingInTown(loop1, loop2, BuildingKind.SourceBuilding);
+                    }
+                }
                 turn++;
                 BuildRandomTown();
                 if(turn % 5 == 0)
@@ -84,11 +91,19 @@ namespace NoobAI
 
              for (int loop1 = maxRoadID; loop1 > 0; loop1--)
              {
-                 IRoadGet road = mapController.GetIRoadGetByID(loop1);
-
-                 if (road.CanActivePlayerBuildRoad() == RoadBuildError.OK)
+                 int roadID = loop1;
+                 switch ((turn / 5) % 4)
                  {
-                     mapController.BuildRoad(loop1);
+                     case 0: roadID = loop1; break;
+                     case 1: roadID = (loop1 + 50) % maxRoadID; break;
+                     case 2: roadID = maxRoadID - loop1; break;
+                     case 3: roadID = ((maxRoadID - loop1) + 30) % maxRoadID; break;
+                 }
+                 IRoadGet road = mapController.GetIRoadGetByID(roadID);
+
+                 if (road != null && road.CanActivePlayerBuildRoad() == RoadBuildError.OK)
+                 {
+                     mapController.BuildRoad(roadID);
                      break ;
                  }
              }
