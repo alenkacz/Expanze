@@ -39,25 +39,25 @@ namespace Expanze.Gameplay
             GameResources res = GameResources.Inst();
             win.showPrompt(Strings.PROMPT_TITLE_WANT_TO_BUILD_MARKET, true);
             if(upgradeFirst[0] == false)
-                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, "Výměna obilí 1", "Popis", Settings.costMarketCorn1, res.getHudTexture(HUDTexture.IconCorn1)));
-            else
-                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 0, "Výměna obilí 2", "Popis", Settings.costMarketCorn2, res.getHudTexture(HUDTexture.IconCorn2)));
+                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, this, Strings.PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_CORN_1, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_CORN_1, Settings.costMarketCorn1, res.getHudTexture(HUDTexture.IconCorn1)));
+            else if (upgradeSecond[0] == false)
+                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 0, this, Strings.PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_CORN_2, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_CORN_2, Settings.costMarketCorn2, res.getHudTexture(HUDTexture.IconCorn2)));
             if(upgradeFirst[1] == false)
-                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 1, "Výměna masa 1", "Popis", Settings.costMarketMeat1, res.getHudTexture(HUDTexture.IconMeat1)));
-            else
-                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 1, "Výměna masa 2", "Popis", Settings.costMarketMeat2, res.getHudTexture(HUDTexture.IconMeat2)));
+                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 1, this, Strings.PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_MEAT_1, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_MEAT_1, Settings.costMarketMeat1, res.getHudTexture(HUDTexture.IconMeat1)));
+            else if (upgradeSecond[1] == false)
+                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 1, this, Strings.PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_MEAT_2, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_MEAT_2, Settings.costMarketMeat2, res.getHudTexture(HUDTexture.IconMeat2)));
             if(upgradeFirst[2] == false)
-                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 2, "Výměna kamenní 1", "Popis", Settings.costMarketStone1, res.getHudTexture(HUDTexture.IconStone1)));
-            else
-                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 2, "Výměna kamenní 2", "Popis", Settings.costMarketStone2, res.getHudTexture(HUDTexture.IconStone2)));
+                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 2, this, Strings.PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_STONE_1, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_STONE_1, Settings.costMarketStone1, res.getHudTexture(HUDTexture.IconStone1)));
+            else if (upgradeSecond[2] == false)
+                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 2, this, Strings.PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_STONE_2, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_STONE_2, Settings.costMarketStone2, res.getHudTexture(HUDTexture.IconStone2)));
             if(upgradeFirst[3] == false)
-                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 3, "Výměna dřeva 1", "Popis", Settings.costMarketWood1, res.getHudTexture(HUDTexture.IconWood1)));
-            else
-                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 3, "Výměna dřeva 2", "Popis", Settings.costMarketWood2, res.getHudTexture(HUDTexture.IconWood2)));
+                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 3, this, Strings.PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_WOOD_1, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_WOOD_1, Settings.costMarketWood1, res.getHudTexture(HUDTexture.IconWood1)));
+            else if (upgradeSecond[3] == false)
+                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 3, this, Strings.PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_WOOD_2, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_WOOD_2, Settings.costMarketWood2, res.getHudTexture(HUDTexture.IconWood2)));
             if(upgradeFirst[4] == false)
-                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 4, "Výměna rudy 1", "Popis", Settings.costMarketOre1, res.getHudTexture(HUDTexture.IconOre1)));
-            else
-                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 4, "Výměna rudy 2", "Popis", Settings.costMarketOre2, res.getHudTexture(HUDTexture.IconOre2)));
+                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 4, this, Strings.PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_ORE_1, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_ORE_1, Settings.costMarketOre1, res.getHudTexture(HUDTexture.IconOre1)));
+            else if (upgradeSecond[4] == false)
+                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 4, this, Strings.PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_ORE_2, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_ORE_2, Settings.costMarketOre2, res.getHudTexture(HUDTexture.IconOre2)));
         }
 
         public override SourceAll getUpgradeCost(UpgradeKind upgradeKind, int upgradeNumber)

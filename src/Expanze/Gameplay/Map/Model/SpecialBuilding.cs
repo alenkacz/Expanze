@@ -13,19 +13,22 @@ namespace Expanze.Gameplay
         int hexaID;         /// where is special building?
         UpgradeKind upgradeKind;    /// first or second
         int upgradeNumber;  /// which from 5 upgraded player wants to upgrade
+        SpecialBuilding building;
 
-        public SpecialBuildingPromptItem(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber, String title, String description, SourceAll cost, Texture2D icon)
+        public SpecialBuildingPromptItem(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber, SpecialBuilding building, String title, String description, SourceAll cost, Texture2D icon)
             : base(title, description, cost, icon)
         {
             this.townID = townID;
             this.hexaID = hexaID;
             this.upgradeKind = upgradeKind;
             this.upgradeNumber = upgradeNumber;
+            this.building = building;
         }
 
         public override void Execute()
         {
             GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, upgradeKind, upgradeNumber);
+            building.setPromptWindow();
         }
 
         public override string TryExecute()
@@ -40,6 +43,7 @@ namespace Expanze.Gameplay
                 case BuyingUpgradeError.NoSources: return "";
                 case BuyingUpgradeError.MaxUpgrades: return Strings.ALERT_TITLE_MAX_UPGRADES;
                 case BuyingUpgradeError.NoUpgrade: return Strings.ALERT_TITLE_NO_UPGRADE;
+                case BuyingUpgradeError.YouAlreadyHaveSecondUpgrade: return Strings.ALERT_TITLE_ALREADY_HAVE_SECOND_UPGRADE;
             }
 
             return base.TryExecute();
@@ -109,6 +113,14 @@ namespace Expanze.Gameplay
 
             if (upgradeCount == upgradeMax)
                 return BuyingUpgradeError.MaxUpgrades;
+
+            if (upgradeKind == UpgradeKind.SecondUpgrade)
+            {
+                    if (upgradeFirst[upgradeNumber] == false)
+                        return BuyingUpgradeError.YouDontHaveFirstUpgrade;
+                    if (upgradeSecond[upgradeNumber] == true)
+                        return BuyingUpgradeError.YouAlreadyHaveSecondUpgrade;
+            }        
 
             if (!getUpgradeCost(upgradeKind, upgradeNumber).HasPlayerSources(activePlayer))
                 return BuyingUpgradeError.NoSources;

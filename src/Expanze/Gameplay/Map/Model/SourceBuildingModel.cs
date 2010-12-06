@@ -130,9 +130,9 @@ namespace Expanze.Gameplay
             GameResources res = GameResources.Inst();
             win.showPrompt(titleBuilding, true);
             if (upgradeFirst[0] == false)
-                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, upgrade1Title, upgrade1Description, upgrade1cost, upgrade1icon));
+                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, this, upgrade1Title, upgrade1Description, upgrade1cost, upgrade1icon));
             else
-                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 0, upgrade2Title, upgrade2Description, upgrade2cost, upgrade2icon));
+                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 0, this, upgrade2Title, upgrade2Description, upgrade2cost, upgrade2icon));
         }
 
         public override BuyingUpgradeError CanActivePlayerBuyUpgrade(UpgradeKind upgradeKind, int upgradeNumber)
@@ -146,6 +146,14 @@ namespace Expanze.Gameplay
             {
                 return BuyingUpgradeError.NoUpgrade;
             }
+
+            if (upgradeKind == UpgradeKind.SecondUpgrade)
+            {
+                if (upgradeFirst[upgradeNumber] == false)
+                    return BuyingUpgradeError.YouDontHaveFirstUpgrade;
+                if (upgradeSecond[upgradeNumber] == true)
+                    return BuyingUpgradeError.YouAlreadyHaveSecondUpgrade;
+            }     
 
             if (!getUpgradeCost(upgradeKind, upgradeNumber).HasPlayerSources(activePlayer))
                 return BuyingUpgradeError.NoSources;

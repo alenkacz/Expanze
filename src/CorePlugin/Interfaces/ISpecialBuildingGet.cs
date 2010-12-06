@@ -5,9 +5,14 @@ using System.Text;
 
 namespace CorePlugin
 {
-    public enum BuyingUpgradeError { OK, NoSources, 
-                                     MaxUpgrades,
-                                     NoUpgrade}
+    public enum BuyingUpgradeError
+    {
+        OK, NoSources,
+        MaxUpgrades,
+        NoUpgrade,
+        YouDontHaveFirstUpgrade,
+        YouAlreadyHaveSecondUpgrade
+    }
 
     public interface ISpecialBuildingGet
     {

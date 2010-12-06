@@ -30,6 +30,7 @@ namespace Expanze
         public static string ALERT_TITLE_NO_ROAD_OR_TOWN_IS_CLOSE = "Žádná tvoje cesta či město v blízkosti.";
 
         // Special building alerts
+        public static string ALERT_TITLE_ALREADY_HAVE_SECOND_UPGRADE = "Již máš koupen tento pokrok.";
         public static string ALERT_TITLE_NO_UPGRADE = "Prvně musíš vynaleznout pokrok v kláštěře.";
         public static string ALERT_TITLE_MAX_UPGRADES = "Už máš zakoupené 3 pokroky.";
 
@@ -94,5 +95,26 @@ namespace Expanze
         public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_MARKET = "Na tržišti si můžeš koupit lepší směnný kurz pro výměnu surovin. Chceš-li měnit tři ku jedné, či dva ku jedné, tržiště je jasná volba.";
         public static string PROMPT_TITLE_WANT_TO_BUILD_MONASTERY = "Klášter";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_MONASTERY = "Mniši můžou vynaleznout lepší nástroje pro horníky, dřevorubce, zvýšit úrodnost obilných polí, urychlit práci pastevce.";
+
+        public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_CORN_1 = "Výhradní výměnné právo na obilí";
+        public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_CORN_2 = "Výměnné právo na obilí druhého stupně";
+        public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_MEAT_1 = "Výhradní výměnné právo na maso";
+        public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_MEAT_2 = "Výměnné právo na maso druhého stupně";
+        public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_STONE_1 = "Výhradní výměnné právo na kámen";
+        public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_STONE_2 = "Výměnné právo na kámen druhého stupně";
+        public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_WOOD_1 = "Výhradní výměnné právo na dřevo";
+        public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_WOOD_2 = "Výměnné právo na dřevo druhého stupně";
+        public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_ORE_1 = "Výhradní výměnné právo na rudu";
+        public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_ORE_2 = "Výměnné právo na obilí druhého rudu";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_CORN_1 = "S touto listinou můžeš měnit 3 obilí za jednu jinou surovinu.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_CORN_2 = "S touto listinou můžeš měnit 2 obilí za jednu jinou surovinu.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_MEAT_1 = "S touto listinou můžeš měnit 3 masa za jednu jinou surovinu.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_MEAT_2 = "S touto listinou můžeš měnit 2 masa za jednu jinou surovinu.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_STONE_1 = "S touto listinou můžeš měnit 3 stavební kameny za jednu jinou surovinu.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_STONE_2 = "S touto listinou můžeš měnit 2 stavební kameny za jednu jinou surovinu.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_WOOD_1 = "S touto listinou můžeš měnit 3 dřeva za jednu jinou surovinu.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_WOOD_2 = "S touto listinou můžeš měnit 2 dřeva za jednu jinou surovinu.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_ORE_1 = "S touto listinou můžeš měnit 3 rudy za jednu jinou surovinu.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_ORE_2 = "S touto listinou můžeš měnit 2 rudy za jednu jinou surovinu.";
     }
 }
