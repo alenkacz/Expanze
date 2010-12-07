@@ -31,7 +31,7 @@ namespace Expanze
         public static SourceAll costMonastery = new SourceAll(0, 40, 80, 0, 0);
         // costs of actions
         public static SourceAll costFortParade = new SourceAll(50, 50, 50, 50, 50);
-        public static SourceAll costFortHexa = new SourceAll(0, 0, 80, 50, 80);
+        public static SourceAll costFortDestroyHexa = new SourceAll(0, 0, 80, 50, 80);
         public static SourceAll costFortSources = new SourceAll(0, 50, 0, 50, 80);
         public static SourceAll costFortCapture = new SourceAll(50, 50, 0, 50, 100);
         // costs of market upgrades
@@ -60,6 +60,7 @@ namespace Expanze
         // goals
         public const int pointsTown = 5; /// points for new town
         public const int pointsRoad = 1; /// points for new road
+        public const int pointsFortParade = 3; /// points for parade from fort
 
 
         public static Vector2 activeResolution = new Vector2(800,600);

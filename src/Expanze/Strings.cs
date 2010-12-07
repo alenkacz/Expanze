@@ -116,5 +116,15 @@ namespace Expanze
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_WOOD_2 = "S touto listinou můžeš měnit 2 dřeva za jednu jinou surovinu.";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_ORE_1 = "S touto listinou můžeš měnit 3 rudy za jednu jinou surovinu.";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_ORE_2 = "S touto listinou můžeš měnit 2 rudy za jednu jinou surovinu.";
+
+        public static string PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_CAPTURE = "Obsadit pole";
+        public static string PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_DESTROY_HEXA = "Poničit pole";
+        public static string PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_SOURCES = "Zničit suroviny";
+        public static string PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE = "Armádní přehlídka";
+
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_CAPTURE = "Obsazené pole nebude dávat nikomu suroviny. Při pokusu obsadit stejné pole 2x bude pole uvolněno.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_DESTROY_HEXA = "Poničí tebou vybrané pole. (obilné pole, hory, les, pastvinu, či lom) Pole bude vynášet polovinu oproti běžnému stavu.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES = "Zničí polovinu surovin jednoho ze soupeřů.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_PARADE = "Armádní přehlídka ti přinese slávu a zisk 3 bodů.";
     }
 }

@@ -284,6 +284,9 @@ namespace Expanze
                 case BuildingKind.MonasteryBuilding :
                     building[pos] = new MonasteryModel(townID, hexaNeighbour[pos].getID());
                     break;
+                case BuildingKind.FortBuilding :
+                    building[pos] = new FortModel(townID, hexaNeighbour[pos].getID());
+                    break;
             }
         }
 

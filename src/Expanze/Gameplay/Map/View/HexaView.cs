@@ -171,6 +171,7 @@ namespace Expanze
                     }
                     else
                     {
+                        /*
                         if (tempTown.getBuildingKind(hexaID) == BuildingKind.FortBuilding)
                         {
                             text = FortModel.GetIconPassive();
@@ -181,7 +182,7 @@ namespace Expanze
                                 spriteBatch.Draw(text, new Vector2(posHammers.X - (text.Width >> 1), posHammers.Y - (text.Height >> 1)), Color.White);
                             }
                         }
-                        else
+                        else*/
                         {
                             text = tempTown.getSpecialBuilding(hexaID).GetIconPassive();
                             spriteBatch.Draw(text, new Vector2(posHammers.X - (text.Width >> 1), posHammers.Y - (text.Height >> 1)), Color.White);
@@ -447,11 +448,11 @@ namespace Expanze
                                 }
                                 break;
                             
-
+                            /*
                             case BuildingKind.FortBuilding :
                                 mod = (townView[loop1].getTownModel().getPlayerOwner() == GameMaster.getInstance().getActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
                                 FortModel.setPromptWindowToFort(mod);
-                                break;
+                                break;*/
 
                             default :
                                 mod = (townView[loop1].getTownModel().getPlayerOwner() == GameMaster.getInstance().getActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;

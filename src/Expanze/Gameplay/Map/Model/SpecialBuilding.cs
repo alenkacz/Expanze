@@ -55,7 +55,7 @@ namespace Expanze.Gameplay
         protected bool[] upgradeFirst;
         protected bool[] upgradeSecond;
         const int upgradeMax = 3;   /// upgradeCount limit
-        int upgradeCount;           /// how many upgrades player has bought in this building?
+        protected int upgradeCount;           /// how many upgrades player has bought in this building?
 
         public SpecialBuilding()
         {
