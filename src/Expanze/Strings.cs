@@ -17,7 +17,7 @@ namespace Expanze
         public static string MENU_LOADING_LOADING = "Načítání obsahu";
 
         //
-
+        public static string ALERT_TITLE_THIS_IS_NOT_YOURS = "Tohle není tvoje. Můžeš pouze koukat.";
         public static string ALERT_TITLE_NOT_ENOUGH_SOURCES = "Nemáš dostatek surovin.";
         
         // Town building alerts

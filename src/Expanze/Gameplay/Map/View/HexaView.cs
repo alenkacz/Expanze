@@ -384,8 +384,8 @@ namespace Expanze
                         /*kind != HexaKind.Desert &&*/
                         kind != HexaKind.Nothing &&
                         kind != HexaKind.Water &&
-                        kind != HexaKind.Null && 
-                        townView[loop1].getTownModel().getPlayerOwner() == GameMaster.getInstance().getActivePlayer())
+                        kind != HexaKind.Null /*&& 
+                        townView[loop1].getTownModel().getPlayerOwner() == GameMaster.getInstance().getActivePlayer()*/)
                     {
                         switch(townView[loop1].getTownModel().getBuildingKind(hexaID))
                         {
@@ -427,7 +427,8 @@ namespace Expanze
                                 }
 
                                 int townID = townView[loop1].getTownModel().getTownID();
-                                PromptWindow.Inst().showPrompt(titleWindow, true);
+                                PromptWindow.Mod mod = (townView[loop1].getTownModel().getPlayerOwner() == GameMaster.getInstance().getActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
+                                PromptWindow.Inst().showPrompt(mod, titleWindow, true);
                                 if(kind != HexaKind.Desert)
                                     PromptWindow.Inst().addPromptItem(
                                         new BuildingPromptItem(townID,
@@ -448,11 +449,13 @@ namespace Expanze
                             
 
                             case BuildingKind.FortBuilding :
-                                FortModel.setPromptWindowToFort();
+                                mod = (townView[loop1].getTownModel().getPlayerOwner() == GameMaster.getInstance().getActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
+                                FortModel.setPromptWindowToFort(mod);
                                 break;
 
                             default :
-                                townView[loop1].getTownModel().getSpecialBuilding(hexaID).setPromptWindow();
+                                mod = (townView[loop1].getTownModel().getPlayerOwner() == GameMaster.getInstance().getActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
+                                townView[loop1].getTownModel().getSpecialBuilding(hexaID).setPromptWindow(mod);
                                 break;
                         }
                     }

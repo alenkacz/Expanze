@@ -124,11 +124,11 @@ namespace Expanze.Gameplay
                 return upgrade2icon;
         }
 
-        public override void setPromptWindow()
+        public override void setPromptWindow(PromptWindow.Mod mod)
         {
             PromptWindow win = PromptWindow.Inst();
             GameResources res = GameResources.Inst();
-            win.showPrompt(titleBuilding, true);
+            win.showPrompt(mod, titleBuilding, true);
             if (upgradeFirst[0] == false)
                 win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, this, upgrade1Title, upgrade1Description, upgrade1cost, upgrade1icon));
             else

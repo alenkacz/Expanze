@@ -13,6 +13,8 @@ namespace Expanze
 {
     class PromptWindow : GameComponent
     {
+        public enum Mod { Viewer, Buyer };
+
         private SpriteBatch spriteBatch;
         private bool drawingPickableAreas = false;
         private bool active = false;
@@ -31,6 +33,7 @@ namespace Expanze
         private PickVariables yesPick;
         private ContentManager content;
 
+        Mod mod;
         bool showIcons;
         int activeItem;
         String title;
@@ -78,8 +81,9 @@ namespace Expanze
             int size = itemList.Count;
             itemPick.Add(new PickVariables(new Color(size / 256.0f, size / 256.0f, 0.0f)));
         }
-        public void showPrompt(String title, bool showIcons)
+        public void showPrompt(Mod mod, String title, bool showIcons)
         {
+            this.mod = mod;
             this.title = title;
             this.showIcons = showIcons;
             itemList.Clear();
@@ -175,7 +179,7 @@ namespace Expanze
             
                 spriteBatch.Draw(background, bgPos, color);
 
-                if (itemList[activeItem].TryExecute() == null) // it means that it is ok
+                if (itemList[activeItem].TryExecute() == null && mod == Mod.Buyer) // it means that it is ok
                 {
                     if (drawingPickableAreas)
                         spriteBatch.Draw(pickTextOK, yesPos, yesPick.pickColor);
@@ -199,6 +203,8 @@ namespace Expanze
                     GameState.medievalSmall, Color.LightSteelBlue, bgPos.X + 20, bgPos.Y + 195, background.Width - 40);
 
                 String error = itemList[activeItem].TryExecute();
+                if (mod == Mod.Viewer)
+                    error = Strings.ALERT_TITLE_THIS_IS_NOT_YOURS;
                 if (error != null)
                 {
                     TextWrapping.DrawStringIntoRectangle(error,

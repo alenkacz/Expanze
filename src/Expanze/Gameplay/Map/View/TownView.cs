@@ -194,7 +194,7 @@ namespace Expanze.Gameplay.Map
                 {
                         if (GameMaster.getInstance().getState() == EGameState.StateGame)
                         {
-                            PromptWindow.Inst().showPrompt(Strings.HEXA_TRI, true);
+                            PromptWindow.Inst().showPrompt(PromptWindow.Mod.Buyer, Strings.HEXA_TRI, true);
                             PromptWindow.Inst().addPromptItem(
                                 new TownPromptItem(townID,
                                                     Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN,

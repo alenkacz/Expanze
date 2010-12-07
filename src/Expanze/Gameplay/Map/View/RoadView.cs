@@ -162,7 +162,7 @@ namespace Expanze.Gameplay.Map.View
             {
                 if (GameMaster.getInstance().getState() == EGameState.StateGame)
                 {
-                    PromptWindow.Inst().showPrompt(Strings.HEXA_DUO, true);
+                    PromptWindow.Inst().showPrompt(PromptWindow.Mod.Buyer, Strings.HEXA_DUO, true);
                     PromptWindow.Inst().addPromptItem(
                             new RoadPromptItem(roadID,
                                                 Strings.PROMT_TITLE_WANT_TO_BUILD_ROAD,

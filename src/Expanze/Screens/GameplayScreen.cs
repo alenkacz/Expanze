@@ -200,13 +200,14 @@ namespace Expanze
         /// </summary>
         void ChangeTurnButtonAction(object sender, PlayerIndexEventArgs e)
         {
-            if (GameMaster.getInstance().getState() == EGameState.StateGame)
+            if (GameMaster.getInstance().getState() == EGameState.StateGame &&
+                !GameMaster.getInstance().getActivePlayer().getIsAI())
             {
                 GameMaster.getInstance().NextTurn();
             }
             else
             {
-                GameState.windowPromt.showAlert("Musíš nejdøíve postavit mìsto.");
+                // ble ble GameState.windowPromt.showAlert("Musíš nejdøíve postavit mìsto.");
             }
         }
 

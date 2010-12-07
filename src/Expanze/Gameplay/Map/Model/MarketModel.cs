@@ -33,11 +33,11 @@ namespace Expanze.Gameplay
             GameMaster.getInstance().getActivePlayer().SetMarketRate(upgradeKind, upgradeNumber);
         }
 
-        public override void setPromptWindow()
+        public override void setPromptWindow(PromptWindow.Mod mod)
         {
             PromptWindow win = PromptWindow.Inst();
             GameResources res = GameResources.Inst();
-            win.showPrompt(Strings.PROMPT_TITLE_WANT_TO_BUILD_MARKET, true);
+            win.showPrompt(mod, Strings.PROMPT_TITLE_WANT_TO_BUILD_MARKET, true);
             if(upgradeFirst[0] == false)
                 win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, this, Strings.PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_CORN_1, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_CORN_1, Settings.costMarketCorn1, res.getHudTexture(HUDTexture.IconCorn1)));
             else if (upgradeSecond[0] == false)

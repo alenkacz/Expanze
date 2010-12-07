@@ -33,11 +33,11 @@ namespace Expanze.Gameplay
             GameMaster.getInstance().getActivePlayer().SetSourceBuildingUpdate(upgradeKind, upgradeNumber);
         }
 
-        public override void setPromptWindow()
+        public override void setPromptWindow(PromptWindow.Mod mod)
         {
             PromptWindow win = PromptWindow.Inst();
             GameResources res = GameResources.Inst();
-            win.showPrompt(Strings.PROMPT_TITLE_WANT_TO_BUILD_MONASTERY, true);
+            win.showPrompt(mod, Strings.PROMPT_TITLE_WANT_TO_BUILD_MONASTERY, true);
             if(upgradeFirst[0] == false)
                 win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, this, Strings.PROMPT_TITLE_WANT_TO_UPGRADE_1_MILL, Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_MILL, Settings.costMonasteryCorn1, res.getHudTexture(HUDTexture.IconMill1)));
             else if (upgradeSecond[0] == false)
