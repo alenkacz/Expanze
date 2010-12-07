@@ -4,19 +4,49 @@ using System.Linq;
 using System.Text;
 using CorePlugin;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace Expanze.Gameplay
 {
+    class PlayerPromptItem : PromptItem
+    {
+        Player player;
+
+        public PlayerPromptItem(Player player, String title, String description, ISourceAll cost, Texture2D icon)
+            : base(title, description, cost, icon)
+        {
+            this.player = player;
+
+        }
+
+        public override void DrawIcon(Microsoft.Xna.Framework.Vector2 iconPosition)
+        {
+            base.DrawIcon(iconPosition);
+            GameState.spriteBatch.Draw(GameResources.Inst().getHudTexture(HUDTexture.PlayerColor), iconPosition, player.getColor());
+        }
+
+        public override void Execute()
+        {
+            base.Execute();
+        }
+
+        public override string TryExecute()
+        {
+            return base.TryExecute();
+        }
+    }
 
     class FortModel : SpecialBuilding
     {
         int townID; // where is this building
         int hexaID;
+        bool playerPrompt;
 
         public FortModel(int townID, int hexaID)
         {
             this.townID = townID;
             this.hexaID = hexaID;
+            playerPrompt = false;
         }
 
         public override Texture2D GetIconActive()
@@ -31,17 +61,25 @@ namespace Expanze.Gameplay
 
         public override void setPromptWindow(PromptWindow.Mod mod)
         {
-            PromptWindow win = PromptWindow.Inst();
-            GameResources res = GameResources.Inst();
-            win.showPrompt(mod, Strings.PROMPT_TITLE_WANT_TO_BUILD_FORT, true);
-            win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_CAPTURE, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_CAPTURE, Settings.costFortCapture, res.getHudTexture(HUDTexture.IconFortCapture)));
-            win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 1, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_DESTROY_HEXA, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_DESTROY_HEXA, Settings.costFortDestroyHexa, res.getHudTexture(HUDTexture.IconFortHexa)));
-            win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 2, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_SOURCES, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES, Settings.costFortSources, res.getHudTexture(HUDTexture.IconFortSources)));
-            win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 3, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_PARADE, Settings.costFortParade, res.getHudTexture(HUDTexture.IconFortParade)));
+            if (!playerPrompt)
+            {
+                PromptWindow win = PromptWindow.Inst();
+                GameResources res = GameResources.Inst();
+                win.showPrompt(mod, Strings.PROMPT_TITLE_WANT_TO_BUILD_FORT, true);
+                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_CAPTURE, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_CAPTURE, Settings.costFortCapture, res.getHudTexture(HUDTexture.IconFortCapture)));
+                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 1, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_DESTROY_HEXA, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_DESTROY_HEXA, Settings.costFortDestroyHexa, res.getHudTexture(HUDTexture.IconFortHexa)));
+                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 2, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_SOURCES, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES, Settings.costFortSources, res.getHudTexture(HUDTexture.IconFortSources)));
+                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 3, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_PARADE, Settings.costFortParade, res.getHudTexture(HUDTexture.IconFortParade)));
+            }
+            playerPrompt = false;
         }
 
         protected override void ApplyEffect(UpgradeKind upgradeKind, int upgradeNumber)
         {
+            PromptWindow win = PromptWindow.Inst();
+            GameResources res = GameResources.Inst();
+            GameMaster gm = GameMaster.getInstance();
+
             upgradeCount--;
             switch (upgradeKind)
             {
@@ -50,6 +88,19 @@ namespace Expanze.Gameplay
                     {
                         case 0 :
                             break;
+
+                        case 2 :
+                            win.showPrompt(PromptWindow.Mod.Buyer, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_SOURCES, true);
+                            for (int loop1 = 0; loop1 < gm.getPlayerCount(); loop1++)
+                            {
+                                if (gm.getPlayer(loop1) != gm.getActivePlayer())
+                                {
+                                    win.addPromptItem(new PlayerPromptItem(gm.getPlayer(loop1), gm.getPlayer(loop1).getName(), "jop", gm.getPlayer(loop1).GetSource(), res.getHudTexture(HUDTexture.IconTown)));
+                                }
+                            }
+                            playerPrompt = true;
+                            break;
+
                         case 3 :
                             GameMaster.getInstance().getActivePlayer().addPoints(Settings.pointsFortParade);
                             break;

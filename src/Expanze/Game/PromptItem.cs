@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using CorePlugin;
 
 namespace Expanze
 {
@@ -15,15 +16,15 @@ namespace Expanze
     {
         String title;           // item title
         String description;     // description
-        SourceAll cost;         // cost in all sources
+        ISourceAll cost;         // cost in all sources
         Texture2D icon;         // image icon of item
 
-        public SourceAll getCost() { return cost; }
+        public ISourceAll getCost() { return cost; }
         public String getTitle() { return title; }
         public Texture2D getIcon() { return icon; }
         public String getDescription() { return description; }
 
-        public PromptItem(String title, String description, SourceAll cost, Texture2D icon)
+        public PromptItem(String title, String description, ISourceAll cost, Texture2D icon)
         {
             this.title = title;
             this.description = description;

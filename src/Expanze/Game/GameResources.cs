@@ -24,6 +24,9 @@ namespace Expanze
         IconCorn1, IconCorn2, IconMeat1, IconMeat2, IconStone1, IconStone2, IconWood1, IconWood2,
         IconOre1, IconOre2, 
         IconFortParade, IconFortCapture, IconFortSources, IconFortHexa,
+
+        PlayerColor,
+
         HUDCount
     }
 
@@ -95,6 +98,8 @@ namespace Expanze
                 content = new ContentManager(game.Services, "Content");
 
             hud = new Texture2D[(int) HUDTexture.HUDCount];
+            hud[(int)HUDTexture.PlayerColor] = content.Load<Texture2D>("pcolor");
+
             hud[(int)HUDTexture.IconActive] = content.Load<Texture2D>("HUD/ic_active");
             hud[(int)HUDTexture.HammersPassive] = content.Load<Texture2D>("HUD/hammer");
             hud[(int)HUDTexture.HammersActive] = content.Load<Texture2D>("HUD/hammeractive");

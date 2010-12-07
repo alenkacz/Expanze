@@ -130,6 +130,9 @@ namespace Expanze
         }
 
         public Player getActivePlayer() { return activePlayer; }
+        public int getPlayerCount() { return players.Count; }
+        public Player getPlayer(int index) { return players[index]; }
+
         public EGameState getState() { return state; }
         public bool isWinnerNew() { bool temp = winnerNew; winnerNew = false; return temp; }
 

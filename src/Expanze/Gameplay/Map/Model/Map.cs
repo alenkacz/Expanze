@@ -194,7 +194,7 @@ namespace Expanze.Gameplay.Map
             if(!PromptWindow.Inst().getIsActive() &&
                !MarketComponent.getInstance().getIsActive())
             {
-                if (GameState.CurrentMouseState.LeftButton == ButtonState.Pressed)
+                if (GameState.CurrentMouseState.RightButton == ButtonState.Pressed)
                 {
                     float dx = (GameState.CurrentMouseState.X - GameState.LastMouseState.X) / 100.0f;
                     eye.Z += dx;
