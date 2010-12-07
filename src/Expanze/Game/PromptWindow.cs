@@ -114,7 +114,7 @@ namespace Expanze
 
             bgPos = new Vector2((Settings.maximumResolution.X - background.Width) / 2,
                                    (Settings.maximumResolution.Y - background.Height) / 2);
-            int borderX = 150;
+            int borderX = 190;
             int borderY = 20;
             yesPos = new Vector2(bgPos.X + borderX, bgPos.Y + background.Height - borderY - yes.Height);
             noPos = new Vector2(bgPos.X - no.Width - borderX + background.Width, bgPos.Y + background.Height - borderY - no.Height);
