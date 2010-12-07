@@ -146,7 +146,7 @@ namespace Expanze
                         spriteBatch.DrawString(GameState.hudMaterialsFont, model.getValue() + "", new Vector2(point2D.X + 1, point2D.Y + 1), Color.Black);
                 }
                 if (pickVars.pickActive)
-                    numberColor = Color.BlueViolet;
+                    numberColor = Color.Red;
                 else
                     numberColor = Color.DarkRed;
 

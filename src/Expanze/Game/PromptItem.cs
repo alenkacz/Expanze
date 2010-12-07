@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace Expanze
 {
@@ -28,6 +29,11 @@ namespace Expanze
             this.description = description;
             this.cost = cost;
             this.icon = icon;
+        }
+
+        public virtual void DrawIcon(Vector2 iconPosition)
+        {
+            GameState.spriteBatch.Draw(getIcon(), iconPosition, Color.White);
         }
 
         public virtual void Execute() // what should be done if someone click on "buy/ok" button

@@ -238,7 +238,7 @@ namespace Expanze
                     spriteBatch.Draw(pickTextIcon, iconPosition, itemPick[loop1].pickColor);
                 else
                 {
-                    spriteBatch.Draw(itemList[loop1].getIcon(), iconPosition, Color.White);
+                    itemList[loop1].DrawIcon(iconPosition);
                     if (activeItem == loop1 && itemList.Count > 1)
                     {
                         spriteBatch.Draw(GameResources.Inst().getHudTexture(HUDTexture.IconActive), iconPosition, Color.White);
