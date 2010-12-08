@@ -351,7 +351,7 @@ namespace Expanze
             }
 
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
-                                               Color.Black, 0, 0);
+                                               new Color(33, 156, 185), 0, 0);
 
            
             foreach (GameComponent gameComponent in gameComponents)

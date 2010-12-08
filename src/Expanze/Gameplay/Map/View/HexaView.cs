@@ -63,12 +63,16 @@ namespace Expanze
             this.model = model;
             this.hexaID = model.getID();
             this.kind = model.getType();
-            this.pickHexaColor = new Color(this.hexaID / 256.0f, 0.0f, 0.0f);
 
-            pickVars = new PickVariables(pickHexaColor);
+            if (kind != HexaKind.Water)
+            {
+                this.pickHexaColor = new Color(this.hexaID / 256.0f, 0.0f, 0.0f);
 
-            roadView = new RoadView[(int) RoadPos.Count];
-            townView = new TownView[(int) TownPos.Count];
+                pickVars = new PickVariables(pickHexaColor);
+
+                roadView = new RoadView[(int)RoadPos.Count];
+                townView = new TownView[(int)TownPos.Count];
+            }
         }
 
         public void setWorld(Matrix m)
@@ -102,8 +106,8 @@ namespace Expanze
 
         public void Draw2D()
         {
-            //if (kind == HexaKind.Desert)
-            //    return;
+            if (kind == HexaKind.Water)
+                return;
 
             BoundingFrustum frustum = new BoundingFrustum(GameState.view * GameState.projection);
             ContainmentType containmentType = frustum.Contains(Vector3.Transform(new Vector3(0.0f, 0.0f, 0.0f), world));
@@ -237,6 +241,9 @@ namespace Expanze
                 mesh.Draw();
             }
 
+            if (kind == HexaKind.Water)
+                return;
+
             DrawBuildings(gameTime);
 
             for (int loop1 = 0; loop1 < roadView.Length; loop1++)
@@ -332,6 +339,10 @@ namespace Expanze
 
         public void DrawPickableAreas()
         {
+            // Water is not pickable
+            if (kind == HexaKind.Water)
+                return;
+
             Model m = GameResources.Inst().getShape(GameResources.SHAPE_CIRCLE);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
@@ -363,6 +374,10 @@ namespace Expanze
 
         public void HandlePickableAreas(Color c)
         {
+            // Water is not pickable
+            if (kind == HexaKind.Water)
+                return;
+
             for (int loop1 = 0; loop1 < roadView.Length; loop1++)
                 if (model.getRoadOwner(loop1))
                     roadView[loop1].HandlePickableAreas(c);
@@ -464,7 +479,7 @@ namespace Expanze
             }
         }
 
-        public RoadView GetRoadViewByID(int roadID)
+        public virtual RoadView GetRoadViewByID(int roadID)
         {
             for (int loop1 = 0; loop1 < roadView.Length; loop1++)
                 if (model.getRoadOwner(loop1))
@@ -476,7 +491,7 @@ namespace Expanze
             return null;
         }
 
-        public TownView GetTownByID(int townID)
+        public virtual TownView GetTownByID(int townID)
         {
             for (int loop1 = 0; loop1 < townView.Length; loop1++)
                 if (model.getTownOwner(loop1))

@@ -47,6 +47,9 @@ namespace Expanze.Gameplay.Map
                             case HexaKind.Stone:
                                 hexaMapView[i][j] = new StoneView(hexaMapModel[i][j]);
                                 break;
+                            case HexaKind.Water:
+                                hexaMapView[i][j] = new WaterView(hexaMapModel[i][j]);
+                                break;
                             default:
                                 hexaMapView[i][j] = new HexaView(hexaMapModel[i][j]);
                                 break;
@@ -112,8 +115,8 @@ namespace Expanze.Gameplay.Map
             Town.resetCounter();
             TownView.resetTownView();
 
-            float dx = 0.592f;
-            float dy = 0.513f;
+            float dx = 0.591f;
+            float dy = 0.512f;
             Matrix mWorld = Matrix.Identity * Matrix.CreateTranslation(new Vector3(-dy * hexaMapView.Length / 2.0f, 0.0f, -dx * hexaMapView[0].Length / 2.0f)); ;
             for (int i = 0; i < hexaMapView.Length; i++)
             {
