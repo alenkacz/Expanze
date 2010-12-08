@@ -191,8 +191,9 @@ namespace Expanze.Gameplay.Map
 
         public void ChangeCamera()
         {
-            if(!PromptWindow.Inst().getIsActive() &&
-               !MarketComponent.getInstance().getIsActive())
+            //if(!PromptWindow.Inst().getIsActive() &&
+            //   !MarketComponent.getInstance().getIsActive())
+            // its on right button now
             {
                 if (GameState.CurrentMouseState.RightButton == ButtonState.Pressed)
                 {

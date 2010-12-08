@@ -85,8 +85,9 @@ namespace Expanze
         public void prepareQuickGame()
         {
             this.resetGameSettings();
-            this.players.Add(new Player("Player1",Color.Red,null));
-            this.players.Add(new Player("Player2", Color.Blue, null));
+            players.Clear();
+            this.players.Add(new Player("Monte Carlos", Color.Red,null));
+            this.players.Add(new Player("Calamity Jain", Color.Blue, null));
         }
 
         public GameSettings getGameSettings()
@@ -97,7 +98,7 @@ namespace Expanze
             }
             else
             {
-                return new GameSettings(50,"normální","střední","střední");
+                return new GameSettings(50,"normální","malá","střední");
             }
         }
 
@@ -171,7 +172,7 @@ namespace Expanze
         public void checkWinner(Player player)
         {
             bool isWinner = false;
-            if (player.getPoints() >= gameSettings.getPoints())
+            if (player.getPoints() >= getGameSettings().getPoints())
             {
                 isWinner = true;
             }

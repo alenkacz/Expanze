@@ -40,7 +40,8 @@ namespace Expanze.Gameplay.Map
 
     class TownView
     {
-        private static int pickTownID = -1;
+     
+        private static int pickTownID;
         private int townID;
         private bool isBuildView;       // Could be diffrent from model Town isBuild, first is in model true but it is not draw, it waits
 
@@ -209,6 +210,11 @@ namespace Expanze.Gameplay.Map
                         }
                 }
             }
+        }
+
+        public static void resetTownView()
+        {
+            pickTownID = -1;
         }
     }
 }

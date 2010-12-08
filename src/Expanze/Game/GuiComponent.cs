@@ -61,12 +61,18 @@ namespace Expanze
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
+            
             Color c;
             if (pick)
+            {
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Opaque, null, null, null, null, Settings.spriteScale);
                 c = Color.Black;
+            }
             else
+            {
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
                 c = Color.White;
+            }
             if( myButton != null )
                 spriteBatch.Draw(myButton,spritePosition, c);
 
