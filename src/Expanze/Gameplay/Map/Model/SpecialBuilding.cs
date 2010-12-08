@@ -15,8 +15,8 @@ namespace Expanze.Gameplay
         int upgradeNumber;  /// which from 5 upgraded player wants to upgrade
         SpecialBuilding building;
 
-        public SpecialBuildingPromptItem(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber, SpecialBuilding building, String title, String description, SourceAll cost, Texture2D icon)
-            : base(title, description, cost, icon)
+        public SpecialBuildingPromptItem(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber, SpecialBuilding building, String title, String description, SourceAll source, bool isSourceCost, Texture2D icon)
+            : base(title, description, source, isSourceCost, icon)
         {
             this.townID = townID;
             this.hexaID = hexaID;

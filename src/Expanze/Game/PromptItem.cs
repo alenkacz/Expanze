@@ -18,18 +18,21 @@ namespace Expanze
         String description;     // description
         ISourceAll cost;         // cost in all sources
         Texture2D icon;         // image icon of item
+        bool isSourceCost;
 
+        public bool getIsSourceCost() { return isSourceCost;}
         public ISourceAll getCost() { return cost; }
         public String getTitle() { return title; }
         public Texture2D getIcon() { return icon; }
         public String getDescription() { return description; }
 
-        public PromptItem(String title, String description, ISourceAll cost, Texture2D icon)
+        public PromptItem(String title, String description, ISourceAll source, bool isSourceCost, Texture2D icon)
         {
             this.title = title;
             this.description = description;
-            this.cost = cost;
+            this.cost = source;
             this.icon = icon;
+            this.isSourceCost = isSourceCost;
         }
 
         public virtual void DrawIcon(Vector2 iconPosition)

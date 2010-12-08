@@ -13,8 +13,8 @@ namespace Expanze.Gameplay.Map.View
     {
         int roadID;
 
-        public RoadPromptItem(int roadID, String title, String description, SourceAll cost, Texture2D icon)
-            : base(title, description, cost, icon)
+        public RoadPromptItem(int roadID, String title, String description, SourceAll source, bool isSourceCost, Texture2D icon)
+            : base(title, description, source, isSourceCost, icon)
         {
             this.roadID = roadID;
         }
@@ -167,7 +167,7 @@ namespace Expanze.Gameplay.Map.View
                             new RoadPromptItem(roadID,
                                                 Strings.PROMT_TITLE_WANT_TO_BUILD_ROAD,
                                                 Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_ROAD,
-                                                Settings.costRoad,
+                                                Settings.costRoad, true,
                                                 GameResources.Inst().getHudTexture(HUDTexture.IconRoad)));             
                 }
             }

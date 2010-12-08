@@ -53,8 +53,6 @@ namespace Expanze
         public bool startGame(bool isAI, Map map)
         {
             this.map = map;
-            if( gameSettings != null )
-                Settings.startResources = new SourceAll(gameSettings.getPoints());
 
             n_player = players.Count;
 

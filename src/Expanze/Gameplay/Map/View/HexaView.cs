@@ -18,8 +18,8 @@ namespace Expanze
         int hexaID;
         BuildingKind kind;
 
-        public BuildingPromptItem(int townID, int hexaID, BuildingKind kind, String title, String description, SourceAll cost, Texture2D icon)
-            : base(title, description, cost, icon)
+        public BuildingPromptItem(int townID, int hexaID, BuildingKind kind, String title, String description, SourceAll source, bool isSourceCost, Texture2D icon)
+            : base(title, description, source, isSourceCost, icon)
         {
             this.townID = townID;
             this.hexaID = hexaID;
@@ -437,7 +437,7 @@ namespace Expanze
                                                            BuildingKind.SourceBuilding,
                                                            titleBuilding,
                                                            descriptionBuilding,
-                                                           model.getSourceBuildingCost(),
+                                                           model.getSourceBuildingCost(), true,
                                                            icon));
 
                                 if (kind != HexaKind.Mountains)

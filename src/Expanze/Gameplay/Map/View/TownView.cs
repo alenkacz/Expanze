@@ -12,7 +12,8 @@ namespace Expanze.Gameplay.Map
     {
         int townID;
 
-        public TownPromptItem(int townID, String title, String description, SourceAll cost, Texture2D icon) : base(title, description, cost, icon)
+        public TownPromptItem(int townID, String title, String description, SourceAll source, bool isSourceCost, Texture2D icon)
+            : base(title, description, source, isSourceCost, icon)
         {
             this.townID = townID;
         }
@@ -199,7 +200,7 @@ namespace Expanze.Gameplay.Map
                                 new TownPromptItem(townID,
                                                     Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN,
                                                     Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_TOWN,
-                                                    Settings.costTown,
+                                                    Settings.costTown, true, 
                                                     GameResources.Inst().getHudTexture(HUDTexture.IconTown)));
                         }
                         else
