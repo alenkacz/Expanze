@@ -351,7 +351,7 @@ namespace Expanze
             }
 
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
-                                               Color.Black, /*new Color(33, 156, 185), */0, 0);
+                                               Color.SkyBlue, /*new Color(33, 156, 185), */0, 0);
 
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
             /*
