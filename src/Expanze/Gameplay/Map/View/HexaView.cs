@@ -202,7 +202,7 @@ namespace Expanze
             }
         }
 
-        public void Draw(GameTime gameTime)
+        public virtual void Draw(GameTime gameTime)
         {
             Model m = GameResources.Inst().getHexaModel(kind);
             Matrix[] transforms = new Matrix[m.Bones.Count];
@@ -240,9 +240,6 @@ namespace Expanze
                 }
                 mesh.Draw();
             }
-
-            if (kind == HexaKind.Water)
-                return;
 
             DrawBuildings(gameTime);
 

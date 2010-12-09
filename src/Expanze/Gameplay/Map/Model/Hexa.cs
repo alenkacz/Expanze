@@ -30,7 +30,11 @@ namespace Expanze
 
         public HexaModel(int value, HexaKind type, SourceAll sourceBuildingCost)
         {
-            this.hexaID = ++counter;
+            if (type == HexaKind.Water)
+            {
+                this.hexaID = -1;
+            } else
+                this.hexaID = ++counter;
 
             this.sourceBuildingCost = sourceBuildingCost;
             this.type = type;

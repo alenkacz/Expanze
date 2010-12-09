@@ -5,6 +5,7 @@ using System.Text;
 using Expanze.Gameplay.Map.View;
 using Microsoft.Xna.Framework;
 using CorePlugin;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Expanze.Gameplay.Map
 {
@@ -48,7 +49,7 @@ namespace Expanze.Gameplay.Map
                                 hexaMapView[i][j] = new StoneView(hexaMapModel[i][j]);
                                 break;
                             case HexaKind.Water:
-                                hexaMapView[i][j] = new WaterView(hexaMapModel[i][j]);
+                                hexaMapView[i][j] = getWaterView(i, j);
                                 break;
                             default:
                                 hexaMapView[i][j] = new HexaView(hexaMapModel[i][j]);
@@ -57,6 +58,119 @@ namespace Expanze.Gameplay.Map
                     }
                 }
             }
+        }
+
+        private bool IsSourceHex(int i, int j)
+        {
+            HexaModel[][] hexaMapModel = map.GetHexaMapModel();
+            if (i >= 0 && i < hexaMapModel.Length &&
+                j >= 0 && j < hexaMapModel[i].Length &&
+                hexaMapModel[i][j] != null && 
+                hexaMapModel[i][j].getType() != HexaKind.Water &&
+                hexaMapModel[i][j].getType() != HexaKind.Nothing)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        WaterView getWaterView(int i, int j)
+        {
+            HexaModel[][] hexaMapModel = map.GetHexaMapModel();
+            int neighbours = 0;
+            bool upLeft = false;
+            bool upRight = false;
+            bool left = false;
+            bool right = false;
+            bool bottomLeft = false;
+            bool bottomRight = false;
+
+            if (IsSourceHex(i - 1, j))
+            {
+                neighbours += 1;
+                upLeft = true;
+            }
+
+            if (IsSourceHex(i - 1, j - 1))
+            {
+                neighbours += 1;
+                upRight = true;
+            }
+
+            if (IsSourceHex(i, j + 1))
+            {
+                neighbours += 1;
+                left = true;
+            }
+
+            if (IsSourceHex(i, j - 1))
+            {
+                neighbours += 1;
+                right = true;
+            }
+
+            if (IsSourceHex(i + 1, j + 1))
+            {
+                neighbours += 1;
+                bottomLeft = true;
+            }
+
+            if (IsSourceHex(i + 1, j))
+            {
+                neighbours += 1;
+                bottomRight = true;
+            }
+
+            Matrix rotation = Matrix.Identity;
+
+            if (right && upRight)
+            {
+            }
+            else 
+                if (upLeft && upRight)
+            {
+                rotation = Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (1));
+            }
+            else if (upLeft && left)
+            {
+                rotation = Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (2));
+            }
+            else if (bottomLeft && left)
+            {
+                rotation = Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (3));
+            }
+            else if (bottomRight && bottomLeft)
+            {
+                rotation = Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (4));
+            }
+            else
+                if (right)
+            {
+                rotation = Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (5));
+            } else
+                if (upLeft)
+            {
+                rotation = Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (1));
+            }
+            else
+                if (left)
+            {
+                rotation = Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (2));
+            }
+            else
+            if (bottomLeft)
+            {
+                rotation = Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (3));
+            }
+            else
+            if (bottomRight)
+            {
+                rotation = Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (4));
+            }
+
+            Model m = GameResources.Inst().getHexaModel(HexaKind.Water + neighbours);
+
+            return new WaterView(hexaMapModel[i][j], m, rotation);
         }
 
         public void Update(GameTime gameTime)

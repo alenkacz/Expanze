@@ -351,8 +351,13 @@ namespace Expanze
             }
 
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
-                                               new Color(33, 156, 185), 0, 0);
+                                               Color.Black, /*new Color(33, 156, 185), */0, 0);
 
+            SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
+            /*
+            spriteBatch.Begin();
+            spriteBatch.Draw(GameResources.Inst().getHudTexture(HUDTexture.BackgroundWater), new Vector2(0, 0), Color.Gray);
+            spriteBatch.End();*/
            
             foreach (GameComponent gameComponent in gameComponents)
             {
@@ -374,11 +379,10 @@ namespace Expanze
                 MarketComponent.getInstance().Draw(gameTime, false);
             }
 
-            SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
+            
 
             //player name and color rectangle
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
-
             spriteBatch.DrawString(GameState.playerNameFont, gMaster.getActivePlayer().getPoints().ToString(), new Vector2(Settings.playerNamePosition.X - 300, Settings.playerNamePosition.Y), Color.White);
             spriteBatch.DrawString(GameState.playerNameFont, gMaster.getActivePlayer().getName(), Settings.playerNamePosition, Color.White);
             spriteBatch.Draw(playerColorTexture, Settings.playerColorPosition, gMaster.getActivePlayer().getColor());

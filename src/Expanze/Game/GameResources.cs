@@ -26,6 +26,7 @@ namespace Expanze
         IconFortParade, IconFortCapture, IconFortSources, IconFortHexa,
 
         PlayerColor,
+        BackgroundWater,
 
         HUDCount
     }
@@ -42,7 +43,7 @@ namespace Expanze
         private ContentManager content;
         private Game game;
 
-        public const int N_MODEL = 7;
+        public const int N_MODEL = 9;
         Model[] hexaModel;
         public const int SHAPE_RECTANGLE = 0;
         public const int SHAPE_CIRCLE = 1;
@@ -99,6 +100,7 @@ namespace Expanze
 
             hud = new Texture2D[(int) HUDTexture.HUDCount];
             hud[(int)HUDTexture.PlayerColor] = content.Load<Texture2D>("pcolor");
+            hud[(int)HUDTexture.BackgroundWater] = content.Load<Texture2D>("Models/hexa_voda3");
 
             hud[(int)HUDTexture.IconActive] = content.Load<Texture2D>("HUD/ic_active");
             hud[(int)HUDTexture.HammersPassive] = content.Load<Texture2D>("HUD/hammer");
@@ -156,6 +158,8 @@ namespace Expanze
             hexaModel[(int)HexaKind.Pasture] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Pasture]);
             hexaModel[(int)HexaKind.Stone] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Stone]);
             hexaModel[(int)HexaKind.Water] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Water]);
+            hexaModel[(int)HexaKind.Water + 1] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Water] + "2");
+            hexaModel[(int)HexaKind.Water + 2] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Water] + "3");
 
             shapeModel = new Model[N_SHAPE_MODEL];
 
