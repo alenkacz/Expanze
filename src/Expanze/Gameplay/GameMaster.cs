@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using CorePlugin;
 using Expanze.Gameplay.Map;
 using System.Threading;
+using Expanze.Gameplay;
 
 namespace Expanze
 {
@@ -137,9 +138,11 @@ namespace Expanze
 
         public bool StartTurn()
         {
+            RandomEvents();
             if (state == EGameState.StateGame)
             {
                 GameState.map.getSources(activePlayer);
+                RandomEvents();
             }
 
             if (activePlayer.getIsAI())
@@ -151,6 +154,15 @@ namespace Expanze
             }
 
             return true;
+        }
+
+        private void RandomEvents()
+        {
+            Random random = new System.Random();
+            if (random.Next() % 2 == 0)
+            {
+                RndEvent.getRandomEvent();
+            }
         }
 
         public bool NextTurn()

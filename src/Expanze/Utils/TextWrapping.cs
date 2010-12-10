@@ -9,6 +9,12 @@ namespace Expanze.Utils
 {
     static class TextWrapping
     {
+        public static void DrawStringCentered(String text, SpriteFont font, Color color, float x, float y, float width)
+        {
+            float textWidth = font.MeasureString(text).X;
+            GameState.spriteBatch.DrawString(font, text, new Vector2(x + ((width - textWidth) / 2), y), color);
+        }
+
         public static void DrawStringIntoRectangle(String text, SpriteFont font, Color color, float x, float y, float width)
         {
             String textCopy = text;

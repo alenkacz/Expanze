@@ -94,7 +94,7 @@ namespace Expanze
 
             mapComp = new Map(ScreenManager.Game);
             gameComponents.Add(mapComp);
-            GameState.windowPromt = new WindowPromt();
+            GameState.windowPromt = new Message();
             gameComponents.Add(GameState.windowPromt);
             gameComponents.Add(PromptWindow.Inst());
             //gamelogic
