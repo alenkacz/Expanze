@@ -44,7 +44,7 @@ namespace Expanze
             yesPick = new PickVariables(Color.Tomato);
         }
 
-        public void showAlert(String title, String description, SourceAll source, Texture2D icon)
+        public void showAlert(String title, String description, Texture2D icon)
         {
             this.icon = icon;
             this.source = source;
@@ -130,18 +130,6 @@ namespace Expanze
                 TextWrapping.DrawStringCentered(title, GameState.medievalBig, Color.LightBlue, bgPos.X, bgPos.Y + 10, background.Width);
                 TextWrapping.DrawStringIntoRectangle(description,
                     GameState.medievalSmall, Color.LightSteelBlue, bgPos.X + 130, bgPos.Y + 50, background.Width - 140);
-
-                if (kind == MessageKind.Promt)
-                {
-                    if (source != new SourceAll(0))
-                    {
-                        spriteBatch.DrawString(GameState.materialsNewFont, source.corn.ToString(), new Vector2(bgPos.X + 30, bgPos.Y + 200), Color.White);
-                        spriteBatch.DrawString(GameState.materialsNewFont, source.meat.ToString(), new Vector2(bgPos.X + 90, bgPos.Y + 200), Color.White);
-                        spriteBatch.DrawString(GameState.materialsNewFont, source.stone.ToString(), new Vector2(bgPos.X + 150, bgPos.Y + 200), Color.White);
-                        spriteBatch.DrawString(GameState.materialsNewFont, source.wood.ToString(), new Vector2(bgPos.X + 210, bgPos.Y + 200), Color.White);
-                        spriteBatch.DrawString(GameState.materialsNewFont, source.ore.ToString(), new Vector2(bgPos.X + 270, bgPos.Y + 200), Color.White);
-                    }
-                }
 
                 spriteBatch.Draw(icon, new Vector2(bgPos.X + 20, bgPos.Y + 10), color);
 
