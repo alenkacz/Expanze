@@ -28,7 +28,6 @@ namespace Expanze
         private PickVariables yesPick;
         private ContentManager content;
 
-        private MessageKind kind;
         private Texture2D icon;
         private String title;
         private String description;
@@ -71,7 +70,6 @@ namespace Expanze
             this.icon = icon;
             this.title = title;
             this.description = description;
-            kind = MessageKind.Alert;
             active = true;
         }
 

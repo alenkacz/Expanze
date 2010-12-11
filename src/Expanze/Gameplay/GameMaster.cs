@@ -94,10 +94,10 @@ namespace Expanze
             return true;
         }
 
-        public void PlayerWantMedail(Player player, Building medail)
+        public void PlayerWantMedail(Player player, Building medal)
         {
             int minCount = 10;
-            switch(medail)
+            switch(medal)
             {
                 case Building.Town :
                     minCount = 5;
@@ -112,15 +112,16 @@ namespace Expanze
 
             int pointsForMedail = 15;
 
-            if((medailOwner[(int) medail] == null && player.getBuildingCount(medail) > minCount) ||
-               (medailOwner[(int) medail] != null && player.getBuildingCount(medail) > medailOwner[(int) medail].getBuildingCount(medail)))
+            if((medailOwner[(int) medal] == null && player.getBuildingCount(medal) >= minCount) ||
+               (medailOwner[(int) medal] != null && player.getBuildingCount(medal) > medailOwner[(int) medal].getBuildingCount(medal)))
             {
-                if (medailOwner[(int)medail] != null)
+                if (medailOwner[(int)medal] != null)
                 {
-                    medailOwner[(int)medail].addPoints(-pointsForMedail);
+                    medailOwner[(int)medal].addPoints(-pointsForMedail);
                 }
-                medailOwner[(int)medail] = player;
+                medailOwner[(int)medal] = player;
                 player.addPoints(pointsForMedail);
+                GameState.message.showAlert(getMedalTitle(medal),getMedalDescription(medal),getMedaileIcon(medal));
             }
         }
 
@@ -178,7 +179,7 @@ namespace Expanze
                     if (actualAITime < 0)
                         actualAIThread.Abort();
 
-                    if (!actualAIThread.IsAlive && map.GetMapView().getIsViewQueueClear())
+                    if (!actualAIThread.IsAlive && map.GetMapView().getIsViewQueueClear() && !GameState.message.getIsActive())
                     {
                         NextTurn();
                     }
@@ -208,7 +209,7 @@ namespace Expanze
 
         private void RandomEvents()
         {
-            if (randomNumber.Next() % 5 == 2)
+            if (randomNumber.Next() % 10 == 2)
             {       
                 GameState.map.ApplyEvent(RndEvent.getRandomEvent(randomNumber));
             }
@@ -393,31 +394,72 @@ namespace Expanze
             return true;
         }
 
+        public String getMedalTitle(Building building)
+        {
+            switch (building)
+            {
+                case Building.Town: return Strings.MESSAGE_TITLE_MEDAL_TOWN;
+                case Building.Road: return Strings.MESSAGE_TITLE_MEDAL_ROAD;
+                case Building.Market: return Strings.MESSAGE_TITLE_MEDAL_MARKET;
+                case Building.Monastery: return Strings.MESSAGE_TITLE_MEDAL_MONASTERY;
+                case Building.Fort: return Strings.MESSAGE_TITLE_MEDAL_FORT;
+                case Building.Saw: return Strings.MESSAGE_TITLE_MEDAL_SAW;
+                case Building.Mill: return Strings.MESSAGE_TITLE_MEDAL_MILL;
+                case Building.Quarry: return Strings.MESSAGE_TITLE_MEDAL_QUARRY;
+                case Building.Stepherd: return Strings.MESSAGE_TITLE_MEDAL_STEPHERD;
+                case Building.Mine: return Strings.MESSAGE_TITLE_MEDAL_MINE;
+            }
+            return null;
+        }
+
+        public String getMedalDescription(Building building)
+        {
+            switch (building)
+            {
+                case Building.Town: return Strings.MESSAGE_DESCRIPTION_MEDAL_TOWN;
+                case Building.Road: return Strings.MESSAGE_DESCRIPTION_MEDAL_ROAD;
+                case Building.Market: return Strings.MESSAGE_DESCRIPTION_MEDAL_MARKET;
+                case Building.Monastery: return Strings.MESSAGE_DESCRIPTION_MEDAL_MONASTERY;
+                case Building.Fort: return Strings.MESSAGE_DESCRIPTION_MEDAL_FORT;
+                case Building.Saw: return Strings.MESSAGE_DESCRIPTION_MEDAL_SAW;
+                case Building.Mill: return Strings.MESSAGE_DESCRIPTION_MEDAL_MILL;
+                case Building.Quarry: return Strings.MESSAGE_DESCRIPTION_MEDAL_QUARRY;
+                case Building.Stepherd: return Strings.MESSAGE_DESCRIPTION_MEDAL_STEPHERD;
+                case Building.Mine: return Strings.MESSAGE_DESCRIPTION_MEDAL_MINE;
+            }
+            return null;
+        }
+
+        public Texture2D getMedaileIcon(Building building)
+        {
+            Texture2D icon = null;
+            switch (building)
+            {
+                case Building.Road: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalRoad); break;
+                case Building.Town: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalTown); break;
+                case Building.Mill: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalMill); break;
+                case Building.Market: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalMarket); break;
+                case Building.Monastery: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalMonastery); break;
+                case Building.Fort: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalFort); break;
+                case Building.Stepherd: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalStepherd); break;
+                case Building.Quarry: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalQuarry); break;
+                case Building.Mine: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalMine); break;
+                case Building.Saw: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalSaw); break;
+            }
+
+            return icon;
+        }
+
         public void Draw2D()
         {
-            int medailCount = 0;
             SpriteBatch spriteBatch = GameState.spriteBatch;
-            Vector2 medailPosition = new Vector2(Settings.activeResolution.X - 80.0f, 50.0f);
-            Texture2D icon = null;
+            Vector2 medailPosition = new Vector2(Settings.activeResolution.X - 80.0f, 100.0f);
             spriteBatch.Begin();
             for (int loop1 = 0; loop1 < medailOwner.Length; loop1++)
             {
                 if (medailOwner[loop1] == activePlayer)
                 {
-                    switch((Building) loop1)
-                    {
-                        case Building.Road : icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalRoad); break;
-                        case Building.Town : icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalTown); break;
-                        case Building.Mill : icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalMill); break;
-                        case Building.Market : icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalMarket); break;
-                        case Building.Monastery : icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalMonastery); break;
-                        case Building.Fort : icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalFort); break;
-                        case Building.Stepherd : icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalStepherd); break;
-                        case Building.Quarry : icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalQuarry); break;
-                        case Building.Mine : icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalMine); break;
-                        case Building.Saw : icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalSaw); break;
-                    }
-                    spriteBatch.Draw(icon, medailPosition, Color.White);
+                    spriteBatch.Draw(getMedaileIcon((Building) loop1), medailPosition, Color.White);
                     medailPosition += new Vector2(0.0f, 85.0f);
                 }
             }
