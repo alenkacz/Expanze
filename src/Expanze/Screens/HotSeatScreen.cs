@@ -113,7 +113,7 @@ namespace Expanze
             colorPosition.Y += 80;
 
             points = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameState.gameFont, 400, 200, "Počet bodů", new List<String>() { "50", "75", "100" });
-            mapType = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 50, GameState.gameFont, 400, 200, "Druh mapy", new List<String>() { "Normální", "Nížiny", "Pustina" });
+            mapType = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 50, GameState.gameFont, 400, 200, "Druh mapy", new List<String>() { "Nížiny", "Normální", "Pustina" });
             mapSize = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 100, GameState.gameFont, 400, 200, "Velikost mapy", new List<String>() { "Malá", "Střední", "Velká" });
             wealth = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 150, GameState.gameFont, 400, 200, "Bohatství surovin", new List<String>() { "Nízké", "Střední", "Vysoké" });
 
