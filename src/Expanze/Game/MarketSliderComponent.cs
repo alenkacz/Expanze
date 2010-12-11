@@ -126,17 +126,20 @@ namespace Expanze
 
         private void moveSlider(int pos)
         {
-            if (Settings.scaleW(pos) < (range.Right - Settings.scaleW(24)) && Settings.scaleW(pos) > range.Left)
+            if (Settings.scaleW(pos) < (range.Right - Settings.scaleW(10)) && Settings.scaleW(pos) > range.Left)
             {
                 int unit = getSliderUnit();
                 int converted = (int)(spritePosition.X - pos)/unit;
 
                 if (converted < 0) converted = -converted;
 
-                this.fromConvertedCount = this.fromTypeCount - converted * GameMaster.getInstance().getActivePlayer().getConversionRate(fromType);
-                this.toConvertedCount = this.toTypeCount + converted;
+                if ((this.fromTypeCount - converted * GameMaster.getInstance().getActivePlayer().getConversionRate(fromType)) >= 0)
+                {
+                    this.fromConvertedCount = this.fromTypeCount - converted * GameMaster.getInstance().getActivePlayer().getConversionRate(fromType);
+                    this.toConvertedCount = this.toTypeCount + converted;
 
-                sliderPosition.X = pos;
+                    sliderPosition.X = pos;
+                }
             }
         }
 
