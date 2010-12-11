@@ -291,7 +291,6 @@ namespace Expanze
             int convertedTo = marketSlider.getConvertedTo();
 
             GameMaster.getInstance().doMaterialConversion(fromSelectKind, toSelectKind, GameMaster.getInstance().getActivePlayer(),actualFrom - convertedFrom,convertedTo-actualTo);
-            MarketComponent.isActive = false;
         }
 
         /// <summary>
