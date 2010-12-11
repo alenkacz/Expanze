@@ -32,7 +32,6 @@ namespace Expanze
         private Texture2D icon;
         private String title;
         private String description;
-        private SourceAll source;
 
         public Message()
         {
@@ -47,7 +46,6 @@ namespace Expanze
         public void showAlert(String title, String description, Texture2D icon)
         {
             this.icon = icon;
-            this.source = source;
             this.title = title;
             this.description = description;
             kind = MessageKind.Alert;
@@ -69,7 +67,7 @@ namespace Expanze
                                    (Settings.maximumResolution.Y - background.Height) / 2 - 50);
             int border = 15;
             yesPos = new Vector2(bgPos.X + (background.Width - yes.Width) / 2, bgPos.Y + background.Height - border - yes.Height);
-            noPos = new Vector2(bgPos.X + (background.Width - yes.Width) / 2, bgPos.Y + background.Height - border - no.Height);
+            noPos = new Vector2(bgPos.X + (background.Width - yes.Width) - 20, bgPos.Y + background.Height - border - no.Height);
         }
 
         public override void UnloadContent()
@@ -129,9 +127,9 @@ namespace Expanze
 
                 TextWrapping.DrawStringCentered(title, GameState.medievalBig, Color.LightBlue, bgPos.X, bgPos.Y + 10, background.Width);
                 TextWrapping.DrawStringIntoRectangle(description,
-                    GameState.medievalSmall, Color.LightSteelBlue, bgPos.X + 130, bgPos.Y + 50, background.Width - 140);
+                    GameState.medievalSmall, Color.LightSteelBlue, bgPos.X + 20, bgPos.Y + 55, background.Width - 140);
 
-                spriteBatch.Draw(icon, new Vector2(bgPos.X + 20, bgPos.Y + 10), color);
+                spriteBatch.Draw(icon, new Vector2(bgPos.X + background.Width - icon.Width - 20, bgPos.Y + 20), color);
 
                 spriteBatch.End();
             }
