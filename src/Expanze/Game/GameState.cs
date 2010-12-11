@@ -24,7 +24,7 @@ namespace Expanze
         public static Game game;
         public static Map map;
 
-        public static Message windowPromt;
+        public static Message message;
 
         public static SpriteBatch spriteBatch;
 

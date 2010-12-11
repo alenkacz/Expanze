@@ -43,6 +43,8 @@ namespace Expanze
             yesPick = new PickVariables(Color.Tomato);
         }
 
+        public bool getIsActive() {return active;}
+
         public void showAlert(String title, String description, Texture2D icon)
         {
             this.icon = icon;

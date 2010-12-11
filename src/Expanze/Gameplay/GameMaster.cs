@@ -30,7 +30,7 @@ namespace Expanze
         private Thread actualAIThread;
         private const int AI_TIME = 5000;   // this is time which have each plugin each turn to resolve AI
         private int actualAITime;           // how much time has AI before it will be aborted
-
+        private bool hasAIThreadStarted;
 
         private static GameMaster instance = null;
 
@@ -73,6 +73,7 @@ namespace Expanze
             pausedNew = false;
             paused = false;
 
+            hasAIThreadStarted = false;
             state = EGameState.StateFirstTown;
 
             return true;
@@ -118,13 +119,24 @@ namespace Expanze
         {
             if (activePlayer.getIsAI())
             {
-                actualAITime -= gameTime.ElapsedGameTime.Milliseconds;
-                if (actualAITime < 0)
-                    actualAIThread.Abort();
-
-                if (!actualAIThread.IsAlive && map.GetMapView().getIsViewQueueClear())
+                if (!hasAIThreadStarted && !GameState.message.getIsActive())
                 {
-                       NextTurn();
+                    actualAIStart = new ThreadStart(activePlayer.getComponentAI().ResolveAI);
+                    actualAIThread = new Thread(actualAIStart);
+                    actualAIThread.Start();
+                    actualAITime = AI_TIME;
+                    hasAIThreadStarted = true;
+                }
+                if (hasAIThreadStarted)
+                {
+                    actualAITime -= gameTime.ElapsedGameTime.Milliseconds;
+                    if (actualAITime < 0)
+                        actualAIThread.Abort();
+
+                    if (!actualAIThread.IsAlive && map.GetMapView().getIsViewQueueClear())
+                    {
+                        NextTurn();
+                    }
                 }
             }
         }
@@ -145,13 +157,7 @@ namespace Expanze
                 RandomEvents();
             }
 
-            if (activePlayer.getIsAI())
-            {
-                actualAIStart = new ThreadStart(activePlayer.getComponentAI().ResolveAI);
-                actualAIThread = new Thread(actualAIStart);
-                actualAIThread.Start();
-                actualAITime = AI_TIME;
-            }
+            hasAIThreadStarted = false;
 
             return true;
         }
