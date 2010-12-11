@@ -183,7 +183,7 @@ namespace Expanze
 
         public virtual Rectangle GetRange(MenuScreen screen)
         {
-                return new Rectangle((int)position.X,(int)position.Y,this.GetWidth(screen),40);
+                return new Rectangle((int)position.X,(int)position.Y-20,this.GetWidth(screen),40);
         }
 
 
