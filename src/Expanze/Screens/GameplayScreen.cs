@@ -98,7 +98,7 @@ namespace Expanze
             gameComponents.Add(GameState.message);
             gameComponents.Add(PromptWindow.Inst());
             //gamelogic
-            gMaster.startGame(isAI, mapComp);
+            gMaster.StartGame(isAI, mapComp);
 
             ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), new Rectangle(Settings.scaleW((int)(Settings.maximumResolution.X - 80)), Settings.scaleH((int)(Settings.maximumResolution.Y - 80)), Settings.scaleW(60), Settings.scaleH(60)), GameState.gameFont, Settings.scaleW(147), Settings.scaleH(141), "nextTurn");
             changeTurnButton.Actions += ChangeTurnButtonAction;

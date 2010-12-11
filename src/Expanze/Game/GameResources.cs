@@ -25,6 +25,7 @@ namespace Expanze
         IconOre1, IconOre2, 
         IconFortParade, IconFortCapture, IconFortSources, IconFortHexa,
 
+        // icon medal fort have to be first //
         IconMedalFort, IconMedalMonastery, IconMedalMarket,
         IconMedalTown, IconMedalRoad,
         IconMedalMill, IconMedalStepherd, IconMedalQuarry, IconMedalSaw, IconMedalMine,

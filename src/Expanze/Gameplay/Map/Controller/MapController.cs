@@ -114,7 +114,7 @@ namespace Expanze.Gameplay.Map
             BuildingBuildError error = town.canActivePlayerBuildBuildingInTown(buildingPos, kind);
             if (error == BuildingBuildError.OK)
             {
-                town.buildBuilding(buildingPos, kind);
+                town.BuildBuilding(buildingPos, kind);
                 gm.getActivePlayer().payForSomething(town.GetBuildingCost(buildingPos, kind));
             }
 
