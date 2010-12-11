@@ -116,6 +116,7 @@ namespace Expanze
         public void resetSlider() 
         {
             sliderPosition.X = spritePosition.X;
+            clickablePos = new Rectangle(Settings.scaleW(sliderPosition.X), Settings.scaleH(sliderPosition.Y), sliderW, sliderH);
             this.fromType = HexaKind.Null;
             this.toType = HexaKind.Null;
             this.fromTypeCount = 0;
@@ -127,6 +128,7 @@ namespace Expanze
         public void moveSliderToStart()
         {
             sliderPosition.X = spritePosition.X;
+            clickablePos = new Rectangle(Settings.scaleW(sliderPosition.X), Settings.scaleH(sliderPosition.Y), sliderW, sliderH);
             this.fromTypeCount = GameMaster.getInstance().getActivePlayer().getMaterialNumber(fromType);
             this.fromConvertedCount = fromTypeCount;
             this.toTypeCount = GameMaster.getInstance().getActivePlayer().getMaterialNumber(toType);
