@@ -36,7 +36,7 @@ namespace Expanze
             playerColorTexture = game.Content.Load<Texture2D>("pcolor");
             playerColor = c;
             this.name = name;
-            playerState = new ButtonComponent(game, x + 500, y, font, 200, 50, null, Settings.PlayerState);
+            playerState = new ButtonComponent(game, x + 500, y, font, Settings.scaleW(200), Settings.scaleH(45), null, Settings.PlayerState);
             playerState.Initialize(); playerState.LoadContent();
             addButton = new ButtonComponent(game, x, y, new Rectangle(), font, 34, 32, "HUD/hotseat_plus");
             addButton.Actions += AddButtonAction;
