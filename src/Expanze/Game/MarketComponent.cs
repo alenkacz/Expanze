@@ -230,6 +230,7 @@ namespace Expanze
 
                 fromSelectKind = btn.getType();
                 marketSlider.setFromType(fromSelectKind);
+                marketSlider.moveSliderToStart();
             }
 
             btn.setPicked(!btn.getPicked());

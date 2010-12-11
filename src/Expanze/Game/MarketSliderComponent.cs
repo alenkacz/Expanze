@@ -124,9 +124,18 @@ namespace Expanze
             this.toConvertedCount = 0;
         }
 
+        public void moveSliderToStart()
+        {
+            sliderPosition.X = spritePosition.X;
+            this.fromTypeCount = GameMaster.getInstance().getActivePlayer().getMaterialNumber(fromType);
+            this.fromConvertedCount = fromTypeCount;
+            this.toTypeCount = GameMaster.getInstance().getActivePlayer().getMaterialNumber(toType);
+            this.toConvertedCount = toTypeCount;
+        }
+
         private void moveSlider(int pos)
         {
-            if (Settings.scaleW(pos) < (range.Right - Settings.scaleW(10)) && Settings.scaleW(pos) > range.Left)
+            if (Settings.scaleW(pos) < (range.Right) && Settings.scaleW(pos) > range.Left)
             {
                 int unit = getSliderUnit();
                 int converted = (int)(spritePosition.X - pos)/unit;
