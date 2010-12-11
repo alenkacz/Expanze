@@ -70,7 +70,7 @@ namespace Expanze
         public static string PROMT_TITLE_WANT_TO_BUILD_SAW = "Pila";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_SAW = "Dřevorubci natahají z lesa dřevo.  Po vynalezení pokroku z Kláštera bude těžba účinější.";
         public static string PROMPT_TITLE_WANT_TO_UPGRADE_1_SAW = "Sekery";
-        public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_SAW = "Pořídíš-li dřevorupcům sekery, budou pracovat o 50% lépe";
+        public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_SAW = "Pořídíš-li dřevorubcům sekery, budou pracovat o 50% lépe";
         public static string PROMPT_TITLE_WANT_TO_UPGRADE_2_SAW = "Tažní koně";
         public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_SAW = "Tažní koně velice urychlí práci. Zisky dřeva o 100% lepší.";
 
@@ -135,18 +135,18 @@ namespace Expanze
 
         public static string MESSAGE_TITLE_DISASTER = "Pohroma";
         public static string MESSAGE_DESCRIPTION_DISASTER_CORNFIELD = "Zemi postihla extrémní sucha. Výnosy z polí budou poloviční.";
-        public static string MESSAGE_DESCRIPTION_DISASTER_PASTURE = "";
-        public static string MESSAGE_DESCRIPTION_DISASTER_STONE = "";
-        public static string MESSAGE_DESCRIPTION_DISASTER_FOREST = "";
-        public static string MESSAGE_DESCRIPTION_DISASTER_MOUNTAINS = "";
+        public static string MESSAGE_DESCRIPTION_DISASTER_PASTURE = "Vlci napadli stádo ovcí. Pastevci ti jich budou dodávat o polovinu méně.";
+        public static string MESSAGE_DESCRIPTION_DISASTER_STONE = "Sesuvy kamení dělají práci nebezpečnou a horníci nepracují. Těžba bude poloviční.";
+        public static string MESSAGE_DESCRIPTION_DISASTER_FOREST = "Požár zachvátil lesy v zemi. Těžba dřeva musí být omezena na polovinu.";
+        public static string MESSAGE_DESCRIPTION_DISASTER_MOUNTAINS = "V dolech straší a horníci se no nich bojí. Budou těžit jen za světla. Zisky poloviční.";
 
         // MIRACLES //
 
-        public static string MESSAGE_DESCRIPTION_MIRACLE_CORNFIELD = "";
-        public static string MESSAGE_DESCRIPTION_MIRACLE_PASTURE = "";
-        public static string MESSAGE_DESCRIPTION_MIRACLE_STONE = "";
-        public static string MESSAGE_DESCRIPTION_MIRACLE_FOREST = "";
-        public static string MESSAGE_DESCRIPTION_MIRACLE_MOUNTAINS = "";
+        public static string MESSAGE_DESCRIPTION_MIRACLE_CORNFIELD = "Teplé počasí polím přálo, obilí rostlo mnohem víc, rovnou o polovinu víc.";
+        public static string MESSAGE_DESCRIPTION_MIRACLE_PASTURE = "Ovcím se narodilo spoustu mláďat, bude jich o polovinu více.";
+        public static string MESSAGE_DESCRIPTION_MIRACLE_STONE = "Nikdo neví, co se stalo. Těžba jde teď mnohem lépe, je zrychlena o polovinu.";
+        public static string MESSAGE_DESCRIPTION_MIRACLE_FOREST = "Silný vítr vyvrátil mnoho stromů. Těžba dřeva bude rychlejší o polovinu.";
+        public static string MESSAGE_DESCRIPTION_MIRACLE_MOUNTAINS = "Nalezeny nové žíly, může se těžit naplno. Zisky rud budou o polovinu vyšší.";
 
         public static string MESSAGE_TITLE_MIRACLE = "Zázrak";
     }
