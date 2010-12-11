@@ -86,9 +86,10 @@ namespace Expanze
         {
             foreach (MenuEntry m in menuEntries)
             {
-                if (input.IsMenuMouseHover(m.Position))
+                if (input.IsMenuMouseHover(m.GetRange(this)))
                 {
-
+                    selectedEntry = menuEntries.IndexOf(m);
+                    break;
                 }
             }
 

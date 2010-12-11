@@ -220,9 +220,9 @@ namespace Expanze
                    IsNewButtonPress(Buttons.LeftThumbstickUp, controllingPlayer, out playerIndex);
         }
 
-        public bool IsMenuMouseHover(Vector2 position)
+        public bool IsMenuMouseHover(Rectangle res)
         {
-            if (CurrentMouseState.X > position.X && CurrentMouseState.Y > position.Y)
+            if (CurrentMouseState.X > Settings.scaleW(res.Left) && CurrentMouseState.X < Settings.scaleW(res.Right) && CurrentMouseState.Y > Settings.scaleH(res.Top) && CurrentMouseState.Y < Settings.scaleH(res.Bottom))
             {
                 return true;
             }
