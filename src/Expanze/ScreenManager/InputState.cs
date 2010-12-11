@@ -220,6 +220,16 @@ namespace Expanze
                    IsNewButtonPress(Buttons.LeftThumbstickUp, controllingPlayer, out playerIndex);
         }
 
+        public bool IsMenuMouseHover(Vector2 position)
+        {
+            if (CurrentMouseState.X > position.X && CurrentMouseState.Y > position.Y)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
 
         /// <summary>
         /// Checks for a "menu down" input action.

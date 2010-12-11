@@ -84,6 +84,14 @@ namespace Expanze
         /// </summary>
         public override void HandleInput(InputState input)
         {
+            foreach (MenuEntry m in menuEntries)
+            {
+                if (input.IsMenuMouseHover(m.Position))
+                {
+
+                }
+            }
+
             // Move to the previous menu entry?
             if (input.IsMenuUp(ControllingPlayer))
             {
