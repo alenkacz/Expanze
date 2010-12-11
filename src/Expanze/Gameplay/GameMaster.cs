@@ -32,6 +32,8 @@ namespace Expanze
         private int actualAITime;           // how much time has AI before it will be aborted
         private bool hasAIThreadStarted;
 
+        private Random randomNumber;
+
         private static GameMaster instance = null;
 
         private GameSettings gameSettings;
@@ -75,6 +77,8 @@ namespace Expanze
 
             hasAIThreadStarted = false;
             state = EGameState.StateFirstTown;
+
+            randomNumber = new System.Random();
 
             return true;
         }
@@ -150,7 +154,6 @@ namespace Expanze
 
         public bool StartTurn()
         {
-            RandomEvents();
             if (state == EGameState.StateGame)
             {
                 GameState.map.getSources(activePlayer);
@@ -164,10 +167,9 @@ namespace Expanze
 
         private void RandomEvents()
         {
-            Random random = new System.Random();
-            if (random.Next() % 2 == 0)
-            {
-                RndEvent.getRandomEvent();
+            if (randomNumber.Next() % 5 == 2)
+            {       
+                GameState.map.ApplyEvent(RndEvent.getRandomEvent(randomNumber));
             }
         }
 

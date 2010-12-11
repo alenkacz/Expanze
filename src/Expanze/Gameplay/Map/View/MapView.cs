@@ -37,7 +37,7 @@ namespace Expanze.Gameplay.Map
                 {
                     if (hexaMapModel[i][j] != null)
                     {
-                        switch (hexaMapModel[i][j].getType())
+                        switch (hexaMapModel[i][j].getKind())
                         {
                             case HexaKind.Mountains:
                                 hexaMapView[i][j] = new MountainsView(hexaMapModel[i][j]);
@@ -66,8 +66,8 @@ namespace Expanze.Gameplay.Map
             if (i >= 0 && i < hexaMapModel.Length &&
                 j >= 0 && j < hexaMapModel[i].Length &&
                 hexaMapModel[i][j] != null && 
-                hexaMapModel[i][j].getType() != HexaKind.Water &&
-                hexaMapModel[i][j].getType() != HexaKind.Nothing)
+                hexaMapModel[i][j].getKind() != HexaKind.Water &&
+                hexaMapModel[i][j].getKind() != HexaKind.Nothing)
             {
                 return true;
             }

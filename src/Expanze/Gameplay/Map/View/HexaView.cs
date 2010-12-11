@@ -62,7 +62,7 @@ namespace Expanze
         {
             this.model = model;
             this.hexaID = model.getID();
-            this.kind = model.getType();
+            this.kind = model.getKind();
 
             if (kind != HexaKind.Water)
             {
@@ -122,7 +122,7 @@ namespace Expanze
                 posHammers = point2D;
                 SpriteBatch spriteBatch = GameState.spriteBatch;
 
-                Vector2 stringCenter = GameState.hudMaterialsFont.MeasureString(model.getValue() + "") * 0.5f;
+                Vector2 stringCenter = GameState.hudMaterialsFont.MeasureString(model.getCurrentSource() + "") * 0.5f;
 
                 // now subtract the string center from the text position to find correct position 
                 point2D.X = (int)(point2D.X - stringCenter.X);
@@ -146,8 +146,8 @@ namespace Expanze
                 if (drawNumber ||
                     tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.getPlayerOwner() != GameMaster.getInstance().getActivePlayer())
                 {
-                    if (model.getValue() != 0) // desert
-                        spriteBatch.DrawString(GameState.hudMaterialsFont, model.getValue() + "", new Vector2(point2D.X + 1, point2D.Y + 1), Color.Black);
+                    if (model.getCurrentSource() != 0) // desert
+                        spriteBatch.DrawString(GameState.hudMaterialsFont, model.getCurrentSource() + "", new Vector2(point2D.X + 1, point2D.Y + 1), Color.Black);
                 }
                 if (pickVars.pickActive)
                     numberColor = Color.Red;
@@ -157,8 +157,10 @@ namespace Expanze
                 if (drawNumber ||
                     tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.getPlayerOwner() != GameMaster.getInstance().getActivePlayer())
                 {
-                    if (model.getValue() != 0) // desert
-                        spriteBatch.DrawString(GameState.hudMaterialsFont, model.getValue() + "", point2D, numberColor);
+                    if (model.getCurrentSource() != 0) // desert
+                    {
+                        spriteBatch.DrawString(GameState.hudMaterialsFont, model.getCurrentSource() + "", point2D, numberColor);
+                    }
                 }
                 else
                 {

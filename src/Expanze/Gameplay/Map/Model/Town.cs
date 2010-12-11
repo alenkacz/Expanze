@@ -117,9 +117,9 @@ namespace Expanze
                     buildingKind[loop1] == BuildingKind.SourceBuilding)
                 {
                     float multiply = (building[loop1].GetIsUpgrade(UpgradeKind.SecondUpgrade, 0)) ? 2.0f : (building[loop1].GetIsUpgrade(UpgradeKind.FirstUpgrade, 0)) ? 1.5f : 1.0f;
-                    amount = (int) (hexaNeighbour[loop1].getValue() * multiply);
+                    amount = (int)(hexaNeighbour[loop1].getCurrentSource() * multiply);
 
-                    switch (hexaNeighbour[loop1].getType())
+                    switch (hexaNeighbour[loop1].getKind())
                     {
                         case HexaKind.Forest:
                             cost = cost + new SourceAll(amount, 0, 0, 0, 0);
