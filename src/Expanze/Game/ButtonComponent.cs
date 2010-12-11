@@ -119,9 +119,6 @@ namespace Expanze
                     if (Actions != null)
                         Actions(this, new PlayerIndexEventArgs(new PlayerIndex()));
                     
-                    if( switchTexts != null )
-                        nextText();
-                    
                     pressed = true;
                 }
 
@@ -185,6 +182,14 @@ namespace Expanze
         public bool isActive()
         {
             return GameMaster.getInstance().getActivePlayer().haveEnoughMaterial(type);
+        }
+
+        public void changeText()
+        {
+            if (switchTexts != null)
+            {
+                nextText();
+            }
         }
 
         public override void Draw(GameTime gameTime)

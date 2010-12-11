@@ -37,6 +37,7 @@ namespace Expanze
             playerColor = c;
             this.name = name;
             playerState = new ButtonComponent(game, x + 500, y, font, Settings.scaleW(200), Settings.scaleH(45), null, Settings.PlayerState);
+            playerState.Actions += PlayerStateButtonAction;
             playerState.Initialize(); playerState.LoadContent();
             addButton = new ButtonComponent(game, x, y, new Rectangle(), font, 34, 32, "HUD/hotseat_plus");
             addButton.Actions += AddButtonAction;
@@ -108,6 +109,17 @@ namespace Expanze
             else
             {
                 alreadyChanged = false;
+            }
+        }
+
+        /// <summary>
+        /// Event handler for player state button
+        /// </summary>
+        void PlayerStateButtonAction(object sender, PlayerIndexEventArgs e)
+        {
+            if (active )
+            {
+                playerState.changeText();
             }
         }
 
