@@ -222,7 +222,7 @@ namespace Expanze
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
             SpriteFont font = ScreenManager.Font;
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Opaque, null, null, null, null, Settings.spriteScale);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
             //cursorComp.Draw(gameTime);
 
             spriteBatch.Draw(menuLogo, new Vector2(370,100), Color.White);
