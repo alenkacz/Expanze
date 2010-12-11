@@ -128,5 +128,26 @@ namespace Expanze
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_PARADE = "Armádní přehlídka ti přinese slávu a zisk 3 bodů.";
 
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES_CHOISING_PLAYER = "Chceš aby tento hráč přišel o své suroviny? Zvědové zjistili, že má tolik surovin :";
+    
+        // EVENTS //
+
+        // DISASTERS //
+
+        public static string MESSAGE_TITLE_DISASTER = "Pohroma";
+        public static string MESSAGE_DESCRIPTION_DISASTER_CORNFIELD = "Zemi postihla extrémní sucha. Výnosy z polí budou poloviční.";
+        public static string MESSAGE_DESCRIPTION_DISASTER_PASTURE = "";
+        public static string MESSAGE_DESCRIPTION_DISASTER_STONE = "";
+        public static string MESSAGE_DESCRIPTION_DISASTER_FOREST = "";
+        public static string MESSAGE_DESCRIPTION_DISASTER_MOUNTAINS = "";
+
+        // MIRACLES //
+
+        public static string MESSAGE_DESCRIPTION_MIRACLE_CORNFIELD = "";
+        public static string MESSAGE_DESCRIPTION_MIRACLE_PASTURE = "";
+        public static string MESSAGE_DESCRIPTION_MIRACLE_STONE = "";
+        public static string MESSAGE_DESCRIPTION_MIRACLE_FOREST = "";
+        public static string MESSAGE_DESCRIPTION_MIRACLE_MOUNTAINS = "";
+
+        public static string MESSAGE_TITLE_MIRACLE = "Zázrak";
     }
 }

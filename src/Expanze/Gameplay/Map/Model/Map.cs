@@ -369,5 +369,15 @@ namespace Expanze.Gameplay.Map
                 pickVars.pickNewRelease = false;
             }
         }
+
+        public void ApplyEvent(RndEvent rndEvent)
+        {
+           for (int i = 0; i < hexaMapModel.Length; i++)
+                for (int j = 0; j < hexaMapModel[i].Length; j++)
+                    if (hexaMapModel[i][j] != null)
+                    {
+                        hexaMapModel[i][j].ApplyEvent(rndEvent);
+                    }
+        }
     }
 }

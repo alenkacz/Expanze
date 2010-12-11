@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CorePlugin;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Expanze.Gameplay
 {
@@ -16,14 +17,82 @@ namespace Expanze.Gameplay
             this.isPositive = isPositive;
             this.hexaKind = hexaKind;
 
-            GameState.message.showAlert("Zázrak", "Ovce snědly jedovatý jetel. Bude jich o polovinu méně. Bla bla je to tak, slečna je. ahoj, jak to jde< dobre to je", GameResources.Inst().getHudTexture(HUDTexture.IconMine));
+            string title = "";
+            string description = "";
+            Texture2D icon = null; ;
+            if (isPositive)
+            {
+                switch (hexaKind)
+                {
+                    case HexaKind.Cornfield :
+                        title = Strings.MESSAGE_TITLE_MIRACLE;
+                        description = Strings.MESSAGE_DESCRIPTION_MIRACLE_CORNFIELD;
+                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconMill);
+                        break;
+                    case HexaKind.Pasture :
+                        title = Strings.MESSAGE_TITLE_MIRACLE;
+                        description = Strings.MESSAGE_DESCRIPTION_MIRACLE_PASTURE;
+                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconStepherd);
+                        break;
+                    case HexaKind.Stone :
+                        title = Strings.MESSAGE_TITLE_MIRACLE;
+                        description = Strings.MESSAGE_DESCRIPTION_MIRACLE_STONE;
+                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconQuarry);
+                        break;
+                    case HexaKind.Forest :
+                        title = Strings.MESSAGE_TITLE_MIRACLE;
+                        description = Strings.MESSAGE_DESCRIPTION_MIRACLE_FOREST;
+                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconSaw);
+                        break;
+                    case HexaKind.Mountains :
+                        title = Strings.MESSAGE_TITLE_MIRACLE;
+                        description = Strings.MESSAGE_DESCRIPTION_MIRACLE_MOUNTAINS;
+                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconMine);
+                        break;
+                }
+            }
+            else
+            {
+                switch (hexaKind)
+                {
+                    case HexaKind.Cornfield:
+                        title = Strings.MESSAGE_TITLE_DISASTER;
+                        description = Strings.MESSAGE_DESCRIPTION_DISASTER_CORNFIELD;
+                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconMill);
+                        break;
+                    case HexaKind.Pasture:
+                        title = Strings.MESSAGE_TITLE_DISASTER;
+                        description = Strings.MESSAGE_DESCRIPTION_DISASTER_PASTURE;
+                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconStepherd);
+                        break;
+                    case HexaKind.Stone:
+                        title = Strings.MESSAGE_TITLE_DISASTER;
+                        description = Strings.MESSAGE_DESCRIPTION_DISASTER_STONE;
+                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconQuarry);
+                        break;
+                    case HexaKind.Forest:
+                        title = Strings.MESSAGE_TITLE_DISASTER;
+                        description = Strings.MESSAGE_DESCRIPTION_DISASTER_FOREST;
+                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconSaw);
+                        break;
+                    case HexaKind.Mountains:
+                        title = Strings.MESSAGE_TITLE_DISASTER;
+                        description = Strings.MESSAGE_DESCRIPTION_DISASTER_MOUNTAINS;
+                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconMine);
+                        break;
+                }
+            }
+
+            GameState.message.showAlert(title, description, icon);
         }
 
-        public static RndEvent getRandomEvent()
+        public HexaKind getHexaKind() { return hexaKind; }
+        public bool getIsPositive() { return isPositive; }
+
+        public static RndEvent getRandomEvent(Random randomNumber)
         {
-            Random random = new System.Random();
-            bool positiveEvent = (random.Next() % 2) == 0;
-            HexaKind hexa = (HexaKind)(random.Next() % 5);
+            HexaKind hexa = (HexaKind)(randomNumber.Next() % 5);
+            bool positiveEvent = (randomNumber.Next() % 2) == 0;
             return new RndEvent(hexa, positiveEvent);
         }
     }
