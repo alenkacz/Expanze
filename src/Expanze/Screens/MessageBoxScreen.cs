@@ -139,7 +139,7 @@ namespace Expanze
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
             Vector2 viewportSize = new Vector2(viewport.Width, viewport.Height);
             Vector2 textSize = font.MeasureString(message);
-            Vector2 textPosition = (viewportSize - textSize) / 2;
+            Vector2 textPosition = (Settings.maximumResolution - textSize) / 2;
 
             // The background includes a border somewhat larger than the text itself.
             const int hPad = 32;
@@ -153,7 +153,7 @@ namespace Expanze
             // Fade the popup alpha during transitions.
             Color color = Color.White * TransitionAlpha;
 
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
 
             // Draw the background rectangle.
             spriteBatch.Draw(gradientTexture, backgroundRectangle, color);
