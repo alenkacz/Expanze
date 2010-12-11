@@ -166,7 +166,7 @@ namespace NoobAI
                 IHexaGet hexa = town.getIHexaGet(loop2);
                 if (hexa != null)
                 {
-                    switch(hexa.getType())
+                    switch(hexa.getKind())
                     {
                         case HexaKind.Cornfield :
                             cornHexa += hexa.getCurrentSource();
@@ -221,7 +221,7 @@ namespace NoobAI
                     if (hexa != null)
                     {
                         float multi = 1.0f;
-                        switch (hexa.getType())
+                        switch (hexa.getKind())
                         {
                             case HexaKind.Cornfield:
                                 if (cornHexa == 0 && tempCorn == false)

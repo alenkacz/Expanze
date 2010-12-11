@@ -108,7 +108,7 @@ namespace Expanze.Gameplay.Map
                 return BuildingBuildError.TownHasNoHexaWithThatHexaID;
 
             HexaModel hexa = town.getHexa(buildingPos);
-            if (hexa.getType() == HexaKind.Desert && kind == BuildingKind.SourceBuilding)
+            if (hexa.getKind() == HexaKind.Desert && kind == BuildingKind.SourceBuilding)
                 return BuildingBuildError.NoSourceBuildingForDesert;
 
             BuildingBuildError error = town.canActivePlayerBuildBuildingInTown(buildingPos, kind);
@@ -143,7 +143,7 @@ namespace Expanze.Gameplay.Map
                     {
                         if ((hexa = town.getHexa(loop1)) != null)
                         {
-                            switch (hexa.getType())
+                            switch (hexa.getKind())
                             {
                                 case HexaKind.Cornfield:
                                     source = Settings.costMill; break;

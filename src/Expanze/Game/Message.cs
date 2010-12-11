@@ -67,9 +67,9 @@ namespace Expanze
             pickTexture = content.Load<Texture2D>("HUD/PickPromt");
             bgPos = new Vector2((Settings.maximumResolution.X - background.Width) / 2,
                                    (Settings.maximumResolution.Y - background.Height) / 2 - 50);
-            int border = 15;
+            int border = 12;
             yesPos = new Vector2(bgPos.X + (background.Width - yes.Width) / 2, bgPos.Y + background.Height - border - yes.Height);
-            noPos = new Vector2(bgPos.X + (background.Width - yes.Width) - 20, bgPos.Y + background.Height - border - no.Height);
+            noPos = new Vector2(bgPos.X + (background.Width - yes.Width) / 2, bgPos.Y + background.Height - border - no.Height);
         }
 
         public override void UnloadContent()
@@ -131,7 +131,7 @@ namespace Expanze
                 TextWrapping.DrawStringIntoRectangle(description,
                     GameState.medievalSmall, Color.LightSteelBlue, bgPos.X + 20, bgPos.Y + 55, background.Width - 140);
 
-                spriteBatch.Draw(icon, new Vector2(bgPos.X + background.Width - icon.Width - 20, bgPos.Y + 20), color);
+                spriteBatch.Draw(icon, new Vector2(bgPos.X + background.Width - icon.Width - 20, bgPos.Y + 30), color);
 
                 spriteBatch.End();
             }
