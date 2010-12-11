@@ -149,5 +149,28 @@ namespace Expanze
         public static string MESSAGE_DESCRIPTION_MIRACLE_MOUNTAINS = "Nalezeny nové žíly, může se těžit naplno. Zisky rud budou o polovinu vyšší.";
 
         public static string MESSAGE_TITLE_MIRACLE = "Zázrak";
+
+        // Medals //
+        public static string MESSAGE_TITLE_MEDAL_TOWN = "Medaile za expanzi";
+        public static string MESSAGE_TITLE_MEDAL_ROAD = "Medaile cestovatele";
+        public static string MESSAGE_TITLE_MEDAL_MARKET = "Medaile obchodníka";
+        public static string MESSAGE_TITLE_MEDAL_FORT = "Medaile válečníka";
+        public static string MESSAGE_TITLE_MEDAL_MONASTERY = "Medaile učence";
+        public static string MESSAGE_TITLE_MEDAL_SAW = "Medaile pily";
+        public static string MESSAGE_TITLE_MEDAL_MILL = "Medaile mlýna";
+        public static string MESSAGE_TITLE_MEDAL_QUARRY = "Medaile lomu";
+        public static string MESSAGE_TITLE_MEDAL_STEPHERD = "Medaile pastevce";
+        public static string MESSAGE_TITLE_MEDAL_MINE = "Medaile dolu";
+
+        public static string MESSAGE_DESCRIPTION_MEDAL_TOWN = "Získá ji ten, který má nejvíce měst, avšak minimálně 5.";
+        public static string MESSAGE_DESCRIPTION_MEDAL_ROAD = "Získá ji ten, jenž postaví nejvíce cest, avšak nejméně 10.";
+        public static string MESSAGE_DESCRIPTION_MEDAL_MARKET = "Získá ji ten, kdo alespoň 3 tržiště má a pokud nikdo jiný jich nemá víc.";
+        public static string MESSAGE_DESCRIPTION_MEDAL_FORT = "Máš-li alespoň tři pevnosti a zároveň víc pevností než kdokoliv jiný, medaile je tvá.";
+        public static string MESSAGE_DESCRIPTION_MEDAL_MONASTERY = "Potřebuješ postavit 3 kláštery a mít jich víc než tví soupeři.";
+        public static string MESSAGE_DESCRIPTION_MEDAL_SAW = "Postav víc pil než ostatní, avšak minimálně tři a tato medaile je tvá.";
+        public static string MESSAGE_DESCRIPTION_MEDAL_MILL = "Postav víc mlýnů než ostatní, avšak minimálně tři a tato medaile je tvá.";
+        public static string MESSAGE_DESCRIPTION_MEDAL_QUARRY = "Postav víc lomů než ostatní, avšak minimálně tři a tato medaile je tvá.";
+        public static string MESSAGE_DESCRIPTION_MEDAL_STEPHERD = "Postav víc chatrčí pastevce než ostatní, avšak minimálně tři a tato medaile je tvá.";
+        public static string MESSAGE_DESCRIPTION_MEDAL_MINE = "Postav víc dolů na rudu než ostatní, avšak minimálně tři a tato medaile je tvá.";
     }
 }
