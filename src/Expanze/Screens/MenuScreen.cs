@@ -239,7 +239,7 @@ namespace Expanze
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
             //cursorComp.Draw(gameTime);
 
-            spriteBatch.Draw(menuLogo, new Vector2(370,100), Color.White);
+            spriteBatch.Draw(menuLogo, new Vector2(280,100), Color.White);
 
             // Draw each menu entry in turn.
             for (int i = 0; i < menuEntries.Count; i++)
