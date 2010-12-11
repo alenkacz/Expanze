@@ -162,7 +162,7 @@ namespace Expanze
             Rectangle backgroundRectangle = new Rectangle((int)textPosition.X - hPad,
                                                           (int)textPosition.Y - vPad,
                                                           1000,
-                                                          250);
+                                                          180);
 
             yesPosition = new Vector2(textPosition.X + 300, textPosition.Y + 80);
             noPosition = new Vector2(textPosition.X + 600, textPosition.Y + 80);

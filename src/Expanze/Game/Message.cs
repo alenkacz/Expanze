@@ -16,7 +16,7 @@ namespace Expanze
     {
         private SpriteBatch spriteBatch;
         private bool drawingPickableAreas = false;
-        private bool active = false;
+        
         private Texture2D background;
         private Texture2D no;
         private Texture2D yes;
@@ -33,17 +33,38 @@ namespace Expanze
         private String title;
         private String description;
 
+        private bool active = false;
+        private int timeActive;
+        private const int ACTIVE_LIMIT = 3000;
+
         public Message()
         {
             spriteBatch = GameState.spriteBatch;
             bgPos = new Vector2(0, 0);
             active = false;
+            timeActive = ACTIVE_LIMIT;
 
             noPick = new PickVariables(Color.YellowGreen);
             yesPick = new PickVariables(Color.Tomato);
         }
 
         public bool getIsActive() {return active;}
+
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            if (active)
+            {
+                if (timeActive > 0)
+                    timeActive -= gameTime.ElapsedGameTime.Milliseconds;
+                else
+                {
+                    active = false;
+                    timeActive = ACTIVE_LIMIT;
+                }
+            }
+        }
 
         public void showAlert(String title, String description, Texture2D icon)
         {
