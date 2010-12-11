@@ -16,7 +16,7 @@ namespace Expanze.Gameplay
             this.isPositive = isPositive;
             this.hexaKind = hexaKind;
 
-            GameState.windowPromt.showAlert("Zázrak", "Ovce snědly jedovatý jetel. Bude jich o polovinu méně. Bla bla je to tak, slečna je. ahoj, jak to jde< dobre to je", GameResources.Inst().getHudTexture(HUDTexture.IconMine));
+            GameState.message.showAlert("Zázrak", "Ovce snědly jedovatý jetel. Bude jich o polovinu méně. Bla bla je to tak, slečna je. ahoj, jak to jde< dobre to je", GameResources.Inst().getHudTexture(HUDTexture.IconMine));
         }
 
         public static RndEvent getRandomEvent()
