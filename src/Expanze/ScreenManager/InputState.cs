@@ -43,6 +43,8 @@ namespace Expanze
 
         public readonly List<GestureSample> Gestures = new List<GestureSample>();
 
+        private bool mousePressed = false;
+
         #endregion
 
         #region Initialization
@@ -61,6 +63,16 @@ namespace Expanze
 
             LastMouseState = new MouseState();
             CurrentMouseState = new MouseState();
+
+            if (CurrentMouseState.LeftButton == ButtonState.Pressed)
+            {
+                mousePressed = true;
+            }
+            else
+            {
+                //mouse released
+                mousePressed = false;
+            }
 
             GamePadWasConnected = new bool[MaxInputs];
         }
@@ -175,7 +187,23 @@ namespace Expanze
 
         public bool IsNewLeftMouseButtonPressed()
         {
-            return CurrentMouseState.LeftButton == ButtonState.Pressed;
+            if (CurrentMouseState.LeftButton == ButtonState.Pressed)
+            {
+                if (!mousePressed)
+                {
+                    mousePressed = true;
+                    return true;
+                }
+                else
+                {
+                    //button not yet released
+                    return false;
+                }
+            }
+
+            mousePressed = false;
+            return false;
+            //return CurrentMouseState.LeftButton == ButtonState.Pressed && LastMouseState.LeftButton == ButtonState.Released;
         }
 
 
