@@ -265,6 +265,7 @@ namespace Expanze.Gameplay.Map
         public override void Draw2D()
         {
             mapView.Draw2D();
+            GameMaster.getInstance().Draw2D();
         }
 
         public override void Draw(GameTime gameTime)

@@ -7,6 +7,7 @@ using CorePlugin;
 using Expanze.Gameplay.Map;
 using System.Threading;
 using Expanze.Gameplay;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Expanze
 {
@@ -14,15 +15,18 @@ namespace Expanze
     {
         private int n_player = 0;
         private List<Player> players = new List<Player>();
+
+        private Player[] medailOwner;
+
         private Player activePlayer;
         private int activePlayerIndex;
         private EGameState state;
         // when is game paused and player see paused menu, he cant build towers etc
-        private bool paused = false;
+        private bool paused;
         // used for open paused menu
-        private bool pausedNew = false;
+        private bool pausedNew;
 
-        private bool winnerNew = false;
+        private bool winnerNew;
 
         private Map map;
 
@@ -53,11 +57,17 @@ namespace Expanze
         /// </summary>
         private GameMaster() {}
 
-        public bool startGame(bool isAI, Map map)
+        public bool StartGame(bool isAI, Map map)
         {
             this.map = map;
 
             n_player = players.Count;
+
+            medailOwner = new Player[(int) Building.Count];
+            for (int loop1 = 0; loop1 < players.Count; loop1++)
+            {
+                medailOwner[loop1] = null;
+            }
 
             IComponentAI AI;
             foreach (Player player in players)
@@ -74,6 +84,7 @@ namespace Expanze
 
             pausedNew = false;
             paused = false;
+            winnerNew = false;
 
             hasAIThreadStarted = false;
             state = EGameState.StateFirstTown;
@@ -83,12 +94,42 @@ namespace Expanze
             return true;
         }
 
+        public void PlayerWantMedail(Player player, Building medail)
+        {
+            int minCount = 10;
+            switch(medail)
+            {
+                case Building.Town :
+                    minCount = 5;
+                    break;
+                case Building.Road :
+                    minCount = 10;
+                    break;
+                default :
+                    minCount = 3;
+                    break;
+            }
+
+            int pointsForMedail = 15;
+
+            if((medailOwner[(int) medail] == null && player.getBuildingCount(medail) > minCount) ||
+               (medailOwner[(int) medail] != null && player.getBuildingCount(medail) > medailOwner[(int) medail].getBuildingCount(medail)))
+            {
+                if (medailOwner[(int)medail] != null)
+                {
+                    medailOwner[(int)medail].addPoints(-pointsForMedail);
+                }
+                medailOwner[(int)medail] = player;
+                player.addPoints(pointsForMedail);
+            }
+        }
+
         public void setGameSettings(int points, string mapType, string mapSize, string mapWealth)
         {
             gameSettings = new GameSettings(points,mapType,mapSize,mapWealth);
         }
 
-        public void prepareQuickGame()
+        public void PrepareQuickGame()
         {
             this.resetGameSettings();
             players.Clear();
@@ -189,7 +230,7 @@ namespace Expanze
             return status;
         }
 
-        public void checkWinner(Player player)
+        public void CheckWinner(Player player)
         {
             bool isWinner = false;
             if (player.getPoints() >= getGameSettings().getPoints())
@@ -203,7 +244,7 @@ namespace Expanze
             }
         }
 
-        public void changeStateToStateGame()
+        public void ChangeStateToStateGame()
         {
             state = EGameState.StateGame;
             foreach (Player player in players)
@@ -342,7 +383,7 @@ namespace Expanze
                 activePlayerIndex--;
                 if (activePlayerIndex < 0)
                 {
-                    changeStateToStateGame();
+                    ChangeStateToStateGame();
                     activePlayerIndex = 0;
                 }
             }
@@ -350,6 +391,37 @@ namespace Expanze
             activePlayer = players[activePlayerIndex];
 
             return true;
+        }
+
+        public void Draw2D()
+        {
+            int medailCount = 0;
+            SpriteBatch spriteBatch = GameState.spriteBatch;
+            Vector2 medailPosition = new Vector2(Settings.activeResolution.X - 80.0f, 50.0f);
+            Texture2D icon = null;
+            spriteBatch.Begin();
+            for (int loop1 = 0; loop1 < medailOwner.Length; loop1++)
+            {
+                if (medailOwner[loop1] == activePlayer)
+                {
+                    switch((Building) loop1)
+                    {
+                        case Building.Road : icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalRoad); break;
+                        case Building.Town : icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalTown); break;
+                        case Building.Mill : icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalMill); break;
+                        case Building.Market : icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalMarket); break;
+                        case Building.Monastery : icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalMonastery); break;
+                        case Building.Fort : icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalFort); break;
+                        case Building.Stepherd : icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalStepherd); break;
+                        case Building.Quarry : icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalQuarry); break;
+                        case Building.Mine : icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalMine); break;
+                        case Building.Saw : icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalSaw); break;
+                    }
+                    spriteBatch.Draw(icon, medailPosition, Color.White);
+                    medailPosition += new Vector2(0.0f, 85.0f);
+                }
+            }
+            spriteBatch.End();
         }
     }
 }

@@ -8,6 +8,8 @@ using CorePlugin;
 namespace Expanze
 {
     public enum TransactionState {TransactionStart, TransactionMiddle, TransactionEnd };
+    public enum Building { Town, Road, Market, Monastery, Fort, Mill, Stepherd, Quarry, Saw, Mine, Count }
+
     class Player : IPlayerGet
     {
         private String name;
@@ -19,6 +21,7 @@ namespace Expanze
         SourceAll source;
         SourceAll transactionSource;
 
+        int[] buildingCount;
 
         int conversionRateCorn;
         int conversionRateStone;
@@ -35,6 +38,12 @@ namespace Expanze
             prevSource = new SourceAll(0);
             source = new SourceAll(0);
             transactionSource = new SourceAll(0);
+
+            buildingCount = new int[(int) Building.Count];
+            for (int loop1 = 0; loop1 < (int)Building.Count; loop1++)
+            {
+                buildingCount[loop1] = 0;
+            }
 
             conversionRateCorn = Settings.conversionRateCorn;
             conversionRateStone = Settings.conversionRateStone;
@@ -55,14 +64,21 @@ namespace Expanze
             materialChanged = false;
         }
 
+        public int getBuildingCount(Building building) { return buildingCount[(int)building]; }
         public IComponentAI getComponentAI() { return componentAI; }
         public bool getIsAI() { return componentAI != null; }
         public Color getColor() { return color; }
         public UpgradeKind GetSourceBuildingUpgrade(SourceBuildingKind kind) { return upgradeSourceBuilding[(int)kind]; }
 
+        public void addBuilding(Building building)
+        {
+            buildingCount[(int)building]++;
+            GameMaster.getInstance().PlayerWantMedail(this, building);
+        }
+
         public void addPoints(int add) { 
             points += add;
-            GameMaster.getInstance().checkWinner(this);
+            GameMaster.getInstance().CheckWinner(this);
         }
 
         public int getPoints() { return points; }
@@ -146,7 +162,7 @@ namespace Expanze
                     source = source + transactionSource;               
                     changeSources(transactionSource.wood, transactionSource.stone, transactionSource.corn, transactionSource.meat, transactionSource.ore);
                     transactionSource = new SourceAll(0);
-                    GameMaster.getInstance().checkWinner(this);
+                    GameMaster.getInstance().CheckWinner(this);
                     break;
             }
         }
