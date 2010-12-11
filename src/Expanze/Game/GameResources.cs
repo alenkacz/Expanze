@@ -25,6 +25,10 @@ namespace Expanze
         IconOre1, IconOre2, 
         IconFortParade, IconFortCapture, IconFortSources, IconFortHexa,
 
+        IconMedalFort, IconMedalMonastery, IconMedalMarket,
+        IconMedalTown, IconMedalRoad,
+        IconMedalMill, IconMedalStepherd, IconMedalQuarry, IconMedalSaw, IconMedalMine,
+
         PlayerColor,
         BackgroundWater,
 
@@ -149,6 +153,17 @@ namespace Expanze
             hud[(int)HUDTexture.IconFortHexa] = content.Load<Texture2D>("HUD/ic_fort_hexa");
             hud[(int)HUDTexture.IconFortParade] = content.Load<Texture2D>("HUD/ic_fort_parade");
             hud[(int)HUDTexture.IconFortSources] = content.Load<Texture2D>("HUD/ic_fort_sources");
+
+            hud[(int)HUDTexture.IconMedalFort] = content.Load<Texture2D>("HUD/medals/medal_fort");
+            hud[(int)HUDTexture.IconMedalMarket] = content.Load<Texture2D>("HUD/medals/medal_market");
+            hud[(int)HUDTexture.IconMedalMonastery] = content.Load<Texture2D>("HUD/medals/medal_monastery");
+            hud[(int)HUDTexture.IconMedalTown] = content.Load<Texture2D>("HUD/medals/medal_town");
+            hud[(int)HUDTexture.IconMedalRoad] = content.Load<Texture2D>("HUD/medals/medal_road");
+            hud[(int)HUDTexture.IconMedalMill] = content.Load<Texture2D>("HUD/medals/medal_mill");
+            hud[(int)HUDTexture.IconMedalStepherd] = content.Load<Texture2D>("HUD/medals/medal_stepherd");
+            hud[(int)HUDTexture.IconMedalQuarry] = content.Load<Texture2D>("HUD/medals/medal_quarry");
+            hud[(int)HUDTexture.IconMedalSaw] = content.Load<Texture2D>("HUD/medals/medal_saw");
+            hud[(int)HUDTexture.IconMedalMine] = content.Load<Texture2D>("HUD/medals/medal_mine");
 
             hexaModel = new Model[N_MODEL];
             hexaModel[(int)HexaKind.Cornfield] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Cornfield]);

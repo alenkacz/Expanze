@@ -402,72 +402,70 @@ namespace Expanze
                         kind != HexaKind.Null /*&& 
                         townView[loop1].getTownModel().getPlayerOwner() == GameMaster.getInstance().getActivePlayer()*/)
                     {
+                        PromptWindow.Mod mod;
                         switch(townView[loop1].getTownModel().getBuildingKind(hexaID))
                         {
                             case BuildingKind.NoBuilding :
-                                String titleWindow = "";
-                                String titleBuilding = "";
-                                String descriptionBuilding = "";
-                                Texture2D icon = null;
-                                switch (kind)
+                                if (townView[loop1].getTownModel().getPlayerOwner() == GameMaster.getInstance().getActivePlayer())
                                 {
-                                    case HexaKind.Mountains:
-                                        titleWindow = Strings.HEXA_NAME_MOUNTAINS;
-                                        titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_MINE;
-                                        descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_MINE;
-                                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconMine); break;
-                                    case HexaKind.Forest:
-                                        titleWindow = Strings.HEXA_NAME_FOREST;
-                                        titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_SAW;
-                                        descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_SAW;
-                                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconSaw); break;
-                                    case HexaKind.Cornfield:
-                                        titleWindow = Strings.HEXA_NAME_CORNFIELD;
-                                        titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_MILL;
-                                        descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_MILL;
-                                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconMill); break;
-                                    case HexaKind.Pasture:
-                                        titleWindow = Strings.HEXA_NAME_PASTURE;
-                                        titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_STEPHERD;
-                                        descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_STEPHERD;
-                                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconStepherd); break;
-                                    case HexaKind.Stone:
-                                        titleWindow = Strings.HEXA_NAME_STONE;
-                                        titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_QUARRY;
-                                        descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_QUARRY;
-                                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconQuarry); break;
-                                    case HexaKind.Desert:
-                                        titleWindow = Strings.HEXA_NAME_DESERT;
-                                        break;
-                                }
+                                    String titleWindow = "";
+                                    String titleBuilding = "";
+                                    String descriptionBuilding = "";
+                                    Texture2D icon = null;
+                                    switch (kind)
+                                    {
+                                        case HexaKind.Mountains:
+                                            titleWindow = Strings.HEXA_NAME_MOUNTAINS;
+                                            titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_MINE;
+                                            descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_MINE;
+                                            icon = GameResources.Inst().getHudTexture(HUDTexture.IconMine); break;
+                                        case HexaKind.Forest:
+                                            titleWindow = Strings.HEXA_NAME_FOREST;
+                                            titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_SAW;
+                                            descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_SAW;
+                                            icon = GameResources.Inst().getHudTexture(HUDTexture.IconSaw); break;
+                                        case HexaKind.Cornfield:
+                                            titleWindow = Strings.HEXA_NAME_CORNFIELD;
+                                            titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_MILL;
+                                            descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_MILL;
+                                            icon = GameResources.Inst().getHudTexture(HUDTexture.IconMill); break;
+                                        case HexaKind.Pasture:
+                                            titleWindow = Strings.HEXA_NAME_PASTURE;
+                                            titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_STEPHERD;
+                                            descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_STEPHERD;
+                                            icon = GameResources.Inst().getHudTexture(HUDTexture.IconStepherd); break;
+                                        case HexaKind.Stone:
+                                            titleWindow = Strings.HEXA_NAME_STONE;
+                                            titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_QUARRY;
+                                            descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_QUARRY;
+                                            icon = GameResources.Inst().getHudTexture(HUDTexture.IconQuarry); break;
+                                        case HexaKind.Desert:
+                                            titleWindow = Strings.HEXA_NAME_DESERT;
+                                            break;
+                                    }
 
-                                int townID = townView[loop1].getTownModel().getTownID();
-                                PromptWindow.Mod mod = (townView[loop1].getTownModel().getPlayerOwner() == GameMaster.getInstance().getActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
-                                PromptWindow.Inst().showPrompt(mod, titleWindow, true);
-                                if(kind != HexaKind.Desert)
-                                    PromptWindow.Inst().addPromptItem(
-                                        new BuildingPromptItem(townID,
-                                                           hexaID,
-                                                           BuildingKind.SourceBuilding,
-                                                           titleBuilding,
-                                                           descriptionBuilding,
-                                                           model.getSourceBuildingCost(), true,
-                                                           icon));
+                                    int townID = townView[loop1].getTownModel().getTownID();
+                                    mod = (townView[loop1].getTownModel().getPlayerOwner() == GameMaster.getInstance().getActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
+                                    PromptWindow.Inst().showPrompt(mod, titleWindow, true);
+                                    if (kind != HexaKind.Desert)
+                                        PromptWindow.Inst().addPromptItem(
+                                            new BuildingPromptItem(townID,
+                                                               hexaID,
+                                                               BuildingKind.SourceBuilding,
+                                                               titleBuilding,
+                                                               descriptionBuilding,
+                                                               model.getSourceBuildingCost(), true,
+                                                               icon));
 
-                                if (kind != HexaKind.Mountains)
-                                {
-                                    PromptWindow.Inst().addPromptItem(MonasteryModel.getPromptItemBuildMonastery(townID, hexaID));
-                                    PromptWindow.Inst().addPromptItem(MarketModel.getPromptItemBuildMarket(townID, hexaID));
-                                    PromptWindow.Inst().addPromptItem(FortModel.getPromptItemBuildFort(townID, hexaID));
+                                    if (kind != HexaKind.Mountains)
+                                    {
+                                        PromptWindow.Inst().addPromptItem(MonasteryModel.getPromptItemBuildMonastery(townID, hexaID));
+                                        PromptWindow.Inst().addPromptItem(MarketModel.getPromptItemBuildMarket(townID, hexaID));
+                                        PromptWindow.Inst().addPromptItem(FortModel.getPromptItemBuildFort(townID, hexaID));
+                                    }
                                 }
                                 break;
                             
-                            /*
-                            case BuildingKind.FortBuilding :
-                                mod = (townView[loop1].getTownModel().getPlayerOwner() == GameMaster.getInstance().getActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
-                                FortModel.setPromptWindowToFort(mod);
-                                break;*/
-
                             default :
                                 mod = (townView[loop1].getTownModel().getPlayerOwner() == GameMaster.getInstance().getActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
                                 townView[loop1].getTownModel().getSpecialBuilding(hexaID).setPromptWindow(mod);

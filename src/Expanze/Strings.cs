@@ -98,8 +98,8 @@ namespace Expanze
 
         public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_CORN_1 = "Výhradní výměnné právo na obilí";
         public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_CORN_2 = "Výměnné právo na obilí druhého stupně";
-        public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_MEAT_1 = "Výhradní výměnné právo na maso";
-        public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_MEAT_2 = "Výměnné právo na maso druhého stupně";
+        public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_MEAT_1 = "Výhradní výměnné právo na ovce";
+        public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_MEAT_2 = "Výměnné právo na ovce druhého stupně";
         public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_STONE_1 = "Výhradní výměnné právo na kámen";
         public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_STONE_2 = "Výměnné právo na kámen druhého stupně";
         public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_WOOD_1 = "Výhradní výměnné právo na dřevo";
@@ -108,8 +108,8 @@ namespace Expanze
         public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_ORE_2 = "Výměnné právo na obilí druhého rudu";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_CORN_1 = "S touto listinou můžeš měnit 3 obilí za jednu jinou surovinu.";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_CORN_2 = "S touto listinou můžeš měnit 2 obilí za jednu jinou surovinu.";
-        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_MEAT_1 = "S touto listinou můžeš měnit 3 masa za jednu jinou surovinu.";
-        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_MEAT_2 = "S touto listinou můžeš měnit 2 masa za jednu jinou surovinu.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_MEAT_1 = "S touto listinou můžeš měnit 3 ovce za jednu jinou surovinu.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_MEAT_2 = "S touto listinou můžeš měnit 2 ovce za jednu jinou surovinu.";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_STONE_1 = "S touto listinou můžeš měnit 3 stavební kameny za jednu jinou surovinu.";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_STONE_2 = "S touto listinou můžeš měnit 2 stavební kameny za jednu jinou surovinu.";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_WOOD_1 = "S touto listinou můžeš měnit 3 dřeva za jednu jinou surovinu.";
@@ -138,7 +138,7 @@ namespace Expanze
         public static string MESSAGE_DESCRIPTION_DISASTER_PASTURE = "Vlci napadli stádo ovcí. Pastevci ti jich budou dodávat o polovinu méně.";
         public static string MESSAGE_DESCRIPTION_DISASTER_STONE = "Sesuvy kamení dělají práci nebezpečnou a horníci nepracují. Těžba bude poloviční.";
         public static string MESSAGE_DESCRIPTION_DISASTER_FOREST = "Požár zachvátil lesy v zemi. Těžba dřeva musí být omezena na polovinu.";
-        public static string MESSAGE_DESCRIPTION_DISASTER_MOUNTAINS = "V dolech straší a horníci se no nich bojí. Budou těžit jen za světla. Zisky poloviční.";
+        public static string MESSAGE_DESCRIPTION_DISASTER_MOUNTAINS = "V dolech straší a horníci se bojí. Budou těžit jen ti nejodvážnější. Zisky poloviční.";
 
         // MIRACLES //
 
