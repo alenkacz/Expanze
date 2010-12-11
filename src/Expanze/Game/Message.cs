@@ -35,7 +35,7 @@ namespace Expanze
 
         private bool active = false;
         private int timeActive;
-        private const int ACTIVE_LIMIT = 3000;
+        private const int ACTIVE_LIMIT = 2500;
 
         public Message()
         {

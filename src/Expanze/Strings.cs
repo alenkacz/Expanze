@@ -138,7 +138,7 @@ namespace Expanze
         public static string MESSAGE_DESCRIPTION_DISASTER_PASTURE = "Vlci napadli stádo ovcí. Pastevci ti jich budou dodávat o polovinu méně.";
         public static string MESSAGE_DESCRIPTION_DISASTER_STONE = "Sesuvy kamení dělají práci nebezpečnou a horníci nepracují. Těžba bude poloviční.";
         public static string MESSAGE_DESCRIPTION_DISASTER_FOREST = "Požár zachvátil lesy v zemi. Těžba dřeva musí být omezena na polovinu.";
-        public static string MESSAGE_DESCRIPTION_DISASTER_MOUNTAINS = "V dolech straší a horníci se no nich bojí. Budou těžit jen za světla. Zisky poloviční.";
+        public static string MESSAGE_DESCRIPTION_DISASTER_MOUNTAINS = "V dolech straší a horníci se bojí. Budou těžit jen ti nejodvážnější. Zisky poloviční.";
 
         // MIRACLES //
 
