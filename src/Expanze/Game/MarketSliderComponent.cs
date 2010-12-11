@@ -133,7 +133,7 @@ namespace Expanze
 
                 if (converted < 0) converted = -converted;
 
-                this.fromConvertedCount = this.fromTypeCount - converted * Settings.getConversionRate(fromType);
+                this.fromConvertedCount = this.fromTypeCount - converted * GameMaster.getInstance().getActivePlayer().getConversionRate(fromType);
                 this.toConvertedCount = this.toTypeCount + converted;
 
                 sliderPosition.X = pos;
@@ -152,7 +152,7 @@ namespace Expanze
 
         private int getSliderUnit()
         {
-            int count = GameMaster.getInstance().getActivePlayer().getMaterialNumber(fromType)/Settings.getConversionRate(fromType);
+            int count = GameMaster.getInstance().getActivePlayer().getMaterialNumber(fromType)/GameMaster.getInstance().getActivePlayer().getConversionRate(fromType);
             return width / count;
         }
 
