@@ -2,7 +2,7 @@
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
 	<Asset Type="Graphics:FontDescription">
 		<FontName>Insula</FontName>
-		<Size>20</Size>
+		<Size>40</Size>
 		<Spacing>2</Spacing>
 		<Style>Bold</Style>
 		<CharacterRegions>

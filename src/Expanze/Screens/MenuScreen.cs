@@ -29,6 +29,7 @@ namespace Expanze
         List<MenuEntry> menuEntries = new List<MenuEntry>();
         int selectedEntry = 0;
         string menuTitle;
+        Texture2D menuLogo;
 
         #endregion
 
@@ -68,6 +69,7 @@ namespace Expanze
             //cursorComp = new CustomCursor(ScreenManager.Game);
             //cursorComp.Initialize();
             //cursorComp.LoadContent();
+            menuLogo = ScreenManager.Game.Content.Load<Texture2D>("HUD/main_menu_logo");
         }
 
 
@@ -162,7 +164,7 @@ namespace Expanze
             float transitionOffset = (float)Math.Pow(TransitionPosition, 2);
 
             // start at Y = 175; each X value is generated per entry
-            Vector2 position = new Vector2(0f, (int)Settings.scaleH(300));
+            Vector2 position = new Vector2(0f, (int)Settings.scaleH(450));
 
             // update each menu entry's location in turn
             for (int i = 0; i < menuEntries.Count; i++)
@@ -170,7 +172,7 @@ namespace Expanze
                 MenuEntry menuEntry = menuEntries[i];
                 
                 // each entry is to be centered horizontally
-                position.X = ScreenManager.GraphicsDevice.Viewport.Width / 2 - menuEntry.GetWidth(this) / 2;
+                position.X = Settings.maximumResolution.X / 2 - menuEntry.GetWidth(this) / 2;
 
                 if (ScreenState == ScreenState.TransitionOn)
                     position.X -= transitionOffset * 256;
@@ -220,8 +222,10 @@ namespace Expanze
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
             SpriteFont font = ScreenManager.Font;
 
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Opaque, null, null, null, null, Settings.spriteScale);
             //cursorComp.Draw(gameTime);
+
+            spriteBatch.Draw(menuLogo, new Vector2(370,100), Color.White);
 
             // Draw each menu entry in turn.
             for (int i = 0; i < menuEntries.Count; i++)
