@@ -173,6 +173,11 @@ namespace Expanze
             return true;
         }
 
+        public bool IsNewLeftMouseButtonPressed()
+        {
+            return CurrentMouseState.LeftButton == ButtonState.Pressed;
+        }
+
 
 
         /// <summary>
@@ -222,9 +227,24 @@ namespace Expanze
 
         public bool IsMenuMouseHover(Rectangle res)
         {
+            return IsInRange(res);
+        }
+
+        private bool IsInRange(Rectangle res)
+        {
             if (CurrentMouseState.X > Settings.scaleW(res.Left) && CurrentMouseState.X < Settings.scaleW(res.Right) && CurrentMouseState.Y > Settings.scaleH(res.Top) && CurrentMouseState.Y < Settings.scaleH(res.Bottom))
             {
                 return true;
+            }
+
+            return false;
+        }
+
+        public bool IsMenuMouseClicked(Rectangle res)
+        {
+            if (IsNewLeftMouseButtonPressed())
+            {
+                return IsInRange(res);
             }
 
             return false;

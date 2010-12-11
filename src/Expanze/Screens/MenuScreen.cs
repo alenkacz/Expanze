@@ -84,12 +84,24 @@ namespace Expanze
         /// </summary>
         public override void HandleInput(InputState input)
         {
+
+            // Accept or cancel the menu? We pass in our ControllingPlayer, which may
+            // either be null (to accept input from any player) or a specific index.
+            // If we pass a null controlling player, the InputState helper returns to
+            // us which player actually provided the input. We pass that through to
+            // OnSelectEntry and OnCancel, so they can tell which player triggered them.
+            PlayerIndex playerIndex;
+
             foreach (MenuEntry m in menuEntries)
             {
                 if (input.IsMenuMouseHover(m.GetRange(this)))
                 {
                     selectedEntry = menuEntries.IndexOf(m);
-                    break;
+
+                    if( input.IsMenuMouseClicked(m.GetRange(this)) )
+                    {
+                        OnSelectEntry(selectedEntry, PlayerIndex.One);
+                    } 
                 }
             }
 
@@ -110,13 +122,6 @@ namespace Expanze
                 if (selectedEntry >= menuEntries.Count)
                     selectedEntry = 0;
             }
-
-            // Accept or cancel the menu? We pass in our ControllingPlayer, which may
-            // either be null (to accept input from any player) or a specific index.
-            // If we pass a null controlling player, the InputState helper returns to
-            // us which player actually provided the input. We pass that through to
-            // OnSelectEntry and OnCancel, so they can tell which player triggered them.
-            PlayerIndex playerIndex;
 
             if (input.IsMenuSelect(ControllingPlayer, out playerIndex))
             {
