@@ -30,6 +30,7 @@ namespace Expanze
         #region Fields
 
         GameMaster gMaster;
+        Map map;
 
         RenderTarget2D renderTarget;
         Texture2D shadowMap;
@@ -88,17 +89,16 @@ namespace Expanze
             renderTarget = new RenderTarget2D(ScreenManager.GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight, false, ScreenManager.GraphicsDevice.DisplayMode.Format, pp.DepthStencilFormat);
             //renderTarget = new RenderTarget2D(ScreenManager.GraphicsDevice, 1024, 1024, false, ScreenManager.GraphicsDevice.DisplayMode.Format, pp.DepthStencilFormat);
 
-            Map mapComp;
             GameState.game = ScreenManager.Game;
             GameResources.Inst().LoadContent();
 
-            mapComp = new Map(ScreenManager.Game);
-            gameComponents.Add(mapComp);
+            map = new Map(ScreenManager.Game);
+            gameComponents.Add(map);
             GameState.message = new Message();
             gameComponents.Add(GameState.message);
             gameComponents.Add(PromptWindow.Inst());
             //gamelogic
-            gMaster.StartGame(isAI, mapComp);
+            gMaster.StartGame(isAI, map);
 
             ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), new Rectangle(Settings.scaleW((int)(Settings.maximumResolution.X - 80)), Settings.scaleH((int)(Settings.maximumResolution.Y - 80)), Settings.scaleW(60), Settings.scaleH(60)), GameState.gameFont, Settings.scaleW(147), Settings.scaleH(141), "nextTurn");
             changeTurnButton.Actions += ChangeTurnButtonAction;
@@ -287,6 +287,8 @@ namespace Expanze
 
             KeyboardState keyboardState = input.CurrentKeyboardStates[playerIndex];
             GamePadState gamePadState = input.CurrentGamePadStates[playerIndex];
+
+            GameState.CurrentKeyboardState = keyboardState;
 
             // The game pauses either if the user presses the pause button, or if
             // they unplug the active gamepad. This requires us to keep track of

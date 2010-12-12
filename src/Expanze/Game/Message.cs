@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Expanze.Gameplay.Map;
 using CorePlugin;
 using Expanze.Utils;
+using Microsoft.Xna.Framework.Input;
 
 namespace Expanze
 {
@@ -102,7 +103,7 @@ namespace Expanze
             Map.SetPickVariables(c == noPick.pickColor, noPick);
             Map.SetPickVariables(c == yesPick.pickColor, yesPick);
 
-            if (yesPick.pickNewPress)
+            if (yesPick.pickNewPress || GameState.CurrentKeyboardState.IsKeyDown(Keys.Enter))
             {
                 yesPick.pickNewPress = false;
                 active = false;
