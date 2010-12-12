@@ -232,6 +232,7 @@ namespace Expanze
             status &= StartTurn();
 
             map.NextTurn();
+            TownView.resetTownView();
 
             return status;
         }

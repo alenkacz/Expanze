@@ -208,6 +208,32 @@ namespace Expanze.Gameplay.Map
             }
         }
 
+        public void DrawWaterHexa(Matrix mWorld)
+        {
+            Matrix tempMatrix = Matrix.CreateScale(0.00028f);
+            Model m = GameResources.Inst().getHexaModel(HexaKind.Water);
+            Matrix[] transforms = new Matrix[m.Bones.Count];
+            m.CopyAbsoluteBoneTransformsTo(transforms);
+
+            foreach (ModelMesh mesh in m.Meshes)
+            {
+                foreach (BasicEffect effect in mesh.Effects)
+                {
+                    effect.LightingEnabled = true;
+                    effect.AmbientLightColor = GameState.MaterialAmbientColor;
+                    effect.DirectionalLight0.Direction = GameState.LightDirection;
+                    effect.DirectionalLight0.DiffuseColor = GameState.LightDiffusionColor;
+                    effect.DirectionalLight0.SpecularColor = GameState.LightSpecularColor;
+                    effect.DirectionalLight0.Enabled = true;
+
+                    effect.World = transforms[mesh.ParentBone.Index] * tempMatrix * mWorld;
+                    effect.View = GameState.view;
+                    effect.Projection = GameState.projection;
+                }
+                mesh.Draw();
+            }
+        }
+
         public void Draw(GameTime gameTime)
         {
             for (int i = 0; i < hexaMapView.Length; i++)
@@ -219,6 +245,63 @@ namespace Expanze.Gameplay.Map
                         hexaMapView[i][j].Draw(gameTime);
                     }
                 }
+            }
+            
+            Matrix mWorld = Matrix.Identity;
+            float dx = 0.591f;  // copyied from creating matrices
+            float dy = 0.512f;
+            HexaView tempView;
+            
+            int rowWidth = 0;
+            const int hexaBorder = 14;
+
+            for (int i = 0; i < hexaMapView.Length; i++)
+            {
+                rowWidth = hexaMapView[i].Length;
+                for (int j = 0; j < hexaMapView[i].Length; j++)
+                {
+                    tempView = hexaMapView[i][j];
+                    if (tempView != null)
+                    {
+                        mWorld = hexaMapView[i][j].getWorldMatrix();
+                        break;
+                    }
+                    rowWidth--;
+                }
+
+                mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, dx * -hexaBorder));
+                for (int loop2 = -hexaBorder; loop2 <= hexaBorder; loop2++)
+                {
+                    DrawWaterHexa(mWorld);
+                    if(loop2 == -1)
+                        mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, dx * rowWidth));
+
+                    mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, dx));
+                }
+            }
+
+            mWorld = hexaMapView[0][0].getWorldMatrix() * Matrix.CreateTranslation(new Vector3(-dy, 0.0f, dx / 2.0f - hexaBorder * dx));
+
+            int maxRowWidth = hexaBorder * 2 + 3;
+            for (int loop1 = 0; loop1 < maxRowWidth; loop1++)
+            {
+                for (int loop2 = 0; loop2 < maxRowWidth; loop2++)
+                {
+                    DrawWaterHexa(mWorld);
+                    mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, dx));
+                }
+                mWorld = mWorld * Matrix.CreateTranslation(new Vector3(-dy, 0.0f, -dx / 2.0f - dx * (maxRowWidth - ((loop1 % 2 == 0) ? 1 : 0))));
+            }
+
+            mWorld = hexaMapView[hexaMapView.Length - 1][hexaMapView[hexaMapView.Length - 1].Length - rowWidth].getWorldMatrix() * Matrix.CreateTranslation(new Vector3(dy, 0.0f, dx / 2.0f - hexaBorder * dx));
+            for (int loop1 = 0; loop1 < maxRowWidth; loop1++)
+            {
+                for (int loop2 = 0; loop2 < maxRowWidth; loop2++)
+                {
+                    DrawWaterHexa(mWorld);
+                    mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, dx));
+                }
+                mWorld = mWorld * Matrix.CreateTranslation(new Vector3(dy, 0.0f, -dx / 2.0f - dx * (maxRowWidth - ((loop1 % 2 == 0) ? 1 : 0))));
             }
         }
 

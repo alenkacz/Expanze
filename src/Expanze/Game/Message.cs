@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Expanze.Gameplay.Map;
 using CorePlugin;
 using Expanze.Utils;
+using Microsoft.Xna.Framework.Input;
 
 namespace Expanze
 {
@@ -32,7 +33,8 @@ namespace Expanze
         private String title;
         private String description;
 
-        private bool active = false;
+        private bool active;
+        private bool disabled; /// Can be popup messages?
         private int timeActive;
         private const int ACTIVE_LIMIT = 2500;
 
@@ -42,6 +44,7 @@ namespace Expanze
             bgPos = new Vector2(0, 0);
             active = false;
             timeActive = ACTIVE_LIMIT;
+            disabled = false;
 
             noPick = new PickVariables(Color.YellowGreen);
             yesPick = new PickVariables(Color.Tomato);
@@ -63,10 +66,18 @@ namespace Expanze
                     timeActive = ACTIVE_LIMIT;
                 }
             }
+
+            if (GameState.CurrentKeyboardState.IsKeyDown(Keys.P) && !disabled)
+            {
+                disabled = true;
+            }
         }
 
         public void showAlert(String title, String description, Texture2D icon)
         {
+            if (disabled)
+                return;
+
             this.icon = icon;
             this.title = title;
             this.description = description;
@@ -102,7 +113,7 @@ namespace Expanze
             Map.SetPickVariables(c == noPick.pickColor, noPick);
             Map.SetPickVariables(c == yesPick.pickColor, yesPick);
 
-            if (yesPick.pickNewPress)
+            if (yesPick.pickNewPress || GameState.CurrentKeyboardState.IsKeyDown(Keys.Enter))
             {
                 yesPick.pickNewPress = false;
                 active = false;

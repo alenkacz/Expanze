@@ -189,33 +189,89 @@ namespace Expanze.Gameplay.Map
             player.addSources(new SourceAll(0), TransactionState.TransactionEnd);
         }
 
-        public void ChangeCamera()
+        public void ChangeCamera(GameTime gameTime)
         {
-            //if(!PromptWindow.Inst().getIsActive() &&
-            //   !MarketComponent.getInstance().getIsActive())
-            // its on right button now
             {
                 if (GameState.CurrentMouseState.RightButton == ButtonState.Pressed)
                 {
-                    float dx = (GameState.CurrentMouseState.X - GameState.LastMouseState.X) / 100.0f;
+                    float dx = (GameState.CurrentMouseState.X - GameState.LastMouseState.X) / 3000.0f * gameTime.ElapsedGameTime.Milliseconds;
                     eye.Z += dx;
                     target.Z += dx;
 
-                    float dy = (GameState.CurrentMouseState.Y - GameState.LastMouseState.Y) / 100.0f;
+                    float dy = (GameState.CurrentMouseState.Y - GameState.LastMouseState.Y) / 3000.0f * gameTime.ElapsedGameTime.Milliseconds;
                     eye.X -= dy;
                     target.X -= dy;
                 }
+
+                float cameraVelAcc = 700.0f;
+
+                if (GameState.CurrentKeyboardState.IsKeyDown(Keys.Left))
+                {
+                    float dx = gameTime.ElapsedGameTime.Milliseconds / cameraVelAcc;
+                    eye.Z += dx;
+                    target.Z += dx;
+                }
+                else if (GameState.CurrentKeyboardState.IsKeyDown(Keys.Right))
+                {
+                    float dx = gameTime.ElapsedGameTime.Milliseconds / cameraVelAcc;
+                    eye.Z -= dx;
+                    target.Z -= dx;
+                }
+
+                if (GameState.CurrentKeyboardState.IsKeyDown(Keys.Up))
+                {
+                    float dy = gameTime.ElapsedGameTime.Milliseconds / cameraVelAcc;
+                    eye.X -= dy;
+                    target.X -= dy;
+                } else
+                if (GameState.CurrentKeyboardState.IsKeyDown(Keys.Down))
+                {
+                    float dy = gameTime.ElapsedGameTime.Milliseconds / cameraVelAcc;
+                    eye.X += dy;
+                    target.X += dy;
+                }
             }
+
+            if (eye.X > 5.4f)
+            {
+                target.X = 5.0f;
+                eye.X = 5.4f;
+            }
+            if (eye.X < -5.0f)
+            {
+                target.X = -5.4f;
+                eye.X = -5.0f;
+            }
+            if (eye.Z > 2.5)
+            {
+                eye.Z = 2.5f;
+                target.Z = 2.5f;
+            }
+            if (eye.Z < -2.5)
+            {
+                eye.Z = -2.5f;
+                target.Z = -2.5f;
+            }
+            //target = new Vector3(0.0f, 0.0f, 0.0f);
+            //eye = new Vector3(0.4f, 1.5f, 0.0f);
 
             if (GameState.CurrentMouseState.ScrollWheelValue - GameState.LastMouseState.ScrollWheelValue != 0)
             {
-                eye.Y += (GameState.CurrentMouseState.ScrollWheelValue - GameState.LastMouseState.ScrollWheelValue) / 500.0f;
-
-                if (eye.Y < 0.2f)
-                    eye.Y = 0.2f;
-                if(eye.Y > 2.8f)
-                    eye.Y = 2.8f;
+                eye.Y += (GameState.CurrentMouseState.ScrollWheelValue - GameState.LastMouseState.ScrollWheelValue) / 6000.0f * gameTime.ElapsedGameTime.Milliseconds;
             }
+            if (GameState.CurrentKeyboardState.IsKeyDown(Keys.PageUp))
+            {
+                eye.Y += gameTime.ElapsedGameTime.Milliseconds / 1000.0f;
+            }
+            if (GameState.CurrentKeyboardState.IsKeyDown(Keys.PageDown))
+            {
+                eye.Y -= gameTime.ElapsedGameTime.Milliseconds / 1000.0f;
+            }
+
+            if (eye.Y < 0.2f)
+                eye.Y = 0.2f;
+            if (eye.Y > 2.8f)
+                eye.Y = 2.8f;
         }
 
         float lightAngle = 0;
@@ -237,7 +293,7 @@ namespace Expanze.Gameplay.Map
             if (GameMaster.getInstance().getPaused())
                 return;
 
-            ChangeCamera();
+            ChangeCamera(gameTime);
             ChangeLight(gameTime);
 
             mapView.Update(gameTime);
