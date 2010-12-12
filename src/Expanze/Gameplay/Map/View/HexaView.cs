@@ -499,5 +499,10 @@ namespace Expanze
 
             return null;
         }
+
+        public Matrix getWorldMatrix()
+        {
+            return world;
+        }
     }
 }
