@@ -33,7 +33,8 @@ namespace Expanze
         private String title;
         private String description;
 
-        private bool active = false;
+        private bool active;
+        private bool disabled; /// Can be popup messages?
         private int timeActive;
         private const int ACTIVE_LIMIT = 2500;
 
@@ -43,6 +44,7 @@ namespace Expanze
             bgPos = new Vector2(0, 0);
             active = false;
             timeActive = ACTIVE_LIMIT;
+            disabled = false;
 
             noPick = new PickVariables(Color.YellowGreen);
             yesPick = new PickVariables(Color.Tomato);
@@ -64,10 +66,18 @@ namespace Expanze
                     timeActive = ACTIVE_LIMIT;
                 }
             }
+
+            if (GameState.CurrentKeyboardState.IsKeyDown(Keys.P) && !disabled)
+            {
+                disabled = true;
+            }
         }
 
         public void showAlert(String title, String description, Texture2D icon)
         {
+            if (disabled)
+                return;
+
             this.icon = icon;
             this.title = title;
             this.description = description;
