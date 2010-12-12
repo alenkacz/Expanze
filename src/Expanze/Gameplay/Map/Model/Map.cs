@@ -232,6 +232,29 @@ namespace Expanze.Gameplay.Map
                 }
             }
 
+            if (eye.X > 5.4f)
+            {
+                target.X = 5.0f;
+                eye.X = 5.4f;
+            }
+            if (eye.X < -5.0f)
+            {
+                target.X = -5.4f;
+                eye.X = -5.0f;
+            }
+            if (eye.Z > 2.5)
+            {
+                eye.Z = 2.5f;
+                target.Z = 2.5f;
+            }
+            if (eye.Z < -2.5)
+            {
+                eye.Z = -2.5f;
+                target.Z = -2.5f;
+            }
+            //target = new Vector3(0.0f, 0.0f, 0.0f);
+            //eye = new Vector3(0.4f, 1.5f, 0.0f);
+
             if (GameState.CurrentMouseState.ScrollWheelValue - GameState.LastMouseState.ScrollWheelValue != 0)
             {
                 eye.Y += (GameState.CurrentMouseState.ScrollWheelValue - GameState.LastMouseState.ScrollWheelValue) / 6000.0f * gameTime.ElapsedGameTime.Milliseconds;
