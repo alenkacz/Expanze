@@ -108,18 +108,12 @@ namespace Expanze
             guiComponents.Add(menuHUDButton);
             MaterialsHUDComponent materialsHUDComp = new MaterialsHUDComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width / 4, ScreenManager.Game.GraphicsDevice.Viewport.Height - 78, GameState.gameFont, 757, 148, "suroviny_hud");
             guiComponents.Add(materialsHUDComp);
-            //GuiComponent usersHud = new GuiComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 670), 10, GameState.gameFont, Settings.scaleW(660), Settings.scaleH(46), "hud-top");
-            //guiComponents.Add(usersHud);
             TopPlayerScoreComponent topPlayer = new TopPlayerScoreComponent();
             guiComponents.Add(topPlayer);
             MarketComponent marketHud = MarketComponent.getInstance();
-            //guiComponents.Add(marketHud);
-            //GuiComponent marketHud = new GuiComponent(ScreenManager.Game, 100, 10, GameState.gameFont, Settings.scaleW(500), Settings.scaleH(500), "market_bg");
-            //guiComponents.Add(marketHud);
             ButtonComponent newMsg = new ButtonComponent(ScreenManager.Game, Settings.scaleW(30), (int)(Settings.maximumResolution.Y - 176), new Rectangle(Settings.scaleW(30), Settings.scaleH((int)(Settings.maximumResolution.Y - 176)), Settings.scaleW(70), Settings.scaleH(70)), GameState.gameFont, Settings.scaleW(151), Settings.scaleH(156), "newmessage");
             newMsg.Actions += MarketButtonAction;
             guiComponents.Add(newMsg);
-            //gameComponents.Add(buttonComp);
 
             foreach (GameComponent gameComponent in gameComponents)
             {
@@ -135,9 +129,6 @@ namespace Expanze
 
             MarketComponent.getInstance().Initialize();
             MarketComponent.getInstance().LoadContent();
-
-            //simulating loading screens
-            //Thread.Sleep(1000);
 
             // once the load has finished, we use ResetElapsedTime to tell the game's
             // timing mechanism that we have just finished a very long frame, and that
@@ -356,10 +347,6 @@ namespace Expanze
                                                Color.SkyBlue, /*new Color(33, 156, 185), */0, 0);
 
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
-            /*
-            spriteBatch.Begin();
-            spriteBatch.Draw(GameResources.Inst().getHudTexture(HUDTexture.BackgroundWater), new Vector2(0, 0), Color.Gray);
-            spriteBatch.End();*/
            
             foreach (GameComponent gameComponent in gameComponents)
             {
@@ -380,16 +367,6 @@ namespace Expanze
             {
                 MarketComponent.getInstance().Draw(gameTime, false);
             }
-
-            
-
-            //player name and color rectangle
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
-            //spriteBatch.DrawString(GameState.playerNameFont, gMaster.getActivePlayer().getPoints().ToString(), new Vector2(Settings.playerNamePosition.X - 300, Settings.playerNamePosition.Y), Color.White);
-            //spriteBatch.DrawString(GameState.playerNameFont, gMaster.getActivePlayer().getName(), Settings.playerNamePosition, Color.White);
-            //spriteBatch.Draw(playerColorTexture, Settings.playerColorPosition, gMaster.getActivePlayer().getColor());
-            
-            spriteBatch.End();
 
             // If the game is transitioning on or off, fade it out to black.
             if (TransitionPosition > 0 || pauseAlpha > 0)

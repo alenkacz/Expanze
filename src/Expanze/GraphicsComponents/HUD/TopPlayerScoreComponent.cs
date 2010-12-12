@@ -110,6 +110,7 @@ namespace Expanze
             spriteBatch.Draw(textureLeft, positionLeft, c);
             spriteBatch.Draw(textureRight, positionRight, c);
 
+            // drawing the middle part - simulation of CSS repeat-x
             Vector2 posMiddleDraw = positionMiddle;
 
             for (int i = 0; i < (widthMiddle / middleSize); i++)
