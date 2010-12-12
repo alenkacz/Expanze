@@ -191,6 +191,11 @@ namespace Expanze
         public int getPlayerCount() { return players.Count; }
         public Player getPlayer(int index) { return players[index]; }
 
+        public List<Player> getPlayers()
+        {
+            return this.players;
+        }
+
         public EGameState getState() { return state; }
         public bool isWinnerNew() { bool temp = winnerNew; winnerNew = false; return temp; }
 
