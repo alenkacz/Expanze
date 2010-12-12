@@ -24,8 +24,10 @@ namespace Expanze
         Vector2 positionMiddle;
         Vector2 positionName;
         Vector2 positionColor;
+        Vector2 positionScore;
 
         int widthMiddle;
+        int widthScore = 100;
         const int space = 20;
         const int rightSize = 79;
         const int leftSize = 11;
@@ -35,13 +37,14 @@ namespace Expanze
 
         public TopPlayerScoreComponent() 
         {
-            widthMiddle = roundMiddleWidth(getPlayerNameWidth() + 2*space);
+            widthMiddle = roundMiddleWidth(getPlayerNameWidth() + 2*space + widthScore);
 
             positionLeft = new Vector2((int)Settings.maximumResolution.X - (rightSize + leftSize + widthMiddle), 0);
             positionRight = new Vector2((int)Settings.maximumResolution.X - rightSize, 0);
             positionMiddle = new Vector2((int)Settings.maximumResolution.X - (rightSize + widthMiddle), 0);
 
-            positionName = new Vector2((int)Settings.maximumResolution.X - (rightSize - space + widthMiddle), 0);
+            positionName = new Vector2((int)Settings.maximumResolution.X - (rightSize - space - widthScore + widthMiddle), 0);
+            positionScore = new Vector2((int)Settings.maximumResolution.X - (rightSize - space/2 + widthMiddle), 0);
             positionColor = new Vector2((int)Settings.maximumResolution.X - (rightSize - space), 6);
         }
 
@@ -117,6 +120,7 @@ namespace Expanze
 
             // draw texts
             spriteBatch.DrawString(font, gMaster.getActivePlayer().getName(), positionName, Color.White);
+            spriteBatch.DrawString(font, gMaster.getActivePlayer().getPoints().ToString(), positionScore, Color.White);
 
             // draw player color
             spriteBatch.Draw(textureColor, positionColor, gMaster.getActivePlayer().getColor());
