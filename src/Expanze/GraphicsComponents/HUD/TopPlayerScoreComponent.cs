@@ -25,6 +25,7 @@ namespace Expanze
         Vector2 positionName;
         Vector2 positionColor;
         Vector2 positionScore;
+        Vector2 positionTotalPoints;
 
         int widthMiddle;
         int widthScore = 100;
@@ -37,14 +38,15 @@ namespace Expanze
 
         public TopPlayerScoreComponent() 
         {
-            widthMiddle = roundMiddleWidth(getPlayerNameWidth() + 2*space + widthScore);
+            widthMiddle = roundMiddleWidth(getPlayerNameWidth() + 2*space);
 
             positionLeft = new Vector2((int)Settings.maximumResolution.X - (rightSize + leftSize + widthMiddle), 0);
             positionRight = new Vector2((int)Settings.maximumResolution.X - rightSize, 0);
             positionMiddle = new Vector2((int)Settings.maximumResolution.X - (rightSize + widthMiddle), 0);
 
-            positionName = new Vector2((int)Settings.maximumResolution.X - (rightSize - space - widthScore + widthMiddle), 0);
-            positionScore = new Vector2((int)Settings.maximumResolution.X - (rightSize - space/2 + widthMiddle), 0);
+            positionName = new Vector2((int)Settings.maximumResolution.X - (rightSize - space + widthMiddle), 0);
+            positionScore = new Vector2((int)Settings.maximumResolution.X - (rightSize + 5*space), 50);
+            positionTotalPoints = new Vector2((int)Settings.maximumResolution.X - (rightSize + 2*space), 50);
             positionColor = new Vector2((int)Settings.maximumResolution.X - (rightSize - space), 6);
         }
 
@@ -122,6 +124,7 @@ namespace Expanze
             // draw texts
             spriteBatch.DrawString(font, gMaster.getActivePlayer().getName(), positionName, Color.White);
             spriteBatch.DrawString(font, gMaster.getActivePlayer().getPoints().ToString(), positionScore, Color.White);
+            spriteBatch.DrawString(font, " / " + GameMaster.getInstance().getGameSettings().getPoints(), positionTotalPoints, Color.White);
 
             // draw player color
             spriteBatch.Draw(textureColor, positionColor, gMaster.getActivePlayer().getColor());
