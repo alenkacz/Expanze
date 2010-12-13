@@ -84,7 +84,6 @@ namespace Expanze
         /// </summary>
         public override void HandleInput(InputState input)
         {
-
             // Accept or cancel the menu? We pass in our ControllingPlayer, which may
             // either be null (to accept input from any player) or a specific index.
             // If we pass a null controlling player, the InputState helper returns to

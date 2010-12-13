@@ -27,6 +27,7 @@ namespace Expanze
         #region Fields
 
         public const int MaxInputs = 4;
+        private static bool waitingForRelease = false;
 
         public readonly KeyboardState[] CurrentKeyboardStates;
         public readonly GamePadState[] CurrentGamePadStates;
@@ -104,6 +105,11 @@ namespace Expanze
                 {
                     GamePadWasConnected[i] = true;
                 }
+            }
+
+            if (waitingForRelease)
+            {
+                if (CurrentMouseState.LeftButton == ButtonState.Released) waitingForRelease = false;
             }
 
             TouchState = TouchPanel.GetState();
@@ -187,7 +193,7 @@ namespace Expanze
 
         public bool IsNewLeftMouseButtonPressed()
         {
-            if (CurrentMouseState.LeftButton == ButtonState.Pressed)
+            if (CurrentMouseState.LeftButton == ButtonState.Pressed && !waitingForRelease)
             {
                 if (!mousePressed)
                 {
@@ -306,6 +312,11 @@ namespace Expanze
             return IsNewKeyPress(Keys.Escape, controllingPlayer, out playerIndex) ||
                    IsNewButtonPress(Buttons.Back, controllingPlayer, out playerIndex) ||
                    IsNewButtonPress(Buttons.Start, controllingPlayer, out playerIndex);
+        }
+
+        public static void waitForRelease()
+        {
+            waitingForRelease = true;
         }
 
 
