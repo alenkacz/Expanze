@@ -66,7 +66,11 @@ namespace Expanze.Gameplay.Map
         {
             GameMaster gm = GameMaster.getInstance();
             Town town = map.GetTownByID(townID);
+            if (town == null)
+                return BuyingUpgradeError.ThereIsNoTown;
             SpecialBuilding building = town.getSpecialBuilding(hexaID);
+            if (building == null)
+                return BuyingUpgradeError.ThereIsNoBuilding;
 
             BuyingUpgradeError error = building.CanActivePlayerBuyUpgrade(upgradeKind, upgradeNumber);
             if (error == BuyingUpgradeError.OK)

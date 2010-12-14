@@ -19,6 +19,11 @@ namespace NoobAI
         int stoneHexa;
 
         int turn;
+        bool hasFort;
+        int fortTownID;
+        int fortHexaID;
+        bool hasMonastery;
+        bool hasMarket;
 
         public String GetAIName()
         {
@@ -34,6 +39,12 @@ namespace NoobAI
             meatHexa = 0;
             oreHexa = 0;
             stoneHexa = 0;
+
+            hasFort = false;
+
+            hasMarket = false;
+            hasMonastery = false;
+
             Random random = new Random();
             turn = random.Next() % 5;
         }
@@ -54,6 +65,7 @@ namespace NoobAI
                 turn++;
                 BuildAllPossibleSourceBuilding();
                 BuildRandomTown();
+                
                 if (turn % 4 == 0)
                 {
                     for (int loop1 = 0; loop1 < 3; loop1++)
@@ -69,6 +81,7 @@ namespace NoobAI
                         }
                     }
                 }
+                mapController.BuyUpgradeInSpecialBuilding(fortTownID, fortHexaID, UpgradeKind.FirstUpgrade, 3);
             }
         }
 
@@ -106,11 +119,50 @@ namespace NoobAI
 
         public void BuildAllPossibleSourceBuilding()
         {
-            for (int loop1 = 1; loop1 < 200; loop1++)
+            int hexaID;
+            ITownGet town;
+            IHexaGet hexa;
+            for (int loop1 = 1; loop1 < mapController.GetMaxTownID(); loop1++)
             {
-                for (int loop2 = 1; loop2 < 200; loop2++)
+                for (int loop2 = 0; loop2 < 3; loop2++)
                 {
-                    mapController.BuildBuildingInTown(loop1, loop2, BuildingKind.SourceBuilding);
+                    town = mapController.GetITownGetByID(loop1);
+                    hexa = town.getIHexaGet(loop2);
+                    hexaID = hexa.getID();
+
+                    if (turn > 7)
+                    {
+                        if (hexa.getStartSource() <= 12)
+                        {
+                            if (!hasFort)
+                            {
+                                if (mapController.BuildBuildingInTown(loop1, hexaID, BuildingKind.FortBuilding) == BuildingBuildError.OK)
+                                {
+                                    hasFort = true;
+                                    fortHexaID = hexaID;
+                                    fortTownID = loop1;
+                                }
+                                continue;
+                            }
+                            else if (!hasMarket)
+                            {
+                                if (mapController.BuildBuildingInTown(loop1, hexaID, BuildingKind.MarketBuilding) == BuildingBuildError.OK)
+                                {
+                                    hasMarket = true;
+                                }
+                                continue;
+                            } if (!hasMonastery)
+                            {
+                                if (mapController.BuildBuildingInTown(loop1, hexaID, BuildingKind.MonasteryBuilding) == BuildingBuildError.OK)
+                                {
+                                    hasMonastery = true;
+                                }
+                                continue;
+                            }
+                            
+                        }
+                    }
+                    mapController.BuildBuildingInTown(loop1, hexaID, BuildingKind.SourceBuilding);
                 }
             }
         }
