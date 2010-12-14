@@ -97,20 +97,30 @@ namespace Expanze
         public void PlayerWantMedail(Player player, Building medal)
         {
             int minCount = 10;
+            int pointsForMedail = 15;
             switch(medal)
             {
                 case Building.Town :
                     minCount = 5;
+                    pointsForMedail = 15;
                     break;
                 case Building.Road :
                     minCount = 10;
+                    pointsForMedail = 15;
+                    break;
+                case Building.Market :
+                case Building.Fort :
+                case Building.Monastery :
+                    minCount = 3;
+                    pointsForMedail = 10;
                     break;
                 default :
-                    minCount = 3;
+                    minCount = 4;
+                    pointsForMedail = 5;
                     break;
             }
 
-            int pointsForMedail = 15;
+            
 
             if((medailOwner[(int) medal] == null && player.getBuildingCount(medal) >= minCount) ||
                (medailOwner[(int) medal] != null && player.getBuildingCount(medal) > medailOwner[(int) medal].getBuildingCount(medal)))

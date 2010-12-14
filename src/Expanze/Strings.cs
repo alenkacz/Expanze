@@ -11,6 +11,8 @@ namespace Expanze
         // Menu strings
         public static string MENU_HOT_SEAT_NO_AI = "Hráč";
 
+        public static string[] MENU_HOT_SEAT_NAMES = { "Pedro de Mendoza", "Raimundus Lullus", "Hernando de Soto", "Francisco Pizarro", "Diego de Almagro", "Juan de la Cosa" };
+
         public static string MENU_PAUSE_GAME_ITEM_RESUME = "Zpět do hry";
         public static string MENU_PAUSE_GAME_ITEM_QUIT_GAME = "Ukončit hru";
 
