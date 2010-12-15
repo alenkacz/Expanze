@@ -13,19 +13,16 @@ namespace Expanze.Gameplay.Map
     /// </summary>
     class ItemQueue
     {
-        ItemKind kind;  /// Kind of item
-        int arg1;       /// First int argument. Meaning is different according to ItemKind
-                        /// BuildTown - townID
-                        /// BuildRoad - roadID
+        protected MapView mapView;
 
-        public ItemQueue(ItemKind kind, int arg1)
+        public ItemQueue(MapView mapView)
         {
-            this.kind = kind;
-            this.arg1 = arg1;
+            this.mapView = mapView;
         }
+        public virtual void Execute()
+        {
 
-        public ItemKind getItemKind() {return kind;}
-        public int getArg1() { return arg1; }
+        }
     }
 
     /// <summary>
@@ -75,18 +72,7 @@ namespace Expanze.Gameplay.Map
             if (queue.Count > 0 && lastEnque < 0)
             {
                 ItemQueue item = queue.Dequeue();
-                switch (item.getItemKind())
-                {
-                    case ItemKind.BuildTown :
-                        mapView.BuildTownView(item.getArg1());
-                        break;
-
-                    case ItemKind.BuildRoad :
-                        mapView.BuildRoadView(item.getArg1());
-                        break;
-                    case ItemKind.NextTurn :
-                        break;
-                }
+                item.Execute();
                 lastEnque = ENQUEUE_TIME;
             }
         }

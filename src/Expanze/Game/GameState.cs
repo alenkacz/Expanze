@@ -20,11 +20,12 @@ namespace Expanze
 
         public static MouseState CurrentMouseState;
         public static MouseState LastMouseState;
+        public static KeyboardState CurrentKeyboardState;
 
         public static Game game;
         public static Map map;
 
-        public static WindowPromt windowPromt;
+        public static Message message;
 
         public static SpriteBatch spriteBatch;
 

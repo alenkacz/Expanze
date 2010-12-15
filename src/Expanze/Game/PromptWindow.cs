@@ -175,7 +175,7 @@ namespace Expanze
                 else
                     color = Color.White;
 
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
+                spriteBatch.Begin(SpriteSortMode.Deferred, (drawingPickableAreas) ? BlendState.Opaque : BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
             
                 spriteBatch.Draw(background, bgPos, color);
 

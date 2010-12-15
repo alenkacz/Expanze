@@ -25,7 +25,13 @@ namespace Expanze
         IconOre1, IconOre2, 
         IconFortParade, IconFortCapture, IconFortSources, IconFortHexa,
 
+        // icon medal fort have to be first //
+        IconMedalFort, IconMedalMonastery, IconMedalMarket,
+        IconMedalTown, IconMedalRoad,
+        IconMedalMill, IconMedalStepherd, IconMedalQuarry, IconMedalSaw, IconMedalMine,
+
         PlayerColor,
+        BackgroundWater,
 
         HUDCount
     }
@@ -42,7 +48,7 @@ namespace Expanze
         private ContentManager content;
         private Game game;
 
-        public const int N_MODEL = 7;
+        public const int N_MODEL = 9;
         Model[] hexaModel;
         public const int SHAPE_RECTANGLE = 0;
         public const int SHAPE_CIRCLE = 1;
@@ -99,6 +105,7 @@ namespace Expanze
 
             hud = new Texture2D[(int) HUDTexture.HUDCount];
             hud[(int)HUDTexture.PlayerColor] = content.Load<Texture2D>("pcolor");
+            hud[(int)HUDTexture.BackgroundWater] = content.Load<Texture2D>("Models/hexa_voda3");
 
             hud[(int)HUDTexture.IconActive] = content.Load<Texture2D>("HUD/ic_active");
             hud[(int)HUDTexture.HammersPassive] = content.Load<Texture2D>("HUD/hammer");
@@ -148,6 +155,17 @@ namespace Expanze
             hud[(int)HUDTexture.IconFortParade] = content.Load<Texture2D>("HUD/ic_fort_parade");
             hud[(int)HUDTexture.IconFortSources] = content.Load<Texture2D>("HUD/ic_fort_sources");
 
+            hud[(int)HUDTexture.IconMedalFort] = content.Load<Texture2D>("HUD/medals/medal_fort");
+            hud[(int)HUDTexture.IconMedalMarket] = content.Load<Texture2D>("HUD/medals/medal_market");
+            hud[(int)HUDTexture.IconMedalMonastery] = content.Load<Texture2D>("HUD/medals/medal_monastery");
+            hud[(int)HUDTexture.IconMedalTown] = content.Load<Texture2D>("HUD/medals/medal_town");
+            hud[(int)HUDTexture.IconMedalRoad] = content.Load<Texture2D>("HUD/medals/medal_road");
+            hud[(int)HUDTexture.IconMedalMill] = content.Load<Texture2D>("HUD/medals/medal_mill");
+            hud[(int)HUDTexture.IconMedalStepherd] = content.Load<Texture2D>("HUD/medals/medal_stepherd");
+            hud[(int)HUDTexture.IconMedalQuarry] = content.Load<Texture2D>("HUD/medals/medal_quarry");
+            hud[(int)HUDTexture.IconMedalSaw] = content.Load<Texture2D>("HUD/medals/medal_saw");
+            hud[(int)HUDTexture.IconMedalMine] = content.Load<Texture2D>("HUD/medals/medal_mine");
+
             hexaModel = new Model[N_MODEL];
             hexaModel[(int)HexaKind.Cornfield] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Cornfield]);
             hexaModel[(int)HexaKind.Desert] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Desert]);
@@ -156,6 +174,8 @@ namespace Expanze
             hexaModel[(int)HexaKind.Pasture] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Pasture]);
             hexaModel[(int)HexaKind.Stone] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Stone]);
             hexaModel[(int)HexaKind.Water] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Water]);
+            hexaModel[(int)HexaKind.Water + 1] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Water] + "2");
+            hexaModel[(int)HexaKind.Water + 2] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Water] + "3");
 
             shapeModel = new Model[N_SHAPE_MODEL];
 

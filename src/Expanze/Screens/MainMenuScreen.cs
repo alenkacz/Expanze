@@ -70,7 +70,7 @@ namespace Expanze
         void QuickMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
             // reset to the default state
-            GameMaster.getInstance().prepareQuickGame();
+            GameMaster.getInstance().PrepareQuickGame();
 
             // now is used for AI
             LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,

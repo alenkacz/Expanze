@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework;
 using CorePlugin;
 using Expanze.Gameplay.Map;
 using System.Threading;
+using Expanze.Gameplay;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Expanze
 {
@@ -13,15 +15,18 @@ namespace Expanze
     {
         private int n_player = 0;
         private List<Player> players = new List<Player>();
+
+        private Player[] medailOwner;
+
         private Player activePlayer;
         private int activePlayerIndex;
         private EGameState state;
         // when is game paused and player see paused menu, he cant build towers etc
-        private bool paused = false;
+        private bool paused;
         // used for open paused menu
-        private bool pausedNew = false;
+        private bool pausedNew;
 
-        private bool winnerNew = false;
+        private bool winnerNew;
 
         private Map map;
 
@@ -29,7 +34,9 @@ namespace Expanze
         private Thread actualAIThread;
         private const int AI_TIME = 5000;   // this is time which have each plugin each turn to resolve AI
         private int actualAITime;           // how much time has AI before it will be aborted
+        private bool hasAIThreadStarted;
 
+        private Random randomNumber;
 
         private static GameMaster instance = null;
 
@@ -50,11 +57,17 @@ namespace Expanze
         /// </summary>
         private GameMaster() {}
 
-        public bool startGame(bool isAI, Map map)
+        public bool StartGame(bool isAI, Map map)
         {
             this.map = map;
 
             n_player = players.Count;
+
+            medailOwner = new Player[(int) Building.Count];
+            for (int loop1 = 0; loop1 < players.Count; loop1++)
+            {
+                medailOwner[loop1] = null;
+            }
 
             IComponentAI AI;
             foreach (Player player in players)
@@ -71,10 +84,55 @@ namespace Expanze
 
             pausedNew = false;
             paused = false;
+            winnerNew = false;
 
+            hasAIThreadStarted = false;
             state = EGameState.StateFirstTown;
 
+            randomNumber = new System.Random();
+
             return true;
+        }
+
+        public void PlayerWantMedail(Player player, Building medal)
+        {
+            int minCount = 10;
+            int pointsForMedail = 15;
+            switch(medal)
+            {
+                case Building.Town :
+                    minCount = 5;
+                    pointsForMedail = 15;
+                    break;
+                case Building.Road :
+                    minCount = 10;
+                    pointsForMedail = 15;
+                    break;
+                case Building.Market :
+                case Building.Fort :
+                case Building.Monastery :
+                    minCount = 3;
+                    pointsForMedail = 10;
+                    break;
+                default :
+                    minCount = 4;
+                    pointsForMedail = 5;
+                    break;
+            }
+
+            
+
+            if((medailOwner[(int) medal] == null && player.getBuildingCount(medal) >= minCount) ||
+               (medailOwner[(int) medal] != null && player.getBuildingCount(medal) > medailOwner[(int) medal].getBuildingCount(medal)))
+            {
+                if (medailOwner[(int)medal] != null)
+                {
+                    medailOwner[(int)medal].addPoints(-pointsForMedail);
+                }
+                medailOwner[(int)medal] = player;
+                player.addPoints(pointsForMedail);
+                GameState.message.showAlert(getMedalTitle(medal),getMedalDescription(medal),getMedaileIcon(medal));
+            }
         }
 
         public void setGameSettings(int points, string mapType, string mapSize, string mapWealth)
@@ -82,11 +140,25 @@ namespace Expanze
             gameSettings = new GameSettings(points,mapType,mapSize,mapWealth);
         }
 
-        public void prepareQuickGame()
+        public void PrepareQuickGame()
         {
             this.resetGameSettings();
-            this.players.Add(new Player("Player1",Color.Red,null));
-            this.players.Add(new Player("Player2", Color.Blue, null));
+            players.Clear();
+            IComponentAI componentAI = null;
+            foreach (IComponentAI AI in CoreProviderAI.AI)
+            {
+                componentAI = AI;
+                break;
+            }
+            
+            this.players.Add(new Player("Monte Carlos", Color.Red,null));
+
+            if (componentAI != null)
+            {
+                IComponentAI componentAICopy = componentAI.Clone();
+                this.players.Add(new Player("Calamity Jain", Color.Blue, componentAICopy));
+            } else
+                this.players.Add(new Player("Calamity Jain", Color.Blue, null));
         }
 
         public GameSettings getGameSettings()
@@ -97,7 +169,7 @@ namespace Expanze
             }
             else
             {
-                return new GameSettings(50,"normální","střední","střední");
+                return new GameSettings(50,"normální","malá","střední");
             }
         }
 
@@ -116,13 +188,24 @@ namespace Expanze
         {
             if (activePlayer.getIsAI())
             {
-                actualAITime -= gameTime.ElapsedGameTime.Milliseconds;
-                if (actualAITime < 0)
-                    actualAIThread.Abort();
-
-                if (!actualAIThread.IsAlive && map.GetMapView().getIsViewQueueClear())
+                if (!hasAIThreadStarted && !GameState.message.getIsActive())
                 {
-                       NextTurn();
+                    actualAIStart = new ThreadStart(activePlayer.getComponentAI().ResolveAI);
+                    actualAIThread = new Thread(actualAIStart);
+                    actualAIThread.Start();
+                    actualAITime = AI_TIME;
+                    hasAIThreadStarted = true;
+                }
+                if (hasAIThreadStarted)
+                {
+                    actualAITime -= gameTime.ElapsedGameTime.Milliseconds;
+                    if (actualAITime < 0)
+                        actualAIThread.Abort();
+
+                    if (!actualAIThread.IsAlive && map.GetMapView().getIsViewQueueClear() && !GameState.message.getIsActive())
+                    {
+                        NextTurn();
+                    }
                 }
             }
         }
@@ -130,6 +213,11 @@ namespace Expanze
         public Player getActivePlayer() { return activePlayer; }
         public int getPlayerCount() { return players.Count; }
         public Player getPlayer(int index) { return players[index]; }
+
+        public List<Player> getPlayers()
+        {
+            return this.players;
+        }
 
         public EGameState getState() { return state; }
         public bool isWinnerNew() { bool temp = winnerNew; winnerNew = false; return temp; }
@@ -139,17 +227,20 @@ namespace Expanze
             if (state == EGameState.StateGame)
             {
                 GameState.map.getSources(activePlayer);
+                RandomEvents();
             }
 
-            if (activePlayer.getIsAI())
-            {
-                actualAIStart = new ThreadStart(activePlayer.getComponentAI().ResolveAI);
-                actualAIThread = new Thread(actualAIStart);
-                actualAIThread.Start();
-                actualAITime = AI_TIME;
-            }
+            hasAIThreadStarted = false;
 
             return true;
+        }
+
+        private void RandomEvents()
+        {
+            if (randomNumber.Next() % 10 == 2)
+            {       
+                GameState.map.ApplyEvent(RndEvent.getRandomEvent(randomNumber));
+            }
         }
 
         public bool NextTurn()
@@ -157,6 +248,7 @@ namespace Expanze
             bool status = true;
             if (state == EGameState.StateGame)
             {
+                MarketComponent.isActive = false;
                 //checkWinner(activePlayer);
             }
             status &= changeActivePlaye();
@@ -164,14 +256,15 @@ namespace Expanze
             status &= StartTurn();
 
             map.NextTurn();
+            TownView.resetTownView();
 
             return status;
         }
 
-        public void checkWinner(Player player)
+        public void CheckWinner(Player player)
         {
             bool isWinner = false;
-            if (player.getPoints() >= gameSettings.getPoints())
+            if (player.getPoints() >= getGameSettings().getPoints())
             {
                 isWinner = true;
             }
@@ -182,7 +275,7 @@ namespace Expanze
             }
         }
 
-        public void changeStateToStateGame()
+        public void ChangeStateToStateGame()
         {
             state = EGameState.StateGame;
             foreach (Player player in players)
@@ -321,7 +414,7 @@ namespace Expanze
                 activePlayerIndex--;
                 if (activePlayerIndex < 0)
                 {
-                    changeStateToStateGame();
+                    ChangeStateToStateGame();
                     activePlayerIndex = 0;
                 }
             }
@@ -329,6 +422,78 @@ namespace Expanze
             activePlayer = players[activePlayerIndex];
 
             return true;
+        }
+
+        public String getMedalTitle(Building building)
+        {
+            switch (building)
+            {
+                case Building.Town: return Strings.MESSAGE_TITLE_MEDAL_TOWN;
+                case Building.Road: return Strings.MESSAGE_TITLE_MEDAL_ROAD;
+                case Building.Market: return Strings.MESSAGE_TITLE_MEDAL_MARKET;
+                case Building.Monastery: return Strings.MESSAGE_TITLE_MEDAL_MONASTERY;
+                case Building.Fort: return Strings.MESSAGE_TITLE_MEDAL_FORT;
+                case Building.Saw: return Strings.MESSAGE_TITLE_MEDAL_SAW;
+                case Building.Mill: return Strings.MESSAGE_TITLE_MEDAL_MILL;
+                case Building.Quarry: return Strings.MESSAGE_TITLE_MEDAL_QUARRY;
+                case Building.Stepherd: return Strings.MESSAGE_TITLE_MEDAL_STEPHERD;
+                case Building.Mine: return Strings.MESSAGE_TITLE_MEDAL_MINE;
+            }
+            return null;
+        }
+
+        public String getMedalDescription(Building building)
+        {
+            switch (building)
+            {
+                case Building.Town: return Strings.MESSAGE_DESCRIPTION_MEDAL_TOWN;
+                case Building.Road: return Strings.MESSAGE_DESCRIPTION_MEDAL_ROAD;
+                case Building.Market: return Strings.MESSAGE_DESCRIPTION_MEDAL_MARKET;
+                case Building.Monastery: return Strings.MESSAGE_DESCRIPTION_MEDAL_MONASTERY;
+                case Building.Fort: return Strings.MESSAGE_DESCRIPTION_MEDAL_FORT;
+                case Building.Saw: return Strings.MESSAGE_DESCRIPTION_MEDAL_SAW;
+                case Building.Mill: return Strings.MESSAGE_DESCRIPTION_MEDAL_MILL;
+                case Building.Quarry: return Strings.MESSAGE_DESCRIPTION_MEDAL_QUARRY;
+                case Building.Stepherd: return Strings.MESSAGE_DESCRIPTION_MEDAL_STEPHERD;
+                case Building.Mine: return Strings.MESSAGE_DESCRIPTION_MEDAL_MINE;
+            }
+            return null;
+        }
+
+        public Texture2D getMedaileIcon(Building building)
+        {
+            Texture2D icon = null;
+            switch (building)
+            {
+                case Building.Road: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalRoad); break;
+                case Building.Town: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalTown); break;
+                case Building.Mill: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalMill); break;
+                case Building.Market: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalMarket); break;
+                case Building.Monastery: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalMonastery); break;
+                case Building.Fort: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalFort); break;
+                case Building.Stepherd: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalStepherd); break;
+                case Building.Quarry: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalQuarry); break;
+                case Building.Mine: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalMine); break;
+                case Building.Saw: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalSaw); break;
+            }
+
+            return icon;
+        }
+
+        public void Draw2D()
+        {
+            SpriteBatch spriteBatch = GameState.spriteBatch;
+            Vector2 medailPosition = new Vector2(Settings.activeResolution.X - 90.0f, 80.0f);
+            spriteBatch.Begin();
+            for (int loop1 = 0; loop1 < medailOwner.Length; loop1++)
+            {
+                if (medailOwner[loop1] == activePlayer)
+                {
+                    spriteBatch.Draw(getMedaileIcon((Building) loop1), medailPosition, Color.White);
+                    medailPosition += new Vector2(0.0f, 85.0f);
+                }
+            }
+            spriteBatch.End();
         }
     }
 }

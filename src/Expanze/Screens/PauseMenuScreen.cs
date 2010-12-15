@@ -1,4 +1,4 @@
-#region File Description
+﻿#region File Description
 //-----------------------------------------------------------------------------
 // PauseMenuScreen.cs
 //
@@ -57,7 +57,7 @@ namespace Expanze
         /// </summary>
         void QuitGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            const string message = "Are you sure you want to quit this game?";
+            const string message = "Opravdu chcete ukončit hru?";
 
             MessageBoxScreen confirmQuitMessageBox = new MessageBoxScreen(message);
 

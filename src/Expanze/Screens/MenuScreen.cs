@@ -29,6 +29,7 @@ namespace Expanze
         List<MenuEntry> menuEntries = new List<MenuEntry>();
         int selectedEntry = 0;
         string menuTitle;
+        Texture2D menuLogo;
 
         #endregion
 
@@ -68,6 +69,7 @@ namespace Expanze
             //cursorComp = new CustomCursor(ScreenManager.Game);
             //cursorComp.Initialize();
             //cursorComp.LoadContent();
+            menuLogo = ScreenManager.Game.Content.Load<Texture2D>("HUD/main_menu_logo");
         }
 
 
@@ -82,6 +84,26 @@ namespace Expanze
         /// </summary>
         public override void HandleInput(InputState input)
         {
+            // Accept or cancel the menu? We pass in our ControllingPlayer, which may
+            // either be null (to accept input from any player) or a specific index.
+            // If we pass a null controlling player, the InputState helper returns to
+            // us which player actually provided the input. We pass that through to
+            // OnSelectEntry and OnCancel, so they can tell which player triggered them.
+            PlayerIndex playerIndex;
+
+            foreach (MenuEntry m in menuEntries)
+            {
+                if (input.IsMenuMouseHover(m.GetRange(this)))
+                {
+                    selectedEntry = menuEntries.IndexOf(m);
+
+                    if( input.IsMenuMouseClicked(m.GetRange(this)) )
+                    {
+                        OnSelectEntry(selectedEntry, PlayerIndex.One);
+                    } 
+                }
+            }
+
             // Move to the previous menu entry?
             if (input.IsMenuUp(ControllingPlayer))
             {
@@ -99,13 +121,6 @@ namespace Expanze
                 if (selectedEntry >= menuEntries.Count)
                     selectedEntry = 0;
             }
-
-            // Accept or cancel the menu? We pass in our ControllingPlayer, which may
-            // either be null (to accept input from any player) or a specific index.
-            // If we pass a null controlling player, the InputState helper returns to
-            // us which player actually provided the input. We pass that through to
-            // OnSelectEntry and OnCancel, so they can tell which player triggered them.
-            PlayerIndex playerIndex;
 
             if (input.IsMenuSelect(ControllingPlayer, out playerIndex))
             {
@@ -162,7 +177,7 @@ namespace Expanze
             float transitionOffset = (float)Math.Pow(TransitionPosition, 2);
 
             // start at Y = 175; each X value is generated per entry
-            Vector2 position = new Vector2(0f, (int)Settings.scaleH(300));
+            Vector2 position = new Vector2(0f, (int)Settings.scaleH(450));
 
             // update each menu entry's location in turn
             for (int i = 0; i < menuEntries.Count; i++)
@@ -170,7 +185,7 @@ namespace Expanze
                 MenuEntry menuEntry = menuEntries[i];
                 
                 // each entry is to be centered horizontally
-                position.X = ScreenManager.GraphicsDevice.Viewport.Width / 2 - menuEntry.GetWidth(this) / 2;
+                position.X = Settings.maximumResolution.X / 2 - menuEntry.GetWidth(this) / 2;
 
                 if (ScreenState == ScreenState.TransitionOn)
                     position.X -= transitionOffset * 256;
@@ -220,8 +235,10 @@ namespace Expanze
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
             SpriteFont font = ScreenManager.Font;
 
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
             //cursorComp.Draw(gameTime);
+
+            spriteBatch.Draw(menuLogo, new Vector2(280,100), Color.White);
 
             // Draw each menu entry in turn.
             for (int i = 0; i < menuEntries.Count; i++)

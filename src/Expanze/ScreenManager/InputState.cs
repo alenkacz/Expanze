@@ -27,6 +27,7 @@ namespace Expanze
         #region Fields
 
         public const int MaxInputs = 4;
+        private static bool waitingForRelease = false;
 
         public readonly KeyboardState[] CurrentKeyboardStates;
         public readonly GamePadState[] CurrentGamePadStates;
@@ -42,6 +43,8 @@ namespace Expanze
         public TouchCollection TouchState;
 
         public readonly List<GestureSample> Gestures = new List<GestureSample>();
+
+        private bool mousePressed = false;
 
         #endregion
 
@@ -61,6 +64,16 @@ namespace Expanze
 
             LastMouseState = new MouseState();
             CurrentMouseState = new MouseState();
+
+            if (CurrentMouseState.LeftButton == ButtonState.Pressed)
+            {
+                mousePressed = true;
+            }
+            else
+            {
+                //mouse released
+                mousePressed = false;
+            }
 
             GamePadWasConnected = new bool[MaxInputs];
         }
@@ -92,6 +105,11 @@ namespace Expanze
                 {
                     GamePadWasConnected[i] = true;
                 }
+            }
+
+            if (waitingForRelease)
+            {
+                if (CurrentMouseState.LeftButton == ButtonState.Released) waitingForRelease = false;
             }
 
             TouchState = TouchPanel.GetState();
@@ -173,6 +191,32 @@ namespace Expanze
             return true;
         }
 
+        public bool IsNewLeftMouseButtonPressed()
+        {
+            return IsNewLeftMouseButtonPressed(false);
+        }
+
+        public bool IsNewLeftMouseButtonPressed(bool force)
+        {
+            if (CurrentMouseState.LeftButton == ButtonState.Pressed && !waitingForRelease)
+            {
+                if (!mousePressed || force)
+                {
+                    mousePressed = true;
+                    return true;
+                }
+                else
+                {
+                    //button not yet released
+                    return false;
+                }
+            }
+
+            mousePressed = false;
+            return false;
+            //return CurrentMouseState.LeftButton == ButtonState.Pressed && LastMouseState.LeftButton == ButtonState.Released;
+        }
+
 
 
         /// <summary>
@@ -220,6 +264,41 @@ namespace Expanze
                    IsNewButtonPress(Buttons.LeftThumbstickUp, controllingPlayer, out playerIndex);
         }
 
+        public bool IsMenuMouseHover(Rectangle res)
+        {
+            return IsInRange(res);
+        }
+
+        private bool IsInRange(Rectangle res)
+        {
+            if (CurrentMouseState.X > Settings.scaleW(res.Left) && CurrentMouseState.X < Settings.scaleW(res.Right) && CurrentMouseState.Y > Settings.scaleH(res.Top) && CurrentMouseState.Y < Settings.scaleH(res.Bottom))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool IsMenuMouseClicked(Rectangle res, bool force)
+        {
+            if (IsNewLeftMouseButtonPressed(force))
+            {
+                return IsInRange(res);
+            }
+
+            return false;
+        }
+
+        public bool IsMenuMouseClicked(Rectangle res)
+        {
+            if (IsNewLeftMouseButtonPressed())
+            {
+                return IsInRange(res);
+            }
+
+            return false;
+        }
+
 
         /// <summary>
         /// Checks for a "menu down" input action.
@@ -248,6 +327,11 @@ namespace Expanze
             return IsNewKeyPress(Keys.Escape, controllingPlayer, out playerIndex) ||
                    IsNewButtonPress(Buttons.Back, controllingPlayer, out playerIndex) ||
                    IsNewButtonPress(Buttons.Start, controllingPlayer, out playerIndex);
+        }
+
+        public static void waitForRelease()
+        {
+            waitingForRelease = true;
         }
 
 

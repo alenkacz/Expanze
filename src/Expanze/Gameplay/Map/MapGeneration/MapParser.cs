@@ -60,16 +60,18 @@ namespace Expanze
                 for (int j = 0; j < hexas.Count; ++j)
                 {
                     bool isEmpty = false;
+                    bool isWater = false;
 
                     foreach (XmlAttribute a in hexas[j].Attributes)
                     {
                         if(a.Name == "type" && a.Value == "space") isEmpty = true;
+                        if(a.Name == "type" && a.Value == "water") isWater = true;
                     }
 
                     HexaKind type;
                     int hexanum = 0;
 
-                    if (!isEmpty)
+                    if (!isEmpty && !isWater)
                     {
                         type = getRandomType();
 
@@ -84,7 +86,10 @@ namespace Expanze
                     }
                     else
                     {
-                        type = HexaKind.Nothing;
+                        if (isWater)
+                            type = HexaKind.Water;
+                        else
+                            type = HexaKind.Nothing;
                     }
 
 

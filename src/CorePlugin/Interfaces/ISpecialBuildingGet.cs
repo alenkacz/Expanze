@@ -11,7 +11,9 @@ namespace CorePlugin
         MaxUpgrades,
         NoUpgrade,
         YouDontHaveFirstUpgrade,
-        YouAlreadyHaveSecondUpgrade
+        YouAlreadyHaveSecondUpgrade,
+        ThereIsNoBuilding,
+        ThereIsNoTown
     }
 
     public interface ISpecialBuildingGet

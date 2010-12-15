@@ -36,7 +36,8 @@ namespace Expanze
             playerColorTexture = game.Content.Load<Texture2D>("pcolor");
             playerColor = c;
             this.name = name;
-            playerState = new ButtonComponent(game, x + 500, y, font, 200, 50, null, Settings.PlayerState);
+            playerState = new ButtonComponent(game, x + 500, y - 6, font, Settings.scaleW(200), Settings.scaleH(45), null, Settings.PlayerState);
+            playerState.Actions += PlayerStateButtonAction;
             playerState.Initialize(); playerState.LoadContent();
             addButton = new ButtonComponent(game, x, y, new Rectangle(), font, 34, 32, "HUD/hotseat_plus");
             addButton.Actions += AddButtonAction;
@@ -112,6 +113,17 @@ namespace Expanze
         }
 
         /// <summary>
+        /// Event handler for player state button
+        /// </summary>
+        void PlayerStateButtonAction(object sender, PlayerIndexEventArgs e)
+        {
+            if (active )
+            {
+                playerState.changeText();
+            }
+        }
+
+        /// <summary>
         /// Event handler for add button
         /// </summary>
         void AddButtonAction(object sender, PlayerIndexEventArgs e)
@@ -154,8 +166,8 @@ namespace Expanze
                 addButton.Draw(gameTime);
             }
 
-            spriteBatch.DrawString(GameState.playerNameFont, name, new Vector2(spritePosition.X + 100, spritePosition.Y), c);
-            spriteBatch.Draw(playerColorTexture, new Vector2(spritePosition.X + 400, spritePosition.Y), playerColor);
+            spriteBatch.DrawString(GameState.playerNameFont, name, new Vector2(spritePosition.X + 80, spritePosition.Y - 6), c);
+            spriteBatch.Draw(playerColorTexture, new Vector2(spritePosition.X + 420, spritePosition.Y), playerColor);
 
             if( active )
                 playerState.Draw(gameTime);

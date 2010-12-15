@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CorePlugin;
+using Expanze.Gameplay.Map.View;
 
 namespace Expanze.Gameplay.Map
 {
@@ -66,13 +67,17 @@ namespace Expanze.Gameplay.Map
         {
             GameMaster gm = GameMaster.getInstance();
             Town town = map.GetTownByID(townID);
+            if (town == null)
+                return BuyingUpgradeError.ThereIsNoTown;
             SpecialBuilding building = town.getSpecialBuilding(hexaID);
+            if (building == null)
+                return BuyingUpgradeError.ThereIsNoBuilding;
 
             BuyingUpgradeError error = building.CanActivePlayerBuyUpgrade(upgradeKind, upgradeNumber);
             if (error == BuyingUpgradeError.OK)
             {
-                building.BuyUpgrade(upgradeKind, upgradeNumber);
                 gm.getActivePlayer().payForSomething(building.getUpgradeCost(upgradeKind, upgradeNumber));
+                building.BuyUpgrade(upgradeKind, upgradeNumber);
             }
             return error;
         }
@@ -87,7 +92,7 @@ namespace Expanze.Gameplay.Map
             {
                 road.BuildRoad(gm.getActivePlayer());
 
-                ItemQueue item = new ItemQueue(ItemKind.BuildRoad, roadID);
+                ItemQueue item = new RoadItemQueue(mapView, roadID);
                 mapView.AddToViewQueue(item);
 
                 gm.getActivePlayer().payForSomething(Settings.costRoad);
@@ -108,13 +113,16 @@ namespace Expanze.Gameplay.Map
                 return BuildingBuildError.TownHasNoHexaWithThatHexaID;
 
             HexaModel hexa = town.getHexa(buildingPos);
-            if (hexa.getType() == HexaKind.Desert && kind == BuildingKind.SourceBuilding)
+            if (hexa.getKind() == HexaKind.Desert && kind == BuildingKind.SourceBuilding)
                 return BuildingBuildError.NoSourceBuildingForDesert;
 
             BuildingBuildError error = town.canActivePlayerBuildBuildingInTown(buildingPos, kind);
             if (error == BuildingBuildError.OK)
             {
-                town.buildBuilding(buildingPos, kind);
+                ItemQueue item = new BuildingItemQueue(mapView, townID, buildingPos);
+                mapView.AddToViewQueue(item);
+
+                town.BuildBuilding(buildingPos, kind);
                 gm.getActivePlayer().payForSomething(town.GetBuildingCost(buildingPos, kind));
             }
 
@@ -131,7 +139,7 @@ namespace Expanze.Gameplay.Map
             {
                 town.BuildTown(gm.getActivePlayer());
 
-                ItemQueue item = new ItemQueue(ItemKind.BuildTown, townID);
+                ItemQueue item = new TownItemQueue(mapView, townID);
                 mapView.AddToViewQueue(item);
 
                 if (gm.getState() != EGameState.StateGame)
@@ -143,7 +151,7 @@ namespace Expanze.Gameplay.Map
                     {
                         if ((hexa = town.getHexa(loop1)) != null)
                         {
-                            switch (hexa.getType())
+                            switch (hexa.getKind())
                             {
                                 case HexaKind.Cornfield:
                                     source = Settings.costMill; break;

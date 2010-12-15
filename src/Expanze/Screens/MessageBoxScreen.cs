@@ -26,6 +26,8 @@ namespace Expanze
 
         string message;
         Texture2D gradientTexture;
+        Vector2 yesPosition;
+        Vector2 noPosition;
 
         #endregion
 
@@ -54,13 +56,8 @@ namespace Expanze
         /// </summary>
         public MessageBoxScreen(string message, bool includeUsageText)
         {
-            const string usageText = "\nAno - stiskněte A, Mezerník nebo Enter" +
-                                     "\nNe - stiskněte B nebo Esc"; 
-            
-            if (includeUsageText)
-                this.message = message + usageText;
-            else
-                this.message = message;
+
+            this.message = message;
 
             IsPopup = true;
 
@@ -93,6 +90,23 @@ namespace Expanze
         /// </summary>
         public override void HandleInput(InputState input)
         {
+
+            if(input.IsMenuMouseClicked(new Rectangle((int)noPosition.X,(int)noPosition.Y,150,50)))
+            {
+                if( Cancelled != null )
+                    Cancelled(this, new PlayerIndexEventArgs(PlayerIndex.One));
+
+                ExitScreen();
+            }
+
+            if (input.IsMenuMouseClicked(new Rectangle((int)yesPosition.X, (int)yesPosition.Y, 150, 50),true))
+            {
+                if (Accepted != null)
+                    Accepted(this, new PlayerIndexEventArgs(PlayerIndex.One));
+
+                ExitScreen();
+            }
+
             PlayerIndex playerIndex;
 
             // We pass in our ControllingPlayer, which may either be null (to
@@ -139,7 +153,7 @@ namespace Expanze
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
             Vector2 viewportSize = new Vector2(viewport.Width, viewport.Height);
             Vector2 textSize = font.MeasureString(message);
-            Vector2 textPosition = (viewportSize - textSize) / 2;
+            Vector2 textPosition = (Settings.maximumResolution - textSize) / 2;
 
             // The background includes a border somewhat larger than the text itself.
             const int hPad = 32;
@@ -147,19 +161,25 @@ namespace Expanze
             
             Rectangle backgroundRectangle = new Rectangle((int)textPosition.X - hPad,
                                                           (int)textPosition.Y - vPad,
-                                                          (int)textSize.X + hPad * 2,
-                                                          (int)textSize.Y + vPad * 2);
+                                                          1000,
+                                                          180);
+
+            yesPosition = new Vector2(textPosition.X + 300, textPosition.Y + 80);
+            noPosition = new Vector2(textPosition.X + 600, textPosition.Y + 80);
 
             // Fade the popup alpha during transitions.
             Color color = Color.White * TransitionAlpha;
 
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
 
             // Draw the background rectangle.
             spriteBatch.Draw(gradientTexture, backgroundRectangle, color);
 
             // Draw the message box text.
             spriteBatch.DrawString(font, message, textPosition, color);
+
+            spriteBatch.DrawString(font, "Ano", yesPosition, color);
+            spriteBatch.DrawString(font, "Ne", noPosition, color);
 
             spriteBatch.End();
         }

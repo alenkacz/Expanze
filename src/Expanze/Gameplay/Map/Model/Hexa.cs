@@ -14,12 +14,17 @@ namespace Expanze
     /// </summary>
     class HexaModel : IHexaGet
     {
-        int value;      // how many sources will player get
+        int startSource;      // how many sources will player get
+        bool sourceDisaster;  // is on hex disaster 
+        int turnDisaster;     // how many turns disaster will last
+        bool sourceMiracle;   // is on hex miracle
+        int turnMiracle;      // how many turns miracle will last
+
         int hexaID;     // from counter, useable for picking
         private static int counter = 0;    // how many hexas are created
         SourceAll sourceBuildingCost;
 
-        private HexaKind type = HexaKind.Water;
+        private HexaKind kind = HexaKind.Water;
         private HexaModel[] hexaNeighbours;      // neighbours of hexa, to index use RoadPos
         private Town[] towns;               // possible towns on hexa, to index use Town Pos
         private Boolean[] townOwner;        // was this town made by this hexa? if was, this hexa will draw it, handle picking, get sources...
@@ -30,20 +35,46 @@ namespace Expanze
 
         public HexaModel(int value, HexaKind type, SourceAll sourceBuildingCost)
         {
-            this.hexaID = ++counter;
+            if (type == HexaKind.Water)
+            {
+                this.hexaID = -1;
+            } else
+                this.hexaID = ++counter;
 
             this.sourceBuildingCost = sourceBuildingCost;
-            this.type = type;
-            this.value = value;
+            this.kind = type;
+            this.startSource = value;
             this.towns = new Town[(int) TownPos.Count];
             this.roads = new Road[(int)RoadPos.Count];
             this.townOwner = new Boolean[(int)TownPos.Count];
             this.roadOwner = new Boolean[(int)RoadPos.Count];
+
+            sourceDisaster = false;
+            sourceMiracle = false;
         }
 
         public static void resetCounter() { counter = 0; }
 
-        public int getCurrentSource() { return value; }
+        public void Update(GameTime gameTime)
+        {
+        }
+
+        public void NextTurn()
+        {
+            if (sourceDisaster)
+            {
+                turnDisaster--;
+                if (turnDisaster == 0)
+                    sourceDisaster = false;
+            }
+
+            if (sourceMiracle)
+            {
+                turnMiracle--;
+                if (turnMiracle == 0)
+                    sourceMiracle = false;
+            }
+        }
 
         public void CreateTownsAndRoads(HexaModel[] neighboursModel, HexaView hexaView, HexaView[] neighboursView)
         {
@@ -51,7 +82,7 @@ namespace Expanze
             for (int loop1 = 0; loop1 < neighboursModel.Length; loop1++)
                 hexaNeighbours[loop1] = neighboursModel[loop1];
 
-            if (type == HexaKind.Nothing || type == HexaKind.Water)
+            if (kind == HexaKind.Nothing || kind == HexaKind.Water)
                 return;
 
             ///////////////////////
@@ -418,13 +449,23 @@ namespace Expanze
 
         public string getModelPath()
         {
-            return Settings.mapPaths[(int)getType()];
+            return Settings.mapPaths[(int)getKind()];
         }
 
-        public int getValue() { return value; }
-        public HexaKind getType()
+        public int getStartSource() { return startSource; }
+        public int getCurrentSource()
         {
-            return this.type;
+            float multiply = 1.0f;
+            if (sourceMiracle)
+                multiply *= 1.5f;
+            else if (sourceDisaster)
+                multiply *= 0.5f;
+            return (int) (startSource * multiply);
+        }
+
+        public HexaKind getKind()
+        {
+            return this.kind;
         }
 
         public Road getRoad(RoadPos roadPos)
@@ -470,5 +511,24 @@ namespace Expanze
         public Boolean getRoadOwner(int i) { return roadOwner[i]; }
         public Boolean getTownOwner(int i) { return townOwner[i]; }
         public SourceAll getSourceBuildingCost() { return sourceBuildingCost; }
+
+        public void ApplyEvent(Gameplay.RndEvent rndEvent)
+        {
+            if (rndEvent.getHexaKind() == kind)
+            {
+                if (rndEvent.getIsPositive())
+                {
+                    sourceMiracle = true;
+                    turnMiracle = GameMaster.getInstance().getPlayerCount() * 3;
+                    sourceDisaster = false;
+                }
+                else
+                {
+                    sourceDisaster = true;
+                    turnDisaster = GameMaster.getInstance().getPlayerCount() * 2;
+                    sourceMiracle = false;
+                }
+            }
+        }
     }
 }

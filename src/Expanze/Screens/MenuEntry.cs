@@ -181,6 +181,11 @@ namespace Expanze
             return (int)screen.ScreenManager.Font.MeasureString(Text).X;
         }
 
+        public virtual Rectangle GetRange(MenuScreen screen)
+        {
+                return new Rectangle((int)position.X,(int)position.Y-20,this.GetWidth(screen),40);
+        }
+
 
         #endregion
     }

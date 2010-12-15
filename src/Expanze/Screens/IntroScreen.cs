@@ -110,6 +110,7 @@ namespace Expanze
         {
             if (time.TotalGameTime.TotalSeconds > 5 || Keyboard.GetState().IsKeyDown(Keys.Enter) || Keyboard.GetState().IsKeyDown(Keys.Escape) || Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
+                InputState.waitForRelease();
                 return true;
             }
 

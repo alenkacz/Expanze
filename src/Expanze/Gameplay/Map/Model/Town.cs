@@ -117,9 +117,9 @@ namespace Expanze
                     buildingKind[loop1] == BuildingKind.SourceBuilding)
                 {
                     float multiply = (building[loop1].GetIsUpgrade(UpgradeKind.SecondUpgrade, 0)) ? 2.0f : (building[loop1].GetIsUpgrade(UpgradeKind.FirstUpgrade, 0)) ? 1.5f : 1.0f;
-                    amount = (int) (hexaNeighbour[loop1].getValue() * multiply);
+                    amount = (int)(hexaNeighbour[loop1].getCurrentSource() * multiply);
 
-                    switch (hexaNeighbour[loop1].getType())
+                    switch (hexaNeighbour[loop1].getKind())
                     {
                         case HexaKind.Forest:
                             cost = cost + new SourceAll(amount, 0, 0, 0, 0);
@@ -150,6 +150,7 @@ namespace Expanze
         {
             playerOwner = player;
             player.addPoints(Settings.pointsTown);
+            player.addBuilding(Building.Town);
             isBuild = true;
         }
 
@@ -269,23 +270,34 @@ namespace Expanze
             }
         }
 
-        public void buildBuilding(int pos, BuildingKind kind)
+        public void BuildBuilding(int pos, BuildingKind kind)
         {
             buildingKind[pos] = kind;
             switch (kind)
             {
                 case BuildingKind.SourceBuilding :
                     building[pos] = new SourceBuildingModel(townID, hexaNeighbour[pos].getID());
+                    switch (hexaNeighbour[pos].getKind())
+                    {
+                        case HexaKind.Cornfield: playerOwner.addBuilding(Building.Mill); break;
+                        case HexaKind.Pasture: playerOwner.addBuilding(Building.Stepherd); break;
+                        case HexaKind.Stone: playerOwner.addBuilding(Building.Quarry); break;
+                        case HexaKind.Forest: playerOwner.addBuilding(Building.Saw); break;
+                        case HexaKind.Mountains: playerOwner.addBuilding(Building.Mine); break;
+                    }
                     break;
 
                 case BuildingKind.MarketBuilding :
                     building[pos] = new MarketModel(townID, hexaNeighbour[pos].getID());
+                    playerOwner.addBuilding(Building.Market);
                     break;
                 case BuildingKind.MonasteryBuilding :
                     building[pos] = new MonasteryModel(townID, hexaNeighbour[pos].getID());
+                    playerOwner.addBuilding(Building.Monastery);
                     break;
                 case BuildingKind.FortBuilding :
                     building[pos] = new FortModel(townID, hexaNeighbour[pos].getID());
+                    playerOwner.addBuilding(Building.Fort);
                     break;
             }
         }

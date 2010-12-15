@@ -38,9 +38,26 @@ namespace Expanze.Gameplay.Map
         }
     }
 
+    class TownItemQueue : ItemQueue
+    {
+        int townID;
+
+        public TownItemQueue(MapView mapView, int townID) : base(mapView)
+        {
+            this.townID = townID;
+        }
+
+        public override void Execute()
+        {
+            mapView.BuildTownView(townID);
+            base.Execute();
+        }
+    }
+
     class TownView
     {
-        private static int pickTownID = -1;
+     
+        private static int pickTownID;
         private int townID;
         private bool isBuildView;       // Could be diffrent from model Town isBuild, first is in model true but it is not draw, it waits
 
@@ -49,13 +66,17 @@ namespace Expanze.Gameplay.Map
         private Town model;
         private Matrix world;
 
+        private bool[] buildingIsBuild; /// is building on 1-3 position build?
+
         public TownView(Town model, Matrix world)
         {
             this.model = model;
             this.townID = model.getTownID();
             this.pickTownColor = new Color(0.0f, 0.0f, townID / 256.0f);
             this.world = world;
-
+            buildingIsBuild = new bool[3];
+            for (int loop1 = 0; loop1 < buildingIsBuild.Length; loop1++)
+                buildingIsBuild[loop1] = false;
             pickVars = new PickVariables(pickTownColor);
         }
 
@@ -65,6 +86,16 @@ namespace Expanze.Gameplay.Map
         public Boolean getPickNewPress() { return pickVars.pickNewPress; }
 
         public void setIsBuild(bool isBuild) { this.isBuildView = isBuild; }
+
+        public bool getBuildingIsBuild(int hexaID)
+        {
+            return buildingIsBuild[model.findBuildingByHexaID(hexaID)];
+        }
+
+        public void setBuildingIsBuild(int pos, bool isBuild)
+        {
+            buildingIsBuild[pos] = isBuild;
+        }
 
         public void draw(GameTime gameTime)
         {
@@ -209,6 +240,11 @@ namespace Expanze.Gameplay.Map
                         }
                 }
             }
+        }
+
+        public static void resetTownView()
+        {
+            pickTownID = -1;
         }
     }
 }

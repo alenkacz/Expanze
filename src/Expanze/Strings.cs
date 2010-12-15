@@ -11,6 +11,8 @@ namespace Expanze
         // Menu strings
         public static string MENU_HOT_SEAT_NO_AI = "Hráč";
 
+        public static string[] MENU_HOT_SEAT_NAMES = { "Pedro de Mendoza", "Raimundus Lullus", "Hernando de Soto", "Francisco Pizarro", "Diego de Almagro", "Juan de la Cosa" };
+
         public static string MENU_PAUSE_GAME_ITEM_RESUME = "Zpět do hry";
         public static string MENU_PAUSE_GAME_ITEM_QUIT_GAME = "Ukončit hru";
 
@@ -70,7 +72,7 @@ namespace Expanze
         public static string PROMT_TITLE_WANT_TO_BUILD_SAW = "Pila";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_SAW = "Dřevorubci natahají z lesa dřevo.  Po vynalezení pokroku z Kláštera bude těžba účinější.";
         public static string PROMPT_TITLE_WANT_TO_UPGRADE_1_SAW = "Sekery";
-        public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_SAW = "Pořídíš-li dřevorupcům sekery, budou pracovat o 50% lépe";
+        public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_SAW = "Pořídíš-li dřevorubcům sekery, budou pracovat o 50% lépe";
         public static string PROMPT_TITLE_WANT_TO_UPGRADE_2_SAW = "Tažní koně";
         public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_SAW = "Tažní koně velice urychlí práci. Zisky dřeva o 100% lepší.";
 
@@ -90,7 +92,7 @@ namespace Expanze
         public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_STEPHERD = "Pastevec se naučí ovcím naslouchat, bude jich dvakrát tolik.";
 
         public static string PROMPT_TITLE_WANT_TO_BUILD_FORT = "Pevnost";
-        public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_FORT = "Z pevnosti můžeš poslat vojsko poničit nějaké pole, obsadit důl, zničit suroviny protihráči, nebo získat body za vojenskou přehlídku.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_FORT = "Z pevnosti můžeš poslat vojsko zničit suroviny protihráči, nebo získat body za vojenskou přehlídku.";
         public static string PROMPT_TITLE_WANT_TO_BUILD_MARKET = "Tržiště";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_MARKET = "Na tržišti si můžeš koupit lepší směnný kurz pro výměnu surovin. Chceš-li měnit tři ku jedné, či dva ku jedné, tržiště je jasná volba.";
         public static string PROMPT_TITLE_WANT_TO_BUILD_MONASTERY = "Klášter";
@@ -98,8 +100,8 @@ namespace Expanze
 
         public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_CORN_1 = "Výhradní výměnné právo na obilí";
         public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_CORN_2 = "Výměnné právo na obilí druhého stupně";
-        public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_MEAT_1 = "Výhradní výměnné právo na maso";
-        public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_MEAT_2 = "Výměnné právo na maso druhého stupně";
+        public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_MEAT_1 = "Výhradní výměnné právo na ovce";
+        public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_MEAT_2 = "Výměnné právo na ovce druhého stupně";
         public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_STONE_1 = "Výhradní výměnné právo na kámen";
         public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_STONE_2 = "Výměnné právo na kámen druhého stupně";
         public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_WOOD_1 = "Výhradní výměnné právo na dřevo";
@@ -108,8 +110,8 @@ namespace Expanze
         public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_ORE_2 = "Výměnné právo na obilí druhého rudu";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_CORN_1 = "S touto listinou můžeš měnit 3 obilí za jednu jinou surovinu.";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_CORN_2 = "S touto listinou můžeš měnit 2 obilí za jednu jinou surovinu.";
-        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_MEAT_1 = "S touto listinou můžeš měnit 3 masa za jednu jinou surovinu.";
-        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_MEAT_2 = "S touto listinou můžeš měnit 2 masa za jednu jinou surovinu.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_MEAT_1 = "S touto listinou můžeš měnit 3 ovce za jednu jinou surovinu.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_MEAT_2 = "S touto listinou můžeš měnit 2 ovce za jednu jinou surovinu.";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_STONE_1 = "S touto listinou můžeš měnit 3 stavební kameny za jednu jinou surovinu.";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_STONE_2 = "S touto listinou můžeš měnit 2 stavební kameny za jednu jinou surovinu.";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_WOOD_1 = "S touto listinou můžeš měnit 3 dřeva za jednu jinou surovinu.";
@@ -122,11 +124,57 @@ namespace Expanze
         public static string PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_SOURCES = "Zničit suroviny";
         public static string PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE = "Armádní přehlídka";
 
+        public static string PROMPT_DESCTIPTION_MESSAGE_FORT_ACTION_PARADE = "Předvedl jsi majestátnou přehlídku, těžce se bude překonávat. Získal jsi 3 body.";
+
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_CAPTURE = "Obsazené pole nebude dávat nikomu suroviny. Při pokusu obsadit stejné pole 2x bude pole uvolněno.";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_DESTROY_HEXA = "Poničí tebou vybrané pole. (obilné pole, hory, les, pastvinu, či lom) Pole bude vynášet polovinu oproti běžnému stavu.";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES = "Zničí polovinu surovin jednoho ze soupeřů.";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_PARADE = "Armádní přehlídka ti přinese slávu a zisk 3 bodů.";
 
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES_CHOISING_PLAYER = "Chceš aby tento hráč přišel o své suroviny? Zvědové zjistili, že má tolik surovin :";
+    
+        // EVENTS //
+
+        // DISASTERS //
+
+        public static string MESSAGE_TITLE_DISASTER = "Pohroma";
+        public static string MESSAGE_DESCRIPTION_DISASTER_CORNFIELD = "Zemi postihla extrémní sucha. Výnosy z polí budou poloviční.";
+        public static string MESSAGE_DESCRIPTION_DISASTER_PASTURE = "Vlci napadli stádo ovcí. Pastevci ti jich budou dodávat o polovinu méně.";
+        public static string MESSAGE_DESCRIPTION_DISASTER_STONE = "Sesuvy kamení dělají práci nebezpečnou a horníci nepracují. Těžba bude poloviční.";
+        public static string MESSAGE_DESCRIPTION_DISASTER_FOREST = "Požár zachvátil lesy v zemi. Těžba dřeva musí být omezena na polovinu.";
+        public static string MESSAGE_DESCRIPTION_DISASTER_MOUNTAINS = "V dolech straší a horníci se bojí. Budou těžit jen ti nejodvážnější. Zisky poloviční.";
+
+        // MIRACLES //
+
+        public static string MESSAGE_DESCRIPTION_MIRACLE_CORNFIELD = "Teplé počasí polím přálo, obilí rostlo mnohem víc, rovnou o polovinu víc.";
+        public static string MESSAGE_DESCRIPTION_MIRACLE_PASTURE = "Ovcím se narodilo spoustu mláďat, bude jich o polovinu více.";
+        public static string MESSAGE_DESCRIPTION_MIRACLE_STONE = "Nikdo neví, co se stalo. Těžba jde teď mnohem lépe, je zrychlena o polovinu.";
+        public static string MESSAGE_DESCRIPTION_MIRACLE_FOREST = "Silný vítr vyvrátil mnoho stromů. Těžba dřeva bude rychlejší o polovinu.";
+        public static string MESSAGE_DESCRIPTION_MIRACLE_MOUNTAINS = "Nalezeny nové žíly, může se těžit naplno. Zisky rud budou o polovinu vyšší.";
+
+        public static string MESSAGE_TITLE_MIRACLE = "Zázrak";
+
+        // Medals //
+        public static string MESSAGE_TITLE_MEDAL_TOWN = "Medaile za expanzi";
+        public static string MESSAGE_TITLE_MEDAL_ROAD = "Medaile cestovatele";
+        public static string MESSAGE_TITLE_MEDAL_MARKET = "Medaile obchodníka";
+        public static string MESSAGE_TITLE_MEDAL_FORT = "Medaile válečníka";
+        public static string MESSAGE_TITLE_MEDAL_MONASTERY = "Medaile učence";
+        public static string MESSAGE_TITLE_MEDAL_SAW = "Medaile pily";
+        public static string MESSAGE_TITLE_MEDAL_MILL = "Medaile mlýna";
+        public static string MESSAGE_TITLE_MEDAL_QUARRY = "Medaile lomu";
+        public static string MESSAGE_TITLE_MEDAL_STEPHERD = "Medaile pastevce";
+        public static string MESSAGE_TITLE_MEDAL_MINE = "Medaile dolu";
+
+        public static string MESSAGE_DESCRIPTION_MEDAL_TOWN = "Získá ji ten, který má nejvíce měst, avšak minimálně 5.";
+        public static string MESSAGE_DESCRIPTION_MEDAL_ROAD = "Získá ji ten, jenž postaví nejvíce cest, avšak nejméně 10.";
+        public static string MESSAGE_DESCRIPTION_MEDAL_MARKET = "Získá ji ten, kdo alespoň 3 tržiště má a pokud nikdo jiný jich nemá víc.";
+        public static string MESSAGE_DESCRIPTION_MEDAL_FORT = "Máš-li alespoň tři pevnosti a zároveň víc pevností než kdokoliv jiný, medaile je tvá.";
+        public static string MESSAGE_DESCRIPTION_MEDAL_MONASTERY = "Potřebuješ postavit 3 kláštery a mít jich víc než tví soupeři.";
+        public static string MESSAGE_DESCRIPTION_MEDAL_SAW = "Postav víc pil než ostatní, avšak minimálně tři a tato medaile je tvá.";
+        public static string MESSAGE_DESCRIPTION_MEDAL_MILL = "Postav víc mlýnů než ostatní, avšak minimálně tři a tato medaile je tvá.";
+        public static string MESSAGE_DESCRIPTION_MEDAL_QUARRY = "Postav víc lomů než ostatní, avšak minimálně tři a tato medaile je tvá.";
+        public static string MESSAGE_DESCRIPTION_MEDAL_STEPHERD = "Postav víc chatrčí pastevce než ostatní, avšak minimálně tři a tato medaile je tvá.";
+        public static string MESSAGE_DESCRIPTION_MEDAL_MINE = "Postav víc dolů na rudu než ostatní, avšak minimálně tři a tato medaile je tvá.";
     }
 }

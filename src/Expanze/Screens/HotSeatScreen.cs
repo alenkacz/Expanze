@@ -36,6 +36,7 @@ namespace Expanze
         List<ButtonComponent> remButtons = new List<ButtonComponent>();
 
         int activeNumberOfPlayers = 2;
+        ButtonComponent startGameButton;
 
         List<ButtonComponent> playerButtons = new List<ButtonComponent>();
 
@@ -69,9 +70,9 @@ namespace Expanze
 
             GameState.playerNameFont = content.Load<SpriteFont>("playername");
 
-            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 150), (int)(Settings.maximumResolution.Y - 200), new Rectangle(), GameState.gameFont, Settings.scaleW(79), Settings.scaleH(66), "HUD/hotseat_hra_button");
-            changeTurnButton.Actions += StartGameSelected;
-            guiComponents.Add(changeTurnButton);
+            startGameButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 150), (int)(Settings.maximumResolution.Y - 200), new Rectangle(), GameState.gameFont, Settings.scaleW(79), Settings.scaleH(66), "HUD/hotseat_hra_button");
+            startGameButton.Actions += StartGameSelected;
+            //guiComponents.Add(changeTurnButton);
 
             ButtonComponent backButton = new ButtonComponent(ScreenManager.Game, 60, (int)(Settings.maximumResolution.Y - 200), new Rectangle(), GameState.gameFont, Settings.scaleW(79), Settings.scaleH(66), "HUD/hotseat_back");
             backButton.Actions += BackSelected;
@@ -96,7 +97,7 @@ namespace Expanze
 
             foreach (Color c in Settings.playerColors)
             {
-                PlayerSettingRowComponent pSwitch = new PlayerSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameState.playerNameFont, 200, 200, c, "Player" + (counter+1));
+                PlayerSettingRowComponent pSwitch = new PlayerSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameState.playerNameFont, 200, 200, c, Strings.MENU_HOT_SEAT_NAMES[counter]);
                 playersSettings.Add(pSwitch);
                 colorPosition.Y += playerSpace;
 
@@ -113,7 +114,7 @@ namespace Expanze
             colorPosition.Y += 80;
 
             points = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameState.gameFont, 400, 200, "Počet bodů", new List<String>() { "50", "75", "100" });
-            mapType = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 50, GameState.gameFont, 400, 200, "Druh mapy", new List<String>() { "Normální", "Nížiny", "Pustina" });
+            mapType = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 50, GameState.gameFont, 400, 200, "Druh mapy", new List<String>() { "Nížiny", "Normální", "Pustina" });
             mapSize = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 100, GameState.gameFont, 400, 200, "Velikost mapy", new List<String>() { "Malá", "Střední", "Velká" });
             wealth = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 150, GameState.gameFont, 400, 200, "Bohatství surovin", new List<String>() { "Nízké", "Střední", "Vysoké" });
 
@@ -147,7 +148,7 @@ namespace Expanze
             }
 
                 playerColorTexture = ScreenManager.Game.Content.Load<Texture2D>("pcolor");
-
+                startGameButton.Initialize(); startGameButton.LoadContent();
             ScreenManager.Game.ResetElapsedTime();
         }
 
@@ -177,6 +178,8 @@ namespace Expanze
             {
                 b.UnloadContent();
             }
+
+            startGameButton.UnloadContent();
         }
 
         public override void Update(GameTime gameTime, bool otherScreenHasFocus,
@@ -193,6 +196,8 @@ namespace Expanze
             {
                 p.Update(gameTime);
             }
+
+            startGameButton.Update(gameTime);
         }
 
 
@@ -264,6 +269,20 @@ namespace Expanze
             {
                 p.Draw(gameTime);
             }
+
+            //counting all players
+            int playerCount = 0;
+
+            foreach (PlayerSettingRowComponent p in playersSettings)
+            {
+                if (p.isActive())
+                {
+                    playerCount++;
+                }
+            }
+
+            if( playerCount >= 2 )
+                startGameButton.Draw(gameTime);
 
             spriteBatch.End();
         }

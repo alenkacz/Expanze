@@ -62,7 +62,7 @@ namespace Expanze
             this.texture = texture;
 
             sliderPosition = new Vector2(x, y - 10);
-            clickablePos = new Rectangle(Settings.scaleW(x + 50), Settings.scaleH(y-10), sliderW, sliderH);
+            clickablePos = new Rectangle(Settings.scaleW(x), Settings.scaleH(y - 10), sliderW, sliderH);
             range = new Rectangle(Settings.scaleW(x), Settings.scaleH(y), Settings.scaleW(width), Settings.scaleH(height));
         }
 
@@ -116,6 +116,7 @@ namespace Expanze
         public void resetSlider() 
         {
             sliderPosition.X = spritePosition.X;
+            clickablePos = new Rectangle(Settings.scaleW(sliderPosition.X), Settings.scaleH(sliderPosition.Y), sliderW, sliderH);
             this.fromType = HexaKind.Null;
             this.toType = HexaKind.Null;
             this.fromTypeCount = 0;
@@ -124,19 +125,32 @@ namespace Expanze
             this.toConvertedCount = 0;
         }
 
+        public void moveSliderToStart()
+        {
+            sliderPosition.X = spritePosition.X;
+            clickablePos = new Rectangle(Settings.scaleW(sliderPosition.X), Settings.scaleH(sliderPosition.Y), sliderW, sliderH);
+            this.fromTypeCount = GameMaster.getInstance().getActivePlayer().getMaterialNumber(fromType);
+            this.fromConvertedCount = fromTypeCount;
+            this.toTypeCount = GameMaster.getInstance().getActivePlayer().getMaterialNumber(toType);
+            this.toConvertedCount = toTypeCount;
+        }
+
         private void moveSlider(int pos)
         {
-            if (Settings.scaleW(pos) < (range.Right - Settings.scaleW(24)) && Settings.scaleW(pos) > range.Left)
+            if (Settings.scaleW(pos) < (range.Right) && Settings.scaleW(pos) > range.Left)
             {
                 int unit = getSliderUnit();
                 int converted = (int)(spritePosition.X - pos)/unit;
 
                 if (converted < 0) converted = -converted;
 
-                this.fromConvertedCount = this.fromTypeCount - converted * Settings.getConversionRate(fromType);
-                this.toConvertedCount = this.toTypeCount + converted;
+                if ((this.fromTypeCount - converted * GameMaster.getInstance().getActivePlayer().getConversionRate(fromType)) >= 0)
+                {
+                    this.fromConvertedCount = this.fromTypeCount - converted * GameMaster.getInstance().getActivePlayer().getConversionRate(fromType);
+                    this.toConvertedCount = this.toTypeCount + converted;
 
-                sliderPosition.X = pos;
+                    sliderPosition.X = pos;
+                }
             }
         }
 
@@ -152,7 +166,7 @@ namespace Expanze
 
         private int getSliderUnit()
         {
-            int count = GameMaster.getInstance().getActivePlayer().getMaterialNumber(fromType)/Settings.getConversionRate(fromType);
+            int count = GameMaster.getInstance().getActivePlayer().getMaterialNumber(fromType)/GameMaster.getInstance().getActivePlayer().getConversionRate(fromType);
             return width / count;
         }
 
