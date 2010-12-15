@@ -92,7 +92,7 @@ namespace Expanze
         public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_STEPHERD = "Pastevec se naučí ovcím naslouchat, bude jich dvakrát tolik.";
 
         public static string PROMPT_TITLE_WANT_TO_BUILD_FORT = "Pevnost";
-        public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_FORT = "Z pevnosti můžeš poslat vojsko poničit nějaké pole, obsadit důl, zničit suroviny protihráči, nebo získat body za vojenskou přehlídku.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_FORT = "Z pevnosti můžeš poslat vojsko zničit suroviny protihráči, nebo získat body za vojenskou přehlídku.";
         public static string PROMPT_TITLE_WANT_TO_BUILD_MARKET = "Tržiště";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_MARKET = "Na tržišti si můžeš koupit lepší směnný kurz pro výměnu surovin. Chceš-li měnit tři ku jedné, či dva ku jedné, tržiště je jasná volba.";
         public static string PROMPT_TITLE_WANT_TO_BUILD_MONASTERY = "Klášter";
