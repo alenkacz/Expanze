@@ -124,6 +124,8 @@ namespace Expanze
         public static string PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_SOURCES = "Zničit suroviny";
         public static string PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE = "Armádní přehlídka";
 
+        public static string PROMPT_DESCTIPTION_MESSAGE_FORT_ACTION_PARADE = "Předvedl jsi majestátnou přehlídku, těžce se bude překonávat. Získal jsi 3 body.";
+
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_CAPTURE = "Obsazené pole nebude dávat nikomu suroviny. Při pokusu obsadit stejné pole 2x bude pole uvolněno.";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_DESTROY_HEXA = "Poničí tebou vybrané pole. (obilné pole, hory, les, pastvinu, či lom) Pole bude vynášet polovinu oproti běžnému stavu.";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES = "Zničí polovinu surovin jednoho ze soupeřů.";

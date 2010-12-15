@@ -114,6 +114,10 @@ namespace Expanze.Gameplay
                         case 3 :
                             GameMaster.getInstance().getActivePlayer().addPoints(Settings.pointsFortParade);
                             costParade = costParade + new SourceAll(30);
+                            if (GameMaster.getInstance().getActivePlayer().getIsAI())
+                            {
+                                GameState.message.showAlert(Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE, Strings.PROMPT_DESCTIPTION_MESSAGE_FORT_ACTION_PARADE, GameResources.Inst().getHudTexture(HUDTexture.IconFortParade));
+                            }                          
                             break;
                     }
                     upgradeFirst[upgradeNumber] = false;

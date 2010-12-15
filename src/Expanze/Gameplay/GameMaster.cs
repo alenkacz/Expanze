@@ -483,7 +483,7 @@ namespace Expanze
         public void Draw2D()
         {
             SpriteBatch spriteBatch = GameState.spriteBatch;
-            Vector2 medailPosition = new Vector2(Settings.activeResolution.X - 80.0f, 100.0f);
+            Vector2 medailPosition = new Vector2(Settings.activeResolution.X - 90.0f, 80.0f);
             spriteBatch.Begin();
             for (int loop1 = 0; loop1 < medailOwner.Length; loop1++)
             {
