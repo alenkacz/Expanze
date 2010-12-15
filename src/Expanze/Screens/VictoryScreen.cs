@@ -82,8 +82,9 @@ namespace Expanze
             KeyboardState keyboardState = input.CurrentKeyboardStates[playerIndex];
             MouseState mouseState = input.CurrentMouseState;
 
-            if (keyboardState.IsKeyDown(Keys.Escape) || keyboardState.IsKeyDown(Keys.Enter))
+            if (keyboardState.IsKeyDown(Keys.Escape) || keyboardState.IsKeyDown(Keys.Enter) || Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
+                InputState.waitForRelease();
                 userCancelled = true;
             }
         }
