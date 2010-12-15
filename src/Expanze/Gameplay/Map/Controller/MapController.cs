@@ -76,8 +76,8 @@ namespace Expanze.Gameplay.Map
             BuyingUpgradeError error = building.CanActivePlayerBuyUpgrade(upgradeKind, upgradeNumber);
             if (error == BuyingUpgradeError.OK)
             {
-                building.BuyUpgrade(upgradeKind, upgradeNumber);
                 gm.getActivePlayer().payForSomething(building.getUpgradeCost(upgradeKind, upgradeNumber));
+                building.BuyUpgrade(upgradeKind, upgradeNumber);         
             }
             return error;
         }
