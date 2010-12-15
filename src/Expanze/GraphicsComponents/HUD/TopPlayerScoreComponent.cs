@@ -15,6 +15,7 @@ namespace Expanze
         Texture2D textureRight;
         Texture2D textureMiddle;
         Texture2D textureColor;
+        Texture2D textureMedaile;
 
         SpriteFont font = Settings.Game.Content.Load<SpriteFont>("playername");
         SpriteBatch spriteBatch;
@@ -24,11 +25,11 @@ namespace Expanze
         Vector2 positionMiddle;
         Vector2 positionName;
         Vector2 positionColor;
-        Vector2 positionScore;
         Vector2 positionTotalPoints;
 
         int widthMiddle;
         int widthScore = 100;
+        const int medalWidth = 51;
         const int space = 20;
         const int rightSize = 79;
         const int leftSize = 11;
@@ -45,7 +46,6 @@ namespace Expanze
             positionMiddle = new Vector2((int)Settings.maximumResolution.X - (rightSize + widthMiddle), 0);
 
             positionName = new Vector2((int)Settings.maximumResolution.X - (rightSize - space + widthMiddle), 0);
-            positionScore = new Vector2((int)Settings.maximumResolution.X - (rightSize + 5*space), 50);
             positionTotalPoints = new Vector2((int)Settings.maximumResolution.X - (rightSize + 2*space), 50);
             positionColor = new Vector2((int)Settings.maximumResolution.X - (rightSize - space), 6);
         }
@@ -57,6 +57,7 @@ namespace Expanze
             textureLeft = Settings.Game.Content.Load<Texture2D>("HUD/hud-top-left");
             textureRight = Settings.Game.Content.Load<Texture2D>("HUD/hud-top-right");
             textureMiddle = Settings.Game.Content.Load<Texture2D>("HUD/hud-top-middle");
+            textureMedaile = Settings.Game.Content.Load<Texture2D>("HUD/score_medaile");
             textureColor = Settings.Game.Content.Load<Texture2D>("pcolor");
         }
 
@@ -121,6 +122,8 @@ namespace Expanze
                 posMiddleDraw.X += middleSize;
             }
 
+            Vector2 positionScore = new Vector2(positionTotalPoints.X - font.MeasureString(gMaster.getActivePlayer().getPoints().ToString()).X, positionTotalPoints.Y);
+
             // draw texts
             spriteBatch.DrawString(font, gMaster.getActivePlayer().getName(), positionName, Color.White);
             spriteBatch.DrawString(font, gMaster.getActivePlayer().getPoints().ToString(), positionScore, Color.White);
@@ -128,6 +131,9 @@ namespace Expanze
 
             // draw player color
             spriteBatch.Draw(textureColor, positionColor, gMaster.getActivePlayer().getColor());
+
+            //draw medal
+            spriteBatch.Draw(textureMedaile, new Vector2(positionScore.X - medalWidth - space,positionScore.Y), Color.White);
 
             spriteBatch.End();
         }
