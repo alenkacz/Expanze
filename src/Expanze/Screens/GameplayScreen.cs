@@ -210,7 +210,8 @@ namespace Expanze
         void MarketButtonAction(object sender, PlayerIndexEventArgs e)
         {
             // market can not be opened during first phase of the game - building first towns
-            if (GameMaster.getInstance().getState() == EGameState.StateGame)
+            if (GameMaster.getInstance().getState() == EGameState.StateGame &&
+                !GameMaster.getInstance().getActivePlayer().getIsAI())
             {
 
                 if (MarketComponent.isActive)

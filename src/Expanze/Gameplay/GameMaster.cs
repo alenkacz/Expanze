@@ -144,8 +144,21 @@ namespace Expanze
         {
             this.resetGameSettings();
             players.Clear();
+            IComponentAI componentAI = null;
+            foreach (IComponentAI AI in CoreProviderAI.AI)
+            {
+                componentAI = AI;
+                break;
+            }
+            
             this.players.Add(new Player("Monte Carlos", Color.Red,null));
-            this.players.Add(new Player("Calamity Jain", Color.Blue, null));
+
+            if (componentAI != null)
+            {
+                IComponentAI componentAICopy = componentAI.Clone();
+                this.players.Add(new Player("Calamity Jain", Color.Blue, componentAICopy));
+            } else
+                this.players.Add(new Player("Calamity Jain", Color.Blue, null));
         }
 
         public GameSettings getGameSettings()
@@ -235,6 +248,7 @@ namespace Expanze
             bool status = true;
             if (state == EGameState.StateGame)
             {
+                MarketComponent.isActive = false;
                 //checkWinner(activePlayer);
             }
             status &= changeActivePlaye();
