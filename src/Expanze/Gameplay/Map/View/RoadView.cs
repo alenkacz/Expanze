@@ -38,6 +38,23 @@ namespace Expanze.Gameplay.Map.View
         }
     }
 
+    class RoadItemQueue : ItemQueue
+    {
+        int roadID;
+
+        public RoadItemQueue(MapView mapView, int roadID)
+            : base(mapView)
+        {
+            this.roadID = roadID;
+        }
+
+        public override void Execute()
+        {
+            mapView.BuildRoadView(roadID);
+            base.Execute();
+        }
+    }
+
     class RoadView
     {
         private bool isBuildView;

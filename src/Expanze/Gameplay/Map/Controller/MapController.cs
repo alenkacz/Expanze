@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CorePlugin;
+using Expanze.Gameplay.Map.View;
 
 namespace Expanze.Gameplay.Map
 {
@@ -91,7 +92,7 @@ namespace Expanze.Gameplay.Map
             {
                 road.BuildRoad(gm.getActivePlayer());
 
-                ItemQueue item = new ItemQueue(ItemKind.BuildRoad, roadID);
+                ItemQueue item = new RoadItemQueue(mapView, roadID);
                 mapView.AddToViewQueue(item);
 
                 gm.getActivePlayer().payForSomething(Settings.costRoad);
@@ -118,6 +119,9 @@ namespace Expanze.Gameplay.Map
             BuildingBuildError error = town.canActivePlayerBuildBuildingInTown(buildingPos, kind);
             if (error == BuildingBuildError.OK)
             {
+                ItemQueue item = new BuildingItemQueue(mapView, townID, buildingPos);
+                mapView.AddToViewQueue(item);
+
                 town.BuildBuilding(buildingPos, kind);
                 gm.getActivePlayer().payForSomething(town.GetBuildingCost(buildingPos, kind));
             }
@@ -135,7 +139,7 @@ namespace Expanze.Gameplay.Map
             {
                 town.BuildTown(gm.getActivePlayer());
 
-                ItemQueue item = new ItemQueue(ItemKind.BuildTown, townID);
+                ItemQueue item = new TownItemQueue(mapView, townID);
                 mapView.AddToViewQueue(item);
 
                 if (gm.getState() != EGameState.StateGame)

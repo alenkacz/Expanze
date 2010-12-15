@@ -339,6 +339,12 @@ namespace Expanze.Gameplay.Map
             return viewQueue.getIsClear();
         }
 
+        public void BuildBuildingView(int townID, int pos)
+        {
+            TownView townView = GetTownViewByID(townID);
+            townView.setBuildingIsBuild(pos, true);
+        }
+
         public void BuildTownView(int townID)
         {
             TownView townView = GetTownViewByID(townID);

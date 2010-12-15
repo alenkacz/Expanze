@@ -48,6 +48,25 @@ namespace Expanze
         }
     }
 
+    class BuildingItemQueue : ItemQueue
+    {
+        int townID;
+        int pos;
+
+        public BuildingItemQueue(MapView mapView, int townID, int pos)
+            : base(mapView)
+        {
+            this.townID = townID;
+            this.pos = pos;
+        }
+
+        public override void Execute()
+        {
+            mapView.BuildBuildingView(townID, pos);
+            base.Execute();
+        }
+    } 
+
     class HexaView
     {
         protected int                           hexaID;           // from counter, useable for picking
@@ -259,6 +278,11 @@ namespace Expanze
         {
             for (int loop1 = 0; loop1 < 6; loop1++)
             {
+                if (!townView[loop1].getBuildingIsBuild(model.getID()))
+                {
+                    continue;
+                }
+
                 Model m;
                 Matrix rotation;
 

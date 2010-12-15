@@ -343,7 +343,7 @@ namespace Expanze.Gameplay.Map
         {
             if (mapView.getIsViewQueueClear())
             {
-                ItemQueue item = new ItemQueue(ItemKind.NextTurn, 0);
+                ItemQueue item = new ItemQueue(mapView);
                 mapView.AddToViewQueue(item);
             }
         }
