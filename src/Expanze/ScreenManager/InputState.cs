@@ -193,9 +193,14 @@ namespace Expanze
 
         public bool IsNewLeftMouseButtonPressed()
         {
+            return IsNewLeftMouseButtonPressed(false);
+        }
+
+        public bool IsNewLeftMouseButtonPressed(bool force)
+        {
             if (CurrentMouseState.LeftButton == ButtonState.Pressed && !waitingForRelease)
             {
-                if (!mousePressed)
+                if (!mousePressed || force)
                 {
                     mousePressed = true;
                     return true;
@@ -269,6 +274,16 @@ namespace Expanze
             if (CurrentMouseState.X > Settings.scaleW(res.Left) && CurrentMouseState.X < Settings.scaleW(res.Right) && CurrentMouseState.Y > Settings.scaleH(res.Top) && CurrentMouseState.Y < Settings.scaleH(res.Bottom))
             {
                 return true;
+            }
+
+            return false;
+        }
+
+        public bool IsMenuMouseClicked(Rectangle res, bool force)
+        {
+            if (IsNewLeftMouseButtonPressed(force))
+            {
+                return IsInRange(res);
             }
 
             return false;

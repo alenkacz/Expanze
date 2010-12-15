@@ -91,18 +91,18 @@ namespace Expanze
         public override void HandleInput(InputState input)
         {
 
-            if(input.IsMenuMouseClicked(new Rectangle((int)yesPosition.X,(int)yesPosition.Y,150,50)))
-            {
-                if( Accepted != null )
-                    Accepted(this, new PlayerIndexEventArgs(PlayerIndex.One));
-
-                ExitScreen();
-            }
-
             if(input.IsMenuMouseClicked(new Rectangle((int)noPosition.X,(int)noPosition.Y,150,50)))
             {
                 if( Cancelled != null )
                     Cancelled(this, new PlayerIndexEventArgs(PlayerIndex.One));
+
+                ExitScreen();
+            }
+
+            if (input.IsMenuMouseClicked(new Rectangle((int)yesPosition.X, (int)yesPosition.Y, 150, 50),true))
+            {
+                if (Accepted != null)
+                    Accepted(this, new PlayerIndexEventArgs(PlayerIndex.One));
 
                 ExitScreen();
             }
