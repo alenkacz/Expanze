@@ -16,7 +16,9 @@ namespace Expanze
     {
         int startSource;      // how many sources will player get
         bool sourceDisaster;  // is on hex disaster 
+        int turnDisaster;     // how many turns disaster will last
         bool sourceMiracle;   // is on hex miracle
+        int turnMiracle;      // how many turns miracle will last
 
         int hexaID;     // from counter, useable for picking
         private static int counter = 0;    // how many hexas are created
@@ -52,6 +54,27 @@ namespace Expanze
         }
 
         public static void resetCounter() { counter = 0; }
+
+        public void Update(GameTime gameTime)
+        {
+        }
+
+        public void NextTurn()
+        {
+            if (sourceDisaster)
+            {
+                turnDisaster--;
+                if (turnDisaster == 0)
+                    sourceDisaster = false;
+            }
+
+            if (sourceMiracle)
+            {
+                turnMiracle--;
+                if (turnMiracle == 0)
+                    sourceMiracle = false;
+            }
+        }
 
         public void CreateTownsAndRoads(HexaModel[] neighboursModel, HexaView hexaView, HexaView[] neighboursView)
         {
@@ -496,11 +519,13 @@ namespace Expanze
                 if (rndEvent.getIsPositive())
                 {
                     sourceMiracle = true;
+                    turnMiracle = GameMaster.getInstance().getPlayerCount() * 3;
                     sourceDisaster = false;
                 }
                 else
                 {
                     sourceDisaster = true;
+                    turnDisaster = GameMaster.getInstance().getPlayerCount() * 2;
                     sourceMiracle = false;
                 }
             }

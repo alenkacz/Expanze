@@ -297,6 +297,11 @@ namespace Expanze.Gameplay.Map
             ChangeLight(gameTime);
 
             mapView.Update(gameTime);
+
+            for (int i = 0; i < hexaMapModel.Length; i++)
+                for (int j = 0; j < hexaMapModel[i].Length; j++)
+                    if (hexaMapModel[i][j] != null)
+                        hexaMapModel[i][j].Update(gameTime);
         }
 
         public override void HandlePickableAreas(Color c)
@@ -346,6 +351,11 @@ namespace Expanze.Gameplay.Map
                 ItemQueue item = new ItemQueue(mapView);
                 mapView.AddToViewQueue(item);
             }
+
+            for (int i = 0; i < hexaMapModel.Length; i++)
+                for (int j = 0; j < hexaMapModel[i].Length; j++)
+                    if (hexaMapModel[i][j] != null)
+                        hexaMapModel[i][j].NextTurn();
         }
 
         public HexaModel GetHexaModel(int i, int j)
