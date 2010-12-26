@@ -82,7 +82,13 @@ namespace Expanze.Gameplay.Map
             return error;
         }
 
-        public RoadBuildError BuildRoad(int roadID)
+        public RoadBuildError CanBuildRoad(int roadID)
+        {
+            Road road = map.GetRoadByID(roadID);
+            return road.CanActivePlayerBuildRoad();
+        }
+
+        public IRoadGet BuildRoad(int roadID)
         {
             Road road = map.GetRoadByID(roadID);
 
@@ -96,12 +102,14 @@ namespace Expanze.Gameplay.Map
                 mapView.AddToViewQueue(item);
 
                 gm.getActivePlayer().payForSomething(Settings.costRoad);
+
+                return road;
             }
 
-            return error;
+            return null;
         }
 
-        public BuildingBuildError BuildBuildingInTown(int townID, int hexaID, BuildingKind kind)
+        public BuildingBuildError CanBuildBuildingInTown(int townID, int hexaID, BuildingKind kind)
         {
             GameMaster gm = GameMaster.getInstance();
             Town town = map.GetTownByID(townID);
@@ -116,20 +124,44 @@ namespace Expanze.Gameplay.Map
             if (hexa.getKind() == HexaKind.Desert && kind == BuildingKind.SourceBuilding)
                 return BuildingBuildError.NoSourceBuildingForDesert;
 
+            return town.canActivePlayerBuildBuildingInTown(buildingPos, kind);
+        }
+
+        public ISpecialBuildingGet BuildBuildingInTown(int townID, int hexaID, BuildingKind kind)
+        {
+            GameMaster gm = GameMaster.getInstance();
+            Town town = map.GetTownByID(townID);
+            if (town == null)
+                return null;
+
+            int buildingPos = town.findBuildingByHexaID(hexaID);
+            if (buildingPos == -1)
+                return null;
+
+            HexaModel hexa = town.getHexa(buildingPos);
+            if (hexa.getKind() == HexaKind.Desert && kind == BuildingKind.SourceBuilding)
+                return null;
+
             BuildingBuildError error = town.canActivePlayerBuildBuildingInTown(buildingPos, kind);
             if (error == BuildingBuildError.OK)
             {
                 ItemQueue item = new BuildingItemQueue(mapView, townID, buildingPos);
                 mapView.AddToViewQueue(item);
 
-                town.BuildBuilding(buildingPos, kind);
                 gm.getActivePlayer().payForSomething(town.GetBuildingCost(buildingPos, kind));
+                return town.BuildBuilding(buildingPos, kind);
             }
 
-            return error;
+            return null;
         }
 
-        public TownBuildError BuildTown(int townID)
+        public TownBuildError CanBuildTown(int townID)
+        {
+            Town town = map.GetTownByID(townID);
+            return town.CanActivePlayerBuildTown();
+        }
+
+        public ITownGet BuildTown(int townID)
         {
             Town town = map.GetTownByID(townID);
 
@@ -176,9 +208,11 @@ namespace Expanze.Gameplay.Map
                 }
                 else
                     gm.getActivePlayer().payForSomething(Settings.costTown);
+
+                return town;
             }
 
-            return error;
+            return null;
         }
     }
 }

@@ -11,9 +11,52 @@ namespace CorePlugin
 
     public interface IMapController
     {
-        TownBuildError BuildTown(int townID);
-        RoadBuildError BuildRoad(int roadID);
-        BuildingBuildError BuildBuildingInTown(int townID, int hexaID, BuildingKind kind);
+        /// <summary>
+        /// If it is possible, it builds town on town place with townID.
+        /// </summary>
+        /// <param name="townID">ID of town place</param>
+        /// <returns>Builded town or null if player cant build town.</returns>
+        ITownGet BuildTown(int townID);
+
+        /// <summary>
+        /// Find out if player can build town on town place with townID. 
+        /// </summary>
+        /// <param name="townID">ID of town place</param>
+        /// <returns>Reason why it is not possible to build town or TownBuildError.OK if there is no error.</returns>
+        TownBuildError CanBuildTown(int townID);
+
+        /// <summary>
+        /// If it is possible, it builds road on road place with roadID.
+        /// </summary>
+        /// <param name="roadID">ID of road place</param>
+        /// <returns>Builded road or null if player cant build road.</returns>
+        IRoadGet BuildRoad(int roadID);
+
+        /// <summary>
+        /// Find out if player can build road on road place with roadID. 
+        /// </summary>
+        /// <param name="roadID">ID of road place</param>
+        /// <returns>Reason why it is not possible to build road or RoadBuildError.OK if there is no error.</returns>
+        RoadBuildError CanBuildRoad(int roadID);
+
+        /// <summary>
+        /// Find out if player can build building in town with townID on hexa with hexaID of building kind kind.
+        /// </summary>
+        /// <param name="townID">ID of town</param>
+        /// <param name="hexaID">ID of hexa near town</param>
+        /// <param name="kind">kind of building</param>
+        /// <returns>Reason why it is not possible to build building int town or BuildingBuildError.OK if there is no error.</returns>
+        BuildingBuildError CanBuildBuildingInTown(int townID, int hexaID, BuildingKind kind);
+
+        /// <summary>
+        /// If it is possible it builds building in town with townID on hexa with hexaID of building kind kind.
+        /// </summary>
+        /// <param name="townID">ID of town</param>
+        /// <param name="hexaID">ID of hexa near town</param>
+        /// <param name="kind">kind of building</param>
+        /// <returns>Builded building or null if player cant build building in town.</returns>       
+        ISpecialBuildingGet BuildBuildingInTown(int townID, int hexaID, BuildingKind kind);
+
         BuyingUpgradeError BuyUpgradeInSpecialBuilding(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber);
         ChangingSourcesError ChangeSources(SourceKind fromSource, SourceKind toSource, int fromAmount);
 

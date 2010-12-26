@@ -136,7 +136,7 @@ namespace NoobAI
                         {
                             if (!hasFort)
                             {
-                                if (mapController.BuildBuildingInTown(loop1, hexaID, BuildingKind.FortBuilding) == BuildingBuildError.OK)
+                                if (mapController.BuildBuildingInTown(loop1, hexaID, BuildingKind.FortBuilding) != null)
                                 {
                                     hasFort = true;
                                     fortHexaID = hexaID;
@@ -146,14 +146,14 @@ namespace NoobAI
                             }
                             else if (!hasMarket)
                             {
-                                if (mapController.BuildBuildingInTown(loop1, hexaID, BuildingKind.MarketBuilding) == BuildingBuildError.OK)
+                                if (mapController.BuildBuildingInTown(loop1, hexaID, BuildingKind.MarketBuilding) != null)
                                 {
                                     hasMarket = true;
                                 }
                                 continue;
                             } if (!hasMonastery)
                             {
-                                if (mapController.BuildBuildingInTown(loop1, hexaID, BuildingKind.MonasteryBuilding) == BuildingBuildError.OK)
+                                if (mapController.BuildBuildingInTown(loop1, hexaID, BuildingKind.MonasteryBuilding) != null)
                                 {
                                     hasMonastery = true;
                                 }
@@ -173,9 +173,7 @@ namespace NoobAI
 
             for (int loop1 = maxTownID; loop1 > 0; loop1--)
             {
-                ITownGet town = mapController.GetITownGetByID(loop1);
-
-                if (town.CanActivePlayerBuildTown() == TownBuildError.OK)
+                if (mapController.CanBuildTown(loop1) == TownBuildError.OK)
                 {
                     mapController.BuildTown(loop1);
                     return true;
@@ -211,8 +209,8 @@ namespace NoobAI
 
         public void BuildTown(int id)
         {
-            mapController.BuildTown(id);
-            ITownGet town = mapController.GetITownGetByID(id);
+            ITownGet town = mapController.BuildTown(id);
+
             for (int loop2 = 0; loop2 < 3; loop2++)
             {
                 IHexaGet hexa = town.getIHexaGet(loop2);
@@ -255,10 +253,11 @@ namespace NoobAI
             for (int loop1 = 1; loop1 < maxTownID; loop1++)
             {
                 int sourceSum = 0;
-                ITownGet town = mapController.GetITownGetByID(loop1);
-
-                if (town.CanActivePlayerBuildTown() != TownBuildError.OK)
+                
+                if (mapController.CanBuildTown(loop1) != TownBuildError.OK)
                     continue;
+
+                ITownGet town = mapController.GetITownGetByID(loop1);
 
                 bool tempCorn, tempWood, tempMeat, tempOre, tempStone;
                 tempCorn = false;

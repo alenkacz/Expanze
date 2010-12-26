@@ -270,7 +270,7 @@ namespace Expanze
             }
         }
 
-        public void BuildBuilding(int pos, BuildingKind kind)
+        public ISpecialBuildingGet BuildBuilding(int pos, BuildingKind kind)
         {
             buildingKind[pos] = kind;
             switch (kind)
@@ -300,6 +300,8 @@ namespace Expanze
                     playerOwner.addBuilding(Building.Fort);
                     break;
             }
+
+            return building[pos];
         }
 
 
