@@ -162,6 +162,7 @@ namespace Expanze.Gameplay.Map
             GameState.projection = Matrix.CreatePerspectiveFieldOfView((float)MathHelper.ToRadians(90), aspectRatio, 0.01f, 100.0f);
 
             GameMaster.getInstance().StartTurn();
+            mapController.Init();
         }
 
         private HexaModel[][] getMap()

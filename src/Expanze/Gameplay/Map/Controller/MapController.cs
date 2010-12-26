@@ -12,6 +12,9 @@ namespace Expanze.Gameplay.Map
         Map map;
         MapView mapView;
 
+        ITownGet[] townByID;
+        IRoadGet[] roadByID;
+
         public MapController(Map map, MapView mapView)
         {
             this.map = map;
@@ -23,12 +26,20 @@ namespace Expanze.Gameplay.Map
 
         public ITownGet GetITownGetByID(int townID)
         {
-            return map.GetTownByID(townID);
+            if (townID < 1 || townID >= townByID.Length)
+                return null;
+            if(townByID[townID - 1] == null)
+                townByID[townID - 1] = map.GetTownByID(townID);
+            return townByID[townID - 1];
         }
 
         public IRoadGet GetIRoadGetByID(int roadID)
         {
-            return map.GetRoadByID(roadID);
+            if (roadID < 1 || roadID >= roadByID.Length)
+                return null;
+            if (roadByID[roadID - 1] == null)
+                roadByID[roadID - 1] = map.GetRoadByID(roadID);
+            return roadByID[roadID - 1];
         }
 
         public IPlayerGet GetPlayerMe() { return GameMaster.getInstance().getActivePlayer(); }
@@ -118,7 +129,7 @@ namespace Expanze.Gameplay.Map
             GameMaster gm = GameMaster.getInstance();
             Town town = map.GetTownByID(townID);
             if (town == null)
-                return BuildingBuildError.TownDoesntExist;
+                return BuildingBuildError.InvalidTownID;
 
             int buildingPos = town.findBuildingByHexaID(hexaID);
             if (buildingPos == -1)
@@ -221,6 +232,16 @@ namespace Expanze.Gameplay.Map
             }
 
             return null;
+        }
+
+        public void Init()
+        {
+            townByID = new ITownGet[Town.getTownCount()];
+            for (int loop1 = 0; loop1 < townByID.Length; loop1++)
+                townByID[loop1] = null;
+            roadByID = new IRoadGet[Road.getRoadCount()];
+            for (int loop1 = 0; loop1 < roadByID.Length; loop1++)
+                roadByID[loop1] = null;
         }
     }
 }
