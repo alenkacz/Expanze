@@ -14,7 +14,7 @@ namespace Expanze.Gameplay.Map.View
         int roadID;
 
         public RoadPromptItem(int roadID, String title, String description, SourceAll source, bool isSourceCost, Texture2D icon)
-            : base(title, description, source, isSourceCost, icon)
+            : base(title, description, source, isSourceCost, false, icon)
         {
             this.roadID = roadID;
         }

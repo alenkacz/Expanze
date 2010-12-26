@@ -18,21 +18,24 @@ namespace Expanze
         String description;     // description
         ISourceAll cost;         // cost in all sources
         Texture2D icon;         // image icon of item
-        bool isSourceCost;
+        bool isSourceCost;      /// is that cost or it means something else? (ex. sources of some player)
+        bool showZeroSources;   /// show source if it is zero?
 
+        public bool getShowZeroSources() { return showZeroSources; }
         public bool getIsSourceCost() { return isSourceCost;}
         public ISourceAll getCost() { return cost; }
         public String getTitle() { return title; }
         public Texture2D getIcon() { return icon; }
         public String getDescription() { return description; }
 
-        public PromptItem(String title, String description, ISourceAll source, bool isSourceCost, Texture2D icon)
+        public PromptItem(String title, String description, ISourceAll source, bool isSourceCost, bool showZeroSources, Texture2D icon)
         {
             this.title = title;
             this.description = description;
             this.cost = source;
             this.icon = icon;
             this.isSourceCost = isSourceCost;
+            this.showZeroSources = showZeroSources;
         }
 
         public virtual void DrawIcon(Vector2 iconPosition)

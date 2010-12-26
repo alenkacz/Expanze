@@ -19,7 +19,7 @@ namespace Expanze
         BuildingKind kind;
 
         public BuildingPromptItem(int townID, int hexaID, BuildingKind kind, String title, String description, SourceAll source, bool isSourceCost, Texture2D icon)
-            : base(title, description, source, isSourceCost, icon)
+            : base(title, description, source, isSourceCost, false, icon)
         {
             this.townID = townID;
             this.hexaID = hexaID;

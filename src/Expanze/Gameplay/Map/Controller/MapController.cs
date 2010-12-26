@@ -197,7 +197,7 @@ namespace Expanze.Gameplay.Map
                 {
                     SourceAll source = new SourceAll(0);
                     HexaModel hexa;
-                    gm.getActivePlayer().addSources(new SourceAll(0), TransactionState.TransactionStart);
+                    
                     for (int loop1 = 0; loop1 < 3; loop1++)
                     {
                         if ((hexa = town.getHexa(loop1)) != null)
@@ -220,7 +220,7 @@ namespace Expanze.Gameplay.Map
                             gm.getActivePlayer().addSources(source, TransactionState.TransactionMiddle);
                         }
                     }
-                    gm.getActivePlayer().addSources(new SourceAll(0), TransactionState.TransactionEnd);
+                    
 
                     //if (!gm.getActivePlayer().getIsAI())
                         gm.NextTurn();

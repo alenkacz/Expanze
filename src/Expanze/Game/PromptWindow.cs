@@ -255,7 +255,8 @@ namespace Expanze
             float sourcesWidth = -border;
             for (int loop1 = 0; loop1 < 5; loop1++)
             {
-                if (itemList[activeItem].getCost()[loop1] != 0)
+                if (itemList[activeItem].getCost()[loop1] != 0 ||
+                    itemList[activeItem].getShowZeroSources())
                     sourcesWidth += textureSource[loop1].Width + border;
             }
 
@@ -265,7 +266,8 @@ namespace Expanze
             ISourceAll playerSource = GameMaster.getInstance().getActivePlayer().GetSource();
             for (int loop1 = 0; loop1 < 5; loop1++)
             {
-                if (itemList[activeItem].getCost()[loop1] != 0)
+                if (itemList[activeItem].getCost()[loop1] != 0 ||
+                    itemList[activeItem].getShowZeroSources())
                 {
                     spriteBatch.Draw(textureSource[loop1], new Vector2(startX, startY), Color.White);
                     spriteBatch.DrawString(GameState.materialsNewFont, itemList[activeItem].getCost()[loop1].ToString(), new Vector2(startX + (textureSource[loop1].Width >> 1) + 5, startY + 45), (!itemList[activeItem].getIsSourceCost() || playerSource[loop1] >= itemList[activeItem].getCost()[loop1]) ? Color.White : Color.DarkRed);         

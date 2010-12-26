@@ -13,7 +13,7 @@ namespace Expanze.Gameplay.Map
         int townID;
 
         public TownPromptItem(int townID, String title, String description, SourceAll source, bool isSourceCost, Texture2D icon)
-            : base(title, description, source, isSourceCost, icon)
+            : base(title, description, source, isSourceCost, false, icon)
         {
             this.townID = townID;
         }

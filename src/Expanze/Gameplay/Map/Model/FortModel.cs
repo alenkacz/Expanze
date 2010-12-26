@@ -13,7 +13,7 @@ namespace Expanze.Gameplay
         Player player;
 
         public PlayerPromptItem(Player player, String title, String description, ISourceAll source, bool isSourceCost, Texture2D icon)
-            : base(title, description, source, isSourceCost, icon)
+            : base(title, description, source, isSourceCost, true, icon)
         {
             this.player = player;
 
@@ -105,7 +105,7 @@ namespace Expanze.Gameplay
                             {
                                 if (gm.getPlayer(loop1) != gm.getActivePlayer())
                                 {
-                                    win.addPromptItem(new PlayerPromptItem(gm.getPlayer(loop1), gm.getPlayer(loop1).getName(), Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES_CHOISING_PLAYER, gm.getPlayer(loop1).GetSource(), false, res.getHudTexture(HUDTexture.IconTown)));
+                                    win.addPromptItem(new PlayerPromptItem(gm.getPlayer(loop1), gm.getPlayer(loop1).getName(), Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES_CHOISING_PLAYER, gm.getPlayer(loop1).GetSource(), true, res.getHudTexture(HUDTexture.IconTown)));
                                 }
                             }
                             playerPrompt = true;

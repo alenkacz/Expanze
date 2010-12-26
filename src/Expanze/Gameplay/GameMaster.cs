@@ -224,8 +224,13 @@ namespace Expanze
 
         public bool StartTurn()
         {
+            if (state == EGameState.StateFirstTown)
+            {
+                getActivePlayer().addSources(new SourceAll(0), TransactionState.TransactionStart);
+            }
             if (state == EGameState.StateGame)
             {
+                getActivePlayer().addSources(new SourceAll(0), TransactionState.TransactionEnd);
                 GameState.map.getSources(activePlayer);
                 RandomEvents();
             }
@@ -249,7 +254,6 @@ namespace Expanze
             if (state == EGameState.StateGame)
             {
                 MarketComponent.isActive = false;
-                //checkWinner(activePlayer);
             }
             status &= changeActivePlaye();
 
