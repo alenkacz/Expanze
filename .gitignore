@@ -9,6 +9,10 @@ src/CorePlugin/bin
 src/CorePlugin/obj
 src/NoobAI/bin
 src/NoobAI/obj
+src/AIHacker/bin
+src/AIHacker/obj
+src/AIEasy/bin
+src/AIEasy/obj
 src/Content/obj
 *.user
 *.zip

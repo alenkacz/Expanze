@@ -111,7 +111,7 @@ namespace NoobAI
                 }
             }
 
-            if (max > 200 && min < 100)
+            if (max > 200 && min < 100 || max > 800)
             {
                 mapController.ChangeSources(maxKind, minKind, 100);
             }

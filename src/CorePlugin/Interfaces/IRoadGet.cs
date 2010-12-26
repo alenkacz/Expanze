@@ -11,7 +11,7 @@ namespace CorePlugin
     /// AlreadyBuild Someone has already build road on selected place
     /// NoPlayerRoadOrTown Selected place is not connect with players road or town
     /// </summary>
-    public enum RoadBuildError { OK, NoSources, AlreadyBuild, NoPlayerRoadOrTown }
+    public enum RoadBuildError { OK, NoSources, AlreadyBuild, NoPlayerRoadOrTown, InvalidRoadID }
 
     public interface IRoadGet
     {

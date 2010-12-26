@@ -85,12 +85,16 @@ namespace Expanze.Gameplay.Map
         public RoadBuildError CanBuildRoad(int roadID)
         {
             Road road = map.GetRoadByID(roadID);
+            if (road == null)
+                return RoadBuildError.InvalidRoadID;
             return road.CanActivePlayerBuildRoad();
         }
 
         public IRoadGet BuildRoad(int roadID)
         {
             Road road = map.GetRoadByID(roadID);
+            if (road == null)
+                return null;
 
             GameMaster gm = GameMaster.getInstance();
             RoadBuildError error = road.CanActivePlayerBuildRoad();
@@ -158,12 +162,16 @@ namespace Expanze.Gameplay.Map
         public TownBuildError CanBuildTown(int townID)
         {
             Town town = map.GetTownByID(townID);
+            if (town == null)
+                return TownBuildError.InvalidTownID;
             return town.CanActivePlayerBuildTown();
         }
 
         public ITownGet BuildTown(int townID)
         {
             Town town = map.GetTownByID(townID);
+            if (town == null)
+                return null;
 
             GameMaster gm = GameMaster.getInstance();
             TownBuildError error = town.CanActivePlayerBuildTown();
@@ -203,7 +211,7 @@ namespace Expanze.Gameplay.Map
                     }
                     gm.getActivePlayer().addSources(new SourceAll(0), TransactionState.TransactionEnd);
 
-                    if (!gm.getActivePlayer().getIsAI())
+                    //if (!gm.getActivePlayer().getIsAI())
                         gm.NextTurn();
                 }
                 else
