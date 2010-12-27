@@ -30,7 +30,6 @@ namespace Expanze
 
         private Map map;
 
-        private ThreadStart actualAIStart;
         private Thread actualAIThread;
         private const int AI_TIME = 5000;   // this is time which have each plugin each turn to resolve AI
         private int actualAITime;           // how much time has AI before it will be aborted
@@ -142,7 +141,7 @@ namespace Expanze
 
         public void PrepareQuickGame()
         {
-            this.resetGameSettings();
+            this.ResetGameSettings();
             players.Clear();
             IComponentAI componentAI = null;
             foreach (IComponentAI AI in CoreProviderAI.AI)
@@ -173,16 +172,29 @@ namespace Expanze
             }
         }
 
-        public void resetGameSettings()
+        public void ResetGameSettings()
         {
             gameSettings = null;
         }
 
-        public void deleteAllPlayers()
+        public void DeleteAllPlayers()
         {
             players = new List<Player>();
             n_player = 0;
         }
+
+        private static void AIThread(IComponentAI ai)
+        {
+            try
+            {
+                ai.ResolveAI();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+        }
+
 
         public void Update(GameTime gameTime)
         {
@@ -190,8 +202,7 @@ namespace Expanze
             {
                 if (!hasAIThreadStarted && !GameState.message.getIsActive())
                 {
-                    actualAIStart = new ThreadStart(activePlayer.getComponentAI().ResolveAI);
-                    actualAIThread = new Thread(actualAIStart);
+                    actualAIThread = new Thread(X => AIThread(activePlayer.getComponentAI()));
                     actualAIThread.Start();
                     actualAITime = AI_TIME;
                     hasAIThreadStarted = true;
@@ -255,7 +266,7 @@ namespace Expanze
             {
                 MarketComponent.isActive = false;
             }
-            status &= changeActivePlaye();
+            status &= ChangeActivePlaye();
 
             status &= StartTurn();
 
@@ -396,7 +407,7 @@ namespace Expanze
             ++n_player;
         }
 
-        public bool changeActivePlaye()
+        public bool ChangeActivePlaye()
         {
             if (state == EGameState.StateFirstTown || state == EGameState.StateGame)
             {

@@ -24,8 +24,8 @@ namespace AIHacker
 
         public void ResolveAI()
         {
-            //int i = 0;
-            //int a = 1 / i;
+            int i = 0;
+            int a = 1 / i;
             if (mapController.GetState() == EGameState.StateFirstTown)
             {
                 for (int loop1 = -5; loop1 < 20; loop1++)
