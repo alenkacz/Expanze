@@ -83,8 +83,8 @@ namespace Expanze
         {
             playerOwner = player;
             isBuild = true;
-            player.addPoints(Settings.pointsRoad);
-            player.addBuilding(Building.Road);
+            player.AddPoints(Settings.pointsRoad);
+            player.AddBuilding(Building.Road);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Expanze
         /// <returns>OK if there is not problem or name of problem.</returns>
         public RoadBuildError CanActivePlayerBuildRoad()
         {
-            GameMaster gm = GameMaster.getInstance();
+            GameMaster gm = GameMaster.Inst();
             if (gm.getState() == EGameState.StateGame)
             {
                 Player activePlayer = gm.getActivePlayer();

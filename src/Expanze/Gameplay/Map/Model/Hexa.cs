@@ -94,7 +94,7 @@ namespace Expanze
             {
                 roadOwner[(int)RoadPos.UpLeft] = true;
                 roads[(int)RoadPos.UpLeft] = new Road();
-                hexaView.createRoadView(RoadPos.UpLeft, Matrix.CreateRotationY(-(float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(-0.25f, 0.0f, 0.14f)));
+                hexaView.CreateRoadView(RoadPos.UpLeft, Matrix.CreateRotationY(-(float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(-0.25f, 0.0f, 0.14f)));
             }
             else
             {
@@ -107,7 +107,7 @@ namespace Expanze
             {
                 roadOwner[(int)RoadPos.UpRight] = true;
                 roads[(int)RoadPos.UpRight] = new Road();
-                hexaView.createRoadView(RoadPos.UpRight, Matrix.CreateRotationY((float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(-0.25f, 0.0f, -0.14f)));
+                hexaView.CreateRoadView(RoadPos.UpRight, Matrix.CreateRotationY((float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(-0.25f, 0.0f, -0.14f)));
             }
             else
             {
@@ -120,7 +120,7 @@ namespace Expanze
             {
                 roadOwner[(int)RoadPos.MiddleLeft] = true;
                 roads[(int)RoadPos.MiddleLeft] = new Road();
-                hexaView.createRoadView(RoadPos.MiddleLeft, Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, 0.29f)));
+                hexaView.CreateRoadView(RoadPos.MiddleLeft, Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, 0.29f)));
             }
             else
             {
@@ -133,7 +133,7 @@ namespace Expanze
             {
                 roadOwner[(int)RoadPos.MiddleRight] = true;
                 roads[(int)RoadPos.MiddleRight] = new Road();
-                hexaView.createRoadView(RoadPos.MiddleRight, Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, -0.28f)));
+                hexaView.CreateRoadView(RoadPos.MiddleRight, Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, -0.28f)));
             }
             else
             {
@@ -146,7 +146,7 @@ namespace Expanze
             {
                 roadOwner[(int)RoadPos.BottomLeft] = true;
                 roads[(int)RoadPos.BottomLeft] = new Road();
-                hexaView.createRoadView(RoadPos.BottomLeft, Matrix.CreateRotationY((float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(0.25f, 0.0f, 0.14f)));
+                hexaView.CreateRoadView(RoadPos.BottomLeft, Matrix.CreateRotationY((float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(0.25f, 0.0f, 0.14f)));
             }
             else
             {
@@ -158,7 +158,7 @@ namespace Expanze
             {
                 roadOwner[(int)RoadPos.BottomRight] = true;
                 roads[(int)RoadPos.BottomRight] = new Road();
-                hexaView.createRoadView(RoadPos.BottomRight, Matrix.CreateRotationY(-(float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(0.25f, 0.0f, -0.14f)));
+                hexaView.CreateRoadView(RoadPos.BottomRight, Matrix.CreateRotationY(-(float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(0.25f, 0.0f, -0.14f)));
             }
             else
             {
@@ -176,7 +176,7 @@ namespace Expanze
             {
                 townOwner[(int)TownPos.Up] = true;
                 towns[(int)TownPos.Up] = new Town();
-                hexaView.createTownView(TownPos.Up, Matrix.CreateTranslation(new Vector3(-0.32f, 0.0f, 0.0f)));
+                hexaView.CreateTownView(TownPos.Up, Matrix.CreateTranslation(new Vector3(-0.32f, 0.0f, 0.0f)));
             }
             else
             {
@@ -199,7 +199,7 @@ namespace Expanze
             {
                 townOwner[(int)TownPos.Bottom] = true;
                 towns[(int)TownPos.Bottom] = new Town();
-                hexaView.createTownView(TownPos.Bottom, Matrix.CreateTranslation(new Vector3(0.32f, 0.0f, 0.0f)));
+                hexaView.CreateTownView(TownPos.Bottom, Matrix.CreateTranslation(new Vector3(0.32f, 0.0f, 0.0f)));
             }
             else
             {
@@ -214,7 +214,7 @@ namespace Expanze
             {
                 townOwner[(int)TownPos.UpRight] = true;
                 towns[(int)TownPos.UpRight] = new Town();
-                hexaView.createTownView(TownPos.UpRight, Matrix.CreateTranslation(new Vector3(-0.16f, 0.0f, -0.28f)));
+                hexaView.CreateTownView(TownPos.UpRight, Matrix.CreateTranslation(new Vector3(-0.16f, 0.0f, -0.28f)));
             }
             else
             {
@@ -237,7 +237,7 @@ namespace Expanze
             {
                 townOwner[(int)TownPos.UpLeft] = true;
                 towns[(int)TownPos.UpLeft] = new Town();
-                hexaView.createTownView(TownPos.UpLeft, Matrix.CreateTranslation(new Vector3(-0.16f, 0.0f, 0.28f)));
+                hexaView.CreateTownView(TownPos.UpLeft, Matrix.CreateTranslation(new Vector3(-0.16f, 0.0f, 0.28f)));
             }
             else
             {
@@ -252,7 +252,7 @@ namespace Expanze
             {
                 townOwner[(int)TownPos.BottomRight] = true;
                 towns[(int)TownPos.BottomRight] = new Town();
-                hexaView.createTownView(TownPos.BottomRight, Matrix.CreateTranslation(new Vector3(0.16f, 0.0f, -0.28f)));
+                hexaView.CreateTownView(TownPos.BottomRight, Matrix.CreateTranslation(new Vector3(0.16f, 0.0f, -0.28f)));
             }
             else
             {
@@ -274,7 +274,7 @@ namespace Expanze
             {
                 townOwner[(int)TownPos.BottomLeft] = true;
                 towns[(int)TownPos.BottomLeft] = new Town();
-                hexaView.createTownView(TownPos.BottomLeft, Matrix.CreateTranslation(new Vector3(0.16f, 0.0f, 0.28f)));
+                hexaView.CreateTownView(TownPos.BottomLeft, Matrix.CreateTranslation(new Vector3(0.16f, 0.0f, 0.28f)));
             }
             else
             {
@@ -519,13 +519,13 @@ namespace Expanze
                 if (rndEvent.getIsPositive())
                 {
                     sourceMiracle = true;
-                    turnMiracle = GameMaster.getInstance().getPlayerCount() * 3;
+                    turnMiracle = GameMaster.Inst().getPlayerCount() * 3;
                     sourceDisaster = false;
                 }
                 else
                 {
                     sourceDisaster = true;
-                    turnDisaster = GameMaster.getInstance().getPlayerCount() * 2;
+                    turnDisaster = GameMaster.Inst().getPlayerCount() * 2;
                     sourceMiracle = false;
                 }
             }

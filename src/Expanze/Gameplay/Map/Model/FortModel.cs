@@ -30,7 +30,7 @@ namespace Expanze.Gameplay
         {
             ISourceAll source = player.GetSource();
             // show message
-            player.payForSomething(new SourceAll(source.getWood() / 2, source.getStone() / 2, source.getCorn() / 2, source.getMeat() / 2, source.getOre() / 2));
+            player.PayForSomething(new SourceAll(source.getWood() / 2, source.getStone() / 2, source.getCorn() / 2, source.getMeat() / 2, source.getOre() / 2));
             
             base.Execute();
         }
@@ -72,14 +72,14 @@ namespace Expanze.Gameplay
             {
                 PromptWindow win = PromptWindow.Inst();
                 GameResources res = GameResources.Inst();
-                win.showPrompt(mod, Strings.PROMPT_TITLE_WANT_TO_BUILD_FORT, true);
+                win.Show(mod, Strings.PROMPT_TITLE_WANT_TO_BUILD_FORT, true);
                 
                 // it wont be in beta version but this is ok
                 // win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_CAPTURE, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_CAPTURE, Settings.costFortCapture, true, res.getHudTexture(HUDTexture.IconFortCapture)));
                 // win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 1, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_DESTROY_HEXA, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_DESTROY_HEXA, Settings.costFortDestroyHexa, true, res.getHudTexture(HUDTexture.IconFortHexa)));
                 
-                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 2, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_SOURCES, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES, Settings.costFortSources, true, res.getHudTexture(HUDTexture.IconFortSources)));
-                win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 3, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_PARADE, costParade, true, res.getHudTexture(HUDTexture.IconFortParade)));
+                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 2, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_SOURCES, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES, Settings.costFortSources, true, res.getHudTexture(HUDTexture.IconFortSources)));
+                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 3, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_PARADE, costParade, true, res.getHudTexture(HUDTexture.IconFortParade)));
             }
             playerPrompt = false;
         }
@@ -88,7 +88,7 @@ namespace Expanze.Gameplay
         {
             PromptWindow win = PromptWindow.Inst();
             GameResources res = GameResources.Inst();
-            GameMaster gm = GameMaster.getInstance();
+            GameMaster gm = GameMaster.Inst();
 
             upgradeCount--;
             switch (upgradeKind)
@@ -100,23 +100,23 @@ namespace Expanze.Gameplay
                             break;
 
                         case 2 :
-                            win.showPrompt(PromptWindow.Mod.Buyer, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_SOURCES, true);
+                            win.Show(PromptWindow.Mod.Buyer, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_SOURCES, true);
                             for (int loop1 = 0; loop1 < gm.getPlayerCount(); loop1++)
                             {
                                 if (gm.getPlayer(loop1) != gm.getActivePlayer())
                                 {
-                                    win.addPromptItem(new PlayerPromptItem(gm.getPlayer(loop1), gm.getPlayer(loop1).getName(), Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES_CHOISING_PLAYER, gm.getPlayer(loop1).GetSource(), true, res.getHudTexture(HUDTexture.IconTown)));
+                                    win.AddPromptItem(new PlayerPromptItem(gm.getPlayer(loop1), gm.getPlayer(loop1).getName(), Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES_CHOISING_PLAYER, gm.getPlayer(loop1).GetSource(), true, res.getHudTexture(HUDTexture.IconTown)));
                                 }
                             }
                             playerPrompt = true;
                             break;
 
                         case 3 :
-                            GameMaster.getInstance().getActivePlayer().addPoints(Settings.pointsFortParade);
+                            GameMaster.Inst().getActivePlayer().AddPoints(Settings.pointsFortParade);
                             costParade = costParade + new SourceAll(30);
-                            if (GameMaster.getInstance().getActivePlayer().getIsAI())
+                            if (GameMaster.Inst().getActivePlayer().getIsAI())
                             {
-                                GameState.message.showAlert(Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE, Strings.PROMPT_DESCTIPTION_MESSAGE_FORT_ACTION_PARADE, GameResources.Inst().getHudTexture(HUDTexture.IconFortParade));
+                                GameState.message.Show(Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE, Strings.PROMPT_DESCTIPTION_MESSAGE_FORT_ACTION_PARADE, GameResources.Inst().getHudTexture(HUDTexture.IconFortParade));
                             }                          
                             break;
                     }

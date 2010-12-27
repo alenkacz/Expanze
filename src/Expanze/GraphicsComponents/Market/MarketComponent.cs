@@ -284,13 +284,13 @@ namespace Expanze
         void ChangeButtonAction(object sender, PlayerIndexEventArgs e)
         {
 
-            int actualFrom = GameMaster.getInstance().getActivePlayer().getMaterialNumber(fromSelectKind);
-            int actualTo = GameMaster.getInstance().getActivePlayer().getMaterialNumber(toSelectKind);
+            int actualFrom = GameMaster.Inst().getActivePlayer().getMaterialNumber(fromSelectKind);
+            int actualTo = GameMaster.Inst().getActivePlayer().getMaterialNumber(toSelectKind);
 
             int convertedFrom = marketSlider.getConvertedFrom();
             int convertedTo = marketSlider.getConvertedTo();
 
-            GameMaster.getInstance().doMaterialConversion(fromSelectKind, toSelectKind, GameMaster.getInstance().getActivePlayer(),actualFrom - convertedFrom,convertedTo-actualTo);
+            GameMaster.Inst().DoMaterialConversion(fromSelectKind, toSelectKind, GameMaster.Inst().getActivePlayer(),actualFrom - convertedFrom,convertedTo-actualTo);
         }
 
         /// <summary>

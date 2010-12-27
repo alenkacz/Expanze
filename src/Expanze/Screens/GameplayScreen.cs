@@ -64,7 +64,7 @@ namespace Expanze
             isAI = AI;
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
-            gMaster = GameMaster.getInstance();
+            gMaster = GameMaster.Inst();
 
         }
 
@@ -185,7 +185,7 @@ namespace Expanze
         /// </summary>
         void MenuButtonAction(object sender, PlayerIndexEventArgs e)
         {
-            GameMaster.getInstance().setPausedNew(true);
+            GameMaster.Inst().setPausedNew(true);
         }
 
         /// <summary>
@@ -193,10 +193,10 @@ namespace Expanze
         /// </summary>
         void ChangeTurnButtonAction(object sender, PlayerIndexEventArgs e)
         {
-            if (GameMaster.getInstance().getState() == EGameState.StateGame &&
-                !GameMaster.getInstance().getActivePlayer().getIsAI())
+            if (GameMaster.Inst().getState() == EGameState.StateGame &&
+                !GameMaster.Inst().getActivePlayer().getIsAI())
             {
-                GameMaster.getInstance().NextTurn();
+                GameMaster.Inst().NextTurn();
             }
             else
             {
@@ -210,8 +210,8 @@ namespace Expanze
         void MarketButtonAction(object sender, PlayerIndexEventArgs e)
         {
             // market can not be opened during first phase of the game - building first towns
-            if (GameMaster.getInstance().getState() == EGameState.StateGame &&
-                !GameMaster.getInstance().getActivePlayer().getIsAI())
+            if (GameMaster.Inst().getState() == EGameState.StateGame &&
+                !GameMaster.Inst().getActivePlayer().getIsAI())
             {
 
                 if (MarketComponent.isActive)
@@ -291,13 +291,13 @@ namespace Expanze
             bool gamePadDisconnected = !gamePadState.IsConnected &&
                                        input.GamePadWasConnected[playerIndex];
 
-            if (input.IsPauseGame(ControllingPlayer) || gamePadDisconnected || GameMaster.getInstance().isPausedNew())
+            if (input.IsPauseGame(ControllingPlayer) || gamePadDisconnected || GameMaster.Inst().IsPausedNew())
             {
-                GameMaster.getInstance().setPaused(true);
+                GameMaster.Inst().setPaused(true);
                 ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
             }
 
-            if (GameMaster.getInstance().isWinnerNew())
+            if (GameMaster.Inst().isWinnerNew())
             {
                 VictoryScreen.Load(ScreenManager, true, ControllingPlayer,
                                new GameScreen[] { new BackgroundScreen(), new MainMenuScreen() });

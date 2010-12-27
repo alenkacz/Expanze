@@ -41,7 +41,7 @@ namespace Expanze
 
         private GameSettings gameSettings;
 
-        public static GameMaster getInstance()
+        public static GameMaster Inst()
         {
             if (instance == null)
             {
@@ -126,11 +126,11 @@ namespace Expanze
             {
                 if (medailOwner[(int)medal] != null)
                 {
-                    medailOwner[(int)medal].addPoints(-pointsForMedail);
+                    medailOwner[(int)medal].AddPoints(-pointsForMedail);
                 }
                 medailOwner[(int)medal] = player;
-                player.addPoints(pointsForMedail);
-                GameState.message.showAlert(getMedalTitle(medal),getMedalDescription(medal),getMedaileIcon(medal));
+                player.AddPoints(pointsForMedail);
+                GameState.message.Show(getMedalTitle(medal),getMedalDescription(medal),getMedaileIcon(medal));
             }
         }
 
@@ -237,11 +237,11 @@ namespace Expanze
         {
             if (state == EGameState.StateFirstTown)
             {
-                getActivePlayer().addSources(new SourceAll(0), TransactionState.TransactionStart);
+                getActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionStart);
             }
             if (state == EGameState.StateGame)
             {
-                getActivePlayer().addSources(new SourceAll(0), TransactionState.TransactionEnd);
+                getActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
                 GameState.map.getSources(activePlayer);
                 RandomEvents();
             }
@@ -271,7 +271,7 @@ namespace Expanze
             status &= StartTurn();
 
             map.NextTurn();
-            TownView.resetTownView();
+            TownView.ResetTownView();
 
             return status;
         }
@@ -295,11 +295,11 @@ namespace Expanze
             state = EGameState.StateGame;
             foreach (Player player in players)
             {
-                player.addSources(Settings.startResources, TransactionState.TransactionStart);
+                player.AddSources(Settings.startResources, TransactionState.TransactionStart);
             }
         }
 
-        public bool isPausedNew()
+        public bool IsPausedNew()
         {
             if (this.pausedNew)
             {
@@ -324,47 +324,47 @@ namespace Expanze
             this.paused = paused;
         }
 
-        public void doMaterialConversion(HexaKind from, HexaKind to, Player p, int fromAmount, int toAmount)
+        public void DoMaterialConversion(HexaKind from, HexaKind to, Player p, int fromAmount, int toAmount)
         {
             int rate = p.getConversionRate(from);
 
-            if (!this.isMaterialAvailable(from,rate)) { return; }
+            if (!this.IsMaterialAvailable(from,rate)) { return; }
 
             //remove material from player
-            SourceAll cost = createSourceAllCost(from, -fromAmount);
-            p.addSources(cost,TransactionState.TransactionStart);
+            SourceAll cost = CreateSourceAllCost(from, -fromAmount);
+            p.AddSources(cost,TransactionState.TransactionStart);
             
 
             //add new material
-            SourceAll get = createSourceAllCost(to, toAmount);
-            p.addSources(get, TransactionState.TransactionEnd);
+            SourceAll get = CreateSourceAllCost(to, toAmount);
+            p.AddSources(get, TransactionState.TransactionEnd);
         }
 
         /// <summary>
         /// Checks whether user has enough resources from the type he wants to change in market
         /// </summary>
         /// <returns></returns>
-        protected bool isMaterialAvailable(HexaKind from, int rate)
+        protected bool IsMaterialAvailable(HexaKind from, int rate)
         {
             if (from == HexaKind.Cornfield)
             {
-                return (getActivePlayer().getCorn() >= rate) ? true : false;
+                return (getActivePlayer().getCorn() >= rate);
             }
             else if ( from == HexaKind.Pasture )
             {
-                return (getActivePlayer().getMeat() >= rate) ? true : false;
+                return (getActivePlayer().getMeat() >= rate);
             } 
             else if( from == HexaKind.Mountains ) 
             {
-                return (getActivePlayer().getOre() >= rate) ? true : false;
+                return (getActivePlayer().getOre() >= rate);
             }
             else if( from == HexaKind.Stone ) 
             {
-                return (getActivePlayer().getStone() >= rate) ? true : false;
+                return (getActivePlayer().getStone() >= rate);
             }
             else if ( from == HexaKind.Forest )
             {
-                return (getActivePlayer().getWood() >= rate) ? true : false;
+                return (getActivePlayer().getWood() >= rate);
             }
             else
             {
@@ -373,7 +373,7 @@ namespace Expanze
         }
 
 
-        protected SourceAll createSourceAllCost(HexaKind kind, int rate)
+        protected SourceAll CreateSourceAllCost(HexaKind kind, int rate)
         {
             if (kind == HexaKind.Forest)
             {
@@ -401,7 +401,7 @@ namespace Expanze
             }
         }
 
-        public void addPlayer(Player p)
+        public void AddPlayer(Player p)
         {
             players.Add(p);
             ++n_player;

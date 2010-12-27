@@ -73,7 +73,7 @@ namespace Expanze
             }
         }
 
-        public void showAlert(String title, String description, Texture2D icon)
+        public void Show(String title, String description, Texture2D icon)
         {
             if (disabled)
                 return;

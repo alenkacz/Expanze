@@ -181,7 +181,7 @@ namespace Expanze
 
         public bool isActive()
         {
-            return GameMaster.getInstance().getActivePlayer().haveEnoughMaterial(type);
+            return GameMaster.Inst().getActivePlayer().HaveEnoughMaterial(type);
         }
 
         public void changeText()
@@ -204,7 +204,7 @@ namespace Expanze
 
                 if (type != HexaKind.Null)
                 {
-                    if (!GameMaster.getInstance().getActivePlayer().haveEnoughMaterial(type) && nonactiveTexture != null)
+                    if (!GameMaster.Inst().getActivePlayer().HaveEnoughMaterial(type) && nonactiveTexture != null)
                     {
                         spriteBatch.Draw(nonactiveTexture, spritePosition, c);
                     }

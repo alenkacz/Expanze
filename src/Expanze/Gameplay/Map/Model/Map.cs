@@ -161,14 +161,14 @@ namespace Expanze.Gameplay.Map
             GameState.view = Matrix.CreateLookAt(eye, target, up);
             GameState.projection = Matrix.CreatePerspectiveFieldOfView((float)MathHelper.ToRadians(90), aspectRatio, 0.01f, 100.0f);
 
-            GameMaster.getInstance().StartTurn();
+            GameMaster.Inst().StartTurn();
             mapController.Init();
         }
 
         private HexaModel[][] getMap()
         {
             MapParser parser = new MapParser();
-            GameSettings gs = GameMaster.getInstance().getGameSettings();
+            GameSettings gs = GameMaster.Inst().getGameSettings();
             return parser.getMap(gs.getMapSize(), gs.getMapType(), gs.getMapWealth());
         }
 
@@ -180,14 +180,14 @@ namespace Expanze.Gameplay.Map
         // active player gets on start of his turn sources from mining buildings
         public void getSources(Player player)
         {
-            player.addSources(new SourceAll(0), TransactionState.TransactionStart);
+            player.AddSources(new SourceAll(0), TransactionState.TransactionStart);
             for (int i = 0; i < hexaMapModel.Length; i++)
                 for (int j = 0; j < hexaMapModel[i].Length; j++)
                     if (hexaMapModel[i][j] != null)
                     {
                         hexaMapModel[i][j].CollectSources(player);
                     }
-            player.addSources(new SourceAll(0), TransactionState.TransactionEnd);
+            player.AddSources(new SourceAll(0), TransactionState.TransactionEnd);
         }
 
         public void ChangeCamera(GameTime gameTime)
@@ -291,7 +291,7 @@ namespace Expanze.Gameplay.Map
         {
             base.Update(gameTime);
 
-            if (GameMaster.getInstance().getPaused())
+            if (GameMaster.Inst().getPaused())
                 return;
 
             ChangeCamera(gameTime);
@@ -307,10 +307,10 @@ namespace Expanze.Gameplay.Map
 
         public override void HandlePickableAreas(Color c)
         {
-            if (GameMaster.getInstance().getPaused())
+            if (GameMaster.Inst().getPaused())
                 return;
 
-            if (GameMaster.getInstance().getActivePlayer().getComponentAI() != null)
+            if (GameMaster.Inst().getActivePlayer().getComponentAI() != null)
                 return;
 
             mapView.HandlePickableAreas(c);
@@ -318,7 +318,7 @@ namespace Expanze.Gameplay.Map
 
         public override void DrawPickableAreas()
         {
-            if (GameMaster.getInstance().getPaused())
+            if (GameMaster.Inst().getPaused())
                 return;
 
             mapView.DrawPickableAreas();
@@ -327,7 +327,7 @@ namespace Expanze.Gameplay.Map
         public override void Draw2D()
         {
             mapView.Draw2D();
-            GameMaster.getInstance().Draw2D();
+            GameMaster.Inst().Draw2D();
         }
 
         public override void Draw(GameTime gameTime)

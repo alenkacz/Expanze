@@ -30,9 +30,9 @@ namespace Expanze
         {
             base.Update(gameTime);
 
-            Player act = GameMaster.getInstance().getActivePlayer();
+            Player act = GameMaster.Inst().getActivePlayer();
 
-            if (act.hasMaterialChanged())
+            if (act.HasMaterialChanged())
             {
                 changeMaterials = true;
                 materialsChangeTime = 1500;
@@ -64,7 +64,7 @@ namespace Expanze
             spritePosition.Y = 750;
             spritePosition.X = 350;
 
-            Player act = GameMaster.getInstance().getActivePlayer();
+            Player act = GameMaster.Inst().getActivePlayer();
 
             spriteBatch.Draw(myButton, spritePosition, c);
             if (pick)

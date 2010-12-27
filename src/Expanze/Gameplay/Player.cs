@@ -70,15 +70,15 @@ namespace Expanze
         public Color getColor() { return color; }
         public UpgradeKind GetSourceBuildingUpgrade(SourceBuildingKind kind) { return upgradeSourceBuilding[(int)kind]; }
 
-        public void addBuilding(Building building)
+        public void AddBuilding(Building building)
         {
             buildingCount[(int)building]++;
-            GameMaster.getInstance().PlayerWantMedail(this, building);
+            GameMaster.Inst().PlayerWantMedail(this, building);
         }
 
-        public void addPoints(int add) { 
+        public void AddPoints(int add) { 
             points += add;
-            GameMaster.getInstance().CheckWinner(this);
+            GameMaster.Inst().CheckWinner(this);
         }
 
         public int getPoints() { return points; }
@@ -137,14 +137,14 @@ namespace Expanze
             return source.stone;
         }
 
-        public void payForSomething(SourceAll cost)
+        public void PayForSomething(SourceAll cost)
         {
-            changeSources(-cost.wood, -cost.stone, -cost.corn, -cost.meat, -cost.ore);
+            ChangeSources(-cost.wood, -cost.stone, -cost.corn, -cost.meat, -cost.ore);
 
             source = source - cost;
         }
 
-        public void addSources(SourceAll amount, TransactionState state)
+        public void AddSources(SourceAll amount, TransactionState state)
         {
             switch (state)
             {
@@ -160,9 +160,9 @@ namespace Expanze
                 case TransactionState.TransactionEnd :
                     transactionSource = transactionSource + amount;
                     source = source + transactionSource;               
-                    changeSources(transactionSource.wood, transactionSource.stone, transactionSource.corn, transactionSource.meat, transactionSource.ore);
+                    ChangeSources(transactionSource.wood, transactionSource.stone, transactionSource.corn, transactionSource.meat, transactionSource.ore);
                     transactionSource = new SourceAll(0);
-                    GameMaster.getInstance().CheckWinner(this);
+                    GameMaster.Inst().CheckWinner(this);
                     break;
             }
         }
@@ -170,13 +170,13 @@ namespace Expanze
         /// <summary>
         /// Remembers state of material from previous round, active when active player is changed
         /// </summary>
-        public void changeSources(int wood, int stone, int corn, int meat, int ore)
+        public void ChangeSources(int wood, int stone, int corn, int meat, int ore)
         {
             materialChanged = true;
             prevSource = new SourceAll(wood, stone, corn, meat, ore);
         }
 
-        public bool hasMaterialChanged()
+        public bool HasMaterialChanged()
         {
             bool temp = materialChanged;
             materialChanged = false;
@@ -188,7 +188,7 @@ namespace Expanze
             return prevSource;
         }
 
-        public bool haveEnoughMaterial(HexaKind k)
+        public bool HaveEnoughMaterial(HexaKind k)
         {
             switch (k)
             {

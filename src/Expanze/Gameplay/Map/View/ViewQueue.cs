@@ -81,7 +81,7 @@ namespace Expanze.Gameplay.Map
         /// Checks if there are some items waiting in queue
         /// </summary>
         /// <returns>True if there is no item in queue</returns>
-        public bool getIsClear()
+        public bool IsClear()
         {
             return queue.Count == 0;
         }

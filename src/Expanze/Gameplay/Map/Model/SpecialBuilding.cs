@@ -33,7 +33,7 @@ namespace Expanze.Gameplay
 
         public override string TryExecute()
         {
-            GameMaster gm = GameMaster.getInstance();
+            GameMaster gm = GameMaster.Inst();
             Town town = GameState.map.GetTownByID(townID);
             SpecialBuilding building = town.getSpecialBuilding(hexaID);
 
@@ -108,7 +108,7 @@ namespace Expanze.Gameplay
 
         public virtual BuyingUpgradeError CanActivePlayerBuyUpgrade(UpgradeKind upgradeKind, int upgradeNumber)
         {
-            GameMaster gm = GameMaster.getInstance();
+            GameMaster gm = GameMaster.Inst();
             Player activePlayer = gm.getActivePlayer();
 
             if (upgradeCount == upgradeMax)

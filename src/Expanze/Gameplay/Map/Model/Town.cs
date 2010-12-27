@@ -143,14 +143,14 @@ namespace Expanze
                     }
                 }
             }
-            player.addSources(cost, TransactionState.TransactionMiddle);
+            player.AddSources(cost, TransactionState.TransactionMiddle);
         }
 
         public void BuildTown(Player player)
         {
             playerOwner = player;
-            player.addPoints(Settings.pointsTown);
-            player.addBuilding(Building.Town);
+            player.AddPoints(Settings.pointsTown);
+            player.AddBuilding(Building.Town);
             isBuild = true;
         }
 
@@ -208,7 +208,7 @@ namespace Expanze
 
         public BuildingBuildError canActivePlayerBuildBuildingInTown(int pos, BuildingKind kind)
         {
-            GameMaster gm = GameMaster.getInstance();
+            GameMaster gm = GameMaster.Inst();
 
             SourceAll cost = GetBuildingCost(pos, kind);        
             
@@ -236,7 +236,7 @@ namespace Expanze
 
         public TownBuildError CanActivePlayerBuildTown()
         {
-            GameMaster gm = GameMaster.getInstance();
+            GameMaster gm = GameMaster.Inst();
             if (gm.getState() == EGameState.StateGame)
             {
                 Player activePlayer = gm.getActivePlayer();
@@ -279,25 +279,25 @@ namespace Expanze
                     building[pos] = new SourceBuildingModel(townID, hexaNeighbour[pos].getID());
                     switch (hexaNeighbour[pos].getKind())
                     {
-                        case HexaKind.Cornfield: playerOwner.addBuilding(Building.Mill); break;
-                        case HexaKind.Pasture: playerOwner.addBuilding(Building.Stepherd); break;
-                        case HexaKind.Stone: playerOwner.addBuilding(Building.Quarry); break;
-                        case HexaKind.Forest: playerOwner.addBuilding(Building.Saw); break;
-                        case HexaKind.Mountains: playerOwner.addBuilding(Building.Mine); break;
+                        case HexaKind.Cornfield: playerOwner.AddBuilding(Building.Mill); break;
+                        case HexaKind.Pasture: playerOwner.AddBuilding(Building.Stepherd); break;
+                        case HexaKind.Stone: playerOwner.AddBuilding(Building.Quarry); break;
+                        case HexaKind.Forest: playerOwner.AddBuilding(Building.Saw); break;
+                        case HexaKind.Mountains: playerOwner.AddBuilding(Building.Mine); break;
                     }
                     break;
 
                 case BuildingKind.MarketBuilding :
                     building[pos] = new MarketModel(townID, hexaNeighbour[pos].getID());
-                    playerOwner.addBuilding(Building.Market);
+                    playerOwner.AddBuilding(Building.Market);
                     break;
                 case BuildingKind.MonasteryBuilding :
                     building[pos] = new MonasteryModel(townID, hexaNeighbour[pos].getID());
-                    playerOwner.addBuilding(Building.Monastery);
+                    playerOwner.AddBuilding(Building.Monastery);
                     break;
                 case BuildingKind.FortBuilding :
                     building[pos] = new FortModel(townID, hexaNeighbour[pos].getID());
-                    playerOwner.addBuilding(Building.Fort);
+                    playerOwner.AddBuilding(Building.Fort);
                     break;
             }
 

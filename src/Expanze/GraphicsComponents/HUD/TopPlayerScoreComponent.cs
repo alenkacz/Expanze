@@ -74,7 +74,7 @@ namespace Expanze
         {
             int size = 0;
 
-            foreach (Player p in GameMaster.getInstance().getPlayers())
+            foreach (Player p in GameMaster.Inst().getPlayers())
             {
                 if (font.MeasureString(p.getName()).X > size)
                 {
@@ -107,7 +107,7 @@ namespace Expanze
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
 
             Color c = Color.White;
-            GameMaster gMaster = GameMaster.getInstance();
+            GameMaster gMaster = GameMaster.Inst();
 
             // draw textures
             spriteBatch.Draw(textureLeft, positionLeft, c);
@@ -127,7 +127,7 @@ namespace Expanze
             // draw texts
             spriteBatch.DrawString(font, gMaster.getActivePlayer().getName(), positionName, Color.White);
             spriteBatch.DrawString(font, gMaster.getActivePlayer().getPoints().ToString(), positionScore, Color.White);
-            spriteBatch.DrawString(font, " / " + GameMaster.getInstance().getGameSettings().getPoints(), positionTotalPoints, Color.White);
+            spriteBatch.DrawString(font, " / " + GameMaster.Inst().getGameSettings().getPoints(), positionTotalPoints, Color.White);
 
             // draw player color
             spriteBatch.Draw(textureColor, positionColor, gMaster.getActivePlayer().getColor());

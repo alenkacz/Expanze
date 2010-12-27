@@ -83,7 +83,7 @@ namespace Expanze.Gameplay
                 }
             }
 
-            GameState.message.showAlert(title, description, icon);
+            GameState.message.Show(title, description, icon);
         }
 
         public HexaKind getHexaKind() { return hexaKind; }

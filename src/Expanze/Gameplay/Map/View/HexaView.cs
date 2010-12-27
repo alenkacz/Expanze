@@ -33,7 +33,7 @@ namespace Expanze
 
         public override string TryExecute()
         {
-            GameMaster gm = GameMaster.getInstance();
+            GameMaster gm = GameMaster.Inst();
             Town town = GameState.map.GetTownByID(townID);
             int buildingPos = town.findBuildingByHexaID(hexaID);
             HexaModel hexa = town.getHexa(buildingPos);
@@ -99,7 +99,7 @@ namespace Expanze
             world = m;
         }
 
-        public void createRoadView(RoadPos pos, Matrix relative)
+        public void CreateRoadView(RoadPos pos, Matrix relative)
         {
             roadView[(int)pos] = new RoadView(model.getRoad(pos), relative * world);
         }
@@ -111,7 +111,7 @@ namespace Expanze
             roadView[(int)pos] = road;
         }
 
-        public void createTownView(TownPos pos, Matrix relative)
+        public void CreateTownView(TownPos pos, Matrix relative)
         {
             townView[(int)pos] = new TownView(model.getTown(pos), relative * world);
         }
@@ -163,7 +163,7 @@ namespace Expanze
                     }
                 }
                 if (drawNumber ||
-                    tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.getPlayerOwner() != GameMaster.getInstance().getActivePlayer())
+                    tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.getPlayerOwner() != GameMaster.Inst().getActivePlayer())
                 {
                     if (model.getCurrentSource() != 0) // desert
                         spriteBatch.DrawString(GameState.hudMaterialsFont, model.getCurrentSource() + "", new Vector2(point2D.X + 1, point2D.Y + 1), Color.Black);
@@ -174,7 +174,7 @@ namespace Expanze
                     numberColor = Color.DarkRed;
 
                 if (drawNumber ||
-                    tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.getPlayerOwner() != GameMaster.getInstance().getActivePlayer())
+                    tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.getPlayerOwner() != GameMaster.Inst().getActivePlayer())
                 {
                     if (model.getCurrentSource() != 0) // desert
                     {
@@ -184,7 +184,7 @@ namespace Expanze
                 else
                 {
                     Texture2D text;
-                    if (tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.getPlayerOwner() == GameMaster.getInstance().getActivePlayer())
+                    if (tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.getPlayerOwner() == GameMaster.Inst().getActivePlayer())
                     {
                         text = GameResources.Inst().getHudTexture(HUDTexture.HammersPassive);
                         spriteBatch.Draw(text, new Vector2(posHammers.X - (text.Width >> 1), posHammers.Y - (text.Height >> 1)), Color.White);
@@ -271,7 +271,7 @@ namespace Expanze
 
             for (int loop1 = 0; loop1 < roadView.Length; loop1++)
                 if (model.getTownOwner(loop1))
-                    townView[loop1].draw(gameTime);
+                    townView[loop1].Draw(gameTime);
         }
 
         public virtual void DrawBuildings(GameTime gameTime)
@@ -392,7 +392,7 @@ namespace Expanze
 
             for (int loop1 = 0; loop1 < townView.Length; loop1++)
                 if (model.getTownOwner(loop1))
-                    townView[loop1].drawPickableAreas();
+                    townView[loop1].DrawPickableAreas();
         }
 
         public void HandlePickableAreas(Color c)
@@ -409,7 +409,7 @@ namespace Expanze
             {
                 if (model.getTownOwner(loop1))
                 {
-                    townView[loop1].handlePickableAreas(c);
+                    townView[loop1].HandlePickableAreas(c);
                 }
             }
 
@@ -430,7 +430,7 @@ namespace Expanze
                         switch(townView[loop1].getTownModel().getBuildingKind(hexaID))
                         {
                             case BuildingKind.NoBuilding :
-                                if (townView[loop1].getTownModel().getPlayerOwner() == GameMaster.getInstance().getActivePlayer())
+                                if (townView[loop1].getTownModel().getPlayerOwner() == GameMaster.Inst().getActivePlayer())
                                 {
                                     String titleWindow = "";
                                     String titleBuilding = "";
@@ -469,10 +469,10 @@ namespace Expanze
                                     }
 
                                     int townID = townView[loop1].getTownModel().getTownID();
-                                    mod = (townView[loop1].getTownModel().getPlayerOwner() == GameMaster.getInstance().getActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
-                                    PromptWindow.Inst().showPrompt(mod, titleWindow, true);
+                                    mod = (townView[loop1].getTownModel().getPlayerOwner() == GameMaster.Inst().getActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
+                                    PromptWindow.Inst().Show(mod, titleWindow, true);
                                     if (kind != HexaKind.Desert)
-                                        PromptWindow.Inst().addPromptItem(
+                                        PromptWindow.Inst().AddPromptItem(
                                             new BuildingPromptItem(townID,
                                                                hexaID,
                                                                BuildingKind.SourceBuilding,
@@ -483,15 +483,15 @@ namespace Expanze
 
                                     if (kind != HexaKind.Mountains)
                                     {
-                                        PromptWindow.Inst().addPromptItem(MonasteryModel.getPromptItemBuildMonastery(townID, hexaID));
-                                        PromptWindow.Inst().addPromptItem(MarketModel.getPromptItemBuildMarket(townID, hexaID));
-                                        PromptWindow.Inst().addPromptItem(FortModel.getPromptItemBuildFort(townID, hexaID));
+                                        PromptWindow.Inst().AddPromptItem(MonasteryModel.getPromptItemBuildMonastery(townID, hexaID));
+                                        PromptWindow.Inst().AddPromptItem(MarketModel.getPromptItemBuildMarket(townID, hexaID));
+                                        PromptWindow.Inst().AddPromptItem(FortModel.getPromptItemBuildFort(townID, hexaID));
                                     }
                                 }
                                 break;
                             
                             default :
-                                mod = (townView[loop1].getTownModel().getPlayerOwner() == GameMaster.getInstance().getActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
+                                mod = (townView[loop1].getTownModel().getPlayerOwner() == GameMaster.Inst().getActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
                                 townView[loop1].getTownModel().getSpecialBuilding(hexaID).setPromptWindow(mod);
                                 break;
                         }

@@ -80,7 +80,7 @@ namespace Expanze.Gameplay.Map.View
 
         public void Draw(GameTime gameTime)
         {
-            GameMaster gm = GameMaster.getInstance();
+            GameMaster gm = GameMaster.Inst();
             if ((pickVars.pickActive && gm.getState() == EGameState.StateGame) || isBuildView)
             {
                 Model m = GameResources.Inst().getRoadModel();
@@ -93,7 +93,7 @@ namespace Expanze.Gameplay.Map.View
 
                 Player player = model.getOwner();
                 if (player == null)
-                    player = GameMaster.getInstance().getActivePlayer();
+                    player = GameMaster.Inst().getActivePlayer();
                 Vector3 color = player.getColor().ToVector3();
                 foreach (ModelMesh mesh in m.Meshes)
                 {
@@ -177,10 +177,10 @@ namespace Expanze.Gameplay.Map.View
 
             if (pickVars.pickNewPress)
             {
-                if (GameMaster.getInstance().getState() == EGameState.StateGame)
+                if (GameMaster.Inst().getState() == EGameState.StateGame)
                 {
-                    PromptWindow.Inst().showPrompt(PromptWindow.Mod.Buyer, Strings.HEXA_DUO, true);
-                    PromptWindow.Inst().addPromptItem(
+                    PromptWindow.Inst().Show(PromptWindow.Mod.Buyer, Strings.HEXA_DUO, true);
+                    PromptWindow.Inst().AddPromptItem(
                             new RoadPromptItem(roadID,
                                                 Strings.PROMT_TITLE_WANT_TO_BUILD_ROAD,
                                                 Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_ROAD,

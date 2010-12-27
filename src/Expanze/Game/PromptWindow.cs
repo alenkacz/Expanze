@@ -75,13 +75,13 @@ namespace Expanze
             this.active = active;
         }
 
-        public void addPromptItem(PromptItem item)
+        public void AddPromptItem(PromptItem item)
         {
             itemList.Add(item);
             int size = itemList.Count;
             itemPick.Add(new PickVariables(new Color(size / 256.0f, size / 256.0f, 0.0f)));
         }
-        public void showPrompt(Mod mod, String title, bool showIcons)
+        public void Show(Mod mod, String title, bool showIcons)
         {
             this.mod = mod;
             this.title = title;
@@ -263,7 +263,7 @@ namespace Expanze
             float startX = bgPos.X + ((background.Width - sourcesWidth) / 2);
             float startY = bgPos.Y + background.Height - textureSource[0].Height - 85;
 
-            ISourceAll playerSource = GameMaster.getInstance().getActivePlayer().GetSource();
+            ISourceAll playerSource = GameMaster.Inst().getActivePlayer().GetSource();
             for (int loop1 = 0; loop1 < 5; loop1++)
             {
                 if (itemList[activeItem].getCost()[loop1] != 0 ||

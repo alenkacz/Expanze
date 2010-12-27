@@ -310,7 +310,7 @@ namespace Expanze.Gameplay.Map
             HexaModel.resetCounter();
             Road.resetCounter();
             Town.resetCounter();
-            TownView.resetTownView();
+            TownView.ResetTownView();
 
             float dx = 0.591f;
             float dy = 0.512f;
@@ -336,7 +336,7 @@ namespace Expanze.Gameplay.Map
 
         public bool getIsViewQueueClear()
         {
-            return viewQueue.getIsClear();
+            return viewQueue.IsClear();
         }
 
         public void BuildBuildingView(int townID, int pos)

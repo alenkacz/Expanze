@@ -57,7 +57,7 @@ namespace Expanze
             colorPosition = new Vector2(150, 100);
 
             // clearing all players in case of several game in one program launch
-            GameMaster.getInstance().DeleteAllPlayers();
+            GameMaster.Inst().DeleteAllPlayers();
         }
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace Expanze
 
                 if (pl != null)
                 {
-                    GameMaster.getInstance().addPlayer(pl);
+                    GameMaster.Inst().AddPlayer(pl);
                 }
             }
 
@@ -245,8 +245,8 @@ namespace Expanze
             String size = mapSize.getSelectedSettings();
             String wealthMap = wealth.getSelectedSettings();
 
-            GameMaster.getInstance().ResetGameSettings();
-            GameMaster.getInstance().setGameSettings(point,type,size,wealthMap);
+            GameMaster.Inst().ResetGameSettings();
+            GameMaster.Inst().setGameSettings(point,type,size,wealthMap);
         }
 
         #region Draw

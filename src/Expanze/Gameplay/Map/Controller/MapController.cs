@@ -42,10 +42,10 @@ namespace Expanze.Gameplay.Map
             return roadByID[roadID - 1];
         }
 
-        public IPlayerGet GetPlayerMe() { return GameMaster.getInstance().getActivePlayer(); }
+        public IPlayerGet GetPlayerMe() { return GameMaster.Inst().getActivePlayer(); }
         public int GetMaxRoadID() { return Road.getRoadCount(); }
         public int GetMaxTownID() { return Town.getTownCount(); }
-        public EGameState GetState() { return GameMaster.getInstance().getState(); }
+        public EGameState GetState() { return GameMaster.Inst().getState(); }
         public IHexaGet GetHexa(int x, int y) { return map.GetHexaModel(x, y); }
 
         private HexaKind SourceKindToHexaKind(SourceKind source)
@@ -64,19 +64,19 @@ namespace Expanze.Gameplay.Map
 
         public ChangingSourcesError ChangeSources(SourceKind fromSource, SourceKind toSource, int fromAmount)
         {
-            GameMaster gm = GameMaster.getInstance();
+            GameMaster gm = GameMaster.Inst();
             int rate = gm.getActivePlayer().getConversionRate(SourceKindToHexaKind(fromSource));
             if (fromAmount > gm.getActivePlayer().GetSource().Get(fromSource))
                 return ChangingSourcesError.NotEnoughFromSource;
 
-            gm.doMaterialConversion(SourceKindToHexaKind(fromSource), SourceKindToHexaKind(toSource), gm.getActivePlayer(), fromAmount - (fromAmount % rate), fromAmount / rate);
+            gm.DoMaterialConversion(SourceKindToHexaKind(fromSource), SourceKindToHexaKind(toSource), gm.getActivePlayer(), fromAmount - (fromAmount % rate), fromAmount / rate);
 
             return ChangingSourcesError.OK;
         }
 
         public BuyingUpgradeError BuyUpgradeInSpecialBuilding(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber)
         {
-            GameMaster gm = GameMaster.getInstance();
+            GameMaster gm = GameMaster.Inst();
             Town town = map.GetTownByID(townID);
             if (town == null)
                 return BuyingUpgradeError.ThereIsNoTown;
@@ -87,7 +87,7 @@ namespace Expanze.Gameplay.Map
             BuyingUpgradeError error = building.CanActivePlayerBuyUpgrade(upgradeKind, upgradeNumber);
             if (error == BuyingUpgradeError.OK)
             {
-                gm.getActivePlayer().payForSomething(building.getUpgradeCost(upgradeKind, upgradeNumber));
+                gm.getActivePlayer().PayForSomething(building.getUpgradeCost(upgradeKind, upgradeNumber));
                 building.BuyUpgrade(upgradeKind, upgradeNumber);
             }
             return error;
@@ -107,7 +107,7 @@ namespace Expanze.Gameplay.Map
             if (road == null)
                 return null;
 
-            GameMaster gm = GameMaster.getInstance();
+            GameMaster gm = GameMaster.Inst();
             RoadBuildError error = road.CanActivePlayerBuildRoad();
             if (error == RoadBuildError.OK)
             {
@@ -116,7 +116,7 @@ namespace Expanze.Gameplay.Map
                 ItemQueue item = new RoadItemQueue(mapView, roadID);
                 mapView.AddToViewQueue(item);
 
-                gm.getActivePlayer().payForSomething(Settings.costRoad);
+                gm.getActivePlayer().PayForSomething(Settings.costRoad);
 
                 return road;
             }
@@ -126,7 +126,7 @@ namespace Expanze.Gameplay.Map
 
         public BuildingBuildError CanBuildBuildingInTown(int townID, int hexaID, BuildingKind kind)
         {
-            GameMaster gm = GameMaster.getInstance();
+            GameMaster gm = GameMaster.Inst();
             Town town = map.GetTownByID(townID);
             if (town == null)
                 return BuildingBuildError.InvalidTownID;
@@ -144,7 +144,7 @@ namespace Expanze.Gameplay.Map
 
         public ISpecialBuildingGet BuildBuildingInTown(int townID, int hexaID, BuildingKind kind)
         {
-            GameMaster gm = GameMaster.getInstance();
+            GameMaster gm = GameMaster.Inst();
             Town town = map.GetTownByID(townID);
             if (town == null)
                 return null;
@@ -163,7 +163,7 @@ namespace Expanze.Gameplay.Map
                 ItemQueue item = new BuildingItemQueue(mapView, townID, buildingPos);
                 mapView.AddToViewQueue(item);
 
-                gm.getActivePlayer().payForSomething(town.GetBuildingCost(buildingPos, kind));
+                gm.getActivePlayer().PayForSomething(town.GetBuildingCost(buildingPos, kind));
                 return town.BuildBuilding(buildingPos, kind);
             }
 
@@ -184,7 +184,7 @@ namespace Expanze.Gameplay.Map
             if (town == null)
                 return null;
 
-            GameMaster gm = GameMaster.getInstance();
+            GameMaster gm = GameMaster.Inst();
             TownBuildError error = town.CanActivePlayerBuildTown();
             if (error == TownBuildError.OK)
             {
@@ -217,7 +217,7 @@ namespace Expanze.Gameplay.Map
                                 default:
                                     source = new SourceAll(0); break;
                             }
-                            gm.getActivePlayer().addSources(source, TransactionState.TransactionMiddle);
+                            gm.getActivePlayer().AddSources(source, TransactionState.TransactionMiddle);
                         }
                     }
                     
@@ -226,7 +226,7 @@ namespace Expanze.Gameplay.Map
                         gm.NextTurn();
                 }
                 else
-                    gm.getActivePlayer().payForSomething(Settings.costTown);
+                    gm.getActivePlayer().PayForSomething(Settings.costTown);
 
                 return town;
             }
