@@ -178,8 +178,8 @@ namespace Expanze
             // Draw the message box text.
             spriteBatch.DrawString(font, message, textPosition, color);
 
-            spriteBatch.DrawString(font, "Ano", yesPosition, color);
-            spriteBatch.DrawString(font, "Ne", noPosition, color);
+            spriteBatch.DrawString(font, Strings.MENU_COMMON_YES, yesPosition, color);
+            spriteBatch.DrawString(font, Strings.MENU_COMMON_NO, noPosition, color);
 
             spriteBatch.End();
         }

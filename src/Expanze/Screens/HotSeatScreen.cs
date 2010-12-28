@@ -113,10 +113,10 @@ namespace Expanze
             //margin betweent sections
             colorPosition.Y += 80;
 
-            points = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameState.gameFont, 400, 200, "Počet bodů", new List<String>() { "50", "75", "100" });
-            mapType = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 50, GameState.gameFont, 400, 200, "Druh mapy", new List<String>() { "Nížiny", "Normální", "Pustina" });
-            mapSize = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 100, GameState.gameFont, 400, 200, "Velikost mapy", new List<String>() { "Malá", "Střední", "Velká" });
-            wealth = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 150, GameState.gameFont, 400, 200, "Bohatství surovin", new List<String>() { "Nízké", "Střední", "Vysoké" });
+            points = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameState.gameFont, 400, 200, Strings.MENU_HOT_SEAT_POINTS, new List<String>() { "50", "75", "100" });
+            mapType = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 50, GameState.gameFont, 400, 200, Strings.MENU_HOT_SEAT_MAP_TYPE, new List<String>() { Strings.GAME_SETTINGS_MAP_TYPE_LOWLAND, Strings.GAME_SETTINGS_MAP_TYPE_NORMAL, Strings.GAME_SETTINGS_MAP_TYPE_WASTELAND });
+            mapSize = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 100, GameState.gameFont, 400, 200, Strings.MENU_HOT_SEAT_MAP_SIZE, new List<String>() { Strings.GAME_SETTINGS_MAP_SIZE_SMALL, Strings.GAME_SETTINGS_MAP_SIZE_MEDIUM, Strings.GAME_SETTINGS_MAP_SIZE_BIG });
+            wealth = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 150, GameState.gameFont, 400, 200, Strings.MENU_HOT_SEAT_MAP_WEALTH, new List<String>() { Strings.GAME_SETTINGS_MAP_WEALTH_LOW, Strings.GAME_SETTINGS_MAP_WEALTH_MEDIUM, Strings.GAME_SETTINGS_MAP_WEALTH_HIGH });
 
             guiComponents.Add(points);
             guiComponents.Add(mapType);

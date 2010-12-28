@@ -57,7 +57,7 @@ namespace Expanze
         /// </summary>
         void QuitGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            const string message = "Opravdu chcete ukončit hru?";
+            string message = Strings.MENU_PAUSE_GAME_ARE_YOU_SURE;
 
             MessageBoxScreen confirmQuitMessageBox = new MessageBoxScreen(message);
 

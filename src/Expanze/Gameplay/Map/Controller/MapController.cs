@@ -220,10 +220,8 @@ namespace Expanze.Gameplay.Map
                             gm.getActivePlayer().AddSources(source, TransactionState.TransactionMiddle);
                         }
                     }
-                    
-
-                    //if (!gm.getActivePlayer().getIsAI())
-                        gm.NextTurn();
+                     
+                    gm.NextTurn();
                 }
                 else
                     gm.getActivePlayer().PayForSomething(Settings.costTown);

@@ -9,15 +9,50 @@ namespace Expanze
     {
 
         // Menu strings
-        public static string MENU_HOT_SEAT_NO_AI = "Hráč";
+        public static string MENU_COMMON_BACK = "Zpět";
+        public static string MENU_COMMON_ARE_YOU_SURE = "Jste si jisti, že chcete hru ukončit?";
+        public static string MENU_COMMON_YES = "Ano";
+        public static string MENU_COMMON_NO = "Ne";
 
+        public static string MENU_MAIN_HOT_SEAT = "Hot seat";
+        public static string MENU_MAIN_QUICK_GAME = "Rychlá hra";
+        public static string MENU_MAIN_OPTION = "Nastavení";
+        public static string MENU_MAIN_CREATORS = "Autoři";
+        public static string MENU_MAIN_EXIT = "Konec";
+
+        public static string MENU_HOT_SEAT_NO_AI = "Hráč";
         public static string[] MENU_HOT_SEAT_NAMES = { "Pedro de Mendoza", "Raimundus Lullus", "Hernando de Soto", "Francisco Pizarro", "Diego de Almagro", "Juan de la Cosa" };
+        public static string MENU_HOT_SEAT_POINTS = "Počet bodů";
+        public static string MENU_HOT_SEAT_MAP_TYPE = "Druh mapy";
+        public static string MENU_HOT_SEAT_MAP_SIZE = "Velikost mapy";
+        public static string MENU_HOT_SEAT_MAP_WEALTH = "Bohatství surovin";
 
         public static string MENU_PAUSE_GAME_ITEM_RESUME = "Zpět do hry";
         public static string MENU_PAUSE_GAME_ITEM_QUIT_GAME = "Ukončit hru";
+        public static string MENU_PAUSE_GAME_ARE_YOU_SURE = "Opravdu chcete ukončit hru?";
 
         public static string MENU_LOADING_LOADING = "Načítání obsahu";
 
+        public static string MENU_OPTION_TITLE = "Nastavení";
+        public static string MENU_OPTION_ACTIVATE_CHANGES = "Aktivovat změny";
+        public static string MENU_OPTION_RESOLUTION = "Rozlišení";
+        public static string MENU_OPTION_FULLSCREEN = "Fullscreen";
+
+        public static string MENU_CREATORS_LUKAS = "Lukáš Beran - teamleader, programátor";
+        public static string MENU_CREATORS_ALENA = "Alena Varkočková - programátorka";
+        public static string MENU_CREATORS_PAVLA = "Pavla Balíková - grafička";
+
+        public static string GAME_SETTINGS_MAP_SIZE_SMALL = "Malá";
+        public static string GAME_SETTINGS_MAP_SIZE_MEDIUM = "Střední";
+        public static string GAME_SETTINGS_MAP_SIZE_BIG = "Velká";
+        public static string GAME_SETTINGS_MAP_WEALTH_LOW = "Nízké";
+        public static string GAME_SETTINGS_MAP_WEALTH_MEDIUM = "Střední";
+        public static string GAME_SETTINGS_MAP_WEALTH_HIGH = "Vysoké";
+        public static string GAME_SETTINGS_MAP_TYPE_NORMAL = "Normální";
+        public static string GAME_SETTINGS_MAP_TYPE_LOWLAND = "Nížiny";
+        public static string GAME_SETTINGS_MAP_TYPE_WASTELAND = "Pustina";
+        
+        
         //
         public static string ALERT_TITLE_THIS_IS_NOT_YOURS = "Tohle není tvoje. Můžeš pouze koukat.";
         public static string ALERT_TITLE_NOT_ENOUGH_SOURCES = "Nemáš dostatek surovin.";

@@ -149,15 +149,15 @@ namespace Expanze
                 componentAI = AI;
                 break;
             }
-            
-            this.players.Add(new Player("Monte Carlos", Color.Red,null));
+
+            this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[3], Color.Red, null));
 
             if (componentAI != null)
             {
                 IComponentAI componentAICopy = componentAI.Clone();
-                this.players.Add(new Player("Calamity Jain", Color.Blue, componentAICopy));
+                this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[2], Color.Blue, componentAICopy));
             } else
-                this.players.Add(new Player("Calamity Jain", Color.Blue, null));
+                this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[2], Color.Blue, null));
         }
 
         public GameSettings getGameSettings()
@@ -168,7 +168,7 @@ namespace Expanze
             }
             else
             {
-                return new GameSettings(50,"normální","malá","střední");
+                return new GameSettings(50, Strings.GAME_SETTINGS_MAP_TYPE_NORMAL, Strings.GAME_SETTINGS_MAP_SIZE_SMALL, Strings.GAME_SETTINGS_MAP_WEALTH_MEDIUM);
             }
         }
 
@@ -266,6 +266,12 @@ namespace Expanze
             {
                 MarketComponent.isActive = false;
             }
+
+            if (activePlayer.getIsAI())
+            {
+                actualAIThread.Abort();
+            }
+
             status &= ChangeActivePlaye();
 
             status &= StartTurn();

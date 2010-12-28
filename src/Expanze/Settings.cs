@@ -132,10 +132,7 @@ namespace Expanze
         //possible game modes
         public static List<String> PlayerState = new List<String>
         {
-            Strings.MENU_HOT_SEAT_NO_AI,
-            "AI - jednoduché",
-            "AI - střední",
-            "AI - těžké"
+            Strings.MENU_HOT_SEAT_NO_AI
         };
     }
 }
