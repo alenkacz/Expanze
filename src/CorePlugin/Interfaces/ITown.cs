@@ -11,12 +11,12 @@ namespace CorePlugin
     
     public interface ITown
     {
-        TownBuildError CanActivePlayerBuildTown();
+        TownBuildError CanBuildTown();
         ITown Build();
-        ISourceBuilding BuildSourceBuilding(int pos);
+        ISourceBuilding BuildSourceBuilding(byte pos);
 
         int GetTownID();
         ISourceAll GetCost();
-        IHexa GetIHexaGet(int pos);
+        IHexa GetIHexa(byte pos);
     }
 }

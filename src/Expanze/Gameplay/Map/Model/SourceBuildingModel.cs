@@ -34,7 +34,7 @@ namespace Expanze.Gameplay
 
             Town town = GameState.map.GetTownByID(townID);
             int buildingPos = town.FindBuildingByHexaID(hexaID);
-            HexaModel hexa = town.getHexa(buildingPos);
+            HexaModel hexa = town.GetHexa(buildingPos);
 
 
             upgrade1cost = new SourceAll(50, 0, 0, 40, 20);

@@ -18,7 +18,7 @@ namespace Expanze
         Texture2D textureMedaile;
 
         SpriteFont font = Settings.Game.Content.Load<SpriteFont>("playername");
-        SpriteBatch spriteBatch;
+        //SpriteBatch spriteBatch;
 
         Vector2 positionLeft;
         Vector2 positionRight;
@@ -28,14 +28,14 @@ namespace Expanze
         Vector2 positionTotalPoints;
 
         int widthMiddle;
-        int widthScore = 100;
+        //int widthScore = 100;
         const int medalWidth = 51;
         const int space = 20;
         const int rightSize = 79;
         const int leftSize = 11;
         const int middleSize = 6;
 
-        protected Boolean pick;
+        //protected Boolean pick;
 
         public TopPlayerScoreComponent() 
         {

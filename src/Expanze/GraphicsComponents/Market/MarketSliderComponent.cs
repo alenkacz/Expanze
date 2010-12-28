@@ -34,7 +34,7 @@ namespace Expanze
         protected int width;
         protected int height;
         protected String texture;
-        protected bool picked;
+        //protected bool picked;
 
         HexaKind fromType = HexaKind.Null;
         HexaKind toType = HexaKind.Null;

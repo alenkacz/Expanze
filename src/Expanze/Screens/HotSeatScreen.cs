@@ -35,7 +35,7 @@ namespace Expanze
         List<ButtonComponent> addButtons = new List<ButtonComponent>();
         List<ButtonComponent> remButtons = new List<ButtonComponent>();
 
-        int activeNumberOfPlayers = 2;
+        //int activeNumberOfPlayers = 2;
         ButtonComponent startGameButton;
 
         List<ButtonComponent> playerButtons = new List<ButtonComponent>();

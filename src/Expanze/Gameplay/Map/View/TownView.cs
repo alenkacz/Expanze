@@ -26,7 +26,7 @@ namespace Expanze.Gameplay.Map
         public override string TryExecute()
         {
             Town town = GameState.map.GetTownByID(townID);
-            TownBuildError error = town.CanActivePlayerBuildTown();
+            TownBuildError error = town.CanBuildTown();
             switch (error)
             {
                 case TownBuildError.AlreadyBuild: return Strings.ALERT_TITLE_TOWN_IS_BUILD;
@@ -111,7 +111,7 @@ namespace Expanze.Gameplay.Map
 
                 int a = 0;
 
-                Player player = model.getPlayerOwner();
+                Player player = model.GetPlayerOwner();
                 if (player == null)
                     player = GameMaster.Inst().getActivePlayer();
                 Vector3 color = player.getColor().ToVector3();
@@ -142,8 +142,8 @@ namespace Expanze.Gameplay.Map
                         
                         if (pickVars.pickActive && !isBuildView)
                         {
-                            if (model.CanActivePlayerBuildTown() != TownBuildError.OK &&
-                                !(model.getIsBuild() && !isBuildView))
+                            if (model.CanBuildTown() != TownBuildError.OK &&
+                                !(model.GetIsBuild() && !isBuildView))
                             {
                                 if (a != 0)
                                     effect.EmissiveColor = new Vector3(0.5f, 0.0f, 0);
@@ -215,7 +215,7 @@ namespace Expanze.Gameplay.Map
             if (pickVars.pickNewPress)
             {
                 pickVars.pickNewPress = false;
-                if (model.getIsBuild() && GameMaster.Inst().getState() == EGameState.StateGame)
+                if (model.GetIsBuild() && GameMaster.Inst().getState() == EGameState.StateGame)
                 {
                     if (pickTownID == townID)
                         pickTownID = -1;

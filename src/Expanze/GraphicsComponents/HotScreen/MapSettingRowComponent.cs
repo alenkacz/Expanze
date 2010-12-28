@@ -13,7 +13,7 @@ namespace Expanze
 
         //space between texts in HUD of materials
         const int space = 150;
-        int start = 60;
+        //int start = 60;
 
         MouseState mouseState;
         int mousex;
@@ -21,9 +21,9 @@ namespace Expanze
         bool pressed = false;
 
         // active player
-        private bool active = false;
+        //private bool active = false;
         // if true, it means that this click was already catched - fix because add/rem buttons are on the same place
-        private bool alreadyChanged = false;
+        //private bool alreadyChanged = false;
 
         RadioButtonComponent radio1;
         RadioButtonComponent radio2;

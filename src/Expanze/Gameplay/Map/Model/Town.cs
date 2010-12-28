@@ -24,12 +24,12 @@ namespace Expanze
         public static int counter = 0;  /// how many town places are on the map
 
         public int GetTownID() { return townID; }
-        public bool getIsBuild() { return isBuild; }
-        public Player getPlayerOwner() { return playerOwner; }
+        public bool GetIsBuild() { return isBuild; }
+        public Player GetPlayerOwner() { return playerOwner; }
         public ISourceAll GetCost() { return Settings.costTown; }
-        public IHexa GetIHexaGet(int pos) { return getHexa(pos); }
-        public HexaModel getHexa(int pos) { return hexaNeighbour[pos]; }
-        public static int getTownCount() { return counter; }    // number of towns
+        public IHexa GetIHexa(byte pos) { return GetHexa(pos); }
+        public HexaModel GetHexa(int pos) { return hexaNeighbour[pos]; }
+        public static int GetTownCount() { return counter; }    // number of towns
 
         public Town()
         {
@@ -188,7 +188,7 @@ namespace Expanze
             {
                 if (townNeighbour[loop1] != null)
                 {
-                    if (townNeighbour[loop1].getIsBuild())
+                    if (townNeighbour[loop1].GetIsBuild())
                         return true;
                 }
             }
@@ -248,7 +248,7 @@ namespace Expanze
             return BuildingBuildError.NoSources;
         }
 
-        public TownBuildError CanActivePlayerBuildTown()
+        public TownBuildError CanBuildTown()
         {
             GameMaster gm = GameMaster.Inst();
             if (gm.getState() == EGameState.StateGame)
@@ -318,7 +318,7 @@ namespace Expanze
             return building[pos];
         }
 
-        public ISourceBuilding BuildSourceBuilding(int pos)
+        public ISourceBuilding BuildSourceBuilding(byte pos)
         {
             GameState.map.GetMapController().BuildBuildingInTown(townID, hexaNeighbour[pos].getID(), BuildingKind.SourceBuilding);
             return (ISourceBuilding) building[pos];

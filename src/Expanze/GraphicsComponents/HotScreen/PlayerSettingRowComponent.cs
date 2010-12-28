@@ -15,7 +15,7 @@ namespace Expanze
 
         //space between texts in HUD of materials
         const int space = 150;
-        int start = 60;
+        //int start = 60;
 
         // active player
         private bool active = false;

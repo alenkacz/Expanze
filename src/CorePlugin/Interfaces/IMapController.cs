@@ -54,23 +54,23 @@ namespace CorePlugin
         /// <param name="townID">ID of town</param>
         /// <param name="hexaID">ID of hexa near town</param>
         /// <param name="kind">kind of building</param>   
-        /// <returns>If the building where builded</returns>
+        /// <returns>If the building was built</returns>
         bool BuildBuildingInTown(int townID, int hexaID, BuildingKind kind);
 
         BuyingUpgradeError BuyUpgradeInSpecialBuilding(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber);
         ChangingSourcesError ChangeSources(SourceKind fromSource, SourceKind toSource, int fromAmount);
 
         IPlayer GetPlayerMe();
-        IHexa GetHexa(int x, int y);
+        IHexa GetIHexa(int x, int y);       
+        ITown GetITownByID(int townID);
+        IRoad GetIRoadByID(int roadID);       
+        EGameState GetState();
+
         /// Min ID is 1 (not 0!)
         /// <returns>Max ID of possible town</returns>
         int GetMaxTownID();
-        ITown GetITownByID(int townID);
         /// Min ID is 1 (not 0!)
         /// <returns>Max ID of possible road</returns>
         int GetMaxRoadID();
-        IRoad GetIRoadByID(int roadID);
-        
-        EGameState GetState();
     }
 }

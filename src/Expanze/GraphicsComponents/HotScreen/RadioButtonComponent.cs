@@ -11,20 +11,20 @@ namespace Expanze
     class RadioButtonComponent : GameComponent
     {
 
-        Color playerColor;
+        //Color playerColor;
         protected SpriteBatch spriteBatch;
         protected Vector2 spritePosition;
         protected Game myGame;
 
         protected Rectangle clickablePos;
-        bool pressed = false;
+        //bool pressed = false;
 
         private bool selected = false;
         Texture2D activeTexture;
         Texture2D bgTexture;
-        bool previouslyNotPressed = true;
+        //bool previouslyNotPressed = true;
 
-        Rectangle range;
+        //Rectangle range;
 
         public RadioButtonComponent(Game game, int x, int y, SpriteFont font, int width, int height)
         {

@@ -52,7 +52,7 @@ namespace Expanze
         {
             foreach (Town town in neighbour)
             {
-                if (town.HasPlayerRoadNeighbour(player) && (town.getPlayerOwner() == player || !town.getIsBuild()))
+                if (town.HasPlayerRoadNeighbour(player) && (town.GetPlayerOwner() == player || !town.GetIsBuild()))
                     return true;
             }
 
@@ -68,7 +68,7 @@ namespace Expanze
         {
             foreach(Town town in neighbour)
             {
-                if (town.getPlayerOwner() == player)
+                if (town.GetPlayerOwner() == player)
                     return true;
             }
 

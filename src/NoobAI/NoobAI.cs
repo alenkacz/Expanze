@@ -124,10 +124,10 @@ namespace NoobAI
             IHexa hexa;
             for (int loop1 = 1; loop1 < mapController.GetMaxTownID(); loop1++)
             {
-                for (int loop2 = 0; loop2 < 3; loop2++)
+                for (byte loop2 = 0; loop2 < 3; loop2++)
                 {
                     town = mapController.GetITownByID(loop1);
-                    hexa = town.GetIHexaGet(loop2);
+                    hexa = town.GetIHexa(loop2);
                     hexaID = hexa.getID();
 
                     if (turn > 7)
@@ -211,9 +211,9 @@ namespace NoobAI
         {
             ITown town = mapController.BuildTown(id);
 
-            for (int loop2 = 0; loop2 < 3; loop2++)
+            for (byte loop2 = 0; loop2 < 3; loop2++)
             {
-                IHexa hexa = town.GetIHexaGet(loop2);
+                IHexa hexa = town.GetIHexa(loop2);
                 if (hexa != null)
                 {
                     switch(hexa.getKind())
@@ -266,9 +266,9 @@ namespace NoobAI
                 tempOre = false;
                 tempMeat = false;
 
-                for (int loop2 = 0; loop2 < 3; loop2++)
+                for (byte loop2 = 0; loop2 < 3; loop2++)
                 {
-                    IHexa hexa = town.GetIHexaGet(loop2);
+                    IHexa hexa = town.GetIHexa(loop2);
                     if (hexa != null)
                     {
                         float multi = 1.0f;

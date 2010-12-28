@@ -41,7 +41,9 @@ namespace AIEasy
             else
             {
                 town = mapController.GetITownByID(5);
-                town.BuildSourceBuilding(0);
+                town.CanBuildTown();
+                ISourceBuilding source = town.BuildSourceBuilding(0);
+                
                 town.BuildSourceBuilding(1);
                 town.BuildSourceBuilding(2);
             }

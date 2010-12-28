@@ -44,9 +44,9 @@ namespace Expanze.Gameplay.Map
 
         public IPlayer GetPlayerMe() { return GameMaster.Inst().getActivePlayer(); }
         public int GetMaxRoadID() { return Road.getRoadCount(); }
-        public int GetMaxTownID() { return Town.getTownCount(); }
+        public int GetMaxTownID() { return Town.GetTownCount(); }
         public EGameState GetState() { return GameMaster.Inst().getState(); }
-        public IHexa GetHexa(int x, int y) { return map.GetHexaModel(x, y); }
+        public IHexa GetIHexa(int x, int y) { return map.GetHexaModel(x, y); }
 
         private HexaKind SourceKindToHexaKind(SourceKind source)
         {
@@ -135,7 +135,7 @@ namespace Expanze.Gameplay.Map
             if (buildingPos == -1)
                 return BuildingBuildError.TownHasNoHexaWithThatHexaID;
 
-            HexaModel hexa = town.getHexa(buildingPos);
+            HexaModel hexa = town.GetHexa(buildingPos);
             if (hexa.getKind() == HexaKind.Desert && kind == BuildingKind.SourceBuilding)
                 return BuildingBuildError.NoSourceBuildingForDesert;
 
@@ -153,7 +153,7 @@ namespace Expanze.Gameplay.Map
             if (buildingPos == -1)
                 return false;
 
-            HexaModel hexa = town.getHexa(buildingPos);
+            HexaModel hexa = town.GetHexa(buildingPos);
             if (hexa.getKind() == HexaKind.Desert && kind == BuildingKind.SourceBuilding)
                 return false;
 
@@ -176,7 +176,7 @@ namespace Expanze.Gameplay.Map
             Town town = map.GetTownByID(townID);
             if (town == null)
                 return TownBuildError.InvalidTownID;
-            return town.CanActivePlayerBuildTown();
+            return town.CanBuildTown();
         }
 
         public ITown BuildTown(int townID)
@@ -186,7 +186,7 @@ namespace Expanze.Gameplay.Map
                 return null;
 
             GameMaster gm = GameMaster.Inst();
-            TownBuildError error = town.CanActivePlayerBuildTown();
+            TownBuildError error = town.CanBuildTown();
             if (error == TownBuildError.OK)
             {
                 town.BuildTown(gm.getActivePlayer());
@@ -201,7 +201,7 @@ namespace Expanze.Gameplay.Map
                     
                     for (int loop1 = 0; loop1 < 3; loop1++)
                     {
-                        if ((hexa = town.getHexa(loop1)) != null)
+                        if ((hexa = town.GetHexa(loop1)) != null)
                         {
                             switch (hexa.getKind())
                             {
@@ -235,7 +235,7 @@ namespace Expanze.Gameplay.Map
 
         public void Init()
         {
-            townByID = new ITown[Town.getTownCount()];
+            townByID = new ITown[Town.GetTownCount()];
             for (int loop1 = 0; loop1 < townByID.Length; loop1++)
                 townByID[loop1] = null;
             roadByID = new IRoad[Road.getRoadCount()];
