@@ -25,7 +25,7 @@ namespace Expanze.Gameplay.Map
 
         public override string TryExecute()
         {
-            Town town = GameState.map.GetTownByID(townID);
+            TownModel town = GameState.map.GetTownByID(townID);
             TownBuildError error = town.CanBuildTown();
             switch (error)
             {
@@ -63,12 +63,12 @@ namespace Expanze.Gameplay.Map
 
         private Color pickTownColor;
         private PickVariables pickVars;
-        private Town model;
+        private TownModel model;
         private Matrix world;
 
         private bool[] buildingIsBuild; /// is building on 1-3 position build?
 
-        public TownView(Town model, Matrix world)
+        public TownView(TownModel model, Matrix world)
         {
             this.model = model;
             this.townID = model.GetTownID();
@@ -81,7 +81,7 @@ namespace Expanze.Gameplay.Map
         }
 
         public int getTownID() { return townID; }
-        public Town getTownModel() { return model; }
+        public TownModel getTownModel() { return model; }
         public Boolean getIsMarked() { return pickTownID == townID; }
         public Boolean getPickNewPress() { return pickVars.pickNewPress; }
 

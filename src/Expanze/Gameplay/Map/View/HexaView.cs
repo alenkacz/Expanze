@@ -34,7 +34,7 @@ namespace Expanze
         public override string TryExecute()
         {
             GameMaster gm = GameMaster.Inst();
-            Town town = GameState.map.GetTownByID(townID);
+            TownModel town = GameState.map.GetTownByID(townID);
             int buildingPos = town.FindBuildingByHexaID(hexaID);
             HexaModel hexa = town.GetHexa(buildingPos);
 
@@ -152,7 +152,7 @@ namespace Expanze
                 spriteBatch.Begin();
 
                 bool drawNumber = true;
-                Town tempTown = null;
+                TownModel tempTown = null;
                 foreach (TownView town in townView)
                 {
                     if (town.getIsMarked())

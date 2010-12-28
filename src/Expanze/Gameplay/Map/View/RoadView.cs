@@ -26,7 +26,7 @@ namespace Expanze.Gameplay.Map.View
 
         public override string TryExecute()
         {
-            Road road = GameState.map.GetRoadByID(roadID);
+            RoadModel road = GameState.map.GetRoadByID(roadID);
             RoadBuildError error = road.CanActivePlayerBuildRoad();
             switch (error)
             {
@@ -63,9 +63,9 @@ namespace Expanze.Gameplay.Map.View
         private PickVariables pickVars;
         private Matrix world;
         private int roadID;
-        private Road model;
+        private RoadModel model;
 
-        public RoadView(Road model, Matrix world)
+        public RoadView(RoadModel model, Matrix world)
         {
             this.model = model;
             this.roadID = model.GetRoadID();

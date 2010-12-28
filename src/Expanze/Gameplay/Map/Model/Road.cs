@@ -9,7 +9,7 @@ using CorePlugin;
 
 namespace Expanze
 {
-    class Road : IRoad
+    class RoadModel : IRoad
     {
         private Player playerOwner;     /// owner of road, if road is not build, owner is null
         private bool isBuild;           /// is build this road? or it is only place for road
@@ -18,25 +18,25 @@ namespace Expanze
                                         /// roadID starts with one and the last one is equals counter
         public static int counter = 0;  /// count of possible roads in the map
 
-        private Town[] neighbour;       /// every road must have two town neighbours
+        private TownModel[] neighbour;       /// every road must have two town neighbours
 
-        public Road()
+        public RoadModel()
         {
             roadID = ++counter;
 
-            neighbour = new Town[2];
+            neighbour = new TownModel[2];
             isBuild = false;
             playerOwner = null;
         }
 
         public static void resetCounter() { counter = 0; }      // every new game have to be reseted
 
-        public static int getRoadCount() { return counter; }    // number of roads
+        public static int GetRoadCount() { return counter; }    // number of roads
         public Player getOwner() { return playerOwner; }
         public int GetRoadID() { return roadID; }
         public bool getIsBuild() { return isBuild; }
 
-        public void SetTownNeighbours(Town one, Town two)
+        public void SetTownNeighbours(TownModel one, TownModel two)
         {
             neighbour[0] = one;
             neighbour[1] = two;
@@ -50,7 +50,7 @@ namespace Expanze
         /// <returns>True if there is at least one players road</returns>
         public Boolean IsActivePlayersRoadOnEndOfRoad(Player player)
         {
-            foreach (Town town in neighbour)
+            foreach (TownModel town in neighbour)
             {
                 if (town.HasPlayerRoadNeighbour(player) && (town.GetPlayerOwner() == player || !town.GetIsBuild()))
                     return true;
@@ -66,7 +66,7 @@ namespace Expanze
         /// <returns>True if there is players town</returns>
         public Boolean IsActivePlayersTownOnEndOfRoad(Player player)
         {
-            foreach(Town town in neighbour)
+            foreach(TownModel town in neighbour)
             {
                 if (town.GetPlayerOwner() == player)
                     return true;

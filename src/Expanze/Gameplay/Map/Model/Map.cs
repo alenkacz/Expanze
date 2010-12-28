@@ -368,9 +368,20 @@ namespace Expanze.Gameplay.Map
                 return null;
         }
 
-        public Town GetTownByID(int townID)
+        public HexaModel GetHexaByID(int hexaID)
         {
-            Town town = null;
+            for (int i = 0; i < hexaMapModel.Length; i++)
+                for (int j = 0; j < hexaMapModel[i].Length; j++)
+                    if (hexaMapModel[i][j].getID() == hexaID)
+                    {
+                        return hexaMapModel[i][j];
+                    }
+            return null;
+        }
+
+        public TownModel GetTownByID(int townID)
+        {
+            TownModel town = null;
             for (int i = 0; i < hexaMapModel.Length; i++)
                 for (int j = 0; j < hexaMapModel[i].Length; j++)
                     if (hexaMapModel[i][j] != null)
@@ -382,9 +393,9 @@ namespace Expanze.Gameplay.Map
             return null;
         }
 
-        public Road GetRoadByID(int roadID)
+        public RoadModel GetRoadByID(int roadID)
         {
-            Road road = null;
+            RoadModel road = null;
             for (int i = 0; i < hexaMapModel.Length; i++)
                 for (int j = 0; j < hexaMapModel[i].Length; j++)
                     if (hexaMapModel[i][j] != null)

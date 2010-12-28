@@ -34,7 +34,7 @@ namespace Expanze.Gameplay
         public override string TryExecute()
         {
             GameMaster gm = GameMaster.Inst();
-            Town town = GameState.map.GetTownByID(townID);
+            TownModel town = GameState.map.GetTownByID(townID);
             SpecialBuilding building = town.getSpecialBuilding(hexaID);
 
             BuyingUpgradeError error = building.CanActivePlayerBuyUpgrade(upgradeKind, upgradeNumber);

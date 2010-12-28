@@ -26,9 +26,9 @@ namespace Expanze
 
         private HexaKind kind = HexaKind.Water;
         private HexaModel[] hexaNeighbours;      // neighbours of hexa, to index use RoadPos
-        private Town[] towns;               // possible towns on hexa, to index use Town Pos
+        private TownModel[] towns;               // possible towns on hexa, to index use Town Pos
         private Boolean[] townOwner;        // was this town made by this hexa? if was, this hexa will draw it, handle picking, get sources...
-        private Road[] roads;               // possible roads on hexa, to index use RoadPos
+        private RoadModel[] roads;               // possible roads on hexa, to index use RoadPos
         private Boolean[] roadOwner;        // was this road made by this hexa? if was, this hexa will draw it, handle picking...
 
         public HexaModel() : this(0, HexaKind.Water, new SourceAll(0)) { }
@@ -44,8 +44,8 @@ namespace Expanze
             this.sourceBuildingCost = sourceBuildingCost;
             this.kind = type;
             this.startSource = value;
-            this.towns = new Town[(int) TownPos.Count];
-            this.roads = new Road[(int)RoadPos.Count];
+            this.towns = new TownModel[(int) TownPos.Count];
+            this.roads = new RoadModel[(int)RoadPos.Count];
             this.townOwner = new Boolean[(int)TownPos.Count];
             this.roadOwner = new Boolean[(int)RoadPos.Count];
 
@@ -53,7 +53,8 @@ namespace Expanze
             sourceMiracle = false;
         }
 
-        public static void resetCounter() { counter = 0; }
+        public static void ResetCounter() { counter = 0; }
+        public static int GetHexaCount() { return counter; }
 
         public void Update(GameTime gameTime)
         {
@@ -93,7 +94,7 @@ namespace Expanze
                 neighboursModel[(int)RoadPos.UpLeft].getRoad(RoadPos.BottomRight) == null)
             {
                 roadOwner[(int)RoadPos.UpLeft] = true;
-                roads[(int)RoadPos.UpLeft] = new Road();
+                roads[(int)RoadPos.UpLeft] = new RoadModel();
                 hexaView.CreateRoadView(RoadPos.UpLeft, Matrix.CreateRotationY(-(float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(-0.25f, 0.0f, 0.14f)));
             }
             else
@@ -106,7 +107,7 @@ namespace Expanze
                 neighboursModel[(int)RoadPos.UpRight].getRoad(RoadPos.BottomLeft) == null)
             {
                 roadOwner[(int)RoadPos.UpRight] = true;
-                roads[(int)RoadPos.UpRight] = new Road();
+                roads[(int)RoadPos.UpRight] = new RoadModel();
                 hexaView.CreateRoadView(RoadPos.UpRight, Matrix.CreateRotationY((float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(-0.25f, 0.0f, -0.14f)));
             }
             else
@@ -119,7 +120,7 @@ namespace Expanze
                 neighboursModel[(int)RoadPos.MiddleLeft].getRoad(RoadPos.MiddleRight) == null)
             {
                 roadOwner[(int)RoadPos.MiddleLeft] = true;
-                roads[(int)RoadPos.MiddleLeft] = new Road();
+                roads[(int)RoadPos.MiddleLeft] = new RoadModel();
                 hexaView.CreateRoadView(RoadPos.MiddleLeft, Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, 0.29f)));
             }
             else
@@ -132,7 +133,7 @@ namespace Expanze
                 neighboursModel[(int)RoadPos.MiddleRight].getRoad(RoadPos.MiddleLeft) == null)
             {
                 roadOwner[(int)RoadPos.MiddleRight] = true;
-                roads[(int)RoadPos.MiddleRight] = new Road();
+                roads[(int)RoadPos.MiddleRight] = new RoadModel();
                 hexaView.CreateRoadView(RoadPos.MiddleRight, Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, -0.28f)));
             }
             else
@@ -145,7 +146,7 @@ namespace Expanze
                 neighboursModel[(int)RoadPos.BottomLeft].getRoad(RoadPos.UpRight) == null)
             {
                 roadOwner[(int)RoadPos.BottomLeft] = true;
-                roads[(int)RoadPos.BottomLeft] = new Road();
+                roads[(int)RoadPos.BottomLeft] = new RoadModel();
                 hexaView.CreateRoadView(RoadPos.BottomLeft, Matrix.CreateRotationY((float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(0.25f, 0.0f, 0.14f)));
             }
             else
@@ -157,7 +158,7 @@ namespace Expanze
                 neighboursModel[(int)RoadPos.BottomRight].getRoad(RoadPos.UpLeft) == null)
             {
                 roadOwner[(int)RoadPos.BottomRight] = true;
-                roads[(int)RoadPos.BottomRight] = new Road();
+                roads[(int)RoadPos.BottomRight] = new RoadModel();
                 hexaView.CreateRoadView(RoadPos.BottomRight, Matrix.CreateRotationY(-(float)Math.PI / 3.0f) * Matrix.CreateTranslation(new Vector3(0.25f, 0.0f, -0.14f)));
             }
             else
@@ -175,7 +176,7 @@ namespace Expanze
                  neighboursModel[(int)RoadPos.UpRight].getTown(TownPos.BottomLeft) == null))
             {
                 townOwner[(int)TownPos.Up] = true;
-                towns[(int)TownPos.Up] = new Town();
+                towns[(int)TownPos.Up] = new TownModel();
                 hexaView.CreateTownView(TownPos.Up, Matrix.CreateTranslation(new Vector3(-0.32f, 0.0f, 0.0f)));
             }
             else
@@ -198,7 +199,7 @@ namespace Expanze
                  neighboursModel[(int)RoadPos.BottomRight].getTown(TownPos.UpLeft) == null))
             {
                 townOwner[(int)TownPos.Bottom] = true;
-                towns[(int)TownPos.Bottom] = new Town();
+                towns[(int)TownPos.Bottom] = new TownModel();
                 hexaView.CreateTownView(TownPos.Bottom, Matrix.CreateTranslation(new Vector3(0.32f, 0.0f, 0.0f)));
             }
             else
@@ -213,7 +214,7 @@ namespace Expanze
                 neighboursModel[(int)RoadPos.MiddleRight].getTown(TownPos.UpLeft) == null))
             {
                 townOwner[(int)TownPos.UpRight] = true;
-                towns[(int)TownPos.UpRight] = new Town();
+                towns[(int)TownPos.UpRight] = new TownModel();
                 hexaView.CreateTownView(TownPos.UpRight, Matrix.CreateTranslation(new Vector3(-0.16f, 0.0f, -0.28f)));
             }
             else
@@ -236,7 +237,7 @@ namespace Expanze
                  neighboursModel[(int)RoadPos.MiddleLeft].getTown(TownPos.UpRight) == null))
             {
                 townOwner[(int)TownPos.UpLeft] = true;
-                towns[(int)TownPos.UpLeft] = new Town();
+                towns[(int)TownPos.UpLeft] = new TownModel();
                 hexaView.CreateTownView(TownPos.UpLeft, Matrix.CreateTranslation(new Vector3(-0.16f, 0.0f, 0.28f)));
             }
             else
@@ -251,7 +252,7 @@ namespace Expanze
                 neighboursModel[(int)RoadPos.MiddleRight].getTown(TownPos.BottomLeft) == null))
             {
                 townOwner[(int)TownPos.BottomRight] = true;
-                towns[(int)TownPos.BottomRight] = new Town();
+                towns[(int)TownPos.BottomRight] = new TownModel();
                 hexaView.CreateTownView(TownPos.BottomRight, Matrix.CreateTranslation(new Vector3(0.16f, 0.0f, -0.28f)));
             }
             else
@@ -273,7 +274,7 @@ namespace Expanze
                 neighboursModel[(int)RoadPos.MiddleLeft].getTown(TownPos.BottomRight) == null))
             {
                 townOwner[(int)TownPos.BottomLeft] = true;
-                towns[(int)TownPos.BottomLeft] = new Town();
+                towns[(int)TownPos.BottomLeft] = new TownModel();
                 hexaView.CreateTownView(TownPos.BottomLeft, Matrix.CreateTranslation(new Vector3(0.16f, 0.0f, 0.28f)));
             }
             else
@@ -293,8 +294,8 @@ namespace Expanze
 
         public void FindTownNeighbours()
         {
-            Town thirdTown = null;
-            Road thirdRoad = null;
+            TownModel thirdTown = null;
+            RoadModel thirdRoad = null;
             for (int loop1 = 0; loop1 < towns.Length; loop1++)
             {
                 if (townOwner[loop1])
@@ -468,12 +469,12 @@ namespace Expanze
             return this.kind;
         }
 
-        public Road getRoad(RoadPos roadPos)
+        public RoadModel getRoad(RoadPos roadPos)
         {
             return roads[(int)roadPos];
         }
 
-        public Road GetRoadByID(int roadID)
+        public RoadModel GetRoadByID(int roadID)
         {
             for (int loop1 = 0; loop1 < roads.Length; loop1++)
                 if (roadOwner[loop1])
@@ -485,7 +486,7 @@ namespace Expanze
             return null;
         }
 
-        public Town getTown(TownPos townPos)
+        public TownModel getTown(TownPos townPos)
         {
             return towns[(int)townPos];
         }
@@ -495,7 +496,7 @@ namespace Expanze
             return towns[(int)townPos];
         }
 
-        public Town GetTownByID(int townID)
+        public TownModel GetTownByID(int townID)
         {
             for (int loop1 = 0; loop1 < towns.Length; loop1++)
                 if (townOwner[loop1])

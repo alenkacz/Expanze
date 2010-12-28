@@ -14,6 +14,7 @@ namespace Expanze.Gameplay.Map
 
         ITown[] townByID;
         IRoad[] roadByID;
+        IHexa[] hexaByID;
 
         public MapController(Map map, MapView mapView)
         {
@@ -33,6 +34,15 @@ namespace Expanze.Gameplay.Map
             return townByID[townID - 1];
         }
 
+        public IHexa GetIHexaByID(int hexaID)
+        {
+            if (hexaID < 1 || hexaID >= hexaByID.Length)
+                return null;
+            if (hexaByID[hexaID - 1] == null)
+                hexaByID[hexaID - 1] = map.GetHexaByID(hexaID);
+            return hexaByID[hexaID - 1];
+        }
+
         public IRoad GetIRoadByID(int roadID)
         {
             if (roadID < 1 || roadID >= roadByID.Length)
@@ -43,8 +53,9 @@ namespace Expanze.Gameplay.Map
         }
 
         public IPlayer GetPlayerMe() { return GameMaster.Inst().GetActivePlayer(); }
-        public int GetMaxRoadID() { return Road.getRoadCount(); }
-        public int GetMaxTownID() { return Town.GetTownCount(); }
+        public int GetMaxRoadID() { return RoadModel.GetRoadCount(); }
+        public int GetMaxTownID() { return TownModel.GetTownCount(); }
+        public int GetMaxHexaID() { return HexaModel.GetHexaCount(); }
         public EGameState GetState() { return GameMaster.Inst().GetState(); }
         public IHexa GetIHexa(int x, int y) { return map.GetHexaModel(x, y); }
 
@@ -77,7 +88,7 @@ namespace Expanze.Gameplay.Map
         public BuyingUpgradeError BuyUpgradeInSpecialBuilding(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber)
         {
             GameMaster gm = GameMaster.Inst();
-            Town town = map.GetTownByID(townID);
+            TownModel town = map.GetTownByID(townID);
             if (town == null)
                 return BuyingUpgradeError.ThereIsNoTown;
             SpecialBuilding building = town.getSpecialBuilding(hexaID);
@@ -95,7 +106,7 @@ namespace Expanze.Gameplay.Map
 
         public RoadBuildError CanBuildRoad(int roadID)
         {
-            Road road = map.GetRoadByID(roadID);
+            RoadModel road = map.GetRoadByID(roadID);
             if (road == null)
                 return RoadBuildError.InvalidRoadID;
             return road.CanActivePlayerBuildRoad();
@@ -103,7 +114,7 @@ namespace Expanze.Gameplay.Map
 
         public IRoad BuildRoad(int roadID)
         {
-            Road road = map.GetRoadByID(roadID);
+            RoadModel road = map.GetRoadByID(roadID);
             if (road == null)
                 return null;
 
@@ -127,7 +138,7 @@ namespace Expanze.Gameplay.Map
         public BuildingBuildError CanBuildBuildingInTown(int townID, int hexaID, BuildingKind kind)
         {
             GameMaster gm = GameMaster.Inst();
-            Town town = map.GetTownByID(townID);
+            TownModel town = map.GetTownByID(townID);
             if (town == null)
                 return BuildingBuildError.InvalidTownID;
 
@@ -145,7 +156,7 @@ namespace Expanze.Gameplay.Map
         public bool BuildBuildingInTown(int townID, int hexaID, BuildingKind kind)
         {
             GameMaster gm = GameMaster.Inst();
-            Town town = map.GetTownByID(townID);
+            TownModel town = map.GetTownByID(townID);
             if (town == null)
                 return false;
 
@@ -173,7 +184,7 @@ namespace Expanze.Gameplay.Map
 
         public TownBuildError CanBuildTown(int townID)
         {
-            Town town = map.GetTownByID(townID);
+            TownModel town = map.GetTownByID(townID);
             if (town == null)
                 return TownBuildError.InvalidTownID;
             return town.CanBuildTown();
@@ -181,7 +192,7 @@ namespace Expanze.Gameplay.Map
 
         public ITown BuildTown(int townID)
         {
-            Town town = map.GetTownByID(townID);
+            TownModel town = map.GetTownByID(townID);
             if (town == null)
                 return null;
 
@@ -238,12 +249,16 @@ namespace Expanze.Gameplay.Map
 
         public void Init()
         {
-            townByID = new ITown[Town.GetTownCount()];
+            townByID = new ITown[TownModel.GetTownCount()];
             for (int loop1 = 0; loop1 < townByID.Length; loop1++)
                 townByID[loop1] = null;
-            roadByID = new IRoad[Road.getRoadCount()];
+            roadByID = new IRoad[RoadModel.GetRoadCount()];
             for (int loop1 = 0; loop1 < roadByID.Length; loop1++)
                 roadByID[loop1] = null;
+            hexaByID = new IHexa[HexaModel.GetHexaCount()];
+            for (int loop1 = 0; loop1 < hexaByID.Length; loop1++)
+                hexaByID[loop1] = null;
+
         }
     }
 }

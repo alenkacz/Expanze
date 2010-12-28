@@ -32,7 +32,7 @@ namespace Expanze.Gameplay
             this.townID = townID;
             this.hexaID = hexaID;
 
-            Town town = GameState.map.GetTownByID(townID);
+            TownModel town = GameState.map.GetTownByID(townID);
             int buildingPos = town.FindBuildingByHexaID(hexaID);
             HexaModel hexa = town.GetHexa(buildingPos);
 
@@ -180,6 +180,16 @@ namespace Expanze.Gameplay
             }
 
             return new SourceAll(0);
+        }
+
+        public bool Upgrade()
+        {
+            UpgradeKind kind;
+            if (!upgradeFirst[0])
+                kind = UpgradeKind.FirstUpgrade;
+            else
+                kind = UpgradeKind.SecondUpgrade;
+            return GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, kind, 0) == BuyingUpgradeError.OK;
         }
     }
 }

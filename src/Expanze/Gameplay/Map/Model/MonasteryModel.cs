@@ -93,5 +93,16 @@ namespace Expanze.Gameplay
         {
             return new BuildingPromptItem(townID, hexaID, BuildingKind.MonasteryBuilding, Strings.PROMPT_TITLE_WANT_TO_BUILD_MONASTERY, Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_MONASTERY, Settings.costMonastery, true, GameResources.Inst().getHudTexture(HUDTexture.IconMonastery));
         }
+
+        public bool InventUpgrade(SourceKind source)
+        {
+            UpgradeKind kind;
+            if (!upgradeFirst[(int)source])
+                kind = UpgradeKind.FirstUpgrade;
+            else
+                kind = UpgradeKind.SecondUpgrade;
+
+            return GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, kind, (int) source) == BuyingUpgradeError.OK;
+        }
     }
 }

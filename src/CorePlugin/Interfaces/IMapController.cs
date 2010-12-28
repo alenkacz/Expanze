@@ -57,15 +57,27 @@ namespace CorePlugin
         /// <returns>If the building was built</returns>
         bool BuildBuildingInTown(int townID, int hexaID, BuildingKind kind);
 
-        //BuyingUpgradeError BuyUpgradeInSpecialBuilding(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber);
+        /// <summary>
+        /// Change fromAmount amount of one source kind to another according conversion rate of player.
+        /// </summary>
+        /// <param name="fromSource">Source kind which you dont want to have.</param>
+        /// <param name="toSource">Source kind which you want.</param>
+        /// <param name="fromAmount">How many pieces of fromSource you want to change.</param>
+        /// <returns>Possible error or ChangingSourcesError.OK</returns>
         ChangingSourcesError ChangeSources(SourceKind fromSource, SourceKind toSource, int fromAmount);
 
         IPlayer GetPlayerMe();
-        IHexa GetIHexa(int x, int y);       
+        IHexa GetIHexa(int x, int y);
+        IHexa GetIHexaByID(int hexaID);
         ITown GetITownByID(int townID);
         IRoad GetIRoadByID(int roadID);       
         EGameState GetState();
 
+        /// <summary>
+        /// Min ID is 1 (not 0!)
+        /// </summary>
+        /// <returns>Max hexa ID</returns>
+        int GetMaxHexaID();
         /// Min ID is 1 (not 0!)
         /// <returns>Max ID of possible town</returns>
         int GetMaxTownID();

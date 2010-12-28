@@ -93,5 +93,16 @@ namespace Expanze.Gameplay
         {
             return new BuildingPromptItem(townID, hexaID, BuildingKind.MarketBuilding, Strings.PROMPT_TITLE_WANT_TO_BUILD_MARKET, Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_MARKET, Settings.costMarket, true, GameResources.Inst().getHudTexture(HUDTexture.IconMarket));
         }
+
+        public bool BuyLicence(SourceKind source)
+        {
+            UpgradeKind kind;
+            if (!upgradeFirst[(int) source])
+                kind = UpgradeKind.FirstUpgrade;
+            else
+                kind = UpgradeKind.SecondUpgrade;
+
+            return GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, kind, (int)source) == BuyingUpgradeError.OK;
+        }
     }
 }

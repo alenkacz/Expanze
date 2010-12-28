@@ -10,12 +10,12 @@ using Expanze.Gameplay;
 
 namespace Expanze
 {
-    class Town : ITown
+    class TownModel : ITown
     {
         private Player playerOwner; /// owner of this town, if null no player owns town on this place
         private bool isBuild;       /// is there town or it is only place for possible town
-        private Road[] roadNeighbour; /// two or 3 neighbours
-        private Town[] townNeighbour; /// two or 3 neighbours
+        private RoadModel[] roadNeighbour; /// two or 3 neighbours
+        private TownModel[] townNeighbour; /// two or 3 neighbours
         private HexaModel[] hexaNeighbour; /// 1 - 3 neighbours
         private BuildingKind[] buildingKind; /// indeces corresponds with hexaNeighbour indeces
         private SpecialBuilding[] building; /// indeces corresponds with hexaNeighbour indeces
@@ -31,13 +31,13 @@ namespace Expanze
         public HexaModel GetHexa(int pos) { return hexaNeighbour[pos]; }
         public static int GetTownCount() { return counter; }    // number of towns
 
-        public Town()
+        public TownModel()
         {
             townID = ++counter;
             isBuild = false;
 
-            roadNeighbour = new Road[3];
-            townNeighbour = new Town[3];
+            roadNeighbour = new RoadModel[3];
+            townNeighbour = new TownModel[3];
             hexaNeighbour = new HexaModel[3];
             buildingKind = new BuildingKind[3];
             building = new SpecialBuilding[3];
@@ -87,14 +87,14 @@ namespace Expanze
 
         public static void ResetCounter() { counter = 0; }
 
-        public void SetRoadNeighbours(Road road1, Road road2, Road road3)
+        public void SetRoadNeighbours(RoadModel road1, RoadModel road2, RoadModel road3)
         {
             roadNeighbour[0] = road1;
             roadNeighbour[1] = road2;
             roadNeighbour[2] = road3;
         }
 
-        public void SetTownNeighbours(Town town1, Town town2, Town town3)
+        public void SetTownNeighbours(TownModel town1, TownModel town2, TownModel town3)
         {
             townNeighbour[0] = town1;
             townNeighbour[1] = town2;
@@ -170,7 +170,7 @@ namespace Expanze
 
         public Boolean HasPlayerRoadNeighbour(Player player)
         {
-            foreach (Road road in roadNeighbour)
+            foreach (RoadModel road in roadNeighbour)
             {
                 if (road != null)
                 {
@@ -256,7 +256,7 @@ namespace Expanze
                 Player activePlayer = gm.GetActivePlayer();
                 Boolean hasActivePlayerRoadNeighbour = false;
 
-                foreach (Road road in roadNeighbour)
+                foreach (RoadModel road in roadNeighbour)
                 {
                     if (road != null && road.getOwner() == activePlayer)
                         hasActivePlayerRoadNeighbour = true;
