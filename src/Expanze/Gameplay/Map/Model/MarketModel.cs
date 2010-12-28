@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Expanze.Gameplay
 {
-    class MarketModel : SpecialBuilding
+    class MarketModel : SpecialBuilding, IMarket
     {
         int townID; // where is this building
         int hexaID;

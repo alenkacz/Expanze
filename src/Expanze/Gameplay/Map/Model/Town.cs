@@ -322,8 +322,46 @@ namespace Expanze
 
         public ISourceBuilding BuildSourceBuilding(byte pos)
         {
-            GameState.map.GetMapController().BuildBuildingInTown(townID, hexaNeighbour[pos].getID(), BuildingKind.SourceBuilding);
-            return (ISourceBuilding) building[pos];
+            if (pos < 0 || pos > 2)
+                return null;
+
+            if (GameState.map.GetMapController().BuildBuildingInTown(townID, hexaNeighbour[pos].getID(), BuildingKind.SourceBuilding))
+                return (ISourceBuilding)building[pos];
+            else
+                return null;
+        }
+
+        public IFort BuildFort(byte pos)
+        {
+            if (pos < 0 || pos > 2)
+                return null;
+
+            if(GameState.map.GetMapController().BuildBuildingInTown(townID, hexaNeighbour[pos].getID(), BuildingKind.FortBuilding))
+                return (IFort)building[pos];
+            else
+                return null;      
+        }
+
+        public IMonastery BuildMonastery(byte pos)
+        {
+            if (pos < 0 || pos > 2)
+                return null;
+
+            if (GameState.map.GetMapController().BuildBuildingInTown(townID, hexaNeighbour[pos].getID(), BuildingKind.MonasteryBuilding))
+                return (IMonastery)building[pos];
+            else
+                return null;
+        }
+
+        public IMarket BuildMarket(byte pos)
+        {
+            if (pos < 0 || pos > 2)
+                return null;
+
+            if (GameState.map.GetMapController().BuildBuildingInTown(townID, hexaNeighbour[pos].getID(), BuildingKind.MarketBuilding))
+                return (IMarket)building[pos];
+            else
+                return null;
         }
     }
 }

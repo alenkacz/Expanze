@@ -41,7 +41,7 @@ namespace Expanze.Gameplay
         }
     }
 
-    class FortModel : SpecialBuilding
+    class FortModel : SpecialBuilding, IFort
     {
         int townID; // where is this building
         int hexaID;
@@ -146,6 +146,11 @@ namespace Expanze.Gameplay
         public static BuildingPromptItem getPromptItemBuildFort(int townID, int hexaID)
         {
             return new BuildingPromptItem(townID, hexaID, BuildingKind.FortBuilding, Strings.PROMPT_TITLE_WANT_TO_BUILD_FORT, Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_FORT, Settings.costFort, true, GameResources.Inst().getHudTexture(HUDTexture.IconFort));
+        }
+
+        public bool ShowParade()
+        {
+            return GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, UpgradeKind.FirstUpgrade, 3) == BuyingUpgradeError.OK;
         }
     }
 }

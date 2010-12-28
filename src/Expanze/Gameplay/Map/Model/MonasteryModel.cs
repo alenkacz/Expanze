@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Expanze.Gameplay
 {
-    class MonasteryModel : SpecialBuilding
+    class MonasteryModel : SpecialBuilding, IMonastery
     {
         int townID; // where is this building
         int hexaID;

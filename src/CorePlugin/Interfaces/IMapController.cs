@@ -57,7 +57,7 @@ namespace CorePlugin
         /// <returns>If the building was built</returns>
         bool BuildBuildingInTown(int townID, int hexaID, BuildingKind kind);
 
-        BuyingUpgradeError BuyUpgradeInSpecialBuilding(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber);
+        //BuyingUpgradeError BuyUpgradeInSpecialBuilding(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber);
         ChangingSourcesError ChangeSources(SourceKind fromSource, SourceKind toSource, int fromAmount);
 
         IPlayer GetPlayerMe();

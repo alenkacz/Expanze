@@ -20,8 +20,7 @@ namespace NoobAI
 
         int turn;
         bool hasFort;
-        int fortTownID;
-        int fortHexaID;
+        IFort myFort;
         bool hasMonastery;
         bool hasMarket;
 
@@ -81,7 +80,8 @@ namespace NoobAI
                         }
                     }
                 }
-                mapController.BuyUpgradeInSpecialBuilding(fortTownID, fortHexaID, UpgradeKind.FirstUpgrade, 3);
+                if (hasFort)
+                    myFort.ShowParade();
             }
         }
 
@@ -136,11 +136,9 @@ namespace NoobAI
                         {
                             if (!hasFort)
                             {
-                                if (mapController.BuildBuildingInTown(loop1, hexaID, BuildingKind.FortBuilding))
+                                if ((myFort = town.BuildFort(loop2)) != null)
                                 {
                                     hasFort = true;
-                                    fortHexaID = hexaID;
-                                    fortTownID = loop1;
                                 }
                                 continue;
                             }
