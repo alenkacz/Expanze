@@ -156,7 +156,8 @@ namespace Expanze
                 TextWrapping.DrawStringIntoRectangle(messageActive.getDescription(),
                     GameState.medievalSmall, Color.LightSteelBlue, bgPos.X + 20, bgPos.Y + 55, background.Width - 140);
 
-                spriteBatch.Draw(messageActive.getIcon(), new Vector2(bgPos.X + background.Width - messageActive.getIcon().Width - 20, bgPos.Y + 30), color);
+                if(messageActive.getIcon() != null)
+                    spriteBatch.Draw(messageActive.getIcon(), new Vector2(bgPos.X + background.Width - messageActive.getIcon().Width - 20, bgPos.Y + 30), color);
 
                 spriteBatch.End();
             }

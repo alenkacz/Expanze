@@ -33,7 +33,7 @@ namespace Expanze
 
         public static int getRoadCount() { return counter; }    // number of roads
         public Player getOwner() { return playerOwner; }
-        public int getRoadID() { return roadID; }
+        public int GetRoadID() { return roadID; }
         public bool getIsBuild() { return isBuild; }
 
         public void SetTownNeighbours(Town one, Town two)

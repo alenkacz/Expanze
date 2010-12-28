@@ -17,6 +17,7 @@ namespace CorePlugin
         /// <param name="townID">ID of town place</param>
         /// <returns>Builded town or null if player cant build town.</returns>
         ITownGet BuildTown(int townID);
+        ITownGet BuildTown(ITownGet town);
 
         /// <summary>
         /// Find out if player can build town on town place with townID. 
@@ -31,6 +32,7 @@ namespace CorePlugin
         /// <param name="roadID">ID of road place</param>
         /// <returns>Builded road or null if player cant build road.</returns>
         IRoadGet BuildRoad(int roadID);
+        IRoadGet BuildRoad(IRoadGet road);
 
         /// <summary>
         /// Find out if player can build road on road place with roadID. 

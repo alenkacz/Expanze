@@ -361,7 +361,11 @@ namespace Expanze.Gameplay.Map
 
         public HexaModel GetHexaModel(int i, int j)
         {
-            return hexaMapModel[i][j];
+            if (i >= 0 && i < hexaMapModel.Length &&
+               j >= 0 && j < hexaMapModel[i].Length)
+                return hexaMapModel[i][j];
+            else
+                return null;
         }
 
         public Town GetTownByID(int townID)

@@ -101,6 +101,11 @@ namespace Expanze.Gameplay.Map
             return road.CanActivePlayerBuildRoad();
         }
 
+        public IRoadGet BuildRoad(IRoadGet road)
+        {
+            return BuildRoad(road.GetRoadID());
+        }
+
         public IRoadGet BuildRoad(int roadID)
         {
             Road road = map.GetRoadByID(roadID);
@@ -176,6 +181,11 @@ namespace Expanze.Gameplay.Map
             if (town == null)
                 return TownBuildError.InvalidTownID;
             return town.CanActivePlayerBuildTown();
+        }
+
+        public ITownGet BuildTown(ITownGet town)
+        {
+            return BuildTown(town.getTownID());
         }
 
         public ITownGet BuildTown(int townID)

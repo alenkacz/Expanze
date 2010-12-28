@@ -478,7 +478,7 @@ namespace Expanze
             for (int loop1 = 0; loop1 < roads.Length; loop1++)
                 if (roadOwner[loop1])
                 {
-                    if (roadID == roads[loop1].getRoadID())
+                    if (roadID == roads[loop1].GetRoadID())
                         return roads[loop1];
                 }
 

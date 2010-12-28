@@ -192,6 +192,7 @@ namespace Expanze
             catch (Exception exception)
             {
                 Console.WriteLine(exception.Message);
+                GameState.message.Show(exception.Source, exception.Message, null);
             }
         }
 

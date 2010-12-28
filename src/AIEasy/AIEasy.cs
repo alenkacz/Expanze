@@ -26,6 +26,7 @@ namespace AIEasy
         {
             if (mapController.GetState() == EGameState.StateFirstTown)
             {
+                mapController.BuildTown(mapController.GetHexa(1, 2).getITown(TownPos.BottomRight));
                 mapController.BuildTown(5);
                 mapController.BuildTown(10);
                 mapController.BuildTown(15);

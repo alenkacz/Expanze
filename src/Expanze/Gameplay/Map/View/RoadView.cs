@@ -68,7 +68,7 @@ namespace Expanze.Gameplay.Map.View
         public RoadView(Road model, Matrix world)
         {
             this.model = model;
-            this.roadID = model.getRoadID();
+            this.roadID = model.GetRoadID();
             this.pickRoadColor = new Color(0.0f, roadID / 256.0f, 0.0f);
             this.world = world;
             pickVars = new PickVariables(pickRoadColor);
