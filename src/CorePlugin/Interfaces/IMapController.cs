@@ -16,8 +16,7 @@ namespace CorePlugin
         /// </summary>
         /// <param name="townID">ID of town place</param>
         /// <returns>Builded town or null if player cant build town.</returns>
-        ITownGet BuildTown(int townID);
-        ITownGet BuildTown(ITownGet town);
+        ITown BuildTown(int townID);
 
         /// <summary>
         /// Find out if player can build town on town place with townID. 
@@ -31,8 +30,7 @@ namespace CorePlugin
         /// </summary>
         /// <param name="roadID">ID of road place</param>
         /// <returns>Builded road or null if player cant build road.</returns>
-        IRoadGet BuildRoad(int roadID);
-        IRoadGet BuildRoad(IRoadGet road);
+        IRoad BuildRoad(int roadID);
 
         /// <summary>
         /// Find out if player can build road on road place with roadID. 
@@ -55,23 +53,23 @@ namespace CorePlugin
         /// </summary>
         /// <param name="townID">ID of town</param>
         /// <param name="hexaID">ID of hexa near town</param>
-        /// <param name="kind">kind of building</param>
-        /// <returns>Builded building or null if player cant build building in town.</returns>       
-        ISpecialBuildingGet BuildBuildingInTown(int townID, int hexaID, BuildingKind kind);
+        /// <param name="kind">kind of building</param>   
+        /// <returns>If the building where builded</returns>
+        bool BuildBuildingInTown(int townID, int hexaID, BuildingKind kind);
 
         BuyingUpgradeError BuyUpgradeInSpecialBuilding(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber);
         ChangingSourcesError ChangeSources(SourceKind fromSource, SourceKind toSource, int fromAmount);
 
-        IPlayerGet GetPlayerMe();
-        IHexaGet GetHexa(int x, int y);
+        IPlayer GetPlayerMe();
+        IHexa GetHexa(int x, int y);
         /// Min ID is 1 (not 0!)
         /// <returns>Max ID of possible town</returns>
         int GetMaxTownID();
-        ITownGet GetITownGetByID(int townID);
+        ITown GetITownByID(int townID);
         /// Min ID is 1 (not 0!)
         /// <returns>Max ID of possible road</returns>
         int GetMaxRoadID();
-        IRoadGet GetIRoadGetByID(int roadID);
+        IRoad GetIRoadByID(int roadID);
         
         EGameState GetState();
     }

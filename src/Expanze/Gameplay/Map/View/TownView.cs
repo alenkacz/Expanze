@@ -71,7 +71,7 @@ namespace Expanze.Gameplay.Map
         public TownView(Town model, Matrix world)
         {
             this.model = model;
-            this.townID = model.getTownID();
+            this.townID = model.GetTownID();
             this.pickTownColor = new Color(0.0f, 0.0f, townID / 256.0f);
             this.world = world;
             buildingIsBuild = new bool[3];
@@ -89,7 +89,7 @@ namespace Expanze.Gameplay.Map
 
         public bool getBuildingIsBuild(int hexaID)
         {
-            return buildingIsBuild[model.findBuildingByHexaID(hexaID)];
+            return buildingIsBuild[model.FindBuildingByHexaID(hexaID)];
         }
 
         public void setBuildingIsBuild(int pos, bool isBuild)

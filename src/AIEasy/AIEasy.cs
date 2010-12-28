@@ -11,6 +11,8 @@ namespace AIEasy
     class AIEasy : IComponentAI
     {
         IMapController mapController;
+        ITown town;
+
 
         public String GetAIName()
         {
@@ -26,8 +28,7 @@ namespace AIEasy
         {
             if (mapController.GetState() == EGameState.StateFirstTown)
             {
-                mapController.BuildTown(mapController.GetHexa(1, 2).getITown(TownPos.BottomRight));
-                mapController.BuildTown(5);
+                town = mapController.BuildTown(5);
                 mapController.BuildTown(10);
                 mapController.BuildTown(15);
             }
@@ -39,7 +40,10 @@ namespace AIEasy
             }
             else
             {
-                
+                town = mapController.GetITownByID(5);
+                town.BuildSourceBuilding(0);
+                town.BuildSourceBuilding(1);
+                town.BuildSourceBuilding(2);
             }
         }
 

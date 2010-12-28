@@ -120,14 +120,14 @@ namespace NoobAI
         public void BuildAllPossibleSourceBuilding()
         {
             int hexaID;
-            ITownGet town;
-            IHexaGet hexa;
+            ITown town;
+            IHexa hexa;
             for (int loop1 = 1; loop1 < mapController.GetMaxTownID(); loop1++)
             {
                 for (int loop2 = 0; loop2 < 3; loop2++)
                 {
-                    town = mapController.GetITownGetByID(loop1);
-                    hexa = town.getIHexaGet(loop2);
+                    town = mapController.GetITownByID(loop1);
+                    hexa = town.GetIHexaGet(loop2);
                     hexaID = hexa.getID();
 
                     if (turn > 7)
@@ -136,7 +136,7 @@ namespace NoobAI
                         {
                             if (!hasFort)
                             {
-                                if (mapController.BuildBuildingInTown(loop1, hexaID, BuildingKind.FortBuilding) != null)
+                                if (mapController.BuildBuildingInTown(loop1, hexaID, BuildingKind.FortBuilding))
                                 {
                                     hasFort = true;
                                     fortHexaID = hexaID;
@@ -146,14 +146,14 @@ namespace NoobAI
                             }
                             else if (!hasMarket)
                             {
-                                if (mapController.BuildBuildingInTown(loop1, hexaID, BuildingKind.MarketBuilding) != null)
+                                if (mapController.BuildBuildingInTown(loop1, hexaID, BuildingKind.MarketBuilding))
                                 {
                                     hasMarket = true;
                                 }
                                 continue;
                             } if (!hasMonastery)
                             {
-                                if (mapController.BuildBuildingInTown(loop1, hexaID, BuildingKind.MonasteryBuilding) != null)
+                                if (mapController.BuildBuildingInTown(loop1, hexaID, BuildingKind.MonasteryBuilding))
                                 {
                                     hasMonastery = true;
                                 }
@@ -196,7 +196,7 @@ namespace NoobAI
                      case 2: roadID = maxRoadID - loop1; break;
                      case 3: roadID = ((maxRoadID - loop1) + 30) % maxRoadID; break;
                  }
-                 IRoadGet road = mapController.GetIRoadGetByID(roadID);
+                 IRoad road = mapController.GetIRoadByID(roadID);
 
                  if (road != null && road.CanActivePlayerBuildRoad() == RoadBuildError.OK)
                  {
@@ -209,11 +209,11 @@ namespace NoobAI
 
         public void BuildTown(int id)
         {
-            ITownGet town = mapController.BuildTown(id);
+            ITown town = mapController.BuildTown(id);
 
             for (int loop2 = 0; loop2 < 3; loop2++)
             {
-                IHexaGet hexa = town.getIHexaGet(loop2);
+                IHexa hexa = town.GetIHexaGet(loop2);
                 if (hexa != null)
                 {
                     switch(hexa.getKind())
@@ -257,7 +257,7 @@ namespace NoobAI
                 if (mapController.CanBuildTown(loop1) != TownBuildError.OK)
                     continue;
 
-                ITownGet town = mapController.GetITownGetByID(loop1);
+                ITown town = mapController.GetITownByID(loop1);
 
                 bool tempCorn, tempWood, tempMeat, tempOre, tempStone;
                 tempCorn = false;
@@ -268,7 +268,7 @@ namespace NoobAI
 
                 for (int loop2 = 0; loop2 < 3; loop2++)
                 {
-                    IHexaGet hexa = town.getIHexaGet(loop2);
+                    IHexa hexa = town.GetIHexaGet(loop2);
                     if (hexa != null)
                     {
                         float multi = 1.0f;

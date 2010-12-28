@@ -12,7 +12,7 @@ namespace Expanze
     /// <summary>
     /// Containing information about one single hexa
     /// </summary>
-    class HexaModel : IHexaGet
+    class HexaModel : IHexa
     {
         int startSource;      // how many sources will player get
         bool sourceDisaster;  // is on hex disaster 
@@ -315,9 +315,9 @@ namespace Expanze
                                 thirdTown = hexaNeighbours[(int)RoadPos.UpRight].getTown(TownPos.UpLeft);
                                 thirdRoad = hexaNeighbours[(int)RoadPos.UpRight].getRoad(RoadPos.MiddleLeft);
                             }
-                            towns[loop1].setRoadNeighbours(roads[(int)RoadPos.UpLeft], roads[(int)RoadPos.UpRight], thirdRoad);
-                            towns[loop1].setTownNeighbours(towns[(int)TownPos.UpLeft], towns[(int)TownPos.UpRight], thirdTown);
-                            towns[loop1].setHexaNeighbours(this, hexaNeighbours[(int)RoadPos.UpLeft], hexaNeighbours[(int)RoadPos.UpRight]);
+                            towns[loop1].SetRoadNeighbours(roads[(int)RoadPos.UpLeft], roads[(int)RoadPos.UpRight], thirdRoad);
+                            towns[loop1].SetTownNeighbours(towns[(int)TownPos.UpLeft], towns[(int)TownPos.UpRight], thirdTown);
+                            towns[loop1].SetHexaNeighbours(this, hexaNeighbours[(int)RoadPos.UpLeft], hexaNeighbours[(int)RoadPos.UpRight]);
                             break;
 
                         case TownPos.Bottom:
@@ -331,9 +331,9 @@ namespace Expanze
                                 thirdTown = hexaNeighbours[(int)RoadPos.BottomRight].getTown(TownPos.BottomLeft);
                                 thirdRoad = hexaNeighbours[(int)RoadPos.BottomRight].getRoad(RoadPos.MiddleLeft);
                             }
-                            towns[loop1].setRoadNeighbours(roads[(int)RoadPos.BottomLeft], roads[(int)RoadPos.BottomRight], thirdRoad);
-                            towns[loop1].setTownNeighbours(towns[(int)TownPos.BottomLeft], towns[(int)TownPos.BottomRight], thirdTown);
-                            towns[loop1].setHexaNeighbours(this, hexaNeighbours[(int)RoadPos.BottomLeft], hexaNeighbours[(int)RoadPos.BottomRight]);
+                            towns[loop1].SetRoadNeighbours(roads[(int)RoadPos.BottomLeft], roads[(int)RoadPos.BottomRight], thirdRoad);
+                            towns[loop1].SetTownNeighbours(towns[(int)TownPos.BottomLeft], towns[(int)TownPos.BottomRight], thirdTown);
+                            towns[loop1].SetHexaNeighbours(this, hexaNeighbours[(int)RoadPos.BottomLeft], hexaNeighbours[(int)RoadPos.BottomRight]);
                             break;
 
                         case TownPos.UpLeft:
@@ -347,9 +347,9 @@ namespace Expanze
                                 thirdTown = hexaNeighbours[(int)RoadPos.UpLeft].getTown(TownPos.BottomLeft);
                                 thirdRoad = hexaNeighbours[(int)RoadPos.UpLeft].getRoad(RoadPos.BottomLeft);
                             }
-                            towns[loop1].setRoadNeighbours(roads[(int)RoadPos.UpLeft], roads[(int)RoadPos.MiddleLeft], thirdRoad);
-                            towns[loop1].setTownNeighbours(towns[(int)TownPos.Up], towns[(int)TownPos.BottomLeft], thirdTown);
-                            towns[loop1].setHexaNeighbours(this, hexaNeighbours[(int)RoadPos.UpLeft], hexaNeighbours[(int)RoadPos.MiddleLeft]);
+                            towns[loop1].SetRoadNeighbours(roads[(int)RoadPos.UpLeft], roads[(int)RoadPos.MiddleLeft], thirdRoad);
+                            towns[loop1].SetTownNeighbours(towns[(int)TownPos.Up], towns[(int)TownPos.BottomLeft], thirdTown);
+                            towns[loop1].SetHexaNeighbours(this, hexaNeighbours[(int)RoadPos.UpLeft], hexaNeighbours[(int)RoadPos.MiddleLeft]);
                             break;
 
                         case TownPos.UpRight:
@@ -363,9 +363,9 @@ namespace Expanze
                                 thirdTown = hexaNeighbours[(int)RoadPos.UpRight].getTown(TownPos.BottomRight);
                                 thirdRoad = hexaNeighbours[(int)RoadPos.UpRight].getRoad(RoadPos.BottomRight);
                             }
-                            towns[loop1].setRoadNeighbours(roads[(int)RoadPos.UpRight], roads[(int)RoadPos.MiddleRight], thirdRoad);
-                            towns[loop1].setTownNeighbours(towns[(int)TownPos.Up], towns[(int)TownPos.BottomRight], thirdTown);
-                            towns[loop1].setHexaNeighbours(this, hexaNeighbours[(int)RoadPos.UpRight], hexaNeighbours[(int)RoadPos.MiddleRight]);
+                            towns[loop1].SetRoadNeighbours(roads[(int)RoadPos.UpRight], roads[(int)RoadPos.MiddleRight], thirdRoad);
+                            towns[loop1].SetTownNeighbours(towns[(int)TownPos.Up], towns[(int)TownPos.BottomRight], thirdTown);
+                            towns[loop1].SetHexaNeighbours(this, hexaNeighbours[(int)RoadPos.UpRight], hexaNeighbours[(int)RoadPos.MiddleRight]);
                             break;
 
                         case TownPos.BottomLeft:
@@ -379,9 +379,9 @@ namespace Expanze
                                 thirdTown = hexaNeighbours[(int)RoadPos.BottomLeft].getTown(TownPos.UpLeft);
                                 thirdRoad = hexaNeighbours[(int)RoadPos.BottomLeft].getRoad(RoadPos.UpLeft);
                             }
-                            towns[loop1].setRoadNeighbours(roads[(int)RoadPos.BottomLeft], roads[(int)RoadPos.MiddleLeft], thirdRoad);
-                            towns[loop1].setTownNeighbours(towns[(int)TownPos.Bottom], towns[(int)TownPos.UpLeft], thirdTown);
-                            towns[loop1].setHexaNeighbours(this, hexaNeighbours[(int)RoadPos.BottomLeft], hexaNeighbours[(int)RoadPos.MiddleLeft]);
+                            towns[loop1].SetRoadNeighbours(roads[(int)RoadPos.BottomLeft], roads[(int)RoadPos.MiddleLeft], thirdRoad);
+                            towns[loop1].SetTownNeighbours(towns[(int)TownPos.Bottom], towns[(int)TownPos.UpLeft], thirdTown);
+                            towns[loop1].SetHexaNeighbours(this, hexaNeighbours[(int)RoadPos.BottomLeft], hexaNeighbours[(int)RoadPos.MiddleLeft]);
                             break;
 
                         case TownPos.BottomRight:
@@ -395,9 +395,9 @@ namespace Expanze
                                 thirdTown = hexaNeighbours[(int)RoadPos.BottomRight].getTown(TownPos.UpRight);
                                 thirdRoad = hexaNeighbours[(int)RoadPos.BottomRight].getRoad(RoadPos.UpRight);
                             }
-                            towns[loop1].setRoadNeighbours(roads[(int)RoadPos.BottomRight], roads[(int)RoadPos.MiddleRight], thirdRoad);
-                            towns[loop1].setTownNeighbours(towns[(int)TownPos.Bottom], towns[(int)TownPos.UpRight], thirdTown);
-                            towns[loop1].setHexaNeighbours(this, hexaNeighbours[(int)RoadPos.BottomRight], hexaNeighbours[(int)RoadPos.MiddleRight]);
+                            towns[loop1].SetRoadNeighbours(roads[(int)RoadPos.BottomRight], roads[(int)RoadPos.MiddleRight], thirdRoad);
+                            towns[loop1].SetTownNeighbours(towns[(int)TownPos.Bottom], towns[(int)TownPos.UpRight], thirdTown);
+                            towns[loop1].SetHexaNeighbours(this, hexaNeighbours[(int)RoadPos.BottomRight], hexaNeighbours[(int)RoadPos.MiddleRight]);
                             break;
                     }
                 }
@@ -444,7 +444,7 @@ namespace Expanze
         {
             for (int loop1 = 0; loop1 < towns.Length; loop1++)
                 if (townOwner[loop1])
-                    towns[loop1].collectSources(player);
+                    towns[loop1].CollectSources(player);
         }
 
         public string getModelPath()
@@ -490,7 +490,7 @@ namespace Expanze
             return towns[(int)townPos];
         }
 
-        public ITownGet getITown(TownPos townPos)
+        public ITown getITown(TownPos townPos)
         {
             return towns[(int)townPos];
         }
@@ -500,7 +500,7 @@ namespace Expanze
             for (int loop1 = 0; loop1 < towns.Length; loop1++)
                 if (townOwner[loop1])
                 {
-                    if (townID == towns[loop1].getTownID())
+                    if (townID == towns[loop1].GetTownID())
                         return towns[loop1];
                 }
 

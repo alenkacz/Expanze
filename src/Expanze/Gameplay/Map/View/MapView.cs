@@ -309,7 +309,7 @@ namespace Expanze.Gameplay.Map
         {
             HexaModel.resetCounter();
             Road.resetCounter();
-            Town.resetCounter();
+            Town.ResetCounter();
             TownView.ResetTownView();
 
             float dx = 0.591f;

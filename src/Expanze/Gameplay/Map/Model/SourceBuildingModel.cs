@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Expanze.Gameplay
 {
-    class SourceBuildingModel : SpecialBuilding
+    class SourceBuildingModel : SpecialBuilding, ISourceBuilding
     {
         int townID; // where is this building
         int hexaID;
@@ -33,7 +33,7 @@ namespace Expanze.Gameplay
             this.hexaID = hexaID;
 
             Town town = GameState.map.GetTownByID(townID);
-            int buildingPos = town.findBuildingByHexaID(hexaID);
+            int buildingPos = town.FindBuildingByHexaID(hexaID);
             HexaModel hexa = town.getHexa(buildingPos);
 
 

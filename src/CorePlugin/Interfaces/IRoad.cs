@@ -13,9 +13,10 @@ namespace CorePlugin
     /// </summary>
     public enum RoadBuildError { OK, NoSources, AlreadyBuild, NoPlayerRoadOrTown, InvalidRoadID }
 
-    public interface IRoadGet
+    public interface IRoad
     {
         RoadBuildError CanActivePlayerBuildRoad();
         int GetRoadID();
+        IRoad Build();
     }
 }

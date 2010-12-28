@@ -35,10 +35,10 @@ namespace Expanze
         {
             GameMaster gm = GameMaster.Inst();
             Town town = GameState.map.GetTownByID(townID);
-            int buildingPos = town.findBuildingByHexaID(hexaID);
+            int buildingPos = town.FindBuildingByHexaID(hexaID);
             HexaModel hexa = town.getHexa(buildingPos);
 
-            BuildingBuildError error = town.canActivePlayerBuildBuildingInTown(buildingPos, kind);
+            BuildingBuildError error = town.CanActivePlayerBuildBuildingInTown(buildingPos, kind);
             switch (error)
             {
                 case BuildingBuildError.NoSources: return "";
@@ -468,7 +468,7 @@ namespace Expanze
                                             break;
                                     }
 
-                                    int townID = townView[loop1].getTownModel().getTownID();
+                                    int townID = townView[loop1].getTownModel().GetTownID();
                                     mod = (townView[loop1].getTownModel().getPlayerOwner() == GameMaster.Inst().getActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
                                     PromptWindow.Inst().Show(mod, titleWindow, true);
                                     if (kind != HexaKind.Desert)

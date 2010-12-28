@@ -9,7 +9,7 @@ using CorePlugin;
 
 namespace Expanze
 {
-    class Road : IRoadGet
+    class Road : IRoad
     {
         private Player playerOwner;     /// owner of road, if road is not build, owner is null
         private bool isBuild;           /// is build this road? or it is only place for road
@@ -85,6 +85,14 @@ namespace Expanze
             isBuild = true;
             player.AddPoints(Settings.pointsRoad);
             player.AddBuilding(Building.Road);
+        }
+
+        /// <summary>
+        /// Building road uses by AI
+        /// </summary>
+        public IRoad Build()
+        {
+            return GameState.map.GetMapController().BuildRoad(roadID);
         }
 
         /// <summary>

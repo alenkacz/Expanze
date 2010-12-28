@@ -10,7 +10,7 @@ using Expanze.Gameplay;
 
 namespace Expanze
 {
-    class Town : ITownGet
+    class Town : ITown
     {
         private Player playerOwner; /// owner of this town, if null no player owns town on this place
         private bool isBuild;       /// is there town or it is only place for possible town
@@ -23,11 +23,11 @@ namespace Expanze
         private int townID;             /// unique ID of town place, from 1 to counter
         public static int counter = 0;  /// how many town places are on the map
 
-        public int getTownID() { return townID; }
+        public int GetTownID() { return townID; }
         public bool getIsBuild() { return isBuild; }
         public Player getPlayerOwner() { return playerOwner; }
-        public ISourceAll getCost() { return Settings.costTown; }
-        public IHexaGet getIHexaGet(int pos) { return getHexa(pos); }
+        public ISourceAll GetCost() { return Settings.costTown; }
+        public IHexa GetIHexaGet(int pos) { return getHexa(pos); }
         public HexaModel getHexa(int pos) { return hexaNeighbour[pos]; }
         public static int getTownCount() { return counter; }    // number of towns
 
@@ -50,7 +50,12 @@ namespace Expanze
             playerOwner = null;
         }
 
-        public int findBuildingByHexaID(int hexaID)
+        /// <summary>
+        /// It checks hexa ID of neighbours and return position of possible building.
+        /// </summary>
+        /// <param name="hexaID">ID of hexa</param>
+        /// <returns>0-2 position, -1 if town has no neigbour with hexaID</returns>
+        public int FindBuildingByHexaID(int hexaID)
         {
             for (int loop1 = 0; loop1 < buildingKind.Length; loop1++)
             {
@@ -65,7 +70,7 @@ namespace Expanze
             if (!isBuild)
                 return BuildingKind.NoBuilding;
 
-            int buildingPos = findBuildingByHexaID(hexaID);
+            int buildingPos = FindBuildingByHexaID(hexaID);
 
             return (buildingPos == -1) ? BuildingKind.NoBuilding : buildingKind[buildingPos];
         }
@@ -75,35 +80,35 @@ namespace Expanze
             if (!isBuild)
                 return null;
 
-            int buildingPos = findBuildingByHexaID(hexaID);
+            int buildingPos = FindBuildingByHexaID(hexaID);
 
             return (buildingPos == -1) ? null : building[buildingPos];
         }
 
-        public static void resetCounter() { counter = 0; }
+        public static void ResetCounter() { counter = 0; }
 
-        public void setRoadNeighbours(Road road1, Road road2, Road road3)
+        public void SetRoadNeighbours(Road road1, Road road2, Road road3)
         {
             roadNeighbour[0] = road1;
             roadNeighbour[1] = road2;
             roadNeighbour[2] = road3;
         }
 
-        public void setTownNeighbours(Town town1, Town town2, Town town3)
+        public void SetTownNeighbours(Town town1, Town town2, Town town3)
         {
             townNeighbour[0] = town1;
             townNeighbour[1] = town2;
             townNeighbour[2] = town3;
         }
 
-        public void setHexaNeighbours(HexaModel hexa1, HexaModel hexa2, HexaModel hexa3)
+        public void SetHexaNeighbours(HexaModel hexa1, HexaModel hexa2, HexaModel hexa3)
         {
             hexaNeighbour[0] = hexa1;
             hexaNeighbour[1] = hexa2;
             hexaNeighbour[2] = hexa3;
         }
 
-        public void collectSources(Player player)
+        public void CollectSources(Player player)
         {
             if (playerOwner != player)
                 return;
@@ -152,6 +157,15 @@ namespace Expanze
             player.AddPoints(Settings.pointsTown);
             player.AddBuilding(Building.Town);
             isBuild = true;
+        }
+
+        /// <summary>
+        /// It builds town on this position. Uses by AI.
+        /// </summary>
+        /// <returns>Itself or null if town cant be builded.</returns>
+        public ITown Build()
+        {
+            return GameState.map.GetMapController().BuildTown(townID);
         }
 
         public Boolean HasPlayerRoadNeighbour(Player player)
@@ -206,7 +220,7 @@ namespace Expanze
             return cost;
         }
 
-        public BuildingBuildError canActivePlayerBuildBuildingInTown(int pos, BuildingKind kind)
+        public BuildingBuildError CanActivePlayerBuildBuildingInTown(int pos, BuildingKind kind)
         {
             GameMaster gm = GameMaster.Inst();
 
@@ -304,6 +318,10 @@ namespace Expanze
             return building[pos];
         }
 
-
+        public ISourceBuilding BuildSourceBuilding(int pos)
+        {
+            GameState.map.GetMapController().BuildBuildingInTown(townID, hexaNeighbour[pos].getID(), BuildingKind.SourceBuilding);
+            return (ISourceBuilding) building[pos];
+        }
     }
 }

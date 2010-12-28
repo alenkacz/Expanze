@@ -12,8 +12,8 @@ namespace Expanze.Gameplay.Map
         Map map;
         MapView mapView;
 
-        ITownGet[] townByID;
-        IRoadGet[] roadByID;
+        ITown[] townByID;
+        IRoad[] roadByID;
 
         public MapController(Map map, MapView mapView)
         {
@@ -24,7 +24,7 @@ namespace Expanze.Gameplay.Map
             MarketComponent.getInstance().setIsActive(false);
         }
 
-        public ITownGet GetITownGetByID(int townID)
+        public ITown GetITownByID(int townID)
         {
             if (townID < 1 || townID >= townByID.Length)
                 return null;
@@ -33,7 +33,7 @@ namespace Expanze.Gameplay.Map
             return townByID[townID - 1];
         }
 
-        public IRoadGet GetIRoadGetByID(int roadID)
+        public IRoad GetIRoadByID(int roadID)
         {
             if (roadID < 1 || roadID >= roadByID.Length)
                 return null;
@@ -42,11 +42,11 @@ namespace Expanze.Gameplay.Map
             return roadByID[roadID - 1];
         }
 
-        public IPlayerGet GetPlayerMe() { return GameMaster.Inst().getActivePlayer(); }
+        public IPlayer GetPlayerMe() { return GameMaster.Inst().getActivePlayer(); }
         public int GetMaxRoadID() { return Road.getRoadCount(); }
         public int GetMaxTownID() { return Town.getTownCount(); }
         public EGameState GetState() { return GameMaster.Inst().getState(); }
-        public IHexaGet GetHexa(int x, int y) { return map.GetHexaModel(x, y); }
+        public IHexa GetHexa(int x, int y) { return map.GetHexaModel(x, y); }
 
         private HexaKind SourceKindToHexaKind(SourceKind source)
         {
@@ -101,12 +101,7 @@ namespace Expanze.Gameplay.Map
             return road.CanActivePlayerBuildRoad();
         }
 
-        public IRoadGet BuildRoad(IRoadGet road)
-        {
-            return BuildRoad(road.GetRoadID());
-        }
-
-        public IRoadGet BuildRoad(int roadID)
+        public IRoad BuildRoad(int roadID)
         {
             Road road = map.GetRoadByID(roadID);
             if (road == null)
@@ -136,7 +131,7 @@ namespace Expanze.Gameplay.Map
             if (town == null)
                 return BuildingBuildError.InvalidTownID;
 
-            int buildingPos = town.findBuildingByHexaID(hexaID);
+            int buildingPos = town.FindBuildingByHexaID(hexaID);
             if (buildingPos == -1)
                 return BuildingBuildError.TownHasNoHexaWithThatHexaID;
 
@@ -144,35 +139,36 @@ namespace Expanze.Gameplay.Map
             if (hexa.getKind() == HexaKind.Desert && kind == BuildingKind.SourceBuilding)
                 return BuildingBuildError.NoSourceBuildingForDesert;
 
-            return town.canActivePlayerBuildBuildingInTown(buildingPos, kind);
+            return town.CanActivePlayerBuildBuildingInTown(buildingPos, kind);
         }
 
-        public ISpecialBuildingGet BuildBuildingInTown(int townID, int hexaID, BuildingKind kind)
+        public bool BuildBuildingInTown(int townID, int hexaID, BuildingKind kind)
         {
             GameMaster gm = GameMaster.Inst();
             Town town = map.GetTownByID(townID);
             if (town == null)
-                return null;
+                return false;
 
-            int buildingPos = town.findBuildingByHexaID(hexaID);
+            int buildingPos = town.FindBuildingByHexaID(hexaID);
             if (buildingPos == -1)
-                return null;
+                return false;
 
             HexaModel hexa = town.getHexa(buildingPos);
             if (hexa.getKind() == HexaKind.Desert && kind == BuildingKind.SourceBuilding)
-                return null;
+                return false;
 
-            BuildingBuildError error = town.canActivePlayerBuildBuildingInTown(buildingPos, kind);
+            BuildingBuildError error = town.CanActivePlayerBuildBuildingInTown(buildingPos, kind);
             if (error == BuildingBuildError.OK)
             {
                 ItemQueue item = new BuildingItemQueue(mapView, townID, buildingPos);
                 mapView.AddToViewQueue(item);
 
                 gm.getActivePlayer().PayForSomething(town.GetBuildingCost(buildingPos, kind));
-                return town.BuildBuilding(buildingPos, kind);
+                town.BuildBuilding(buildingPos, kind);
+                return true;
             }
 
-            return null;
+            return false;
         }
 
         public TownBuildError CanBuildTown(int townID)
@@ -183,12 +179,7 @@ namespace Expanze.Gameplay.Map
             return town.CanActivePlayerBuildTown();
         }
 
-        public ITownGet BuildTown(ITownGet town)
-        {
-            return BuildTown(town.getTownID());
-        }
-
-        public ITownGet BuildTown(int townID)
+        public ITown BuildTown(int townID)
         {
             Town town = map.GetTownByID(townID);
             if (town == null)
@@ -244,10 +235,10 @@ namespace Expanze.Gameplay.Map
 
         public void Init()
         {
-            townByID = new ITownGet[Town.getTownCount()];
+            townByID = new ITown[Town.getTownCount()];
             for (int loop1 = 0; loop1 < townByID.Length; loop1++)
                 townByID[loop1] = null;
-            roadByID = new IRoadGet[Road.getRoadCount()];
+            roadByID = new IRoad[Road.getRoadCount()];
             for (int loop1 = 0; loop1 < roadByID.Length; loop1++)
                 roadByID[loop1] = null;
         }

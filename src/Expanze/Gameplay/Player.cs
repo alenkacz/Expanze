@@ -10,7 +10,7 @@ namespace Expanze
     public enum TransactionState {TransactionStart, TransactionMiddle, TransactionEnd };
     public enum Building { Town, Road, Market, Monastery, Fort, Mill, Stepherd, Quarry, Saw, Mine, Count }
 
-    class Player : IPlayerGet
+    class Player : IPlayer
     {
         private String name;
         private Color color;

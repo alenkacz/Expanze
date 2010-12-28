@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CorePlugin
 {
-    public interface IPlayerGet
+    public interface IPlayer
     {
         UpgradeKind GetSourceBuildingUpgrade(SourceBuildingKind kind);
         ISourceAll GetSource();
