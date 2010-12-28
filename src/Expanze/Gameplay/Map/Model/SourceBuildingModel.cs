@@ -138,7 +138,7 @@ namespace Expanze.Gameplay
         public override BuyingUpgradeError CanActivePlayerBuyUpgrade(UpgradeKind upgradeKind, int upgradeNumber)
         {
             GameMaster gm = GameMaster.Inst();
-            Player activePlayer = gm.getActivePlayer();
+            Player activePlayer = gm.GetActivePlayer();
 
             if (activePlayer.GetSourceBuildingUpgrade(buildingKind) == UpgradeKind.NoUpgrade ||
                 (activePlayer.GetSourceBuildingUpgrade(buildingKind) == UpgradeKind.FirstUpgrade &&

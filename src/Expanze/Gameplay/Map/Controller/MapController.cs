@@ -42,10 +42,10 @@ namespace Expanze.Gameplay.Map
             return roadByID[roadID - 1];
         }
 
-        public IPlayer GetPlayerMe() { return GameMaster.Inst().getActivePlayer(); }
+        public IPlayer GetPlayerMe() { return GameMaster.Inst().GetActivePlayer(); }
         public int GetMaxRoadID() { return Road.getRoadCount(); }
         public int GetMaxTownID() { return Town.GetTownCount(); }
-        public EGameState GetState() { return GameMaster.Inst().getState(); }
+        public EGameState GetState() { return GameMaster.Inst().GetState(); }
         public IHexa GetIHexa(int x, int y) { return map.GetHexaModel(x, y); }
 
         private HexaKind SourceKindToHexaKind(SourceKind source)
@@ -65,11 +65,11 @@ namespace Expanze.Gameplay.Map
         public ChangingSourcesError ChangeSources(SourceKind fromSource, SourceKind toSource, int fromAmount)
         {
             GameMaster gm = GameMaster.Inst();
-            int rate = gm.getActivePlayer().getConversionRate(SourceKindToHexaKind(fromSource));
-            if (fromAmount > gm.getActivePlayer().GetSource().Get(fromSource))
+            int rate = gm.GetActivePlayer().getConversionRate(SourceKindToHexaKind(fromSource));
+            if (fromAmount > gm.GetActivePlayer().GetSource().Get(fromSource))
                 return ChangingSourcesError.NotEnoughFromSource;
 
-            gm.DoMaterialConversion(SourceKindToHexaKind(fromSource), SourceKindToHexaKind(toSource), gm.getActivePlayer(), fromAmount - (fromAmount % rate), fromAmount / rate);
+            gm.DoMaterialConversion(SourceKindToHexaKind(fromSource), SourceKindToHexaKind(toSource), gm.GetActivePlayer(), fromAmount - (fromAmount % rate), fromAmount / rate);
 
             return ChangingSourcesError.OK;
         }
@@ -87,7 +87,7 @@ namespace Expanze.Gameplay.Map
             BuyingUpgradeError error = building.CanActivePlayerBuyUpgrade(upgradeKind, upgradeNumber);
             if (error == BuyingUpgradeError.OK)
             {
-                gm.getActivePlayer().PayForSomething(building.getUpgradeCost(upgradeKind, upgradeNumber));
+                gm.GetActivePlayer().PayForSomething(building.getUpgradeCost(upgradeKind, upgradeNumber));
                 building.BuyUpgrade(upgradeKind, upgradeNumber);
             }
             return error;
@@ -111,12 +111,12 @@ namespace Expanze.Gameplay.Map
             RoadBuildError error = road.CanActivePlayerBuildRoad();
             if (error == RoadBuildError.OK)
             {
-                road.BuildRoad(gm.getActivePlayer());
+                road.BuildRoad(gm.GetActivePlayer());
 
                 ItemQueue item = new RoadItemQueue(mapView, roadID);
                 mapView.AddToViewQueue(item);
 
-                gm.getActivePlayer().PayForSomething(Settings.costRoad);
+                gm.GetActivePlayer().PayForSomething(Settings.costRoad);
 
                 return road;
             }
@@ -163,7 +163,7 @@ namespace Expanze.Gameplay.Map
                 ItemQueue item = new BuildingItemQueue(mapView, townID, buildingPos);
                 mapView.AddToViewQueue(item);
 
-                gm.getActivePlayer().PayForSomething(town.GetBuildingCost(buildingPos, kind));
+                gm.GetActivePlayer().PayForSomething(town.GetBuildingCost(buildingPos, kind));
                 town.BuildBuilding(buildingPos, kind);
                 return true;
             }
@@ -189,12 +189,12 @@ namespace Expanze.Gameplay.Map
             TownBuildError error = town.CanBuildTown();
             if (error == TownBuildError.OK)
             {
-                town.BuildTown(gm.getActivePlayer());
+                town.BuildTown(gm.GetActivePlayer());
 
                 ItemQueue item = new TownItemQueue(mapView, townID);
                 mapView.AddToViewQueue(item);
 
-                if (gm.getState() != EGameState.StateGame)
+                if (gm.GetState() != EGameState.StateGame)
                 {
                     SourceAll source = new SourceAll(0);
                     HexaModel hexa;
@@ -218,14 +218,17 @@ namespace Expanze.Gameplay.Map
                                 default:
                                     source = new SourceAll(0); break;
                             }
-                            gm.getActivePlayer().AddSources(source, TransactionState.TransactionMiddle);
+                            gm.GetActivePlayer().AddSources(source, TransactionState.TransactionMiddle);
                         }
                     }
-                     
-                    gm.NextTurn();
+
+                    gm.SetHasBuiltTown(true);
+
+                    if(!gm.GetActivePlayer().getIsAI())
+                        gm.NextTurn();                   
                 }
                 else
-                    gm.getActivePlayer().PayForSomething(Settings.costTown);
+                    gm.GetActivePlayer().PayForSomething(Settings.costTown);
 
                 return town;
             }

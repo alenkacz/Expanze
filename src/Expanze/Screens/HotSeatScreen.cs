@@ -246,7 +246,7 @@ namespace Expanze
             String wealthMap = wealth.getSelectedSettings();
 
             GameMaster.Inst().ResetGameSettings();
-            GameMaster.Inst().setGameSettings(point,type,size,wealthMap);
+            GameMaster.Inst().SetGameSettings(point,type,size,wealthMap);
         }
 
         #region Draw

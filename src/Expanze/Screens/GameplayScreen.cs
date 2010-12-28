@@ -193,8 +193,8 @@ namespace Expanze
         /// </summary>
         void ChangeTurnButtonAction(object sender, PlayerIndexEventArgs e)
         {
-            if (GameMaster.Inst().getState() == EGameState.StateGame &&
-                !GameMaster.Inst().getActivePlayer().getIsAI())
+            if (GameMaster.Inst().GetState() == EGameState.StateGame &&
+                !GameMaster.Inst().GetActivePlayer().getIsAI())
             {
                 GameMaster.Inst().NextTurn();
             }
@@ -210,8 +210,8 @@ namespace Expanze
         void MarketButtonAction(object sender, PlayerIndexEventArgs e)
         {
             // market can not be opened during first phase of the game - building first towns
-            if (GameMaster.Inst().getState() == EGameState.StateGame &&
-                !GameMaster.Inst().getActivePlayer().getIsAI())
+            if (GameMaster.Inst().GetState() == EGameState.StateGame &&
+                !GameMaster.Inst().GetActivePlayer().getIsAI())
             {
 
                 if (MarketComponent.isActive)
@@ -297,7 +297,7 @@ namespace Expanze
                 ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
             }
 
-            if (GameMaster.Inst().isWinnerNew())
+            if (GameMaster.Inst().IsWinnerNew())
             {
                 VictoryScreen.Load(ScreenManager, true, ControllingPlayer,
                                new GameScreen[] { new BackgroundScreen(), new MainMenuScreen() });

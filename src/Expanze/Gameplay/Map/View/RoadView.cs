@@ -81,7 +81,7 @@ namespace Expanze.Gameplay.Map.View
         public void Draw(GameTime gameTime)
         {
             GameMaster gm = GameMaster.Inst();
-            if ((pickVars.pickActive && gm.getState() == EGameState.StateGame) || isBuildView)
+            if ((pickVars.pickActive && gm.GetState() == EGameState.StateGame) || isBuildView)
             {
                 Model m = GameResources.Inst().getRoadModel();
                 Matrix[] transforms = new Matrix[m.Bones.Count];
@@ -93,7 +93,7 @@ namespace Expanze.Gameplay.Map.View
 
                 Player player = model.getOwner();
                 if (player == null)
-                    player = GameMaster.Inst().getActivePlayer();
+                    player = GameMaster.Inst().GetActivePlayer();
                 Vector3 color = player.getColor().ToVector3();
                 foreach (ModelMesh mesh in m.Meshes)
                 {
@@ -177,7 +177,7 @@ namespace Expanze.Gameplay.Map.View
 
             if (pickVars.pickNewPress)
             {
-                if (GameMaster.Inst().getState() == EGameState.StateGame)
+                if (GameMaster.Inst().GetState() == EGameState.StateGame)
                 {
                     PromptWindow.Inst().Show(PromptWindow.Mod.Buyer, Strings.HEXA_DUO, true);
                     PromptWindow.Inst().AddPromptItem(

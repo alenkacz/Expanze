@@ -102,9 +102,9 @@ namespace Expanze
         public RoadBuildError CanActivePlayerBuildRoad()
         {
             GameMaster gm = GameMaster.Inst();
-            if (gm.getState() == EGameState.StateGame)
+            if (gm.GetState() == EGameState.StateGame)
             {
-                Player activePlayer = gm.getActivePlayer();
+                Player activePlayer = gm.GetActivePlayer();
 
                 if (isBuild)
                     return RoadBuildError.AlreadyBuild;

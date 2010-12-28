@@ -40,7 +40,6 @@ namespace AIEasy
             }
             else
             {
-                town = mapController.GetITownByID(5);
                 town.CanBuildTown();
                 ISourceBuilding source = town.BuildSourceBuilding(0);
                 

@@ -519,13 +519,13 @@ namespace Expanze
                 if (rndEvent.getIsPositive())
                 {
                     sourceMiracle = true;
-                    turnMiracle = GameMaster.Inst().getPlayerCount() * 3;
+                    turnMiracle = GameMaster.Inst().GetPlayerCount() * 3;
                     sourceDisaster = false;
                 }
                 else
                 {
                     sourceDisaster = true;
-                    turnDisaster = GameMaster.Inst().getPlayerCount() * 2;
+                    turnDisaster = GameMaster.Inst().GetPlayerCount() * 2;
                     sourceMiracle = false;
                 }
             }

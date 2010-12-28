@@ -163,7 +163,7 @@ namespace Expanze
                     }
                 }
                 if (drawNumber ||
-                    tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.GetPlayerOwner() != GameMaster.Inst().getActivePlayer())
+                    tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.GetPlayerOwner() != GameMaster.Inst().GetActivePlayer())
                 {
                     if (model.getCurrentSource() != 0) // desert
                         spriteBatch.DrawString(GameState.hudMaterialsFont, model.getCurrentSource() + "", new Vector2(point2D.X + 1, point2D.Y + 1), Color.Black);
@@ -174,7 +174,7 @@ namespace Expanze
                     numberColor = Color.DarkRed;
 
                 if (drawNumber ||
-                    tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.GetPlayerOwner() != GameMaster.Inst().getActivePlayer())
+                    tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.GetPlayerOwner() != GameMaster.Inst().GetActivePlayer())
                 {
                     if (model.getCurrentSource() != 0) // desert
                     {
@@ -184,7 +184,7 @@ namespace Expanze
                 else
                 {
                     Texture2D text;
-                    if (tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.GetPlayerOwner() == GameMaster.Inst().getActivePlayer())
+                    if (tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.GetPlayerOwner() == GameMaster.Inst().GetActivePlayer())
                     {
                         text = GameResources.Inst().getHudTexture(HUDTexture.HammersPassive);
                         spriteBatch.Draw(text, new Vector2(posHammers.X - (text.Width >> 1), posHammers.Y - (text.Height >> 1)), Color.White);
@@ -430,7 +430,7 @@ namespace Expanze
                         switch(townView[loop1].getTownModel().getBuildingKind(hexaID))
                         {
                             case BuildingKind.NoBuilding :
-                                if (townView[loop1].getTownModel().GetPlayerOwner() == GameMaster.Inst().getActivePlayer())
+                                if (townView[loop1].getTownModel().GetPlayerOwner() == GameMaster.Inst().GetActivePlayer())
                                 {
                                     String titleWindow = "";
                                     String titleBuilding = "";
@@ -469,7 +469,7 @@ namespace Expanze
                                     }
 
                                     int townID = townView[loop1].getTownModel().GetTownID();
-                                    mod = (townView[loop1].getTownModel().GetPlayerOwner() == GameMaster.Inst().getActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
+                                    mod = (townView[loop1].getTownModel().GetPlayerOwner() == GameMaster.Inst().GetActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
                                     PromptWindow.Inst().Show(mod, titleWindow, true);
                                     if (kind != HexaKind.Desert)
                                         PromptWindow.Inst().AddPromptItem(
@@ -491,7 +491,7 @@ namespace Expanze
                                 break;
                             
                             default :
-                                mod = (townView[loop1].getTownModel().GetPlayerOwner() == GameMaster.Inst().getActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
+                                mod = (townView[loop1].getTownModel().GetPlayerOwner() == GameMaster.Inst().GetActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
                                 townView[loop1].getTownModel().getSpecialBuilding(hexaID).setPromptWindow(mod);
                                 break;
                         }

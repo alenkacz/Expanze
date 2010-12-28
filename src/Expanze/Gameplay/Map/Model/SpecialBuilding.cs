@@ -109,7 +109,7 @@ namespace Expanze.Gameplay
         public virtual BuyingUpgradeError CanActivePlayerBuyUpgrade(UpgradeKind upgradeKind, int upgradeNumber)
         {
             GameMaster gm = GameMaster.Inst();
-            Player activePlayer = gm.getActivePlayer();
+            Player activePlayer = gm.GetActivePlayer();
 
             if (upgradeCount == upgradeMax)
                 return BuyingUpgradeError.MaxUpgrades;

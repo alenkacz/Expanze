@@ -226,15 +226,15 @@ namespace Expanze
 
             SourceAll cost = GetBuildingCost(pos, kind);        
             
-            if (gm.getState() == EGameState.StateGame)
+            if (gm.GetState() == EGameState.StateGame)
             {
                 if (buildingKind[pos] != BuildingKind.NoBuilding)
                     return BuildingBuildError.AlreadyBuild;
 
-                if (gm.getActivePlayer() != playerOwner)
+                if (gm.GetActivePlayer() != playerOwner)
                     return BuildingBuildError.NotOwner;
 
-                if (!cost.HasPlayerSources(gm.getActivePlayer()))
+                if (!cost.HasPlayerSources(gm.GetActivePlayer()))
                     return BuildingBuildError.NoSources;
 
                 if (cost == new SourceAll(0))
@@ -251,9 +251,9 @@ namespace Expanze
         public TownBuildError CanBuildTown()
         {
             GameMaster gm = GameMaster.Inst();
-            if (gm.getState() == EGameState.StateGame)
+            if (gm.GetState() == EGameState.StateGame)
             {
-                Player activePlayer = gm.getActivePlayer();
+                Player activePlayer = gm.GetActivePlayer();
                 Boolean hasActivePlayerRoadNeighbour = false;
 
                 foreach (Road road in roadNeighbour)
@@ -275,6 +275,8 @@ namespace Expanze
             }
             else
             {
+                if (gm.GetHasBuiltTown())
+                    return TownBuildError.YouHaveBuiltTownThisTurn;
                 if (isBuild)
                     return TownBuildError.AlreadyBuild;
                 if (HasTownBuildNeighbour())

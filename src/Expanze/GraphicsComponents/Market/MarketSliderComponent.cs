@@ -129,9 +129,9 @@ namespace Expanze
         {
             sliderPosition.X = spritePosition.X;
             clickablePos = new Rectangle(Settings.scaleW(sliderPosition.X), Settings.scaleH(sliderPosition.Y), sliderW, sliderH);
-            this.fromTypeCount = GameMaster.Inst().getActivePlayer().getMaterialNumber(fromType);
+            this.fromTypeCount = GameMaster.Inst().GetActivePlayer().getMaterialNumber(fromType);
             this.fromConvertedCount = fromTypeCount;
-            this.toTypeCount = GameMaster.Inst().getActivePlayer().getMaterialNumber(toType);
+            this.toTypeCount = GameMaster.Inst().GetActivePlayer().getMaterialNumber(toType);
             this.toConvertedCount = toTypeCount;
         }
 
@@ -144,9 +144,9 @@ namespace Expanze
 
                 if (converted < 0) converted = -converted;
 
-                if ((this.fromTypeCount - converted * GameMaster.Inst().getActivePlayer().getConversionRate(fromType)) >= 0)
+                if ((this.fromTypeCount - converted * GameMaster.Inst().GetActivePlayer().getConversionRate(fromType)) >= 0)
                 {
-                    this.fromConvertedCount = this.fromTypeCount - converted * GameMaster.Inst().getActivePlayer().getConversionRate(fromType);
+                    this.fromConvertedCount = this.fromTypeCount - converted * GameMaster.Inst().GetActivePlayer().getConversionRate(fromType);
                     this.toConvertedCount = this.toTypeCount + converted;
 
                     sliderPosition.X = pos;
@@ -166,21 +166,21 @@ namespace Expanze
 
         private int getSliderUnit()
         {
-            int count = GameMaster.Inst().getActivePlayer().getMaterialNumber(fromType)/GameMaster.Inst().getActivePlayer().getConversionRate(fromType);
+            int count = GameMaster.Inst().GetActivePlayer().getMaterialNumber(fromType)/GameMaster.Inst().GetActivePlayer().getConversionRate(fromType);
             return width / count;
         }
 
         public void setFromType(HexaKind k)
         {
             this.fromType = k;
-            this.fromTypeCount = GameMaster.Inst().getActivePlayer().getMaterialNumber(fromType);
+            this.fromTypeCount = GameMaster.Inst().GetActivePlayer().getMaterialNumber(fromType);
             this.fromConvertedCount = fromTypeCount;
         }
 
         public void setToType(HexaKind k)
         {
             toType = k;
-            this.toTypeCount = GameMaster.Inst().getActivePlayer().getMaterialNumber(toType);
+            this.toTypeCount = GameMaster.Inst().GetActivePlayer().getMaterialNumber(toType);
             this.toConvertedCount = toTypeCount;
         }
 

@@ -21,6 +21,8 @@ namespace Expanze
         private Player activePlayer;
         private int activePlayerIndex;
         private EGameState state;
+        private bool hasBuiltTown;          /// In first 2 rounds each player can build only one town
+
         // when is game paused and player see paused menu, he cant build towers etc
         private bool paused;
         // used for open paused menu
@@ -90,6 +92,8 @@ namespace Expanze
 
             randomNumber = new System.Random();
 
+            hasBuiltTown = false;
+
             return true;
         }
 
@@ -134,7 +138,7 @@ namespace Expanze
             }
         }
 
-        public void setGameSettings(int points, string mapType, string mapSize, string mapWealth)
+        public void SetGameSettings(int points, string mapType, string mapSize, string mapWealth)
         {
             gameSettings = new GameSettings(points,mapType,mapSize,mapWealth);
         }
@@ -222,27 +226,25 @@ namespace Expanze
             }
         }
 
-        public Player getActivePlayer() { return activePlayer; }
-        public int getPlayerCount() { return players.Count; }
-        public Player getPlayer(int index) { return players[index]; }
+        public bool GetHasBuiltTown() { return hasBuiltTown; }
+        public Player GetActivePlayer() { return activePlayer; }
+        public int GetPlayerCount() { return players.Count; }
+        public Player GetPlayer(int index) { return players[index]; }
+        public List<Player> GetPlayers() { return this.players; }
+        public EGameState GetState() { return state; }
+        public bool IsWinnerNew() { bool temp = winnerNew; winnerNew = false; return temp; }
 
-        public List<Player> getPlayers()
-        {
-            return this.players;
-        }
-
-        public EGameState getState() { return state; }
-        public bool isWinnerNew() { bool temp = winnerNew; winnerNew = false; return temp; }
+        public void SetHasBuiltTown(bool hasBuiltTown) { this.hasBuiltTown = hasBuiltTown; }
 
         public bool StartTurn()
         {
             if (state == EGameState.StateFirstTown)
             {
-                getActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionStart);
+                GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionStart);
             }
             if (state == EGameState.StateGame)
             {
-                getActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
+                GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
                 GameState.map.getSources(activePlayer);
                 RandomEvents();
             }
@@ -268,12 +270,8 @@ namespace Expanze
                 MarketComponent.isActive = false;
             }
 
-            if (activePlayer.getIsAI())
-            {
-                actualAIThread.Abort();
-            }
-
             status &= ChangeActivePlaye();
+            hasBuiltTown = false;
 
             status &= StartTurn();
 
@@ -355,23 +353,23 @@ namespace Expanze
         {
             if (from == HexaKind.Cornfield)
             {
-                return (getActivePlayer().getCorn() >= rate);
+                return (GetActivePlayer().getCorn() >= rate);
             }
             else if ( from == HexaKind.Pasture )
             {
-                return (getActivePlayer().getMeat() >= rate);
+                return (GetActivePlayer().getMeat() >= rate);
             } 
             else if( from == HexaKind.Mountains ) 
             {
-                return (getActivePlayer().getOre() >= rate);
+                return (GetActivePlayer().getOre() >= rate);
             }
             else if( from == HexaKind.Stone ) 
             {
-                return (getActivePlayer().getStone() >= rate);
+                return (GetActivePlayer().getStone() >= rate);
             }
             else if ( from == HexaKind.Forest )
             {
-                return (getActivePlayer().getWood() >= rate);
+                return (GetActivePlayer().getWood() >= rate);
             }
             else
             {

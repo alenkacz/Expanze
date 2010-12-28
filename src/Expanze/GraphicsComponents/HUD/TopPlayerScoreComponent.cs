@@ -74,7 +74,7 @@ namespace Expanze
         {
             int size = 0;
 
-            foreach (Player p in GameMaster.Inst().getPlayers())
+            foreach (Player p in GameMaster.Inst().GetPlayers())
             {
                 if (font.MeasureString(p.getName()).X > size)
                 {
@@ -122,15 +122,15 @@ namespace Expanze
                 posMiddleDraw.X += middleSize;
             }
 
-            Vector2 positionScore = new Vector2(positionTotalPoints.X - font.MeasureString(gMaster.getActivePlayer().getPoints().ToString()).X, positionTotalPoints.Y);
+            Vector2 positionScore = new Vector2(positionTotalPoints.X - font.MeasureString(gMaster.GetActivePlayer().getPoints().ToString()).X, positionTotalPoints.Y);
 
             // draw texts
-            spriteBatch.DrawString(font, gMaster.getActivePlayer().getName(), positionName, Color.White);
-            spriteBatch.DrawString(font, gMaster.getActivePlayer().getPoints().ToString(), positionScore, Color.White);
+            spriteBatch.DrawString(font, gMaster.GetActivePlayer().getName(), positionName, Color.White);
+            spriteBatch.DrawString(font, gMaster.GetActivePlayer().getPoints().ToString(), positionScore, Color.White);
             spriteBatch.DrawString(font, " / " + GameMaster.Inst().getGameSettings().getPoints(), positionTotalPoints, Color.White);
 
             // draw player color
-            spriteBatch.Draw(textureColor, positionColor, gMaster.getActivePlayer().getColor());
+            spriteBatch.Draw(textureColor, positionColor, gMaster.GetActivePlayer().getColor());
 
             //draw medal
             spriteBatch.Draw(textureMedaile, new Vector2(positionScore.X - medalWidth - space,positionScore.Y), Color.White);

@@ -310,7 +310,7 @@ namespace Expanze.Gameplay.Map
             if (GameMaster.Inst().getPaused())
                 return;
 
-            if (GameMaster.Inst().getActivePlayer().getComponentAI() != null)
+            if (GameMaster.Inst().GetActivePlayer().getComponentAI() != null)
                 return;
 
             mapView.HandlePickableAreas(c);

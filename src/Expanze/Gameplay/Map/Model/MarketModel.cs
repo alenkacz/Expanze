@@ -30,7 +30,7 @@ namespace Expanze.Gameplay
 
         protected override void ApplyEffect(UpgradeKind upgradeKind, int upgradeNumber)
         {
-            GameMaster.Inst().getActivePlayer().SetMarketRate(upgradeKind, upgradeNumber);
+            GameMaster.Inst().GetActivePlayer().SetMarketRate(upgradeKind, upgradeNumber);
         }
 
         public override void setPromptWindow(PromptWindow.Mod mod)

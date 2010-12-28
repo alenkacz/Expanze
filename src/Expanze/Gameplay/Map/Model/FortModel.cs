@@ -101,20 +101,20 @@ namespace Expanze.Gameplay
 
                         case 2 :
                             win.Show(PromptWindow.Mod.Buyer, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_SOURCES, true);
-                            for (int loop1 = 0; loop1 < gm.getPlayerCount(); loop1++)
+                            for (int loop1 = 0; loop1 < gm.GetPlayerCount(); loop1++)
                             {
-                                if (gm.getPlayer(loop1) != gm.getActivePlayer())
+                                if (gm.GetPlayer(loop1) != gm.GetActivePlayer())
                                 {
-                                    win.AddPromptItem(new PlayerPromptItem(gm.getPlayer(loop1), gm.getPlayer(loop1).getName(), Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES_CHOISING_PLAYER, gm.getPlayer(loop1).GetSource(), true, res.getHudTexture(HUDTexture.IconTown)));
+                                    win.AddPromptItem(new PlayerPromptItem(gm.GetPlayer(loop1), gm.GetPlayer(loop1).getName(), Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES_CHOISING_PLAYER, gm.GetPlayer(loop1).GetSource(), true, res.getHudTexture(HUDTexture.IconTown)));
                                 }
                             }
                             playerPrompt = true;
                             break;
 
                         case 3 :
-                            GameMaster.Inst().getActivePlayer().AddPoints(Settings.pointsFortParade);
+                            GameMaster.Inst().GetActivePlayer().AddPoints(Settings.pointsFortParade);
                             costParade = costParade + new SourceAll(30);
-                            if (GameMaster.Inst().getActivePlayer().getIsAI())
+                            if (GameMaster.Inst().GetActivePlayer().getIsAI())
                             {
                                 GameState.message.Show(Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE, Strings.PROMPT_DESCTIPTION_MESSAGE_FORT_ACTION_PARADE, GameResources.Inst().getHudTexture(HUDTexture.IconFortParade));
                             }                          

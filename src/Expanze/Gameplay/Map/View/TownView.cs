@@ -113,7 +113,7 @@ namespace Expanze.Gameplay.Map
 
                 Player player = model.GetPlayerOwner();
                 if (player == null)
-                    player = GameMaster.Inst().getActivePlayer();
+                    player = GameMaster.Inst().GetActivePlayer();
                 Vector3 color = player.getColor().ToVector3();
 
                 foreach (ModelMesh mesh in m.Meshes)
@@ -215,7 +215,7 @@ namespace Expanze.Gameplay.Map
             if (pickVars.pickNewPress)
             {
                 pickVars.pickNewPress = false;
-                if (model.GetIsBuild() && GameMaster.Inst().getState() == EGameState.StateGame)
+                if (model.GetIsBuild() && GameMaster.Inst().GetState() == EGameState.StateGame)
                 {
                     if (pickTownID == townID)
                         pickTownID = -1;
@@ -224,7 +224,7 @@ namespace Expanze.Gameplay.Map
                 }
                 else
                 {
-                        if (GameMaster.Inst().getState() == EGameState.StateGame)
+                        if (GameMaster.Inst().GetState() == EGameState.StateGame)
                         {
                             PromptWindow.Inst().Show(PromptWindow.Mod.Buyer, Strings.HEXA_TRI, true);
                             PromptWindow.Inst().AddPromptItem(

@@ -30,7 +30,7 @@ namespace Expanze.Gameplay
 
         protected override void ApplyEffect(UpgradeKind upgradeKind, int upgradeNumber)
         {
-            GameMaster.Inst().getActivePlayer().SetSourceBuildingUpdate(upgradeKind, upgradeNumber);
+            GameMaster.Inst().GetActivePlayer().SetSourceBuildingUpdate(upgradeKind, upgradeNumber);
         }
 
         public override void setPromptWindow(PromptWindow.Mod mod)
