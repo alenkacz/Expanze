@@ -241,7 +241,7 @@ namespace Expanze
                     itemList[loop1].DrawIcon(iconPosition);
                     if (activeItem == loop1 && itemList.Count > 1)
                     {
-                        spriteBatch.Draw(GameResources.Inst().getHudTexture(HUDTexture.IconActive), iconPosition, Color.White);
+                        spriteBatch.Draw(GameResources.Inst().GetHudTexture(HUDTexture.IconActive), iconPosition, Color.White);
                     }
                 }
                 iconPosition += new Vector2(itemList[loop1].getIcon().Width + border, 0.0f);

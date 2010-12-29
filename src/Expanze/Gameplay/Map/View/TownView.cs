@@ -232,7 +232,7 @@ namespace Expanze.Gameplay.Map
                                                     Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN,
                                                     Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_TOWN,
                                                     Settings.costTown, true, 
-                                                    GameResources.Inst().getHudTexture(HUDTexture.IconTown)));
+                                                    GameResources.Inst().GetHudTexture(HUDTexture.IconTown)));
                         }
                         else
                         {

@@ -85,7 +85,7 @@ namespace Expanze
             return hexaModel[(int)type];
         }
 
-        public Texture2D getHudTexture(HUDTexture id) { return hud[(int) id]; }
+        public Texture2D GetHudTexture(HUDTexture id) { return hud[(int) id]; }
         public Model getMountainsCover(int i) { return mountainsCoverModel[i]; }
         public Model getMountainsSourceBuildingModel(int i) { return mountainsMineModel[i]; }
         public Model getStoneCover(int i) { return stoneCoverModel[i]; }

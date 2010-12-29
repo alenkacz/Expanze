@@ -205,7 +205,7 @@ namespace Expanze
                 Player player = GameMaster.Inst().GetActivePlayer();
                 player.SetActive(false);
                 Logger.Inst().Log(ai.GetAIName() + ".txt", exception.Message + " : from : " + exception.Source);
-                GameState.message.Show(Strings.GAME_ALERT_TITLE_AI_EXCEPTION, player.getName() + " " + Strings.GAME_ALERT_DESCRIPTION_AI_EXCEPTION, GameResources.Inst().getHudTexture(HUDTexture.IconTown));
+                GameState.message.Show(Strings.GAME_ALERT_TITLE_AI_EXCEPTION, player.getName() + " " + Strings.GAME_ALERT_DESCRIPTION_AI_EXCEPTION, GameResources.Inst().GetHudTexture(HUDTexture.IconTown));
             }
         }
 
@@ -532,16 +532,16 @@ namespace Expanze
             Texture2D icon = null;
             switch (building)
             {
-                case Building.Road: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalRoad); break;
-                case Building.Town: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalTown); break;
-                case Building.Mill: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalMill); break;
-                case Building.Market: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalMarket); break;
-                case Building.Monastery: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalMonastery); break;
-                case Building.Fort: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalFort); break;
-                case Building.Stepherd: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalStepherd); break;
-                case Building.Quarry: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalQuarry); break;
-                case Building.Mine: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalMine); break;
-                case Building.Saw: icon = GameResources.Inst().getHudTexture(HUDTexture.IconMedalSaw); break;
+                case Building.Road: icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMedalRoad); break;
+                case Building.Town: icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMedalTown); break;
+                case Building.Mill: icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMedalMill); break;
+                case Building.Market: icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMedalMarket); break;
+                case Building.Monastery: icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMedalMonastery); break;
+                case Building.Fort: icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMedalFort); break;
+                case Building.Stepherd: icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMedalStepherd); break;
+                case Building.Quarry: icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMedalQuarry); break;
+                case Building.Mine: icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMedalMine); break;
+                case Building.Saw: icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMedalSaw); break;
             }
 
             return icon;

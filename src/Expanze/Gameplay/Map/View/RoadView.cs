@@ -185,7 +185,7 @@ namespace Expanze.Gameplay.Map.View
                                                 Strings.PROMT_TITLE_WANT_TO_BUILD_ROAD,
                                                 Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_ROAD,
                                                 Settings.costRoad, true,
-                                                GameResources.Inst().getHudTexture(HUDTexture.IconRoad)));             
+                                                GameResources.Inst().GetHudTexture(HUDTexture.IconRoad)));             
                 }
             }
         }

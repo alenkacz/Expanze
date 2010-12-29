@@ -156,7 +156,7 @@ namespace Expanze
         }
         private void DrawHexaIcon(SpriteBatch spriteBatch, Vector2 pos, HUDTexture passive, HUDTexture active)
         {
-            DrawHexaIcon(spriteBatch, pos, GameResources.Inst().getHudTexture(passive), GameResources.Inst().getHudTexture(active));
+            DrawHexaIcon(spriteBatch, pos, GameResources.Inst().GetHudTexture(passive), GameResources.Inst().GetHudTexture(active));
         }
 
         private void DrawHexaNumber(SpriteBatch spriteBatch, Vector2 pos)
@@ -258,6 +258,8 @@ namespace Expanze
                     else
                     {
                             DrawHexaIcon(spriteBatch, posHexaIcon, tempTown.getSpecialBuilding(hexaID).GetIconPassive(), tempTown.getSpecialBuilding(hexaID).GetIconActive());
+                            if(tempTown.getBuildingKind(hexaID) == BuildingKind.SourceBuilding)
+                                DrawHexaNumber(spriteBatch, point2D);
                     }
                 }
                 spriteBatch.End();
@@ -479,27 +481,27 @@ namespace Expanze
                                                     titleWindow = Strings.HEXA_NAME_MOUNTAINS;
                                                     titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_MINE;
                                                     descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_MINE;
-                                                    icon = GameResources.Inst().getHudTexture(HUDTexture.IconMine); break;
+                                                    icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMine); break;
                                                 case HexaKind.Forest:
                                                     titleWindow = Strings.HEXA_NAME_FOREST;
                                                     titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_SAW;
                                                     descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_SAW;
-                                                    icon = GameResources.Inst().getHudTexture(HUDTexture.IconSaw); break;
+                                                    icon = GameResources.Inst().GetHudTexture(HUDTexture.IconSaw); break;
                                                 case HexaKind.Cornfield:
                                                     titleWindow = Strings.HEXA_NAME_CORNFIELD;
                                                     titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_MILL;
                                                     descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_MILL;
-                                                    icon = GameResources.Inst().getHudTexture(HUDTexture.IconMill); break;
+                                                    icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMill); break;
                                                 case HexaKind.Pasture:
                                                     titleWindow = Strings.HEXA_NAME_PASTURE;
                                                     titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_STEPHERD;
                                                     descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_STEPHERD;
-                                                    icon = GameResources.Inst().getHudTexture(HUDTexture.IconStepherd); break;
+                                                    icon = GameResources.Inst().GetHudTexture(HUDTexture.IconStepherd); break;
                                                 case HexaKind.Stone:
                                                     titleWindow = Strings.HEXA_NAME_STONE;
                                                     titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_QUARRY;
                                                     descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_QUARRY;
-                                                    icon = GameResources.Inst().getHudTexture(HUDTexture.IconQuarry); break;
+                                                    icon = GameResources.Inst().GetHudTexture(HUDTexture.IconQuarry); break;
                                                 case HexaKind.Desert:
                                                     titleWindow = Strings.HEXA_NAME_DESERT;
                                                     break;

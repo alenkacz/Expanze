@@ -27,27 +27,27 @@ namespace Expanze.Gameplay
                     case HexaKind.Cornfield :
                         title = Strings.MESSAGE_TITLE_MIRACLE;
                         description = Strings.MESSAGE_DESCRIPTION_MIRACLE_CORNFIELD;
-                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconMill);
+                        icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMill);
                         break;
                     case HexaKind.Pasture :
                         title = Strings.MESSAGE_TITLE_MIRACLE;
                         description = Strings.MESSAGE_DESCRIPTION_MIRACLE_PASTURE;
-                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconStepherd);
+                        icon = GameResources.Inst().GetHudTexture(HUDTexture.IconStepherd);
                         break;
                     case HexaKind.Stone :
                         title = Strings.MESSAGE_TITLE_MIRACLE;
                         description = Strings.MESSAGE_DESCRIPTION_MIRACLE_STONE;
-                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconQuarry);
+                        icon = GameResources.Inst().GetHudTexture(HUDTexture.IconQuarry);
                         break;
                     case HexaKind.Forest :
                         title = Strings.MESSAGE_TITLE_MIRACLE;
                         description = Strings.MESSAGE_DESCRIPTION_MIRACLE_FOREST;
-                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconSaw);
+                        icon = GameResources.Inst().GetHudTexture(HUDTexture.IconSaw);
                         break;
                     case HexaKind.Mountains :
                         title = Strings.MESSAGE_TITLE_MIRACLE;
                         description = Strings.MESSAGE_DESCRIPTION_MIRACLE_MOUNTAINS;
-                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconMine);
+                        icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMine);
                         break;
                 }
             }
@@ -58,27 +58,27 @@ namespace Expanze.Gameplay
                     case HexaKind.Cornfield:
                         title = Strings.MESSAGE_TITLE_DISASTER;
                         description = Strings.MESSAGE_DESCRIPTION_DISASTER_CORNFIELD;
-                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconMill);
+                        icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMill);
                         break;
                     case HexaKind.Pasture:
                         title = Strings.MESSAGE_TITLE_DISASTER;
                         description = Strings.MESSAGE_DESCRIPTION_DISASTER_PASTURE;
-                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconStepherd);
+                        icon = GameResources.Inst().GetHudTexture(HUDTexture.IconStepherd);
                         break;
                     case HexaKind.Stone:
                         title = Strings.MESSAGE_TITLE_DISASTER;
                         description = Strings.MESSAGE_DESCRIPTION_DISASTER_STONE;
-                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconQuarry);
+                        icon = GameResources.Inst().GetHudTexture(HUDTexture.IconQuarry);
                         break;
                     case HexaKind.Forest:
                         title = Strings.MESSAGE_TITLE_DISASTER;
                         description = Strings.MESSAGE_DESCRIPTION_DISASTER_FOREST;
-                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconSaw);
+                        icon = GameResources.Inst().GetHudTexture(HUDTexture.IconSaw);
                         break;
                     case HexaKind.Mountains:
                         title = Strings.MESSAGE_TITLE_DISASTER;
                         description = Strings.MESSAGE_DESCRIPTION_DISASTER_MOUNTAINS;
-                        icon = GameResources.Inst().getHudTexture(HUDTexture.IconMine);
+                        icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMine);
                         break;
                 }
             }

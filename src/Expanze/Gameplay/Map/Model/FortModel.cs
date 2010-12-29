@@ -22,7 +22,7 @@ namespace Expanze.Gameplay
         public override void DrawIcon(Microsoft.Xna.Framework.Vector2 iconPosition)
         {
             base.DrawIcon(iconPosition);
-            Texture2D playerIcon = GameResources.Inst().getHudTexture(HUDTexture.PlayerColor);
+            Texture2D playerIcon = GameResources.Inst().GetHudTexture(HUDTexture.PlayerColor);
             GameState.spriteBatch.Draw(playerIcon, new Vector2(iconPosition.X + getIcon().Width - playerIcon.Width - 5, iconPosition.Y + getIcon().Height - playerIcon.Height - 5), player.GetColor());
         }
 
@@ -58,12 +58,12 @@ namespace Expanze.Gameplay
 
         public override Texture2D GetIconActive()
         {
-            return GameResources.Inst().getHudTexture(HUDTexture.IconFortActive);
+            return GameResources.Inst().GetHudTexture(HUDTexture.IconFortActive);
         }
 
         public override Texture2D GetIconPassive()
         {
-            return GameResources.Inst().getHudTexture(HUDTexture.IconFort);
+            return GameResources.Inst().GetHudTexture(HUDTexture.IconFort);
         }
 
         public override void setPromptWindow(PromptWindow.Mod mod)
@@ -75,10 +75,10 @@ namespace Expanze.Gameplay
                 win.Show(mod, Strings.PROMPT_TITLE_WANT_TO_BUILD_FORT, true);
                 
 
-                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_CAPTURE, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_CAPTURE, Settings.costFortCapture, true, res.getHudTexture(HUDTexture.IconFortCapture)));
-                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 1, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_DESTROY_HEXA, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_DESTROY_HEXA, Settings.costFortDestroyHexa, true, res.getHudTexture(HUDTexture.IconFortHexa)));          
-                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 2, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_SOURCES, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES, Settings.costFortSources, true, res.getHudTexture(HUDTexture.IconFortSources)));
-                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 3, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_PARADE, costParade, true, res.getHudTexture(HUDTexture.IconFortParade)));
+                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_CAPTURE, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_CAPTURE, Settings.costFortCapture, true, res.GetHudTexture(HUDTexture.IconFortCapture)));
+                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 1, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_DESTROY_HEXA, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_DESTROY_HEXA, Settings.costFortDestroyHexa, true, res.GetHudTexture(HUDTexture.IconFortHexa)));          
+                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 2, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_SOURCES, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES, Settings.costFortSources, true, res.GetHudTexture(HUDTexture.IconFortSources)));
+                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 3, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_PARADE, costParade, true, res.GetHudTexture(HUDTexture.IconFortParade)));
             }
             playerPrompt = false;
         }
@@ -113,7 +113,7 @@ namespace Expanze.Gameplay
                             {
                                 if (gm.GetPlayer(loop1) != gm.GetActivePlayer())
                                 {
-                                    win.AddPromptItem(new PlayerPromptItem(gm.GetPlayer(loop1), gm.GetPlayer(loop1).getName(), Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES_CHOISING_PLAYER, gm.GetPlayer(loop1).GetSource(), true, res.getHudTexture(HUDTexture.IconTown)));
+                                    win.AddPromptItem(new PlayerPromptItem(gm.GetPlayer(loop1), gm.GetPlayer(loop1).getName(), Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES_CHOISING_PLAYER, gm.GetPlayer(loop1).GetSource(), false, res.GetHudTexture(HUDTexture.IconTown)));
                                 }
                             }
                             playerPrompt = true;
@@ -124,7 +124,7 @@ namespace Expanze.Gameplay
                             costParade = costParade + new SourceAll(30);
                             if (GameMaster.Inst().GetActivePlayer().GetIsAI())
                             {
-                                GameState.message.Show(Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE, Strings.PROMPT_DESCTIPTION_MESSAGE_FORT_ACTION_PARADE, GameResources.Inst().getHudTexture(HUDTexture.IconFortParade));
+                                GameState.message.Show(Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE, Strings.PROMPT_DESCTIPTION_MESSAGE_FORT_ACTION_PARADE, GameResources.Inst().GetHudTexture(HUDTexture.IconFortParade));
                             }                          
                             break;
                     }
@@ -153,7 +153,7 @@ namespace Expanze.Gameplay
 
         public static BuildingPromptItem getPromptItemBuildFort(int townID, int hexaID)
         {
-            return new BuildingPromptItem(townID, hexaID, BuildingKind.FortBuilding, Strings.PROMPT_TITLE_WANT_TO_BUILD_FORT, Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_FORT, Settings.costFort, true, GameResources.Inst().getHudTexture(HUDTexture.IconFort));
+            return new BuildingPromptItem(townID, hexaID, BuildingKind.FortBuilding, Strings.PROMPT_TITLE_WANT_TO_BUILD_FORT, Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_FORT, Settings.costFort, true, GameResources.Inst().GetHudTexture(HUDTexture.IconFort));
         }
 
         public bool ShowParade()
