@@ -193,14 +193,9 @@ namespace Expanze
         /// </summary>
         void ChangeTurnButtonAction(object sender, PlayerIndexEventArgs e)
         {
-            if (GameMaster.Inst().GetState() == EGameState.StateGame &&
-                !GameMaster.Inst().GetActivePlayer().getIsAI())
+            if (GameMaster.Inst().CanNextTurn())
             {
                 GameMaster.Inst().NextTurn();
-            }
-            else
-            {
-                // ble ble GameState.windowPromt.showAlert("Musíš nejdøíve postavit mìsto.");
             }
         }
 
@@ -211,7 +206,7 @@ namespace Expanze
         {
             // market can not be opened during first phase of the game - building first towns
             if (GameMaster.Inst().GetState() == EGameState.StateGame &&
-                !GameMaster.Inst().GetActivePlayer().getIsAI())
+                !GameMaster.Inst().GetActivePlayer().GetIsAI())
             {
 
                 if (MarketComponent.isActive)

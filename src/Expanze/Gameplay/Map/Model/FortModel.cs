@@ -122,7 +122,7 @@ namespace Expanze.Gameplay
                         case 3 :
                             GameMaster.Inst().GetActivePlayer().AddPoints(Settings.pointsFortParade);
                             costParade = costParade + new SourceAll(30);
-                            if (GameMaster.Inst().GetActivePlayer().getIsAI())
+                            if (GameMaster.Inst().GetActivePlayer().GetIsAI())
                             {
                                 GameState.message.Show(Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE, Strings.PROMPT_DESCTIPTION_MESSAGE_FORT_ACTION_PARADE, GameResources.Inst().getHudTexture(HUDTexture.IconFortParade));
                             }                          

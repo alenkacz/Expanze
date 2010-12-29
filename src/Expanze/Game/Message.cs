@@ -46,7 +46,7 @@ namespace Expanze
             queue = new Queue<MessageItem>();
         }
 
-        public bool getIsActive() {return messageActive != null;}
+        public bool GetIsActive() {return messageActive != null;}
 
 
         private void NextMessage()

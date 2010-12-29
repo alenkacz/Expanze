@@ -200,8 +200,6 @@ namespace Expanze
                 point2D.X = (int)(point2D.X - stringCenter.X);
                 point2D.Y = (int)(point2D.Y - stringCenter.Y);
 
-                Color numberColor;
-
                 spriteBatch.Begin();
 
                 bool drawNumber = true;

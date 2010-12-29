@@ -207,9 +207,9 @@ namespace Expanze
 
         public void Update(GameTime gameTime)
         {
-            if (activePlayer.getIsAI())
+            if (activePlayer.GetIsAI())
             {
-                if (!hasAIThreadStarted && !GameState.message.getIsActive())
+                if (!hasAIThreadStarted && !GameState.message.GetIsActive())
                 {
                     actualAIThread = new Thread(X => AIThread(activePlayer.getComponentAI()));
                     actualAIThread.Start();
@@ -222,7 +222,7 @@ namespace Expanze
                     if (actualAITime < 0)
                         actualAIThread.Abort();
 
-                    if (!actualAIThread.IsAlive && map.GetMapView().getIsViewQueueClear() && !GameState.message.getIsActive())
+                    if (!actualAIThread.IsAlive && map.GetMapView().getIsViewQueueClear() && !GameState.message.GetIsActive())
                     {
                         NextTurn();
                     }
@@ -266,6 +266,36 @@ namespace Expanze
             {       
                 GameState.map.ApplyEvent(RndEvent.getRandomEvent(randomNumber));
             }
+        }
+
+        public bool CanNextTurn()
+        {
+            if (state != EGameState.StateGame)
+            {
+                return false;
+            }
+            
+            if(activePlayer.GetIsAI())
+            {
+                return false;
+            }
+
+            if (GameState.message.GetIsActive())
+            {
+                return false;
+            }
+
+            if (fortState == EFortState.CapturingHexa)
+            {
+                return false;
+            }
+
+            if (fortState == EFortState.DestroyingHexa)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public bool NextTurn()

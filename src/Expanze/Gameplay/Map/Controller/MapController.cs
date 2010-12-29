@@ -251,7 +251,7 @@ namespace Expanze.Gameplay.Map
 
                     gm.SetHasBuiltTown(true);
 
-                    if(!gm.GetActivePlayer().getIsAI())
+                    if(!gm.GetActivePlayer().GetIsAI())
                         gm.NextTurn();                   
                 }
                 else

@@ -66,7 +66,7 @@ namespace Expanze
 
         public int getBuildingCount(Building building) { return buildingCount[(int)building]; }
         public IComponentAI getComponentAI() { return componentAI; }
-        public bool getIsAI() { return componentAI != null; }
+        public bool GetIsAI() { return componentAI != null; }
         public Color getColor() { return color; }
         public UpgradeKind GetSourceBuildingUpgrade(SourceBuildingKind kind) { return upgradeSourceBuilding[(int)kind]; }
 
