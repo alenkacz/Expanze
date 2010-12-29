@@ -11,7 +11,8 @@ namespace Expanze
 {
     public enum HUDTexture
     {
-        HammersPassive, HammersActive, InfoPassive, InfoActive, IconActive,
+        HammersPassive, HammersActive, SwordsActive, SwordsPassive, DestroyActive, DestroyPassive,
+        InfoPassive, InfoActive, IconActive,
         IconTown, IconRoad, 
         IconFort, IconFortActive,
         IconMarket, IconMarketActive,
@@ -108,8 +109,12 @@ namespace Expanze
             hud[(int)HUDTexture.BackgroundWater] = content.Load<Texture2D>("Models/hexa_voda3");
 
             hud[(int)HUDTexture.IconActive] = content.Load<Texture2D>("HUD/ic_active");
-            hud[(int)HUDTexture.HammersPassive] = content.Load<Texture2D>("HUD/hammer");
-            hud[(int)HUDTexture.HammersActive] = content.Load<Texture2D>("HUD/hammeractive");
+            hud[(int)HUDTexture.HammersPassive] = content.Load<Texture2D>("HUD/hex_ic_hammer");
+            hud[(int)HUDTexture.HammersActive] = content.Load<Texture2D>("HUD/hex_ic_hammeractive");
+            hud[(int)HUDTexture.SwordsPassive] = content.Load<Texture2D>("HUD/hex_ic_sword");
+            hud[(int)HUDTexture.SwordsActive] = content.Load<Texture2D>("HUD/hex_ic_swordactive");
+            hud[(int)HUDTexture.DestroyPassive] = content.Load<Texture2D>("HUD/hex_ic_destroy");
+            hud[(int)HUDTexture.DestroyActive] = content.Load<Texture2D>("HUD/hex_ic_destroyactive");
             hud[(int)HUDTexture.InfoPassive] = content.Load<Texture2D>("HUD/info");
             hud[(int)HUDTexture.InfoActive] = content.Load<Texture2D>("HUD/infoactive");
             hud[(int)HUDTexture.IconTown] = content.Load<Texture2D>("HUD/ic_town");
@@ -167,15 +172,15 @@ namespace Expanze
             hud[(int)HUDTexture.IconMedalMine] = content.Load<Texture2D>("HUD/medals/medal_mine");
 
             hexaModel = new Model[N_MODEL];
-            hexaModel[(int)HexaKind.Cornfield] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Cornfield]);
-            hexaModel[(int)HexaKind.Desert] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Desert]);
-            hexaModel[(int)HexaKind.Forest] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Forest]);
-            hexaModel[(int)HexaKind.Mountains] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Mountains]);
-            hexaModel[(int)HexaKind.Pasture] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Pasture]);
-            hexaModel[(int)HexaKind.Stone] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Stone]);
-            hexaModel[(int)HexaKind.Water] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Water]);
-            hexaModel[(int)HexaKind.Water + 1] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Water] + "2");
-            hexaModel[(int)HexaKind.Water + 2] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Water] + "3");
+            hexaModel[(int)HexaKind.Cornfield] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Cornfield]);
+            hexaModel[(int)HexaKind.Desert] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Desert]);
+            hexaModel[(int)HexaKind.Forest] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Forest]);
+            hexaModel[(int)HexaKind.Mountains] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Mountains]);
+            hexaModel[(int)HexaKind.Pasture] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Pasture]);
+            hexaModel[(int)HexaKind.Stone] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Stone]);
+            hexaModel[(int)HexaKind.Water] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Water]);
+            hexaModel[(int)HexaKind.Water + 1] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Water] + "2");
+            hexaModel[(int)HexaKind.Water + 2] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Water] + "3");
 
             shapeModel = new Model[N_SHAPE_MODEL];
 

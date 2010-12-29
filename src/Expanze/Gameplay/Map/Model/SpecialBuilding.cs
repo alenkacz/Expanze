@@ -27,8 +27,8 @@ namespace Expanze.Gameplay
 
         public override void Execute()
         {
-            GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, upgradeKind, upgradeNumber);
             building.setPromptWindow(PromptWindow.Mod.Buyer);
+            GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, upgradeKind, upgradeNumber);            
         }
 
         public override string TryExecute()

@@ -57,6 +57,8 @@ namespace Expanze.Gameplay.Map
                       if (hexaMapModel[i][j] == null)
                           continue;
 
+                      hexaMapModel[i][j].SetCoord(i, j);
+
                       // UP LEFT
                       if (i >= 1 && hexaMapModel[i - 1].Length > j)
                       {
@@ -372,7 +374,7 @@ namespace Expanze.Gameplay.Map
         {
             for (int i = 0; i < hexaMapModel.Length; i++)
                 for (int j = 0; j < hexaMapModel[i].Length; j++)
-                    if (hexaMapModel[i][j].GetID() == hexaID)
+                    if (hexaMapModel[i][j] != null && hexaMapModel[i][j].GetID() == hexaID)
                     {
                         return hexaMapModel[i][j];
                     }

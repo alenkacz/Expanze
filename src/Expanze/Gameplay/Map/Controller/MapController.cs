@@ -112,6 +112,22 @@ namespace Expanze.Gameplay.Map
             return road.CanActivePlayerBuildRoad();
         }
 
+        public bool CaptureHexa(int hexaID)
+        {
+            HexaModel hexa = map.GetHexaByID(hexaID);
+            hexa.Capture();
+
+            return true;
+        }
+
+        public bool DestroyHexa(int hexaID)
+        {
+            HexaModel hexa = map.GetHexaByID(hexaID);
+            hexa.Destroy();
+
+            return true;
+        }
+
         public IRoad BuildRoad(int roadID)
         {
             RoadModel road = map.GetRoadByID(roadID);

@@ -74,10 +74,9 @@ namespace Expanze.Gameplay
                 GameResources res = GameResources.Inst();
                 win.Show(mod, Strings.PROMPT_TITLE_WANT_TO_BUILD_FORT, true);
                 
-                // it wont be in beta version but this is ok
-                // win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_CAPTURE, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_CAPTURE, Settings.costFortCapture, true, res.getHudTexture(HUDTexture.IconFortCapture)));
-                // win.addPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 1, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_DESTROY_HEXA, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_DESTROY_HEXA, Settings.costFortDestroyHexa, true, res.getHudTexture(HUDTexture.IconFortHexa)));
-                
+
+                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_CAPTURE, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_CAPTURE, Settings.costFortCapture, true, res.getHudTexture(HUDTexture.IconFortCapture)));
+                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 1, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_DESTROY_HEXA, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_DESTROY_HEXA, Settings.costFortDestroyHexa, true, res.getHudTexture(HUDTexture.IconFortHexa)));          
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 2, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_SOURCES, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES, Settings.costFortSources, true, res.getHudTexture(HUDTexture.IconFortSources)));
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 3, this, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_PARADE, costParade, true, res.getHudTexture(HUDTexture.IconFortParade)));
             }
@@ -97,6 +96,15 @@ namespace Expanze.Gameplay
                     switch (upgradeNumber)
                     {
                         case 0 :
+                            HexaModel.SetHexaIDFort(hexaID);
+                            gm.SetFortState(EFortState.CapturingHexa);
+                            win.setIsActive(false);
+                            break;
+
+                        case 1:
+                            HexaModel.SetHexaIDFort(hexaID);
+                            gm.SetFortState(EFortState.DestroyingHexa);
+                            win.setIsActive(false);
                             break;
 
                         case 2 :

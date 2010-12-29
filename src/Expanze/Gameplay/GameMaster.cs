@@ -11,6 +11,8 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Expanze
 {
+    public enum EFortState { Normal, DestroyingHexa, CapturingHexa };
+
     class GameMaster
     {
         private int n_player = 0;
@@ -21,6 +23,7 @@ namespace Expanze
         private Player activePlayer;
         private int activePlayerIndex;
         private EGameState state;
+        private EFortState fortState;
         private bool hasBuiltTown;          /// In first 2 rounds each player can build only one town
 
         // when is game paused and player see paused menu, he cant build towers etc
@@ -89,6 +92,7 @@ namespace Expanze
 
             hasAIThreadStarted = false;
             state = EGameState.StateFirstTown;
+            fortState = EFortState.Normal;
 
             randomNumber = new System.Random();
 
@@ -232,9 +236,11 @@ namespace Expanze
         public Player GetPlayer(int index) { return players[index]; }
         public List<Player> GetPlayers() { return this.players; }
         public EGameState GetState() { return state; }
+        public EFortState GetFortState() { return fortState; }
         public bool IsWinnerNew() { bool temp = winnerNew; winnerNew = false; return temp; }
 
         public void SetHasBuiltTown(bool hasBuiltTown) { this.hasBuiltTown = hasBuiltTown; }
+        public void SetFortState(EFortState state) { fortState = state; }
 
         public bool StartTurn()
         {

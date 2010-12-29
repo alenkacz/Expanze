@@ -12,13 +12,13 @@ namespace Expanze
         public static Vector2[] allResolutions = { new Vector2(800, 600), new Vector2(1024, 768), new Vector2(1280, 800), new Vector2(1366, 768) };
         public static Vector2 maximumResolution = new Vector2(1440,900);
 
-        //indexed by enum Types
-        public static String[] mapPaths = new String[] { "Models/yellowhex", "Models/brownhex", "Models/greyhex", "Models/greenhex", "Models/redhex", "Models/orangehex", "Models/bluehex" };
+        /// indexed by enum Types
+        public static String[] hexaSrcPath = new String[] { "Models/yellowhex", "Models/brownhex", "Models/greyhex", "Models/greenhex", "Models/redhex", "Models/orangehex", "Models/bluehex" };
 
-        //// resources which get player on start
-        public static SourceAll startResources = new SourceAll(100);
+        /// resources which get player on start
+        public static SourceAll startResources = new SourceAll(1000);
 
-        // costs of infrastructure
+        /// costs of infrastructure
         public static SourceAll costTown = new SourceAll(60, 60, 50, 50, 30);
         public static SourceAll costRoad = new SourceAll(0, 40, 0, 0, 50);
         public static SourceAll costMine = new SourceAll(0, 50, 0, 50, 0);
