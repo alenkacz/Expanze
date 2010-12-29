@@ -78,10 +78,16 @@ namespace CorePlugin
         /// </summary>
         /// <returns>Max hexa ID</returns>
         int GetMaxHexaID();
+
+        /// <summary>
         /// Min ID is 1 (not 0!)
+        /// </summary>
         /// <returns>Max ID of possible town</returns>
         int GetMaxTownID();
+
+        /// <summary>
         /// Min ID is 1 (not 0!)
+        /// </summary>
         /// <returns>Max ID of possible road</returns>
         int GetMaxRoadID();
     }

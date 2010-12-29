@@ -59,7 +59,7 @@ namespace Expanze
         {
             for (int loop1 = 0; loop1 < buildingKind.Length; loop1++)
             {
-                if (hexaNeighbour[loop1] != null && hexaNeighbour[loop1].getID() == hexaID)
+                if (hexaNeighbour[loop1] != null && hexaNeighbour[loop1].GetID() == hexaID)
                     return loop1;
             }
             return -1;
@@ -122,9 +122,9 @@ namespace Expanze
                     buildingKind[loop1] == BuildingKind.SourceBuilding)
                 {
                     float multiply = (building[loop1].GetIsUpgrade(UpgradeKind.SecondUpgrade, 0)) ? 2.0f : (building[loop1].GetIsUpgrade(UpgradeKind.FirstUpgrade, 0)) ? 1.5f : 1.0f;
-                    amount = (int)(hexaNeighbour[loop1].getCurrentSource() * multiply);
+                    amount = (int)(hexaNeighbour[loop1].GetCurrentSource() * multiply);
 
-                    switch (hexaNeighbour[loop1].getKind())
+                    switch (hexaNeighbour[loop1].GetKind())
                     {
                         case HexaKind.Forest:
                             cost = cost + new SourceAll(amount, 0, 0, 0, 0);
@@ -292,8 +292,8 @@ namespace Expanze
             switch (kind)
             {
                 case BuildingKind.SourceBuilding :
-                    building[pos] = new SourceBuildingModel(townID, hexaNeighbour[pos].getID());
-                    switch (hexaNeighbour[pos].getKind())
+                    building[pos] = new SourceBuildingModel(townID, hexaNeighbour[pos].GetID());
+                    switch (hexaNeighbour[pos].GetKind())
                     {
                         case HexaKind.Cornfield: playerOwner.AddBuilding(Building.Mill); break;
                         case HexaKind.Pasture: playerOwner.AddBuilding(Building.Stepherd); break;
@@ -304,15 +304,15 @@ namespace Expanze
                     break;
 
                 case BuildingKind.MarketBuilding :
-                    building[pos] = new MarketModel(townID, hexaNeighbour[pos].getID());
+                    building[pos] = new MarketModel(townID, hexaNeighbour[pos].GetID());
                     playerOwner.AddBuilding(Building.Market);
                     break;
                 case BuildingKind.MonasteryBuilding :
-                    building[pos] = new MonasteryModel(townID, hexaNeighbour[pos].getID());
+                    building[pos] = new MonasteryModel(townID, hexaNeighbour[pos].GetID());
                     playerOwner.AddBuilding(Building.Monastery);
                     break;
                 case BuildingKind.FortBuilding :
-                    building[pos] = new FortModel(townID, hexaNeighbour[pos].getID());
+                    building[pos] = new FortModel(townID, hexaNeighbour[pos].GetID());
                     playerOwner.AddBuilding(Building.Fort);
                     break;
             }
@@ -325,7 +325,7 @@ namespace Expanze
             if (pos < 0 || pos > 2)
                 return null;
 
-            if (GameState.map.GetMapController().BuildBuildingInTown(townID, hexaNeighbour[pos].getID(), BuildingKind.SourceBuilding))
+            if (GameState.map.GetMapController().BuildBuildingInTown(townID, hexaNeighbour[pos].GetID(), BuildingKind.SourceBuilding))
                 return (ISourceBuilding)building[pos];
             else
                 return null;
@@ -336,7 +336,7 @@ namespace Expanze
             if (pos < 0 || pos > 2)
                 return null;
 
-            if(GameState.map.GetMapController().BuildBuildingInTown(townID, hexaNeighbour[pos].getID(), BuildingKind.FortBuilding))
+            if(GameState.map.GetMapController().BuildBuildingInTown(townID, hexaNeighbour[pos].GetID(), BuildingKind.FortBuilding))
                 return (IFort)building[pos];
             else
                 return null;      
@@ -347,7 +347,7 @@ namespace Expanze
             if (pos < 0 || pos > 2)
                 return null;
 
-            if (GameState.map.GetMapController().BuildBuildingInTown(townID, hexaNeighbour[pos].getID(), BuildingKind.MonasteryBuilding))
+            if (GameState.map.GetMapController().BuildBuildingInTown(townID, hexaNeighbour[pos].GetID(), BuildingKind.MonasteryBuilding))
                 return (IMonastery)building[pos];
             else
                 return null;
@@ -358,7 +358,7 @@ namespace Expanze
             if (pos < 0 || pos > 2)
                 return null;
 
-            if (GameState.map.GetMapController().BuildBuildingInTown(townID, hexaNeighbour[pos].getID(), BuildingKind.MarketBuilding))
+            if (GameState.map.GetMapController().BuildBuildingInTown(townID, hexaNeighbour[pos].GetID(), BuildingKind.MarketBuilding))
                 return (IMarket)building[pos];
             else
                 return null;

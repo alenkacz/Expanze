@@ -128,11 +128,11 @@ namespace NoobAI
                 {
                     town = mapController.GetITownByID(loop1);
                     hexa = town.GetIHexa(loop2);
-                    hexaID = hexa.getID();
+                    hexaID = hexa.GetID();
 
                     if (turn > 7)
                     {
-                        if (hexa.getStartSource() <= 12)
+                        if (hexa.GetStartSource() <= 12)
                         {
                             if (!hasFort)
                             {
@@ -214,22 +214,22 @@ namespace NoobAI
                 IHexa hexa = town.GetIHexa(loop2);
                 if (hexa != null)
                 {
-                    switch(hexa.getKind())
+                    switch(hexa.GetKind())
                     {
                         case HexaKind.Cornfield :
-                            cornHexa += hexa.getCurrentSource();
+                            cornHexa += hexa.GetCurrentSource();
                             break;
                         case HexaKind.Pasture :
-                            meatHexa += hexa.getCurrentSource();
+                            meatHexa += hexa.GetCurrentSource();
                             break;
                         case HexaKind.Stone:
-                            stoneHexa += hexa.getCurrentSource();
+                            stoneHexa += hexa.GetCurrentSource();
                             break;
                         case HexaKind.Forest:
-                            woodHexa += hexa.getCurrentSource();
+                            woodHexa += hexa.GetCurrentSource();
                             break;
                         case HexaKind.Mountains:
-                            oreHexa += hexa.getCurrentSource();
+                            oreHexa += hexa.GetCurrentSource();
                             break;
                     }
                 }
@@ -270,7 +270,7 @@ namespace NoobAI
                     if (hexa != null)
                     {
                         float multi = 1.0f;
-                        switch (hexa.getKind())
+                        switch (hexa.GetKind())
                         {
                             case HexaKind.Cornfield:
                                 if (cornHexa == 0 && tempCorn == false)
@@ -308,7 +308,7 @@ namespace NoobAI
                                 }
                                 break;
                         }
-                        sourceSum += (int) (hexa.getCurrentSource() * multi);
+                        sourceSum += (int) (hexa.GetCurrentSource() * multi);
                     }
                 }
 

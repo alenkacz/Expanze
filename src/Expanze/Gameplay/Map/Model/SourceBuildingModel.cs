@@ -39,7 +39,7 @@ namespace Expanze.Gameplay
 
             upgrade1cost = new SourceAll(50, 0, 0, 40, 20);
             upgrade2cost = new SourceAll(0, 50, 50, 0, 40);
-            switch (hexa.getKind())
+            switch (hexa.GetKind())
             {
                 case HexaKind.Mountains:
                     buildingKind = SourceBuildingKind.Mine;

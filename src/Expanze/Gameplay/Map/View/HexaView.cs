@@ -80,8 +80,8 @@ namespace Expanze
         public HexaView(HexaModel model)
         {
             this.model = model;
-            this.hexaID = model.getID();
-            this.kind = model.getKind();
+            this.hexaID = model.GetID();
+            this.kind = model.GetKind();
 
             if (kind != HexaKind.Water)
             {
@@ -141,7 +141,7 @@ namespace Expanze
                 posHammers = point2D;
                 SpriteBatch spriteBatch = GameState.spriteBatch;
 
-                Vector2 stringCenter = GameState.hudMaterialsFont.MeasureString(model.getCurrentSource() + "") * 0.5f;
+                Vector2 stringCenter = GameState.hudMaterialsFont.MeasureString(model.GetCurrentSource() + "") * 0.5f;
 
                 // now subtract the string center from the text position to find correct position 
                 point2D.X = (int)(point2D.X - stringCenter.X);
@@ -165,8 +165,8 @@ namespace Expanze
                 if (drawNumber ||
                     tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.GetPlayerOwner() != GameMaster.Inst().GetActivePlayer())
                 {
-                    if (model.getCurrentSource() != 0) // desert
-                        spriteBatch.DrawString(GameState.hudMaterialsFont, model.getCurrentSource() + "", new Vector2(point2D.X + 1, point2D.Y + 1), Color.Black);
+                    if (model.GetCurrentSource() != 0) // desert
+                        spriteBatch.DrawString(GameState.hudMaterialsFont, model.GetCurrentSource() + "", new Vector2(point2D.X + 1, point2D.Y + 1), Color.Black);
                 }
                 if (pickVars.pickActive)
                     numberColor = Color.Red;
@@ -176,9 +176,9 @@ namespace Expanze
                 if (drawNumber ||
                     tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.GetPlayerOwner() != GameMaster.Inst().GetActivePlayer())
                 {
-                    if (model.getCurrentSource() != 0) // desert
+                    if (model.GetCurrentSource() != 0) // desert
                     {
-                        spriteBatch.DrawString(GameState.hudMaterialsFont, model.getCurrentSource() + "", point2D, numberColor);
+                        spriteBatch.DrawString(GameState.hudMaterialsFont, model.GetCurrentSource() + "", point2D, numberColor);
                     }
                 }
                 else
@@ -278,7 +278,7 @@ namespace Expanze
         {
             for (int loop1 = 0; loop1 < 6; loop1++)
             {
-                if (!townView[loop1].getBuildingIsBuild(model.getID()))
+                if (!townView[loop1].getBuildingIsBuild(model.GetID()))
                 {
                     continue;
                 }
@@ -291,7 +291,7 @@ namespace Expanze
                 Matrix tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
 
                 int roofID = -1;
-                switch(model.getTown((CorePlugin.TownPos)loop1).getBuildingKind(model.getID()))
+                switch(model.getTown((CorePlugin.TownPos)loop1).getBuildingKind(model.GetID()))
                 {
                     case BuildingKind.NoBuilding :
                         m = null;

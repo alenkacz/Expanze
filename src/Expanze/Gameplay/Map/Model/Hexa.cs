@@ -450,11 +450,11 @@ namespace Expanze
 
         public string getModelPath()
         {
-            return Settings.mapPaths[(int)getKind()];
+            return Settings.mapPaths[(int)GetKind()];
         }
 
-        public int getStartSource() { return startSource; }
-        public int getCurrentSource()
+        public int GetStartSource() { return startSource; }
+        public int GetCurrentSource()
         {
             float multiply = 1.0f;
             if (sourceMiracle)
@@ -464,7 +464,7 @@ namespace Expanze
             return (int) (startSource * multiply);
         }
 
-        public HexaKind getKind()
+        public HexaKind GetKind()
         {
             return this.kind;
         }
@@ -491,7 +491,7 @@ namespace Expanze
             return towns[(int)townPos];
         }
 
-        public ITown getITown(TownPos townPos)
+        public ITown GetITown(TownPos townPos)
         {
             return towns[(int)townPos];
         }
@@ -508,7 +508,7 @@ namespace Expanze
             return null;
         }
 
-        public int getID() { return hexaID; }
+        public int GetID() { return hexaID; }
         public Boolean getRoadOwner(int i) { return roadOwner[i]; }
         public Boolean getTownOwner(int i) { return townOwner[i]; }
         public SourceAll getSourceBuildingCost() { return sourceBuildingCost; }

@@ -372,7 +372,7 @@ namespace Expanze.Gameplay.Map
         {
             for (int i = 0; i < hexaMapModel.Length; i++)
                 for (int j = 0; j < hexaMapModel[i].Length; j++)
-                    if (hexaMapModel[i][j].getID() == hexaID)
+                    if (hexaMapModel[i][j].GetID() == hexaID)
                     {
                         return hexaMapModel[i][j];
                     }
