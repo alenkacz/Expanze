@@ -16,6 +16,7 @@ namespace Expanze
         private Color color;
         private bool materialChanged;
         private int points;
+        private bool active;            /// is he still playing? (ex. AI make exception and it cant continue in game
 
         SourceAll prevSource;       // Source before last source change (for example before paying for something, collecting resources
         SourceAll source;
@@ -62,12 +63,14 @@ namespace Expanze
             this.componentAI = componentAI;
 
             materialChanged = false;
+            active = true;
         }
 
-        public int getBuildingCount(Building building) { return buildingCount[(int)building]; }
-        public IComponentAI getComponentAI() { return componentAI; }
+        public int GetBuildingCount(Building building) { return buildingCount[(int)building]; }
+        public IComponentAI GetComponentAI() { return componentAI; }
         public bool GetIsAI() { return componentAI != null; }
-        public Color getColor() { return color; }
+        public Color GetColor() { return color; }
+        public bool GetActive() { return active; }
         public UpgradeKind GetSourceBuildingUpgrade(SourceBuildingKind kind) { return upgradeSourceBuilding[(int)kind]; }
 
         public void AddBuilding(Building building)
@@ -81,9 +84,9 @@ namespace Expanze
             GameMaster.Inst().CheckWinner(this);
         }
 
-        public int getPoints() { return points; }
+        public int GetPoints() { return points; }
 
-        public int getConversionRate(HexaKind h)
+        public int GetConversionRate(HexaKind h)
         {
             switch (h)
             {
@@ -193,15 +196,15 @@ namespace Expanze
             switch (k)
             {
                 case HexaKind.Cornfield:
-                    return getCorn() > getConversionRate(k);
+                    return getCorn() > GetConversionRate(k);
                 case HexaKind.Forest:
-                    return getWood() > getConversionRate(k);
+                    return getWood() > GetConversionRate(k);
                 case HexaKind.Mountains:
-                    return getOre() > getConversionRate(k);
+                    return getOre() > GetConversionRate(k);
                 case HexaKind.Pasture:
-                    return getMeat() > getConversionRate(k);
+                    return getMeat() > GetConversionRate(k);
                 case HexaKind.Stone:
-                    return getStone() > getConversionRate(k);
+                    return getStone() > GetConversionRate(k);
             }
 
             return false;
@@ -226,12 +229,21 @@ namespace Expanze
             return 0;
         }
 
-        internal void SetSourceBuildingUpdate(UpgradeKind upgradeKind, int upgradeNumber)
+        public void SetActive(bool active) 
+        {
+            if (this.active && !active)
+                GameMaster.Inst().AddToPlayerCount(-1);
+
+            this.active = active; 
+            
+        }
+
+        public void SetSourceBuildingUpdate(UpgradeKind upgradeKind, int upgradeNumber)
         {
             upgradeSourceBuilding[upgradeNumber] = upgradeKind;
         }
 
-        internal void SetMarketRate(UpgradeKind upgradeKind, int upgradeNumber)
+        public void SetMarketRate(UpgradeKind upgradeKind, int upgradeNumber)
         {
             switch (upgradeKind)
             {

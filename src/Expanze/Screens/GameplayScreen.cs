@@ -185,7 +185,7 @@ namespace Expanze
         /// </summary>
         void MenuButtonAction(object sender, PlayerIndexEventArgs e)
         {
-            GameMaster.Inst().setPausedNew(true);
+            GameMaster.Inst().SetPausedNew(true);
         }
 
         /// <summary>
@@ -288,7 +288,7 @@ namespace Expanze
 
             if (input.IsPauseGame(ControllingPlayer) || gamePadDisconnected || GameMaster.Inst().IsPausedNew())
             {
-                GameMaster.Inst().setPaused(true);
+                GameMaster.Inst().SetPaused(true);
                 ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
             }
 

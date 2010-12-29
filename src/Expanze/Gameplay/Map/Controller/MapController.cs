@@ -76,7 +76,7 @@ namespace Expanze.Gameplay.Map
         public ChangingSourcesError ChangeSources(SourceKind fromSource, SourceKind toSource, int fromAmount)
         {
             GameMaster gm = GameMaster.Inst();
-            int rate = gm.GetActivePlayer().getConversionRate(SourceKindToHexaKind(fromSource));
+            int rate = gm.GetActivePlayer().GetConversionRate(SourceKindToHexaKind(fromSource));
             if (fromAmount > gm.GetActivePlayer().GetSource().Get(fromSource))
                 return ChangingSourcesError.NotEnoughFromSource;
 

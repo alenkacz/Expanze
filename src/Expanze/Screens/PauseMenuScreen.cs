@@ -49,7 +49,7 @@ namespace Expanze
 
         void ResumeGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            GameMaster.Inst().setPaused(false);
+            GameMaster.Inst().SetPaused(false);
         }
 
         /// <summary>

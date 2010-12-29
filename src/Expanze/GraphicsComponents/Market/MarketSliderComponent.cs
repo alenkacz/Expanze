@@ -144,9 +144,9 @@ namespace Expanze
 
                 if (converted < 0) converted = -converted;
 
-                if ((this.fromTypeCount - converted * GameMaster.Inst().GetActivePlayer().getConversionRate(fromType)) >= 0)
+                if ((this.fromTypeCount - converted * GameMaster.Inst().GetActivePlayer().GetConversionRate(fromType)) >= 0)
                 {
-                    this.fromConvertedCount = this.fromTypeCount - converted * GameMaster.Inst().GetActivePlayer().getConversionRate(fromType);
+                    this.fromConvertedCount = this.fromTypeCount - converted * GameMaster.Inst().GetActivePlayer().GetConversionRate(fromType);
                     this.toConvertedCount = this.toTypeCount + converted;
 
                     sliderPosition.X = pos;
@@ -166,7 +166,7 @@ namespace Expanze
 
         private int getSliderUnit()
         {
-            int count = GameMaster.Inst().GetActivePlayer().getMaterialNumber(fromType)/GameMaster.Inst().GetActivePlayer().getConversionRate(fromType);
+            int count = GameMaster.Inst().GetActivePlayer().getMaterialNumber(fromType)/GameMaster.Inst().GetActivePlayer().GetConversionRate(fromType);
             return width / count;
         }
 

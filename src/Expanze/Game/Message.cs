@@ -31,7 +31,7 @@ namespace Expanze
 
         private bool disabled; /// Can be popup messages?
         private int timeActive;
-        private const int ACTIVE_LIMIT = 2500;
+        private const int ACTIVE_LIMIT = 3200;
 
         public Message()
         {

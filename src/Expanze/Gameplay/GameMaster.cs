@@ -8,6 +8,7 @@ using Expanze.Gameplay.Map;
 using System.Threading;
 using Expanze.Gameplay;
 using Microsoft.Xna.Framework.Graphics;
+using Expanze.Utils;
 
 namespace Expanze
 {
@@ -15,7 +16,7 @@ namespace Expanze
 
     class GameMaster
     {
-        private int n_player = 0;
+        private int playerCount;
         private List<Player> players = new List<Player>();
 
         private Player[] medailOwner;
@@ -61,11 +62,13 @@ namespace Expanze
         /// </summary>
         private GameMaster() {}
 
+        public void AddToPlayerCount(int i) { playerCount += i; }
+
         public bool StartGame(bool isAI, Map map)
         {
             this.map = map;
 
-            n_player = players.Count;
+            playerCount = players.Count;
 
             medailOwner = new Player[(int) Building.Count];
             for (int loop1 = 0; loop1 < players.Count; loop1++)
@@ -76,7 +79,7 @@ namespace Expanze
             IComponentAI AI;
             foreach (Player player in players)
             {
-                AI = player.getComponentAI();
+                AI = player.GetComponentAI();
                 if (AI != null) // its computer then
                 {
                     AI.InitAIComponent(map.GetMapController());
@@ -129,8 +132,8 @@ namespace Expanze
 
             
 
-            if((medailOwner[(int) medal] == null && player.getBuildingCount(medal) >= minCount) ||
-               (medailOwner[(int) medal] != null && player.getBuildingCount(medal) > medailOwner[(int) medal].getBuildingCount(medal)))
+            if((medailOwner[(int) medal] == null && player.GetBuildingCount(medal) >= minCount) ||
+               (medailOwner[(int) medal] != null && player.GetBuildingCount(medal) > medailOwner[(int) medal].GetBuildingCount(medal)))
             {
                 if (medailOwner[(int)medal] != null)
                 {
@@ -138,7 +141,7 @@ namespace Expanze
                 }
                 medailOwner[(int)medal] = player;
                 player.AddPoints(pointsForMedail);
-                GameState.message.Show(getMedalTitle(medal),getMedalDescription(medal),getMedaileIcon(medal));
+                GameState.message.Show(GetMedalTitle(medal),GetMedalDescription(medal),GetMedaileIcon(medal));
             }
         }
 
@@ -168,7 +171,7 @@ namespace Expanze
                 this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[2], Color.Blue, null));
         }
 
-        public GameSettings getGameSettings()
+        public GameSettings GetGameSettings()
         {
             if (gameSettings != null)
             {
@@ -188,7 +191,7 @@ namespace Expanze
         public void DeleteAllPlayers()
         {
             players = new List<Player>();
-            n_player = 0;
+            playerCount = 0;
         }
 
         private static void AIThread(IComponentAI ai)
@@ -196,11 +199,13 @@ namespace Expanze
             try
             {
                 ai.ResolveAI();
-            }
+            } 
             catch (Exception exception)
             {
-                Console.WriteLine(exception.Message);
-                GameState.message.Show(exception.Source, exception.Message, null);
+                Player player = GameMaster.Inst().GetActivePlayer();
+                player.SetActive(false);
+                Logger.Inst().Log(ai.GetAIName() + ".txt", exception.Message + " : from : " + exception.Source);
+                GameState.message.Show(Strings.GAME_ALERT_TITLE_AI_EXCEPTION, player.getName() + " " + Strings.GAME_ALERT_DESCRIPTION_AI_EXCEPTION, GameResources.Inst().getHudTexture(HUDTexture.IconTown));
             }
         }
 
@@ -211,7 +216,7 @@ namespace Expanze
             {
                 if (!hasAIThreadStarted && !GameState.message.GetIsActive())
                 {
-                    actualAIThread = new Thread(X => AIThread(activePlayer.getComponentAI()));
+                    actualAIThread = new Thread(X => AIThread(activePlayer.GetComponentAI()));
                     actualAIThread.Start();
                     actualAITime = AI_TIME;
                     hasAIThreadStarted = true;
@@ -306,7 +311,13 @@ namespace Expanze
                 MarketComponent.isActive = false;
             }
 
-            status &= ChangeActivePlaye();
+            if (playerCount == 1)
+            {
+                winnerNew = true;
+                return true;
+            }
+
+            status &= ChangeActivePlayer();
             hasBuiltTown = false;
 
             status &= StartTurn();
@@ -320,7 +331,7 @@ namespace Expanze
         public void CheckWinner(Player player)
         {
             bool isWinner = false;
-            if (player.getPoints() >= getGameSettings().getPoints())
+            if (player.GetPoints() >= GetGameSettings().getPoints())
             {
                 isWinner = true;
             }
@@ -342,32 +353,29 @@ namespace Expanze
 
         public bool IsPausedNew()
         {
-            if (this.pausedNew)
-            {
-                this.pausedNew = false;
-                return true;
-            }
-            return false;
+            bool temp = pausedNew;
+            pausedNew = false;
+            return temp;
         }
 
-        public bool getPaused()
+        public bool GetPaused()
         {
             return paused;
         }
 
-        public void setPausedNew(Boolean paused)
+        public void SetPausedNew(Boolean paused)
         {
             this.pausedNew = paused;
         }
 
-        public void setPaused(Boolean paused)
+        public void SetPaused(Boolean paused)
         {
             this.paused = paused;
         }
 
         public void DoMaterialConversion(HexaKind from, HexaKind to, Player p, int fromAmount, int toAmount)
         {
-            int rate = p.getConversionRate(from);
+            int rate = p.GetConversionRate(from);
 
             if (!this.IsMaterialAvailable(from,rate)) { return; }
 
@@ -445,15 +453,15 @@ namespace Expanze
         public void AddPlayer(Player p)
         {
             players.Add(p);
-            ++n_player;
+            ++playerCount;
         }
 
-        public bool ChangeActivePlaye()
+        public bool ChangeActivePlayer()
         {
             if (state == EGameState.StateFirstTown || state == EGameState.StateGame)
             {
                 activePlayerIndex++;
-                if (activePlayerIndex == n_player)
+                if (activePlayerIndex == players.Count)
                 {
                     switch (state)
                     {
@@ -477,10 +485,13 @@ namespace Expanze
 
             activePlayer = players[activePlayerIndex];
 
+            if (!activePlayer.GetActive())
+                return ChangeActivePlayer();
+
             return true;
         }
 
-        public String getMedalTitle(Building building)
+        public String GetMedalTitle(Building building)
         {
             switch (building)
             {
@@ -498,7 +509,7 @@ namespace Expanze
             return null;
         }
 
-        public String getMedalDescription(Building building)
+        public String GetMedalDescription(Building building)
         {
             switch (building)
             {
@@ -516,7 +527,7 @@ namespace Expanze
             return null;
         }
 
-        public Texture2D getMedaileIcon(Building building)
+        public Texture2D GetMedaileIcon(Building building)
         {
             Texture2D icon = null;
             switch (building)
@@ -545,7 +556,7 @@ namespace Expanze
             {
                 if (medailOwner[loop1] == activePlayer)
                 {
-                    spriteBatch.Draw(getMedaileIcon((Building) loop1), medailPosition, Color.White);
+                    spriteBatch.Draw(GetMedaileIcon((Building) loop1), medailPosition, Color.White);
                     medailPosition += new Vector2(0.0f, 85.0f);
                 }
             }

@@ -114,7 +114,7 @@ namespace Expanze.Gameplay.Map
                 Player player = model.GetPlayerOwner();
                 if (player == null)
                     player = GameMaster.Inst().GetActivePlayer();
-                Vector3 color = player.getColor().ToVector3();
+                Vector3 color = player.GetColor().ToVector3();
 
                 foreach (ModelMesh mesh in m.Meshes)
                 {

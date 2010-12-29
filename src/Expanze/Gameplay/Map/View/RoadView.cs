@@ -94,7 +94,7 @@ namespace Expanze.Gameplay.Map.View
                 Player player = model.getOwner();
                 if (player == null)
                     player = GameMaster.Inst().GetActivePlayer();
-                Vector3 color = player.getColor().ToVector3();
+                Vector3 color = player.GetColor().ToVector3();
                 foreach (ModelMesh mesh in m.Meshes)
                 {
                     foreach (BasicEffect effect in mesh.Effects)

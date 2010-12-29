@@ -170,7 +170,7 @@ namespace Expanze.Gameplay.Map
         private HexaModel[][] getMap()
         {
             MapParser parser = new MapParser();
-            GameSettings gs = GameMaster.Inst().getGameSettings();
+            GameSettings gs = GameMaster.Inst().GetGameSettings();
             return parser.getMap(gs.getMapSize(), gs.getMapType(), gs.getMapWealth());
         }
 
@@ -293,7 +293,7 @@ namespace Expanze.Gameplay.Map
         {
             base.Update(gameTime);
 
-            if (GameMaster.Inst().getPaused())
+            if (GameMaster.Inst().GetPaused())
                 return;
 
             ChangeCamera(gameTime);
@@ -309,10 +309,10 @@ namespace Expanze.Gameplay.Map
 
         public override void HandlePickableAreas(Color c)
         {
-            if (GameMaster.Inst().getPaused())
+            if (GameMaster.Inst().GetPaused())
                 return;
 
-            if (GameMaster.Inst().GetActivePlayer().getComponentAI() != null)
+            if (GameMaster.Inst().GetActivePlayer().GetComponentAI() != null)
                 return;
 
             mapView.HandlePickableAreas(c);
@@ -320,7 +320,7 @@ namespace Expanze.Gameplay.Map
 
         public override void DrawPickableAreas()
         {
-            if (GameMaster.Inst().getPaused())
+            if (GameMaster.Inst().GetPaused())
                 return;
 
             mapView.DrawPickableAreas();

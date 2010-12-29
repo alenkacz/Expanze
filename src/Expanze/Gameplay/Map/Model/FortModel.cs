@@ -23,7 +23,7 @@ namespace Expanze.Gameplay
         {
             base.DrawIcon(iconPosition);
             Texture2D playerIcon = GameResources.Inst().getHudTexture(HUDTexture.PlayerColor);
-            GameState.spriteBatch.Draw(playerIcon, new Vector2(iconPosition.X + getIcon().Width - playerIcon.Width - 5, iconPosition.Y + getIcon().Height - playerIcon.Height - 5), player.getColor());
+            GameState.spriteBatch.Draw(playerIcon, new Vector2(iconPosition.X + getIcon().Width - playerIcon.Width - 5, iconPosition.Y + getIcon().Height - playerIcon.Height - 5), player.GetColor());
         }
 
         public override void Execute()

@@ -53,6 +53,9 @@ namespace Expanze
         public static string GAME_SETTINGS_MAP_TYPE_WASTELAND = "Pustina";
         
         
+        public static string GAME_ALERT_TITLE_AI_EXCEPTION = "O jednoho míň";
+        public static string GAME_ALERT_DESCRIPTION_AI_EXCEPTION = "vzdává hru a již dále nebude pokračovat v expanzi ostrova.";
+
         //
         public static string ALERT_TITLE_THIS_IS_NOT_YOURS = "Tohle není tvoje. Můžeš pouze koukat.";
         public static string ALERT_TITLE_NOT_ENOUGH_SOURCES = "Nemáš dostatek surovin.";

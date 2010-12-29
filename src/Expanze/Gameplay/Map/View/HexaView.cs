@@ -372,7 +372,7 @@ namespace Expanze
                     {
                         if (a == roofID)
                         {
-                            Vector3 color = model.getTown((CorePlugin.TownPos)loop1).GetPlayerOwner().getColor().ToVector3();
+                            Vector3 color = model.getTown((CorePlugin.TownPos)loop1).GetPlayerOwner().GetColor().ToVector3();
                             effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
                             effect.DiffuseColor = color * 0.6f;
                             effect.AmbientLightColor = color * 0.3f;
