@@ -99,7 +99,7 @@ namespace Expanze
         /// Checks all conditions needed to be ok to build road.
         /// </summary>
         /// <returns>OK if there is not problem or name of problem.</returns>
-        public RoadBuildError CanActivePlayerBuildRoad()
+        public RoadBuildError CanBuildRoad()
         {
             GameMaster gm = GameMaster.Inst();
             if (gm.GetState() == EGameState.StateGame)

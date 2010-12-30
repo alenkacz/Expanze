@@ -33,7 +33,7 @@ namespace Expanze.Gameplay
             GameMaster.Inst().GetActivePlayer().SetMarketRate(upgradeKind, upgradeNumber);
         }
 
-        public override void setPromptWindow(PromptWindow.Mod mod)
+        public override void SetPromptWindow(PromptWindow.Mod mod)
         {
             PromptWindow win = PromptWindow.Inst();
             GameResources res = GameResources.Inst();

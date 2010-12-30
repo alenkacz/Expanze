@@ -76,9 +76,9 @@ namespace Expanze
 
             foreach (Player p in GameMaster.Inst().GetPlayers())
             {
-                if (font.MeasureString(p.getName()).X > size)
+                if (font.MeasureString(p.GetName()).X > size)
                 {
-                    size = (int)font.MeasureString(p.getName()).X;
+                    size = (int)font.MeasureString(p.GetName()).X;
                 }
             }
 
@@ -125,7 +125,7 @@ namespace Expanze
             Vector2 positionScore = new Vector2(positionTotalPoints.X - font.MeasureString(gMaster.GetActivePlayer().GetPoints().ToString()).X, positionTotalPoints.Y);
 
             // draw texts
-            spriteBatch.DrawString(font, gMaster.GetActivePlayer().getName(), positionName, Color.White);
+            spriteBatch.DrawString(font, gMaster.GetActivePlayer().GetName(), positionName, Color.White);
             spriteBatch.DrawString(font, gMaster.GetActivePlayer().GetPoints().ToString(), positionScore, Color.White);
             spriteBatch.DrawString(font, " / " + GameMaster.Inst().GetGameSettings().getPoints(), positionTotalPoints, Color.White);
 

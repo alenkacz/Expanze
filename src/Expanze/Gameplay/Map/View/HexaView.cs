@@ -531,7 +531,7 @@ namespace Expanze
 
                                     default:
                                         mod = (townView[loop1].getTownModel().GetPlayerOwner() == GameMaster.Inst().GetActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
-                                        townView[loop1].getTownModel().getSpecialBuilding(hexaID).setPromptWindow(mod);
+                                        townView[loop1].getTownModel().getSpecialBuilding(hexaID).SetPromptWindow(mod);
                                         break;
                                 }
                             }

@@ -28,10 +28,7 @@ namespace Expanze.Gameplay
 
         public override void Execute()
         {
-            ISourceAll source = player.GetSource();
-            // show message
-            player.PayForSomething(new SourceAll(source.getWood() / 2, source.getStone() / 2, source.getCorn() / 2, source.getMeat() / 2, source.getOre() / 2));
-            
+            GameState.map.GetMapController().DestroySources(player.GetName());
             base.Execute();
         }
 
@@ -66,7 +63,7 @@ namespace Expanze.Gameplay
             return GameResources.Inst().GetHudTexture(HUDTexture.IconFort);
         }
 
-        public override void setPromptWindow(PromptWindow.Mod mod)
+        public override void SetPromptWindow(PromptWindow.Mod mod)
         {
             if (!playerPrompt)
             {
@@ -96,24 +93,33 @@ namespace Expanze.Gameplay
                     switch (upgradeNumber)
                     {
                         case 0 :
+                            gm.GetActivePlayer().AddSources(getUpgradeCost(upgradeKind, upgradeNumber), TransactionState.TransactionStart);
+                            gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
+                            gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
                             HexaModel.SetHexaIDFort(hexaID);
                             gm.SetFortState(EFortState.CapturingHexa);
                             win.setIsActive(false);
                             break;
 
                         case 1:
+                            gm.GetActivePlayer().AddSources(getUpgradeCost(upgradeKind, upgradeNumber), TransactionState.TransactionStart);
+                            gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
+                            gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
                             HexaModel.SetHexaIDFort(hexaID);
                             gm.SetFortState(EFortState.DestroyingHexa);
                             win.setIsActive(false);
                             break;
 
                         case 2 :
+                            gm.GetActivePlayer().AddSources(getUpgradeCost(upgradeKind, upgradeNumber), TransactionState.TransactionStart);
+                            gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
+                            gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
                             win.Show(PromptWindow.Mod.Buyer, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_SOURCES, true);
                             for (int loop1 = 0; loop1 < gm.GetPlayerCount(); loop1++)
                             {
                                 if (gm.GetPlayer(loop1) != gm.GetActivePlayer())
                                 {
-                                    win.AddPromptItem(new PlayerPromptItem(gm.GetPlayer(loop1), gm.GetPlayer(loop1).getName(), Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES_CHOISING_PLAYER, gm.GetPlayer(loop1).GetSource(), false, res.GetHudTexture(HUDTexture.IconTown)));
+                                    win.AddPromptItem(new PlayerPromptItem(gm.GetPlayer(loop1), gm.GetPlayer(loop1).GetName(), Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES_CHOISING_PLAYER, gm.GetPlayer(loop1).GetSource(), false, res.GetHudTexture(HUDTexture.IconTown)));
                                 }
                             }
                             playerPrompt = true;
@@ -159,6 +165,21 @@ namespace Expanze.Gameplay
         public bool ShowParade()
         {
             return GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, UpgradeKind.FirstUpgrade, 3) == BuyingUpgradeError.OK;
+        }
+
+        public bool DestroySources(String playerName)
+        {
+            return GameState.map.GetMapController().DestroySources(playerName);
+        }
+
+        public bool DestroyHexa(int hexaID)
+        {
+            return GameState.map.GetMapController().DestroyHexa(hexaID);
+        }
+
+        public bool CaptureHexa(int hexaID)
+        {
+            return GameState.map.GetMapController().CaptureHexa(hexaID);
         }
     }
 }

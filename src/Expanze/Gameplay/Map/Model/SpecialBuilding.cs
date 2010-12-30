@@ -27,7 +27,7 @@ namespace Expanze.Gameplay
 
         public override void Execute()
         {
-            building.setPromptWindow(PromptWindow.Mod.Buyer);
+            building.SetPromptWindow(PromptWindow.Mod.Buyer);
             GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, upgradeKind, upgradeNumber);            
         }
 
@@ -99,7 +99,7 @@ namespace Expanze.Gameplay
             ApplyEffect(kind, upgradeNumber);
         }
 
-        abstract public void setPromptWindow(PromptWindow.Mod mod);
+        abstract public void SetPromptWindow(PromptWindow.Mod mod);
         abstract public SourceAll getUpgradeCost(UpgradeKind upgradeKind, int upgradeNumber);
         abstract public Texture2D GetIconActive();
         abstract public Texture2D GetIconPassive();

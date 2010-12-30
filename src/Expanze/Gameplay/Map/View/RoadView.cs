@@ -27,7 +27,7 @@ namespace Expanze.Gameplay.Map.View
         public override string TryExecute()
         {
             RoadModel road = GameState.map.GetRoadByID(roadID);
-            RoadBuildError error = road.CanActivePlayerBuildRoad();
+            RoadBuildError error = road.CanBuildRoad();
             switch (error)
             {
                 case RoadBuildError.AlreadyBuild: return Strings.ALERT_TITLE_ROAD_IS_BUILD;
@@ -127,7 +127,7 @@ namespace Expanze.Gameplay.Map.View
                         
                         if (pickVars.pickActive && !isBuildView)
                         {
-                            if (model.CanActivePlayerBuildRoad() != RoadBuildError.OK)
+                            if (model.CanBuildRoad() != RoadBuildError.OK)
                             {
                                 if (!(a % 5 == 1 || a % 5 == 2 || a % 5 == 3 || a == 4 || a == 5 || a == 15 || a == 14))
                                     effect.EmissiveColor = new Vector3(0.5f, 0.0f, 0);

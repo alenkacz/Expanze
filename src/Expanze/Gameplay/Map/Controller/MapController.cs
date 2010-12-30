@@ -109,23 +109,7 @@ namespace Expanze.Gameplay.Map
             RoadModel road = map.GetRoadByID(roadID);
             if (road == null)
                 return RoadBuildError.InvalidRoadID;
-            return road.CanActivePlayerBuildRoad();
-        }
-
-        public bool CaptureHexa(int hexaID)
-        {
-            HexaModel hexa = map.GetHexaByID(hexaID);
-            hexa.Capture();
-
-            return true;
-        }
-
-        public bool DestroyHexa(int hexaID)
-        {
-            HexaModel hexa = map.GetHexaByID(hexaID);
-            hexa.Destroy();
-
-            return true;
+            return road.CanBuildRoad();
         }
 
         public IRoad BuildRoad(int roadID)
@@ -135,7 +119,7 @@ namespace Expanze.Gameplay.Map
                 return null;
 
             GameMaster gm = GameMaster.Inst();
-            RoadBuildError error = road.CanActivePlayerBuildRoad();
+            RoadBuildError error = road.CanBuildRoad();
             if (error == RoadBuildError.OK)
             {
                 road.BuildRoad(gm.GetActivePlayer());
@@ -261,6 +245,33 @@ namespace Expanze.Gameplay.Map
             }
 
             return null;
+        }
+
+        public bool CaptureHexa(int hexaID)
+        {
+            HexaModel hexa = map.GetHexaByID(hexaID);
+            hexa.Capture();
+            GameMaster.Inst().GetActivePlayer().PayForSomething(Settings.costFortCapture);
+
+            return true;
+        }
+
+        public bool DestroyHexa(int hexaID)
+        {
+            HexaModel hexa = map.GetHexaByID(hexaID);
+            hexa.Destroy();
+            GameMaster.Inst().GetActivePlayer().PayForSomething(Settings.costFortDestroyHexa);
+            return true;
+        }
+
+        public bool DestroySources(String playerName)
+        {
+            Player player = GameMaster.Inst().GetPlayer(playerName);
+            ISourceAll source = player.GetSource();
+            player.PayForSomething(new SourceAll(source.GetWood() / 2, source.GetStone() / 2, source.GetCorn() / 2, source.GetMeat() / 2, source.GetOre() / 2));
+
+            GameMaster.Inst().GetActivePlayer().PayForSomething(Settings.costFortSources);
+            return true;
         }
 
         public void Init()

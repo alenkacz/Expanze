@@ -32,11 +32,11 @@ namespace Expanze
             this.ore = ore;
         }
 
-        public int getWood() { return wood; }
-        public int getStone() { return stone; }
-        public int getCorn() { return corn; }
-        public int getOre() { return ore; }
-        public int getMeat() { return meat; }
+        public int GetWood() { return wood; }
+        public int GetStone() { return stone; }
+        public int GetCorn() { return corn; }
+        public int GetOre() { return ore; }
+        public int GetMeat() { return meat; }
 
         public static SourceAll operator +(SourceAll a, SourceAll b)
         {

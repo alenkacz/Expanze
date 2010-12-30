@@ -66,6 +66,13 @@ namespace CorePlugin
         /// <returns>Possible error or ChangingSourcesError.OK</returns>
         ChangingSourcesError ChangeSources(SourceKind fromSource, SourceKind toSource, int fromAmount);
 
+        /// <summary>
+        /// Destroy half of sources of target player.
+        /// </summary>
+        /// <param name="playerName">Name of player you want destroy sources.</param>
+        /// <returns>True if destroying sources is succesful, otherwise false</returns>
+        bool DestroySources(String playerName);
+
         IPlayer GetPlayerMe();
         IHexa GetIHexa(int x, int y);
         IHexa GetIHexaByID(int hexaID);

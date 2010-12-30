@@ -205,7 +205,7 @@ namespace Expanze
                 Player player = GameMaster.Inst().GetActivePlayer();
                 player.SetActive(false);
                 Logger.Inst().Log(ai.GetAIName() + ".txt", exception.Message + " : from : " + exception.Source);
-                GameState.message.Show(Strings.GAME_ALERT_TITLE_AI_EXCEPTION, player.getName() + " " + Strings.GAME_ALERT_DESCRIPTION_AI_EXCEPTION, GameResources.Inst().GetHudTexture(HUDTexture.IconTown));
+                GameState.message.Show(Strings.GAME_ALERT_TITLE_AI_EXCEPTION, player.GetName() + " " + Strings.GAME_ALERT_DESCRIPTION_AI_EXCEPTION, GameResources.Inst().GetHudTexture(HUDTexture.IconTown));
             }
         }
 
@@ -239,6 +239,15 @@ namespace Expanze
         public Player GetActivePlayer() { return activePlayer; }
         public int GetPlayerCount() { return players.Count; }
         public Player GetPlayer(int index) { return players[index]; }
+        public Player GetPlayer(String playerName)
+        {
+            foreach (Player p in players)
+            {
+                if (p.GetName() == playerName)
+                    return p;
+            }
+            return null;
+        }
         public List<Player> GetPlayers() { return this.players; }
         public EGameState GetState() { return state; }
         public EFortState GetFortState() { return fortState; }

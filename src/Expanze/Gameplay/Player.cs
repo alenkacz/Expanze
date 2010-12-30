@@ -110,7 +110,7 @@ namespace Expanze
             return source;
         }
 
-        public String getName()
+        public String GetName()
         {
             return this.name;
         }

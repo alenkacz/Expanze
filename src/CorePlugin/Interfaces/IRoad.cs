@@ -15,8 +15,9 @@ namespace CorePlugin
 
     public interface IRoad
     {
-        RoadBuildError CanActivePlayerBuildRoad();
-        int GetRoadID();
+        RoadBuildError CanBuildRoad();
         IRoad Build();
+
+        int GetRoadID();
     }
 }

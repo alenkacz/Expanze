@@ -196,7 +196,7 @@ namespace NoobAI
                  }
                  IRoad road = mapController.GetIRoadByID(roadID);
 
-                 if (road != null && road.CanActivePlayerBuildRoad() == RoadBuildError.OK)
+                 if (road != null && road.CanBuildRoad() == RoadBuildError.OK)
                  {
                      mapController.BuildRoad(roadID);
                      return true;

@@ -9,5 +9,6 @@ namespace CorePlugin
     {
         UpgradeKind GetSourceBuildingUpgrade(SourceBuildingKind kind);
         ISourceAll GetSource();
+        String GetName();
     }
 }
