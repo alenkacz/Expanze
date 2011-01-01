@@ -16,23 +16,23 @@ namespace Expanze
         public static String[] hexaSrcPath = new String[] { "Models/yellowhex", "Models/brownhex", "Models/greyhex", "Models/greenhex", "Models/redhex", "Models/orangehex", "Models/bluehex" };
 
         /// resources which get player on start
-        public static SourceAll startResources = new SourceAll(1000);
+        public static SourceAll startResources = new SourceAll(100);
 
         /// costs of infrastructure
-        public static SourceAll costTown = new SourceAll(60, 60, 50, 50, 30);
+        public static SourceAll costTown = new SourceAll(60, 30, 60, 60, 30);
         public static SourceAll costRoad = new SourceAll(0, 40, 0, 0, 50);
         public static SourceAll costMine = new SourceAll(0, 50, 0, 50, 0);
         public static SourceAll costSaw = new SourceAll(0, 0, 0, 50, 50);
         public static SourceAll costMill = new SourceAll(50, 50, 0, 0, 0);
         public static SourceAll costStephard = new SourceAll(0, 0, 50, 0, 50);
         public static SourceAll costQuarry = new SourceAll(50, 0, 50, 0, 0);
-        public static SourceAll costFort = new SourceAll(80, 80, 0, 0, 100);
-        public static SourceAll costMarket = new SourceAll(0, 0, 20, 100, 0);
-        public static SourceAll costMonastery = new SourceAll(0, 50, 80, 0, 0);
+        public static SourceAll costFort = new SourceAll(50, 0, 50, 50, 0);
+        public static SourceAll costMarket = new SourceAll(0, 0, 30, 100, 0);
+        public static SourceAll costMonastery = new SourceAll(20, 50, 60, 0, 0);
         // costs of actions
         public static SourceAll costFortParade = new SourceAll(50, 50, 50, 50, 50);
         public static SourceAll costFortDestroyHexa = new SourceAll(0, 0, 80, 50, 80);
-        public static SourceAll costFortSources = new SourceAll(80, 50, 0, 50, 100);
+        public static SourceAll costFortSources = new SourceAll(80, 50, 20, 50, 80);
         public static SourceAll costFortCapture = new SourceAll(50, 50, 0, 50, 100);
         // costs of market upgrades
         public static SourceAll costMarketCorn1 = new SourceAll(0, 0, 90, 0, 0);
