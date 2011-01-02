@@ -101,13 +101,13 @@ namespace Expanze
         public String GetProgress()
         {
             if (hexaModel == null)
-                return "textur";
+                return Strings.MENU_GAME_LOADING_HUD;
             if (shapeModel == null)
-                return "hex";
+                return Strings.MENU_GAME_LOADING_HEXAS;
             if (buildingModel == null)
-                return "budov těžby";
+                return Strings.MENU_GAME_LOADING_BUILDINGS;
             else
-                return "speciálních budov";
+                return Strings.MENU_GAME_LOADING_SPECIAL_BUILDINGS;
         }
 
         public void LoadContent()

@@ -33,6 +33,12 @@ namespace Expanze
 
         public static string MENU_LOADING_LOADING = "Načítání obsahu";
 
+        public static string MENU_GAME_LOADING_TITLE = "Načítání";
+        public static string MENU_GAME_LOADING_HUD = "textur";
+        public static string MENU_GAME_LOADING_HEXAS = "hex";
+        public static string MENU_GAME_LOADING_BUILDINGS = "budov těžby";
+        public static string MENU_GAME_LOADING_SPECIAL_BUILDINGS = "speciálních budov";
+
         public static string MENU_OPTION_TITLE = "Nastavení";
         public static string MENU_OPTION_ACTIVATE_CHANGES = "Aktivovat změny";
         public static string MENU_OPTION_RESOLUTION = "Rozlišení";
@@ -51,8 +57,9 @@ namespace Expanze
         public static string GAME_SETTINGS_MAP_TYPE_NORMAL = "Normální";
         public static string GAME_SETTINGS_MAP_TYPE_LOWLAND = "Nížiny";
         public static string GAME_SETTINGS_MAP_TYPE_WASTELAND = "Pustina";
-        
-        
+
+        public static string GAME_ALERT_TITLE_GAME_STARTED = "Expanze začíná!";
+        public static string GAME_ALERT_DESCRIPTION_GAME_STARTED = "Rozestavění prvních měst je u konce, boj o území může začít.";
         public static string GAME_ALERT_TITLE_AI_EXCEPTION = "O jednoho míň";
         public static string GAME_ALERT_DESCRIPTION_AI_EXCEPTION = "vzdává hru a již dále nebude pokračovat v expanzi ostrova.";
 

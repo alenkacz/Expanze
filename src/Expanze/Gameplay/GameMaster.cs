@@ -354,6 +354,7 @@ namespace Expanze
         public void ChangeStateToStateGame()
         {
             state = EGameState.StateGame;
+            GameState.message.Show(Strings.GAME_ALERT_TITLE_GAME_STARTED, Strings.GAME_ALERT_DESCRIPTION_GAME_STARTED, GameResources.Inst().GetHudTexture(HUDTexture.IconRoad));
             foreach (Player player in players)
             {
                 player.AddSources(Settings.startResources, TransactionState.TransactionStart);
