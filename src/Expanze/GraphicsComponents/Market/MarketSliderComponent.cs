@@ -206,12 +206,12 @@ namespace Expanze
 
             if (fromType != HexaKind.Null)
             {
-                spriteBatch.DrawString(GameState.gameFont, fromConvertedCount.ToString(), new Vector2(spritePosition.X - 100, spritePosition.Y + Settings.scaleH(50)), Color.White);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), fromConvertedCount.ToString(), new Vector2(spritePosition.X - 100, spritePosition.Y + Settings.scaleH(50)), Color.White);
             }
 
             if (toType != HexaKind.Null)
             {
-                spriteBatch.DrawString(GameState.gameFont, toConvertedCount.ToString(), new Vector2(spritePosition.X + width + 50, spritePosition.Y + Settings.scaleH(50)), Color.White);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), toConvertedCount.ToString(), new Vector2(spritePosition.X + width + 50, spritePosition.Y + Settings.scaleH(50)), Color.White);
             }
 
             spriteBatch.End();

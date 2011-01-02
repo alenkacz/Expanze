@@ -68,13 +68,11 @@ namespace Expanze
             if (content == null)
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
 
-            GameState.playerNameFont = content.Load<SpriteFont>("playername");
-
-            startGameButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 150), (int)(Settings.maximumResolution.Y - 200), new Rectangle(), GameState.gameFont, Settings.scaleW(79), Settings.scaleH(66), "HUD/hotseat_hra_button");
+            startGameButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 150), (int)(Settings.maximumResolution.Y - 200), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(79), Settings.scaleH(66), "HUD/hotseat_hra_button");
             startGameButton.Actions += StartGameSelected;
             //guiComponents.Add(changeTurnButton);
 
-            ButtonComponent backButton = new ButtonComponent(ScreenManager.Game, 60, (int)(Settings.maximumResolution.Y - 200), new Rectangle(), GameState.gameFont, Settings.scaleW(79), Settings.scaleH(66), "HUD/hotseat_back");
+            ButtonComponent backButton = new ButtonComponent(ScreenManager.Game, 60, (int)(Settings.maximumResolution.Y - 200), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(79), Settings.scaleH(66), "HUD/hotseat_back");
             backButton.Actions += BackSelected;
             guiComponents.Add(backButton);
 
@@ -97,7 +95,7 @@ namespace Expanze
 
             foreach (Color c in Settings.playerColors)
             {
-                PlayerSettingRowComponent pSwitch = new PlayerSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameState.playerNameFont, 200, 200, c, Strings.MENU_HOT_SEAT_NAMES[counter]);
+                PlayerSettingRowComponent pSwitch = new PlayerSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameResources.Inst().GetFont(EFont.PlayerNameFont), 200, 200, c, Strings.MENU_HOT_SEAT_NAMES[counter]);
                 playersSettings.Add(pSwitch);
                 colorPosition.Y += playerSpace;
 
@@ -113,10 +111,10 @@ namespace Expanze
             //margin betweent sections
             colorPosition.Y += 80;
 
-            points = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameState.gameFont, 400, 200, Strings.MENU_HOT_SEAT_POINTS, new List<String>() { Settings.winPoints[0].ToString(), Settings.winPoints[1].ToString(), Settings.winPoints[2].ToString() });
-            mapType = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 50, GameState.gameFont, 400, 200, Strings.MENU_HOT_SEAT_MAP_TYPE, new List<String>() { Strings.GAME_SETTINGS_MAP_TYPE_LOWLAND, Strings.GAME_SETTINGS_MAP_TYPE_NORMAL, Strings.GAME_SETTINGS_MAP_TYPE_WASTELAND });
-            mapSize = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 100, GameState.gameFont, 400, 200, Strings.MENU_HOT_SEAT_MAP_SIZE, new List<String>() { Strings.GAME_SETTINGS_MAP_SIZE_SMALL, Strings.GAME_SETTINGS_MAP_SIZE_MEDIUM, Strings.GAME_SETTINGS_MAP_SIZE_BIG });
-            wealth = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 150, GameState.gameFont, 400, 200, Strings.MENU_HOT_SEAT_MAP_WEALTH, new List<String>() { Strings.GAME_SETTINGS_MAP_WEALTH_LOW, Strings.GAME_SETTINGS_MAP_WEALTH_MEDIUM, Strings.GAME_SETTINGS_MAP_WEALTH_HIGH });
+            points = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.MENU_HOT_SEAT_POINTS, new List<String>() { Settings.winPoints[0].ToString(), Settings.winPoints[1].ToString(), Settings.winPoints[2].ToString() });
+            mapType = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 50, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.MENU_HOT_SEAT_MAP_TYPE, new List<String>() { Strings.GAME_SETTINGS_MAP_TYPE_LOWLAND, Strings.GAME_SETTINGS_MAP_TYPE_NORMAL, Strings.GAME_SETTINGS_MAP_TYPE_WASTELAND });
+            mapSize = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 100, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.MENU_HOT_SEAT_MAP_SIZE, new List<String>() { Strings.GAME_SETTINGS_MAP_SIZE_SMALL, Strings.GAME_SETTINGS_MAP_SIZE_MEDIUM, Strings.GAME_SETTINGS_MAP_SIZE_BIG });
+            wealth = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 150, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.MENU_HOT_SEAT_MAP_WEALTH, new List<String>() { Strings.GAME_SETTINGS_MAP_WEALTH_LOW, Strings.GAME_SETTINGS_MAP_WEALTH_MEDIUM, Strings.GAME_SETTINGS_MAP_WEALTH_HIGH });
 
             guiComponents.Add(points);
             guiComponents.Add(mapType);

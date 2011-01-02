@@ -49,6 +49,17 @@ namespace Expanze
         CountModel
     }
 
+    public enum EFont
+    {
+        GameFont,
+        PlayerNameFont,
+        HudMaterialsFont,
+        MaterialsNewFont,
+        MedievalSmall,
+        MedievalMedium,
+        MedievalBig
+    }
+
     class GameResources
     {
         private static GameResources instance = null;
@@ -69,7 +80,8 @@ namespace Expanze
         Model[] stoneCoverModel;
         Model[] stoneQuarryModel;
         Texture2D[] hud;
-
+        private const int N_FONT = 7;
+        SpriteFont[] font;
 
         public static GameResources Inst()
         {
@@ -88,6 +100,13 @@ namespace Expanze
         public Model GetHexaModel(HexaKind type)
         {
             return hexaModel[(int)type];
+        }
+
+        public SpriteFont GetFont(EFont fontName)
+        {
+            if (font == null)
+                LoadFonts();
+            return font[(int)fontName];
         }
 
         public Texture2D GetHudTexture(HUDTexture id) { return hud[(int) id]; }
@@ -112,8 +131,11 @@ namespace Expanze
                 return Strings.MENU_GAME_LOADING_HEXAS;
             if (buildingModel == null)
                 return Strings.MENU_GAME_LOADING_BUILDINGS;
-            else
+            else if (townModel == null)
                 return Strings.MENU_GAME_LOADING_SPECIAL_BUILDINGS;
+            else
+                return Strings.MENU_GAME_LOADING_MAP;
+
         }
 
         public void LoadContent()
@@ -254,6 +276,20 @@ namespace Expanze
 
             townModel = content.Load<Model>("Models/town");
             roadModel = content.Load<Model>("Models/road");
+
+            LoadFonts();
+        }
+
+        private void LoadFonts()
+        {
+            font = new SpriteFont[N_FONT];
+            font[(int)EFont.GameFont] = content.Load<SpriteFont>("gamefont");
+            font[(int)EFont.HudMaterialsFont] = content.Load<SpriteFont>("hudMaterialsFont");
+            font[(int)EFont.MaterialsNewFont] = content.Load<SpriteFont>("materialsNewFont");
+            font[(int)EFont.MedievalBig] = content.Load<SpriteFont>("Fonts/medievalBig");
+            font[(int)EFont.MedievalSmall] = content.Load<SpriteFont>("Fonts/medievalSmall");
+            font[(int)EFont.MedievalMedium] = content.Load<SpriteFont>("Fonts/medievalMedium");
+            font[(int)EFont.PlayerNameFont] = content.Load<SpriteFont>("playername");
         }
     }
 }

@@ -160,9 +160,9 @@ namespace Expanze
                 else
                     spriteBatch.Draw(no, noPos, Color.White);
 
-                TextWrapping.DrawStringCentered(messageActive.getTitle(), GameState.medievalBig, Color.LightBlue, bgPos.X, bgPos.Y + 10, background.Width);
+                TextWrapping.DrawStringCentered(messageActive.getTitle(), GameResources.Inst().GetFont(EFont.MedievalBig), Color.LightBlue, bgPos.X, bgPos.Y + 10, background.Width);
                 TextWrapping.DrawStringIntoRectangle(messageActive.getDescription(),
-                    GameState.medievalSmall, Color.LightSteelBlue, bgPos.X + 20, bgPos.Y + 55, background.Width - 140);
+                    GameResources.Inst().GetFont(EFont.MedievalSmall), Color.LightSteelBlue, bgPos.X + 20, bgPos.Y + 55, background.Width - 140);
 
                 if(messageActive.getIcon() != null)
                     spriteBatch.Draw(messageActive.getIcon(), new Vector2(bgPos.X + background.Width - messageActive.getIcon().Width - 20, bgPos.Y + 30), color);

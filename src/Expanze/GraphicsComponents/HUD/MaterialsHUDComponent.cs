@@ -73,11 +73,11 @@ namespace Expanze
                 return;
             }
 
-            spriteBatch.DrawString(GameState.hudMaterialsFont, act.getCorn().ToString(), new Vector2(this.spritePosition.X + start, this.spritePosition.Y + 100), Color.White);
-            spriteBatch.DrawString(GameState.hudMaterialsFont, act.getMeat().ToString(), new Vector2(this.spritePosition.X + start + space, this.spritePosition.Y + 100), Color.White);
-            spriteBatch.DrawString(GameState.hudMaterialsFont, act.getStone().ToString(), new Vector2(this.spritePosition.X + start + 2 * space, this.spritePosition.Y + 100), Color.White);
-            spriteBatch.DrawString(GameState.hudMaterialsFont, act.getWood().ToString(), new Vector2(this.spritePosition.X + start + 3 * space, this.spritePosition.Y + 100), Color.White);
-            spriteBatch.DrawString(GameState.hudMaterialsFont, act.getOre().ToString(), new Vector2(this.spritePosition.X + start + 4 * space, this.spritePosition.Y + 100), Color.White);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), act.getCorn().ToString(), new Vector2(this.spritePosition.X + start, this.spritePosition.Y + 100), Color.White);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), act.getMeat().ToString(), new Vector2(this.spritePosition.X + start + space, this.spritePosition.Y + 100), Color.White);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), act.getStone().ToString(), new Vector2(this.spritePosition.X + start + 2 * space, this.spritePosition.Y + 100), Color.White);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), act.getWood().ToString(), new Vector2(this.spritePosition.X + start + 3 * space, this.spritePosition.Y + 100), Color.White);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), act.getOre().ToString(), new Vector2(this.spritePosition.X + start + 4 * space, this.spritePosition.Y + 100), Color.White);
 
             //spriteBatch.DrawString(GameState.hudMaterialsFont, changeMaterials.ToString(), new Vector2(200, 200), Color.White);
 
@@ -87,27 +87,27 @@ namespace Expanze
 
 
                 if(sc.corn != 0) {
-                    spriteBatch.DrawString(GameState.materialsNewFont, ((sc.corn > 0) ? "+" : "") + sc.corn.ToString(), new Vector2(this.spritePosition.X + start, this.spritePosition.Y + 120), (sc.corn > 0) ? Color.Green : Color.Red);
+                    spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), ((sc.corn > 0) ? "+" : "") + sc.corn.ToString(), new Vector2(this.spritePosition.X + start, this.spritePosition.Y + 120), (sc.corn > 0) ? Color.Green : Color.Red);
                 }
 
                 if (sc.meat != 0)
                 {
-                    spriteBatch.DrawString(GameState.materialsNewFont, ((sc.meat > 0) ? "+" : "") + sc.meat.ToString(), new Vector2(this.spritePosition.X + start + space, this.spritePosition.Y + 120), (sc.meat > 0) ? Color.Green : Color.Red);
+                    spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), ((sc.meat > 0) ? "+" : "") + sc.meat.ToString(), new Vector2(this.spritePosition.X + start + space, this.spritePosition.Y + 120), (sc.meat > 0) ? Color.Green : Color.Red);
                 }
 
                 if (sc.ore != 0)
                 {
-                    spriteBatch.DrawString(GameState.materialsNewFont, ((sc.ore > 0) ? "+" : "") + sc.ore.ToString(), new Vector2(this.spritePosition.X + start + 4 * space, this.spritePosition.Y + 120), (sc.ore > 0) ? Color.Green : Color.Red);
+                    spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), ((sc.ore > 0) ? "+" : "") + sc.ore.ToString(), new Vector2(this.spritePosition.X + start + 4 * space, this.spritePosition.Y + 120), (sc.ore > 0) ? Color.Green : Color.Red);
                 }
 
                 if (sc.wood != 0)
                 {
-                    spriteBatch.DrawString(GameState.materialsNewFont, ((sc.wood > 0) ? "+" : "") + sc.wood.ToString(), new Vector2(this.spritePosition.X + start + 3 * space, this.spritePosition.Y + 120), (sc.wood > 0) ? Color.Green : Color.Red);
+                    spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), ((sc.wood > 0) ? "+" : "") + sc.wood.ToString(), new Vector2(this.spritePosition.X + start + 3 * space, this.spritePosition.Y + 120), (sc.wood > 0) ? Color.Green : Color.Red);
                 }
 
                 if (sc.stone != 0)
                 {
-                    spriteBatch.DrawString(GameState.materialsNewFont, ((sc.stone > 0) ? "+" : "") + sc.stone.ToString(), new Vector2(this.spritePosition.X + start + 2 * space, this.spritePosition.Y + 120), (sc.stone > 0) ? Color.Green : Color.Red);
+                    spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), ((sc.stone > 0) ? "+" : "") + sc.stone.ToString(), new Vector2(this.spritePosition.X + start + 2 * space, this.spritePosition.Y + 120), (sc.stone > 0) ? Color.Green : Color.Red);
                 }
             }
 

@@ -43,7 +43,7 @@ namespace Expanze
         #region Initialization
         private MarketComponent()
 
-            : base(Settings.Game, 200, (int)Settings.maximumResolution.Y-600, GameState.gameFont, Settings.scaleW(658), Settings.scaleH(446), "market-bg")
+            : base(Settings.Game, 200, (int)Settings.maximumResolution.Y-600, GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(658), Settings.scaleH(446), "market-bg")
         {
             this.range = new Rectangle(200, (int)Settings.maximumResolution.Y - 600, 658, 446);
 
@@ -80,24 +80,24 @@ namespace Expanze
 
             fillMarketKindTextures();
 
-            ButtonComponent change_button = new ButtonComponent(Settings.Game, range.Left + 180, (int)(range.Bottom-80), new Rectangle(), GameState.gameFont, Settings.scaleW(104), Settings.scaleH(45), "HUD/OKPromt");
+            ButtonComponent change_button = new ButtonComponent(Settings.Game, range.Left + 180, (int)(range.Bottom-80), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(104), Settings.scaleH(45), "HUD/OKPromt");
             change_button.Actions += ChangeButtonAction;
             this.content.Add(change_button);
 
-            ButtonComponent exit_button = new ButtonComponent(Settings.Game, range.Left + 400, (int)(range.Bottom - 80), new Rectangle(), GameState.gameFont, Settings.scaleW(104), Settings.scaleH(46), "HUD/NOPromt");
+            ButtonComponent exit_button = new ButtonComponent(Settings.Game, range.Left + 400, (int)(range.Bottom - 80), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(104), Settings.scaleH(46), "HUD/NOPromt");
             exit_button.Actions += CloseButtonAction;
             this.content.Add(exit_button);
 
-            GuiComponent title = new GuiComponent(Settings.Game, range.Left + 240, (int)(range.Top + 20), GameState.gameFont, Settings.scaleW(217), Settings.scaleH(43), "trziste_nadpis");
+            GuiComponent title = new GuiComponent(Settings.Game, range.Left + 240, (int)(range.Top + 20), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(217), Settings.scaleH(43), "trziste_nadpis");
             this.content.Add(title);
 
-            GuiComponent firstRow = new GuiComponent(Settings.Game, range.Left + 3*w_space, (int)(range.Top + topMargin + space + 10), GameState.gameFont, Settings.scaleW(154), Settings.scaleH(22), "co_vymenit");
+            GuiComponent firstRow = new GuiComponent(Settings.Game, range.Left + 3*w_space, (int)(range.Top + topMargin + space + 10), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(154), Settings.scaleH(22), "co_vymenit");
             this.content.Add(firstRow);
 
-            GuiComponent secondRow = new GuiComponent(Settings.Game, range.Left + 3 * w_space, (int)(range.Top + topMargin + buttonSize.Y + 2 * space + 10), GameState.gameFont, Settings.scaleW(77), Settings.scaleH(14), "za_co_vymenit");
+            GuiComponent secondRow = new GuiComponent(Settings.Game, range.Left + 3 * w_space, (int)(range.Top + topMargin + buttonSize.Y + 2 * space + 10), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(77), Settings.scaleH(14), "za_co_vymenit");
             this.content.Add(secondRow);
 
-            marketSlider = new MarketSliderComponent(Settings.Game, range.Left + 130, (int)(range.Top + topMargin + buttonSize.Y + 4 * space + 10), GameState.gameFont,392,16,"slider_market");
+            marketSlider = new MarketSliderComponent(Settings.Game, range.Left + 130, (int)(range.Top + topMargin + buttonSize.Y + 4 * space + 10), GameResources.Inst().GetFont(EFont.MedievalBig),392,16,"slider_market");
             //this.content.Add(marketSlider);
 
             foreach (GuiComponent g in content)
@@ -125,19 +125,19 @@ namespace Expanze
         protected void createFirstRow()
         {
             //top row
-            ButtonComponent corn_button = new ButtonComponent(Settings.Game, leftMargin + range.Left + 3 * w_space, (int)(range.Top + topMargin + space), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "corn_market", "corn_market_nonactive", HexaKind.Cornfield);
+            ButtonComponent corn_button = new ButtonComponent(Settings.Game, leftMargin + range.Left + 3 * w_space, (int)(range.Top + topMargin + space), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "corn_market", "corn_market_nonactive", HexaKind.Cornfield);
             corn_button.Actions += MaterialButtonAction;
             this.content.Add(corn_button);
-            ButtonComponent brick_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + buttonSize.X + 4 * w_space), (int)(range.Top + space + topMargin), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "stone_market", "stone_market_nonactive", HexaKind.Stone);
+            ButtonComponent brick_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + buttonSize.X + 4 * w_space), (int)(range.Top + space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "stone_market", "stone_market_nonactive", HexaKind.Stone);
             brick_button.Actions += MaterialButtonAction;
             this.content.Add(brick_button);
-            ButtonComponent wood_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + 2 * buttonSize.X + 5 * w_space), (int)(range.Top + space + topMargin), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "wood_market", "wood_market_nonactive", HexaKind.Forest);
+            ButtonComponent wood_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + 2 * buttonSize.X + 5 * w_space), (int)(range.Top + space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "wood_market", "wood_market_nonactive", HexaKind.Forest);
             wood_button.Actions += MaterialButtonAction;
             this.content.Add(wood_button);
-            ButtonComponent stone_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + 3 * buttonSize.X + 6 * w_space), (int)(range.Top + space + topMargin), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "ore_market", "ore_market_nonactive", HexaKind.Mountains);
+            ButtonComponent stone_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + 3 * buttonSize.X + 6 * w_space), (int)(range.Top + space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "ore_market", "ore_market_nonactive", HexaKind.Mountains);
             stone_button.Actions += MaterialButtonAction;
             this.content.Add(stone_button);
-            ButtonComponent sheep_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + 4 * buttonSize.X + 7 * w_space), (int)(range.Top + space + topMargin), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "meat_market", "meat_market_nonactive", HexaKind.Pasture);
+            ButtonComponent sheep_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + 4 * buttonSize.X + 7 * w_space), (int)(range.Top + space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "meat_market", "meat_market_nonactive", HexaKind.Pasture);
             sheep_button.Actions += MaterialButtonAction;
             this.content.Add(sheep_button);
 
@@ -154,19 +154,19 @@ namespace Expanze
         protected void createSecondRow()
         {
             //bottom row
-            ButtonComponent corn_button = new ButtonComponent(Settings.Game, leftMargin + range.Left + 3*w_space, (int)(range.Top + buttonSize.Y + 2 * space + topMargin), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "corn_market", HexaKind.Cornfield);
+            ButtonComponent corn_button = new ButtonComponent(Settings.Game, leftMargin + range.Left + 3*w_space, (int)(range.Top + buttonSize.Y + 2 * space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "corn_market", HexaKind.Cornfield);
             corn_button.Actions += MaterialButtonAction;
             this.content.Add(corn_button);
-            ButtonComponent brick_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + buttonSize.X + 4 * w_space), (int)(range.Top + buttonSize.Y + 2 * space + topMargin), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "stone_market", HexaKind.Stone);
+            ButtonComponent brick_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + buttonSize.X + 4 * w_space), (int)(range.Top + buttonSize.Y + 2 * space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "stone_market", HexaKind.Stone);
             brick_button.Actions += MaterialButtonAction;
             this.content.Add(brick_button);
-            ButtonComponent wood_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + 2 * buttonSize.X + 5 * w_space), (int)(range.Top + buttonSize.Y + 2 * space + topMargin), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "wood_market", HexaKind.Forest);
+            ButtonComponent wood_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + 2 * buttonSize.X + 5 * w_space), (int)(range.Top + buttonSize.Y + 2 * space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "wood_market", HexaKind.Forest);
             wood_button.Actions += MaterialButtonAction;
             this.content.Add(wood_button);
-            ButtonComponent stone_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + 3 * buttonSize.X + 6 * w_space), (int)(range.Top + buttonSize.Y + 2 * space + topMargin), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "ore_market", HexaKind.Mountains);
+            ButtonComponent stone_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + 3 * buttonSize.X + 6 * w_space), (int)(range.Top + buttonSize.Y + 2 * space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "ore_market", HexaKind.Mountains);
             stone_button.Actions += MaterialButtonAction;
             this.content.Add(stone_button);
-            ButtonComponent sheep_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + 4 * buttonSize.X + 7 * w_space), (int)(range.Top + buttonSize.Y + 2 * space + topMargin), new Rectangle(), GameState.gameFont, Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "meat_market", HexaKind.Pasture);
+            ButtonComponent sheep_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + 4 * buttonSize.X + 7 * w_space), (int)(range.Top + buttonSize.Y + 2 * space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "meat_market", HexaKind.Pasture);
             sheep_button.Actions += MaterialButtonAction;
             this.content.Add(sheep_button);
 
@@ -342,14 +342,14 @@ namespace Expanze
             {
                 spriteBatch.Draw(marketKindsTextures[toSelectKind],toIconPosition,Color.White);
                 //int count = GameMaster.getInstance().getActivePlayer().getMaterialNumber(toSelectKind);
-                //spriteBatch.DrawString(GameState.gameFont, count.ToString(), new Vector2(toIconPosition.X, toIconPosition.Y+Settings.scaleH(90)), Color.White);
+                //spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), count.ToString(), new Vector2(toIconPosition.X, toIconPosition.Y+Settings.scaleH(90)), Color.White);
             }
 
             if (fromSelectKind != HexaKind.Null)
             {
                 spriteBatch.Draw(marketKindsTextures[fromSelectKind], fromIconPosition, Color.White);
                 //int count = GameMaster.getInstance().getActivePlayer().getMaterialNumber(fromSelectKind);
-                //spriteBatch.DrawString(GameState.gameFont, count.ToString(), new Vector2(fromIconPosition.X, fromIconPosition.Y + Settings.scaleH(90)), Color.White);
+                //spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), count.ToString(), new Vector2(fromIconPosition.X, fromIconPosition.Y + Settings.scaleH(90)), Color.White);
             }
         }
 

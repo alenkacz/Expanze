@@ -45,9 +45,9 @@ namespace Expanze
         {
             base.LoadContent();
 
-            radio1 = new RadioButtonComponent(Settings.Game, (int)(spritePosition.X + 400), (int)spritePosition.Y + 10, GameState.playerNameFont, Settings.scaleW(27), Settings.scaleH(28));
-            radio2 = new RadioButtonComponent(Settings.Game, (int)(spritePosition.X + 650), (int)spritePosition.Y + 10, GameState.playerNameFont, Settings.scaleW(27), Settings.scaleH(28));
-            radio3 = new RadioButtonComponent(Settings.Game, (int)(spritePosition.X + 900), (int)spritePosition.Y + 10, GameState.playerNameFont, Settings.scaleW(27), Settings.scaleH(28));
+            radio1 = new RadioButtonComponent(Settings.Game, (int)(spritePosition.X + 400), (int)spritePosition.Y + 10, GameResources.Inst().GetFont(EFont.PlayerNameFont), Settings.scaleW(27), Settings.scaleH(28));
+            radio2 = new RadioButtonComponent(Settings.Game, (int)(spritePosition.X + 650), (int)spritePosition.Y + 10, GameResources.Inst().GetFont(EFont.PlayerNameFont), Settings.scaleW(27), Settings.scaleH(28));
+            radio3 = new RadioButtonComponent(Settings.Game, (int)(spritePosition.X + 900), (int)spritePosition.Y + 10, GameResources.Inst().GetFont(EFont.PlayerNameFont), Settings.scaleW(27), Settings.scaleH(28));
 
             radio2.clicked(); //first one will be selected by default
 
@@ -127,7 +127,7 @@ namespace Expanze
 
             spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,null,null,null,null,Settings.spriteScale);
 
-            spriteBatch.DrawString(GameState.playerNameFont, title, new Vector2(spritePosition.X, spritePosition.Y), Color.White);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.PlayerNameFont), title, new Vector2(spritePosition.X, spritePosition.Y), Color.White);
 
             Vector2 position = new Vector2(spritePosition.X + 200,spritePosition.Y);
 
@@ -139,8 +139,8 @@ namespace Expanze
             {
                 // nessesary spacing
                 position.X += 250;
-                
-                spriteBatch.DrawString(GameState.playerNameFont, s, position, Color.White);
+
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.PlayerNameFont), s, position, Color.White);
             }
 
             spriteBatch.End();

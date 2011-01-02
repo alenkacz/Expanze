@@ -37,8 +37,6 @@ namespace Expanze
 
         //dummy texture for displaying players color in top hud
         Texture2D playerColorTexture;
-
-        ContentManager content;
         
         List<GameComponent> gameComponents = new List<GameComponent>();
         List<GuiComponent> guiComponents = new List<GuiComponent>();
@@ -70,17 +68,6 @@ namespace Expanze
 
         public void LoadAllThread()
         {
-            if (content == null)
-                content = new ContentManager(ScreenManager.Game.Services, "Content");
-
-            GameState.gameFont = content.Load<SpriteFont>("gamefont");
-            GameState.playerNameFont = content.Load<SpriteFont>("playername");
-            GameState.hudMaterialsFont = content.Load<SpriteFont>("hudMaterialsFont");
-            GameState.materialsNewFont = content.Load<SpriteFont>("materialsNewFont");
-            GameState.medievalSmall = content.Load<SpriteFont>("Fonts/medievalSmall");
-            GameState.medievalMedium = content.Load<SpriteFont>("Fonts/medievalMedium");
-            GameState.medievalBig = content.Load<SpriteFont>("Fonts/medievalBig");
-
             //playerColorTexture = new Texture2D(ScreenManager.GraphicsDevice, (int)Settings.playerColorSize.X, (int)Settings.playerColorSize.Y, false, SurfaceFormat.Color);
             playerColorTexture = ScreenManager.Game.Content.Load<Texture2D>("pcolor");
 
@@ -90,7 +77,6 @@ namespace Expanze
             //renderTarget = new RenderTarget2D(ScreenManager.GraphicsDevice, 1024, 1024, false, ScreenManager.GraphicsDevice.DisplayMode.Format, pp.DepthStencilFormat);
 
             GameState.game = ScreenManager.Game;
-            GameResources.Inst().LoadContent();
 
             map = new Map(ScreenManager.Game);
             gameComponents.Add(map);
@@ -99,18 +85,18 @@ namespace Expanze
             //gamelogic
             gMaster.StartGame(isAI, map);
 
-            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), new Rectangle(Settings.scaleW((int)(Settings.maximumResolution.X - 80)), Settings.scaleH((int)(Settings.maximumResolution.Y - 80)), Settings.scaleW(60), Settings.scaleH(60)), GameState.gameFont, Settings.scaleW(147), Settings.scaleH(141), "nextTurn");
+            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), new Rectangle(Settings.scaleW((int)(Settings.maximumResolution.X - 80)), Settings.scaleH((int)(Settings.maximumResolution.Y - 80)), Settings.scaleW(60), Settings.scaleH(60)), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(147), Settings.scaleH(141), "nextTurn");
             changeTurnButton.Actions += ChangeTurnButtonAction;
             guiComponents.Add(changeTurnButton);
-            ButtonComponent menuHUDButton = new ButtonComponent(ScreenManager.Game, Settings.scaleW(20), Settings.scaleH(20), new Rectangle(Settings.scaleW(20), Settings.scaleH(20), Settings.scaleW(80), Settings.scaleH(80)), GameState.gameFont, Settings.scaleW(222), Settings.scaleH(225), "menu_button");
+            ButtonComponent menuHUDButton = new ButtonComponent(ScreenManager.Game, Settings.scaleW(20), Settings.scaleH(20), new Rectangle(Settings.scaleW(20), Settings.scaleH(20), Settings.scaleW(80), Settings.scaleH(80)), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(222), Settings.scaleH(225), "menu_button");
             menuHUDButton.Actions += MenuButtonAction;
             guiComponents.Add(menuHUDButton);
-            MaterialsHUDComponent materialsHUDComp = new MaterialsHUDComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width / 4, ScreenManager.Game.GraphicsDevice.Viewport.Height - 78, GameState.gameFont, 757, 148, "suroviny_hud");
+            MaterialsHUDComponent materialsHUDComp = new MaterialsHUDComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width / 4, ScreenManager.Game.GraphicsDevice.Viewport.Height - 78, GameResources.Inst().GetFont(EFont.MedievalBig), 757, 148, "suroviny_hud");
             guiComponents.Add(materialsHUDComp);
             TopPlayerScoreComponent topPlayer = new TopPlayerScoreComponent();
             guiComponents.Add(topPlayer);
             MarketComponent marketHud = MarketComponent.getInstance();
-            ButtonComponent newMsg = new ButtonComponent(ScreenManager.Game, Settings.scaleW(30), (int)(Settings.maximumResolution.Y - 176), new Rectangle(Settings.scaleW(30), Settings.scaleH((int)(Settings.maximumResolution.Y - 176)), Settings.scaleW(70), Settings.scaleH(70)), GameState.gameFont, Settings.scaleW(151), Settings.scaleH(156), "newmessage");
+            ButtonComponent newMsg = new ButtonComponent(ScreenManager.Game, Settings.scaleW(30), (int)(Settings.maximumResolution.Y - 176), new Rectangle(Settings.scaleW(30), Settings.scaleH((int)(Settings.maximumResolution.Y - 176)), Settings.scaleW(70), Settings.scaleH(70)), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(151), Settings.scaleH(156), "newmessage");
             newMsg.Actions += MarketButtonAction;
             guiComponents.Add(newMsg);
 
@@ -160,7 +146,6 @@ namespace Expanze
         /// </summary>
         public override void UnloadContent()
         {
-            content.Unload();
             foreach (GameComponent gameComponent in gameComponents)
             {
                 gameComponent.UnloadContent();

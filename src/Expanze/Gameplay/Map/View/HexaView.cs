@@ -162,7 +162,7 @@ namespace Expanze
         private void DrawHexaNumber(SpriteBatch spriteBatch, Vector2 pos)
         {
             if (model.GetCurrentSource() != 0) // desert
-                spriteBatch.DrawString(GameState.hudMaterialsFont, model.GetCurrentSource() + "", new Vector2(pos.X + 1, pos.Y + 1), Color.Black);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), model.GetCurrentSource() + "", new Vector2(pos.X + 1, pos.Y + 1), Color.Black);
 
             Color numberColor;
             if (pickVars.pickActive)
@@ -172,7 +172,7 @@ namespace Expanze
 
             if (model.GetCurrentSource() != 0) // desert
             {
-                spriteBatch.DrawString(GameState.hudMaterialsFont, model.GetCurrentSource() + "", pos, numberColor);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), model.GetCurrentSource() + "", pos, numberColor);
             }
         }
 
@@ -194,7 +194,7 @@ namespace Expanze
                 posHexaIcon = point2D;
                 SpriteBatch spriteBatch = GameState.spriteBatch;
 
-                Vector2 stringCenter = GameState.hudMaterialsFont.MeasureString(model.GetCurrentSource() + "") * 0.5f;
+                Vector2 stringCenter = GameResources.Inst().GetFont(EFont.MedievalMedium).MeasureString(model.GetCurrentSource() + "") * 0.5f;
 
                 // now subtract the string center from the text position to find correct position 
                 point2D.X = (int)(point2D.X - stringCenter.X);

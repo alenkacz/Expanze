@@ -189,15 +189,15 @@ namespace Expanze
                 else
                     spriteBatch.Draw(no, noPos, Color.White);
 
-                float titleWidth = GameState.medievalBig.MeasureString(title).X;
-                spriteBatch.DrawString(GameState.medievalBig, title, new Vector2(bgPos.X + (background.Width - titleWidth) / 2, bgPos.Y + 20), Color.LightBlue);
+                float titleWidth = GameResources.Inst().GetFont(EFont.MedievalBig).MeasureString(title).X;
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), title, new Vector2(bgPos.X + (background.Width - titleWidth) / 2, bgPos.Y + 20), Color.LightBlue);
 
                 if(showIcons)
                     DrawIcons();
 
-                spriteBatch.DrawString(GameState.medievalMedium, itemList[activeItem].getTitle(), new Vector2(bgPos.X + 20, bgPos.Y + 160), Color.LightBlue);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), itemList[activeItem].getTitle(), new Vector2(bgPos.X + 20, bgPos.Y + 160), Color.LightBlue);
                 TextWrapping.DrawStringIntoRectangle(itemList[activeItem].getDescription(),
-                    GameState.medievalSmall, Color.LightSteelBlue, bgPos.X + 20, bgPos.Y + 195, background.Width - 40);
+                    GameResources.Inst().GetFont(EFont.MedievalSmall), Color.LightSteelBlue, bgPos.X + 20, bgPos.Y + 195, background.Width - 40);
 
                 String error = itemList[activeItem].TryExecute();
                 if (mod == Mod.Viewer)
@@ -205,9 +205,9 @@ namespace Expanze
                 if (error != null)
                 {
                     TextWrapping.DrawStringIntoRectangle(error,
-                     GameState.medievalSmall, Color.DarkSlateGray, bgPos.X + 22, bgPos.Y + 267, background.Width - 40);
+                     GameResources.Inst().GetFont(EFont.MedievalSmall), Color.DarkSlateGray, bgPos.X + 22, bgPos.Y + 267, background.Width - 40);
                     TextWrapping.DrawStringIntoRectangle(error,
-                     GameState.medievalSmall, Color.Red, bgPos.X + 20, bgPos.Y + 265, background.Width - 40);
+                     GameResources.Inst().GetFont(EFont.MedievalSmall), Color.Red, bgPos.X + 20, bgPos.Y + 265, background.Width - 40);
                 }
                 if (!drawingPickableAreas)
                     DrawSources();
@@ -267,7 +267,7 @@ namespace Expanze
                     itemList[activeItem].getShowZeroSources())
                 {
                     spriteBatch.Draw(textureSource[loop1], new Vector2(startX, startY), Color.White);
-                    spriteBatch.DrawString(GameState.materialsNewFont, itemList[activeItem].getCost()[loop1].ToString(), new Vector2(startX + (textureSource[loop1].Width >> 1) + 5, startY + 45), (!itemList[activeItem].getIsSourceCost() || playerSource[loop1] >= itemList[activeItem].getCost()[loop1]) ? Color.White : Color.DarkRed);         
+                    spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), itemList[activeItem].getCost()[loop1].ToString(), new Vector2(startX + (textureSource[loop1].Width >> 1) + 5, startY + 45), (!itemList[activeItem].getIsSourceCost() || playerSource[loop1] >= itemList[activeItem].getCost()[loop1]) ? Color.White : Color.DarkRed);         
                     startX += textureSource[loop1].Width + border;
                 }
             }

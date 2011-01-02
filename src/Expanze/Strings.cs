@@ -38,6 +38,7 @@ namespace Expanze
         public static string MENU_GAME_LOADING_HEXAS = "hex";
         public static string MENU_GAME_LOADING_BUILDINGS = "budov těžby";
         public static string MENU_GAME_LOADING_SPECIAL_BUILDINGS = "speciálních budov";
+        public static string MENU_GAME_LOADING_MAP = "mapy";
 
         public static string MENU_OPTION_TITLE = "Nastavení";
         public static string MENU_OPTION_ACTIVATE_CHANGES = "Aktivovat změny";
