@@ -60,8 +60,6 @@ namespace Expanze
         void HotseatMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
             ScreenManager.AddScreen(new HotSeatScreen(), e.PlayerIndex);
-
-
         }
 
         /// <summary>
@@ -73,7 +71,7 @@ namespace Expanze
             GameMaster.Inst().PrepareQuickGame();
 
             // now is used for AI
-            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
+            GameLoadScreen.Load(ScreenManager, true, e.PlayerIndex,
                                new GameplayScreen(false));
         }
 

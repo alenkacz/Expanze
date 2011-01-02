@@ -211,7 +211,7 @@ namespace Expanze
             saveScreenData();
 
             //ScreenManager.RemoveScreen(this);
-            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
+            GameLoadScreen.Load(ScreenManager, true, e.PlayerIndex,
                                new GameplayScreen(false));
             ScreenManager.RemoveScreen(this);
         }

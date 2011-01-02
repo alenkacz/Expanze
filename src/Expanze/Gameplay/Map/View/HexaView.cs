@@ -402,7 +402,7 @@ namespace Expanze
             if (kind == HexaKind.Water)
                 return;
 
-            Model m = GameResources.Inst().getShape(GameResources.SHAPE_CIRCLE);
+            Model m = GameResources.Inst().GetShape(GameResources.SHAPE_CIRCLE);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 

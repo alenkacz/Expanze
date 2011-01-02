@@ -101,7 +101,7 @@ namespace Expanze.Gameplay.Map
         {
             if (pickVars.pickActive || isBuildView)
             {
-                Model m = GameResources.Inst().getTownModel();
+                Model m = GameResources.Inst().GetTownModel();
                 Matrix[] transforms = new Matrix[m.Bones.Count];
                 m.CopyAbsoluteBoneTransformsTo(transforms);
 
@@ -167,7 +167,7 @@ namespace Expanze.Gameplay.Map
 
                 if (pickTownID == townID || (pickVars.pickActive && isBuildView))
                 {
-                    m = GameResources.Inst().getShape(GameResources.SHAPE_SPHERE);
+                    m = GameResources.Inst().GetShape(GameResources.SHAPE_SPHERE);
                     mWorld = Matrix.CreateScale(0.0001f) * Matrix.CreateTranslation(new Vector3(0.0f, 0.15f, 0.0f)) * world;
                     foreach (ModelMesh mesh in m.Meshes)
                     {
@@ -186,7 +186,7 @@ namespace Expanze.Gameplay.Map
 
         public void DrawPickableAreas()
         {
-            Model m = GameResources.Inst().getShape(GameResources.SHAPE_CIRCLE);
+            Model m = GameResources.Inst().GetShape(GameResources.SHAPE_CIRCLE);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 

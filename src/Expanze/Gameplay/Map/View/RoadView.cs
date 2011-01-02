@@ -83,7 +83,7 @@ namespace Expanze.Gameplay.Map.View
             GameMaster gm = GameMaster.Inst();
             if ((pickVars.pickActive && gm.GetState() == EGameState.StateGame) || isBuildView)
             {
-                Model m = GameResources.Inst().getRoadModel();
+                Model m = GameResources.Inst().GetRoadModel();
                 Matrix[] transforms = new Matrix[m.Bones.Count];
                 m.CopyAbsoluteBoneTransformsTo(transforms);
 
@@ -150,7 +150,7 @@ namespace Expanze.Gameplay.Map.View
 
         public void DrawPickableAreas()
         {
-            Model m = GameResources.Inst().getShape(GameResources.SHAPE_RECTANGLE);
+            Model m = GameResources.Inst().GetShape(GameResources.SHAPE_RECTANGLE);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 

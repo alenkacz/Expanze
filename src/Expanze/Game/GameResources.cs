@@ -47,7 +47,7 @@ namespace Expanze
     {
         private static GameResources instance = null;
         private ContentManager content;
-        private Game game;
+        public static Game game;
 
         public const int N_MODEL = 9;
         Model[] hexaModel;
@@ -77,7 +77,6 @@ namespace Expanze
 
         private GameResources()
         {
-            game = GameState.game;
         }
 
         public Model getHexaModel(HexaKind type)
@@ -91,12 +90,24 @@ namespace Expanze
         public Model getStoneCover(int i) { return stoneCoverModel[i]; }
         public Model getStoneSourceBuildingModel(int i) { return stoneQuarryModel[i]; }
         public Model getBuildingModel(BuildingModel id) { return buildingModel[(int) id]; }
-        public Model getTownModel() { return townModel; }
-        public Model getRoadModel() { return roadModel; }
+        public Model GetTownModel() { return townModel; }
+        public Model GetRoadModel() { return roadModel; }
 
-        public Model getShape(int shapeID)
+        public Model GetShape(int shapeID)
         {
             return shapeModel[shapeID];
+        }
+
+        public String GetProgress()
+        {
+            if (hexaModel == null)
+                return "textur";
+            if (shapeModel == null)
+                return "hex";
+            if (buildingModel == null)
+                return "budov těžby";
+            else
+                return "speciálních budov";
         }
 
         public void LoadContent()
@@ -188,21 +199,26 @@ namespace Expanze
             shapeModel[SHAPE_CIRCLE] = content.Load<Model>("Shapes/circle");
             shapeModel[SHAPE_SPHERE] = content.Load<Model>("Shapes/sphere");
 
-            buildingModel = new Model[(int) BuildingModel.CountModel];
-            buildingModel[(int) BuildingModel.PastureHouse] = content.Load<Model>("Models/pastureHouse");
-            buildingModel[(int) BuildingModel.Saw] = content.Load<Model>("Models/saw");
-            buildingModel[(int) BuildingModel.Mill] = content.Load<Model>("Models/millnew");
-            buildingModel[(int) BuildingModel.Fort] = content.Load<Model>("Models/fort");
-            buildingModel[(int) BuildingModel.Market] = content.Load<Model>("Models/market");
-            buildingModel[(int) BuildingModel.Monastery] = content.Load<Model>("Models/monastery");
-
+            stoneCoverModel = new Model[6];
+            stoneCoverModel[0] = content.Load<Model>("Models/krytka5");
+            stoneCoverModel[1] = content.Load<Model>("Models/krytka6");
+            stoneCoverModel[2] = content.Load<Model>("Models/krytka1");
+            stoneCoverModel[3] = content.Load<Model>("Models/krytka2");
+            stoneCoverModel[4] = content.Load<Model>("Models/krytka3");
+            stoneCoverModel[5] = content.Load<Model>("Models/krytka4");
+            stoneQuarryModel = new Model[6];
+            stoneQuarryModel[0] = content.Load<Model>("Models/lom_model5");
+            stoneQuarryModel[1] = content.Load<Model>("Models/lom_model6");
+            stoneQuarryModel[2] = content.Load<Model>("Models/lom_model1");
+            stoneQuarryModel[3] = content.Load<Model>("Models/lom_model2");
+            stoneQuarryModel[4] = content.Load<Model>("Models/lom_model3");
+            stoneQuarryModel[5] = content.Load<Model>("Models/lom_model4");
             mountainsCoverModel = new Model[5];
             mountainsCoverModel[0] = content.Load<Model>("Models/cover4");
             mountainsCoverModel[1] = content.Load<Model>("Models/cover5");
             mountainsCoverModel[2] = content.Load<Model>("Models/cover1");
             mountainsCoverModel[3] = content.Load<Model>("Models/cover2");
             mountainsCoverModel[4] = content.Load<Model>("Models/cover3");
-
             mountainsMineModel = new Model[6];
             mountainsMineModel[0] = content.Load<Model>("Models/mine5");
             mountainsMineModel[1] = content.Load<Model>("Models/mine6");
@@ -211,21 +227,13 @@ namespace Expanze
             mountainsMineModel[4] = content.Load<Model>("Models/mine3");
             mountainsMineModel[5] = content.Load<Model>("Models/mine4");
 
-            stoneCoverModel = new Model[6];
-            stoneCoverModel[0] = content.Load<Model>("Models/krytka5");
-            stoneCoverModel[1] = content.Load<Model>("Models/krytka6");
-            stoneCoverModel[2] = content.Load<Model>("Models/krytka1");
-            stoneCoverModel[3] = content.Load<Model>("Models/krytka2");
-            stoneCoverModel[4] = content.Load<Model>("Models/krytka3");
-            stoneCoverModel[5] = content.Load<Model>("Models/krytka4");
-
-            stoneQuarryModel = new Model[6];
-            stoneQuarryModel[0] = content.Load<Model>("Models/lom_model5");
-            stoneQuarryModel[1] = content.Load<Model>("Models/lom_model6");
-            stoneQuarryModel[2] = content.Load<Model>("Models/lom_model1");
-            stoneQuarryModel[3] = content.Load<Model>("Models/lom_model2");
-            stoneQuarryModel[4] = content.Load<Model>("Models/lom_model3");
-            stoneQuarryModel[5] = content.Load<Model>("Models/lom_model4");
+            buildingModel = new Model[(int)BuildingModel.CountModel];
+            buildingModel[(int)BuildingModel.PastureHouse] = content.Load<Model>("Models/pastureHouse");
+            buildingModel[(int)BuildingModel.Saw] = content.Load<Model>("Models/saw");
+            buildingModel[(int)BuildingModel.Mill] = content.Load<Model>("Models/millnew");
+            buildingModel[(int)BuildingModel.Fort] = content.Load<Model>("Models/fort");
+            buildingModel[(int)BuildingModel.Market] = content.Load<Model>("Models/market");
+            buildingModel[(int)BuildingModel.Monastery] = content.Load<Model>("Models/monastery");
 
             townModel = content.Load<Model>("Models/town");
             roadModel = content.Load<Model>("Models/road");
