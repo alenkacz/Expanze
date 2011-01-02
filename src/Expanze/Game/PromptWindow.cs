@@ -32,7 +32,6 @@ namespace Expanze
         private Vector2 noPos;
         private PickVariables noPick;
         private PickVariables yesPick;
-        private ContentManager content;
 
         Mod mod;
         bool showIcons;
@@ -66,12 +65,12 @@ namespace Expanze
             itemPick = new List<PickVariables>();
         }
 
-        public bool getIsActive()
+        public bool GetIsActive()
         {
             return active;
         }
 
-        public void setIsActive(bool active)
+        public void SetIsActive(bool active)
         {
             this.active = active;
         }
@@ -98,20 +97,17 @@ namespace Expanze
         {
             base.LoadContent();
 
-            if (content == null)
-                content = new ContentManager(GameState.game.Services, "Content");
-
-            background = content.Load<Texture2D>("HUD/WindowPromt");
-            no = content.Load<Texture2D>("HUD/NOPromt");
-            yes = content.Load<Texture2D>("HUD/OKPromt");
-            pickTextOK = content.Load<Texture2D>("HUD/PickPromt");
-            pickTextIcon = content.Load<Texture2D>("HUD/PickIcon");
+            background = GameResources.Inst().GetHudTexture(HUDTexture.BackgroundPromptWindow);
+            no = GameResources.Inst().GetHudTexture(HUDTexture.ButtonNo);
+            yes = GameResources.Inst().GetHudTexture(HUDTexture.ButtonYes);
+            pickTextOK = GameResources.Inst().GetHudTexture(HUDTexture.PickWindowPrompt);
+            pickTextIcon = GameResources.Inst().GetHudTexture(HUDTexture.PickWindowIcon);
             textureSource = new Texture2D[5];
-            textureSource[0] = content.Load<Texture2D>("HUD/scorn");
-            textureSource[1] = content.Load<Texture2D>("HUD/smeat");
-            textureSource[2] = content.Load<Texture2D>("HUD/sstone");
-            textureSource[3] = content.Load<Texture2D>("HUD/swood");
-            textureSource[4] = content.Load<Texture2D>("HUD/sore");
+            textureSource[0] = GameResources.Inst().GetHudTexture(HUDTexture.SmallCorn);
+            textureSource[1] = GameResources.Inst().GetHudTexture(HUDTexture.SmallMeat);
+            textureSource[2] = GameResources.Inst().GetHudTexture(HUDTexture.SmallStone);
+            textureSource[3] = GameResources.Inst().GetHudTexture(HUDTexture.SmallWood);
+            textureSource[4] = GameResources.Inst().GetHudTexture(HUDTexture.SmallOre);
 
             bgPos = new Vector2((Settings.maximumResolution.X - background.Width) / 2,
                                    (Settings.maximumResolution.Y - background.Height) / 2);

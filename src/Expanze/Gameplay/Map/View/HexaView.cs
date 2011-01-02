@@ -268,7 +268,7 @@ namespace Expanze
 
         public virtual void Draw(GameTime gameTime)
         {
-            Model m = GameResources.Inst().getHexaModel(kind);
+            Model m = GameResources.Inst().GetHexaModel(kind);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
             RasterizerState rasterizerState = new RasterizerState();
@@ -336,25 +336,25 @@ namespace Expanze
                         switch (kind)
                         {
                             case HexaKind.Cornfield :
-                                m = GameResources.Inst().getBuildingModel(BuildingModel.Mill);
+                                m = GameResources.Inst().GetBuildingModel(BuildingModel.Mill);
                                 break;
                             case HexaKind.Forest :
-                                m = GameResources.Inst().getBuildingModel(BuildingModel.Saw);
+                                m = GameResources.Inst().GetBuildingModel(BuildingModel.Saw);
                                 break;
                             default :
-                                m = GameResources.Inst().getBuildingModel(BuildingModel.PastureHouse);
+                                m = GameResources.Inst().GetBuildingModel(BuildingModel.PastureHouse);
                                 //roofID = 0;
                                 break;
                         }
                         break;
                     case BuildingKind.FortBuilding :
-                        m = GameResources.Inst().getBuildingModel(BuildingModel.Fort);
+                        m = GameResources.Inst().GetBuildingModel(BuildingModel.Fort);
                         break;
                     case BuildingKind.MarketBuilding:
-                        m = GameResources.Inst().getBuildingModel(BuildingModel.Market);
+                        m = GameResources.Inst().GetBuildingModel(BuildingModel.Market);
                         break;
                     case BuildingKind.MonasteryBuilding:
-                        m = GameResources.Inst().getBuildingModel(BuildingModel.Monastery);
+                        m = GameResources.Inst().GetBuildingModel(BuildingModel.Monastery);
                         break;
                     default :
                         m = null;

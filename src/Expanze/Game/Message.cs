@@ -24,7 +24,6 @@ namespace Expanze
         private Vector2 bgPos;
         private Vector2 noPos;
         private PickVariables noPick;
-        private ContentManager content;
 
         private MessageItem messageActive;  /// message on the screen
         private Queue<MessageItem> queue;
@@ -108,12 +107,9 @@ namespace Expanze
         {
             base.LoadContent();
 
-            if (content == null)
-                content = new ContentManager(GameState.game.Services, "Content");
-
-            background = content.Load<Texture2D>("HUD/messageBG");
-            no = content.Load<Texture2D>("HUD/NOPromt");
-            pickTexture = content.Load<Texture2D>("HUD/PickPromt");
+            background = GameResources.Inst().GetHudTexture(HUDTexture.BackgroundMessageWindow);
+            no = GameResources.Inst().GetHudTexture(HUDTexture.ButtonNo);
+            pickTexture = GameResources.Inst().GetHudTexture(HUDTexture.PickWindowPrompt);
             bgPos = new Vector2((Settings.maximumResolution.X - background.Width) / 2,
                                    (Settings.maximumResolution.Y - background.Height) / 2 - 50);
             int border = 12;

@@ -31,28 +31,28 @@ namespace Expanze.Gameplay.Map
                 switch(model.getTown((CorePlugin.TownPos)loop1).getBuildingKind(model.GetID()))
                 {
                     case BuildingKind.SourceBuilding :
-                        m[0] = gr.getStoneSourceBuildingModel(tempPos);
+                        m[0] = gr.GetStoneSourceBuildingModel(tempPos);
                         rotationMatrix = Matrix.Identity;
                         break;
                     case BuildingKind.NoBuilding:
-                        m[0] = gr.getStoneCover(tempPos);
+                        m[0] = gr.GetStoneCover(tempPos);
                         rotationMatrix = Matrix.Identity;
                         break;
                     case BuildingKind.FortBuilding:
-                        m[0] = gr.getStoneCover(tempPos);
-                        m[1] = gr.getBuildingModel(BuildingModel.Fort);
+                        m[0] = gr.GetStoneCover(tempPos);
+                        m[1] = gr.GetBuildingModel(BuildingModel.Fort);
                         rotationMatrix = (loop1 == 4) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * -(loop1 - 4));
                         rotationMatrix = Matrix.CreateScale(0.00028f) * rotationMatrix;
                         break;
                     case BuildingKind.MarketBuilding:
-                        m[0] = gr.getStoneCover(tempPos);
-                        m[1] = gr.getBuildingModel(BuildingModel.Market);
+                        m[0] = gr.GetStoneCover(tempPos);
+                        m[1] = gr.GetBuildingModel(BuildingModel.Market);
                         rotationMatrix = (loop1 == 4) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * -(loop1 - 4));
                         rotationMatrix = Matrix.CreateScale(0.00028f) * rotationMatrix;
                         break;
                     case BuildingKind.MonasteryBuilding:
-                        m[0] = gr.getStoneCover(tempPos);
-                        m[1] = gr.getBuildingModel(BuildingModel.Monastery);
+                        m[0] = gr.GetStoneCover(tempPos);
+                        m[1] = gr.GetBuildingModel(BuildingModel.Monastery);
                         rotationMatrix = (loop1 == 4) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * -(loop1 - 4));
                         rotationMatrix = Matrix.CreateScale(0.00028f) * rotationMatrix;
                         break;

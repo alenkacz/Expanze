@@ -32,7 +32,13 @@ namespace Expanze
         IconMedalMill, IconMedalStepherd, IconMedalQuarry, IconMedalSaw, IconMedalMine,
 
         PlayerColor,
-        BackgroundWater,
+        BackgroundWater, BackgroundPromptWindow, BackgroundMessageWindow, 
+
+        ButtonYes, ButtonNo,
+
+        SmallCorn, SmallMeat, SmallStone, SmallWood, SmallOre,
+
+        PickWindowIcon, PickWindowPrompt,
 
         HUDCount
     }
@@ -79,17 +85,17 @@ namespace Expanze
         {
         }
 
-        public Model getHexaModel(HexaKind type)
+        public Model GetHexaModel(HexaKind type)
         {
             return hexaModel[(int)type];
         }
 
         public Texture2D GetHudTexture(HUDTexture id) { return hud[(int) id]; }
-        public Model getMountainsCover(int i) { return mountainsCoverModel[i]; }
-        public Model getMountainsSourceBuildingModel(int i) { return mountainsMineModel[i]; }
-        public Model getStoneCover(int i) { return stoneCoverModel[i]; }
-        public Model getStoneSourceBuildingModel(int i) { return stoneQuarryModel[i]; }
-        public Model getBuildingModel(BuildingModel id) { return buildingModel[(int) id]; }
+        public Model GetMountainsCover(int i) { return mountainsCoverModel[i]; }
+        public Model GetMountainsSourceBuildingModel(int i) { return mountainsMineModel[i]; }
+        public Model GetStoneCover(int i) { return stoneCoverModel[i]; }
+        public Model GetStoneSourceBuildingModel(int i) { return stoneQuarryModel[i]; }
+        public Model GetBuildingModel(BuildingModel id) { return buildingModel[(int) id]; }
         public Model GetTownModel() { return townModel; }
         public Model GetRoadModel() { return roadModel; }
 
@@ -118,6 +124,17 @@ namespace Expanze
             hud = new Texture2D[(int) HUDTexture.HUDCount];
             hud[(int)HUDTexture.PlayerColor] = content.Load<Texture2D>("pcolor");
             hud[(int)HUDTexture.BackgroundWater] = content.Load<Texture2D>("Models/hexa_voda3");
+            hud[(int)HUDTexture.BackgroundMessageWindow] = content.Load<Texture2D>("HUD/messageBG");
+            hud[(int)HUDTexture.BackgroundPromptWindow] = content.Load<Texture2D>("HUD/WindowPromt");
+            hud[(int)HUDTexture.ButtonNo] = content.Load<Texture2D>("HUD/NOPromt");
+            hud[(int)HUDTexture.ButtonYes] = content.Load<Texture2D>("HUD/OKPromt");
+            hud[(int)HUDTexture.SmallCorn] = content.Load<Texture2D>("HUD/scorn");
+            hud[(int)HUDTexture.SmallMeat] = content.Load<Texture2D>("HUD/smeat");
+            hud[(int)HUDTexture.SmallStone] = content.Load<Texture2D>("HUD/sstone");
+            hud[(int)HUDTexture.SmallWood] = content.Load<Texture2D>("HUD/swood");
+            hud[(int)HUDTexture.SmallOre] = content.Load<Texture2D>("HUD/sore");
+            hud[(int)HUDTexture.PickWindowIcon] = content.Load<Texture2D>("HUD/PickIcon");
+            hud[(int)HUDTexture.PickWindowPrompt] = content.Load<Texture2D>("HUD/PickPromt");
 
             hud[(int)HUDTexture.IconActive] = content.Load<Texture2D>("HUD/ic_active");
             hud[(int)HUDTexture.HammersPassive] = content.Load<Texture2D>("HUD/hex_ic_hammer");

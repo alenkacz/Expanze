@@ -98,7 +98,7 @@ namespace Expanze.Gameplay
                             gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
                             HexaModel.SetHexaIDFort(hexaID);
                             gm.SetFortState(EFortState.CapturingHexa);
-                            win.setIsActive(false);
+                            win.SetIsActive(false);
                             break;
 
                         case 1:
@@ -107,7 +107,7 @@ namespace Expanze.Gameplay
                             gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
                             HexaModel.SetHexaIDFort(hexaID);
                             gm.SetFortState(EFortState.DestroyingHexa);
-                            win.setIsActive(false);
+                            win.SetIsActive(false);
                             break;
 
                         case 2 :

@@ -168,7 +168,7 @@ namespace Expanze.Gameplay.Map
                 rotation = Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (4));
             }
 
-            Model m = GameResources.Inst().getHexaModel(HexaKind.Water + neighbours);
+            Model m = GameResources.Inst().GetHexaModel(HexaKind.Water + neighbours);
 
             return new WaterView(hexaMapModel[i][j], m, rotation);
         }
@@ -211,7 +211,7 @@ namespace Expanze.Gameplay.Map
         public void DrawWaterHexa(Matrix mWorld)
         {
             Matrix tempMatrix = Matrix.CreateScale(0.00028f);
-            Model m = GameResources.Inst().getHexaModel(HexaKind.Water);
+            Model m = GameResources.Inst().GetHexaModel(HexaKind.Water);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 
