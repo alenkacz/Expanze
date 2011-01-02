@@ -94,8 +94,7 @@ namespace Expanze
 
             map = new Map(ScreenManager.Game);
             gameComponents.Add(map);
-            GameState.message = new Message();
-            gameComponents.Add(GameState.message);
+            gameComponents.Add(Message.Inst());
             gameComponents.Add(PromptWindow.Inst());
             //gamelogic
             gMaster.StartGame(isAI, map);

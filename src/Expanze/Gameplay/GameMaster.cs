@@ -141,7 +141,7 @@ namespace Expanze
                 }
                 medailOwner[(int)medal] = player;
                 player.AddPoints(pointsForMedail);
-                GameState.message.Show(GetMedalTitle(medal),GetMedalDescription(medal),GetMedaileIcon(medal));
+                Message.Inst().Show(GetMedalTitle(medal),GetMedalDescription(medal),GetMedaileIcon(medal));
             }
         }
 
@@ -205,7 +205,7 @@ namespace Expanze
                 Player player = GameMaster.Inst().GetActivePlayer();
                 player.SetActive(false);
                 Logger.Inst().Log(ai.GetAIName() + ".txt", exception.Message + " : from : " + exception.Source);
-                GameState.message.Show(Strings.GAME_ALERT_TITLE_AI_EXCEPTION, player.GetName() + " " + Strings.GAME_ALERT_DESCRIPTION_AI_EXCEPTION, GameResources.Inst().GetHudTexture(HUDTexture.IconTown));
+                Message.Inst().Show(Strings.GAME_ALERT_TITLE_AI_EXCEPTION, player.GetName() + " " + Strings.GAME_ALERT_DESCRIPTION_AI_EXCEPTION, GameResources.Inst().GetHudTexture(HUDTexture.IconTown));
             }
         }
 
@@ -214,7 +214,7 @@ namespace Expanze
         {
             if (activePlayer.GetIsAI())
             {
-                if (!hasAIThreadStarted && !GameState.message.GetIsActive())
+                if (!hasAIThreadStarted && !Message.Inst().GetIsActive())
                 {
                     actualAIThread = new Thread(X => AIThread(activePlayer.GetComponentAI()));
                     actualAIThread.Start();
@@ -227,7 +227,7 @@ namespace Expanze
                     if (actualAITime < 0)
                         actualAIThread.Abort();
 
-                    if (!actualAIThread.IsAlive && map.GetMapView().getIsViewQueueClear() && !GameState.message.GetIsActive())
+                    if (!actualAIThread.IsAlive && map.GetMapView().getIsViewQueueClear() && !Message.Inst().GetIsActive())
                     {
                         NextTurn();
                     }
@@ -294,7 +294,7 @@ namespace Expanze
                 return false;
             }
 
-            if (GameState.message.GetIsActive())
+            if (Message.Inst().GetIsActive())
             {
                 return false;
             }
@@ -354,7 +354,7 @@ namespace Expanze
         public void ChangeStateToStateGame()
         {
             state = EGameState.StateGame;
-            GameState.message.Show(Strings.GAME_ALERT_TITLE_GAME_STARTED, Strings.GAME_ALERT_DESCRIPTION_GAME_STARTED, GameResources.Inst().GetHudTexture(HUDTexture.IconRoad));
+            Message.Inst().Show(Strings.GAME_ALERT_TITLE_GAME_STARTED, Strings.GAME_ALERT_DESCRIPTION_GAME_STARTED, GameResources.Inst().GetHudTexture(HUDTexture.IconRoad));
             foreach (Player player in players)
             {
                 player.AddSources(Settings.startResources, TransactionState.TransactionStart);

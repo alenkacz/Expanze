@@ -33,7 +33,19 @@ namespace Expanze
         private int timeActive;
         private const int ACTIVE_LIMIT = 3200;
 
-        public Message()
+        private static Message instance = null;
+
+        public static Message Inst()
+        {
+            if (instance == null)
+            {
+                instance = new Message();
+            }
+
+            return instance;
+        }
+
+        private Message()
         {
             spriteBatch = GameState.spriteBatch;
             bgPos = new Vector2(0, 0);

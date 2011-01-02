@@ -130,7 +130,7 @@ namespace Expanze.Gameplay
                             costParade = costParade + new SourceAll(30);
                             if (GameMaster.Inst().GetActivePlayer().GetIsAI())
                             {
-                                GameState.message.Show(Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE, Strings.PROMPT_DESCTIPTION_MESSAGE_FORT_ACTION_PARADE, GameResources.Inst().GetHudTexture(HUDTexture.IconFortParade));
+                                Message.Inst().Show(Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE, Strings.PROMPT_DESCTIPTION_MESSAGE_FORT_ACTION_PARADE, GameResources.Inst().GetHudTexture(HUDTexture.IconFortParade));
                             }                          
                             break;
                     }

@@ -25,8 +25,6 @@ namespace Expanze
         public static Game game;
         public static Map map;
 
-        public static Message message;
-
         public static SpriteBatch spriteBatch;
 
         public static SpriteFont gameFont;

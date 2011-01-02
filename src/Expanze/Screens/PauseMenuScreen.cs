@@ -47,6 +47,13 @@ namespace Expanze
 
         #region Handle Input
 
+        protected override void  OnCancel(PlayerIndex playerIndex)
+        {
+ 	         base.OnCancel(playerIndex);
+             GameMaster.Inst().SetPaused(false);
+        }
+     
+
         void ResumeGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
             GameMaster.Inst().SetPaused(false);
