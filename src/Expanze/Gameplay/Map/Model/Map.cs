@@ -19,9 +19,7 @@ namespace Expanze.Gameplay.Map
     {
         private Vector3 eye, target, up;
 
-        Game myGame;
-
-        float aspectRatio;
+        Game game;
 
         HexaModel[][] hexaMapModel;
         MapView mapView;
@@ -29,7 +27,7 @@ namespace Expanze.Gameplay.Map
 
         public Map(Game game)
         {
-            myGame = game;
+            this.game = game;
             mapView = new MapView(this);
             mapController = new MapController(this, mapView);
         }
@@ -154,13 +152,13 @@ namespace Expanze.Gameplay.Map
 
             GameState.map = this;
 
-            aspectRatio = myGame.GraphicsDevice.Viewport.Width / (float)myGame.GraphicsDevice.Viewport.Height;
             target = new Vector3(0.0f, 0.0f, 0.0f);
             up = new Vector3(0.1f, 0.8f, 0.0f);
             eye = new Vector3(0.4f, 1.5f, 0.0f);
             GameState.MaterialAmbientColor = new Vector3(0.2f, 0.2f, 0.2f);
             GameState.LightDirection = new Vector3(-1.0f, -0.5f, 0.0f);
             GameState.view = Matrix.CreateLookAt(eye, target, up);
+            float aspectRatio = game.GraphicsDevice.Viewport.Width / (float)game.GraphicsDevice.Viewport.Height;
             GameState.projection = Matrix.CreatePerspectiveFieldOfView((float)MathHelper.ToRadians(90), aspectRatio, 0.01f, 100.0f);
 
             GameMaster.Inst().StartTurn();
@@ -337,8 +335,8 @@ namespace Expanze.Gameplay.Map
             //if (GameMaster.getInstance().getPaused())
             //    return;
 
-            myGame.GraphicsDevice.BlendState = BlendState.Opaque;
-            myGame.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            game.GraphicsDevice.BlendState = BlendState.Opaque;
+            game.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
             GameState.view = Matrix.CreateLookAt(eye, target, up);
 
