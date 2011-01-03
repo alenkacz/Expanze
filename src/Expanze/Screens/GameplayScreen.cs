@@ -37,8 +37,6 @@ namespace Expanze
 
         //dummy texture for displaying players color in top hud
         Texture2D playerColorTexture;
-
-        ContentManager content;
         
         List<GameComponent> gameComponents = new List<GameComponent>();
         List<GuiComponent> guiComponents = new List<GuiComponent>();
@@ -64,23 +62,12 @@ namespace Expanze
             isAI = AI;
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
-            gMaster = GameMaster.getInstance();
+            gMaster = GameMaster.Inst();
 
         }
 
         public void LoadAllThread()
         {
-            if (content == null)
-                content = new ContentManager(ScreenManager.Game.Services, "Content");
-
-            GameState.gameFont = content.Load<SpriteFont>("gamefont");
-            GameState.playerNameFont = content.Load<SpriteFont>("playername");
-            GameState.hudMaterialsFont = content.Load<SpriteFont>("hudMaterialsFont");
-            GameState.materialsNewFont = content.Load<SpriteFont>("materialsNewFont");
-            GameState.medievalSmall = content.Load<SpriteFont>("Fonts/medievalSmall");
-            GameState.medievalMedium = content.Load<SpriteFont>("Fonts/medievalMedium");
-            GameState.medievalBig = content.Load<SpriteFont>("Fonts/medievalBig");
-
             //playerColorTexture = new Texture2D(ScreenManager.GraphicsDevice, (int)Settings.playerColorSize.X, (int)Settings.playerColorSize.Y, false, SurfaceFormat.Color);
             playerColorTexture = ScreenManager.Game.Content.Load<Texture2D>("pcolor");
 
@@ -90,28 +77,26 @@ namespace Expanze
             //renderTarget = new RenderTarget2D(ScreenManager.GraphicsDevice, 1024, 1024, false, ScreenManager.GraphicsDevice.DisplayMode.Format, pp.DepthStencilFormat);
 
             GameState.game = ScreenManager.Game;
-            GameResources.Inst().LoadContent();
 
             map = new Map(ScreenManager.Game);
             gameComponents.Add(map);
-            GameState.message = new Message();
-            gameComponents.Add(GameState.message);
+            gameComponents.Add(Message.Inst());
             gameComponents.Add(PromptWindow.Inst());
             //gamelogic
             gMaster.StartGame(isAI, map);
 
-            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), new Rectangle(Settings.scaleW((int)(Settings.maximumResolution.X - 80)), Settings.scaleH((int)(Settings.maximumResolution.Y - 80)), Settings.scaleW(60), Settings.scaleH(60)), GameState.gameFont, Settings.scaleW(147), Settings.scaleH(141), "nextTurn");
+            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), new Rectangle(Settings.scaleW((int)(Settings.maximumResolution.X - 80)), Settings.scaleH((int)(Settings.maximumResolution.Y - 80)), Settings.scaleW(60), Settings.scaleH(60)), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(147), Settings.scaleH(141), "nextTurn");
             changeTurnButton.Actions += ChangeTurnButtonAction;
             guiComponents.Add(changeTurnButton);
-            ButtonComponent menuHUDButton = new ButtonComponent(ScreenManager.Game, Settings.scaleW(20), Settings.scaleH(20), new Rectangle(Settings.scaleW(20), Settings.scaleH(20), Settings.scaleW(80), Settings.scaleH(80)), GameState.gameFont, Settings.scaleW(222), Settings.scaleH(225), "menu_button");
+            ButtonComponent menuHUDButton = new ButtonComponent(ScreenManager.Game, Settings.scaleW(20), Settings.scaleH(20), new Rectangle(Settings.scaleW(20), Settings.scaleH(20), Settings.scaleW(80), Settings.scaleH(80)), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(222), Settings.scaleH(225), "menu_button");
             menuHUDButton.Actions += MenuButtonAction;
             guiComponents.Add(menuHUDButton);
-            MaterialsHUDComponent materialsHUDComp = new MaterialsHUDComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width / 4, ScreenManager.Game.GraphicsDevice.Viewport.Height - 78, GameState.gameFont, 757, 148, "suroviny_hud");
+            MaterialsHUDComponent materialsHUDComp = new MaterialsHUDComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width / 4, ScreenManager.Game.GraphicsDevice.Viewport.Height - 78, GameResources.Inst().GetFont(EFont.MedievalBig), 757, 148, "suroviny_hud");
             guiComponents.Add(materialsHUDComp);
             TopPlayerScoreComponent topPlayer = new TopPlayerScoreComponent();
             guiComponents.Add(topPlayer);
             MarketComponent marketHud = MarketComponent.getInstance();
-            ButtonComponent newMsg = new ButtonComponent(ScreenManager.Game, Settings.scaleW(30), (int)(Settings.maximumResolution.Y - 176), new Rectangle(Settings.scaleW(30), Settings.scaleH((int)(Settings.maximumResolution.Y - 176)), Settings.scaleW(70), Settings.scaleH(70)), GameState.gameFont, Settings.scaleW(151), Settings.scaleH(156), "newmessage");
+            ButtonComponent newMsg = new ButtonComponent(ScreenManager.Game, Settings.scaleW(30), (int)(Settings.maximumResolution.Y - 176), new Rectangle(Settings.scaleW(30), Settings.scaleH((int)(Settings.maximumResolution.Y - 176)), Settings.scaleW(70), Settings.scaleH(70)), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(151), Settings.scaleH(156), "newmessage");
             newMsg.Actions += MarketButtonAction;
             guiComponents.Add(newMsg);
 
@@ -161,7 +146,6 @@ namespace Expanze
         /// </summary>
         public override void UnloadContent()
         {
-            content.Unload();
             foreach (GameComponent gameComponent in gameComponents)
             {
                 gameComponent.UnloadContent();
@@ -185,7 +169,7 @@ namespace Expanze
         /// </summary>
         void MenuButtonAction(object sender, PlayerIndexEventArgs e)
         {
-            GameMaster.getInstance().setPausedNew(true);
+            GameMaster.Inst().SetPausedNew(true);
         }
 
         /// <summary>
@@ -193,14 +177,9 @@ namespace Expanze
         /// </summary>
         void ChangeTurnButtonAction(object sender, PlayerIndexEventArgs e)
         {
-            if (GameMaster.getInstance().getState() == EGameState.StateGame &&
-                !GameMaster.getInstance().getActivePlayer().getIsAI())
+            if (GameMaster.Inst().CanNextTurn())
             {
-                GameMaster.getInstance().NextTurn();
-            }
-            else
-            {
-                // ble ble GameState.windowPromt.showAlert("Musíš nejdøíve postavit mìsto.");
+                GameMaster.Inst().NextTurn();
             }
         }
 
@@ -210,8 +189,8 @@ namespace Expanze
         void MarketButtonAction(object sender, PlayerIndexEventArgs e)
         {
             // market can not be opened during first phase of the game - building first towns
-            if (GameMaster.getInstance().getState() == EGameState.StateGame &&
-                !GameMaster.getInstance().getActivePlayer().getIsAI())
+            if (GameMaster.Inst().GetState() == EGameState.StateGame &&
+                !GameMaster.Inst().GetActivePlayer().GetIsAI())
             {
 
                 if (MarketComponent.isActive)
@@ -291,13 +270,13 @@ namespace Expanze
             bool gamePadDisconnected = !gamePadState.IsConnected &&
                                        input.GamePadWasConnected[playerIndex];
 
-            if (input.IsPauseGame(ControllingPlayer) || gamePadDisconnected || GameMaster.getInstance().isPausedNew())
+            if (input.IsPauseGame(ControllingPlayer) || gamePadDisconnected || GameMaster.Inst().IsPausedNew())
             {
-                GameMaster.getInstance().setPaused(true);
+                GameMaster.Inst().SetPaused(true);
                 ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
             }
 
-            if (GameMaster.getInstance().isWinnerNew())
+            if (GameMaster.Inst().IsWinnerNew())
             {
                 VictoryScreen.Load(ScreenManager, true, ControllingPlayer,
                                new GameScreen[] { new BackgroundScreen(), new MainMenuScreen() });

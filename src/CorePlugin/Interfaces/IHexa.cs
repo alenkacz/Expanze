@@ -10,12 +10,12 @@ namespace CorePlugin
     public enum RoadPos { UpLeft, UpRight, MiddleLeft, MiddleRight, BottomLeft, BottomRight, Count };
     public enum TownPos { Up, UpRight, BottomRight, Bottom, BottomLeft, UpLeft, Count };
 
-    public interface IHexaGet
+    public interface IHexa
     {
-        HexaKind getKind();
-        int getStartSource();
-        int getCurrentSource();
-        ITownGet getITown(TownPos townPos);
-        int getID();
+        HexaKind GetKind();
+        int GetStartSource();
+        int GetCurrentSource();
+        ITown GetITown(TownPos townPos);
+        int GetID();
     }
 }

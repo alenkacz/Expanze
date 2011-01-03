@@ -16,7 +16,7 @@ namespace Expanze.Gameplay
         SpecialBuilding building;
 
         public SpecialBuildingPromptItem(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber, SpecialBuilding building, String title, String description, SourceAll source, bool isSourceCost, Texture2D icon)
-            : base(title, description, source, isSourceCost, icon)
+            : base(title, description, source, isSourceCost, false, icon)
         {
             this.townID = townID;
             this.hexaID = hexaID;
@@ -27,14 +27,14 @@ namespace Expanze.Gameplay
 
         public override void Execute()
         {
-            GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, upgradeKind, upgradeNumber);
-            building.setPromptWindow(PromptWindow.Mod.Buyer);
+            building.SetPromptWindow(PromptWindow.Mod.Buyer);
+            GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, upgradeKind, upgradeNumber);            
         }
 
         public override string TryExecute()
         {
-            GameMaster gm = GameMaster.getInstance();
-            Town town = GameState.map.GetTownByID(townID);
+            GameMaster gm = GameMaster.Inst();
+            TownModel town = GameState.map.GetTownByID(townID);
             SpecialBuilding building = town.getSpecialBuilding(hexaID);
 
             BuyingUpgradeError error = building.CanActivePlayerBuyUpgrade(upgradeKind, upgradeNumber);
@@ -52,55 +52,24 @@ namespace Expanze.Gameplay
 
     abstract class SpecialBuilding : ISpecialBuildingGet
     {
-        protected bool[] upgradeFirst;
-        protected bool[] upgradeSecond;
-        const int upgradeMax = 3;   /// upgradeCount limit
+        const int upgradeMax = 3;             /// upgradeCount limit
         protected int upgradeCount;           /// how many upgrades player has bought in this building?
-
-        public SpecialBuilding()
+        protected Player owner;               /// owner of that building
+            
+        public SpecialBuilding(Player playerOwner)
         {
-            upgradeFirst = new bool[5];
-            upgradeSecond = new bool[5];
             upgradeCount = 0;
-
-            for (int loop1 = 0; loop1 < upgradeFirst.Length; loop1++)
-            {
-                upgradeFirst[loop1] = false;
-                upgradeSecond[loop1] = false;
-            }
-        }
-
-        public bool GetIsUpgrade(UpgradeKind kind, int upgradeNumber)
-        {
-            switch (kind)
-            {
-                case UpgradeKind.FirstUpgrade:
-                    return upgradeFirst[upgradeNumber];
-                case UpgradeKind.SecondUpgrade:
-                    return upgradeSecond[upgradeNumber];
-            }
-
-            return false;
+            owner = playerOwner;
         }
 
         public void BuyUpgrade(UpgradeKind kind, int upgradeNumber)
         {
-            switch (kind)
-            {
-                case UpgradeKind.FirstUpgrade:
-                    upgradeFirst[upgradeNumber] = true;
-                    break;
-                case UpgradeKind.SecondUpgrade:
-                    upgradeSecond[upgradeNumber] = true;
-                    break;
-            }
             upgradeCount++;
-
             ApplyEffect(kind, upgradeNumber);
         }
 
-        abstract public void setPromptWindow(PromptWindow.Mod mod);
-        abstract public SourceAll getUpgradeCost(UpgradeKind upgradeKind, int upgradeNumber);
+        abstract public void SetPromptWindow(PromptWindow.Mod mod);
+        abstract public SourceAll GetUpgradeCost(UpgradeKind upgradeKind, int upgradeNumber);
         abstract public Texture2D GetIconActive();
         abstract public Texture2D GetIconPassive();
         abstract protected void ApplyEffect(UpgradeKind upgradeKind, int upgradeNumber);
@@ -108,21 +77,13 @@ namespace Expanze.Gameplay
 
         public virtual BuyingUpgradeError CanActivePlayerBuyUpgrade(UpgradeKind upgradeKind, int upgradeNumber)
         {
-            GameMaster gm = GameMaster.getInstance();
-            Player activePlayer = gm.getActivePlayer();
+            GameMaster gm = GameMaster.Inst();
+            Player activePlayer = gm.GetActivePlayer();
 
             if (upgradeCount == upgradeMax)
-                return BuyingUpgradeError.MaxUpgrades;
+                return BuyingUpgradeError.MaxUpgrades;    
 
-            if (upgradeKind == UpgradeKind.SecondUpgrade)
-            {
-                    if (upgradeFirst[upgradeNumber] == false)
-                        return BuyingUpgradeError.YouDontHaveFirstUpgrade;
-                    if (upgradeSecond[upgradeNumber] == true)
-                        return BuyingUpgradeError.YouAlreadyHaveSecondUpgrade;
-            }        
-
-            if (!getUpgradeCost(upgradeKind, upgradeNumber).HasPlayerSources(activePlayer))
+            if (!GetUpgradeCost(upgradeKind, upgradeNumber).HasPlayerSources(activePlayer))
                 return BuyingUpgradeError.NoSources;
 
             return BuyingUpgradeError.OK;

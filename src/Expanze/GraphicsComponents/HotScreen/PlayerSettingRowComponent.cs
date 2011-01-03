@@ -15,7 +15,7 @@ namespace Expanze
 
         //space between texts in HUD of materials
         const int space = 150;
-        int start = 60;
+        //int start = 60;
 
         // active player
         private bool active = false;
@@ -166,7 +166,7 @@ namespace Expanze
                 addButton.Draw(gameTime);
             }
 
-            spriteBatch.DrawString(GameState.playerNameFont, name, new Vector2(spritePosition.X + 80, spritePosition.Y - 6), c);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.PlayerNameFont), name, new Vector2(spritePosition.X + 80, spritePosition.Y - 6), c);
             spriteBatch.Draw(playerColorTexture, new Vector2(spritePosition.X + 420, spritePosition.Y), playerColor);
 
             if( active )

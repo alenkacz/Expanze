@@ -20,50 +20,68 @@ namespace Expanze
         
         private Texture2D background;
         private Texture2D no;
-        private Texture2D yes;
         private Texture2D pickTexture;
         private Vector2 bgPos;
-        private Vector2 yesPos;
         private Vector2 noPos;
         private PickVariables noPick;
-        private PickVariables yesPick;
-        private ContentManager content;
 
-        private Texture2D icon;
-        private String title;
-        private String description;
+        private MessageItem messageActive;  /// message on the screen
+        private Queue<MessageItem> queue;
 
-        private bool active;
         private bool disabled; /// Can be popup messages?
         private int timeActive;
-        private const int ACTIVE_LIMIT = 2500;
+        private const int ACTIVE_LIMIT = 3200;
 
-        public Message()
+        private static Message instance = null;
+
+        public static Message Inst()
+        {
+            if (instance == null)
+            {
+                instance = new Message();
+            }
+
+            return instance;
+        }
+
+        private Message()
         {
             spriteBatch = GameState.spriteBatch;
             bgPos = new Vector2(0, 0);
-            active = false;
+
             timeActive = ACTIVE_LIMIT;
             disabled = false;
 
             noPick = new PickVariables(Color.YellowGreen);
-            yesPick = new PickVariables(Color.Tomato);
+
+            queue = new Queue<MessageItem>();
         }
 
-        public bool getIsActive() {return active;}
+        public bool GetIsActive() {return messageActive != null;}
 
+
+        private void NextMessage()
+        {
+            if (queue.Count == 0)
+            {
+                messageActive = null;
+            }
+            else
+                messageActive = queue.Dequeue();
+
+            timeActive = ACTIVE_LIMIT;
+        }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (active)
+            if (messageActive != null)
             {
                 if (timeActive > 0)
                     timeActive -= gameTime.ElapsedGameTime.Milliseconds;
                 else
                 {
-                    active = false;
-                    timeActive = ACTIVE_LIMIT;
+                    NextMessage();
                 }
             }
 
@@ -73,54 +91,45 @@ namespace Expanze
             }
         }
 
-        public void showAlert(String title, String description, Texture2D icon)
+        public void Show(String title, String description, Texture2D icon)
         {
             if (disabled)
                 return;
 
-            this.icon = icon;
-            this.title = title;
-            this.description = description;
-            active = true;
+            MessageItem item = new MessageItem(title, description, icon);
+            if (messageActive == null)
+                messageActive = item;
+            else
+                queue.Enqueue(item);
         }
 
         public override void LoadContent()
         {
             base.LoadContent();
 
-            if (content == null)
-                content = new ContentManager(GameState.game.Services, "Content");
-
-            background = content.Load<Texture2D>("HUD/messageBG");
-            no = content.Load<Texture2D>("HUD/NOPromt");
-            yes = content.Load<Texture2D>("HUD/OKPromt");
-            pickTexture = content.Load<Texture2D>("HUD/PickPromt");
+            background = GameResources.Inst().GetHudTexture(HUDTexture.BackgroundMessageWindow);
+            no = GameResources.Inst().GetHudTexture(HUDTexture.ButtonNo);
+            pickTexture = GameResources.Inst().GetHudTexture(HUDTexture.PickWindowPrompt);
             bgPos = new Vector2((Settings.maximumResolution.X - background.Width) / 2,
                                    (Settings.maximumResolution.Y - background.Height) / 2 - 50);
             int border = 12;
-            yesPos = new Vector2(bgPos.X + (background.Width - yes.Width) / 2, bgPos.Y + background.Height - border - yes.Height);
-            noPos = new Vector2(bgPos.X + (background.Width - yes.Width) / 2, bgPos.Y + background.Height - border - no.Height);
+            noPos = new Vector2(bgPos.X + (background.Width - no.Width) / 2, bgPos.Y + background.Height - border - no.Height);
         }
 
         public override void UnloadContent()
         {
             base.UnloadContent();
-            //content.Dispose();
         }
 
         public override void HandlePickableAreas(Color c)
         {
             Map.SetPickVariables(c == noPick.pickColor, noPick);
-            Map.SetPickVariables(c == yesPick.pickColor, yesPick);
 
-            if (yesPick.pickNewPress || GameState.CurrentKeyboardState.IsKeyDown(Keys.Enter))
-            {
-                yesPick.pickNewPress = false;
-                active = false;
-            } else if(noPick.pickNewPress)
+            if ((noPick.pickNewPress || GameState.CurrentKeyboardState.IsKeyDown(Keys.Enter)) &&
+                 ACTIVE_LIMIT - timeActive > 200)
             {
                 noPick.pickNewPress = false;
-                active = false;
+                NextMessage();
             }
         }
 
@@ -134,7 +143,7 @@ namespace Expanze
         override public void Draw2D()
         {
             //drawingPickableAreas = true;
-            if (active)
+            if (messageActive != null)
             {
                 Color color;
                 if (drawingPickableAreas)
@@ -146,22 +155,17 @@ namespace Expanze
             
                 spriteBatch.Draw(background, bgPos, color);
 
-                /*
-                if (drawingPickableAreas)
-                    spriteBatch.Draw(pickTexture, yesPos, yesPick.pickColor);
-                else
-                    spriteBatch.Draw(yes, yesPos, Color.White);*/
-
                 if (drawingPickableAreas)
                     spriteBatch.Draw(pickTexture, noPos, noPick.pickColor);
                 else
                     spriteBatch.Draw(no, noPos, Color.White);
 
-                TextWrapping.DrawStringCentered(title, GameState.medievalBig, Color.LightBlue, bgPos.X, bgPos.Y + 10, background.Width);
-                TextWrapping.DrawStringIntoRectangle(description,
-                    GameState.medievalSmall, Color.LightSteelBlue, bgPos.X + 20, bgPos.Y + 55, background.Width - 140);
+                TextWrapping.DrawStringCentered(messageActive.getTitle(), GameResources.Inst().GetFont(EFont.MedievalBig), Color.LightBlue, bgPos.X, bgPos.Y + 10, background.Width);
+                TextWrapping.DrawStringIntoRectangle(messageActive.getDescription(),
+                    GameResources.Inst().GetFont(EFont.MedievalSmall), Color.LightSteelBlue, bgPos.X + 20, bgPos.Y + 55, background.Width - 140);
 
-                spriteBatch.Draw(icon, new Vector2(bgPos.X + background.Width - icon.Width - 20, bgPos.Y + 30), color);
+                if(messageActive.getIcon() != null)
+                    spriteBatch.Draw(messageActive.getIcon(), new Vector2(bgPos.X + background.Width - messageActive.getIcon().Width - 20, bgPos.Y + 30), color);
 
                 spriteBatch.End();
             }

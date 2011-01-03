@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Expanze.Gameplay.Map;
 using CorePlugin;
 using Expanze.Utils;
+using Microsoft.Xna.Framework.Input;
 
 namespace Expanze
 {
@@ -31,7 +32,6 @@ namespace Expanze
         private Vector2 noPos;
         private PickVariables noPick;
         private PickVariables yesPick;
-        private ContentManager content;
 
         Mod mod;
         bool showIcons;
@@ -65,23 +65,26 @@ namespace Expanze
             itemPick = new List<PickVariables>();
         }
 
-        public bool getIsActive()
+        public bool GetIsActive()
         {
             return active;
         }
 
-        public void setIsActive(bool active)
+        public void SetIsActive(bool active)
         {
             this.active = active;
         }
 
-        public void addPromptItem(PromptItem item)
+        public void AddPromptItem(PromptItem item)
         {
             itemList.Add(item);
             int size = itemList.Count;
             itemPick.Add(new PickVariables(new Color(size / 256.0f, size / 256.0f, 0.0f)));
         }
-        public void showPrompt(Mod mod, String title, bool showIcons)
+
+        public int GetItemCount() { return itemList.Count; }
+
+        public void Show(Mod mod, String title, bool showIcons)
         {
             this.mod = mod;
             this.title = title;
@@ -97,20 +100,17 @@ namespace Expanze
         {
             base.LoadContent();
 
-            if (content == null)
-                content = new ContentManager(GameState.game.Services, "Content");
-
-            background = content.Load<Texture2D>("HUD/WindowPromt");
-            no = content.Load<Texture2D>("HUD/NOPromt");
-            yes = content.Load<Texture2D>("HUD/OKPromt");
-            pickTextOK = content.Load<Texture2D>("HUD/PickPromt");
-            pickTextIcon = content.Load<Texture2D>("HUD/PickIcon");
+            background = GameResources.Inst().GetHudTexture(HUDTexture.BackgroundPromptWindow);
+            no = GameResources.Inst().GetHudTexture(HUDTexture.ButtonNo);
+            yes = GameResources.Inst().GetHudTexture(HUDTexture.ButtonYes);
+            pickTextOK = GameResources.Inst().GetHudTexture(HUDTexture.PickWindowPrompt);
+            pickTextIcon = GameResources.Inst().GetHudTexture(HUDTexture.PickWindowIcon);
             textureSource = new Texture2D[5];
-            textureSource[0] = content.Load<Texture2D>("HUD/scorn");
-            textureSource[1] = content.Load<Texture2D>("HUD/smeat");
-            textureSource[2] = content.Load<Texture2D>("HUD/sstone");
-            textureSource[3] = content.Load<Texture2D>("HUD/swood");
-            textureSource[4] = content.Load<Texture2D>("HUD/sore");
+            textureSource[0] = GameResources.Inst().GetHudTexture(HUDTexture.SmallCorn);
+            textureSource[1] = GameResources.Inst().GetHudTexture(HUDTexture.SmallMeat);
+            textureSource[2] = GameResources.Inst().GetHudTexture(HUDTexture.SmallStone);
+            textureSource[3] = GameResources.Inst().GetHudTexture(HUDTexture.SmallWood);
+            textureSource[4] = GameResources.Inst().GetHudTexture(HUDTexture.SmallOre);
 
             bgPos = new Vector2((Settings.maximumResolution.X - background.Width) / 2,
                                    (Settings.maximumResolution.Y - background.Height) / 2);
@@ -142,7 +142,7 @@ namespace Expanze
                     }
                 }
 
-                if (yesPick.pickNewPress)
+                if (yesPick.pickNewPress || GameState.CurrentKeyboardState.IsKeyDown(Keys.Enter))
                 {
                     yesPick.pickNewPress = false;
                     active = false;
@@ -192,25 +192,28 @@ namespace Expanze
                 else
                     spriteBatch.Draw(no, noPos, Color.White);
 
-                float titleWidth = GameState.medievalBig.MeasureString(title).X;
-                spriteBatch.DrawString(GameState.medievalBig, title, new Vector2(bgPos.X + (background.Width - titleWidth) / 2, bgPos.Y + 20), Color.LightBlue);
+                float titleWidth = GameResources.Inst().GetFont(EFont.MedievalBig).MeasureString(title).X;
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), title, new Vector2(bgPos.X + (background.Width - titleWidth) / 2, bgPos.Y + 20), Color.LightBlue);
 
                 if(showIcons)
                     DrawIcons();
 
-                spriteBatch.DrawString(GameState.medievalMedium, itemList[activeItem].getTitle(), new Vector2(bgPos.X + 20, bgPos.Y + 160), Color.LightBlue);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), itemList[activeItem].getTitle(), new Vector2(bgPos.X + 20, bgPos.Y + 160), Color.LightBlue);
                 TextWrapping.DrawStringIntoRectangle(itemList[activeItem].getDescription(),
-                    GameState.medievalSmall, Color.LightSteelBlue, bgPos.X + 20, bgPos.Y + 195, background.Width - 40);
+                    GameResources.Inst().GetFont(EFont.MedievalSmall), Color.LightSteelBlue, bgPos.X + 20, bgPos.Y + 195, background.Width - 40);
 
                 String error = itemList[activeItem].TryExecute();
                 if (mod == Mod.Viewer)
                     error = Strings.ALERT_TITLE_THIS_IS_NOT_YOURS;
+                int errorY = 265;
+                if (itemList[activeItem].getCost().Equals(new SourceAll(0)))
+                    errorY = 300;
                 if (error != null)
                 {
                     TextWrapping.DrawStringIntoRectangle(error,
-                     GameState.medievalSmall, Color.DarkSlateGray, bgPos.X + 22, bgPos.Y + 267, background.Width - 40);
+                     GameResources.Inst().GetFont(EFont.MedievalSmall), Color.DarkSlateGray, bgPos.X + 22, bgPos.Y + errorY + 2, background.Width - 40);
                     TextWrapping.DrawStringIntoRectangle(error,
-                     GameState.medievalSmall, Color.Red, bgPos.X + 20, bgPos.Y + 265, background.Width - 40);
+                     GameResources.Inst().GetFont(EFont.MedievalSmall), Color.Red, bgPos.X + 20, bgPos.Y + errorY, background.Width - 40);
                 }
                 if (!drawingPickableAreas)
                     DrawSources();
@@ -241,7 +244,7 @@ namespace Expanze
                     itemList[loop1].DrawIcon(iconPosition);
                     if (activeItem == loop1 && itemList.Count > 1)
                     {
-                        spriteBatch.Draw(GameResources.Inst().getHudTexture(HUDTexture.IconActive), iconPosition, Color.White);
+                        spriteBatch.Draw(GameResources.Inst().GetHudTexture(HUDTexture.IconActive), iconPosition, Color.White);
                     }
                 }
                 iconPosition += new Vector2(itemList[loop1].getIcon().Width + border, 0.0f);
@@ -255,20 +258,22 @@ namespace Expanze
             float sourcesWidth = -border;
             for (int loop1 = 0; loop1 < 5; loop1++)
             {
-                if (itemList[activeItem].getCost()[loop1] != 0)
+                if (itemList[activeItem].getCost()[loop1] != 0 ||
+                    itemList[activeItem].getShowZeroSources())
                     sourcesWidth += textureSource[loop1].Width + border;
             }
 
             float startX = bgPos.X + ((background.Width - sourcesWidth) / 2);
             float startY = bgPos.Y + background.Height - textureSource[0].Height - 85;
 
-            ISourceAll playerSource = GameMaster.getInstance().getActivePlayer().GetSource();
+            ISourceAll playerSource = GameMaster.Inst().GetActivePlayer().GetSource();
             for (int loop1 = 0; loop1 < 5; loop1++)
             {
-                if (itemList[activeItem].getCost()[loop1] != 0)
+                if (itemList[activeItem].getCost()[loop1] != 0 ||
+                    itemList[activeItem].getShowZeroSources())
                 {
                     spriteBatch.Draw(textureSource[loop1], new Vector2(startX, startY), Color.White);
-                    spriteBatch.DrawString(GameState.materialsNewFont, itemList[activeItem].getCost()[loop1].ToString(), new Vector2(startX + (textureSource[loop1].Width >> 1) + 5, startY + 45), (!itemList[activeItem].getIsSourceCost() || playerSource[loop1] >= itemList[activeItem].getCost()[loop1]) ? Color.White : Color.DarkRed);         
+                    spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), itemList[activeItem].getCost()[loop1].ToString(), new Vector2(startX + (textureSource[loop1].Width >> 1) + 5, startY + 45), (!itemList[activeItem].getIsSourceCost() || playerSource[loop1] >= itemList[activeItem].getCost()[loop1]) ? Color.White : Color.DarkRed);         
                     startX += textureSource[loop1].Width + border;
                 }
             }

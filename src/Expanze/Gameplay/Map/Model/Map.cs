@@ -19,9 +19,7 @@ namespace Expanze.Gameplay.Map
     {
         private Vector3 eye, target, up;
 
-        Game myGame;
-
-        float aspectRatio;
+        Game game;
 
         HexaModel[][] hexaMapModel;
         MapView mapView;
@@ -29,7 +27,7 @@ namespace Expanze.Gameplay.Map
 
         public Map(Game game)
         {
-            myGame = game;
+            this.game = game;
             mapView = new MapView(this);
             mapController = new MapController(this, mapView);
         }
@@ -56,6 +54,8 @@ namespace Expanze.Gameplay.Map
                   {
                       if (hexaMapModel[i][j] == null)
                           continue;
+
+                      hexaMapModel[i][j].SetCoord(i, j);
 
                       // UP LEFT
                       if (i >= 1 && hexaMapModel[i - 1].Length > j)
@@ -152,22 +152,23 @@ namespace Expanze.Gameplay.Map
 
             GameState.map = this;
 
-            aspectRatio = myGame.GraphicsDevice.Viewport.Width / (float)myGame.GraphicsDevice.Viewport.Height;
             target = new Vector3(0.0f, 0.0f, 0.0f);
             up = new Vector3(0.1f, 0.8f, 0.0f);
             eye = new Vector3(0.4f, 1.5f, 0.0f);
             GameState.MaterialAmbientColor = new Vector3(0.2f, 0.2f, 0.2f);
             GameState.LightDirection = new Vector3(-1.0f, -0.5f, 0.0f);
             GameState.view = Matrix.CreateLookAt(eye, target, up);
+            float aspectRatio = game.GraphicsDevice.Viewport.Width / (float)game.GraphicsDevice.Viewport.Height;
             GameState.projection = Matrix.CreatePerspectiveFieldOfView((float)MathHelper.ToRadians(90), aspectRatio, 0.01f, 100.0f);
 
-            GameMaster.getInstance().StartTurn();
+            GameMaster.Inst().StartTurn();
+            mapController.Init();
         }
 
         private HexaModel[][] getMap()
         {
             MapParser parser = new MapParser();
-            GameSettings gs = GameMaster.getInstance().getGameSettings();
+            GameSettings gs = GameMaster.Inst().GetGameSettings();
             return parser.getMap(gs.getMapSize(), gs.getMapType(), gs.getMapWealth());
         }
 
@@ -179,14 +180,14 @@ namespace Expanze.Gameplay.Map
         // active player gets on start of his turn sources from mining buildings
         public void getSources(Player player)
         {
-            player.addSources(new SourceAll(0), TransactionState.TransactionStart);
+            player.AddSources(new SourceAll(0), TransactionState.TransactionStart);
             for (int i = 0; i < hexaMapModel.Length; i++)
                 for (int j = 0; j < hexaMapModel[i].Length; j++)
                     if (hexaMapModel[i][j] != null)
                     {
                         hexaMapModel[i][j].CollectSources(player);
                     }
-            player.addSources(new SourceAll(0), TransactionState.TransactionEnd);
+            player.AddSources(new SourceAll(0), TransactionState.TransactionEnd);
         }
 
         public void ChangeCamera(GameTime gameTime)
@@ -290,7 +291,7 @@ namespace Expanze.Gameplay.Map
         {
             base.Update(gameTime);
 
-            if (GameMaster.getInstance().getPaused())
+            if (GameMaster.Inst().GetPaused())
                 return;
 
             ChangeCamera(gameTime);
@@ -306,10 +307,10 @@ namespace Expanze.Gameplay.Map
 
         public override void HandlePickableAreas(Color c)
         {
-            if (GameMaster.getInstance().getPaused())
+            if (GameMaster.Inst().GetPaused())
                 return;
 
-            if (GameMaster.getInstance().getActivePlayer().getComponentAI() != null)
+            if (GameMaster.Inst().GetActivePlayer().GetComponentAI() != null)
                 return;
 
             mapView.HandlePickableAreas(c);
@@ -317,7 +318,7 @@ namespace Expanze.Gameplay.Map
 
         public override void DrawPickableAreas()
         {
-            if (GameMaster.getInstance().getPaused())
+            if (GameMaster.Inst().GetPaused())
                 return;
 
             mapView.DrawPickableAreas();
@@ -326,7 +327,7 @@ namespace Expanze.Gameplay.Map
         public override void Draw2D()
         {
             mapView.Draw2D();
-            GameMaster.getInstance().Draw2D();
+            GameMaster.Inst().Draw2D();
         }
 
         public override void Draw(GameTime gameTime)
@@ -334,8 +335,8 @@ namespace Expanze.Gameplay.Map
             //if (GameMaster.getInstance().getPaused())
             //    return;
 
-            myGame.GraphicsDevice.BlendState = BlendState.Opaque;
-            myGame.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            game.GraphicsDevice.BlendState = BlendState.Opaque;
+            game.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
             GameState.view = Matrix.CreateLookAt(eye, target, up);
 
@@ -360,12 +361,27 @@ namespace Expanze.Gameplay.Map
 
         public HexaModel GetHexaModel(int i, int j)
         {
-            return hexaMapModel[i][j];
+            if (i >= 0 && i < hexaMapModel.Length &&
+               j >= 0 && j < hexaMapModel[i].Length)
+                return hexaMapModel[i][j];
+            else
+                return null;
         }
 
-        public Town GetTownByID(int townID)
+        public HexaModel GetHexaByID(int hexaID)
         {
-            Town town = null;
+            for (int i = 0; i < hexaMapModel.Length; i++)
+                for (int j = 0; j < hexaMapModel[i].Length; j++)
+                    if (hexaMapModel[i][j] != null && hexaMapModel[i][j].GetID() == hexaID)
+                    {
+                        return hexaMapModel[i][j];
+                    }
+            return null;
+        }
+
+        public TownModel GetTownByID(int townID)
+        {
+            TownModel town = null;
             for (int i = 0; i < hexaMapModel.Length; i++)
                 for (int j = 0; j < hexaMapModel[i].Length; j++)
                     if (hexaMapModel[i][j] != null)
@@ -377,9 +393,9 @@ namespace Expanze.Gameplay.Map
             return null;
         }
 
-        public Road GetRoadByID(int roadID)
+        public RoadModel GetRoadByID(int roadID)
         {
-            Road road = null;
+            RoadModel road = null;
             for (int i = 0; i < hexaMapModel.Length; i++)
                 for (int j = 0; j < hexaMapModel[i].Length; j++)
                     if (hexaMapModel[i][j] != null)

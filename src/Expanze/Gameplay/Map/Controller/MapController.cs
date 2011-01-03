@@ -12,30 +12,52 @@ namespace Expanze.Gameplay.Map
         Map map;
         MapView mapView;
 
+        ITown[] townByID;
+        IRoad[] roadByID;
+        IHexa[] hexaByID;
+
         public MapController(Map map, MapView mapView)
         {
             this.map = map;
             this.mapView = mapView;
 
-            PromptWindow.Inst().setIsActive(false);
+            PromptWindow.Inst().SetIsActive(false);
             MarketComponent.getInstance().setIsActive(false);
         }
 
-        public ITownGet GetITownGetByID(int townID)
+        public ITown GetITownByID(int townID)
         {
-            return map.GetTownByID(townID);
+            if (townID < 1 || townID >= townByID.Length)
+                return null;
+            if(townByID[townID - 1] == null)
+                townByID[townID - 1] = map.GetTownByID(townID);
+            return townByID[townID - 1];
         }
 
-        public IRoadGet GetIRoadGetByID(int roadID)
+        public IHexa GetIHexaByID(int hexaID)
         {
-            return map.GetRoadByID(roadID);
+            if (hexaID < 1 || hexaID >= hexaByID.Length)
+                return null;
+            if (hexaByID[hexaID - 1] == null)
+                hexaByID[hexaID - 1] = map.GetHexaByID(hexaID);
+            return hexaByID[hexaID - 1];
         }
 
-        public IPlayerGet GetPlayerMe() { return GameMaster.getInstance().getActivePlayer(); }
-        public int GetMaxRoadID() { return Road.getRoadCount(); }
-        public int GetMaxTownID() { return Town.getTownCount(); }
-        public EGameState GetState() { return GameMaster.getInstance().getState(); }
-        public IHexaGet GetHexa(int x, int y) { return map.GetHexaModel(x, y); }
+        public IRoad GetIRoadByID(int roadID)
+        {
+            if (roadID < 1 || roadID >= roadByID.Length)
+                return null;
+            if (roadByID[roadID - 1] == null)
+                roadByID[roadID - 1] = map.GetRoadByID(roadID);
+            return roadByID[roadID - 1];
+        }
+
+        public IPlayer GetPlayerMe() { return GameMaster.Inst().GetActivePlayer(); }
+        public int GetMaxRoadID() { return RoadModel.GetRoadCount(); }
+        public int GetMaxTownID() { return TownModel.GetTownCount(); }
+        public int GetMaxHexaID() { return HexaModel.GetHexaCount(); }
+        public EGameState GetState() { return GameMaster.Inst().GetState(); }
+        public IHexa GetIHexa(int x, int y) { return map.GetHexaModel(x, y); }
 
         private HexaKind SourceKindToHexaKind(SourceKind source)
         {
@@ -53,20 +75,20 @@ namespace Expanze.Gameplay.Map
 
         public ChangingSourcesError ChangeSources(SourceKind fromSource, SourceKind toSource, int fromAmount)
         {
-            GameMaster gm = GameMaster.getInstance();
-            int rate = gm.getActivePlayer().getConversionRate(SourceKindToHexaKind(fromSource));
-            if (fromAmount > gm.getActivePlayer().GetSource().Get(fromSource))
+            GameMaster gm = GameMaster.Inst();
+            int rate = gm.GetActivePlayer().GetConversionRate(fromSource);
+            if (fromAmount > gm.GetActivePlayer().GetSource().Get(fromSource))
                 return ChangingSourcesError.NotEnoughFromSource;
 
-            gm.doMaterialConversion(SourceKindToHexaKind(fromSource), SourceKindToHexaKind(toSource), gm.getActivePlayer(), fromAmount - (fromAmount % rate), fromAmount / rate);
+            gm.DoMaterialConversion(fromSource, toSource, gm.GetActivePlayer(), fromAmount - (fromAmount % rate), fromAmount / rate);
 
             return ChangingSourcesError.OK;
         }
 
         public BuyingUpgradeError BuyUpgradeInSpecialBuilding(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber)
         {
-            GameMaster gm = GameMaster.getInstance();
-            Town town = map.GetTownByID(townID);
+            GameMaster gm = GameMaster.Inst();
+            TownModel town = map.GetTownByID(townID);
             if (town == null)
                 return BuyingUpgradeError.ThereIsNoTown;
             SpecialBuilding building = town.getSpecialBuilding(hexaID);
@@ -76,82 +98,123 @@ namespace Expanze.Gameplay.Map
             BuyingUpgradeError error = building.CanActivePlayerBuyUpgrade(upgradeKind, upgradeNumber);
             if (error == BuyingUpgradeError.OK)
             {
-                gm.getActivePlayer().payForSomething(building.getUpgradeCost(upgradeKind, upgradeNumber));
+                gm.GetActivePlayer().PayForSomething(building.GetUpgradeCost(upgradeKind, upgradeNumber));
                 building.BuyUpgrade(upgradeKind, upgradeNumber);
             }
             return error;
         }
 
-        public RoadBuildError BuildRoad(int roadID)
+        public RoadBuildError CanBuildRoad(int roadID)
         {
-            Road road = map.GetRoadByID(roadID);
+            RoadModel road = map.GetRoadByID(roadID);
+            if (road == null)
+                return RoadBuildError.InvalidRoadID;
+            return road.CanBuildRoad();
+        }
 
-            GameMaster gm = GameMaster.getInstance();
-            RoadBuildError error = road.CanActivePlayerBuildRoad();
+        public IRoad BuildRoad(int roadID)
+        {
+            RoadModel road = map.GetRoadByID(roadID);
+            if (road == null)
+                return null;
+
+            GameMaster gm = GameMaster.Inst();
+            RoadBuildError error = road.CanBuildRoad();
             if (error == RoadBuildError.OK)
             {
-                road.BuildRoad(gm.getActivePlayer());
+                road.BuildRoad(gm.GetActivePlayer());
 
                 ItemQueue item = new RoadItemQueue(mapView, roadID);
                 mapView.AddToViewQueue(item);
 
-                gm.getActivePlayer().payForSomething(Settings.costRoad);
+                gm.GetActivePlayer().PayForSomething(Settings.costRoad);
+
+                return road;
             }
 
-            return error;
+            return null;
         }
 
-        public BuildingBuildError BuildBuildingInTown(int townID, int hexaID, BuildingKind kind)
+        public BuildingBuildError CanBuildBuildingInTown(int townID, int hexaID, BuildingKind kind)
         {
-            GameMaster gm = GameMaster.getInstance();
-            Town town = map.GetTownByID(townID);
+            GameMaster gm = GameMaster.Inst();
+            TownModel town = map.GetTownByID(townID);
             if (town == null)
-                return BuildingBuildError.TownDoesntExist;
+                return BuildingBuildError.InvalidTownID;
 
-            int buildingPos = town.findBuildingByHexaID(hexaID);
+            int buildingPos = town.FindBuildingByHexaID(hexaID);
             if (buildingPos == -1)
                 return BuildingBuildError.TownHasNoHexaWithThatHexaID;
 
-            HexaModel hexa = town.getHexa(buildingPos);
-            if (hexa.getKind() == HexaKind.Desert && kind == BuildingKind.SourceBuilding)
+            HexaModel hexa = town.GetHexa(buildingPos);
+            if (hexa.GetKind() == HexaKind.Desert && kind == BuildingKind.SourceBuilding)
                 return BuildingBuildError.NoSourceBuildingForDesert;
 
-            BuildingBuildError error = town.canActivePlayerBuildBuildingInTown(buildingPos, kind);
+            return town.CanActivePlayerBuildBuildingInTown(buildingPos, kind);
+        }
+
+        public bool BuildBuildingInTown(int townID, int hexaID, BuildingKind kind)
+        {
+            GameMaster gm = GameMaster.Inst();
+            TownModel town = map.GetTownByID(townID);
+            if (town == null)
+                return false;
+
+            int buildingPos = town.FindBuildingByHexaID(hexaID);
+            if (buildingPos == -1)
+                return false;
+
+            HexaModel hexa = town.GetHexa(buildingPos);
+            if (hexa.GetKind() == HexaKind.Desert && kind == BuildingKind.SourceBuilding)
+                return false;
+
+            BuildingBuildError error = town.CanActivePlayerBuildBuildingInTown(buildingPos, kind);
             if (error == BuildingBuildError.OK)
             {
                 ItemQueue item = new BuildingItemQueue(mapView, townID, buildingPos);
                 mapView.AddToViewQueue(item);
 
+                gm.GetActivePlayer().PayForSomething(town.GetBuildingCost(buildingPos, kind));
                 town.BuildBuilding(buildingPos, kind);
-                gm.getActivePlayer().payForSomething(town.GetBuildingCost(buildingPos, kind));
+                return true;
             }
 
-            return error;
+            return false;
         }
 
-        public TownBuildError BuildTown(int townID)
+        public TownBuildError CanBuildTown(int townID)
         {
-            Town town = map.GetTownByID(townID);
+            TownModel town = map.GetTownByID(townID);
+            if (town == null)
+                return TownBuildError.InvalidTownID;
+            return town.CanBuildTown();
+        }
 
-            GameMaster gm = GameMaster.getInstance();
-            TownBuildError error = town.CanActivePlayerBuildTown();
+        public ITown BuildTown(int townID)
+        {
+            TownModel town = map.GetTownByID(townID);
+            if (town == null)
+                return null;
+
+            GameMaster gm = GameMaster.Inst();
+            TownBuildError error = town.CanBuildTown();
             if (error == TownBuildError.OK)
             {
-                town.BuildTown(gm.getActivePlayer());
+                town.BuildTown(gm.GetActivePlayer());
 
                 ItemQueue item = new TownItemQueue(mapView, townID);
                 mapView.AddToViewQueue(item);
 
-                if (gm.getState() != EGameState.StateGame)
+                if (gm.GetState() != EGameState.StateGame)
                 {
                     SourceAll source = new SourceAll(0);
                     HexaModel hexa;
-                    gm.getActivePlayer().addSources(new SourceAll(0), TransactionState.TransactionStart);
+                    
                     for (int loop1 = 0; loop1 < 3; loop1++)
                     {
-                        if ((hexa = town.getHexa(loop1)) != null)
+                        if ((hexa = town.GetHexa(loop1)) != null)
                         {
-                            switch (hexa.getKind())
+                            switch (hexa.GetKind())
                             {
                                 case HexaKind.Cornfield:
                                     source = Settings.costMill; break;
@@ -166,19 +229,63 @@ namespace Expanze.Gameplay.Map
                                 default:
                                     source = new SourceAll(0); break;
                             }
-                            gm.getActivePlayer().addSources(source, TransactionState.TransactionMiddle);
+                            gm.GetActivePlayer().AddSources(source, TransactionState.TransactionMiddle);
                         }
                     }
-                    gm.getActivePlayer().addSources(new SourceAll(0), TransactionState.TransactionEnd);
 
-                    if (!gm.getActivePlayer().getIsAI())
-                        gm.NextTurn();
+                    gm.SetHasBuiltTown(true);
+
+                    if(!gm.GetActivePlayer().GetIsAI())
+                        gm.NextTurn();                   
                 }
                 else
-                    gm.getActivePlayer().payForSomething(Settings.costTown);
+                    gm.GetActivePlayer().PayForSomething(Settings.costTown);
+
+                return town;
             }
 
-            return error;
+            return null;
+        }
+
+        public bool CaptureHexa(int hexaID)
+        {
+            HexaModel hexa = map.GetHexaByID(hexaID);
+            hexa.Capture();
+            GameMaster.Inst().GetActivePlayer().PayForSomething(Settings.costFortCapture);
+
+            return true;
+        }
+
+        public bool DestroyHexa(int hexaID)
+        {
+            HexaModel hexa = map.GetHexaByID(hexaID);
+            hexa.Destroy();
+            GameMaster.Inst().GetActivePlayer().PayForSomething(Settings.costFortDestroyHexa);
+            return true;
+        }
+
+        public bool DestroySources(String playerName)
+        {
+            Player player = GameMaster.Inst().GetPlayer(playerName);
+            ISourceAll source = player.GetSource();
+            player.PayForSomething(new SourceAll(source.GetWood() / 2, source.GetStone() / 2, source.GetCorn() / 2, source.GetMeat() / 2, source.GetOre() / 2));
+
+            GameMaster.Inst().GetActivePlayer().PayForSomething(Settings.costFortSources);
+            return true;
+        }
+
+        public void Init()
+        {
+            townByID = new ITown[TownModel.GetTownCount()];
+            for (int loop1 = 0; loop1 < townByID.Length; loop1++)
+                townByID[loop1] = null;
+            roadByID = new IRoad[RoadModel.GetRoadCount()];
+            for (int loop1 = 0; loop1 < roadByID.Length; loop1++)
+                roadByID[loop1] = null;
+            hexaByID = new IHexa[HexaModel.GetHexaCount()];
+            for (int loop1 = 0; loop1 < hexaByID.Length; loop1++)
+                hexaByID[loop1] = null;
+
         }
     }
 }

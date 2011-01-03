@@ -14,7 +14,7 @@ namespace Expanze.Gameplay.Map.View
         int roadID;
 
         public RoadPromptItem(int roadID, String title, String description, SourceAll source, bool isSourceCost, Texture2D icon)
-            : base(title, description, source, isSourceCost, icon)
+            : base(title, description, source, isSourceCost, false, icon)
         {
             this.roadID = roadID;
         }
@@ -26,8 +26,8 @@ namespace Expanze.Gameplay.Map.View
 
         public override string TryExecute()
         {
-            Road road = GameState.map.GetRoadByID(roadID);
-            RoadBuildError error = road.CanActivePlayerBuildRoad();
+            RoadModel road = GameState.map.GetRoadByID(roadID);
+            RoadBuildError error = road.CanBuildRoad();
             switch (error)
             {
                 case RoadBuildError.AlreadyBuild: return Strings.ALERT_TITLE_ROAD_IS_BUILD;
@@ -63,12 +63,12 @@ namespace Expanze.Gameplay.Map.View
         private PickVariables pickVars;
         private Matrix world;
         private int roadID;
-        private Road model;
+        private RoadModel model;
 
-        public RoadView(Road model, Matrix world)
+        public RoadView(RoadModel model, Matrix world)
         {
             this.model = model;
-            this.roadID = model.getRoadID();
+            this.roadID = model.GetRoadID();
             this.pickRoadColor = new Color(0.0f, roadID / 256.0f, 0.0f);
             this.world = world;
             pickVars = new PickVariables(pickRoadColor);
@@ -80,10 +80,10 @@ namespace Expanze.Gameplay.Map.View
 
         public void Draw(GameTime gameTime)
         {
-            GameMaster gm = GameMaster.getInstance();
-            if ((pickVars.pickActive && gm.getState() == EGameState.StateGame) || isBuildView)
+            GameMaster gm = GameMaster.Inst();
+            if ((pickVars.pickActive && gm.GetState() == EGameState.StateGame) || isBuildView)
             {
-                Model m = GameResources.Inst().getRoadModel();
+                Model m = GameResources.Inst().GetRoadModel();
                 Matrix[] transforms = new Matrix[m.Bones.Count];
                 m.CopyAbsoluteBoneTransformsTo(transforms);
 
@@ -93,8 +93,8 @@ namespace Expanze.Gameplay.Map.View
 
                 Player player = model.getOwner();
                 if (player == null)
-                    player = GameMaster.getInstance().getActivePlayer();
-                Vector3 color = player.getColor().ToVector3();
+                    player = GameMaster.Inst().GetActivePlayer();
+                Vector3 color = player.GetColor().ToVector3();
                 foreach (ModelMesh mesh in m.Meshes)
                 {
                     foreach (BasicEffect effect in mesh.Effects)
@@ -127,7 +127,7 @@ namespace Expanze.Gameplay.Map.View
                         
                         if (pickVars.pickActive && !isBuildView)
                         {
-                            if (model.CanActivePlayerBuildRoad() != RoadBuildError.OK)
+                            if (model.CanBuildRoad() != RoadBuildError.OK)
                             {
                                 if (!(a % 5 == 1 || a % 5 == 2 || a % 5 == 3 || a == 4 || a == 5 || a == 15 || a == 14))
                                     effect.EmissiveColor = new Vector3(0.5f, 0.0f, 0);
@@ -150,7 +150,7 @@ namespace Expanze.Gameplay.Map.View
 
         public void DrawPickableAreas()
         {
-            Model m = GameResources.Inst().getShape(GameResources.SHAPE_RECTANGLE);
+            Model m = GameResources.Inst().GetShape(GameResources.SHAPE_RECTANGLE);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 
@@ -177,15 +177,15 @@ namespace Expanze.Gameplay.Map.View
 
             if (pickVars.pickNewPress)
             {
-                if (GameMaster.getInstance().getState() == EGameState.StateGame)
+                if (GameMaster.Inst().GetState() == EGameState.StateGame)
                 {
-                    PromptWindow.Inst().showPrompt(PromptWindow.Mod.Buyer, Strings.HEXA_DUO, true);
-                    PromptWindow.Inst().addPromptItem(
+                    PromptWindow.Inst().Show(PromptWindow.Mod.Buyer, Strings.HEXA_DUO, true);
+                    PromptWindow.Inst().AddPromptItem(
                             new RoadPromptItem(roadID,
                                                 Strings.PROMT_TITLE_WANT_TO_BUILD_ROAD,
                                                 Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_ROAD,
                                                 Settings.costRoad, true,
-                                                GameResources.Inst().getHudTexture(HUDTexture.IconRoad)));             
+                                                GameResources.Inst().GetHudTexture(HUDTexture.IconRoad)));             
                 }
             }
         }

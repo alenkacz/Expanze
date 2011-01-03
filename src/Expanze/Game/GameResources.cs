@@ -11,7 +11,8 @@ namespace Expanze
 {
     public enum HUDTexture
     {
-        HammersPassive, HammersActive, InfoPassive, InfoActive, IconActive,
+        HammersPassive, HammersActive, SwordsActive, SwordsPassive, DestroyActive, DestroyPassive,
+        InfoPassive, InfoActive, IconActive,
         IconTown, IconRoad, 
         IconFort, IconFortActive,
         IconMarket, IconMarketActive,
@@ -31,7 +32,13 @@ namespace Expanze
         IconMedalMill, IconMedalStepherd, IconMedalQuarry, IconMedalSaw, IconMedalMine,
 
         PlayerColor,
-        BackgroundWater,
+        BackgroundWater, BackgroundPromptWindow, BackgroundMessageWindow, 
+
+        ButtonYes, ButtonNo,
+
+        SmallCorn, SmallMeat, SmallStone, SmallWood, SmallOre,
+
+        PickWindowIcon, PickWindowPrompt,
 
         HUDCount
     }
@@ -42,11 +49,22 @@ namespace Expanze
         CountModel
     }
 
+    public enum EFont
+    {
+        GameFont,
+        PlayerNameFont,
+        HudMaterialsFont,
+        MaterialsNewFont,
+        MedievalSmall,
+        MedievalMedium,
+        MedievalBig
+    }
+
     class GameResources
     {
         private static GameResources instance = null;
         private ContentManager content;
-        private Game game;
+        public static Game game;
 
         public const int N_MODEL = 9;
         Model[] hexaModel;
@@ -62,7 +80,8 @@ namespace Expanze
         Model[] stoneCoverModel;
         Model[] stoneQuarryModel;
         Texture2D[] hud;
-
+        private const int N_FONT = 7;
+        SpriteFont[] font;
 
         public static GameResources Inst()
         {
@@ -76,26 +95,47 @@ namespace Expanze
 
         private GameResources()
         {
-            game = GameState.game;
         }
 
-        public Model getHexaModel(HexaKind type)
+        public Model GetHexaModel(HexaKind type)
         {
             return hexaModel[(int)type];
         }
 
-        public Texture2D getHudTexture(HUDTexture id) { return hud[(int) id]; }
-        public Model getMountainsCover(int i) { return mountainsCoverModel[i]; }
-        public Model getMountainsSourceBuildingModel(int i) { return mountainsMineModel[i]; }
-        public Model getStoneCover(int i) { return stoneCoverModel[i]; }
-        public Model getStoneSourceBuildingModel(int i) { return stoneQuarryModel[i]; }
-        public Model getBuildingModel(BuildingModel id) { return buildingModel[(int) id]; }
-        public Model getTownModel() { return townModel; }
-        public Model getRoadModel() { return roadModel; }
+        public SpriteFont GetFont(EFont fontName)
+        {
+            if (font == null)
+                LoadFonts();
+            return font[(int)fontName];
+        }
 
-        public Model getShape(int shapeID)
+        public Texture2D GetHudTexture(HUDTexture id) { return hud[(int) id]; }
+        public Model GetMountainsCover(int i) { return mountainsCoverModel[i]; }
+        public Model GetMountainsSourceBuildingModel(int i) { return mountainsMineModel[i]; }
+        public Model GetStoneCover(int i) { return stoneCoverModel[i]; }
+        public Model GetStoneSourceBuildingModel(int i) { return stoneQuarryModel[i]; }
+        public Model GetBuildingModel(BuildingModel id) { return buildingModel[(int) id]; }
+        public Model GetTownModel() { return townModel; }
+        public Model GetRoadModel() { return roadModel; }
+
+        public Model GetShape(int shapeID)
         {
             return shapeModel[shapeID];
+        }
+
+        public String GetProgress()
+        {
+            if (hexaModel == null)
+                return Strings.MENU_GAME_LOADING_HUD;
+            if (shapeModel == null)
+                return Strings.MENU_GAME_LOADING_HEXAS;
+            if (buildingModel == null)
+                return Strings.MENU_GAME_LOADING_BUILDINGS;
+            else if (townModel == null)
+                return Strings.MENU_GAME_LOADING_SPECIAL_BUILDINGS;
+            else
+                return Strings.MENU_GAME_LOADING_MAP;
+
         }
 
         public void LoadContent()
@@ -106,10 +146,25 @@ namespace Expanze
             hud = new Texture2D[(int) HUDTexture.HUDCount];
             hud[(int)HUDTexture.PlayerColor] = content.Load<Texture2D>("pcolor");
             hud[(int)HUDTexture.BackgroundWater] = content.Load<Texture2D>("Models/hexa_voda3");
+            hud[(int)HUDTexture.BackgroundMessageWindow] = content.Load<Texture2D>("HUD/messageBG");
+            hud[(int)HUDTexture.BackgroundPromptWindow] = content.Load<Texture2D>("HUD/WindowPromt");
+            hud[(int)HUDTexture.ButtonNo] = content.Load<Texture2D>("HUD/NOPromt");
+            hud[(int)HUDTexture.ButtonYes] = content.Load<Texture2D>("HUD/OKPromt");
+            hud[(int)HUDTexture.SmallCorn] = content.Load<Texture2D>("HUD/scorn");
+            hud[(int)HUDTexture.SmallMeat] = content.Load<Texture2D>("HUD/smeat");
+            hud[(int)HUDTexture.SmallStone] = content.Load<Texture2D>("HUD/sstone");
+            hud[(int)HUDTexture.SmallWood] = content.Load<Texture2D>("HUD/swood");
+            hud[(int)HUDTexture.SmallOre] = content.Load<Texture2D>("HUD/sore");
+            hud[(int)HUDTexture.PickWindowIcon] = content.Load<Texture2D>("HUD/PickIcon");
+            hud[(int)HUDTexture.PickWindowPrompt] = content.Load<Texture2D>("HUD/PickPromt");
 
             hud[(int)HUDTexture.IconActive] = content.Load<Texture2D>("HUD/ic_active");
-            hud[(int)HUDTexture.HammersPassive] = content.Load<Texture2D>("HUD/hammer");
-            hud[(int)HUDTexture.HammersActive] = content.Load<Texture2D>("HUD/hammeractive");
+            hud[(int)HUDTexture.HammersPassive] = content.Load<Texture2D>("HUD/hex_ic_hammer");
+            hud[(int)HUDTexture.HammersActive] = content.Load<Texture2D>("HUD/hex_ic_hammeractive");
+            hud[(int)HUDTexture.SwordsPassive] = content.Load<Texture2D>("HUD/hex_ic_sword");
+            hud[(int)HUDTexture.SwordsActive] = content.Load<Texture2D>("HUD/hex_ic_swordactive");
+            hud[(int)HUDTexture.DestroyPassive] = content.Load<Texture2D>("HUD/hex_ic_destroy");
+            hud[(int)HUDTexture.DestroyActive] = content.Load<Texture2D>("HUD/hex_ic_destroyactive");
             hud[(int)HUDTexture.InfoPassive] = content.Load<Texture2D>("HUD/info");
             hud[(int)HUDTexture.InfoActive] = content.Load<Texture2D>("HUD/infoactive");
             hud[(int)HUDTexture.IconTown] = content.Load<Texture2D>("HUD/ic_town");
@@ -167,44 +222,21 @@ namespace Expanze
             hud[(int)HUDTexture.IconMedalMine] = content.Load<Texture2D>("HUD/medals/medal_mine");
 
             hexaModel = new Model[N_MODEL];
-            hexaModel[(int)HexaKind.Cornfield] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Cornfield]);
-            hexaModel[(int)HexaKind.Desert] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Desert]);
-            hexaModel[(int)HexaKind.Forest] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Forest]);
-            hexaModel[(int)HexaKind.Mountains] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Mountains]);
-            hexaModel[(int)HexaKind.Pasture] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Pasture]);
-            hexaModel[(int)HexaKind.Stone] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Stone]);
-            hexaModel[(int)HexaKind.Water] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Water]);
-            hexaModel[(int)HexaKind.Water + 1] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Water] + "2");
-            hexaModel[(int)HexaKind.Water + 2] = content.Load<Model>(Settings.mapPaths[(int)HexaKind.Water] + "3");
+            hexaModel[(int)HexaKind.Cornfield] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Cornfield]);
+            hexaModel[(int)HexaKind.Desert] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Desert]);
+            hexaModel[(int)HexaKind.Forest] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Forest]);
+            hexaModel[(int)HexaKind.Mountains] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Mountains]);
+            hexaModel[(int)HexaKind.Pasture] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Pasture]);
+            hexaModel[(int)HexaKind.Stone] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Stone]);
+            hexaModel[(int)HexaKind.Water] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Water]);
+            hexaModel[(int)HexaKind.Water + 1] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Water] + "2");
+            hexaModel[(int)HexaKind.Water + 2] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Water] + "3");
 
             shapeModel = new Model[N_SHAPE_MODEL];
 
             shapeModel[SHAPE_RECTANGLE] = content.Load<Model>("Shapes/rectangle");
             shapeModel[SHAPE_CIRCLE] = content.Load<Model>("Shapes/circle");
             shapeModel[SHAPE_SPHERE] = content.Load<Model>("Shapes/sphere");
-
-            buildingModel = new Model[(int) BuildingModel.CountModel];
-            buildingModel[(int) BuildingModel.PastureHouse] = content.Load<Model>("Models/pastureHouse");
-            buildingModel[(int) BuildingModel.Saw] = content.Load<Model>("Models/saw");
-            buildingModel[(int) BuildingModel.Mill] = content.Load<Model>("Models/millnew");
-            buildingModel[(int) BuildingModel.Fort] = content.Load<Model>("Models/fort");
-            buildingModel[(int) BuildingModel.Market] = content.Load<Model>("Models/market");
-            buildingModel[(int) BuildingModel.Monastery] = content.Load<Model>("Models/monastery");
-
-            mountainsCoverModel = new Model[5];
-            mountainsCoverModel[0] = content.Load<Model>("Models/cover4");
-            mountainsCoverModel[1] = content.Load<Model>("Models/cover5");
-            mountainsCoverModel[2] = content.Load<Model>("Models/cover1");
-            mountainsCoverModel[3] = content.Load<Model>("Models/cover2");
-            mountainsCoverModel[4] = content.Load<Model>("Models/cover3");
-
-            mountainsMineModel = new Model[6];
-            mountainsMineModel[0] = content.Load<Model>("Models/mine5");
-            mountainsMineModel[1] = content.Load<Model>("Models/mine6");
-            mountainsMineModel[2] = content.Load<Model>("Models/mine1");
-            mountainsMineModel[3] = content.Load<Model>("Models/mine2");
-            mountainsMineModel[4] = content.Load<Model>("Models/mine3");
-            mountainsMineModel[5] = content.Load<Model>("Models/mine4");
 
             stoneCoverModel = new Model[6];
             stoneCoverModel[0] = content.Load<Model>("Models/krytka5");
@@ -213,7 +245,6 @@ namespace Expanze
             stoneCoverModel[3] = content.Load<Model>("Models/krytka2");
             stoneCoverModel[4] = content.Load<Model>("Models/krytka3");
             stoneCoverModel[5] = content.Load<Model>("Models/krytka4");
-
             stoneQuarryModel = new Model[6];
             stoneQuarryModel[0] = content.Load<Model>("Models/lom_model5");
             stoneQuarryModel[1] = content.Load<Model>("Models/lom_model6");
@@ -221,9 +252,47 @@ namespace Expanze
             stoneQuarryModel[3] = content.Load<Model>("Models/lom_model2");
             stoneQuarryModel[4] = content.Load<Model>("Models/lom_model3");
             stoneQuarryModel[5] = content.Load<Model>("Models/lom_model4");
+            mountainsCoverModel = new Model[5];
+            mountainsCoverModel[0] = content.Load<Model>("Models/cover4");
+            mountainsCoverModel[1] = content.Load<Model>("Models/cover5");
+            mountainsCoverModel[2] = content.Load<Model>("Models/cover1");
+            mountainsCoverModel[3] = content.Load<Model>("Models/cover2");
+            mountainsCoverModel[4] = content.Load<Model>("Models/cover3");
+            mountainsMineModel = new Model[6];
+            mountainsMineModel[0] = content.Load<Model>("Models/mine5");
+            mountainsMineModel[1] = content.Load<Model>("Models/mine6");
+            mountainsMineModel[2] = content.Load<Model>("Models/mine1");
+            mountainsMineModel[3] = content.Load<Model>("Models/mine2");
+            mountainsMineModel[4] = content.Load<Model>("Models/mine3");
+            mountainsMineModel[5] = content.Load<Model>("Models/mine4");
+
+            buildingModel = new Model[(int)BuildingModel.CountModel];
+            buildingModel[(int)BuildingModel.PastureHouse] = content.Load<Model>("Models/pastureHouse");
+            buildingModel[(int)BuildingModel.Saw] = content.Load<Model>("Models/saw");
+            buildingModel[(int)BuildingModel.Mill] = content.Load<Model>("Models/millnew");
+            buildingModel[(int)BuildingModel.Fort] = content.Load<Model>("Models/fort");
+            buildingModel[(int)BuildingModel.Market] = content.Load<Model>("Models/market");
+            buildingModel[(int)BuildingModel.Monastery] = content.Load<Model>("Models/monastery");
 
             townModel = content.Load<Model>("Models/town");
             roadModel = content.Load<Model>("Models/road");
+
+            LoadFonts();
+        }
+
+        private void LoadFonts()
+        {
+            if (content == null)
+                content = new ContentManager(game.Services, "Content");
+
+            font = new SpriteFont[N_FONT];
+            font[(int)EFont.GameFont] = content.Load<SpriteFont>("gamefont");
+            font[(int)EFont.HudMaterialsFont] = content.Load<SpriteFont>("hudMaterialsFont");
+            font[(int)EFont.MaterialsNewFont] = content.Load<SpriteFont>("materialsNewFont");
+            font[(int)EFont.MedievalBig] = content.Load<SpriteFont>("Fonts/medievalBig");
+            font[(int)EFont.MedievalSmall] = content.Load<SpriteFont>("Fonts/medievalSmall");
+            font[(int)EFont.MedievalMedium] = content.Load<SpriteFont>("Fonts/medievalMedium");
+            font[(int)EFont.PlayerNameFont] = content.Load<SpriteFont>("playername");
         }
     }
 }

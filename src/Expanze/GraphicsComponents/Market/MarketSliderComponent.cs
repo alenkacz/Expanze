@@ -34,10 +34,10 @@ namespace Expanze
         protected int width;
         protected int height;
         protected String texture;
-        protected bool picked;
+        //protected bool picked;
 
-        HexaKind fromType = HexaKind.Null;
-        HexaKind toType = HexaKind.Null;
+        SourceKind fromKind = SourceKind.Null;
+        SourceKind toKind = SourceKind.Null;
 
         int fromTypeCount = 0;
         int toTypeCount = 0;
@@ -99,7 +99,7 @@ namespace Expanze
 
             if (pressed && ButtonState.Pressed == mouseState.LeftButton)
             {
-                if (fromType != HexaKind.Null && toType != HexaKind.Null)
+                if (fromKind != SourceKind.Null && toKind != SourceKind.Null)
                 {
                     // disable moving when both materials are not selected
                     moveSlider(((int)(mousex / Settings.spriteScale.M11)));
@@ -117,8 +117,8 @@ namespace Expanze
         {
             sliderPosition.X = spritePosition.X;
             clickablePos = new Rectangle(Settings.scaleW(sliderPosition.X), Settings.scaleH(sliderPosition.Y), sliderW, sliderH);
-            this.fromType = HexaKind.Null;
-            this.toType = HexaKind.Null;
+            this.fromKind = SourceKind.Null;
+            this.toKind = SourceKind.Null;
             this.fromTypeCount = 0;
             this.fromConvertedCount = 0;
             this.toTypeCount = 0;
@@ -129,9 +129,9 @@ namespace Expanze
         {
             sliderPosition.X = spritePosition.X;
             clickablePos = new Rectangle(Settings.scaleW(sliderPosition.X), Settings.scaleH(sliderPosition.Y), sliderW, sliderH);
-            this.fromTypeCount = GameMaster.getInstance().getActivePlayer().getMaterialNumber(fromType);
+            this.fromTypeCount = GameMaster.Inst().GetActivePlayer().GetMaterialNumber(fromKind);
             this.fromConvertedCount = fromTypeCount;
-            this.toTypeCount = GameMaster.getInstance().getActivePlayer().getMaterialNumber(toType);
+            this.toTypeCount = GameMaster.Inst().GetActivePlayer().GetMaterialNumber(toKind);
             this.toConvertedCount = toTypeCount;
         }
 
@@ -140,13 +140,17 @@ namespace Expanze
             if (Settings.scaleW(pos) < (range.Right) && Settings.scaleW(pos) > range.Left)
             {
                 int unit = getSliderUnit();
+                /// NEED TO BE FIXED //
+                /// unit should be 1/2 for example //
+                if (unit == 0)
+                    unit = 1;
                 int converted = (int)(spritePosition.X - pos)/unit;
 
                 if (converted < 0) converted = -converted;
 
-                if ((this.fromTypeCount - converted * GameMaster.getInstance().getActivePlayer().getConversionRate(fromType)) >= 0)
+                if ((this.fromTypeCount - converted * GameMaster.Inst().GetActivePlayer().GetConversionRate(fromKind)) >= 0)
                 {
-                    this.fromConvertedCount = this.fromTypeCount - converted * GameMaster.getInstance().getActivePlayer().getConversionRate(fromType);
+                    this.fromConvertedCount = this.fromTypeCount - converted * GameMaster.Inst().GetActivePlayer().GetConversionRate(fromKind);
                     this.toConvertedCount = this.toTypeCount + converted;
 
                     sliderPosition.X = pos;
@@ -166,21 +170,21 @@ namespace Expanze
 
         private int getSliderUnit()
         {
-            int count = GameMaster.getInstance().getActivePlayer().getMaterialNumber(fromType)/GameMaster.getInstance().getActivePlayer().getConversionRate(fromType);
+            int count = GameMaster.Inst().GetActivePlayer().GetMaterialNumber(fromKind)/GameMaster.Inst().GetActivePlayer().GetConversionRate(fromKind);
             return width / count;
         }
 
-        public void setFromType(HexaKind k)
+        public void setFromType(SourceKind k)
         {
-            this.fromType = k;
-            this.fromTypeCount = GameMaster.getInstance().getActivePlayer().getMaterialNumber(fromType);
+            this.fromKind = k;
+            this.fromTypeCount = GameMaster.Inst().GetActivePlayer().GetMaterialNumber(fromKind);
             this.fromConvertedCount = fromTypeCount;
         }
 
-        public void setToType(HexaKind k)
+        public void setToType(SourceKind k)
         {
-            toType = k;
-            this.toTypeCount = GameMaster.getInstance().getActivePlayer().getMaterialNumber(toType);
+            toKind = k;
+            this.toTypeCount = GameMaster.Inst().GetActivePlayer().GetMaterialNumber(toKind);
             this.toConvertedCount = toTypeCount;
         }
 
@@ -204,14 +208,14 @@ namespace Expanze
 
             spriteBatch.Draw(sliderTexture, sliderPosition, c);
 
-            if (fromType != HexaKind.Null)
+            if (fromKind != SourceKind.Null)
             {
-                spriteBatch.DrawString(GameState.gameFont, fromConvertedCount.ToString(), new Vector2(spritePosition.X - 100, spritePosition.Y + Settings.scaleH(50)), Color.White);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), fromConvertedCount.ToString(), new Vector2(spritePosition.X - 100, spritePosition.Y + Settings.scaleH(50)), Color.White);
             }
 
-            if (toType != HexaKind.Null)
+            if (toKind != SourceKind.Null)
             {
-                spriteBatch.DrawString(GameState.gameFont, toConvertedCount.ToString(), new Vector2(spritePosition.X + width + 50, spritePosition.Y + Settings.scaleH(50)), Color.White);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), toConvertedCount.ToString(), new Vector2(spritePosition.X + width + 50, spritePosition.Y + Settings.scaleH(50)), Color.White);
             }
 
             spriteBatch.End();

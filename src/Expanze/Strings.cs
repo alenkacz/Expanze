@@ -9,14 +9,60 @@ namespace Expanze
     {
 
         // Menu strings
-        public static string MENU_HOT_SEAT_NO_AI = "Hráč";
+        public static string MENU_COMMON_BACK = "Zpět";
+        public static string MENU_COMMON_ARE_YOU_SURE = "Jste si jisti, že chcete hru ukončit?";
+        public static string MENU_COMMON_YES = "Ano";
+        public static string MENU_COMMON_NO = "Ne";
 
+        public static string MENU_MAIN_HOT_SEAT = "Hot seat";
+        public static string MENU_MAIN_QUICK_GAME = "Rychlá hra";
+        public static string MENU_MAIN_OPTION = "Nastavení";
+        public static string MENU_MAIN_CREATORS = "Autoři";
+        public static string MENU_MAIN_EXIT = "Konec";
+
+        public static string MENU_HOT_SEAT_NO_AI = "Hráč";
         public static string[] MENU_HOT_SEAT_NAMES = { "Pedro de Mendoza", "Raimundus Lullus", "Hernando de Soto", "Francisco Pizarro", "Diego de Almagro", "Juan de la Cosa" };
+        public static string MENU_HOT_SEAT_POINTS = "Počet bodů";
+        public static string MENU_HOT_SEAT_MAP_TYPE = "Druh mapy";
+        public static string MENU_HOT_SEAT_MAP_SIZE = "Velikost mapy";
+        public static string MENU_HOT_SEAT_MAP_WEALTH = "Bohatství surovin";
 
         public static string MENU_PAUSE_GAME_ITEM_RESUME = "Zpět do hry";
         public static string MENU_PAUSE_GAME_ITEM_QUIT_GAME = "Ukončit hru";
+        public static string MENU_PAUSE_GAME_ARE_YOU_SURE = "Opravdu chcete ukončit hru?";
 
         public static string MENU_LOADING_LOADING = "Načítání obsahu";
+
+        public static string MENU_GAME_LOADING_TITLE = "Načítání";
+        public static string MENU_GAME_LOADING_HUD = "textur";
+        public static string MENU_GAME_LOADING_HEXAS = "hex";
+        public static string MENU_GAME_LOADING_BUILDINGS = "budov těžby";
+        public static string MENU_GAME_LOADING_SPECIAL_BUILDINGS = "speciálních budov";
+        public static string MENU_GAME_LOADING_MAP = "mapy";
+
+        public static string MENU_OPTION_TITLE = "Nastavení";
+        public static string MENU_OPTION_ACTIVATE_CHANGES = "Aktivovat změny";
+        public static string MENU_OPTION_RESOLUTION = "Rozlišení";
+        public static string MENU_OPTION_FULLSCREEN = "Fullscreen";
+
+        public static string MENU_CREATORS_LUKAS = "Lukáš Beran - teamleader, programátor";
+        public static string MENU_CREATORS_ALENA = "Alena Varkočková - programátorka";
+        public static string MENU_CREATORS_PAVLA = "Pavla Balíková - grafička";
+
+        public static string GAME_SETTINGS_MAP_SIZE_SMALL = "Malá";
+        public static string GAME_SETTINGS_MAP_SIZE_MEDIUM = "Střední";
+        public static string GAME_SETTINGS_MAP_SIZE_BIG = "Velká";
+        public static string GAME_SETTINGS_MAP_WEALTH_LOW = "Nízké";
+        public static string GAME_SETTINGS_MAP_WEALTH_MEDIUM = "Střední";
+        public static string GAME_SETTINGS_MAP_WEALTH_HIGH = "Vysoké";
+        public static string GAME_SETTINGS_MAP_TYPE_NORMAL = "Normální";
+        public static string GAME_SETTINGS_MAP_TYPE_LOWLAND = "Nížiny";
+        public static string GAME_SETTINGS_MAP_TYPE_WASTELAND = "Pustina";
+
+        public static string GAME_ALERT_TITLE_GAME_STARTED = "Expanze začíná!";
+        public static string GAME_ALERT_DESCRIPTION_GAME_STARTED = "Rozestavění prvních měst je u konce, boj o území může začít.";
+        public static string GAME_ALERT_TITLE_AI_EXCEPTION = "O jednoho míň";
+        public static string GAME_ALERT_DESCRIPTION_AI_EXCEPTION = "vzdává hru a již dále nebude pokračovat v expanzi ostrova.";
 
         //
         public static string ALERT_TITLE_THIS_IS_NOT_YOURS = "Tohle není tvoje. Můžeš pouze koukat.";
@@ -58,21 +104,21 @@ namespace Expanze
         public static string PROMT_TITLE_WANT_TO_BUILD_MINE = "Důl na rudu";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_MINE = "Horníci budou pro tebe těžit z dolu rudu. Po vynalezení pokroku z Kláštera lze důl vylepšit, aby těžba byla ještě vyšší.";
         public static string PROMPT_TITLE_WANT_TO_UPGRADE_1_MINE = "Vozíky na rudu";
-        public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_MINE = "Pořídíš-li horníkům nové vozíky, budou pracovat o 50% lépe";
+        public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_MINE = "Pořídíš-li horníkům nové vozíky, budou pracovat o 50% lépe.";
         public static string PROMPT_TITLE_WANT_TO_UPGRADE_2_MINE = "Nové helmy";
         public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_MINE = "Horníci s novými helmami nebudou tak často na marodce. Zisky rudy o 100% lepší.";
 
         public static string PROMT_TITLE_WANT_TO_BUILD_QUARRY = "Kamenný lom";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_QUARRY = "Horníci budou těžit stavební kámen.  Po vynalezení pokroku z Kláštera jim to půjde líp.";
         public static string PROMPT_TITLE_WANT_TO_UPGRADE_1_QUARRY = "Lepší krumpáče";
-        public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_QUARRY = "Pořídíš-li horníkům lepší krumpáče, budou pracovat o 50% lépe";
+        public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_QUARRY = "Pořídíš-li horníkům lepší krumpáče, budou pracovat o 50% lépe.";
         public static string PROMPT_TITLE_WANT_TO_UPGRADE_2_QUARRY = "Trhavina";
         public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_QUARRY = "Horníci s trhavinou dovedou divy. Zisky kamene o 100% lepší.";
        
         public static string PROMT_TITLE_WANT_TO_BUILD_SAW = "Pila";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_SAW = "Dřevorubci natahají z lesa dřevo.  Po vynalezení pokroku z Kláštera bude těžba účinější.";
         public static string PROMPT_TITLE_WANT_TO_UPGRADE_1_SAW = "Sekery";
-        public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_SAW = "Pořídíš-li dřevorubcům sekery, budou pracovat o 50% lépe";
+        public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_SAW = "Pořídíš-li dřevorubcům sekery, budou pracovat o 50% lépe.";
         public static string PROMPT_TITLE_WANT_TO_UPGRADE_2_SAW = "Tažní koně";
         public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_SAW = "Tažní koně velice urychlí práci. Zisky dřeva o 100% lepší.";
 
@@ -98,6 +144,9 @@ namespace Expanze
         public static string PROMPT_TITLE_WANT_TO_BUILD_MONASTERY = "Klášter";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_MONASTERY = "Mniši můžou vynaleznout lepší nástroje pro horníky, dřevorubce, zvýšit úrodnost obilných polí, urychlit práci pastevce.";
 
+        public static string PROMPT_DESCRIPTION_ALL_UPGRADES_INVENTED = "Vynalezl jsi již všechny dostupné pokroky. Nyní můžeš vybavit novými vynálezy své budovy a tím zlepšit jejich efektivitu.";
+        public static string PROMPT_DESCRIPTION_ALL_LICENCES_BOUGHT = "Koupil jsi již všechny dostupné licence umožňující výhodnější směnu jednotlivých surovin. Je na čase toho využít a vyhrát!";
+        
         public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_CORN_1 = "Výhradní výměnné právo na obilí";
         public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_CORN_2 = "Výměnné právo na obilí druhého stupně";
         public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_MEAT_1 = "Výhradní výměnné právo na ovce";

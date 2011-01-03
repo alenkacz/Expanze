@@ -27,7 +27,7 @@ namespace Expanze
 
 
         static string[] resolution = new string[Settings.allResolutions.Length];
-        static string[] fullscreen = {"Ne", "Ano"};
+        static string[] fullscreen = {Strings.MENU_COMMON_NO, Strings.MENU_COMMON_YES};
 
         static int currentResolution = 0;
         static int isFullscreen = 0;
@@ -72,8 +72,8 @@ namespace Expanze
 
             SetMenuEntryText();
 
-            MenuEntry apply = new MenuEntry("Aktivovat změny");
-            MenuEntry back = new MenuEntry("Zpět");
+            MenuEntry apply = new MenuEntry(Strings.MENU_OPTION_ACTIVATE_CHANGES);
+            MenuEntry back = new MenuEntry(Strings.MENU_COMMON_BACK);
 
             // Hook up menu event handlers.
             resolutionMenuEntry.Selected += ResolutionMenuEntrySelected;
@@ -96,8 +96,8 @@ namespace Expanze
         /// </summary>
         void SetMenuEntryText()
         {
-            resolutionMenuEntry.Text = "Rozlišení: " + resolution[currentResolution];
-            fullscreenMenuEntry.Text = "Fullscreen: " + fullscreen[isFullscreen];
+            resolutionMenuEntry.Text = Strings.MENU_OPTION_RESOLUTION + ": " + resolution[currentResolution];
+            fullscreenMenuEntry.Text = Strings.MENU_OPTION_FULLSCREEN + ": " + fullscreen[isFullscreen];
         }
 
 

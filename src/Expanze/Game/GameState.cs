@@ -25,16 +25,6 @@ namespace Expanze
         public static Game game;
         public static Map map;
 
-        public static Message message;
-
         public static SpriteBatch spriteBatch;
-
-        public static SpriteFont gameFont;
-        public static SpriteFont playerNameFont;
-        public static SpriteFont hudMaterialsFont;
-        public static SpriteFont materialsNewFont;
-        public static SpriteFont medievalSmall;
-        public static SpriteFont medievalMedium;
-        public static SpriteFont medievalBig;
     }
 }

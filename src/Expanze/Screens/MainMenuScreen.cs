@@ -27,11 +27,11 @@ namespace Expanze
             : base("Main Menu")
         {
             // Create our menu entries.
-            MenuEntry hotseatMenuEntry = new MenuEntry("Hot seat");
-            MenuEntry quickMenuEntry = new MenuEntry("Rychlá hra");
-            MenuEntry settingsMenuEntry = new MenuEntry("Nastavení");
-            MenuEntry creatorsMenuEntry = new MenuEntry("Autoři");
-            MenuEntry exitMenuEntry = new MenuEntry("Konec");
+            MenuEntry hotseatMenuEntry = new MenuEntry(Strings.MENU_MAIN_HOT_SEAT);
+            MenuEntry quickMenuEntry = new MenuEntry(Strings.MENU_MAIN_QUICK_GAME);
+            MenuEntry settingsMenuEntry = new MenuEntry(Strings.MENU_MAIN_OPTION);
+            MenuEntry creatorsMenuEntry = new MenuEntry(Strings.MENU_MAIN_CREATORS);
+            MenuEntry exitMenuEntry = new MenuEntry(Strings.MENU_MAIN_EXIT);
 
             // Hook up menu event handlers.
             hotseatMenuEntry.Selected += HotseatMenuEntrySelected;
@@ -60,8 +60,6 @@ namespace Expanze
         void HotseatMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
             ScreenManager.AddScreen(new HotSeatScreen(), e.PlayerIndex);
-
-
         }
 
         /// <summary>
@@ -70,10 +68,10 @@ namespace Expanze
         void QuickMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
             // reset to the default state
-            GameMaster.getInstance().PrepareQuickGame();
+            GameMaster.Inst().PrepareQuickGame();
 
             // now is used for AI
-            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
+            GameLoadScreen.Load(ScreenManager, true, e.PlayerIndex,
                                new GameplayScreen(false));
         }
 
@@ -100,7 +98,7 @@ namespace Expanze
         /// </summary>
         protected override void OnCancel(PlayerIndex playerIndex)
         {
-            const string message = "Jste si jisti, že chcete hru ukončit?";
+            string message = Strings.MENU_COMMON_ARE_YOU_SURE;
 
             MessageBoxScreen confirmExitMessageBox = new MessageBoxScreen(message);
 

@@ -35,7 +35,7 @@ namespace Expanze
         /// Constructor.
         /// </summary>
         public CreatorsMenuScreen()
-            : base("Options")
+            : base(Strings.MENU_OPTION_TITLE)
         {
             // Create our menu entries.
             alenaMenuEntry = new MenuEntry(string.Empty);
@@ -44,7 +44,7 @@ namespace Expanze
 
             SetMenuEntryText();
 
-            MenuEntry back = new MenuEntry("Zpět");
+            MenuEntry back = new MenuEntry(Strings.MENU_COMMON_BACK);
 
             // Hook up menu event handlers.
             back.Selected += OnCancel;
@@ -62,9 +62,9 @@ namespace Expanze
         /// </summary>
         void SetMenuEntryText()
         {
-            lukasMenuEntry.Text = "Lukáš Beran - teamleader, programátor";
-            alenaMenuEntry.Text = "Alena Varkočková - programátorka";
-            pavlaMenuEntry.Text = "Pavla Balíková - grafička";
+            lukasMenuEntry.Text = Strings.MENU_CREATORS_LUKAS;
+            alenaMenuEntry.Text = Strings.MENU_CREATORS_ALENA;
+            pavlaMenuEntry.Text = Strings.MENU_CREATORS_PAVLA;
         }
 
 

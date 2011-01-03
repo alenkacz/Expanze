@@ -32,11 +32,11 @@ namespace Expanze
             this.ore = ore;
         }
 
-        public int getWood() { return wood; }
-        public int getStone() { return stone; }
-        public int getCorn() { return corn; }
-        public int getOre() { return ore; }
-        public int getMeat() { return meat; }
+        public int GetWood() { return wood; }
+        public int GetStone() { return stone; }
+        public int GetCorn() { return corn; }
+        public int GetOre() { return ore; }
+        public int GetMeat() { return meat; }
 
         public static SourceAll operator +(SourceAll a, SourceAll b)
         {
@@ -46,6 +46,16 @@ namespace Expanze
         public static SourceAll operator -(SourceAll a, SourceAll b)
         {
             return new SourceAll(a.wood - b.wood, a.stone - b.stone, a.corn - b.corn, a.meat - b.meat, a.ore - b.ore);
+        }
+
+        public override bool Equals(object obj)
+        {
+            SourceAll b = (SourceAll)obj;
+            return b.corn == corn &&
+                   b.meat == meat &&
+                   b.stone == stone &&
+                   b.wood == wood &&
+                   b.ore == ore;
         }
 
         public int this[int index]

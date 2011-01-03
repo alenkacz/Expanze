@@ -10,12 +10,13 @@ namespace Expanze
     public enum TransactionState {TransactionStart, TransactionMiddle, TransactionEnd };
     public enum Building { Town, Road, Market, Monastery, Fort, Mill, Stepherd, Quarry, Saw, Mine, Count }
 
-    class Player : IPlayerGet
+    class Player : IPlayer
     {
         private String name;
         private Color color;
         private bool materialChanged;
         private int points;
+        private bool active;            /// is he still playing? (ex. AI make exception and it cant continue in game
 
         SourceAll prevSource;       // Source before last source change (for example before paying for something, collecting resources
         SourceAll source;
@@ -23,12 +24,8 @@ namespace Expanze
 
         int[] buildingCount;
 
-        int conversionRateCorn;
-        int conversionRateStone;
-        int conversionRateOre;
-        int conversionRateMeat;
-        int conversionRateWood;
-        UpgradeKind[] upgradeSourceBuilding;
+        LicenceKind[] licenceMarket;
+        UpgradeKind[] upgradeMonastery;
 
         IComponentAI componentAI;   // is null if player is NOT controled by computer but is controled by human
 
@@ -45,16 +42,16 @@ namespace Expanze
                 buildingCount[loop1] = 0;
             }
 
-            conversionRateCorn = Settings.conversionRateCorn;
-            conversionRateStone = Settings.conversionRateStone;
-            conversionRateOre = Settings.conversionRateOre;
-            conversionRateMeat = Settings.conversionRateMeat;
-            conversionRateWood = Settings.conversionRateWood;
-
-            upgradeSourceBuilding = new UpgradeKind[(int) SourceBuildingKind.Count];
+            licenceMarket = new LicenceKind[(int)SourceKind.Count];
             for (int loop1 = 0; loop1 < (int)SourceBuildingKind.Count; loop1++)
             {
-                upgradeSourceBuilding[loop1] = UpgradeKind.NoUpgrade;
+                licenceMarket[loop1] = LicenceKind.NoLicence;
+            }
+
+            upgradeMonastery = new UpgradeKind[(int) SourceBuildingKind.Count];
+            for (int loop1 = 0; loop1 < (int)SourceBuildingKind.Count; loop1++)
+            {
+                upgradeMonastery[loop1] = UpgradeKind.NoUpgrade;
             }
 
             this.color = color;
@@ -62,41 +59,37 @@ namespace Expanze
             this.componentAI = componentAI;
 
             materialChanged = false;
+            active = true;
         }
 
-        public int getBuildingCount(Building building) { return buildingCount[(int)building]; }
-        public IComponentAI getComponentAI() { return componentAI; }
-        public bool getIsAI() { return componentAI != null; }
-        public Color getColor() { return color; }
-        public UpgradeKind GetSourceBuildingUpgrade(SourceBuildingKind kind) { return upgradeSourceBuilding[(int)kind]; }
+        public int GetBuildingCount(Building building) { return buildingCount[(int)building]; }
+        public IComponentAI GetComponentAI() { return componentAI; }
+        public bool GetIsAI() { return componentAI != null; }
+        public Color GetColor() { return color; }
+        public bool GetActive() { return active; }
+        public UpgradeKind GetMonasteryUpgrade(SourceBuildingKind kind) { return upgradeMonastery[(int)kind]; }
+        public LicenceKind GetMarketLicence(SourceKind kind) { return licenceMarket[(int)kind]; }
 
-        public void addBuilding(Building building)
+        public void AddBuilding(Building building)
         {
             buildingCount[(int)building]++;
-            GameMaster.getInstance().PlayerWantMedail(this, building);
+            GameMaster.Inst().PlayerWantMedail(this, building);
         }
 
-        public void addPoints(int add) { 
+        public void AddPoints(int add) { 
             points += add;
-            GameMaster.getInstance().CheckWinner(this);
+            GameMaster.Inst().CheckWinner(this);
         }
 
-        public int getPoints() { return points; }
+        public int GetPoints() { return points; }
 
-        public int getConversionRate(HexaKind h)
+        public int GetConversionRate(SourceKind kind)
         {
-            switch (h)
+            switch (licenceMarket[(int)kind])
             {
-                case HexaKind.Cornfield:
-                    return conversionRateCorn;
-                case HexaKind.Forest:
-                    return conversionRateWood;
-                case HexaKind.Mountains:
-                    return conversionRateOre;
-                case HexaKind.Pasture:
-                    return conversionRateMeat;
-                case HexaKind.Stone:
-                    return conversionRateStone;
+                case LicenceKind.NoLicence: return 4;
+                case LicenceKind.FirstLicence: return 3;
+                case LicenceKind.SecondLicence: return 2;
             }
 
             return -1;
@@ -107,7 +100,7 @@ namespace Expanze
             return source;
         }
 
-        public String getName()
+        public String GetName()
         {
             return this.name;
         }
@@ -137,14 +130,14 @@ namespace Expanze
             return source.stone;
         }
 
-        public void payForSomething(SourceAll cost)
+        public void PayForSomething(SourceAll cost)
         {
-            changeSources(-cost.wood, -cost.stone, -cost.corn, -cost.meat, -cost.ore);
+            ChangeSources(-cost.wood, -cost.stone, -cost.corn, -cost.meat, -cost.ore);
 
             source = source - cost;
         }
 
-        public void addSources(SourceAll amount, TransactionState state)
+        public void AddSources(SourceAll amount, TransactionState state)
         {
             switch (state)
             {
@@ -160,9 +153,9 @@ namespace Expanze
                 case TransactionState.TransactionEnd :
                     transactionSource = transactionSource + amount;
                     source = source + transactionSource;               
-                    changeSources(transactionSource.wood, transactionSource.stone, transactionSource.corn, transactionSource.meat, transactionSource.ore);
+                    ChangeSources(transactionSource.wood, transactionSource.stone, transactionSource.corn, transactionSource.meat, transactionSource.ore);
                     transactionSource = new SourceAll(0);
-                    GameMaster.getInstance().CheckWinner(this);
+                    GameMaster.Inst().CheckWinner(this);
                     break;
             }
         }
@@ -170,92 +163,51 @@ namespace Expanze
         /// <summary>
         /// Remembers state of material from previous round, active when active player is changed
         /// </summary>
-        public void changeSources(int wood, int stone, int corn, int meat, int ore)
+        public void ChangeSources(int wood, int stone, int corn, int meat, int ore)
         {
             materialChanged = true;
             prevSource = new SourceAll(wood, stone, corn, meat, ore);
         }
 
-        public bool hasMaterialChanged()
+        public bool HasMaterialChanged()
         {
             bool temp = materialChanged;
             materialChanged = false;
             return temp;
         }
 
-        public SourceAll getMaterialChange()
+        public SourceAll GetMaterialChange()
         {
             return prevSource;
         }
 
-        public bool haveEnoughMaterial(HexaKind k)
+        public bool HaveEnoughMaterial(SourceKind kind)
         {
-            switch (k)
-            {
-                case HexaKind.Cornfield:
-                    return getCorn() > getConversionRate(k);
-                case HexaKind.Forest:
-                    return getWood() > getConversionRate(k);
-                case HexaKind.Mountains:
-                    return getOre() > getConversionRate(k);
-                case HexaKind.Pasture:
-                    return getMeat() > getConversionRate(k);
-                case HexaKind.Stone:
-                    return getStone() > getConversionRate(k);
-            }
-
-            return false;
+            return source.Get(kind) >= GetConversionRate(kind);
         }
 
-        public int getMaterialNumber(HexaKind k)
+        public int GetMaterialNumber(SourceKind k)
         {
-            switch (k)
-            {
-                case HexaKind.Cornfield:
-                    return getCorn();
-                case HexaKind.Forest:
-                    return getWood();
-                case HexaKind.Mountains:
-                    return getOre();
-                case HexaKind.Pasture:
-                    return getMeat();
-                case HexaKind.Stone:
-                    return getStone();
-            }
-
-            return 0;
+            return source.Get(k);
         }
 
-        internal void SetSourceBuildingUpdate(UpgradeKind upgradeKind, int upgradeNumber)
+        public void SetActive(bool active) 
         {
-            upgradeSourceBuilding[upgradeNumber] = upgradeKind;
+            if (this.active && !active)
+                GameMaster.Inst().AddToPlayerCount(-1);
+
+            this.active = active; 
+            
         }
 
-        internal void SetMarketRate(UpgradeKind upgradeKind, int upgradeNumber)
+        public void SetSourceBuildingUpdate(UpgradeKind upgradeKind, int upgradeNumber)
         {
-            switch (upgradeKind)
-            {
-                case UpgradeKind.FirstUpgrade :
-                    switch (upgradeNumber)
-                    {
-                        case 0: conversionRateCorn = 3; break;
-                        case 1: conversionRateMeat = 3; break;
-                        case 2: conversionRateStone = 3; break;
-                        case 3: conversionRateWood = 3; break;
-                        case 4: conversionRateOre = 3; break;
-                    }
-                    break;
-                case UpgradeKind.SecondUpgrade :
-                    switch (upgradeNumber)
-                    {
-                        case 0: conversionRateCorn =2; break;
-                        case 1: conversionRateMeat = 2; break;
-                        case 2: conversionRateStone = 2; break;
-                        case 3: conversionRateWood = 2; break;
-                        case 4: conversionRateOre = 2; break;
-                    }
-                    break;
-            }
+            upgradeMonastery[upgradeNumber] = upgradeKind;
+        }
+
+        public void BuyMarketLicence(LicenceKind licenceKind, int upgradeNumber)
+        {
+            licenceMarket[upgradeNumber] = licenceKind;
         }
     }
 }

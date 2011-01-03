@@ -64,6 +64,8 @@ namespace Expanze
             if (ScreenManager.Game.Content == null)
                 ScreenManager.Game.Content = new ContentManager(ScreenManager.Game.Services, "Content");
 
+            GameResources.game = ScreenManager.Game;
+
             backgroundTexture = ScreenManager.Game.Content.Load<Texture2D>("intro");
         }
 

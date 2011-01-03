@@ -24,7 +24,7 @@ namespace Expanze
     {
         #region Fields
 
-        bool userCancelled = false;
+        bool userCancelled;
 
         GameScreen[] screensToLoad;
 
@@ -40,6 +40,7 @@ namespace Expanze
         private VictoryScreen(ScreenManager screenManager,
                               GameScreen[] screensToLoad)
         {
+            this.userCancelled = false;
             this.screensToLoad = screensToLoad;
         }
 

@@ -45,7 +45,7 @@ namespace Expanze
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
 
 
-            //ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width - 91, ScreenManager.Game.GraphicsDevice.Viewport.Height - 80, GameState.gameFont, 91, 80, "nextTurn");
+            //ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width - 91, ScreenManager.Game.GraphicsDevice.Viewport.Height - 80, GameResources.Inst().GetFont(EFont.MedievalBig), 91, 80, "nextTurn");
             //guiComponents.Add(changeTurnButton);
 
             foreach (GuiComponent guiComponent in guiComponents)

@@ -18,9 +18,9 @@ namespace Expanze
         public GameSettings(int points, string mapType, string mapSize, string mapWealth) 
         {
             this.points = points;
-            this.mapType = mapType.ToLower();
-            this.mapSize = mapSize.ToLower();
-            this.mapWealth = mapWealth.ToLower();
+            this.mapType = mapType;
+            this.mapSize = mapSize;
+            this.mapWealth = mapWealth;
         }
 
         public int getPoints()
@@ -30,11 +30,11 @@ namespace Expanze
 
         public string getMapSize() 
         {
-            if (mapSize == "malá")
+            if (mapSize == Strings.GAME_SETTINGS_MAP_SIZE_SMALL)
             {
                 return "small";
             }
-            else if (mapSize == "střední")
+            else if (mapSize == Strings.GAME_SETTINGS_MAP_SIZE_MEDIUM)
             {
                 return "medium";
             }
@@ -46,11 +46,11 @@ namespace Expanze
 
         public string getMapType()
         {
-            if (mapType == "normální")
+            if (mapType == Strings.GAME_SETTINGS_MAP_TYPE_NORMAL)
             {
                 return "normal";
             }
-            else if (mapType == "nížiny")
+            else if (mapType == Strings.GAME_SETTINGS_MAP_TYPE_LOWLAND)
             {
                 return "lowland";
             }
@@ -62,11 +62,11 @@ namespace Expanze
 
         public string getMapWealth()
         {
-            if (mapWealth == "nízké")
+            if (mapWealth == Strings.GAME_SETTINGS_MAP_WEALTH_LOW)
             {
                 return "low";
             }
-            else if (mapWealth == "střední")
+            else if (mapWealth == Strings.GAME_SETTINGS_MAP_WEALTH_MEDIUM)
             {
                 return "medium";
             }

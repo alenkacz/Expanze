@@ -13,7 +13,7 @@ namespace Expanze.Gameplay.Map
         int townID;
 
         public TownPromptItem(int townID, String title, String description, SourceAll source, bool isSourceCost, Texture2D icon)
-            : base(title, description, source, isSourceCost, icon)
+            : base(title, description, source, isSourceCost, false, icon)
         {
             this.townID = townID;
         }
@@ -25,8 +25,8 @@ namespace Expanze.Gameplay.Map
 
         public override string TryExecute()
         {
-            Town town = GameState.map.GetTownByID(townID);
-            TownBuildError error = town.CanActivePlayerBuildTown();
+            TownModel town = GameState.map.GetTownByID(townID);
+            TownBuildError error = town.CanBuildTown();
             switch (error)
             {
                 case TownBuildError.AlreadyBuild: return Strings.ALERT_TITLE_TOWN_IS_BUILD;
@@ -63,15 +63,15 @@ namespace Expanze.Gameplay.Map
 
         private Color pickTownColor;
         private PickVariables pickVars;
-        private Town model;
+        private TownModel model;
         private Matrix world;
 
         private bool[] buildingIsBuild; /// is building on 1-3 position build?
 
-        public TownView(Town model, Matrix world)
+        public TownView(TownModel model, Matrix world)
         {
             this.model = model;
-            this.townID = model.getTownID();
+            this.townID = model.GetTownID();
             this.pickTownColor = new Color(0.0f, 0.0f, townID / 256.0f);
             this.world = world;
             buildingIsBuild = new bool[3];
@@ -81,7 +81,7 @@ namespace Expanze.Gameplay.Map
         }
 
         public int getTownID() { return townID; }
-        public Town getTownModel() { return model; }
+        public TownModel getTownModel() { return model; }
         public Boolean getIsMarked() { return pickTownID == townID; }
         public Boolean getPickNewPress() { return pickVars.pickNewPress; }
 
@@ -89,7 +89,7 @@ namespace Expanze.Gameplay.Map
 
         public bool getBuildingIsBuild(int hexaID)
         {
-            return buildingIsBuild[model.findBuildingByHexaID(hexaID)];
+            return buildingIsBuild[model.FindBuildingByHexaID(hexaID)];
         }
 
         public void setBuildingIsBuild(int pos, bool isBuild)
@@ -97,11 +97,11 @@ namespace Expanze.Gameplay.Map
             buildingIsBuild[pos] = isBuild;
         }
 
-        public void draw(GameTime gameTime)
+        public void Draw(GameTime gameTime)
         {
             if (pickVars.pickActive || isBuildView)
             {
-                Model m = GameResources.Inst().getTownModel();
+                Model m = GameResources.Inst().GetTownModel();
                 Matrix[] transforms = new Matrix[m.Bones.Count];
                 m.CopyAbsoluteBoneTransformsTo(transforms);
 
@@ -111,10 +111,10 @@ namespace Expanze.Gameplay.Map
 
                 int a = 0;
 
-                Player player = model.getPlayerOwner();
+                Player player = model.GetPlayerOwner();
                 if (player == null)
-                    player = GameMaster.getInstance().getActivePlayer();
-                Vector3 color = player.getColor().ToVector3();
+                    player = GameMaster.Inst().GetActivePlayer();
+                Vector3 color = player.GetColor().ToVector3();
 
                 foreach (ModelMesh mesh in m.Meshes)
                 {
@@ -142,8 +142,8 @@ namespace Expanze.Gameplay.Map
                         
                         if (pickVars.pickActive && !isBuildView)
                         {
-                            if (model.CanActivePlayerBuildTown() != TownBuildError.OK &&
-                                !(model.getIsBuild() && !isBuildView))
+                            if (model.CanBuildTown() != TownBuildError.OK &&
+                                !(model.GetIsBuild() && !isBuildView))
                             {
                                 if (a != 0)
                                     effect.EmissiveColor = new Vector3(0.5f, 0.0f, 0);
@@ -167,7 +167,7 @@ namespace Expanze.Gameplay.Map
 
                 if (pickTownID == townID || (pickVars.pickActive && isBuildView))
                 {
-                    m = GameResources.Inst().getShape(GameResources.SHAPE_SPHERE);
+                    m = GameResources.Inst().GetShape(GameResources.SHAPE_SPHERE);
                     mWorld = Matrix.CreateScale(0.0001f) * Matrix.CreateTranslation(new Vector3(0.0f, 0.15f, 0.0f)) * world;
                     foreach (ModelMesh mesh in m.Meshes)
                     {
@@ -184,9 +184,9 @@ namespace Expanze.Gameplay.Map
             }
         }
 
-        public void drawPickableAreas()
+        public void DrawPickableAreas()
         {
-            Model m = GameResources.Inst().getShape(GameResources.SHAPE_CIRCLE);
+            Model m = GameResources.Inst().GetShape(GameResources.SHAPE_CIRCLE);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 
@@ -206,16 +206,16 @@ namespace Expanze.Gameplay.Map
             }
         }
 
-        public void handlePickableAreas(Color c)
+        public void HandlePickableAreas(Color c)
         {
             Map.SetPickVariables(c == pickTownColor, pickVars);
 
             // create new town?
-            GameMaster gm = GameMaster.getInstance();
+            GameMaster gm = GameMaster.Inst();
             if (pickVars.pickNewPress)
             {
                 pickVars.pickNewPress = false;
-                if (model.getIsBuild() && GameMaster.getInstance().getState() == EGameState.StateGame)
+                if (model.GetIsBuild() && GameMaster.Inst().GetState() == EGameState.StateGame)
                 {
                     if (pickTownID == townID)
                         pickTownID = -1;
@@ -224,15 +224,15 @@ namespace Expanze.Gameplay.Map
                 }
                 else
                 {
-                        if (GameMaster.getInstance().getState() == EGameState.StateGame)
+                        if (GameMaster.Inst().GetState() == EGameState.StateGame)
                         {
-                            PromptWindow.Inst().showPrompt(PromptWindow.Mod.Buyer, Strings.HEXA_TRI, true);
-                            PromptWindow.Inst().addPromptItem(
+                            PromptWindow.Inst().Show(PromptWindow.Mod.Buyer, Strings.HEXA_TRI, true);
+                            PromptWindow.Inst().AddPromptItem(
                                 new TownPromptItem(townID,
                                                     Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN,
                                                     Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_TOWN,
                                                     Settings.costTown, true, 
-                                                    GameResources.Inst().getHudTexture(HUDTexture.IconTown)));
+                                                    GameResources.Inst().GetHudTexture(HUDTexture.IconTown)));
                         }
                         else
                         {
@@ -242,7 +242,7 @@ namespace Expanze.Gameplay.Map
             }
         }
 
-        public static void resetTownView()
+        public static void ResetTownView()
         {
             pickTownID = -1;
         }

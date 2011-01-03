@@ -12,27 +12,27 @@ namespace Expanze
         public static Vector2[] allResolutions = { new Vector2(800, 600), new Vector2(1024, 768), new Vector2(1280, 800), new Vector2(1366, 768) };
         public static Vector2 maximumResolution = new Vector2(1440,900);
 
-        //indexed by enum Types
-        public static String[] mapPaths = new String[] { "Models/yellowhex", "Models/brownhex", "Models/greyhex", "Models/greenhex", "Models/redhex", "Models/orangehex", "Models/bluehex" };
+        /// indexed by enum Types
+        public static String[] hexaSrcPath = new String[] { "Models/yellowhex", "Models/brownhex", "Models/greyhex", "Models/greenhex", "Models/redhex", "Models/orangehex", "Models/bluehex" };
 
-        //// resources which get player on start
+        /// resources which get player on start
         public static SourceAll startResources = new SourceAll(100);
 
-        // costs of infrastructure
-        public static SourceAll costTown = new SourceAll(60, 60, 50, 50, 30);
+        /// costs of infrastructure
+        public static SourceAll costTown = new SourceAll(60, 30, 60, 60, 30);
         public static SourceAll costRoad = new SourceAll(0, 40, 0, 0, 50);
         public static SourceAll costMine = new SourceAll(0, 50, 0, 50, 0);
         public static SourceAll costSaw = new SourceAll(0, 0, 0, 50, 50);
         public static SourceAll costMill = new SourceAll(50, 50, 0, 0, 0);
         public static SourceAll costStephard = new SourceAll(0, 0, 50, 0, 50);
         public static SourceAll costQuarry = new SourceAll(50, 0, 50, 0, 0);
-        public static SourceAll costFort = new SourceAll(80, 80, 0, 0, 100);
-        public static SourceAll costMarket = new SourceAll(0, 0, 20, 100, 0);
-        public static SourceAll costMonastery = new SourceAll(0, 50, 80, 0, 0);
+        public static SourceAll costFort = new SourceAll(50, 0, 50, 50, 0);
+        public static SourceAll costMarket = new SourceAll(0, 0, 30, 100, 0);
+        public static SourceAll costMonastery = new SourceAll(20, 50, 60, 0, 0);
         // costs of actions
         public static SourceAll costFortParade = new SourceAll(50, 50, 50, 50, 50);
         public static SourceAll costFortDestroyHexa = new SourceAll(0, 0, 80, 50, 80);
-        public static SourceAll costFortSources = new SourceAll(80, 50, 0, 50, 100);
+        public static SourceAll costFortSources = new SourceAll(80, 50, 20, 50, 80);
         public static SourceAll costFortCapture = new SourceAll(50, 50, 0, 50, 100);
         // costs of market upgrades
         public static SourceAll costMarketCorn1 = new SourceAll(0, 0, 90, 0, 0);
@@ -58,6 +58,7 @@ namespace Expanze
         public static SourceAll costMonasteryOre2 = new SourceAll(40, 0, 30, 0, 30);
 
         // goals
+        public static int[] winPoints = {50, 100, 150};
         public const int pointsTown = 5; /// points for new town
         public const int pointsRoad = 1; /// points for new road
         public const int pointsFortParade = 3; /// points for parade from fort
@@ -132,10 +133,7 @@ namespace Expanze
         //possible game modes
         public static List<String> PlayerState = new List<String>
         {
-            Strings.MENU_HOT_SEAT_NO_AI,
-            "AI - jednoduché",
-            "AI - střední",
-            "AI - těžké"
+            Strings.MENU_HOT_SEAT_NO_AI
         };
     }
 }

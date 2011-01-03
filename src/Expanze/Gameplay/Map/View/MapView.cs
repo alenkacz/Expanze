@@ -37,7 +37,7 @@ namespace Expanze.Gameplay.Map
                 {
                     if (hexaMapModel[i][j] != null)
                     {
-                        switch (hexaMapModel[i][j].getKind())
+                        switch (hexaMapModel[i][j].GetKind())
                         {
                             case HexaKind.Mountains:
                                 hexaMapView[i][j] = new MountainsView(hexaMapModel[i][j]);
@@ -66,8 +66,8 @@ namespace Expanze.Gameplay.Map
             if (i >= 0 && i < hexaMapModel.Length &&
                 j >= 0 && j < hexaMapModel[i].Length &&
                 hexaMapModel[i][j] != null && 
-                hexaMapModel[i][j].getKind() != HexaKind.Water &&
-                hexaMapModel[i][j].getKind() != HexaKind.Nothing)
+                hexaMapModel[i][j].GetKind() != HexaKind.Water &&
+                hexaMapModel[i][j].GetKind() != HexaKind.Nothing)
             {
                 return true;
             }
@@ -168,7 +168,7 @@ namespace Expanze.Gameplay.Map
                 rotation = Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (4));
             }
 
-            Model m = GameResources.Inst().getHexaModel(HexaKind.Water + neighbours);
+            Model m = GameResources.Inst().GetHexaModel(HexaKind.Water + neighbours);
 
             return new WaterView(hexaMapModel[i][j], m, rotation);
         }
@@ -211,7 +211,7 @@ namespace Expanze.Gameplay.Map
         public void DrawWaterHexa(Matrix mWorld)
         {
             Matrix tempMatrix = Matrix.CreateScale(0.00028f);
-            Model m = GameResources.Inst().getHexaModel(HexaKind.Water);
+            Model m = GameResources.Inst().GetHexaModel(HexaKind.Water);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 
@@ -307,10 +307,10 @@ namespace Expanze.Gameplay.Map
 
         public void CreateHexaWorldMatrices()
         {
-            HexaModel.resetCounter();
-            Road.resetCounter();
-            Town.resetCounter();
-            TownView.resetTownView();
+            HexaModel.ResetCounter();
+            RoadModel.resetCounter();
+            TownModel.ResetCounter();
+            TownView.ResetTownView();
 
             float dx = 0.591f;
             float dy = 0.512f;
@@ -336,7 +336,7 @@ namespace Expanze.Gameplay.Map
 
         public bool getIsViewQueueClear()
         {
-            return viewQueue.getIsClear();
+            return viewQueue.IsClear();
         }
 
         public void BuildBuildingView(int townID, int pos)
