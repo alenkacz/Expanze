@@ -53,6 +53,8 @@ namespace Expanze.Gameplay
             costParade = Settings.costFortParade;
         }
 
+        public int GetHexaID() { return hexaID; }
+
         public override Texture2D GetIconActive()
         {
             return GameResources.Inst().GetHudTexture(HUDTexture.IconFortActive);
@@ -162,7 +164,24 @@ namespace Expanze.Gameplay
 
         public bool ShowParade()
         {
-            return GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, UpgradeKind.FirstUpgrade, 3) == BuyingUpgradeError.OK;
+            return GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, UpgradeKind.FirstUpgrade, 3);
+        }
+
+        public ParadeError CanShowParade()
+        {
+            BuyingUpgradeError error = GameState.map.GetMapController().CanBuyUpgradeInSpecialBuilding(townID, hexaID, UpgradeKind.FirstUpgrade, 3);
+            switch (error)
+            {
+                case BuyingUpgradeError.NoSources: return ParadeError.NoSources;
+                case BuyingUpgradeError.OK: return ParadeError.OK;
+            }
+
+            return ParadeError.OK;
+        }
+
+        public DestroySourcesError CanDestroySources(String playerName)
+        {
+            return GameState.map.GetMapController().CanDestroySources(playerName);
         }
 
         public bool DestroySources(String playerName)
@@ -175,9 +194,14 @@ namespace Expanze.Gameplay
             return GameState.map.GetMapController().DestroyHexa(hexaID);
         }
 
+        public CaptureHexaError CanCaptureHexa(int hexaID)
+        {
+            return GameState.map.GetMapController().CanCaptureHexa(hexaID, this);
+        }
+
         public bool CaptureHexa(int hexaID)
         {
-            return GameState.map.GetMapController().CaptureHexa(hexaID);
+            return GameState.map.GetMapController().CaptureHexa(hexaID, this);
         }
     }
 }

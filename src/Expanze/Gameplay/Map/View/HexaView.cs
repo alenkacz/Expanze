@@ -123,7 +123,7 @@ namespace Expanze
             townView[(int)pos] = town;
         }
 
-        private bool IsInFortRadius()
+        public bool IsInFortRadius()
         {
             int hexaIDFort = HexaModel.GetHexaIDFort();
 
@@ -549,7 +549,7 @@ namespace Expanze
                     case EFortState.CapturingHexa:
                         if (IsInFortRadius())
                         {
-                            GameState.map.GetMapController().CaptureHexa(hexaID);
+                            GameState.map.GetMapController().CaptureHexa(hexaID, null);
                             GameMaster.Inst().SetFortState(EFortState.Normal);
                         }
                         break;
@@ -581,7 +581,7 @@ namespace Expanze
             return null;
         }
 
-        public Matrix getWorldMatrix()
+        public Matrix GetWorldMatrix()
         {
             return world;
         }

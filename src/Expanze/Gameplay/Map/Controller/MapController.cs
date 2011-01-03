@@ -85,7 +85,7 @@ namespace Expanze.Gameplay.Map
             return ChangingSourcesError.OK;
         }
 
-        public BuyingUpgradeError BuyUpgradeInSpecialBuilding(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber)
+        public BuyingUpgradeError CanBuyUpgradeInSpecialBuilding(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber)
         {
             GameMaster gm = GameMaster.Inst();
             TownModel town = map.GetTownByID(townID);
@@ -95,13 +95,28 @@ namespace Expanze.Gameplay.Map
             if (building == null)
                 return BuyingUpgradeError.ThereIsNoBuilding;
 
+            return building.CanActivePlayerBuyUpgrade(upgradeKind, upgradeNumber);
+        }
+
+        public bool BuyUpgradeInSpecialBuilding(int townID, int hexaID, UpgradeKind upgradeKind, int upgradeNumber)
+        {
+            GameMaster gm = GameMaster.Inst();
+            TownModel town = map.GetTownByID(townID);
+            if (town == null)
+                return false;
+            SpecialBuilding building = town.getSpecialBuilding(hexaID);
+            if (building == null)
+                return false;
+
             BuyingUpgradeError error = building.CanActivePlayerBuyUpgrade(upgradeKind, upgradeNumber);
             if (error == BuyingUpgradeError.OK)
             {
                 gm.GetActivePlayer().PayForSomething(building.GetUpgradeCost(upgradeKind, upgradeNumber));
                 building.BuyUpgrade(upgradeKind, upgradeNumber);
+
+                return true;
             }
-            return error;
+            return false;
         }
 
         public RoadBuildError CanBuildRoad(int roadID)
@@ -247,7 +262,20 @@ namespace Expanze.Gameplay.Map
             return null;
         }
 
-        public bool CaptureHexa(int hexaID)
+        public CaptureHexaError CanCaptureHexa(int hexaID, FortModel fort)
+        {
+            if (!Settings.costFortCapture.HasPlayerSources(GameMaster.Inst().GetActivePlayer()))
+                return CaptureHexaError.NoSources;
+
+            if (fort == null)
+                return CaptureHexaError.OK;
+
+            HexaModel.SetHexaIDFort(fort.GetHexaID());
+
+            return CaptureHexaError.OK;
+        }
+
+        public bool CaptureHexa(int hexaID, FortModel fort)
         {
             HexaModel hexa = map.GetHexaByID(hexaID);
             hexa.Capture();
@@ -264,14 +292,34 @@ namespace Expanze.Gameplay.Map
             return true;
         }
 
+        public DestroySourcesError CanDestroySources(String playerName)
+        {
+            Player player = GameMaster.Inst().GetPlayer(playerName);
+            if (player == null)
+                return DestroySourcesError.NoPlayerWithName;
+
+            Player activePlayer = GameMaster.Inst().GetActivePlayer();
+            if (activePlayer.GetBuildingCount(Building.Fort) == 0)
+                return DestroySourcesError.NoFort;
+            if (!Settings.costFortSources.HasPlayerSources(activePlayer))
+                return DestroySourcesError.NoSources;
+
+            return DestroySourcesError.OK;
+        }
+
         public bool DestroySources(String playerName)
         {
             Player player = GameMaster.Inst().GetPlayer(playerName);
-            ISourceAll source = player.GetSource();
-            player.PayForSomething(new SourceAll(source.GetWood() / 2, source.GetStone() / 2, source.GetCorn() / 2, source.GetMeat() / 2, source.GetOre() / 2));
+            Player activePlayer = GameMaster.Inst().GetActivePlayer();
 
-            GameMaster.Inst().GetActivePlayer().PayForSomething(Settings.costFortSources);
-            return true;
+            if (CanDestroySources(playerName) == DestroySourcesError.OK)
+            {
+                ISourceAll source = player.GetSource();
+                player.PayForSomething(new SourceAll(source.GetWood() / 2, source.GetStone() / 2, source.GetCorn() / 2, source.GetMeat() / 2, source.GetOre() / 2));
+                activePlayer.PayForSomething(Settings.costFortSources);
+                return true;
+            }
+            return false;
         }
 
         public void Init()

@@ -75,6 +75,13 @@ namespace CorePlugin
         /// <returns>True if destroying sources is succesful, otherwise false</returns>
         bool DestroySources(String playerName);
 
+        /// <summary>
+        /// Find out if you can destroy other player sources.
+        /// </summary>
+        /// <param name="playerName">Name of player you want destroy sources.</param>
+        /// <returns>Error why you cant destroy sources or DestroySourcesError.OK</returns>
+        DestroySourcesError CanDestroySources(String playerName);
+
         IPlayer GetPlayerMe();
         IHexa GetIHexa(int x, int y);
         IHexa GetIHexaByID(int hexaID);

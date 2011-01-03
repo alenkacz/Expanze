@@ -117,12 +117,36 @@ namespace Expanze.Gameplay
             UpgradeKind upgradeKind;
             switch (licenceKind)
             {
-                case LicenceKind.NoLicence: upgradeKind = UpgradeKind.NoUpgrade; break;
-                case LicenceKind.FirstLicence: upgradeKind = UpgradeKind.FirstUpgrade; break;
-                default: upgradeKind = UpgradeKind.SecondUpgrade; break;
+                case LicenceKind.NoLicence: upgradeKind = UpgradeKind.FirstUpgrade; break;
+                case LicenceKind.FirstLicence: upgradeKind = UpgradeKind.SecondUpgrade; break;
+                default: upgradeKind = UpgradeKind.NoUpgrade; break;
             }
 
-            return GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, upgradeKind, (int)source) == BuyingUpgradeError.OK;
+            return GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, upgradeKind, (int)source);
+        }
+
+        public MarketError CanBuyLicence(SourceKind source)
+        {
+            LicenceKind licenceKind = owner.GetMarketLicence(source);
+            UpgradeKind upgradeKind;
+            switch (licenceKind)
+            {
+                case LicenceKind.NoLicence: upgradeKind = UpgradeKind.FirstUpgrade; break;
+                case LicenceKind.FirstLicence: upgradeKind = UpgradeKind.SecondUpgrade; break;
+                default: upgradeKind = UpgradeKind.NoUpgrade; break;
+            }
+
+            BuyingUpgradeError error = GameState.map.GetMapController().CanBuyUpgradeInSpecialBuilding(townID, hexaID, upgradeKind, (int)source);
+
+            switch (error)
+            {
+                case BuyingUpgradeError.YouAlreadyHaveSecondUpgrade: return MarketError.HaveSecondLicence;
+                case BuyingUpgradeError.NoSources: return MarketError.NoSources;
+                case BuyingUpgradeError.MaxUpgrades: return MarketError.MaxLicences;
+                case BuyingUpgradeError.OK: return MarketError.OK;
+            }
+
+            return MarketError.OK;
         }
     }
 }

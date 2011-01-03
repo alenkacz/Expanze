@@ -108,7 +108,8 @@ namespace Expanze.Gameplay
 
         protected override void ApplyEffect(UpgradeKind upgradeKind, int upgradeNumber)
         {
-
+            upgrade = upgradeKind;
+            SetPromptWindow(PromptWindow.Mod.Buyer);
         }
 
         public UpgradeKind GetUpgrade() { return upgrade;}
@@ -136,8 +137,12 @@ namespace Expanze.Gameplay
             win.Show(mod, titleBuilding, true);
             if (upgrade == UpgradeKind.NoUpgrade)
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, this, upgrade1Title, upgrade1Description, upgrade1cost, true, upgrade1icon));
-            else if(upgrade == UpgradeKind.FirstUpgrade)
+            else if (upgrade == UpgradeKind.FirstUpgrade)
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 0, this, upgrade2Title, upgrade2Description, upgrade2cost, true, upgrade2icon));
+            else
+            {
+                win.AddPromptItem(new PromptItem(titleBuilding, Strings.PROMPT_DESCRIPTION_ALL_UPGRADES_USED, new SourceAll(0), false, false, upgrade2icon));
+            }
         }
 
         public override BuyingUpgradeError CanActivePlayerBuyUpgrade(UpgradeKind upgradeKind, int upgradeNumber)
@@ -187,11 +192,23 @@ namespace Expanze.Gameplay
             return new SourceAll(0);
         }
 
-
-
         public bool Upgrade()
         {
-            return GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, upgrade, 0) == BuyingUpgradeError.OK;
+            return GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, upgrade, 0);
+        }
+
+        public SourceBuildingError CanUpgrade()
+        {
+            BuyingUpgradeError error = GameState.map.GetMapController().CanBuyUpgradeInSpecialBuilding(townID, hexaID, upgrade, 0);
+
+            switch (error)
+            {
+                case BuyingUpgradeError.NoSources: return SourceBuildingError.NoSources;
+                case BuyingUpgradeError.YouAlreadyHaveSecondUpgrade: return SourceBuildingError.HaveSecondUpgrade;
+                case BuyingUpgradeError.OK: return SourceBuildingError.OK;
+            }
+
+            return SourceBuildingError.OK;
         }
     }
 }

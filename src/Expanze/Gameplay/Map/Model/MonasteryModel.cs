@@ -107,9 +107,37 @@ namespace Expanze.Gameplay
 
         public bool InventUpgrade(SourceBuildingKind source)
         {
-            UpgradeKind kind = owner.GetMonasteryUpgrade(source);
+            UpgradeKind kind;
+            switch (owner.GetMonasteryUpgrade(source))
+            {
+                case UpgradeKind.NoUpgrade: kind = UpgradeKind.FirstUpgrade; break;
+                case UpgradeKind.FirstUpgrade: kind = UpgradeKind.SecondUpgrade; break;
+                default : kind = UpgradeKind.NoUpgrade; break;
+            }
 
-            return GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, kind, (int) source) == BuyingUpgradeError.OK;
+            return GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, kind, (int) source);
+        }
+
+        public MonasteryError CanInventUpgrade(SourceBuildingKind source)
+        {
+            UpgradeKind kind;
+            switch (owner.GetMonasteryUpgrade(source))
+            {
+                case UpgradeKind.NoUpgrade: kind = UpgradeKind.FirstUpgrade; break;
+                case UpgradeKind.FirstUpgrade: kind = UpgradeKind.SecondUpgrade; break;
+                default: kind = UpgradeKind.NoUpgrade; break;
+            }
+            BuyingUpgradeError error = GameState.map.GetMapController().CanBuyUpgradeInSpecialBuilding(townID, hexaID, kind, (int)source);
+
+            switch (error)
+            {
+                case BuyingUpgradeError.YouAlreadyHaveSecondUpgrade: return MonasteryError.HaveSecondUpgrade;
+                case BuyingUpgradeError.NoSources: return MonasteryError.NoSources;
+                case BuyingUpgradeError.MaxUpgrades: return MonasteryError.MaxUpgrades;
+                case BuyingUpgradeError.OK: return MonasteryError.OK;
+            }
+
+            return MonasteryError.OK;
         }
     }
 }
