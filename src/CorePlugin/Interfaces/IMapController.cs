@@ -5,8 +5,9 @@ using System.Text;
 
 namespace CorePlugin
 {
-    public enum EGameState { StateFirstTown, StateSecondTown, StateGame };
+    public enum EGameState { StateFirstTown, StateSecondTown, StateGame }
     public enum UpgradeKind { NoUpgrade, FirstUpgrade, SecondUpgrade }
+    public enum LicenceKind { NoLicence, FirstLicence, SecondLicence }
     public enum SourceBuildingKind { Mill, Stepherd, Quarry, Saw, Mine, Count} // have to be in this order
 
     public interface IMapController

@@ -121,7 +121,8 @@ namespace Expanze
                 if (hexaNeighbour[loop1] != null &&
                     buildingKind[loop1] == BuildingKind.SourceBuilding)
                 {
-                    float multiply = (building[loop1].GetIsUpgrade(UpgradeKind.SecondUpgrade, 0)) ? 2.0f : (building[loop1].GetIsUpgrade(UpgradeKind.FirstUpgrade, 0)) ? 1.5f : 1.0f;
+                    SourceBuildingModel tempBuilding = (SourceBuildingModel) building[loop1];
+                    float multiply = (tempBuilding.GetUpgrade() == UpgradeKind.SecondUpgrade) ? 2.0f : (tempBuilding.GetUpgrade() == UpgradeKind.FirstUpgrade) ? 1.5f : 1.0f;
                     amount = (int)(hexaNeighbour[loop1].GetCurrentSource() * multiply);
 
                     switch (hexaNeighbour[loop1].GetKind())

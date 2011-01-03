@@ -31,10 +31,10 @@ namespace Expanze
         int topMargin = 40;
         Rectangle range;
 
-        HexaKind toSelectKind = HexaKind.Null;
-        HexaKind fromSelectKind = HexaKind.Null;
+        SourceKind toSelectKind = SourceKind.Null;
+        SourceKind fromSelectKind = SourceKind.Null;
 
-        Dictionary<HexaKind,Texture2D> marketKindsTextures = new Dictionary<HexaKind,Texture2D>();
+        Dictionary<SourceKind,Texture2D> marketKindsTextures = new Dictionary<SourceKind,Texture2D>();
         Vector2 toIconPosition;
         Vector2 fromIconPosition;
 
@@ -111,12 +111,12 @@ namespace Expanze
 
         private void fillMarketKindTextures()
         {
-            marketKindsTextures = new Dictionary<HexaKind, Texture2D>();
-            marketKindsTextures.Add(HexaKind.Cornfield,Settings.Game.Content.Load<Texture2D>("corn_market"));
-            marketKindsTextures.Add(HexaKind.Stone, Settings.Game.Content.Load<Texture2D>("stone_market"));
-            marketKindsTextures.Add(HexaKind.Mountains, Settings.Game.Content.Load<Texture2D>("ore_market"));
-            marketKindsTextures.Add(HexaKind.Pasture, Settings.Game.Content.Load<Texture2D>("meat_market"));
-            marketKindsTextures.Add(HexaKind.Forest, Settings.Game.Content.Load<Texture2D>("wood_market"));
+            marketKindsTextures = new Dictionary<SourceKind, Texture2D>();
+            marketKindsTextures.Add(SourceKind.Corn, Settings.Game.Content.Load<Texture2D>("corn_market"));
+            marketKindsTextures.Add(SourceKind.Stone, Settings.Game.Content.Load<Texture2D>("stone_market"));
+            marketKindsTextures.Add(SourceKind.Ore, Settings.Game.Content.Load<Texture2D>("ore_market"));
+            marketKindsTextures.Add(SourceKind.Meat, Settings.Game.Content.Load<Texture2D>("meat_market"));
+            marketKindsTextures.Add(SourceKind.Wood, Settings.Game.Content.Load<Texture2D>("wood_market"));
         }
 
         /// <summary>
@@ -125,19 +125,19 @@ namespace Expanze
         protected void createFirstRow()
         {
             //top row
-            ButtonComponent corn_button = new ButtonComponent(Settings.Game, leftMargin + range.Left + 3 * w_space, (int)(range.Top + topMargin + space), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "corn_market", "corn_market_nonactive", HexaKind.Cornfield);
+            ButtonComponent corn_button = new ButtonComponent(Settings.Game, leftMargin + range.Left + 3 * w_space, (int)(range.Top + topMargin + space), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "corn_market", "corn_market_nonactive", SourceKind.Corn);
             corn_button.Actions += MaterialButtonAction;
             this.content.Add(corn_button);
-            ButtonComponent brick_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + buttonSize.X + 4 * w_space), (int)(range.Top + space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "stone_market", "stone_market_nonactive", HexaKind.Stone);
+            ButtonComponent brick_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + buttonSize.X + 4 * w_space), (int)(range.Top + space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "meat_market", "meat_market_nonactive", SourceKind.Meat);
             brick_button.Actions += MaterialButtonAction;
             this.content.Add(brick_button);
-            ButtonComponent wood_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + 2 * buttonSize.X + 5 * w_space), (int)(range.Top + space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "wood_market", "wood_market_nonactive", HexaKind.Forest);
+            ButtonComponent wood_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + 2 * buttonSize.X + 5 * w_space), (int)(range.Top + space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "stone_market", "stone_market_nonactive", SourceKind.Stone);
             wood_button.Actions += MaterialButtonAction;
             this.content.Add(wood_button);
-            ButtonComponent stone_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + 3 * buttonSize.X + 6 * w_space), (int)(range.Top + space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "ore_market", "ore_market_nonactive", HexaKind.Mountains);
+            ButtonComponent stone_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + 3 * buttonSize.X + 6 * w_space), (int)(range.Top + space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "wood_market", "wood_market_nonactive", SourceKind.Wood);
             stone_button.Actions += MaterialButtonAction;
             this.content.Add(stone_button);
-            ButtonComponent sheep_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + 4 * buttonSize.X + 7 * w_space), (int)(range.Top + space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "meat_market", "meat_market_nonactive", HexaKind.Pasture);
+            ButtonComponent sheep_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + 4 * buttonSize.X + 7 * w_space), (int)(range.Top + space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "ore_market", "ore_market_nonactive", SourceKind.Ore);
             sheep_button.Actions += MaterialButtonAction;
             this.content.Add(sheep_button);
 
@@ -154,19 +154,19 @@ namespace Expanze
         protected void createSecondRow()
         {
             //bottom row
-            ButtonComponent corn_button = new ButtonComponent(Settings.Game, leftMargin + range.Left + 3*w_space, (int)(range.Top + buttonSize.Y + 2 * space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "corn_market", HexaKind.Cornfield);
+            ButtonComponent corn_button = new ButtonComponent(Settings.Game, leftMargin + range.Left + 3*w_space, (int)(range.Top + buttonSize.Y + 2 * space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "corn_market", SourceKind.Corn);
             corn_button.Actions += MaterialButtonAction;
             this.content.Add(corn_button);
-            ButtonComponent brick_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + buttonSize.X + 4 * w_space), (int)(range.Top + buttonSize.Y + 2 * space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "stone_market", HexaKind.Stone);
+            ButtonComponent brick_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + buttonSize.X + 4 * w_space), (int)(range.Top + buttonSize.Y + 2 * space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "meat_market", SourceKind.Meat);
             brick_button.Actions += MaterialButtonAction;
             this.content.Add(brick_button);
-            ButtonComponent wood_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + 2 * buttonSize.X + 5 * w_space), (int)(range.Top + buttonSize.Y + 2 * space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "wood_market", HexaKind.Forest);
+            ButtonComponent wood_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + 2 * buttonSize.X + 5 * w_space), (int)(range.Top + buttonSize.Y + 2 * space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "stone_market", SourceKind.Stone);
             wood_button.Actions += MaterialButtonAction;
             this.content.Add(wood_button);
-            ButtonComponent stone_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + 3 * buttonSize.X + 6 * w_space), (int)(range.Top + buttonSize.Y + 2 * space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "ore_market", HexaKind.Mountains);
+            ButtonComponent stone_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + 3 * buttonSize.X + 6 * w_space), (int)(range.Top + buttonSize.Y + 2 * space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "wood_market", SourceKind.Wood);
             stone_button.Actions += MaterialButtonAction;
             this.content.Add(stone_button);
-            ButtonComponent sheep_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + 4 * buttonSize.X + 7 * w_space), (int)(range.Top + buttonSize.Y + 2 * space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "meat_market", HexaKind.Pasture);
+            ButtonComponent sheep_button = new ButtonComponent(Settings.Game, leftMargin + (int)(range.Left + 4 * buttonSize.X + 7 * w_space), (int)(range.Top + buttonSize.Y + 2 * space + topMargin), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(buttonSize.X), Settings.scaleH(buttonSize.Y), "ore_market", SourceKind.Ore);
             sheep_button.Actions += MaterialButtonAction;
             this.content.Add(sheep_button);
 
@@ -253,8 +253,8 @@ namespace Expanze
                         if (b.getType() == btn.getType()) { 
                             // first row has bigger priority
                             b.setPicked(false);
-                            toSelectKind = HexaKind.Null;
-                            marketSlider.setToType(HexaKind.Null);
+                            toSelectKind = SourceKind.Null;
+                            marketSlider.setToType(SourceKind.Null);
                             return false; 
                         }
                         //we can break because only one button can be selected
@@ -291,6 +291,7 @@ namespace Expanze
             int convertedTo = marketSlider.getConvertedTo();
 
             GameMaster.Inst().DoMaterialConversion(fromSelectKind, toSelectKind, GameMaster.Inst().GetActivePlayer(),actualFrom - convertedFrom,convertedTo-actualTo);
+            wasActive = false;
         }
 
         /// <summary>
@@ -326,8 +327,8 @@ namespace Expanze
                     b.setPicked(false);
                 }
 
-                fromSelectKind = HexaKind.Null;
-                toSelectKind = HexaKind.Null;
+                fromSelectKind = SourceKind.Null;
+                toSelectKind = SourceKind.Null;
                 marketSlider.resetSlider();
 
                 wasActive = isActive;
@@ -338,14 +339,14 @@ namespace Expanze
 
         private void drawSelectedKind()
         {
-            if (toSelectKind != HexaKind.Null)
+            if (toSelectKind != SourceKind.Null)
             {
                 spriteBatch.Draw(marketKindsTextures[toSelectKind],toIconPosition,Color.White);
                 //int count = GameMaster.getInstance().getActivePlayer().getMaterialNumber(toSelectKind);
                 //spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), count.ToString(), new Vector2(toIconPosition.X, toIconPosition.Y+Settings.scaleH(90)), Color.White);
             }
 
-            if (fromSelectKind != HexaKind.Null)
+            if (fromSelectKind != SourceKind.Null)
             {
                 spriteBatch.Draw(marketKindsTextures[fromSelectKind], fromIconPosition, Color.White);
                 //int count = GameMaster.getInstance().getActivePlayer().getMaterialNumber(fromSelectKind);

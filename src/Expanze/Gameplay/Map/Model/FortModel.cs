@@ -134,10 +134,8 @@ namespace Expanze.Gameplay
                             }                          
                             break;
                     }
-                    upgradeFirst[upgradeNumber] = false;
                     break;
                 case UpgradeKind.SecondUpgrade:
-                    upgradeSecond[upgradeNumber] = false;
                     break;
             }
         }

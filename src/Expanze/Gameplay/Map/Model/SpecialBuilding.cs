@@ -52,52 +52,19 @@ namespace Expanze.Gameplay
 
     abstract class SpecialBuilding : ISpecialBuildingGet
     {
-        protected bool[] upgradeFirst;
-        protected bool[] upgradeSecond;
-        const int upgradeMax = 3;   /// upgradeCount limit
+        const int upgradeMax = 3;             /// upgradeCount limit
         protected int upgradeCount;           /// how many upgrades player has bought in this building?
-        protected Player owner;
-
+        protected Player owner;               /// owner of that building
+            
         public SpecialBuilding(Player playerOwner)
         {
-            upgradeFirst = new bool[5];
-            upgradeSecond = new bool[5];
             upgradeCount = 0;
             owner = playerOwner;
-
-            for (int loop1 = 0; loop1 < upgradeFirst.Length; loop1++)
-            {
-                upgradeFirst[loop1] = false;
-                upgradeSecond[loop1] = false;
-            }
-        }
-
-        public bool GetIsUpgrade(UpgradeKind kind, int upgradeNumber)
-        {
-            switch (kind)
-            {
-                case UpgradeKind.FirstUpgrade:
-                    return upgradeFirst[upgradeNumber];
-                case UpgradeKind.SecondUpgrade:
-                    return upgradeSecond[upgradeNumber];
-            }
-
-            return false;
         }
 
         public void BuyUpgrade(UpgradeKind kind, int upgradeNumber)
         {
-            switch (kind)
-            {
-                case UpgradeKind.FirstUpgrade:
-                    upgradeFirst[upgradeNumber] = true;
-                    break;
-                case UpgradeKind.SecondUpgrade:
-                    upgradeSecond[upgradeNumber] = true;
-                    break;
-            }
             upgradeCount++;
-
             ApplyEffect(kind, upgradeNumber);
         }
 
@@ -114,15 +81,7 @@ namespace Expanze.Gameplay
             Player activePlayer = gm.GetActivePlayer();
 
             if (upgradeCount == upgradeMax)
-                return BuyingUpgradeError.MaxUpgrades;
-
-            if (upgradeKind == UpgradeKind.SecondUpgrade)
-            {
-                    if (upgradeFirst[upgradeNumber] == false)
-                        return BuyingUpgradeError.YouDontHaveFirstUpgrade;
-                    if (upgradeSecond[upgradeNumber] == true)
-                        return BuyingUpgradeError.YouAlreadyHaveSecondUpgrade;
-            }        
+                return BuyingUpgradeError.MaxUpgrades;    
 
             if (!GetUpgradeCost(upgradeKind, upgradeNumber).HasPlayerSources(activePlayer))
                 return BuyingUpgradeError.NoSources;

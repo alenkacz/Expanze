@@ -383,7 +383,7 @@ namespace Expanze
             this.paused = paused;
         }
 
-        public void DoMaterialConversion(HexaKind from, HexaKind to, Player p, int fromAmount, int toAmount)
+        public void DoMaterialConversion(SourceKind from, SourceKind to, Player p, int fromAmount, int toAmount)
         {
             int rate = p.GetConversionRate(from);
 
@@ -403,54 +403,31 @@ namespace Expanze
         /// Checks whether user has enough resources from the type he wants to change in market
         /// </summary>
         /// <returns></returns>
-        protected bool IsMaterialAvailable(HexaKind from, int rate)
+        protected bool IsMaterialAvailable(SourceKind from, int rate)
         {
-            if (from == HexaKind.Cornfield)
-            {
-                return (GetActivePlayer().getCorn() >= rate);
-            }
-            else if ( from == HexaKind.Pasture )
-            {
-                return (GetActivePlayer().getMeat() >= rate);
-            } 
-            else if( from == HexaKind.Mountains ) 
-            {
-                return (GetActivePlayer().getOre() >= rate);
-            }
-            else if( from == HexaKind.Stone ) 
-            {
-                return (GetActivePlayer().getStone() >= rate);
-            }
-            else if ( from == HexaKind.Forest )
-            {
-                return (GetActivePlayer().getWood() >= rate);
-            }
-            else
-            {
-                return false;
-            }
+            return GetActivePlayer().HaveEnoughMaterial(from);
         }
 
 
-        protected SourceAll CreateSourceAllCost(HexaKind kind, int rate)
+        protected SourceAll CreateSourceAllCost(SourceKind kind, int rate)
         {
-            if (kind == HexaKind.Forest)
+            if (kind == SourceKind.Wood)
             {
                 return new SourceAll(rate, 0, 0, 0, 0);
             }
-            else if (kind == HexaKind.Stone)
+            else if (kind == SourceKind.Stone)
             {
                 return new SourceAll(0, rate, 0, 0, 0);
             }
-            else if (kind == HexaKind.Cornfield)
+            else if (kind == SourceKind.Corn)
             {
                 return new SourceAll(0, 0, rate, 0, 0);
             }
-            else if (kind == HexaKind.Pasture)
+            else if (kind == SourceKind.Meat)
             {
                 return new SourceAll(0, 0, 0, rate, 0);
             }
-            else if (kind == HexaKind.Mountains)
+            else if (kind == SourceKind.Ore)
             {
                 return new SourceAll(0, 0, 0, 0, rate);
             }

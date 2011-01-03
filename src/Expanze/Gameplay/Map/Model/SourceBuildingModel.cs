@@ -12,6 +12,7 @@ namespace Expanze.Gameplay
     {
         int townID; // where is this building
         int hexaID;
+        UpgradeKind upgrade;
 
         String titleBuilding;
         String upgrade1Title;
@@ -31,7 +32,8 @@ namespace Expanze.Gameplay
         {
             this.townID = townID;
             this.hexaID = hexaID;
-
+            upgrade = UpgradeKind.NoUpgrade;
+            
             TownModel town = GameState.map.GetTownByID(townID);
             int buildingPos = town.FindBuildingByHexaID(hexaID);
             HexaModel hexa = town.GetHexa(buildingPos);
@@ -109,6 +111,8 @@ namespace Expanze.Gameplay
 
         }
 
+        public UpgradeKind GetUpgrade() { return upgrade;}
+
         public override Texture2D GetIconActive()
         {
             return upgrade0iconActive;
@@ -116,12 +120,13 @@ namespace Expanze.Gameplay
 
         public override Texture2D GetIconPassive()
         {
-            if (!upgradeFirst[0])
-                return upgrade0icon;
-            else if (upgradeFirst[0] && !upgradeSecond[0])
-                return upgrade1icon;
-            else
-                return upgrade2icon;
+            switch (upgrade)
+            {
+                case UpgradeKind.NoUpgrade: return upgrade0icon;
+                case UpgradeKind.FirstUpgrade: return upgrade1icon;
+                case UpgradeKind.SecondUpgrade: return upgrade2icon;
+                default: return upgrade0icon;
+            }
         }
 
         public override void SetPromptWindow(PromptWindow.Mod mod)
@@ -129,9 +134,9 @@ namespace Expanze.Gameplay
             PromptWindow win = PromptWindow.Inst();
             GameResources res = GameResources.Inst();
             win.Show(mod, titleBuilding, true);
-            if (upgradeFirst[0] == false)
+            if (upgrade == UpgradeKind.NoUpgrade)
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, this, upgrade1Title, upgrade1Description, upgrade1cost, true, upgrade1icon));
-            else
+            else if(upgrade == UpgradeKind.FirstUpgrade)
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 0, this, upgrade2Title, upgrade2Description, upgrade2cost, true, upgrade2icon));
         }
 
@@ -140,8 +145,8 @@ namespace Expanze.Gameplay
             GameMaster gm = GameMaster.Inst();
             Player activePlayer = gm.GetActivePlayer();
 
-            if (activePlayer.GetSourceBuildingUpgrade(buildingKind) == UpgradeKind.NoUpgrade ||
-                (activePlayer.GetSourceBuildingUpgrade(buildingKind) == UpgradeKind.FirstUpgrade &&
+            if (activePlayer.GetMonasteryUpgrade(buildingKind) == UpgradeKind.NoUpgrade ||
+                (activePlayer.GetMonasteryUpgrade(buildingKind) == UpgradeKind.FirstUpgrade &&
                  upgradeKind == UpgradeKind.SecondUpgrade))
             {
                 return BuyingUpgradeError.NoUpgrade;
@@ -149,9 +154,9 @@ namespace Expanze.Gameplay
 
             if (upgradeKind == UpgradeKind.SecondUpgrade)
             {
-                if (upgradeFirst[upgradeNumber] == false)
+                if (upgrade == UpgradeKind.NoUpgrade)
                     return BuyingUpgradeError.YouDontHaveFirstUpgrade;
-                if (upgradeSecond[upgradeNumber] == true)
+                if (upgrade == UpgradeKind.SecondUpgrade)
                     return BuyingUpgradeError.YouAlreadyHaveSecondUpgrade;
             }     
 
@@ -182,14 +187,11 @@ namespace Expanze.Gameplay
             return new SourceAll(0);
         }
 
+
+
         public bool Upgrade()
         {
-            UpgradeKind kind;
-            if (!upgradeFirst[0])
-                kind = UpgradeKind.FirstUpgrade;
-            else
-                kind = UpgradeKind.SecondUpgrade;
-            return GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, kind, 0) == BuyingUpgradeError.OK;
+            return GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, upgrade, 0) == BuyingUpgradeError.OK;
         }
     }
 }

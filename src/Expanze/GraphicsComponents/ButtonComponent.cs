@@ -25,7 +25,7 @@ namespace Expanze
         protected int mousey;
 
         //type of the hexa - for materials buttons only
-        HexaKind type = HexaKind.Null;
+        SourceKind sourceKind = SourceKind.Null;
 
         //button still pressed
         protected bool pressed = false;
@@ -48,23 +48,23 @@ namespace Expanze
         public ButtonComponent(Game game, int x, int y, Rectangle clickablePosition, SpriteFont font, int width, int height, String texture)
             : base(game, x, y, font, width, height, texture)
         {
-            this.type = HexaKind.Null;
+            this.sourceKind = SourceKind.Null;
             this.init(clickablePosition, x, y, width, height);
             spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
         }
 
-        public ButtonComponent(Game game, int x, int y, Rectangle clickablePosition, SpriteFont font, int width, int height, String texture, HexaKind type)
+        public ButtonComponent(Game game, int x, int y, Rectangle clickablePosition, SpriteFont font, int width, int height, String texture, SourceKind type)
             : base(game, x, y, font, width, height, texture)
         {
-            this.type = type;
+            this.sourceKind = type;
             this.init(clickablePosition, x, y, width, height);
             spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
         }
 
-        public ButtonComponent(Game game, int x, int y, Rectangle clickablePosition, SpriteFont font, int width, int height, String texture, String nonactiveTexture, HexaKind type)
+        public ButtonComponent(Game game, int x, int y, Rectangle clickablePosition, SpriteFont font, int width, int height, String texture, String nonactiveTexture, SourceKind type)
             : base(game, x, y, font, width, height, texture)
         {
-            this.type = type;
+            this.sourceKind = type;
             this.init(clickablePosition, x, y, width, height);
             this.nonactiveTexture = myGame.Content.Load<Texture2D>(nonactiveTexture);
             spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
@@ -97,9 +97,9 @@ namespace Expanze
         /// Returns type of the hexa which is button representing
         /// </summary>
         /// <returns>HexaKind</returns>
-        public HexaKind getType()
+        public SourceKind getType()
         {
-            return this.type;
+            return this.sourceKind;
         }
 
         public override void Update(GameTime gameTime)
@@ -181,7 +181,7 @@ namespace Expanze
 
         public bool isActive()
         {
-            return GameMaster.Inst().GetActivePlayer().HaveEnoughMaterial(type);
+            return GameMaster.Inst().GetActivePlayer().HaveEnoughMaterial(sourceKind);
         }
 
         public void changeText()
@@ -202,9 +202,9 @@ namespace Expanze
             if (myButton != null)
             {
 
-                if (type != HexaKind.Null)
+                if (sourceKind != SourceKind.Null)
                 {
-                    if (!GameMaster.Inst().GetActivePlayer().HaveEnoughMaterial(type) && nonactiveTexture != null)
+                    if (!GameMaster.Inst().GetActivePlayer().HaveEnoughMaterial(sourceKind) && nonactiveTexture != null)
                     {
                         spriteBatch.Draw(nonactiveTexture, spritePosition, c);
                     }

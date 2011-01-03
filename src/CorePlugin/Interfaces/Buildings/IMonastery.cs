@@ -14,6 +14,6 @@ namespace CorePlugin
         /// </summary>
         /// <param name="source">Kind of source building.</param>
         /// <returns>True if upgrade was bought, otherwise false.</returns>
-        bool InventUpgrade(SourceKind source);
+        bool InventUpgrade(SourceBuildingKind source);
     }
 }

@@ -8,7 +8,7 @@ namespace CorePlugin
     /// <summary>
     /// Enum for all sources kind in game. Corn, meat, stone, wood, ore.
     /// </summary>
-    public enum SourceKind { Corn, Meat, Stone, Wood, Ore, Count };
+    public enum SourceKind { Corn, Meat, Stone, Wood, Ore, Count, Null };
 
     /// <summary>
     /// All errors which can be when you change sources in market.

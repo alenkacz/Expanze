@@ -24,12 +24,8 @@ namespace Expanze
 
         int[] buildingCount;
 
-        int conversionRateCorn;
-        int conversionRateStone;
-        int conversionRateOre;
-        int conversionRateMeat;
-        int conversionRateWood;
-        UpgradeKind[] upgradeSourceBuilding;
+        LicenceKind[] licenceMarket;
+        UpgradeKind[] upgradeMonastery;
 
         IComponentAI componentAI;   // is null if player is NOT controled by computer but is controled by human
 
@@ -46,16 +42,16 @@ namespace Expanze
                 buildingCount[loop1] = 0;
             }
 
-            conversionRateCorn = Settings.conversionRateCorn;
-            conversionRateStone = Settings.conversionRateStone;
-            conversionRateOre = Settings.conversionRateOre;
-            conversionRateMeat = Settings.conversionRateMeat;
-            conversionRateWood = Settings.conversionRateWood;
-
-            upgradeSourceBuilding = new UpgradeKind[(int) SourceBuildingKind.Count];
+            licenceMarket = new LicenceKind[(int)SourceKind.Count];
             for (int loop1 = 0; loop1 < (int)SourceBuildingKind.Count; loop1++)
             {
-                upgradeSourceBuilding[loop1] = UpgradeKind.NoUpgrade;
+                licenceMarket[loop1] = LicenceKind.NoLicence;
+            }
+
+            upgradeMonastery = new UpgradeKind[(int) SourceBuildingKind.Count];
+            for (int loop1 = 0; loop1 < (int)SourceBuildingKind.Count; loop1++)
+            {
+                upgradeMonastery[loop1] = UpgradeKind.NoUpgrade;
             }
 
             this.color = color;
@@ -71,7 +67,8 @@ namespace Expanze
         public bool GetIsAI() { return componentAI != null; }
         public Color GetColor() { return color; }
         public bool GetActive() { return active; }
-        public UpgradeKind GetSourceBuildingUpgrade(SourceBuildingKind kind) { return upgradeSourceBuilding[(int)kind]; }
+        public UpgradeKind GetMonasteryUpgrade(SourceBuildingKind kind) { return upgradeMonastery[(int)kind]; }
+        public LicenceKind GetMarketLicence(SourceKind kind) { return licenceMarket[(int)kind]; }
 
         public void AddBuilding(Building building)
         {
@@ -86,20 +83,13 @@ namespace Expanze
 
         public int GetPoints() { return points; }
 
-        public int GetConversionRate(HexaKind h)
+        public int GetConversionRate(SourceKind kind)
         {
-            switch (h)
+            switch (licenceMarket[(int)kind])
             {
-                case HexaKind.Cornfield:
-                    return conversionRateCorn;
-                case HexaKind.Forest:
-                    return conversionRateWood;
-                case HexaKind.Mountains:
-                    return conversionRateOre;
-                case HexaKind.Pasture:
-                    return conversionRateMeat;
-                case HexaKind.Stone:
-                    return conversionRateStone;
+                case LicenceKind.NoLicence: return 4;
+                case LicenceKind.FirstLicence: return 3;
+                case LicenceKind.SecondLicence: return 2;
             }
 
             return -1;
@@ -191,42 +181,14 @@ namespace Expanze
             return prevSource;
         }
 
-        public bool HaveEnoughMaterial(HexaKind k)
+        public bool HaveEnoughMaterial(SourceKind kind)
         {
-            switch (k)
-            {
-                case HexaKind.Cornfield:
-                    return getCorn() > GetConversionRate(k);
-                case HexaKind.Forest:
-                    return getWood() > GetConversionRate(k);
-                case HexaKind.Mountains:
-                    return getOre() > GetConversionRate(k);
-                case HexaKind.Pasture:
-                    return getMeat() > GetConversionRate(k);
-                case HexaKind.Stone:
-                    return getStone() > GetConversionRate(k);
-            }
-
-            return false;
+            return source.Get(kind) >= GetConversionRate(kind);
         }
 
-        public int GetMaterialNumber(HexaKind k)
+        public int GetMaterialNumber(SourceKind k)
         {
-            switch (k)
-            {
-                case HexaKind.Cornfield:
-                    return getCorn();
-                case HexaKind.Forest:
-                    return getWood();
-                case HexaKind.Mountains:
-                    return getOre();
-                case HexaKind.Pasture:
-                    return getMeat();
-                case HexaKind.Stone:
-                    return getStone();
-            }
-
-            return 0;
+            return source.Get(k);
         }
 
         public void SetActive(bool active) 
@@ -240,34 +202,12 @@ namespace Expanze
 
         public void SetSourceBuildingUpdate(UpgradeKind upgradeKind, int upgradeNumber)
         {
-            upgradeSourceBuilding[upgradeNumber] = upgradeKind;
+            upgradeMonastery[upgradeNumber] = upgradeKind;
         }
 
-        public void SetMarketRate(UpgradeKind upgradeKind, int upgradeNumber)
+        public void BuyMarketLicence(LicenceKind licenceKind, int upgradeNumber)
         {
-            switch (upgradeKind)
-            {
-                case UpgradeKind.FirstUpgrade :
-                    switch (upgradeNumber)
-                    {
-                        case 0: conversionRateCorn = 3; break;
-                        case 1: conversionRateMeat = 3; break;
-                        case 2: conversionRateStone = 3; break;
-                        case 3: conversionRateWood = 3; break;
-                        case 4: conversionRateOre = 3; break;
-                    }
-                    break;
-                case UpgradeKind.SecondUpgrade :
-                    switch (upgradeNumber)
-                    {
-                        case 0: conversionRateCorn = 2; break;
-                        case 1: conversionRateMeat = 2; break;
-                        case 2: conversionRateStone = 2; break;
-                        case 3: conversionRateWood = 2; break;
-                        case 4: conversionRateOre = 2; break;
-                    }
-                    break;
-            }
+            licenceMarket[upgradeNumber] = licenceKind;
         }
     }
 }

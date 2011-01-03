@@ -7,7 +7,7 @@ namespace CorePlugin
 {
     public interface IPlayer
     {
-        UpgradeKind GetSourceBuildingUpgrade(SourceBuildingKind kind);
+        UpgradeKind GetMonasteryUpgrade(SourceBuildingKind kind);
         ISourceAll GetSource();
         String GetName();
     }
