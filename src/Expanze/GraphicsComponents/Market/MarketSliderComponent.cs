@@ -140,6 +140,10 @@ namespace Expanze
             if (Settings.scaleW(pos) < (range.Right) && Settings.scaleW(pos) > range.Left)
             {
                 int unit = getSliderUnit();
+                /// NEED TO BE FIXED //
+                /// unit should be 1/2 for example //
+                if (unit == 0)
+                    unit = 1;
                 int converted = (int)(spritePosition.X - pos)/unit;
 
                 if (converted < 0) converted = -converted;

@@ -38,6 +38,7 @@ namespace Expanze.Gameplay
                 default: licenceKind = LicenceKind.SecondLicence; break;
             }
             GameMaster.Inst().GetActivePlayer().BuyMarketLicence(licenceKind, upgradeNumber);
+            SetPromptWindow(PromptWindow.Mod.Buyer);
         }
 
         public override void SetPromptWindow(PromptWindow.Mod mod)
@@ -69,6 +70,11 @@ namespace Expanze.Gameplay
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 4, this, Strings.PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_ORE_1, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_ORE_1, Settings.costMarketOre1, true, res.GetHudTexture(HUDTexture.IconOre1)));
             else if (owner.GetMarketLicence(SourceKind.Ore) == LicenceKind.FirstLicence)
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 4, this, Strings.PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_ORE_2, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_ORE_2, Settings.costMarketOre2, true, res.GetHudTexture(HUDTexture.IconOre2)));
+
+            if (win.GetItemCount() == 0)
+            {
+                win.AddPromptItem(new PromptItem(Strings.PROMPT_TITLE_WANT_TO_BUILD_MARKET, Strings.PROMPT_DESCRIPTION_ALL_LICENCES_BOUGHT, new SourceAll(0), false, false, GameResources.Inst().GetHudTexture(HUDTexture.IconMarket)));
+            }
         }
 
         public override SourceAll GetUpgradeCost(UpgradeKind upgradeKind, int upgradeNumber)

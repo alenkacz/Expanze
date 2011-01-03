@@ -31,6 +31,7 @@ namespace Expanze.Gameplay
         protected override void ApplyEffect(UpgradeKind upgradeKind, int upgradeNumber)
         {
             GameMaster.Inst().GetActivePlayer().SetSourceBuildingUpdate(upgradeKind, upgradeNumber);
+            SetPromptWindow(PromptWindow.Mod.Buyer);
         }
 
         public override void SetPromptWindow(PromptWindow.Mod mod)
@@ -51,7 +52,7 @@ namespace Expanze.Gameplay
             
             if (owner.GetMonasteryUpgrade(SourceBuildingKind.Quarry) == UpgradeKind.NoUpgrade)
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 2, this, Strings.PROMPT_TITLE_WANT_TO_UPGRADE_1_QUARRY, Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_QUARRY, Settings.costMonasteryStone1, true, res.GetHudTexture(HUDTexture.IconQuarry1)));
-            else if (owner.GetMonasteryUpgrade(SourceBuildingKind.Quarry) == UpgradeKind.SecondUpgrade)
+            else if (owner.GetMonasteryUpgrade(SourceBuildingKind.Quarry) == UpgradeKind.FirstUpgrade)
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 2, this, Strings.PROMPT_TITLE_WANT_TO_UPGRADE_2_QUARRY, Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_QUARRY, Settings.costMonasteryStone2, true, res.GetHudTexture(HUDTexture.IconQuarry2)));
             
             if (owner.GetMonasteryUpgrade(SourceBuildingKind.Saw) == UpgradeKind.NoUpgrade)
@@ -63,6 +64,11 @@ namespace Expanze.Gameplay
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 4, this, Strings.PROMPT_TITLE_WANT_TO_UPGRADE_1_MINE, Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_MINE, Settings.costMonasteryOre1, true, res.GetHudTexture(HUDTexture.IconMine1)));
             else if (owner.GetMonasteryUpgrade(SourceBuildingKind.Mine) == UpgradeKind.FirstUpgrade)
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 4, this, Strings.PROMPT_TITLE_WANT_TO_UPGRADE_2_MINE, Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_MINE, Settings.costMonasteryOre2, true, res.GetHudTexture(HUDTexture.IconMine2)));
+
+            if (win.GetItemCount() == 0)
+            {
+                win.AddPromptItem(new PromptItem(Strings.PROMPT_TITLE_WANT_TO_BUILD_MONASTERY, Strings.PROMPT_DESCRIPTION_ALL_UPGRADES_INVENTED, new SourceAll(0), false, false, GameResources.Inst().GetHudTexture(HUDTexture.IconMonastery)));
+            }
         }
 
         public override SourceAll GetUpgradeCost(UpgradeKind upgradeKind, int upgradeNumber)

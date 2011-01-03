@@ -48,6 +48,16 @@ namespace Expanze
             return new SourceAll(a.wood - b.wood, a.stone - b.stone, a.corn - b.corn, a.meat - b.meat, a.ore - b.ore);
         }
 
+        public override bool Equals(object obj)
+        {
+            SourceAll b = (SourceAll)obj;
+            return b.corn == corn &&
+                   b.meat == meat &&
+                   b.stone == stone &&
+                   b.wood == wood &&
+                   b.ore == ore;
+        }
+
         public int this[int index]
         {
             get

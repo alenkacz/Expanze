@@ -81,6 +81,9 @@ namespace Expanze
             int size = itemList.Count;
             itemPick.Add(new PickVariables(new Color(size / 256.0f, size / 256.0f, 0.0f)));
         }
+
+        public int GetItemCount() { return itemList.Count; }
+
         public void Show(Mod mod, String title, bool showIcons)
         {
             this.mod = mod;
@@ -202,12 +205,15 @@ namespace Expanze
                 String error = itemList[activeItem].TryExecute();
                 if (mod == Mod.Viewer)
                     error = Strings.ALERT_TITLE_THIS_IS_NOT_YOURS;
+                int errorY = 265;
+                if (itemList[activeItem].getCost().Equals(new SourceAll(0)))
+                    errorY = 300;
                 if (error != null)
                 {
                     TextWrapping.DrawStringIntoRectangle(error,
-                     GameResources.Inst().GetFont(EFont.MedievalSmall), Color.DarkSlateGray, bgPos.X + 22, bgPos.Y + 267, background.Width - 40);
+                     GameResources.Inst().GetFont(EFont.MedievalSmall), Color.DarkSlateGray, bgPos.X + 22, bgPos.Y + errorY + 2, background.Width - 40);
                     TextWrapping.DrawStringIntoRectangle(error,
-                     GameResources.Inst().GetFont(EFont.MedievalSmall), Color.Red, bgPos.X + 20, bgPos.Y + 265, background.Width - 40);
+                     GameResources.Inst().GetFont(EFont.MedievalSmall), Color.Red, bgPos.X + 20, bgPos.Y + errorY, background.Width - 40);
                 }
                 if (!drawingPickableAreas)
                     DrawSources();

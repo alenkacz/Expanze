@@ -282,6 +282,9 @@ namespace Expanze
 
         private void LoadFonts()
         {
+            if (content == null)
+                content = new ContentManager(game.Services, "Content");
+
             font = new SpriteFont[N_FONT];
             font[(int)EFont.GameFont] = content.Load<SpriteFont>("gamefont");
             font[(int)EFont.HudMaterialsFont] = content.Load<SpriteFont>("hudMaterialsFont");

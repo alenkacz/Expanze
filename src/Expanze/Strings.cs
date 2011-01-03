@@ -144,6 +144,9 @@ namespace Expanze
         public static string PROMPT_TITLE_WANT_TO_BUILD_MONASTERY = "Klášter";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_MONASTERY = "Mniši můžou vynaleznout lepší nástroje pro horníky, dřevorubce, zvýšit úrodnost obilných polí, urychlit práci pastevce.";
 
+        public static string PROMPT_DESCRIPTION_ALL_UPGRADES_INVENTED = "Vynalezl jsi již všechny dostupné pokroky. Nyní můžeš vybavit novými vynálezy své budovy a tím zlepšit jejich efektivitu.";
+        public static string PROMPT_DESCRIPTION_ALL_LICENCES_BOUGHT = "Koupil jsi již všechny dostupné licence umožňující výhodnější směnu jednotlivých surovin. Je na čase toho využít a vyhrát!";
+        
         public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_CORN_1 = "Výhradní výměnné právo na obilí";
         public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_CORN_2 = "Výměnné právo na obilí druhého stupně";
         public static string PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_MEAT_1 = "Výhradní výměnné právo na ovce";
