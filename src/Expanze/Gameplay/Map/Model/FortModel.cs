@@ -189,9 +189,14 @@ namespace Expanze.Gameplay
             return GameState.map.GetMapController().DestroySources(playerName);
         }
 
+        public DestroyHexaError CanDestroyHexa(int hexaID)
+        {
+            return GameState.map.GetMapController().CanDestroyHexa(hexaID, this);
+        }
+
         public bool DestroyHexa(int hexaID)
         {
-            return GameState.map.GetMapController().DestroyHexa(hexaID);
+            return GameState.map.GetMapController().DestroyHexa(hexaID, this);
         }
 
         public CaptureHexaError CanCaptureHexa(int hexaID)

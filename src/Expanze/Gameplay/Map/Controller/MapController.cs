@@ -272,24 +272,61 @@ namespace Expanze.Gameplay.Map
 
             HexaModel.SetHexaIDFort(fort.GetHexaID());
 
+            HexaModel hexa = map.GetHexaByID(hexaID);
+
+            if (hexa == null)
+                return CaptureHexaError.InvalidHexaID;
+
+            if (!hexa.IsInFortRadius())
+                return CaptureHexaError.TooFarFromFort;
+
             return CaptureHexaError.OK;
         }
 
         public bool CaptureHexa(int hexaID, FortModel fort)
         {
-            HexaModel hexa = map.GetHexaByID(hexaID);
-            hexa.Capture();
-            GameMaster.Inst().GetActivePlayer().PayForSomething(Settings.costFortCapture);
-
-            return true;
+            if (CanCaptureHexa(hexaID, fort) == CaptureHexaError.OK)
+            {
+                HexaModel hexa = map.GetHexaByID(hexaID);
+                hexa.Capture();
+                GameMaster.Inst().GetActivePlayer().PayForSomething(Settings.costFortCapture);
+                return true;
+            }
+            return false;
         }
 
-        public bool DestroyHexa(int hexaID)
+
+        public DestroyHexaError CanDestroyHexa(int hexaID, FortModel fort)
         {
+            if (!Settings.costFortDestroyHexa.HasPlayerSources(GameMaster.Inst().GetActivePlayer()))
+                return DestroyHexaError.NoSources;
+
+            if (fort == null)
+                return DestroyHexaError.OK;
+
+            HexaModel.SetHexaIDFort(fort.GetHexaID());
+
             HexaModel hexa = map.GetHexaByID(hexaID);
-            hexa.Destroy();
-            GameMaster.Inst().GetActivePlayer().PayForSomething(Settings.costFortDestroyHexa);
-            return true;
+
+            if (hexa == null)
+                return DestroyHexaError.InvalidHexaID;
+
+            if (!hexa.IsInFortRadius())
+                return DestroyHexaError.TooFarFromFort;
+
+            return DestroyHexaError.OK;
+        }
+
+        public bool DestroyHexa(int hexaID, FortModel fort)
+        {
+            if (CanDestroyHexa(hexaID, fort) == DestroyHexaError.OK)
+            {
+                HexaModel hexa = map.GetHexaByID(hexaID);
+                hexa.Destroy();
+                GameMaster.Inst().GetActivePlayer().PayForSomething(Settings.costFortDestroyHexa);
+                return true;
+            }
+            return false;
         }
 
         public DestroySourcesError CanDestroySources(String playerName)

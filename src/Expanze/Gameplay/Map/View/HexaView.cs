@@ -123,27 +123,6 @@ namespace Expanze
             townView[(int)pos] = town;
         }
 
-        public bool IsInFortRadius()
-        {
-            int hexaIDFort = HexaModel.GetHexaIDFort();
-
-            /// You cant destroy or capture desert
-            if (kind == HexaKind.Desert)
-                return false;
-
-            if (hexaIDFort == hexaID)
-                return true;
-
-        
-            for(int loop1 = 0; loop1 < 6; loop1++)
-            {
-                if (model.GetHexaNeighbour(loop1).GetID() == hexaIDFort)
-                    return true;
-            }
-            return false;
-        }
-
-
         private void DrawHexaIcon(SpriteBatch spriteBatch, Vector2 pos, Texture2D passive, Texture2D active)
         {
             Texture2D text = passive;
@@ -541,7 +520,7 @@ namespace Expanze
                     case EFortState.DestroyingHexa:
                         if (IsInFortRadius())
                         {
-                            GameState.map.GetMapController().DestroyHexa(hexaID);
+                            GameState.map.GetMapController().DestroyHexa(hexaID, null);
                             GameMaster.Inst().SetFortState(EFortState.Normal);
                         }
                         break;
@@ -555,6 +534,11 @@ namespace Expanze
                         break;
                 }
             }
+        }
+
+        private bool IsInFortRadius()
+        {
+            return model.IsInFortRadius();
         }
 
         public virtual RoadView GetRoadViewByID(int roadID)

@@ -540,6 +540,24 @@ namespace Expanze
         public void SetCoord(int x, int y) { this.x = x; this.y = y; }
 
 
+        public bool IsInFortRadius()
+        {
+            /// You cant destroy or capture desert
+            if (kind == HexaKind.Desert)
+                return false;
+
+            if (hexaIDFort == hexaID)
+                return true;
+
+
+            for (int loop1 = 0; loop1 < 6; loop1++)
+            {
+                if (hexaNeighbours[loop1].GetID() == hexaIDFort)
+                    return true;
+            }
+            return false;
+        }
+
         public void Capture()
         {
             hexaCaptured = !hexaCaptured;

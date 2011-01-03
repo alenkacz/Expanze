@@ -26,7 +26,29 @@ namespace CorePlugin
         /// </summary>
         NoSources }
 
-    public enum DestroyHexaError { OK }
+    public enum DestroyHexaError
+    {
+        /// <summary>
+        /// There is no error.
+        /// </summary>
+        OK,
+
+        /// <summary>
+        /// You have not enough sources.
+        /// </summary>
+        NoSources,
+
+        /// <summary>
+        /// There is not your fort in neighbourghood of target hexa.
+        /// </summary>
+        TooFarFromFort,
+
+        /// <summary>
+        /// Target hexa doesnt exist.
+        /// </summary>
+        InvalidHexaID
+    }
+
     public enum ParadeError
     {
         /// <summary>
@@ -40,7 +62,26 @@ namespace CorePlugin
         NoSources
     }
 
-    public enum CaptureHexaError { OK, NoSources }
+    public enum CaptureHexaError {
+        /// <summary>
+        /// There is no error.
+        /// </summary>
+        OK, 
+
+        /// <summary>
+        /// You have not enough sources.
+        /// </summary>
+        NoSources, 
+        
+        /// <summary>
+        /// There is not your fort in neighbourghood of target hexa.
+        /// </summary>
+        TooFarFromFort, 
+        
+        /// <summary>
+        /// Target hexa doesnt exist.
+        /// </summary>
+        InvalidHexaID }
 
     public interface IFort
     {
@@ -65,6 +106,13 @@ namespace CorePlugin
         bool DestroyHexa(int hexaID);
 
         /// <summary>
+        /// Find out if you can destroy hexa with hexaID.
+        /// </summary>
+        /// <param name="hexaID">Target hexa ID</param>
+        /// <returns>Error why you cant destroy hexa or DestroyHexaError.OK</returns>
+        DestroyHexaError CanDestroyHexa(int hexaID);
+
+        /// <summary>
         /// Capture target hexa with hexaID. 
         /// This hexa have to neighbourgh of fort hexa or fort hexa itself. 
         /// </summary>
@@ -72,6 +120,11 @@ namespace CorePlugin
         /// <returns>True if hexa was captured, otherwise false.</returns>
         bool CaptureHexa(int hexaID);
 
+        /// <summary>
+        /// Find out if you can capture hexa with hexaID.
+        /// </summary>
+        /// <param name="hexaID">Target hexa ID</param>
+        /// <returns>Error why you cant capture hexa or CaptureHexaError.OK</returns>
         CaptureHexaError CanCaptureHexa(int hexaID);
 
         /// <summary>
