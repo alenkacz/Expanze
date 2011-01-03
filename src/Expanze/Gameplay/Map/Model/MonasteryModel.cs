@@ -12,7 +12,7 @@ namespace Expanze.Gameplay
         int townID; // where is this building
         int hexaID;
 
-        public MonasteryModel(int townID, int hexaID)
+        public MonasteryModel(Player playerOwner, int townID, int hexaID) : base(playerOwner)
         {
             this.townID = townID;
             this.hexaID = hexaID;
@@ -38,6 +38,7 @@ namespace Expanze.Gameplay
             PromptWindow win = PromptWindow.Inst();
             GameResources res = GameResources.Inst();
             win.Show(mod, Strings.PROMPT_TITLE_WANT_TO_BUILD_MONASTERY, true);
+            
             if(upgradeFirst[0] == false)
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, this, Strings.PROMPT_TITLE_WANT_TO_UPGRADE_1_MILL, Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_MILL, Settings.costMonasteryCorn1, true, res.GetHudTexture(HUDTexture.IconMill1)));
             else if (upgradeSecond[0] == false)
@@ -60,7 +61,7 @@ namespace Expanze.Gameplay
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 4, this, Strings.PROMPT_TITLE_WANT_TO_UPGRADE_2_MINE, Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_MINE, Settings.costMonasteryOre2, true, res.GetHudTexture(HUDTexture.IconMine2)));
         }
 
-        public override SourceAll getUpgradeCost(UpgradeKind upgradeKind, int upgradeNumber)
+        public override SourceAll GetUpgradeCost(UpgradeKind upgradeKind, int upgradeNumber)
         {
             switch (upgradeKind)
             {
@@ -89,7 +90,7 @@ namespace Expanze.Gameplay
             return new SourceAll(0);
         }
 
-        public static BuildingPromptItem getPromptItemBuildMonastery(int townID, int hexaID)
+        public static BuildingPromptItem GetPromptItemBuildMonastery(int townID, int hexaID)
         {
             return new BuildingPromptItem(townID, hexaID, BuildingKind.MonasteryBuilding, Strings.PROMPT_TITLE_WANT_TO_BUILD_MONASTERY, Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_MONASTERY, Settings.costMonastery, true, GameResources.Inst().GetHudTexture(HUDTexture.IconMonastery));
         }

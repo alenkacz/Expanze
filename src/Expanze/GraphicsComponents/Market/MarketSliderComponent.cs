@@ -129,9 +129,9 @@ namespace Expanze
         {
             sliderPosition.X = spritePosition.X;
             clickablePos = new Rectangle(Settings.scaleW(sliderPosition.X), Settings.scaleH(sliderPosition.Y), sliderW, sliderH);
-            this.fromTypeCount = GameMaster.Inst().GetActivePlayer().getMaterialNumber(fromType);
+            this.fromTypeCount = GameMaster.Inst().GetActivePlayer().GetMaterialNumber(fromType);
             this.fromConvertedCount = fromTypeCount;
-            this.toTypeCount = GameMaster.Inst().GetActivePlayer().getMaterialNumber(toType);
+            this.toTypeCount = GameMaster.Inst().GetActivePlayer().GetMaterialNumber(toType);
             this.toConvertedCount = toTypeCount;
         }
 
@@ -166,21 +166,21 @@ namespace Expanze
 
         private int getSliderUnit()
         {
-            int count = GameMaster.Inst().GetActivePlayer().getMaterialNumber(fromType)/GameMaster.Inst().GetActivePlayer().GetConversionRate(fromType);
+            int count = GameMaster.Inst().GetActivePlayer().GetMaterialNumber(fromType)/GameMaster.Inst().GetActivePlayer().GetConversionRate(fromType);
             return width / count;
         }
 
         public void setFromType(HexaKind k)
         {
             this.fromType = k;
-            this.fromTypeCount = GameMaster.Inst().GetActivePlayer().getMaterialNumber(fromType);
+            this.fromTypeCount = GameMaster.Inst().GetActivePlayer().GetMaterialNumber(fromType);
             this.fromConvertedCount = fromTypeCount;
         }
 
         public void setToType(HexaKind k)
         {
             toType = k;
-            this.toTypeCount = GameMaster.Inst().GetActivePlayer().getMaterialNumber(toType);
+            this.toTypeCount = GameMaster.Inst().GetActivePlayer().GetMaterialNumber(toType);
             this.toConvertedCount = toTypeCount;
         }
 

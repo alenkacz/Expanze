@@ -23,13 +23,12 @@ namespace Expanze.Utils
             float rowY = y;
             float rowWidth = 0;
 
-            while (textCopy.Length != 0)
+            while (true)
             {
                 int spaceIndex = textCopy.IndexOf(' ');
                 if (spaceIndex < 0)
                 {
                     word = textCopy;
-                    textCopy = "";
                 }
                 else
                     word = textCopy.Substring(0, spaceIndex);
@@ -49,8 +48,15 @@ namespace Expanze.Utils
                     row = word + " ";
                     rowWidth = font.MeasureString(word + " ").X;
                     rowY += font.LineSpacing;
+
+                    if (textCopy.Length == 0)
+                        break;
                 }
-                textCopy = textCopy.Substring(spaceIndex + 1);
+
+                if (spaceIndex > 0)
+                    textCopy = textCopy.Substring(spaceIndex + 1);
+                else
+                    textCopy = "";
             }
         }
     }

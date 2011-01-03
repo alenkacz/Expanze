@@ -522,7 +522,7 @@ namespace Expanze
 
                                             if (kind != HexaKind.Mountains)
                                             {
-                                                PromptWindow.Inst().AddPromptItem(MonasteryModel.getPromptItemBuildMonastery(townID, hexaID));
+                                                PromptWindow.Inst().AddPromptItem(MonasteryModel.GetPromptItemBuildMonastery(townID, hexaID));
                                                 PromptWindow.Inst().AddPromptItem(MarketModel.getPromptItemBuildMarket(townID, hexaID));
                                                 PromptWindow.Inst().AddPromptItem(FortModel.getPromptItemBuildFort(townID, hexaID));
                                             }

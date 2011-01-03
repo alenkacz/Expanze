@@ -27,7 +27,7 @@ namespace Expanze.Gameplay
         SourceBuildingKind buildingKind;
 
 
-        public SourceBuildingModel(int townID, int hexaID)
+        public SourceBuildingModel(Player playerOwner, int townID, int hexaID) : base(playerOwner)
         {
             this.townID = townID;
             this.hexaID = hexaID;
@@ -155,13 +155,13 @@ namespace Expanze.Gameplay
                     return BuyingUpgradeError.YouAlreadyHaveSecondUpgrade;
             }     
 
-            if (!getUpgradeCost(upgradeKind, upgradeNumber).HasPlayerSources(activePlayer))
+            if (!GetUpgradeCost(upgradeKind, upgradeNumber).HasPlayerSources(activePlayer))
                 return BuyingUpgradeError.NoSources;
 
             return BuyingUpgradeError.OK;
         }
 
-        public override SourceAll getUpgradeCost(UpgradeKind upgradeKind, int upgradeNumber)
+        public override SourceAll GetUpgradeCost(UpgradeKind upgradeKind, int upgradeNumber)
         {
             switch (upgradeKind)
             {

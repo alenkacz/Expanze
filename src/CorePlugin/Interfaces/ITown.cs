@@ -13,6 +13,7 @@ namespace CorePlugin
     {
         TownBuildError CanBuildTown();
         ITown Build();
+
         ISourceBuilding BuildSourceBuilding(byte pos);
         IFort BuildFort(byte pos);
         IMonastery BuildMonastery(byte pos);

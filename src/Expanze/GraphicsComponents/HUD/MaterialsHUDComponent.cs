@@ -83,7 +83,7 @@ namespace Expanze
 
             if (changeMaterials)
             {
-                SourceAll sc = act.getMaterialChange();
+                SourceAll sc = act.GetMaterialChange();
 
 
                 if(sc.corn != 0) {

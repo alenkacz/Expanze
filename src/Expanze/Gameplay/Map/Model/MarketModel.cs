@@ -12,7 +12,7 @@ namespace Expanze.Gameplay
         int townID; // where is this building
         int hexaID;
 
-        public MarketModel(int townID, int hexaID)
+        public MarketModel(Player playerOwner, int townID, int hexaID) : base(playerOwner)
         {
             this.townID = townID;
             this.hexaID = hexaID;
@@ -60,7 +60,7 @@ namespace Expanze.Gameplay
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 4, this, Strings.PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_ORE_2, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_ORE_2, Settings.costMarketOre2, true, res.GetHudTexture(HUDTexture.IconOre2)));
         }
 
-        public override SourceAll getUpgradeCost(UpgradeKind upgradeKind, int upgradeNumber)
+        public override SourceAll GetUpgradeCost(UpgradeKind upgradeKind, int upgradeNumber)
         {
             switch (upgradeKind)
             {

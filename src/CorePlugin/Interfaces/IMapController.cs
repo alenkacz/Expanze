@@ -68,6 +68,7 @@ namespace CorePlugin
 
         /// <summary>
         /// Destroy half of sources of target player.
+        /// You need to have your own fort.
         /// </summary>
         /// <param name="playerName">Name of player you want destroy sources.</param>
         /// <returns>True if destroying sources is succesful, otherwise false</returns>

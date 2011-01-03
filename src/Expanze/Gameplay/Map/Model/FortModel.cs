@@ -45,7 +45,7 @@ namespace Expanze.Gameplay
         bool playerPrompt;
         SourceAll costParade;   // it is higher and higher
 
-        public FortModel(int townID, int hexaID)
+        public FortModel(Player playerOwner, int townID, int hexaID) : base(playerOwner)
         {
             this.townID = townID;
             this.hexaID = hexaID;
@@ -93,7 +93,7 @@ namespace Expanze.Gameplay
                     switch (upgradeNumber)
                     {
                         case 0 :
-                            gm.GetActivePlayer().AddSources(getUpgradeCost(upgradeKind, upgradeNumber), TransactionState.TransactionStart);
+                            gm.GetActivePlayer().AddSources(GetUpgradeCost(upgradeKind, upgradeNumber), TransactionState.TransactionStart);
                             gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
                             gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
                             HexaModel.SetHexaIDFort(hexaID);
@@ -102,7 +102,7 @@ namespace Expanze.Gameplay
                             break;
 
                         case 1:
-                            gm.GetActivePlayer().AddSources(getUpgradeCost(upgradeKind, upgradeNumber), TransactionState.TransactionStart);
+                            gm.GetActivePlayer().AddSources(GetUpgradeCost(upgradeKind, upgradeNumber), TransactionState.TransactionStart);
                             gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
                             gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
                             HexaModel.SetHexaIDFort(hexaID);
@@ -111,7 +111,7 @@ namespace Expanze.Gameplay
                             break;
 
                         case 2 :
-                            gm.GetActivePlayer().AddSources(getUpgradeCost(upgradeKind, upgradeNumber), TransactionState.TransactionStart);
+                            gm.GetActivePlayer().AddSources(GetUpgradeCost(upgradeKind, upgradeNumber), TransactionState.TransactionStart);
                             gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
                             gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
                             win.Show(PromptWindow.Mod.Buyer, Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_SOURCES, true);
@@ -142,7 +142,7 @@ namespace Expanze.Gameplay
             }
         }
 
-        public override SourceAll getUpgradeCost(UpgradeKind upgradeKind, int upgradeNumber)
+        public override SourceAll GetUpgradeCost(UpgradeKind upgradeKind, int upgradeNumber)
         {
             if (upgradeKind == UpgradeKind.FirstUpgrade)
             {

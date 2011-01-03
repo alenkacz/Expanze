@@ -56,12 +56,14 @@ namespace Expanze.Gameplay
         protected bool[] upgradeSecond;
         const int upgradeMax = 3;   /// upgradeCount limit
         protected int upgradeCount;           /// how many upgrades player has bought in this building?
+        protected Player owner;
 
-        public SpecialBuilding()
+        public SpecialBuilding(Player playerOwner)
         {
             upgradeFirst = new bool[5];
             upgradeSecond = new bool[5];
             upgradeCount = 0;
+            owner = playerOwner;
 
             for (int loop1 = 0; loop1 < upgradeFirst.Length; loop1++)
             {
@@ -100,7 +102,7 @@ namespace Expanze.Gameplay
         }
 
         abstract public void SetPromptWindow(PromptWindow.Mod mod);
-        abstract public SourceAll getUpgradeCost(UpgradeKind upgradeKind, int upgradeNumber);
+        abstract public SourceAll GetUpgradeCost(UpgradeKind upgradeKind, int upgradeNumber);
         abstract public Texture2D GetIconActive();
         abstract public Texture2D GetIconPassive();
         abstract protected void ApplyEffect(UpgradeKind upgradeKind, int upgradeNumber);
@@ -122,7 +124,7 @@ namespace Expanze.Gameplay
                         return BuyingUpgradeError.YouAlreadyHaveSecondUpgrade;
             }        
 
-            if (!getUpgradeCost(upgradeKind, upgradeNumber).HasPlayerSources(activePlayer))
+            if (!GetUpgradeCost(upgradeKind, upgradeNumber).HasPlayerSources(activePlayer))
                 return BuyingUpgradeError.NoSources;
 
             return BuyingUpgradeError.OK;

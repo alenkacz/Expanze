@@ -186,7 +186,7 @@ namespace Expanze
             return temp;
         }
 
-        public SourceAll getMaterialChange()
+        public SourceAll GetMaterialChange()
         {
             return prevSource;
         }
@@ -210,7 +210,7 @@ namespace Expanze
             return false;
         }
 
-        public int getMaterialNumber(HexaKind k)
+        public int GetMaterialNumber(HexaKind k)
         {
             switch (k)
             {
@@ -260,7 +260,7 @@ namespace Expanze
                 case UpgradeKind.SecondUpgrade :
                     switch (upgradeNumber)
                     {
-                        case 0: conversionRateCorn =2; break;
+                        case 0: conversionRateCorn = 2; break;
                         case 1: conversionRateMeat = 2; break;
                         case 2: conversionRateStone = 2; break;
                         case 3: conversionRateWood = 2; break;

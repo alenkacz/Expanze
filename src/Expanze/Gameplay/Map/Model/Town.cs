@@ -292,7 +292,7 @@ namespace Expanze
             switch (kind)
             {
                 case BuildingKind.SourceBuilding :
-                    building[pos] = new SourceBuildingModel(townID, hexaNeighbour[pos].GetID());
+                    building[pos] = new SourceBuildingModel(playerOwner, townID, hexaNeighbour[pos].GetID());
                     switch (hexaNeighbour[pos].GetKind())
                     {
                         case HexaKind.Cornfield: playerOwner.AddBuilding(Building.Mill); break;
@@ -304,15 +304,15 @@ namespace Expanze
                     break;
 
                 case BuildingKind.MarketBuilding :
-                    building[pos] = new MarketModel(townID, hexaNeighbour[pos].GetID());
+                    building[pos] = new MarketModel(playerOwner, townID, hexaNeighbour[pos].GetID());
                     playerOwner.AddBuilding(Building.Market);
                     break;
                 case BuildingKind.MonasteryBuilding :
-                    building[pos] = new MonasteryModel(townID, hexaNeighbour[pos].GetID());
+                    building[pos] = new MonasteryModel(playerOwner, townID, hexaNeighbour[pos].GetID());
                     playerOwner.AddBuilding(Building.Monastery);
                     break;
                 case BuildingKind.FortBuilding :
-                    building[pos] = new FortModel(townID, hexaNeighbour[pos].GetID());
+                    building[pos] = new FortModel(playerOwner, townID, hexaNeighbour[pos].GetID());
                     playerOwner.AddBuilding(Building.Fort);
                     break;
             }
