@@ -91,7 +91,7 @@ namespace Expanze.Gameplay.Map
             TownModel town = map.GetTownByID(townID);
             if (town == null)
                 return BuyingUpgradeError.ThereIsNoTown;
-            SpecialBuilding building = town.getSpecialBuilding(hexaID);
+            SpecialBuilding building = town.GetSpecialBuilding(hexaID);
             if (building == null)
                 return BuyingUpgradeError.ThereIsNoBuilding;
 
@@ -104,7 +104,7 @@ namespace Expanze.Gameplay.Map
             TownModel town = map.GetTownByID(townID);
             if (town == null)
                 return false;
-            SpecialBuilding building = town.getSpecialBuilding(hexaID);
+            SpecialBuilding building = town.GetSpecialBuilding(hexaID);
             if (building == null)
                 return false;
 
@@ -231,6 +231,8 @@ namespace Expanze.Gameplay.Map
                         {
                             switch (hexa.GetKind())
                             {
+                                case HexaKind.Desert :
+                                    source = new SourceAll(20); break;
                                 case HexaKind.Cornfield:
                                     source = Settings.costMill; break;
                                 case HexaKind.Forest:

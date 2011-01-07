@@ -283,7 +283,9 @@ namespace Expanze
             }
         }
 
-
+        int frames = 0;
+        int showFrames = 60;
+        int timeMS = 0;
 
         /// <summary>
         /// Draws the gameplay screen.
@@ -348,6 +350,23 @@ namespace Expanze
             if (MarketComponent.isActive)
             {
                 MarketComponent.getInstance().Draw(gameTime, false);
+            }
+
+            frames++;
+            timeMS += gameTime.ElapsedGameTime.Milliseconds;
+            if (timeMS > 3000)
+            {
+                showFrames = frames / 3;
+                timeMS -= 3000;
+                frames = 0;
+            }
+
+            if (gameTime.ElapsedGameTime.Milliseconds != 0)
+            {
+                spriteBatch.Begin();
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), showFrames + " ", new Vector2(12, 12), Color.Black);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), showFrames + " ", new Vector2(10, 10), Color.White);
+                spriteBatch.End();
             }
 
             // If the game is transitioning on or off, fade it out to black.

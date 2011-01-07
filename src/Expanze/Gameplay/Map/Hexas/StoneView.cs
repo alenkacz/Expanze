@@ -28,7 +28,7 @@ namespace Expanze.Gameplay.Map
             for (int loop1 = 0; loop1 < 6; loop1++)
             {
                 int tempPos = (loop1 + hexaID) % 6;
-                switch(model.getTown((CorePlugin.TownPos)loop1).getBuildingKind(model.GetID()))
+                switch(model.getTown((CorePlugin.TownPos)loop1).GetBuildingKind(model.GetID()))
                 {
                     case BuildingKind.SourceBuilding :
                         m[0] = gr.GetStoneSourceBuildingModel(tempPos);

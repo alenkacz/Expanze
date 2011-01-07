@@ -65,7 +65,7 @@ namespace Expanze
             return -1;
         }
 
-        public BuildingKind getBuildingKind(int hexaID)
+        public BuildingKind GetBuildingKind(int hexaID)
         {
             if (!isBuild)
                 return BuildingKind.NoBuilding;
@@ -75,7 +75,7 @@ namespace Expanze
             return (buildingPos == -1) ? BuildingKind.NoBuilding : buildingKind[buildingPos];
         }
 
-        public SpecialBuilding getSpecialBuilding(int hexaID)
+        public SpecialBuilding GetSpecialBuilding(int hexaID)
         {
             if (!isBuild)
                 return null;
@@ -307,14 +307,17 @@ namespace Expanze
                 case BuildingKind.MarketBuilding :
                     building[pos] = new MarketModel(playerOwner, townID, hexaNeighbour[pos].GetID());
                     playerOwner.AddBuilding(Building.Market);
+                    playerOwner.AddPoints(Settings.pointsMarket);
                     break;
                 case BuildingKind.MonasteryBuilding :
                     building[pos] = new MonasteryModel(playerOwner, townID, hexaNeighbour[pos].GetID());
                     playerOwner.AddBuilding(Building.Monastery);
+                    playerOwner.AddPoints(Settings.pointsMonastery);
                     break;
                 case BuildingKind.FortBuilding :
                     building[pos] = new FortModel(playerOwner, townID, hexaNeighbour[pos].GetID());
                     playerOwner.AddBuilding(Building.Fort);
+                    playerOwner.AddPoints(Settings.pointsFort);
                     break;
             }
 

@@ -246,12 +246,17 @@ namespace Expanze.Gameplay.Map
                     }
                 }
             }
-            
+
+            DrawWater();
+        }
+
+        private void DrawWater()
+        {
             Matrix mWorld = Matrix.Identity;
             float dx = 0.591f;  // copyied from creating matrices
             float dy = 0.512f;
             HexaView tempView;
-            
+
             int rowWidth = 0;
             const int hexaBorder = 14;
 
@@ -273,7 +278,7 @@ namespace Expanze.Gameplay.Map
                 for (int loop2 = -hexaBorder; loop2 <= hexaBorder; loop2++)
                 {
                     DrawWaterHexa(mWorld);
-                    if(loop2 == -1)
+                    if (loop2 == -1)
                         mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, dx * rowWidth));
 
                     mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, dx));

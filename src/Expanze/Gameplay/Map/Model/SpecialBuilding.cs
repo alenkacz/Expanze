@@ -35,7 +35,7 @@ namespace Expanze.Gameplay
         {
             GameMaster gm = GameMaster.Inst();
             TownModel town = GameState.map.GetTownByID(townID);
-            SpecialBuilding building = town.getSpecialBuilding(hexaID);
+            SpecialBuilding building = town.GetSpecialBuilding(hexaID);
 
             BuyingUpgradeError error = building.CanActivePlayerBuyUpgrade(upgradeKind, upgradeNumber);
             switch (error)

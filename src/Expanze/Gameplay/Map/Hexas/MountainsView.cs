@@ -26,13 +26,13 @@ namespace Expanze.Gameplay.Map
             {
                 Model m;
                 int tempPos = (loop1 + hexaID) % 6;
-                if (BuildingKind.NoBuilding != model.getTown((CorePlugin.TownPos)loop1).getBuildingKind(model.GetID()))
+                if (BuildingKind.NoBuilding != model.getTown((CorePlugin.TownPos)loop1).GetBuildingKind(model.GetID()))
                 {
                     m = GameResources.Inst().GetMountainsSourceBuildingModel(tempPos);
                 }
                 else
                 {
-                    if (tempPos == 5 || (tempPos == 4 && BuildingKind.NoBuilding == model.getTown((CorePlugin.TownPos)(((int) CorePlugin.TownPos.BottomLeft + hexaID) % 6)).getBuildingKind(model.GetID())))
+                    if (tempPos == 5 || (tempPos == 4 && BuildingKind.NoBuilding == model.getTown((CorePlugin.TownPos)(((int) CorePlugin.TownPos.BottomLeft + hexaID) % 6)).GetBuildingKind(model.GetID())))
                         continue;
                     m = GameResources.Inst().GetMountainsCover(tempPos);
                 }

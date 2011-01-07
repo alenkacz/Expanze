@@ -190,7 +190,7 @@ namespace Expanze
                         if (town.getIsMarked())
                         {
                             tempTown = town.getTownModel();
-                            if (tempTown.getBuildingKind(hexaID) != BuildingKind.NoBuilding || 
+                            if (tempTown.GetBuildingKind(hexaID) != BuildingKind.NoBuilding || 
                                 tempTown.GetPlayerOwner() == GameMaster.Inst().GetActivePlayer())
                                 drawNumber = false;
                             break;
@@ -229,15 +229,15 @@ namespace Expanze
                 }
                 else if(GameMaster.Inst().GetFortState() == EFortState.Normal)
                 {
-                    if (tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.GetPlayerOwner() == GameMaster.Inst().GetActivePlayer())
+                    if (tempTown.GetBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.GetPlayerOwner() == GameMaster.Inst().GetActivePlayer())
                     {
                         DrawHexaIcon(spriteBatch, posHexaIcon, HUDTexture.HammersPassive, HUDTexture.HammersActive);
                         DrawHexaNumber(spriteBatch, point2D);
                     }
                     else
                     {
-                            DrawHexaIcon(spriteBatch, posHexaIcon, tempTown.getSpecialBuilding(hexaID).GetIconPassive(), tempTown.getSpecialBuilding(hexaID).GetIconActive());
-                            if(tempTown.getBuildingKind(hexaID) == BuildingKind.SourceBuilding)
+                            DrawHexaIcon(spriteBatch, posHexaIcon, tempTown.GetSpecialBuilding(hexaID).GetIconPassive(), tempTown.GetSpecialBuilding(hexaID).GetIconActive());
+                            if(tempTown.GetBuildingKind(hexaID) == BuildingKind.SourceBuilding)
                                 DrawHexaNumber(spriteBatch, point2D);
                     }
                 }
@@ -306,7 +306,7 @@ namespace Expanze
                 Matrix tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
 
                 int roofID = -1;
-                switch(model.getTown((CorePlugin.TownPos)loop1).getBuildingKind(model.GetID()))
+                switch(model.getTown((CorePlugin.TownPos)loop1).GetBuildingKind(model.GetID()))
                 {
                     case BuildingKind.NoBuilding :
                         m = null;
@@ -445,7 +445,7 @@ namespace Expanze
                                 kind != HexaKind.Null)
                             {
                                 PromptWindow.Mod mod;
-                                switch (townView[loop1].getTownModel().getBuildingKind(hexaID))
+                                switch (townView[loop1].getTownModel().GetBuildingKind(hexaID))
                                 {
                                     case BuildingKind.NoBuilding:
                                         if (townView[loop1].getTownModel().GetPlayerOwner() == GameMaster.Inst().GetActivePlayer())
@@ -510,7 +510,7 @@ namespace Expanze
 
                                     default:
                                         mod = (townView[loop1].getTownModel().GetPlayerOwner() == GameMaster.Inst().GetActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
-                                        townView[loop1].getTownModel().getSpecialBuilding(hexaID).SetPromptWindow(mod);
+                                        townView[loop1].getTownModel().GetSpecialBuilding(hexaID).SetPromptWindow(mod);
                                         break;
                                 }
                             }

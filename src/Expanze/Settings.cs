@@ -16,7 +16,7 @@ namespace Expanze
         public static String[] hexaSrcPath = new String[] { "Models/yellowhex", "Models/brownhex", "Models/greyhex", "Models/greenhex", "Models/redhex", "Models/orangehex", "Models/bluehex" };
 
         /// resources which get player on start
-        public static SourceAll startResources = new SourceAll(1000);
+        public static SourceAll startResources = new SourceAll(100);
 
         /// costs of infrastructure
         public static SourceAll costTown = new SourceAll(60, 30, 60, 60, 30);
@@ -61,6 +61,10 @@ namespace Expanze
         public static int[] winPoints = {50, 100, 150};
         public const int pointsTown = 5; /// points for new town
         public const int pointsRoad = 1; /// points for new road
+        public const int pointsFort = 3; /// points for new fort
+        public const int pointsMonastery = 3; /// points for new monastery
+        public const int pointsMarket = 3;    /// points for new market
+
         public const int pointsFortParade = 3; /// points for parade from fort
 
 
@@ -75,30 +79,6 @@ namespace Expanze
         public static Game Game = null;
 
         public static bool isFullscreen = false;
-        public static int conversionRateCorn = 4;
-        public static int conversionRateStone = 4;
-        public static int conversionRateOre = 4;
-        public static int conversionRateMeat = 4;
-        public static int conversionRateWood = 4;
-
-        public static int getConversionRate( HexaKind k ) 
-        {
-            switch (k)
-            {
-                case HexaKind.Cornfield:
-                    return conversionRateCorn;
-                case HexaKind.Stone:
-                    return conversionRateStone;
-                case HexaKind.Mountains:
-                    return conversionRateOre;
-                case HexaKind.Pasture:
-                    return conversionRateMeat;
-                case HexaKind.Forest:
-                    return conversionRateWood;
-                default:
-                    return 0;
-            }
-        }
 
         public static Matrix spriteScale = Matrix.CreateScale(Settings.activeResolution.X / Settings.maximumResolution.X, Settings.activeResolution.Y / Settings.maximumResolution.Y, 1);
 
