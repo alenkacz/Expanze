@@ -12,10 +12,13 @@ namespace Expanze.Utils
         private GameAction[] keyActions;
         InputState previousState;
 
+        bool[] changeStateKeys;
+
         public InputState(String name)
         {
             this.name = name;
             keyActions = new GameAction[255];
+            changeStateKeys = new bool[255];
             previousState = null;
         }
 
@@ -55,6 +58,7 @@ namespace Expanze.Utils
         {
             for (int loop1 = 0; loop1 < keyActions.Length; loop1++)
             {
+                changeStateKeys[loop1] = Keyboard.GetState().IsKeyDown((Keys)loop1);
                 if (keyActions[loop1] != null)
                 {
                     keyActions[loop1].Reset();
@@ -71,9 +75,15 @@ namespace Expanze.Utils
                 if (gameAction != null)
                 {
                     if (keyboardState.IsKeyDown((Keys)loop1))
-                        gameAction.Press();
+                    {
+                        if(!changeStateKeys[loop1])
+                            gameAction.Press();
+                    }
                     else
+                    {
+                        changeStateKeys[loop1] = false;
                         gameAction.Release();
+                    }
                 }
             }
         }

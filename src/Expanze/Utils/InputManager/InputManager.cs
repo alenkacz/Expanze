@@ -47,7 +47,11 @@ namespace Expanze.Utils
             InputState state = FindState(stateName);
             if (state != null)
             {
-                state.SetPreviousState(activeState);
+                if (activeState != null &&
+                    state.GetName().CompareTo(activeState.GetName()) != 0)
+                    state.SetPreviousState(activeState);
+                else
+                    state.SetPreviousState(FindState("game"));
                 activeState = state;
                 activeState.ResetAllGameActions();
             }

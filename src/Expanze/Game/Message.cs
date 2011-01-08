@@ -84,7 +84,8 @@ namespace Expanze
                     timeActive -= gameTime.ElapsedGameTime.Milliseconds;
                 else
                 {
-                    NextMessage();
+                    /// Cant be because new input manager
+                    //NextMessage();
                 }
             }
 
