@@ -164,6 +164,10 @@ namespace Expanze.Gameplay.Map
             HexaModel hexa = town.GetHexa(buildingPos);
             if (hexa.GetKind() == HexaKind.Desert && kind == BuildingKind.SourceBuilding)
                 return BuildingBuildError.NoSourceBuildingForDesert;
+            if (hexa.GetKind() == HexaKind.Water)
+                return BuildingBuildError.NoBuildingForWater;
+            if (hexa.GetKind() == HexaKind.Mountains && kind != BuildingKind.SourceBuilding)
+                return BuildingBuildError.NoSpecialBuildingForMountains;
 
             return town.CanActivePlayerBuildBuildingInTown(buildingPos, kind);
         }
@@ -179,11 +183,7 @@ namespace Expanze.Gameplay.Map
             if (buildingPos == -1)
                 return false;
 
-            HexaModel hexa = town.GetHexa(buildingPos);
-            if (hexa.GetKind() == HexaKind.Desert && kind == BuildingKind.SourceBuilding)
-                return false;
-
-            BuildingBuildError error = town.CanActivePlayerBuildBuildingInTown(buildingPos, kind);
+            BuildingBuildError error = CanBuildBuildingInTown(townID, hexaID, kind);
             if (error == BuildingBuildError.OK)
             {
                 ItemQueue item = new BuildingItemQueue(mapView, townID, buildingPos);
