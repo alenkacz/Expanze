@@ -80,8 +80,9 @@ namespace NoobAI
                         }
                     }
                 }
-                if (hasFort)
-                    myFort.ShowParade();
+                if (turn % 7 == 0)
+                    if (hasFort)
+                        myFort.ShowParade();
             }
         }
 
@@ -113,7 +114,7 @@ namespace NoobAI
 
             if (max > 200 && min < 100 || max > 800)
             {
-                mapController.ChangeSources(maxKind, minKind, 100);
+                mapController.ChangeSources(maxKind, minKind, max / 2);
             }
         }
 
@@ -130,7 +131,7 @@ namespace NoobAI
                     hexa = town.GetIHexa(loop2);
                     hexaID = hexa.GetID();
 
-                    if (turn > 7)
+                    if (turn > 15)
                     {
                         if (hexa.GetStartSource() <= 12)
                         {
