@@ -21,7 +21,7 @@ namespace Expanze.Gameplay.Map
             this.map = map;
             this.mapView = mapView;
 
-            PromptWindow.Inst().SetIsActive(false);
+            PromptWindow.Inst().Deactive();
             MarketComponent.getInstance().setIsActive(false);
         }
 

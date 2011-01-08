@@ -36,19 +36,29 @@ namespace Expanze.Utils
             }
         }
 
+        public void ReturnToPreviousState()
+        {
+            if(activeState != null)
+                SetActiveState(activeState.GetPreviousState().GetName());
+        }
+
         public void SetActiveState(String stateName)
         {
             InputState state = FindState(stateName);
             if (state != null)
             {
+                state.SetPreviousState(activeState);
                 activeState = state;
                 activeState.ResetAllGameActions();
             }
         }
 
-        public void AddState(String stateName)
+        public bool AddState(String stateName)
         {
+            if (FindState(stateName) != null)
+                return false;
             states.Add(new InputState(stateName));
+            return true;
         }
 
         private InputState FindState(String stateName)
@@ -69,6 +79,21 @@ namespace Expanze.Utils
             {
                 state.MapToKey(gameAction, key);
             }
+        }
+
+        public void MapToGamepad(string stateName, GameAction gameAction, Buttons button)
+        {
+            throw new NotImplementedException();
+        }
+
+        public GameAction GetGameAction(String stateName, String actionName)
+        {
+            InputState state = FindState(stateName);
+            if (state != null)
+            {
+                return state.GetGameAction(actionName);
+            }
+            return null;
         }
     }
 }

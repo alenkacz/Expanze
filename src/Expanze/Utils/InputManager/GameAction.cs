@@ -26,6 +26,8 @@ namespace Expanze.Utils
             Reset();
         }
 
+        public String GetName() { return name; }
+
         public void Reset()
         {
             state = ActionState.Released;

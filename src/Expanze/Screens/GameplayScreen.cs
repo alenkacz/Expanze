@@ -18,6 +18,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Expanze.Gameplay.Map;
 using CorePlugin;
+using Expanze.Utils;
 #endregion
 
 namespace Expanze
@@ -114,6 +115,37 @@ namespace Expanze
 
             MarketComponent.getInstance().Initialize();
             MarketComponent.getInstance().LoadContent();
+
+            InputManager im = InputManager.Inst();
+            String stateGame = "game";
+            if (im.AddState(stateGame))
+            {
+                GameAction pause = new GameAction("pause", GameAction.ActionKind.OnlyInitialPress);
+                im.MapToKey(stateGame, pause, Keys.Escape);
+            }
+            im.SetActiveState(stateGame);
+
+            String stateGameWindow = "gamewindow";
+            if (im.AddState(stateGameWindow))
+            {
+                GameAction confirm = new GameAction("confirm", GameAction.ActionKind.OnlyInitialPress);
+                GameAction close = new GameAction("close", GameAction.ActionKind.OnlyInitialPress);
+                GameAction left = new GameAction("left", GameAction.ActionKind.OnlyInitialPress);
+                GameAction right = new GameAction("right", GameAction.ActionKind.OnlyInitialPress);
+
+                im.MapToKey(stateGameWindow, confirm, Keys.Enter);
+                im.MapToKey(stateGameWindow, close, Keys.Escape);
+                im.MapToKey(stateGameWindow, left, Keys.Left);
+                im.MapToKey(stateGameWindow, right, Keys.Right);
+            }
+
+            String stateMessage = "gamemessage";
+            if (im.AddState(stateMessage))
+            {
+                GameAction close = new GameAction("close", GameAction.ActionKind.OnlyInitialPress);
+                im.MapToKey(stateMessage, close, Keys.Escape);
+                im.MapToKey(stateMessage, close, Keys.Enter);
+            }
 
             // once the load has finished, we use ResetElapsedTime to tell the game's
             // timing mechanism that we have just finished a very long frame, and that
@@ -234,6 +266,7 @@ namespace Expanze
                 }
 
                 gMaster.Update(gameTime);
+                InputManager.Inst().Update();
 
                 foreach (GuiComponent guiComponent in guiComponents)
                 {
@@ -270,7 +303,7 @@ namespace Expanze
             bool gamePadDisconnected = !gamePadState.IsConnected &&
                                        input.GamePadWasConnected[playerIndex];
 
-            if (input.IsPauseGame(ControllingPlayer) || gamePadDisconnected || GameMaster.Inst().IsPausedNew())
+            if (InputManager.Inst().GetGameAction("game", "pause").IsPressed() || GameMaster.Inst().IsPausedNew())
             {
                 GameMaster.Inst().SetPaused(true);
                 ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);

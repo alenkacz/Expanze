@@ -10,18 +10,33 @@ namespace Expanze.Utils
     {
         String name;
         private GameAction[] keyActions;
+        InputState previousState;
 
         public InputState(String name)
         {
             this.name = name;
             keyActions = new GameAction[255];
+            previousState = null;
         }
 
         public String GetName() { return name; }
+        public InputState GetPreviousState() { return previousState; }
+        public void SetPreviousState(InputState state) { previousState = state; }
 
         public void MapToKey(GameAction gameAction, Keys key)
         {
             keyActions[(int) key] = gameAction;
+        }
+
+        public GameAction GetGameAction(string actionName)
+        {
+            for (int loop1 = 0; loop1 < keyActions.Length; loop1++)
+            {
+                if (keyActions[loop1] != null && keyActions[loop1].GetName().CompareTo(actionName) == 0)
+                    return keyActions[loop1];
+            }
+
+            return null;
         }
 
         public void ClearMap(GameAction gameAction)

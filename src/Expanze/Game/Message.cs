@@ -70,6 +70,9 @@ namespace Expanze
                 messageActive = queue.Dequeue();
 
             timeActive = ACTIVE_LIMIT;
+
+            if (!GetIsActive())
+                InputManager.Inst().ReturnToPreviousState();
         }
 
         public override void Update(GameTime gameTime)
@@ -101,6 +104,8 @@ namespace Expanze
                 messageActive = item;
             else
                 queue.Enqueue(item);
+
+            InputManager.Inst().SetActiveState("gamemessage");
         }
 
         public override void LoadContent()
@@ -125,7 +130,7 @@ namespace Expanze
         {
             Map.SetPickVariables(c == noPick.pickColor, noPick);
 
-            if ((noPick.pickNewPress || GameState.CurrentKeyboardState.IsKeyDown(Keys.Enter)) &&
+            if ((noPick.pickNewPress || InputManager.Inst().GetGameAction("gamemessage", "close").IsPressed()) &&
                  ACTIVE_LIMIT - timeActive > 200)
             {
                 noPick.pickNewPress = false;

@@ -70,9 +70,10 @@ namespace Expanze
             return active;
         }
 
-        public void SetIsActive(bool active)
+        public void Deactive()
         {
-            this.active = active;
+            active = false;
+            InputManager.Inst().ReturnToPreviousState();
         }
 
         public void AddPromptItem(PromptItem item)
@@ -94,6 +95,8 @@ namespace Expanze
 
             active = true;
             activeItem = 0;
+
+            InputManager.Inst().SetActiveState("gamewindow");
         }
 
         public override void LoadContent()
@@ -142,17 +145,17 @@ namespace Expanze
                     }
                 }
 
-                if (yesPick.pickNewPress || GameState.CurrentKeyboardState.IsKeyDown(Keys.Enter))
+                if (yesPick.pickNewPress || InputManager.Inst().GetGameAction("gamewindow", "confirm").IsPressed())
                 {
                     yesPick.pickNewPress = false;
-                    active = false;
+                    Deactive();
 
                     itemList[activeItem].Execute();
                 }
-                else if (noPick.pickNewPress)
+                else if (noPick.pickNewPress || InputManager.Inst().GetGameAction("gamewindow", "close").IsPressed())
                 {
                     noPick.pickNewPress = false;
-                    active = false;
+                    Deactive();
                 }
             }
         }
