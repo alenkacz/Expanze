@@ -85,6 +85,9 @@ namespace Expanze
 
         public int GetConversionRate(SourceKind kind)
         {
+            if (kind == SourceKind.Null)
+                return -1;
+
             switch (licenceMarket[(int)kind])
             {
                 case LicenceKind.NoLicence: return 4;

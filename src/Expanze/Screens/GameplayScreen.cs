@@ -362,6 +362,7 @@ namespace Expanze
 
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
                                                Color.SkyBlue, /*new Color(33, 156, 185), */0, 0);
+            //ScreenManager.GraphicsDevice.RasterizerState.FillMode = FillMode.WireFrame;
 
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
            
