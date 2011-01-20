@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Content;
 using CorePlugin;
 using Expanze.Gameplay.Map;
 using Expanze.Gameplay.Map.View;
+using Expanze.Utils;
 
 namespace Expanze.Gameplay.Map
 {
@@ -206,26 +207,26 @@ namespace Expanze.Gameplay.Map
 
                 float cameraVelAcc = 700.0f;
 
-                if (GameState.CurrentKeyboardState.IsKeyDown(Keys.Left))
+                if (InputManager.Inst().GetGameAction("game", "cameraleft").IsPressed())
                 {
                     float dx = gameTime.ElapsedGameTime.Milliseconds / cameraVelAcc;
                     eye.Z += dx;
                     target.Z += dx;
                 }
-                else if (GameState.CurrentKeyboardState.IsKeyDown(Keys.Right))
+                else if (InputManager.Inst().GetGameAction("game", "cameraright").IsPressed())
                 {
                     float dx = gameTime.ElapsedGameTime.Milliseconds / cameraVelAcc;
                     eye.Z -= dx;
                     target.Z -= dx;
                 }
 
-                if (GameState.CurrentKeyboardState.IsKeyDown(Keys.Up))
+                if (InputManager.Inst().GetGameAction("game", "cameraup").IsPressed())
                 {
                     float dy = gameTime.ElapsedGameTime.Milliseconds / cameraVelAcc;
                     eye.X -= dy;
                     target.X -= dy;
                 } else
-                if (GameState.CurrentKeyboardState.IsKeyDown(Keys.Down))
+                    if (InputManager.Inst().GetGameAction("game", "cameradown").IsPressed())
                 {
                     float dy = gameTime.ElapsedGameTime.Milliseconds / cameraVelAcc;
                     eye.X += dy;
@@ -260,11 +261,11 @@ namespace Expanze.Gameplay.Map
             {
                 eye.Y += (GameState.CurrentMouseState.ScrollWheelValue - GameState.LastMouseState.ScrollWheelValue) / 6000.0f * gameTime.ElapsedGameTime.Milliseconds;
             }
-            if (GameState.CurrentKeyboardState.IsKeyDown(Keys.PageUp))
+            if (InputManager.Inst().GetGameAction("game", "cameratop").IsPressed())
             {
                 eye.Y += gameTime.ElapsedGameTime.Milliseconds / 1000.0f;
             }
-            if (GameState.CurrentKeyboardState.IsKeyDown(Keys.PageDown))
+            if (InputManager.Inst().GetGameAction("game", "camerabottom").IsPressed())
             {
                 eye.Y -= gameTime.ElapsedGameTime.Milliseconds / 1000.0f;
             }

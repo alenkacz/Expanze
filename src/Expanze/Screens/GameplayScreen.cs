@@ -121,9 +121,22 @@ namespace Expanze
                 GameAction pause = new GameAction("pause", GameAction.ActionKind.OnlyInitialPress);
                 GameAction nextTurn = new GameAction("nextturn", GameAction.ActionKind.OnlyInitialPress);
                 GameAction market = new GameAction("market", GameAction.ActionKind.OnlyInitialPress);
+                GameAction cameraleft = new GameAction("cameraleft", GameAction.ActionKind.Normal);
+                GameAction cameraright = new GameAction("cameraright", GameAction.ActionKind.Normal);
+                GameAction cameraup = new GameAction("cameraup", GameAction.ActionKind.Normal);
+                GameAction cameradown = new GameAction("cameradown", GameAction.ActionKind.Normal);
+                GameAction cameratop = new GameAction("cameratop", GameAction.ActionKind.Normal);
+                GameAction camerabottom = new GameAction("camerabottom", GameAction.ActionKind.Normal);
+     
                 im.MapToKey(stateGame, pause, Keys.Escape);
                 im.MapToKey(stateGame, nextTurn, Keys.Tab);
                 im.MapToKey(stateGame, market, Keys.M);
+                im.MapToKey(stateGame, cameraleft, Keys.Left);
+                im.MapToKey(stateGame, cameraright, Keys.Right);
+                im.MapToKey(stateGame, cameraup, Keys.Up);
+                im.MapToKey(stateGame, cameradown, Keys.Down);
+                im.MapToKey(stateGame, cameratop, Keys.PageUp);
+                im.MapToKey(stateGame, camerabottom, Keys.PageDown);
             }
             im.SetActiveState(stateGame);
 
