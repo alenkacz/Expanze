@@ -30,7 +30,7 @@ namespace Expanze
         static string[] fullscreen = {Strings.MENU_COMMON_NO, Strings.MENU_COMMON_YES};
 
         static int currentResolution = 0;
-        static int isFullscreen = 0;
+        static bool isFullscreen = false;
 
         #endregion
 
@@ -87,7 +87,7 @@ namespace Expanze
             MenuEntries.Add(apply);
             MenuEntries.Add(back);
 
-            if (Settings.isFullscreen) { isFullscreen = 1; }
+            isFullscreen = Settings.isFullscreen;
         }
 
 
@@ -97,7 +97,7 @@ namespace Expanze
         void SetMenuEntryText()
         {
             resolutionMenuEntry.Text = Strings.MENU_OPTION_RESOLUTION + ": " + resolution[currentResolution];
-            fullscreenMenuEntry.Text = Strings.MENU_OPTION_FULLSCREEN + ": " + fullscreen[isFullscreen];
+            fullscreenMenuEntry.Text = Strings.MENU_OPTION_FULLSCREEN + ": " + fullscreen[(isFullscreen) ? 1 : 0];
         }
 
 
@@ -111,7 +111,7 @@ namespace Expanze
         void ApplyChangesSelected(object sender, PlayerIndexEventArgs e)
         {
             string selected = resolution[currentResolution];
-            bool fullscreen = (isFullscreen == 0) ? false : true;
+            bool fullscreen = isFullscreen;
             GraphicsDeviceManager gdm = Settings.GraphicsDeviceManager;
 
             if (selected != resolutionToString(Settings.activeResolution))
@@ -161,11 +161,7 @@ namespace Expanze
         /// </summary>
         void FullscreenMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            isFullscreen++;
-
-            if (isFullscreen >= fullscreen.Length)
-                isFullscreen = 0;
-
+            isFullscreen = !isFullscreen;
             SetMenuEntryText();
         }
 
