@@ -39,8 +39,8 @@ namespace Expanze.Gameplay
             HexaModel hexa = town.GetHexa(buildingPos);
 
 
-            upgrade1cost = new SourceAll(50, 0, 0, 40, 20);
-            upgrade2cost = new SourceAll(0, 50, 50, 0, 40);
+            upgrade1cost = new SourceAll(0, 0, 0, 0, 0);
+            upgrade2cost = new SourceAll(0, 0, 0, 0, 0);
             switch (hexa.GetKind())
             {
                 case HexaKind.Mountains:
@@ -112,7 +112,7 @@ namespace Expanze.Gameplay
             SetPromptWindow(PromptWindow.Mod.Buyer);
         }
 
-        public UpgradeKind GetUpgrade() { return upgrade;}
+        public UpgradeKind GetUpgrade() { return owner.GetMonasteryUpgrade(buildingKind);}
 
         public override Texture2D GetIconActive()
         {
@@ -121,7 +121,7 @@ namespace Expanze.Gameplay
 
         public override Texture2D GetIconPassive()
         {
-            switch (upgrade)
+            switch (GetUpgrade())
             {
                 case UpgradeKind.NoUpgrade: return upgrade0icon;
                 case UpgradeKind.FirstUpgrade: return upgrade1icon;
@@ -135,6 +135,7 @@ namespace Expanze.Gameplay
             PromptWindow win = PromptWindow.Inst();
             GameResources res = GameResources.Inst();
             win.Show(mod, titleBuilding, true);
+            upgrade = GetUpgrade();
             if (upgrade == UpgradeKind.NoUpgrade)
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, this, upgrade1Title, upgrade1Description, upgrade1cost, true, upgrade1icon));
             else if (upgrade == UpgradeKind.FirstUpgrade)

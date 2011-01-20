@@ -69,13 +69,11 @@ namespace Expanze
 
         public void LoadAllThread()
         {
-            //playerColorTexture = new Texture2D(ScreenManager.GraphicsDevice, (int)Settings.playerColorSize.X, (int)Settings.playerColorSize.Y, false, SurfaceFormat.Color);
-            playerColorTexture = ScreenManager.Game.Content.Load<Texture2D>("pcolor");
+            playerColorTexture = GameResources.Inst().GetHudTexture(HUDTexture.PlayerColor);
 
             //render to texture
             PresentationParameters pp = ScreenManager.GraphicsDevice.PresentationParameters;
             renderTarget = new RenderTarget2D(ScreenManager.GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight, false, ScreenManager.GraphicsDevice.DisplayMode.Format, pp.DepthStencilFormat);
-            //renderTarget = new RenderTarget2D(ScreenManager.GraphicsDevice, 1024, 1024, false, ScreenManager.GraphicsDevice.DisplayMode.Format, pp.DepthStencilFormat);
 
             GameState.game = ScreenManager.Game;
 
@@ -121,7 +119,11 @@ namespace Expanze
             if (im.AddState(stateGame))
             {
                 GameAction pause = new GameAction("pause", GameAction.ActionKind.OnlyInitialPress);
+                GameAction nextTurn = new GameAction("nextturn", GameAction.ActionKind.OnlyInitialPress);
+                GameAction market = new GameAction("market", GameAction.ActionKind.OnlyInitialPress);
                 im.MapToKey(stateGame, pause, Keys.Escape);
+                im.MapToKey(stateGame, nextTurn, Keys.Tab);
+                im.MapToKey(stateGame, market, Keys.M);
             }
             im.SetActiveState(stateGame);
 
@@ -143,8 +145,10 @@ namespace Expanze
             if (im.AddState(stateMessage))
             {
                 GameAction close = new GameAction("close", GameAction.ActionKind.OnlyInitialPress);
+                GameAction cheatsources = new GameAction("cheatsources", GameAction.ActionKind.OnlyInitialPress);
                 im.MapToKey(stateMessage, close, Keys.Escape);
                 im.MapToKey(stateMessage, close, Keys.Enter);
+                im.MapToKey(stateMessage, cheatsources, Keys.F11);
             }
 
             // once the load has finished, we use ResetElapsedTime to tell the game's
@@ -209,6 +213,11 @@ namespace Expanze
         /// </summary>
         void ChangeTurnButtonAction(object sender, PlayerIndexEventArgs e)
         {
+            NextTurn();
+        }
+
+        void NextTurn()
+        {
             if (GameMaster.Inst().CanNextTurn())
             {
                 GameMaster.Inst().NextTurn();
@@ -220,20 +229,16 @@ namespace Expanze
         /// </summary>
         void MarketButtonAction(object sender, PlayerIndexEventArgs e)
         {
+            MarketWindowOpenClose();
+        }
+
+        void MarketWindowOpenClose()
+        {
             // market can not be opened during first phase of the game - building first towns
             if (GameMaster.Inst().GetState() == EGameState.StateGame &&
                 !GameMaster.Inst().GetActivePlayer().GetIsAI())
             {
-
-                if (MarketComponent.isActive)
-                {
-                    MarketComponent.isActive = false;
-                    //guiComponents.Remove(MarketComponent.getInstance());
-                }
-                else
-                {
-                    MarketComponent.isActive = true;
-                }
+                MarketComponent.isActive = !MarketComponent.isActive;
             }
         }
 
@@ -308,6 +313,15 @@ namespace Expanze
                 GameMaster.Inst().SetPaused(true);
                 ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
             }
+
+            if (InputManager.Inst().GetGameAction("game", "nextturn").IsPressed())
+                NextTurn();
+
+            if (InputManager.Inst().GetGameAction("game", "market").IsPressed())
+                MarketWindowOpenClose();
+
+            if (InputManager.Inst().GetGameAction("gamemessage", "cheatsources").IsPressed())
+                GameMaster.Inst().GetActivePlayer().PayForSomething(new SourceAll(-1000));
 
             if (GameMaster.Inst().IsWinnerNew())
             {

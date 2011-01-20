@@ -20,7 +20,7 @@ namespace Expanze
 
         /// costs of infrastructure
         public static SourceAll costTown = new SourceAll(60, 30, 60, 60, 30);
-        public static SourceAll costRoad = new SourceAll(0, 40, 0, 0, 50);
+        public static SourceAll costRoad = new SourceAll(0, 50, 0, 0, 50);
         public static SourceAll costMine = new SourceAll(0, 50, 0, 50, 0);
         public static SourceAll costSaw = new SourceAll(0, 0, 0, 50, 50);
         public static SourceAll costMill = new SourceAll(50, 50, 0, 0, 0);
@@ -46,16 +46,16 @@ namespace Expanze
         public static SourceAll costMarketOre1 = new SourceAll(0, 0, 0, 0, 90);
         public static SourceAll costMarketOre2 = new SourceAll(60, 0, 0, 0, 60);
         // costs of monastery upgrades
-        public static SourceAll costMonasteryCorn1 = new SourceAll(40, 30, 0, 0, 0);
-        public static SourceAll costMonasteryCorn2 = new SourceAll(0, 0, 30, 30, 40);
-        public static SourceAll costMonasteryMeat1 = new SourceAll(0, 0, 30, 0, 40);
-        public static SourceAll costMonasteryMeat2 = new SourceAll(30, 40, 0, 30, 0);
-        public static SourceAll costMonasteryStone1 = new SourceAll(30, 0, 40, 0, 0);
-        public static SourceAll costMonasteryStone2 = new SourceAll(0, 30, 0, 40, 40);
-        public static SourceAll costMonasteryWood1 = new SourceAll(0, 0, 0, 40, 30);
-        public static SourceAll costMonasteryWood2 = new SourceAll(30, 30, 40, 0, 0);
-        public static SourceAll costMonasteryOre1 = new SourceAll(0, 40, 0, 30, 0);
-        public static SourceAll costMonasteryOre2 = new SourceAll(40, 0, 30, 0, 30);
+        public static SourceAll costMonasteryCorn1 = new SourceAll(40, 40, 0, 0, 0);
+        public static SourceAll costMonasteryCorn2 = new SourceAll(0, 0, 40, 40, 40);
+        public static SourceAll costMonasteryMeat1 = new SourceAll(0, 0, 40, 0, 40);
+        public static SourceAll costMonasteryMeat2 = new SourceAll(40, 40, 0, 40, 0);
+        public static SourceAll costMonasteryStone1 = new SourceAll(40, 0, 40, 0, 0);
+        public static SourceAll costMonasteryStone2 = new SourceAll(0, 40, 0, 40, 40);
+        public static SourceAll costMonasteryWood1 = new SourceAll(0, 0, 0, 40, 40);
+        public static SourceAll costMonasteryWood2 = new SourceAll(40, 40, 40, 0, 0);
+        public static SourceAll costMonasteryOre1 = new SourceAll(0, 40, 0, 40, 0);
+        public static SourceAll costMonasteryOre2 = new SourceAll(40, 0, 40, 0, 40);
 
         // goals
         public static int[] winPoints = {50, 100, 150};
