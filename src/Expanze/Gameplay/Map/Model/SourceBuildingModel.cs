@@ -142,7 +142,9 @@ namespace Expanze.Gameplay
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 0, this, upgrade2Title, upgrade2Description, upgrade2cost, true, upgrade2icon));
             else
             {
-                win.AddPromptItem(new PromptItem(titleBuilding, Strings.PROMPT_DESCRIPTION_ALL_UPGRADES_USED, new SourceAll(0), false, false, upgrade2icon));
+                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 0, this, titleBuilding, Strings.PROMPT_DESCRIPTION_ALL_UPGRADES_USED, new SourceAll(0), true, upgrade2icon));
+           
+                //win.AddPromptItem(new PromptItem(titleBuilding, Strings.PROMPT_DESCRIPTION_ALL_UPGRADES_USED, new SourceAll(0), false, false, upgrade2icon));
             }
         }
 

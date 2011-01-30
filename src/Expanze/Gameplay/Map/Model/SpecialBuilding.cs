@@ -43,7 +43,7 @@ namespace Expanze.Gameplay
                 case BuyingUpgradeError.NoSources: return "";
                 case BuyingUpgradeError.MaxUpgrades: return Strings.ALERT_TITLE_MAX_UPGRADES;
                 case BuyingUpgradeError.NoUpgrade: return Strings.ALERT_TITLE_NO_UPGRADE;
-                case BuyingUpgradeError.YouAlreadyHaveSecondUpgrade: return Strings.ALERT_TITLE_ALREADY_HAVE_SECOND_UPGRADE;
+                case BuyingUpgradeError.YouAlreadyHaveSecondUpgrade: return ""; // Strings.ALERT_TITLE_ALREADY_HAVE_SECOND_UPGRADE;
             }
 
             return base.TryExecute();
