@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Expanze.Gameplay
 {
-    class SourceBuildingModel : SpecialBuilding, ISourceBuilding
+    class SourceBuildingModel : SpecialBuilding
     {
         int townID; // where is this building
         int hexaID;
@@ -193,25 +193,6 @@ namespace Expanze.Gameplay
             }
 
             return new SourceAll(0);
-        }
-
-        public bool Upgrade()
-        {
-            return GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, upgrade, 0);
-        }
-
-        public SourceBuildingError CanUpgrade()
-        {
-            BuyingUpgradeError error = GameState.map.GetMapController().CanBuyUpgradeInSpecialBuilding(townID, hexaID, upgrade, 0);
-
-            switch (error)
-            {
-                case BuyingUpgradeError.NoSources: return SourceBuildingError.NoSources;
-                case BuyingUpgradeError.YouAlreadyHaveSecondUpgrade: return SourceBuildingError.HaveSecondUpgrade;
-                case BuyingUpgradeError.OK: return SourceBuildingError.OK;
-            }
-
-            return SourceBuildingError.OK;
         }
     }
 }

@@ -324,15 +324,15 @@ namespace Expanze
             return building[pos];
         }
 
-        public ISourceBuilding BuildSourceBuilding(byte pos)
+        public bool BuildSourceBuilding(byte pos)
         {
             if (pos < 0 || pos > 2)
-                return null;
+                return false;
 
             if (GameState.map.GetMapController().BuildBuildingInTown(townID, hexaNeighbour[pos].GetID(), BuildingKind.SourceBuilding))
-                return (ISourceBuilding)building[pos];
+                return true;
             else
-                return null;
+                return false;
         }
 
         public IFort BuildFort(byte pos)

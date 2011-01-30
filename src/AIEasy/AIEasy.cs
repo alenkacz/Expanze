@@ -41,7 +41,7 @@ namespace AIEasy
             else
             {
                 town.CanBuildTown();
-                ISourceBuilding source = town.BuildSourceBuilding(0);
+                town.BuildSourceBuilding(0);
                 
                 town.BuildSourceBuilding(1);
                 town.BuildSourceBuilding(2);
