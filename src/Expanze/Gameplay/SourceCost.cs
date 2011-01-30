@@ -43,6 +43,11 @@ namespace Expanze
             return new SourceAll(a.wood + b.wood, a.stone + b.stone, a.corn + b.corn, a.meat + b.meat, a.ore + b.ore);
         }
 
+        public static SourceAll operator -(SourceAll a)
+        {
+            return new SourceAll(- a.wood, - a.stone, - a.corn, - a.meat, - a.ore);
+        }
+
         public static SourceAll operator -(SourceAll a, SourceAll b)
         {
             return new SourceAll(a.wood - b.wood, a.stone - b.stone, a.corn - b.corn, a.meat - b.meat, a.ore - b.ore);

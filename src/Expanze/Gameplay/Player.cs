@@ -179,6 +179,11 @@ namespace Expanze
             return temp;
         }
 
+        public void SetMaterialChange(SourceAll change)
+        {
+            materialChanged = true;
+            prevSource = change;
+        }
         public SourceAll GetMaterialChange()
         {
             return prevSource;
