@@ -542,6 +542,7 @@ namespace Expanze
 
         public bool IsInFortRadius()
         {
+            return true;
             /// You cant destroy or capture desert
             if (kind == HexaKind.Desert)
                 return false;
