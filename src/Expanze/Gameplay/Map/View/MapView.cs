@@ -247,7 +247,7 @@ namespace Expanze.Gameplay.Map
                 }
             }
 
-            DrawWater();
+            // DrawWater();
         }
 
         private void DrawWater()

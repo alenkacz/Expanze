@@ -145,6 +145,20 @@ namespace Expanze
                     }
                 }
 
+                if (InputManager.Inst().GetGameAction("gamewindow", "left").IsPressed())
+                {
+                    activeItem--;
+                    if (activeItem < 0)
+                        activeItem = 0;
+                }
+
+                if (InputManager.Inst().GetGameAction("gamewindow", "right").IsPressed())
+                {
+                    activeItem++;
+                    if (activeItem >= itemList.Count)
+                        activeItem = itemList.Count - 1;
+                }
+
                 if (yesPick.pickNewPress || InputManager.Inst().GetGameAction("gamewindow", "confirm").IsPressed())
                 {
                     yesPick.pickNewPress = false;
