@@ -121,7 +121,7 @@ namespace Expanze
             else
             {
                 roads[(int)RoadPos.UpLeft] = neighboursModel[(int)RoadPos.UpLeft].GetRoad(RoadPos.BottomRight);
-                hexaView.setRoadView(RoadPos.UpLeft, neighboursView[(int)RoadPos.UpLeft].getRoadView(RoadPos.BottomRight));
+                hexaView.SetRoadView(RoadPos.UpLeft, neighboursView[(int)RoadPos.UpLeft].GetRoadView(RoadPos.BottomRight));
             }
 
             if (neighboursModel[(int)RoadPos.UpRight] == null ||
@@ -134,7 +134,7 @@ namespace Expanze
             else
             {
                 roads[(int)RoadPos.UpRight] = neighboursModel[(int)RoadPos.UpRight].GetRoad(RoadPos.BottomLeft);
-                hexaView.setRoadView(RoadPos.UpRight, neighboursView[(int)RoadPos.UpRight].getRoadView(RoadPos.BottomLeft));
+                hexaView.SetRoadView(RoadPos.UpRight, neighboursView[(int)RoadPos.UpRight].GetRoadView(RoadPos.BottomLeft));
             }
 
             if (neighboursModel[(int)RoadPos.MiddleLeft] == null ||
@@ -147,7 +147,7 @@ namespace Expanze
             else
             {
                 roads[(int)RoadPos.MiddleLeft] = neighboursModel[(int)RoadPos.MiddleLeft].GetRoad(RoadPos.MiddleRight);
-                hexaView.setRoadView(RoadPos.MiddleLeft, neighboursView[(int)RoadPos.MiddleLeft].getRoadView(RoadPos.MiddleRight));
+                hexaView.SetRoadView(RoadPos.MiddleLeft, neighboursView[(int)RoadPos.MiddleLeft].GetRoadView(RoadPos.MiddleRight));
             }
 
             if (neighboursModel[(int)RoadPos.MiddleRight] == null ||
@@ -160,7 +160,7 @@ namespace Expanze
             else
             {
                 roads[(int)RoadPos.MiddleRight] = neighboursModel[(int)RoadPos.MiddleRight].GetRoad(RoadPos.MiddleLeft);
-                hexaView.setRoadView(RoadPos.MiddleRight, neighboursView[(int)RoadPos.MiddleRight].getRoadView(RoadPos.MiddleLeft));
+                hexaView.SetRoadView(RoadPos.MiddleRight, neighboursView[(int)RoadPos.MiddleRight].GetRoadView(RoadPos.MiddleLeft));
             }
 
             if (neighboursModel[(int)RoadPos.BottomLeft] == null ||
@@ -173,7 +173,7 @@ namespace Expanze
             else
             {
                 roads[(int)RoadPos.BottomLeft] = neighboursModel[(int)RoadPos.BottomLeft].GetRoad(RoadPos.UpRight);
-                hexaView.setRoadView(RoadPos.BottomLeft, neighboursView[(int)RoadPos.BottomLeft].getRoadView(RoadPos.UpRight));
+                hexaView.SetRoadView(RoadPos.BottomLeft, neighboursView[(int)RoadPos.BottomLeft].GetRoadView(RoadPos.UpRight));
             }
             if (neighboursModel[(int)RoadPos.BottomRight] == null ||
                 neighboursModel[(int)RoadPos.BottomRight].GetRoad(RoadPos.UpLeft) == null)
@@ -185,7 +185,7 @@ namespace Expanze
             else
             {
                 roads[(int)RoadPos.BottomRight] = neighboursModel[(int)RoadPos.BottomRight].GetRoad(RoadPos.UpLeft);
-                hexaView.setRoadView(RoadPos.BottomRight, neighboursView[(int)RoadPos.BottomRight].getRoadView(RoadPos.UpLeft));
+                hexaView.SetRoadView(RoadPos.BottomRight, neighboursView[(int)RoadPos.BottomRight].GetRoadView(RoadPos.UpLeft));
             }
 
             ///////////////////////
@@ -205,12 +205,12 @@ namespace Expanze
                 if (neighboursModel[(int)RoadPos.UpLeft] != null && neighboursModel[(int)RoadPos.UpLeft].getTown(TownPos.BottomRight) != null)
                 {
                     towns[(int)TownPos.Up] = neighboursModel[(int)RoadPos.UpLeft].getTown(TownPos.BottomRight);
-                    hexaView.setTownView(TownPos.Up, neighboursView[(int)RoadPos.UpLeft].getTownView(TownPos.BottomRight));
+                    hexaView.SetTownView(TownPos.Up, neighboursView[(int)RoadPos.UpLeft].GetTownView(TownPos.BottomRight));
                 }
                 else
                 {
                     towns[(int)TownPos.Up] = neighboursModel[(int)RoadPos.UpRight].getTown(TownPos.BottomLeft);
-                    hexaView.setTownView(TownPos.Up, neighboursView[(int)RoadPos.UpRight].getTownView(TownPos.BottomLeft));
+                    hexaView.SetTownView(TownPos.Up, neighboursView[(int)RoadPos.UpRight].GetTownView(TownPos.BottomLeft));
                 }
             }
 
@@ -226,7 +226,7 @@ namespace Expanze
             else
             {
                 towns[(int)TownPos.Bottom] = neighboursModel[(int)RoadPos.BottomLeft].getTown(TownPos.UpRight);
-                hexaView.setTownView(TownPos.Bottom, neighboursView[(int)RoadPos.BottomLeft].getTownView(TownPos.UpRight));
+                hexaView.SetTownView(TownPos.Bottom, neighboursView[(int)RoadPos.BottomLeft].GetTownView(TownPos.UpRight));
             }
 
             if ((neighboursModel[(int)RoadPos.UpRight] == null ||
@@ -243,12 +243,12 @@ namespace Expanze
                 if (neighboursModel[(int)RoadPos.UpRight] != null && neighboursModel[(int)RoadPos.UpRight].getTown(TownPos.Bottom) != null)
                 {
                     towns[(int)TownPos.UpRight] = neighboursModel[(int)RoadPos.UpRight].getTown(TownPos.Bottom);
-                    hexaView.setTownView(TownPos.UpRight, neighboursView[(int)RoadPos.UpRight].getTownView(TownPos.Bottom));
+                    hexaView.SetTownView(TownPos.UpRight, neighboursView[(int)RoadPos.UpRight].GetTownView(TownPos.Bottom));
                 }
                 else
                 {
                     towns[(int)TownPos.UpRight] = neighboursModel[(int)RoadPos.MiddleRight].getTown(TownPos.UpLeft);
-                    hexaView.setTownView(TownPos.UpRight, neighboursView[(int)RoadPos.MiddleRight].getTownView(TownPos.UpLeft));
+                    hexaView.SetTownView(TownPos.UpRight, neighboursView[(int)RoadPos.MiddleRight].GetTownView(TownPos.UpLeft));
                 }
             }
 
@@ -264,7 +264,7 @@ namespace Expanze
             else
             {
                 towns[(int)TownPos.UpLeft] = neighboursModel[(int)RoadPos.UpLeft].getTown(TownPos.Bottom);
-                hexaView.setTownView(TownPos.UpLeft, neighboursView[(int)RoadPos.UpLeft].getTownView(TownPos.Bottom));
+                hexaView.SetTownView(TownPos.UpLeft, neighboursView[(int)RoadPos.UpLeft].GetTownView(TownPos.Bottom));
             }
 
             if ((neighboursModel[(int)RoadPos.BottomRight] == null ||
@@ -281,12 +281,12 @@ namespace Expanze
                 if (neighboursModel[(int)RoadPos.BottomRight] != null && neighboursModel[(int)RoadPos.BottomRight].getTown(TownPos.Bottom) != null)
                 {
                     towns[(int)TownPos.BottomRight] = neighboursModel[(int)RoadPos.BottomRight].getTown(TownPos.Up);
-                    hexaView.setTownView(TownPos.BottomRight, neighboursView[(int)RoadPos.BottomRight].getTownView(TownPos.Up));
+                    hexaView.SetTownView(TownPos.BottomRight, neighboursView[(int)RoadPos.BottomRight].GetTownView(TownPos.Up));
                 }
                 else
                 {
                     towns[(int)TownPos.BottomRight] = neighboursModel[(int)RoadPos.MiddleRight].getTown(TownPos.BottomLeft);
-                    hexaView.setTownView(TownPos.BottomRight, neighboursView[(int)RoadPos.MiddleRight].getTownView(TownPos.BottomLeft));
+                    hexaView.SetTownView(TownPos.BottomRight, neighboursView[(int)RoadPos.MiddleRight].GetTownView(TownPos.BottomLeft));
                 }
             }
             if ((neighboursModel[(int)RoadPos.BottomLeft] == null ||
@@ -303,12 +303,12 @@ namespace Expanze
                 if (neighboursModel[(int)RoadPos.BottomLeft] != null && neighboursModel[(int)RoadPos.BottomLeft].getTown(TownPos.Bottom) != null)
                 {
                     towns[(int)TownPos.BottomLeft] = neighboursModel[(int)RoadPos.BottomLeft].getTown(TownPos.Up);
-                    hexaView.setTownView(TownPos.BottomLeft, neighboursView[(int)RoadPos.BottomLeft].getTownView(TownPos.Up));
+                    hexaView.SetTownView(TownPos.BottomLeft, neighboursView[(int)RoadPos.BottomLeft].GetTownView(TownPos.Up));
                 }
                 else
                 {
                     towns[(int)TownPos.BottomLeft] = neighboursModel[(int)RoadPos.MiddleLeft].getTown(TownPos.BottomRight);
-                    hexaView.setTownView(TownPos.BottomLeft, neighboursView[(int)RoadPos.MiddleLeft].getTownView(TownPos.BottomRight));
+                    hexaView.SetTownView(TownPos.BottomLeft, neighboursView[(int)RoadPos.MiddleLeft].GetTownView(TownPos.BottomRight));
                 }
             }
         }

@@ -131,6 +131,7 @@ namespace Expanze.Gameplay.Map
                       }
 
                       hexaMapModel[i][j].CreateTownsAndRoads(neighboursModel, hexaMapView[i][j], neighboursView);
+                      mapView.GetHexaMapView()[i][j].SetHexaNeighbours(neighboursView);
                   }
             }
         }

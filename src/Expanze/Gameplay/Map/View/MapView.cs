@@ -242,7 +242,8 @@ namespace Expanze.Gameplay.Map
                 {
                     if (hexaMapView[i][j] != null)
                     {
-                        hexaMapView[i][j].Draw(gameTime);
+                        if(hexaMapView[i][j].IsOnScreen())
+                            hexaMapView[i][j].Draw(gameTime);
                     }
                 }
             }

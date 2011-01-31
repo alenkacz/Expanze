@@ -77,6 +77,9 @@ namespace Expanze
         protected RoadView[] roadView;
         protected TownView[] townView;
         protected HexaKind kind;
+        bool centerOnScreen;
+        private HexaView[] hexaNeighbours;
+
         public HexaView(HexaModel model)
         {
             this.model = model;
@@ -104,9 +107,10 @@ namespace Expanze
             roadView[(int)pos] = new RoadView(model.GetRoad(pos), relative * world);
         }
 
-        public RoadView getRoadView(RoadPos pos) { return roadView[(int)pos]; }
+        public bool GetIsCenterOnScreen() { return centerOnScreen; }
+        public RoadView GetRoadView(RoadPos pos) { return roadView[(int)pos]; }
 
-        public void setRoadView(RoadPos pos, RoadView road)
+        public void SetRoadView(RoadPos pos, RoadView road)
         {
             roadView[(int)pos] = road;
         }
@@ -116,9 +120,9 @@ namespace Expanze
             townView[(int)pos] = new TownView(model.getTown(pos), relative * world);
         }
 
-        public TownView getTownView(TownPos pos) { return townView[(int)pos]; }
+        public TownView GetTownView(TownPos pos) { return townView[(int)pos]; }
 
-        public void setTownView(TownPos pos, TownView town)
+        public void SetTownView(TownPos pos, TownView town)
         {
             townView[(int)pos] = town;
         }
@@ -157,11 +161,13 @@ namespace Expanze
 
         public void Draw2D()
         {
-            if (kind == HexaKind.Water)
-                return;
-
             BoundingFrustum frustum = new BoundingFrustum(GameState.view * GameState.projection);
             ContainmentType containmentType = frustum.Contains(Vector3.Transform(new Vector3(0.0f, 0.0f, 0.0f), world));
+
+            centerOnScreen = containmentType != ContainmentType.Disjoint;
+
+            if (kind == HexaKind.Water)
+                return;
 
             if (containmentType != ContainmentType.Disjoint)
             {
@@ -171,6 +177,7 @@ namespace Expanze
                 point2D.X = point3D.X;
                 point2D.Y = point3D.Y;
                 posHexaIcon = point2D;
+
                 SpriteBatch spriteBatch = GameState.spriteBatch;
 
                 Vector2 stringCenter = GameResources.Inst().GetFont(EFont.MedievalMedium).MeasureString(model.GetCurrentSource() + "") * 0.5f;
@@ -568,6 +575,24 @@ namespace Expanze
         public Matrix GetWorldMatrix()
         {
             return world;
+        }
+
+        public bool IsOnScreen()
+        {
+            foreach (HexaView view in hexaNeighbours)
+            {
+                if (view == null || view.GetIsCenterOnScreen())
+                    return true;
+            }
+            return centerOnScreen;
+        }
+
+        public void SetHexaNeighbours(HexaView[] neighboursView)
+        {
+            hexaNeighbours = new HexaView[neighboursView.Length];
+            for (int loop1 = 0; loop1 < neighboursView.Length; loop1++)
+                hexaNeighbours[loop1] = neighboursView[loop1];
+
         }
     }
 }
