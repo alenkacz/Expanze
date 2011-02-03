@@ -178,6 +178,9 @@ namespace Expanze
                 point2D.Y = point3D.Y;
                 posHexaIcon = point2D;
 
+                Texture2D playerIcon = GameResources.Inst().GetHudTexture(HUDTexture.PlayerColor);
+                Rectangle playerIconRect = new Rectangle((int)point2D.X - playerIcon.Width / 2, (int)point2D.Y - playerIcon.Height / 2, playerIcon.Width, playerIcon.Height);
+
                 SpriteBatch spriteBatch = GameState.spriteBatch;
 
                 Vector2 stringCenter = GameResources.Inst().GetFont(EFont.MedievalMedium).MeasureString(model.GetCurrentSource() + "") * 0.5f;
@@ -230,6 +233,11 @@ namespace Expanze
                     }
                 }
 
+                if (model.GetCaptured())
+                {
+                    spriteBatch.Draw(playerIcon, playerIconRect, model.GetCapturedPlayer().GetColor());
+                }
+
                 if (drawNumber)
                 {
                     DrawHexaNumber(spriteBatch, point2D);
@@ -244,6 +252,10 @@ namespace Expanze
                     else
                     {
                             DrawHexaIcon(spriteBatch, posHexaIcon, tempTown.GetSpecialBuilding(hexaID).GetIconPassive(), tempTown.GetSpecialBuilding(hexaID).GetIconActive());
+                            if (model.GetCaptured())
+                            {
+                                spriteBatch.Draw(playerIcon, playerIconRect, model.GetCapturedPlayer().GetColor());
+                            }
                             if(tempTown.GetBuildingKind(hexaID) == BuildingKind.SourceBuilding)
                                 DrawHexaNumber(spriteBatch, point2D);
                     }

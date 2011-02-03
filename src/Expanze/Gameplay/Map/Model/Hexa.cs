@@ -20,7 +20,10 @@ namespace Expanze
         private bool sourceMiracle;   /// is on hex miracle
         private int turnMiracle;      /// how many turns miracle will last
 
-        private bool hexaCaptured;    /// has been hexa captured from fort?
+        private bool captureIs;       /// has been hexa captured from fort?
+        private Player capturePlayer; /// who has captured hexa
+
+        /// destroying was in the game
         private bool hexaDestroy;      /// was hexa destroyed from fort
         private int turnDestroy;      /// how many turns will be hexa destroyed
 
@@ -62,13 +65,16 @@ namespace Expanze
             sourceDisaster = false;
             sourceMiracle = false;
             hexaDestroy = false;
-            hexaCaptured = false;
+            captureIs = false;
+            capturePlayer = null;
         }
 
         public static void ResetCounter() { counter = 0; }
         public static int GetHexaCount() { return counter; }
         public static int GetHexaIDFort() { return hexaIDFort; }
         public static void SetHexaIDFort(int hexaID) { hexaIDFort = hexaID; }
+        public bool GetCaptured() { return captureIs; }
+        public Player GetCapturedPlayer() { return capturePlayer; }
 
         public void Update(GameTime gameTime)
         {
@@ -482,9 +488,6 @@ namespace Expanze
             if (hexaDestroy)
                 multiply *= 0.5f;
 
-            if (hexaCaptured)
-                multiply *= 0.0f;
-
             return (int) (startSource * multiply);
         }
 
@@ -558,9 +561,18 @@ namespace Expanze
             return false;
         }
 
-        public void Capture()
+        public void Capture(Player player)
         {
-            hexaCaptured = !hexaCaptured;
+            if (!captureIs)
+            {
+                capturePlayer = player;
+            }
+            else
+            {
+                capturePlayer = null;
+            }
+
+            captureIs = !captureIs;
         }
 
         public void Destroy()

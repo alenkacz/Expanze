@@ -110,9 +110,6 @@ namespace Expanze
 
         public void CollectSources(Player player)
         {
-            if (playerOwner != player)
-                return;
-
             SourceAll cost = new SourceAll(0);
             int amount;
 
@@ -125,27 +122,31 @@ namespace Expanze
                     float multiply = (tempBuilding.GetUpgrade() == UpgradeKind.SecondUpgrade) ? 2.0f : (tempBuilding.GetUpgrade() == UpgradeKind.FirstUpgrade) ? 1.5f : 1.0f;
                     amount = (int)(hexaNeighbour[loop1].GetCurrentSource() * multiply);
 
-                    switch (hexaNeighbour[loop1].GetKind())
+                    if (player == hexaNeighbour[loop1].GetCapturedPlayer() ||
+                        (player == playerOwner && !hexaNeighbour[loop1].GetCaptured()))
                     {
-                        case HexaKind.Forest:
-                            cost = cost + new SourceAll(amount, 0, 0, 0, 0);
-                            break;
+                        switch (hexaNeighbour[loop1].GetKind())
+                        {
+                            case HexaKind.Forest:
+                                cost = cost + new SourceAll(amount, 0, 0, 0, 0);
+                                break;
 
-                        case HexaKind.Stone:
-                            cost = cost + new SourceAll(0, amount, 0, 0, 0);
-                            break;
+                            case HexaKind.Stone:
+                                cost = cost + new SourceAll(0, amount, 0, 0, 0);
+                                break;
 
-                        case HexaKind.Cornfield:
-                            cost = cost + new SourceAll(0, 0, amount, 0, 0);
-                            break;
+                            case HexaKind.Cornfield:
+                                cost = cost + new SourceAll(0, 0, amount, 0, 0);
+                                break;
 
-                        case HexaKind.Pasture:
-                            cost = cost + new SourceAll(0, 0, 0, amount, 0);
-                            break;
+                            case HexaKind.Pasture:
+                                cost = cost + new SourceAll(0, 0, 0, amount, 0);
+                                break;
 
-                        case HexaKind.Mountains:
-                            cost = cost + new SourceAll(0, 0, 0, 0, amount);
-                            break;
+                            case HexaKind.Mountains:
+                                cost = cost + new SourceAll(0, 0, 0, 0, amount);
+                                break;
+                        }
                     }
                 }
             }

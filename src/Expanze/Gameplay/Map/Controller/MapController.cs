@@ -290,8 +290,9 @@ namespace Expanze.Gameplay.Map
             if (CanCaptureHexa(hexaID, fort) == CaptureHexaError.OK)
             {
                 HexaModel hexa = map.GetHexaByID(hexaID);
-                hexa.Capture();
-                GameMaster.Inst().GetActivePlayer().PayForSomething(Settings.costFortCapture);
+                Player player = GameMaster.Inst().GetActivePlayer();
+                hexa.Capture(player);
+                player.PayForSomething(Settings.costFortCapture);
                 return true;
             }
             return false;
