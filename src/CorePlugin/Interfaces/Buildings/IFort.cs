@@ -98,21 +98,6 @@ namespace CorePlugin
         ParadeError CanShowParade();
 
         /// <summary>
-        /// Destroy target hexa with hexaID. 
-        /// This hexa have to neighbourgh of fort hexa or fort hexa itself.
-        /// </summary>
-        /// <param name="hexaID">ID of hexa which should be destroyed.</param>
-        /// <returns>True if hexa was destroyed, otherwise false.</returns>
-        bool DestroyHexa(int hexaID);
-
-        /// <summary>
-        /// Find out if you can destroy hexa with hexaID.
-        /// </summary>
-        /// <param name="hexaID">Target hexa ID</param>
-        /// <returns>Error why you cant destroy hexa or DestroyHexaError.OK</returns>
-        DestroyHexaError CanDestroyHexa(int hexaID);
-
-        /// <summary>
         /// Capture target hexa with hexaID. 
         /// This hexa have to neighbourgh of fort hexa or fort hexa itself. 
         /// </summary>
