@@ -28,7 +28,7 @@ namespace Expanze.Gameplay
 
         public override void Execute()
         {
-            GameState.map.GetMapController().DestroySources(player.GetName());
+            GameState.map.GetMapController().StealSources(player.GetName());
             base.Execute();
         }
 
@@ -179,14 +179,14 @@ namespace Expanze.Gameplay
             return ParadeError.OK;
         }
 
-        public DestroySourcesError CanDestroySources(String playerName)
+        public DestroySourcesError CanStealSources(String playerName)
         {
-            return GameState.map.GetMapController().CanDestroySources(playerName);
+            return GameState.map.GetMapController().CanStealSources(playerName);
         }
 
-        public bool DestroySources(String playerName)
+        public bool StealSources(String playerName)
         {
-            return GameState.map.GetMapController().DestroySources(playerName);
+            return GameState.map.GetMapController().StealSources(playerName);
         }
 
         public DestroyHexaError CanDestroyHexa(int hexaID)

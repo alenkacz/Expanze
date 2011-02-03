@@ -128,17 +128,17 @@ namespace CorePlugin
         CaptureHexaError CanCaptureHexa(int hexaID);
 
         /// <summary>
-        /// Destroy sources of one player.
+        /// Steal sources of one player.
         /// </summary>
-        /// <param name="playerID">Name of player you want destroy sources.</param>
-        /// <returns>True if destroying sources was succesful, otherwise false.</returns>
-        bool DestroySources(String playerName);
+        /// <param name="playerID">Name of player you want to steal sources.</param>
+        /// <returns>True if stealing sources was succesful, otherwise false.</returns>
+        bool StealSources(String playerName);
 
         /// <summary>
-        /// Find out if you can destroy other player sources.
+        /// Find out if you can steal other player sources.
         /// </summary>
-        /// <param name="playerName">Name of player you want destroy sources.</param>
-        /// <returns>Error why you cant destroy sources or DestroySourcesError.OK</returns>
-        DestroySourcesError CanDestroySources(String playerName);
+        /// <param name="playerName">Name of player you want to steal sources.</param>
+        /// <returns>Error why you cant steal sources or DestroySourcesError.OK</returns>
+        DestroySourcesError CanStealSources(String playerName);
     }
 }

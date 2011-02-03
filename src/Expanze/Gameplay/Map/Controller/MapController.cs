@@ -331,7 +331,7 @@ namespace Expanze.Gameplay.Map
             return false;
         }
 
-        public DestroySourcesError CanDestroySources(String playerName)
+        public DestroySourcesError CanStealSources(String playerName)
         {
             Player player = GameMaster.Inst().GetPlayer(playerName);
             if (player == null)
@@ -346,16 +346,17 @@ namespace Expanze.Gameplay.Map
             return DestroySourcesError.OK;
         }
 
-        public bool DestroySources(String playerName)
+        public bool StealSources(String playerName)
         {
             Player player = GameMaster.Inst().GetPlayer(playerName);
             Player activePlayer = GameMaster.Inst().GetActivePlayer();
 
-            if (CanDestroySources(playerName) == DestroySourcesError.OK)
+            if (CanStealSources(playerName) == DestroySourcesError.OK)
             {
-                ISourceAll source = player.GetSource();
-                player.PayForSomething(new SourceAll(source.GetWood() / 2, source.GetStone() / 2, source.GetCorn() / 2, source.GetMeat() / 2, source.GetOre() / 2));
-                activePlayer.PayForSomething(Settings.costFortSources);
+                SourceAll source = (SourceAll) player.GetSource();
+                player.PayForSomething(new SourceAll(source / 2));
+                activePlayer.AddSources(-Settings.costFortSources, TransactionState.TransactionStart);
+                activePlayer.AddSources(source / 2, TransactionState.TransactionEnd);
                 return true;
             }
             return false;

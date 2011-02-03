@@ -23,6 +23,15 @@ namespace Expanze
             ore = amount;
         }
 
+        public SourceAll(SourceAll b)
+        {
+            corn = b.corn;
+            wood = b.wood;
+            stone = b.stone;
+            meat = b.meat;
+            ore = b.ore;
+        }
+
         public SourceAll(int wood, int stone, int corn, int meat, int ore)
         {
             this.corn = corn;
@@ -51,6 +60,11 @@ namespace Expanze
         public static SourceAll operator -(SourceAll a, SourceAll b)
         {
             return new SourceAll(a.wood - b.wood, a.stone - b.stone, a.corn - b.corn, a.meat - b.meat, a.ore - b.ore);
+        }
+
+        public static SourceAll operator /(SourceAll s, int a)
+        {
+            return new SourceAll(s.GetWood() / a, s.GetStone() / a, s.GetCorn() / a, s.GetMeat() / a, s.GetOre() / a);
         }
 
         public override bool Equals(object obj)
