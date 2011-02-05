@@ -176,7 +176,7 @@ namespace Expanze
 
         public static string PROMPT_DESCTIPTION_MESSAGE_FORT_ACTION_PARADE = "Předvedl jsi majestátnou přehlídku, těžce se bude překonávat. Získal jsi 3 body.";
 
-        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_CAPTURE = "Obsazené pole nebude dávat nikomu suroviny. Při pokusu obsadit stejné pole 2x bude pole uvolněno.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_CAPTURE = "Všechny těžební budovy na poli budou dávat suroviny pouze tobě. Při pokusu obsadit stejné pole 2x, bude pole uvolněno.";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_DESTROY_HEXA = "Poničí tebou vybrané pole. (obilné pole, hory, les, pastvinu, či lom) Pole bude vynášet polovinu oproti běžnému stavu.";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES = "Vyšle vojsko, které získá polovinu veškerých zásob soupeře a o ně tě obohatí.";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_PARADE = "Armádní přehlídka ti přinese slávu a zisk 3 bodů.";

@@ -236,6 +236,7 @@ namespace Expanze.Gameplay.Map
 
         public void Draw(GameTime gameTime)
         {
+            
             for (int i = 0; i < hexaMapView.Length; i++)
             {
                 for (int j = 0; j < hexaMapView[i].Length; j++)
