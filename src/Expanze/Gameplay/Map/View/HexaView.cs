@@ -271,7 +271,7 @@ namespace Expanze
             m.CopyAbsoluteBoneTransformsTo(transforms);
             RasterizerState rasterizerState = new RasterizerState();
             rasterizerState.CullMode = CullMode.None;
-            rasterizerState.FillMode = FillMode.WireFrame;
+            //rasterizerState.FillMode = FillMode.WireFrame;
             GameState.game.GraphicsDevice.RasterizerState = rasterizerState;
 
             Matrix rotation;

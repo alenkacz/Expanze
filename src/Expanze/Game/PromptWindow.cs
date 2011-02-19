@@ -87,6 +87,8 @@ namespace Expanze
 
         public void Show(Mod mod, String title, bool showIcons)
         {
+            if (Message.Inst().GetIsActive())
+                return;
             this.mod = mod;
             this.title = title;
             this.showIcons = showIcons;

@@ -12,7 +12,7 @@ namespace AIEasy
     {
         IMapController mapController;
         ITown town;
-
+        List<ITown> towns;
 
         public String GetAIName()
         {
@@ -22,30 +22,50 @@ namespace AIEasy
         public void InitAIComponent(IMapController mapController)
         {
             this.mapController = mapController;
+            towns = new List<ITown>();
+            MakeDecisionTree();
+        }
+
+        TreeNode root;
+        private void MakeDecisionTree()
+        {
+            TreeNode actionBestTown = new ActionNode(BuildTown);
+            TreeNode actionBuildSourceBuildings = new ActionNode(BuildSourceBuildingsInTowns);
+            TreeNode stateFirstTown;
+            TreeNode state23;
+            TreeNode stateSecondTown;
+            TreeNode stateGame;
+
+            state23 = new DecisionNode(actionBestTown, actionBuildSourceBuildings, () => { return mapController.GetState() == EGameState.StateSecondTown; });
+            root = new DecisionNode(actionBestTown, state23, () => { return mapController.GetState() == EGameState.StateFirstTown; });
+        }
+
+        public void BuildSourceBuildingsInTowns()
+        {
+            foreach (ITown town in towns)
+            {
+                for(byte loop1 = 0; loop1 < 3; loop1++)
+                    town.BuildSourceBuilding(loop1);
+            }
+        }
+
+        public void BuildTown()
+        {
+            ITown tempTown;
+
+            for (int loop1 = 1; loop1 < mapController.GetMaxTownID(); loop1 += 7)
+            {
+                tempTown = mapController.BuildTown(loop1);
+                if (tempTown != null)
+                {
+                    towns.Add(tempTown);
+                }
+            }
         }
 
         public void ResolveAI()
         {
-            if (mapController.GetState() == EGameState.StateFirstTown)
-            {
-                town = mapController.BuildTown(5);
-                mapController.BuildTown(10);
-                mapController.BuildTown(15);
-            }
-            else if (mapController.GetState() == EGameState.StateSecondTown)
-            {
-                mapController.BuildTown(20);
-                mapController.BuildTown(25);
-                mapController.BuildTown(30);
-            }
-            else
-            {
-                town.CanBuildTown();
-                town.BuildSourceBuilding(0);
-                
-                town.BuildSourceBuilding(1);
-                town.BuildSourceBuilding(2);
-            }
+            root.Execute();
         }
 
         public IComponentAI Clone()
