@@ -411,29 +411,14 @@ namespace Expanze
 
         protected SourceAll CreateSourceAllCost(SourceKind kind, int rate)
         {
-            if (kind == SourceKind.Wood)
+            switch (kind)
             {
-                return new SourceAll(rate, 0, 0, 0, 0);
-            }
-            else if (kind == SourceKind.Stone)
-            {
-                return new SourceAll(0, rate, 0, 0, 0);
-            }
-            else if (kind == SourceKind.Corn)
-            {
-                return new SourceAll(0, 0, rate, 0, 0);
-            }
-            else if (kind == SourceKind.Meat)
-            {
-                return new SourceAll(0, 0, 0, rate, 0);
-            }
-            else if (kind == SourceKind.Ore)
-            {
-                return new SourceAll(0, 0, 0, 0, rate);
-            }
-            else
-            {
-                return new SourceAll(0, 0, 0, 0, 0);
+                case SourceKind.Wood: return  new SourceAll(rate, 0, 0, 0, 0);
+                case SourceKind.Stone: return new SourceAll(0, rate, 0, 0, 0);
+                case SourceKind.Corn: return  new SourceAll(0, 0, rate, 0, 0);
+                case SourceKind.Meat: return  new SourceAll(0, 0, 0, rate, 0);
+                case SourceKind.Ore: return   new SourceAll(0, 0, 0, 0, rate);
+                default : return new SourceAll(0);
             }
         }
 

@@ -523,7 +523,7 @@ namespace Expanze
                                             {
                                                 PromptWindow.Inst().AddPromptItem(MonasteryModel.GetPromptItemBuildMonastery(townID, hexaID));
                                                 PromptWindow.Inst().AddPromptItem(MarketModel.getPromptItemBuildMarket(townID, hexaID));
-                                                PromptWindow.Inst().AddPromptItem(FortModel.getPromptItemBuildFort(townID, hexaID));
+                                                PromptWindow.Inst().AddPromptItem(FortModel.GetPromptItemBuildFort(townID, hexaID));
                                             }
                                         }
                                         break;
