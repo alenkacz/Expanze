@@ -268,8 +268,8 @@ namespace Expanze
             if (state == EGameState.StateGame)
             {
                 GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
-                GameState.map.getSources(activePlayer);
                 RandomEvents();
+                GameState.map.getSources(activePlayer);
             }
 
             hasAIThreadStarted = false;
