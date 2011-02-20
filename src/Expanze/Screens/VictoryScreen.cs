@@ -26,6 +26,9 @@ namespace Expanze
 
         bool userCancelled;
 
+        bool firstTimeHandleInput;
+        bool wasMousePressedWhenVictory;
+
         GameScreen[] screensToLoad;
 
         #endregion
@@ -41,6 +44,7 @@ namespace Expanze
                               GameScreen[] screensToLoad)
         {
             this.userCancelled = false;
+            firstTimeHandleInput = true;
             this.screensToLoad = screensToLoad;
         }
 
@@ -83,10 +87,21 @@ namespace Expanze
             KeyboardState keyboardState = input.CurrentKeyboardStates[playerIndex];
             MouseState mouseState = input.CurrentMouseState;
 
-            if (keyboardState.IsKeyDown(Keys.Escape) || keyboardState.IsKeyDown(Keys.Enter) || Mouse.GetState().LeftButton == ButtonState.Pressed)
+            if (keyboardState.IsKeyDown(Keys.Escape) || keyboardState.IsKeyDown(Keys.Enter) || (Mouse.GetState().LeftButton == ButtonState.Pressed && !wasMousePressedWhenVictory))
             {
                 InputState.waitForRelease();
                 userCancelled = true;
+            }
+
+            if (firstTimeHandleInput)
+            {
+                wasMousePressedWhenVictory = Mouse.GetState().LeftButton == ButtonState.Pressed;
+                firstTimeHandleInput = false;
+            }
+            else
+            {
+                if (Mouse.GetState().LeftButton == ButtonState.Released)
+                    wasMousePressedWhenVictory = false;
             }
         }
 
@@ -128,11 +143,12 @@ namespace Expanze
 
 
                 SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
-                SpriteFont font = ScreenManager.Font;
+                SpriteFont font;
 
-                String message = "Vítìzství! A prohra jiného.";
+                String message = "Vítìzství! A prohra jiného v " + GameMaster.Inst().GetTurnNumber() +". kole.";
 
                 // Center the text in the viewport.
+                font = GameResources.Inst().GetFont(EFont.MedievalBig);
                 Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
                 Vector2 viewportSize = new Vector2(viewport.Width, viewport.Height);
                 Vector2 textSize = font.MeasureString(message);
@@ -140,9 +156,22 @@ namespace Expanze
 
                 Color color = Color.White * TransitionAlpha;
 
+                textPosition.Y -= 150;
+                int startY = (int) textPosition.Y + 70;
+                int startX = 100;
+                
                 // Draw the text.
                 spriteBatch.Begin();
                 spriteBatch.DrawString(font, message, textPosition, color);
+                font = GameResources.Inst().GetFont(EFont.MedievalMedium);
+                foreach(Player player in GameMaster.Inst().GetPlayers()) {
+                    spriteBatch.Draw(GameResources.Inst().GetHudTexture(HUDTexture.PlayerColor), new Vector2(startX + 20, startY), player.GetColor());
+                    spriteBatch.DrawString(font, player.GetName(), new Vector2(startX + 140, startY), color);
+                    if(player.GetIsAI())
+                        spriteBatch.DrawString(font, player.GetComponentAI().GetAIName(), new Vector2(startX + 450, startY), color);
+                    spriteBatch.DrawString(font, player.GetPoints() + "", new Vector2(startX + 80, startY), color);
+                    startY += 50;
+                }
                 spriteBatch.End();
             
         }

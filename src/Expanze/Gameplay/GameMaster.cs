@@ -18,6 +18,7 @@ namespace Expanze
     {
         private int playerCount;
         private List<Player> players = new List<Player>();
+        private int turnNumber;
 
         private Player[] medailOwner;
 
@@ -100,6 +101,8 @@ namespace Expanze
             randomNumber = new System.Random();
 
             hasBuiltTown = false;
+
+            turnNumber = 0;
 
             return true;
         }
@@ -354,6 +357,7 @@ namespace Expanze
         public void ChangeStateToStateGame()
         {
             state = EGameState.StateGame;
+
             Message.Inst().Show(Strings.GAME_ALERT_TITLE_GAME_STARTED, Strings.GAME_ALERT_DESCRIPTION_GAME_STARTED, GameResources.Inst().GetHudTexture(HUDTexture.IconRoad));
             foreach (Player player in players)
             {
@@ -367,6 +371,8 @@ namespace Expanze
             pausedNew = false;
             return temp;
         }
+
+        public int GetTurnNumber() { return turnNumber; }
 
         public bool GetPaused()
         {
@@ -456,6 +462,9 @@ namespace Expanze
             }
 
             activePlayer = players[activePlayerIndex];
+
+            if (state == EGameState.StateGame && activePlayerIndex == 0)
+                turnNumber++;
 
             if (!activePlayer.GetActive())
                 return ChangeActivePlayer();
