@@ -88,6 +88,8 @@ namespace Expanze
             MenuEntries.Add(back);
 
             isFullscreen = Settings.isFullscreen;
+
+            SetMenuEntryText();
         }
 
 

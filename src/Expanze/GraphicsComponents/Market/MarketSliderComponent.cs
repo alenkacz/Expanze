@@ -179,6 +179,7 @@ namespace Expanze
             this.fromKind = k;
             this.fromTypeCount = GameMaster.Inst().GetActivePlayer().GetMaterialNumber(fromKind);
             this.fromConvertedCount = fromTypeCount;
+            moveSliderToStart();
         }
 
         public void setToType(SourceKind k)
@@ -186,6 +187,7 @@ namespace Expanze
             toKind = k;
             this.toTypeCount = GameMaster.Inst().GetActivePlayer().GetMaterialNumber(toKind);
             this.toConvertedCount = toTypeCount;
+            moveSliderToStart();
         }
 
         public void Draw(GameTime gameTime, Boolean pick)
