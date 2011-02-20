@@ -27,7 +27,10 @@ namespace Expanze.Gameplay
 
         public override void Execute()
         {
+            int tempItem = PromptWindow.Inst().GetActiveItem();
             building.SetPromptWindow(PromptWindow.Mod.Buyer);
+            PromptWindow.Inst().SetActiveItem(tempItem);
+            
             GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, upgradeKind, upgradeNumber);            
         }
 

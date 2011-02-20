@@ -255,6 +255,10 @@ namespace Expanze
             {
                 MarketComponent.isActive = !MarketComponent.isActive;
             }
+            else
+            {
+                Message.Inst().Show(Strings.GAME_ALERT_TITLE_MARKET_BAD_TURN, Strings.GAME_ALERT_DESCRIPTION_MARKET_BAD_TURN, GameResources.Inst().GetHudTexture(HUDTexture.IconMarket));
+            }
         }
 
         #endregion

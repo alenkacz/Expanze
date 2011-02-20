@@ -31,7 +31,9 @@ namespace Expanze.Gameplay
         protected override void ApplyEffect(UpgradeKind upgradeKind, int upgradeNumber)
         {
             GameMaster.Inst().GetActivePlayer().SetSourceBuildingUpdate(upgradeKind, upgradeNumber);
+            int tempItem = PromptWindow.Inst().GetActiveItem();
             SetPromptWindow(PromptWindow.Mod.Buyer);
+            PromptWindow.Inst().SetActiveItem(tempItem);
         }
 
         public override void SetPromptWindow(PromptWindow.Mod mod)

@@ -63,6 +63,12 @@ namespace Expanze
         public static string GAME_ALERT_DESCRIPTION_GAME_STARTED = "Rozestavění prvních měst je u konce, boj o území může začít.";
         public static string GAME_ALERT_TITLE_AI_EXCEPTION = "O jednoho míň";
         public static string GAME_ALERT_DESCRIPTION_AI_EXCEPTION = "vzdává hru a již dále nebude pokračovat v expanzi ostrova.";
+        public static string GAME_ALERT_TITLE_NEXT_TURN_BAD_STATE = "Postav město";
+        public static string GAME_ALERT_DESCRIPTION_NEXT_TURN_BAD_STATE = "Založ město na jednom z mnoha rozcestníků tří hex.";
+        public static string GAME_ALERT_TITLE_AI_IS_THINKING = "Soupeř přemýšlí";
+        public static string GAME_ALERT_DESCRIPTION_AI_IS_THINKING = "Tvůj soupeř je jediný, kdo může ukončit svůj tah.";
+        public static string GAME_ALERT_TITLE_MARKET_BAD_TURN = "Tržiště jsou zavřena";
+        public static string GAME_ALERT_DESCRIPTION_MARKET_BAD_TURN = "Na tržištích nikdo není. Není s kým obchodovat.";
 
         //
         public static string ALERT_TITLE_THIS_IS_NOT_YOURS = "Tohle není tvoje. Můžeš pouze koukat.";

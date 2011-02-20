@@ -38,7 +38,9 @@ namespace Expanze.Gameplay
                 default: licenceKind = LicenceKind.SecondLicence; break;
             }
             GameMaster.Inst().GetActivePlayer().BuyMarketLicence(licenceKind, upgradeNumber);
+            int tempItem = PromptWindow.Inst().GetActiveItem();
             SetPromptWindow(PromptWindow.Mod.Buyer);
+            PromptWindow.Inst().SetActiveItem(tempItem);
         }
 
         public override void SetPromptWindow(PromptWindow.Mod mod)

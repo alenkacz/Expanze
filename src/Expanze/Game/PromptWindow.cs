@@ -65,6 +65,17 @@ namespace Expanze
             itemPick = new List<PickVariables>();
         }
 
+        public int GetActiveItem() { return activeItem; }
+
+        public void SetActiveItem(int index)
+        {
+            activeItem = index;
+            if (activeItem < 0)
+                activeItem = 0;
+            if (activeItem >= GetItemCount())
+                activeItem = GetItemCount() - 1;
+        }
+
         public bool GetIsActive()
         {
             return active;

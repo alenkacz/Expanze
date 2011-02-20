@@ -289,11 +289,13 @@ namespace Expanze
         {
             if (state != EGameState.StateGame)
             {
+                Message.Inst().Show(Strings.GAME_ALERT_TITLE_NEXT_TURN_BAD_STATE, Strings.GAME_ALERT_DESCRIPTION_NEXT_TURN_BAD_STATE, GameResources.Inst().GetHudTexture(HUDTexture.IconTown));
                 return false;
             }
             
             if(activePlayer.GetIsAI())
             {
+                Message.Inst().Show(Strings.GAME_ALERT_TITLE_AI_IS_THINKING, Strings.GAME_ALERT_DESCRIPTION_AI_IS_THINKING, GameResources.Inst().GetHudTexture(HUDTexture.HammersPassive));
                 return false;
             }
 
@@ -391,6 +393,9 @@ namespace Expanze
 
         public void DoMaterialConversion(SourceKind from, SourceKind to, Player p, int fromAmount, int toAmount)
         {
+            if (from == SourceKind.Null || to == SourceKind.Null)
+                return;
+
             int rate = p.GetConversionRate(from);
 
             if (!this.IsMaterialAvailable(from,rate)) { return; }
