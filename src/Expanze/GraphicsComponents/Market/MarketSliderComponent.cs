@@ -137,14 +137,22 @@ namespace Expanze
 
         private void moveSlider(int pos)
         {
-            if (Settings.scaleW(pos) < (range.Right) && Settings.scaleW(pos) > range.Left)
+            //if (Settings.scaleW(pos) < (range.Right) && Settings.scaleW(pos) > range.Left)
+
+            if(Settings.scaleW(pos) > range.Right)
+                pos = Settings.UnScaleW(range.Right);
+            if (Settings.scaleW(pos) < range.Left)
+                pos = Settings.UnScaleW(range.Left) + 1;
             {
                 int unit = getSliderUnit();
                 /// NEED TO BE FIXED //
                 /// unit should be 1/2 for example //
                 if (unit == 0)
                     unit = 1;
-                int converted = (int)(spritePosition.X - pos)/unit;
+                
+                //int converted = (int)(spritePosition.X - pos)/unit;
+
+                int converted = (int) Math.Round(((pos - spritePosition.X) / (float)width) * getMaxToKindSourcesToConvert());
 
                 if (converted < 0) converted = -converted;
 
@@ -168,10 +176,14 @@ namespace Expanze
             return toConvertedCount;
         }
 
+        private int getMaxToKindSourcesToConvert()
+        {
+            return GameMaster.Inst().GetActivePlayer().GetMaterialNumber(fromKind) / GameMaster.Inst().GetActivePlayer().GetConversionRate(fromKind);
+        }
+
         private int getSliderUnit()
         {
-            int count = GameMaster.Inst().GetActivePlayer().GetMaterialNumber(fromKind)/GameMaster.Inst().GetActivePlayer().GetConversionRate(fromKind);
-            return width / count;
+            return width / getMaxToKindSourcesToConvert();
         }
 
         public void setFromType(SourceKind k)

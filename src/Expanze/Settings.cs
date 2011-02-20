@@ -97,6 +97,11 @@ namespace Expanze
             return (int)(w * spriteScale.M11);
         }
 
+        public static int UnScaleW(float w)
+        {
+            return (int)(w / spriteScale.M11);
+        }
+
         public static int scaleH(float h)
         {
             return (int)(h * spriteScale.M22);

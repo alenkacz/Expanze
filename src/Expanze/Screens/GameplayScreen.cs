@@ -159,9 +159,11 @@ namespace Expanze
             {
                 GameAction close = new GameAction("close", GameAction.ActionKind.OnlyInitialPress);
                 GameAction cheatsources = new GameAction("cheatsources", GameAction.ActionKind.OnlyInitialPress);
+                GameAction cheatpoints = new GameAction("cheatpoints", GameAction.ActionKind.OnlyInitialPress);
                 im.MapToKey(stateMessage, close, Keys.Escape);
                 im.MapToKey(stateMessage, close, Keys.Enter);
                 im.MapToKey(stateMessage, cheatsources, Keys.F11);
+                im.MapToKey(stateMessage, cheatpoints, Keys.F12);
             }
 
             // once the load has finished, we use ResetElapsedTime to tell the game's
@@ -335,6 +337,8 @@ namespace Expanze
 
             if (InputManager.Inst().GetGameAction("gamemessage", "cheatsources").IsPressed())
                 GameMaster.Inst().GetActivePlayer().PayForSomething(new SourceAll(-1000));
+            if (InputManager.Inst().GetGameAction("gamemessage", "cheatpoints").IsPressed())
+                GameMaster.Inst().GetActivePlayer().AddPoints(10);
 
             if (GameMaster.Inst().IsWinnerNew())
             {
