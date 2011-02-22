@@ -84,7 +84,7 @@ namespace Expanze
         public void Deactive()
         {
             active = false;
-            InputManager.Inst().ReturnToPreviousState();
+            InputManager.Inst().ClearActiveState("gamewindow");
         }
 
         public void AddPromptItem(PromptItem item)

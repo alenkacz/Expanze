@@ -113,7 +113,7 @@ namespace Expanze
             }
         }
 
-        public void resetSlider() 
+        public void ResetSlider() 
         {
             sliderPosition.X = spritePosition.X;
             clickablePos = new Rectangle(Settings.scaleW(sliderPosition.X), Settings.scaleH(sliderPosition.Y), sliderW, sliderH);
@@ -125,7 +125,38 @@ namespace Expanze
             this.toConvertedCount = 0;
         }
 
-        public void moveSliderToStart()
+        public void MoveSliderLeft()
+        {
+            if (fromKind == SourceKind.Null || toKind == SourceKind.Null)
+                return;
+
+            if (toConvertedCount - toTypeCount > 0)
+            {
+                fromConvertedCount += GameMaster.Inst().GetActivePlayer().GetConversionRate(fromKind);
+                toConvertedCount--;
+
+                sliderPosition.X = spritePosition.X + (toConvertedCount - toTypeCount) * ((float)width / getMaxToKindSourcesToConvert());
+                clickablePos = new Rectangle(Settings.scaleW(sliderPosition.X), Settings.scaleH(sliderPosition.Y), sliderW, sliderH);
+            }
+        }
+
+        public void MoveSliderRight()
+        {
+            if (fromKind == SourceKind.Null || toKind == SourceKind.Null)
+                return;
+
+            if ((this.fromConvertedCount - GameMaster.Inst().GetActivePlayer().GetConversionRate(fromKind)) >= 0)
+            {
+                fromConvertedCount -= GameMaster.Inst().GetActivePlayer().GetConversionRate(fromKind);
+                toConvertedCount++;
+
+
+                sliderPosition.X = spritePosition.X + (toConvertedCount - toTypeCount) * ((float) width / getMaxToKindSourcesToConvert());
+                clickablePos = new Rectangle(Settings.scaleW(sliderPosition.X), Settings.scaleH(sliderPosition.Y), sliderW, sliderH);
+            }
+        }
+
+        public void MoveSliderToStart()
         {
             sliderPosition.X = spritePosition.X;
             clickablePos = new Rectangle(Settings.scaleW(sliderPosition.X), Settings.scaleH(sliderPosition.Y), sliderW, sliderH);
@@ -191,7 +222,7 @@ namespace Expanze
             this.fromKind = k;
             this.fromTypeCount = GameMaster.Inst().GetActivePlayer().GetMaterialNumber(fromKind);
             this.fromConvertedCount = fromTypeCount;
-            moveSliderToStart();
+            MoveSliderToStart();
         }
 
         public void setToType(SourceKind k)
@@ -199,7 +230,7 @@ namespace Expanze
             toKind = k;
             this.toTypeCount = GameMaster.Inst().GetActivePlayer().GetMaterialNumber(toKind);
             this.toConvertedCount = toTypeCount;
-            moveSliderToStart();
+            MoveSliderToStart();
         }
 
         public void Draw(GameTime gameTime, Boolean pick)

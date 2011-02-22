@@ -22,7 +22,7 @@ namespace Expanze.Gameplay.Map
             this.mapView = mapView;
 
             PromptWindow.Inst().Deactive();
-            MarketComponent.getInstance().setIsActive(false);
+            MarketComponent.Inst().setIsActive(false);
         }
 
         public ITown GetITownByID(int townID)

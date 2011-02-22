@@ -322,7 +322,7 @@ namespace Expanze
             bool status = true;
             if (state == EGameState.StateGame)
             {
-                MarketComponent.isActive = false;
+                MarketComponent.Inst().setIsActive(false);
             }
 
             if (playerCount == 1)

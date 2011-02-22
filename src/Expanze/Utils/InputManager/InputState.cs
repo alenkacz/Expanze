@@ -10,7 +10,6 @@ namespace Expanze.Utils
     {
         String name;
         private GameAction[] keyActions;
-        InputState previousState;
 
         bool[] changeStateKeys;
 
@@ -19,12 +18,9 @@ namespace Expanze.Utils
             this.name = name;
             keyActions = new GameAction[255];
             changeStateKeys = new bool[255];
-            previousState = null;
         }
 
         public String GetName() { return name; }
-        public InputState GetPreviousState() { return previousState; }
-        public void SetPreviousState(InputState state) { previousState = state; }
 
         public void MapToKey(GameAction gameAction, Keys key)
         {

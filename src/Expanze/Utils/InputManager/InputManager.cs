@@ -8,8 +8,8 @@ namespace Expanze.Utils
 {
     class InputManager
     {
-        private InputState activeState;
         private List<InputState> states;
+        private List<String> activeStateList;
 
         private static InputManager instance = null;
 
@@ -25,47 +25,48 @@ namespace Expanze.Utils
         private InputManager()
         {
             states = new List<InputState>();
-            activeState = null;
+            activeStateList = new List<String>();
         }
 
         public void Update()
         {
-            if (activeState != null)
+            if (activeStateList.Count > 0)
             {
-                activeState.Update();
+                FindStateInAllStates(activeStateList[activeStateList.Count - 1]).Update();
             }
-        }
-
-        public void ReturnToPreviousState()
-        {
-            if(activeState != null)
-                SetActiveState(activeState.GetPreviousState().GetName());
         }
 
         public void SetActiveState(String stateName)
         {
-            InputState state = FindState(stateName);
+            InputState state = FindStateInAllStates(stateName);
             if (state != null)
             {
-                if (activeState != null &&
-                    state.GetName().CompareTo(activeState.GetName()) != 0)
-                    state.SetPreviousState(activeState);
-                else
-                    state.SetPreviousState(FindState("game"));
-                activeState = state;
-                activeState.ResetAllGameActions();
+                while(activeStateList.Remove(stateName) == true)
+                    ;
+
+                activeStateList.Add(stateName);
+                state.ResetAllGameActions();
             }
+        }
+
+        public void ClearActiveState(String stateName)
+        {
+            while (activeStateList.Remove(stateName) == true)
+                ;
+
+            if (activeStateList.Count > 0)
+                FindStateInAllStates(activeStateList[activeStateList.Count - 1]).ResetAllGameActions();
         }
 
         public bool AddState(String stateName)
         {
-            if (FindState(stateName) != null)
+            if (FindStateInAllStates(stateName) != null)
                 return false;
             states.Add(new InputState(stateName));
             return true;
         }
 
-        private InputState FindState(String stateName)
+        private InputState FindStateInAllStates(String stateName)
         {
             for (int loop1 = 0; loop1 < states.Count; loop1++)
             {
@@ -78,7 +79,7 @@ namespace Expanze.Utils
 
         public void MapToKey(String stateName, GameAction gameAction, Keys key)
         {
-            InputState state = FindState(stateName);
+            InputState state = FindStateInAllStates(stateName);
             if (state != null)
             {
                 state.MapToKey(gameAction, key);
@@ -92,7 +93,7 @@ namespace Expanze.Utils
 
         public GameAction GetGameAction(String stateName, String actionName)
         {
-            InputState state = FindState(stateName);
+            InputState state = FindStateInAllStates(stateName);
             if (state != null)
             {
                 return state.GetGameAction(actionName);

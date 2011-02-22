@@ -94,7 +94,7 @@ namespace Expanze
             guiComponents.Add(materialsHUDComp);
             TopPlayerScoreComponent topPlayer = new TopPlayerScoreComponent();
             guiComponents.Add(topPlayer);
-            MarketComponent marketHud = MarketComponent.getInstance();
+            MarketComponent marketHud = MarketComponent.Inst();
             ButtonComponent newMsg = new ButtonComponent(ScreenManager.Game, Settings.scaleW(30), (int)(Settings.maximumResolution.Y - 176), new Rectangle(Settings.scaleW(30), Settings.scaleH((int)(Settings.maximumResolution.Y - 176)), Settings.scaleW(70), Settings.scaleH(70)), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(151), Settings.scaleH(156), "newmessage");
             newMsg.Actions += MarketButtonAction;
             guiComponents.Add(newMsg);
@@ -111,8 +111,8 @@ namespace Expanze
                 guiComponent.LoadContent();
             }
 
-            MarketComponent.getInstance().Initialize();
-            MarketComponent.getInstance().LoadContent();
+            MarketComponent.Inst().Initialize();
+            MarketComponent.Inst().LoadContent();
 
             InputManager im = InputManager.Inst();
             String stateGame = "game";
@@ -166,6 +166,22 @@ namespace Expanze
                 im.MapToKey(stateMessage, cheatpoints, Keys.F12);
             }
 
+            String stateMarket = "gamemarket";
+            if (im.AddState(stateMarket))
+            {
+                GameAction ok = new GameAction("ok", GameAction.ActionKind.OnlyInitialPress);
+                GameAction close = new GameAction("close", GameAction.ActionKind.OnlyInitialPress);
+
+                GameAction right = new GameAction("right", GameAction.ActionKind.OnlyInitialPress);
+                GameAction left = new GameAction("left", GameAction.ActionKind.OnlyInitialPress);
+                im.MapToKey(stateMarket, close, Keys.Escape);
+                im.MapToKey(stateMarket, ok, Keys.Enter);
+                im.MapToKey(stateMarket, close, Keys.M);
+
+                im.MapToKey(stateMarket, right, Keys.Right);
+                im.MapToKey(stateMarket, left, Keys.Left);
+            }
+
             // once the load has finished, we use ResetElapsedTime to tell the game's
             // timing mechanism that we have just finished a very long frame, and that
             // it should not try to catch up.
@@ -207,7 +223,7 @@ namespace Expanze
                 guiComponent.UnloadContent();
             }
 
-            MarketComponent.getInstance().UnloadContent();
+            MarketComponent.Inst().UnloadContent();
         }
 
 
@@ -253,7 +269,7 @@ namespace Expanze
             if (GameMaster.Inst().GetState() == EGameState.StateGame &&
                 !GameMaster.Inst().GetActivePlayer().GetIsAI())
             {
-                MarketComponent.isActive = !MarketComponent.isActive;
+                MarketComponent.Inst().setIsActive(!MarketComponent.Inst().getIsActive());
             }
             else
             {
@@ -297,7 +313,7 @@ namespace Expanze
                     guiComponent.Update(gameTime);
                 }
 
-                MarketComponent.getInstance().Update(gameTime);
+                MarketComponent.Inst().Update(gameTime);
             }
 
             
@@ -375,9 +391,9 @@ namespace Expanze
                 guiComponent.Draw(gameTime, true);
             }
 
-            if (MarketComponent.isActive)
+            if (MarketComponent.Inst().getIsActive())
             {
-                MarketComponent.getInstance().Draw(gameTime, true);
+                MarketComponent.Inst().Draw(gameTime, true);
             }
 
             //render to texture
@@ -416,9 +432,9 @@ namespace Expanze
                 guiComponent.Draw(gameTime, false);
             }
 
-            if (MarketComponent.isActive)
+            if (MarketComponent.Inst().getIsActive())
             {
-                MarketComponent.getInstance().Draw(gameTime, false);
+                MarketComponent.Inst().Draw(gameTime, false);
             }
 
             frames++;

@@ -72,7 +72,7 @@ namespace Expanze
             timeActive = ACTIVE_LIMIT;
 
             if (!GetIsActive())
-                InputManager.Inst().ReturnToPreviousState();
+                InputManager.Inst().ClearActiveState("gamemessage");
         }
 
         public override void Update(GameTime gameTime)
