@@ -37,10 +37,71 @@ namespace Expanze.Gameplay
                 case UpgradeKind.FirstUpgrade: licenceKind = LicenceKind.FirstLicence; break;
                 default: licenceKind = LicenceKind.SecondLicence; break;
             }
-            GameMaster.Inst().GetActivePlayer().BuyMarketLicence(licenceKind, upgradeNumber);
-            int tempItem = PromptWindow.Inst().GetActiveItem();
-            SetPromptWindow(PromptWindow.Mod.Buyer);
-            PromptWindow.Inst().SetActiveItem(tempItem);
+            Player p = GameMaster.Inst().GetActivePlayer();
+            p.BuyMarketLicence(licenceKind, upgradeNumber);
+
+            if (!p.GetIsAI())
+            {
+                int tempItem = PromptWindow.Inst().GetActiveItem();
+                SetPromptWindow(PromptWindow.Mod.Buyer);
+                PromptWindow.Inst().SetActiveItem(tempItem);
+            }
+            else
+            {
+                Message.Inst().Show(p.GetName() + " koupil licenci", p.GetName() + " zakoupil " + GetLicenceKindString(licenceKind) + " pro výhodnější výměnu " + GetLicenceSourceName(upgradeNumber) + ".", GetLicenceIcon(licenceKind, upgradeNumber));
+            }
+        }
+
+        public String GetLicenceSourceName(int number)
+        {
+            switch (number)
+            {
+                case 0: return "obilí";
+                case 1: return "masa";
+                case 2: return "kamene";
+                case 3: return "dřeva";
+                case 4: return "rudy";
+            }
+            return "";
+        }
+
+        public String GetLicenceKindString(LicenceKind kind)
+        {
+            switch (kind)
+            {
+                case LicenceKind.FirstLicence: return "první licenci";
+                case LicenceKind.SecondLicence: return "druhou licenci";
+            }
+            return "";
+        }
+
+        public Texture2D GetLicenceIcon(LicenceKind kind, int licenceNumber)
+        {
+            switch (kind)
+            {
+                case LicenceKind.FirstLicence :
+                    switch (licenceNumber)
+                    {
+                        case 0: return GameResources.Inst().GetHudTexture(HUDTexture.IconCorn1);
+                        case 1: return GameResources.Inst().GetHudTexture(HUDTexture.IconMeat1);
+                        case 2: return GameResources.Inst().GetHudTexture(HUDTexture.IconStone1);
+                        case 3: return GameResources.Inst().GetHudTexture(HUDTexture.IconWood1);
+                        case 4: return GameResources.Inst().GetHudTexture(HUDTexture.IconOre1);
+                    }
+                    break;
+                case LicenceKind.SecondLicence:
+                    switch (licenceNumber)
+                    {
+                        case 0: return GameResources.Inst().GetHudTexture(HUDTexture.IconCorn2);
+                        case 1: return GameResources.Inst().GetHudTexture(HUDTexture.IconMeat2);
+                        case 2: return GameResources.Inst().GetHudTexture(HUDTexture.IconStone2);
+                        case 3: return GameResources.Inst().GetHudTexture(HUDTexture.IconWood2);
+                        case 4: return GameResources.Inst().GetHudTexture(HUDTexture.IconOre2);
+                    }
+                    break;
+            }
+
+            return null;
         }
 
         public override void SetPromptWindow(PromptWindow.Mod mod)
@@ -108,7 +169,7 @@ namespace Expanze.Gameplay
             return new SourceAll(0);
         }
 
-        public static BuildingPromptItem getPromptItemBuildMarket(int townID, int hexaID)
+        public static BuildingPromptItem GetPromptItemBuildMarket(int townID, int hexaID)
         {
             return new BuildingPromptItem(townID, hexaID, BuildingKind.MarketBuilding, Strings.PROMPT_TITLE_WANT_TO_BUILD_MARKET, Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_MARKET, Settings.costMarket, true, GameResources.Inst().GetHudTexture(HUDTexture.IconMarket));
         }
