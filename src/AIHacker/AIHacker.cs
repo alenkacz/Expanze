@@ -50,22 +50,23 @@ namespace AIHacker
             }
             else
             {
-                IMonastery mon1 = myTown.BuildMonastery(1);
-                mon1.InventUpgrade(SourceBuildingKind.Mill);
-                mon1.InventUpgrade(SourceBuildingKind.Stepherd);
-                mon1.InventUpgrade(SourceBuildingKind.Stepherd);
+                myTown.BuildMonastery(1);
+                mapController.InventUpgrade(SourceBuildingKind.Mine);
+                mapController.InventUpgrade(SourceBuildingKind.Mine);
+                mapController.InventUpgrade(SourceBuildingKind.Mine);
+                mapController.InventUpgrade(SourceBuildingKind.Quarry);
 
-                IMarket market1 = myTown.BuildMarket(0);
-                
-                market1.BuyLicence(SourceKind.Corn);
-                market1.BuyLicence(SourceKind.Wood);
-                market1.BuyLicence(SourceKind.Meat);
-                market1.BuyLicence(SourceKind.Ore);
+                myTown.BuildMarket(0);
 
-                IMarket market2 = myTown.BuildMarket(2);
-                market2.BuyLicence(SourceKind.Ore);
-                market2.BuyLicence(SourceKind.Stone);
-                market2.BuyLicence(SourceKind.Stone);
+                mapController.BuyLicence(SourceKind.Corn);
+                mapController.BuyLicence(SourceKind.Corn);
+                mapController.BuyLicence(SourceKind.Corn);
+                mapController.BuyLicence(SourceKind.Ore);
+                mapController.BuyLicence(SourceKind.Ore);
+
+                myTown.BuildMarket(2);
+                mapController.BuyLicence(SourceKind.Ore);
+                mapController.BuyLicence(SourceKind.Ore);
 
                 for (int loop1 = -5; loop1 < 1000; loop1++)
                 {

@@ -27,6 +27,10 @@ namespace Expanze
         LicenceKind[] licenceMarket;
         UpgradeKind[] upgradeMonastery;
 
+        List<IMonastery> monastery;
+        List<IMarket> market;
+        List<IFort> fort;
+
         IComponentAI componentAI;   // is null if player is NOT controled by computer but is controled by human
 
         public Player(String name, Color color, IComponentAI componentAI)
@@ -60,6 +64,10 @@ namespace Expanze
 
             materialChanged = false;
             active = true;
+
+            monastery = new List<IMonastery>();
+            market = new List<IMarket>();
+            fort = new List<IFort>();
         }
 
         public int GetBuildingCount(Building building) { return buildingCount[(int)building]; }
@@ -74,6 +82,28 @@ namespace Expanze
         {
             buildingCount[(int)building]++;
             GameMaster.Inst().PlayerWantMedail(this, building);
+        }
+
+        public void AddMarket(IMarket m)
+        {
+            market.Add(m);
+        }
+
+        public List<IMarket> GetMarket()
+        {
+            return market;
+        }
+
+        public void AddMonastery(IMonastery m)
+        {
+            monastery.Add(m);
+        }
+
+        public List<IMonastery> GetMonastery() { return monastery; }
+
+        public void AddFort(IFort f)
+        {
+            fort.Add(f);
         }
 
         public void AddPoints(int add) { 

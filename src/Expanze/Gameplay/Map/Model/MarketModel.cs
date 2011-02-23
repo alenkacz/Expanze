@@ -182,7 +182,7 @@ namespace Expanze.Gameplay
             {
                 case LicenceKind.NoLicence: upgradeKind = UpgradeKind.FirstUpgrade; break;
                 case LicenceKind.FirstLicence: upgradeKind = UpgradeKind.SecondUpgrade; break;
-                default: upgradeKind = UpgradeKind.NoUpgrade; break;
+                default: return false;
             }
 
             return GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, upgradeKind, (int)source);

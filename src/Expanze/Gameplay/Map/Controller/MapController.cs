@@ -264,6 +264,98 @@ namespace Expanze.Gameplay.Map
             return null;
         }
 
+        public bool InventUpgrade(SourceBuildingKind building)
+        {
+            Player p = GameMaster.Inst().GetActivePlayer();
+            List<IMonastery> monastery = p.GetMonastery();
+
+            foreach (IMonastery m in monastery)
+            {
+                switch (m.CanInventUpgrade(building))
+                {
+                    case MonasteryError.HaveSecondUpgrade:
+                        return false;
+                    case MonasteryError.NoSources:
+                        return false;
+                    case MonasteryError.OK:
+                        return m.InventUpgrade(building);
+                    case MonasteryError.MaxUpgrades:          // May be free slot in another market
+                        break;
+                }
+            }
+
+            return false;
+        }
+
+        public MonasteryError CanInventUpgrade(SourceBuildingKind building)
+        {
+            Player p = GameMaster.Inst().GetActivePlayer();
+            List<IMonastery> monastery = p.GetMonastery();
+
+            foreach (IMonastery m in monastery)
+            {
+                switch (m.CanInventUpgrade(building))
+                {
+                    case MonasteryError.HaveSecondUpgrade:
+                        return MonasteryError.HaveSecondUpgrade;
+                    case MonasteryError.NoSources:
+                        return MonasteryError.NoSources;
+                    case MonasteryError.OK:
+                        return MonasteryError.OK;
+                    case MonasteryError.MaxUpgrades:          // May be free slot in another monastery
+                        break;
+                }
+            }
+
+            return MonasteryError.MaxUpgrades;
+        }
+
+        public bool BuyLicence(SourceKind source)
+        {
+            Player p = GameMaster.Inst().GetActivePlayer();
+            List<IMarket> market = p.GetMarket();
+
+            foreach (IMarket m in market)
+            {
+                switch (m.CanBuyLicence(source))
+                {
+                    case MarketError.HaveSecondLicence:
+                        return false;
+                    case MarketError.NoSources:
+                        return false;
+                    case MarketError.OK:
+                        return m.BuyLicence(source);
+                    case MarketError.MaxLicences:          // May be free slot in another market
+                        break;
+                }
+            }
+
+            return false;
+        }
+
+        public MarketError CanBuyLicence(SourceKind source)
+        {
+            Player p = GameMaster.Inst().GetActivePlayer();
+            List<IMarket> market = p.GetMarket();
+
+            foreach (IMarket m in market)
+            {
+                switch (m.CanBuyLicence(source))
+                {
+                    case MarketError.HaveSecondLicence :
+                        return MarketError.HaveSecondLicence;
+                    case MarketError.NoSources :
+                        return MarketError.NoSources;
+                    case MarketError.OK :
+                        return MarketError.OK;
+                    case MarketError.MaxLicences :          // May be free slot in another market
+                        break;
+                }
+            }
+
+            return MarketError.MaxLicences;
+        }
+
         public CaptureHexaError CanCaptureHexa(int hexaID, FortModel fort)
         {
             if (!Settings.costFortCapture.HasPlayerSources(GameMaster.Inst().GetActivePlayer()))

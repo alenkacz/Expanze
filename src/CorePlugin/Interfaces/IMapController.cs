@@ -82,6 +82,34 @@ namespace CorePlugin
         /// <returns>Error why you cant destroy sources or DestroySourcesError.OK</returns>
         DestroySourcesError CanStealSources(String playerName);
 
+        /// <summary>
+        /// Buy licence in random market for better conversion rate for source kind. 
+        /// If you have first licence, you buy second licence. 
+        /// Third licence doesn't exist.
+        /// </summary>
+        /// <param name="source">Kind of source.</param>
+        /// <returns>True if licence was bought, otherwise false.</returns>
+        bool BuyLicence(SourceKind source);
+
+        MarketError CanBuyLicence(SourceKind source);
+
+        /// <summary>
+        /// Invent upgrade for source building of source kind. 
+        /// If you have first upgrade, you invent second upgrade. 
+        /// Third upgrade doesnt exist.
+        /// </summary>
+        /// <param name="source">Kind of source building.</param>
+        /// <returns>True if upgrade was bought, otherwise false.</returns>
+        bool InventUpgrade(SourceBuildingKind source);
+
+        /// <summary>
+        /// Returns the reason why you cant invent upgrade or returns
+        /// MonasteryError.OK if there is no obstacle to invent upgrade.
+        /// </summary>
+        /// <param name="source">For which building kind you want invent upgrade.</param>
+        /// <returns>MonasteryError.OK if it is OK, or some error.</returns>
+        MonasteryError CanInventUpgrade(SourceBuildingKind source);
+
         IPlayer GetPlayerMe();
         IHexa GetIHexa(int x, int y);
         IHexa GetIHexaByID(int hexaID);

@@ -174,7 +174,7 @@ namespace Expanze.Gameplay
             {
                 case UpgradeKind.NoUpgrade: kind = UpgradeKind.FirstUpgrade; break;
                 case UpgradeKind.FirstUpgrade: kind = UpgradeKind.SecondUpgrade; break;
-                default : kind = UpgradeKind.NoUpgrade; break;
+                default : return false;
             }
 
             return GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, kind, (int) source);

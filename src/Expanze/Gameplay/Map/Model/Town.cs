@@ -306,19 +306,25 @@ namespace Expanze
                     break;
 
                 case BuildingKind.MarketBuilding :
-                    building[pos] = new MarketModel(playerOwner, townID, hexaNeighbour[pos].GetID());
+                    MarketModel marketModel = new MarketModel(playerOwner, townID, hexaNeighbour[pos].GetID());
+                    building[pos] = marketModel;
                     playerOwner.AddBuilding(Building.Market);
                     playerOwner.AddPoints(Settings.pointsMarket);
+                    playerOwner.AddMarket(marketModel);
                     break;
                 case BuildingKind.MonasteryBuilding :
-                    building[pos] = new MonasteryModel(playerOwner, townID, hexaNeighbour[pos].GetID());
+                    MonasteryModel monasteryModel = new MonasteryModel(playerOwner, townID, hexaNeighbour[pos].GetID());
+                    building[pos] = monasteryModel;
                     playerOwner.AddBuilding(Building.Monastery);
                     playerOwner.AddPoints(Settings.pointsMonastery);
+                    playerOwner.AddMonastery(monasteryModel);
                     break;
                 case BuildingKind.FortBuilding :
-                    building[pos] = new FortModel(playerOwner, townID, hexaNeighbour[pos].GetID());
+                    FortModel fortModel = new FortModel(playerOwner, townID, hexaNeighbour[pos].GetID());
+                    building[pos] = fortModel;
                     playerOwner.AddBuilding(Building.Fort);
                     playerOwner.AddPoints(Settings.pointsFort);
+                    playerOwner.AddFort(fortModel);
                     break;
             }
 
