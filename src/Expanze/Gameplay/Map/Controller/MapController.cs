@@ -455,16 +455,62 @@ namespace Expanze.Gameplay.Map
             return false;
         }
 
-        public int CanChangeSources(PriceKind kind)
+        public bool ChangeSourcesFor(ISourceAll source)
         {
-            SourceAll source = (SourceAll) GetPrice(kind);
+            if (CanChangeSourcesFor(source) < 0)
+                return false;
+
+            Player player = GameMaster.Inst().GetActivePlayer();
+            if (source.HasPlayerSources(player))
+                return true;
+
+            SourceAll source2 = (SourceAll)source;
+            SourceAll delta = (SourceAll) player.GetSource() - source2;
+            SourceAll collectSources = player.GetCollectSourcesNormal();
+            SourceKind[] kindOrdered = collectSources.Order();
+
+            int plusSources = 0;
+
+            for (int plus = 4; plus >= 0; plus--)
+            {
+                if (delta[(int) kindOrdered[plus]] > 0)
+                {
+                    for (int minus = 0; minus < 5; minus++)
+                    {
+                        if (delta[minus] < 0)
+                        {
+                            plusSources = delta[(int)kindOrdered[plus]] / player.GetConversionRate(kindOrdered[plus]);
+
+                            if (plusSources > -delta[minus])
+                            {
+                                ChangeSources(kindOrdered[plus], (SourceKind)minus, -delta[minus] * player.GetConversionRate(kindOrdered[plus]));
+                                delta[plus] -= delta[minus] * player.GetConversionRate(kindOrdered[plus]);
+                                delta[minus] = 0;
+                            }
+                            else
+                            {
+                                ChangeSources(kindOrdered[plus], (SourceKind)minus, plusSources * player.GetConversionRate(kindOrdered[plus]));
+                                delta[(int) kindOrdered[plus]] -= plusSources * player.GetConversionRate(kindOrdered[plus]);
+                                delta[minus] += plusSources;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        public int CanChangeSourcesFor(ISourceAll source)
+        {
+            SourceAll source2 = (SourceAll) source;
 
             Player player = GameMaster.Inst().GetActivePlayer();
 
             if (source.HasPlayerSources(player))
                 return 0;
 
-            SourceAll delta = (SourceAll) player.GetSource() - source;
+            SourceAll delta = (SourceAll) player.GetSource() - source2;
 
             int minusSources = 0;
             int plusSources = 0;

@@ -22,7 +22,7 @@ namespace AIEasy
         private bool Condition()
         {
             IPlayer player = map.GetPlayerMe();
-            return source.HasPlayerSources(player);
+            return map.CanChangeSourcesFor(source) >= 0;
         }
     }
 }

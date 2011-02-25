@@ -113,12 +113,14 @@ namespace CorePlugin
         /// <returns>MonasteryError.OK if it is OK, or some error.</returns>
         MonasteryError CanInventUpgrade(SourceBuildingKind source);
 
+        bool ChangeSourcesFor(ISourceAll source);
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="kind"></param>
         /// <returns></returns>
-        int CanChangeSources(PriceKind kind);
+        int CanChangeSourcesFor(ISourceAll source);
 
         /// <summary>
         /// Returns price of choosen building, upgrade, licence or action.

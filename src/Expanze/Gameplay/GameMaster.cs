@@ -410,6 +410,16 @@ namespace Expanze
             p.AddSources(get, TransactionState.TransactionEnd);
         }
 
+        public bool ChangeSourcesFor(SourceAll source)
+        {
+            return map.GetMapController().ChangeSourcesFor(source);
+        }
+
+        public int CanChangeSourcesFor(SourceAll source)
+        {
+            return map.GetMapController().CanChangeSourcesFor(source);
+        }
+
         /// <summary>
         /// Checks whether user has enough resources from the type he wants to change in market
         /// </summary>

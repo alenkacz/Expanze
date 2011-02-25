@@ -21,6 +21,8 @@ namespace Expanze
         SourceAll prevSource;       // Source before last source change (for example before paying for something, collecting resources
         SourceAll source;
         SourceAll transactionSource;
+        SourceAll collectSourcesLastTurn; /// sources getted on the start of player's last turn
+        SourceAll collectSourcesNormal;   /// collect sources without disasters and miracles
 
         int[] buildingCount;
 
@@ -169,6 +171,21 @@ namespace Expanze
 
             source = source - cost;
         }
+
+        public void ClearCollectSources()
+        {
+            collectSourcesLastTurn = new SourceAll(0);
+            collectSourcesNormal = new SourceAll(0);
+        }
+
+        public void AddCollectSources(SourceAll normal, SourceAll now)
+        {
+            collectSourcesNormal += normal;
+            collectSourcesLastTurn += now;
+        }
+
+        public SourceAll GetCollectSourcesNormal() { return collectSourcesNormal; }
+        public SourceAll GetCollectSourcesLastTurn() { return collectSourcesLastTurn; }
 
         public void AddSources(SourceAll amount, TransactionState state)
         {

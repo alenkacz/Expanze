@@ -79,8 +79,9 @@ namespace Expanze
 
             map = new Map(ScreenManager.Game);
             gameComponents.Add(map);
-            gameComponents.Add(Message.Inst());
             gameComponents.Add(PromptWindow.Inst());
+            gameComponents.Add(Message.Inst());
+            
             //gamelogic
             gMaster.StartGame(isAI, map);
 
@@ -147,11 +148,15 @@ namespace Expanze
                 GameAction close = new GameAction("close", GameAction.ActionKind.OnlyInitialPress);
                 GameAction left = new GameAction("left", GameAction.ActionKind.OnlyInitialPress);
                 GameAction right = new GameAction("right", GameAction.ActionKind.OnlyInitialPress);
+                GameAction quickChangeSources = new GameAction("changesources", GameAction.ActionKind.OnlyInitialPress);
+                GameAction canChangeSources = new GameAction("canchange", GameAction.ActionKind.OnlyInitialPress);
 
                 im.MapToKey(stateGameWindow, confirm, Keys.Enter);
                 im.MapToKey(stateGameWindow, close, Keys.Escape);
                 im.MapToKey(stateGameWindow, left, Keys.Left);
                 im.MapToKey(stateGameWindow, right, Keys.Right);
+                im.MapToKey(stateGameWindow, quickChangeSources, Keys.T);
+                im.MapToKey(stateGameWindow, canChangeSources, Keys.R);
             }
 
             String stateMessage = "gamemessage";

@@ -183,6 +183,7 @@ namespace Expanze.Gameplay.Map
         public void getSources(Player player)
         {
             player.AddSources(new SourceAll(0), TransactionState.TransactionStart);
+            player.ClearCollectSources();
             for (int i = 0; i < hexaMapModel.Length; i++)
                 for (int j = 0; j < hexaMapModel[i].Length; j++)
                     if (hexaMapModel[i][j] != null)

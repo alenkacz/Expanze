@@ -110,8 +110,10 @@ namespace Expanze
 
         public void CollectSources(Player player)
         {
-            SourceAll cost = new SourceAll(0);
-            int amount;
+            SourceAll sourceNow = new SourceAll(0);
+            SourceAll sourceNormal = new SourceAll(0);
+            int amountNow;
+            int amountNormal;
 
             for(int loop1 = 0; loop1 < 3; loop1++)
             {
@@ -120,37 +122,45 @@ namespace Expanze
                 {
                     SourceBuildingModel tempBuilding = (SourceBuildingModel) building[loop1];
                     float multiply = (tempBuilding.GetUpgrade() == UpgradeKind.SecondUpgrade) ? 2.0f : (tempBuilding.GetUpgrade() == UpgradeKind.FirstUpgrade) ? 1.5f : 1.0f;
-                    amount = (int)(hexaNeighbour[loop1].GetCurrentSource() * multiply);
-
+                    
+                    amountNormal = hexaNeighbour[loop1].GetCurrentSource();
+                    amountNow = (int)(amountNormal * multiply);
+                    
                     if (player == hexaNeighbour[loop1].GetCapturedPlayer() ||
                         (player == playerOwner && !hexaNeighbour[loop1].GetCaptured()))
                     {
                         switch (hexaNeighbour[loop1].GetKind())
                         {
                             case HexaKind.Forest:
-                                cost = cost + new SourceAll(amount, 0, 0, 0, 0);
+                                sourceNow    += new SourceAll(amountNow, 0, 0, 0, 0);
+                                sourceNormal += new SourceAll(amountNormal, 0, 0, 0, 0);
                                 break;
 
                             case HexaKind.Stone:
-                                cost = cost + new SourceAll(0, amount, 0, 0, 0);
+                                sourceNow    += new SourceAll(0, amountNow, 0, 0, 0);
+                                sourceNormal += new SourceAll(0, amountNormal, 0, 0, 0);
                                 break;
 
                             case HexaKind.Cornfield:
-                                cost = cost + new SourceAll(0, 0, amount, 0, 0);
+                                sourceNow    += new SourceAll(0, 0, amountNow, 0, 0);
+                                sourceNormal += new SourceAll(0, 0, amountNormal, 0, 0);
                                 break;
 
                             case HexaKind.Pasture:
-                                cost = cost + new SourceAll(0, 0, 0, amount, 0);
+                                sourceNow    += new SourceAll(0, 0, 0, amountNow, 0);
+                                sourceNormal += new SourceAll(0, 0, 0, amountNormal, 0);
                                 break;
 
                             case HexaKind.Mountains:
-                                cost = cost + new SourceAll(0, 0, 0, 0, amount);
+                                sourceNow    += new SourceAll(0, 0, 0, 0, amountNow);
+                                sourceNormal += new SourceAll(0, 0, 0, 0, amountNormal);
                                 break;
                         }
                     }
                 }
             }
-            player.AddSources(cost, TransactionState.TransactionMiddle);
+            player.AddSources(sourceNow, TransactionState.TransactionMiddle);
+            player.AddCollectSources(sourceNormal, sourceNow);
         }
 
         public void BuildTown(Player player)

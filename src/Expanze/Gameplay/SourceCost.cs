@@ -47,6 +47,42 @@ namespace Expanze
         public int GetOre() { return ore; }
         public int GetMeat() { return meat; }
 
+        public SourceKind[] Order()
+        {
+            SourceKind[] kind = new SourceKind[(int) SourceKind.Count];
+            kind[0] = SourceKind.Corn;
+            kind[1] = SourceKind.Meat;
+            kind[2] = SourceKind.Stone;
+            kind[3] = SourceKind.Wood;
+            kind[4] = SourceKind.Ore;
+
+            int[] number = this;
+
+            int min;
+            int tempInt;
+            SourceKind tempKind;
+
+            for (int loop1 = 0; loop1 < 5; loop1++)
+            {
+                min = loop1;
+                for (int loop2 = loop1 + 1; loop2 < 5; loop2++)
+                {
+                    if (number[loop2] < number[min])
+                        min = loop2;
+                }
+
+                tempInt = number[loop1];
+                number[loop1] = number[min];
+                number[min] = tempInt;
+
+                tempKind = kind[loop1];
+                kind[loop1] = kind[min];
+                kind[min] = tempKind;
+            }
+
+            return kind;
+        }
+
         public static SourceAll operator +(SourceAll a, SourceAll b)
         {
             return new SourceAll(a.wood + b.wood, a.stone + b.stone, a.corn + b.corn, a.meat + b.meat, a.ore + b.ore);
@@ -77,6 +113,14 @@ namespace Expanze
                    b.ore == ore;
         }
 
+        public static implicit operator int[](SourceAll a)
+        {
+            int[] b = new int[5];
+            for (int loop1 = 0; loop1 < 5; loop1++)
+                b[loop1] = a[loop1];
+            return b;
+        }
+
         public int this[int index]
         {
             get
@@ -89,6 +133,18 @@ namespace Expanze
                     case 3: return wood;
                     case 4: return ore;
                     default: return -1;
+                }
+            }
+
+            set
+            {
+                switch (index)
+                {
+                    case 0: corn = value; break;
+                    case 1: meat = value; break;
+                    case 2: stone = value; break;
+                    case 3: wood = value; break;
+                    case 4: ore = value; break;
                 }
             }
         }

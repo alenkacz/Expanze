@@ -158,6 +158,23 @@ namespace Expanze
                     }
                 }
 
+                if (mod == Mod.Buyer && InputManager.Inst().GetGameAction("gamewindow", "changesources").IsPressed())
+                {
+                    GameMaster.Inst().ChangeSourcesFor((SourceAll) itemList[activeItem].getCost());
+                }
+
+                if (mod == Mod.Buyer && InputManager.Inst().GetGameAction("gamewindow", "canchange").IsPressed())
+                {
+                    int amount = GameMaster.Inst().CanChangeSourcesFor((SourceAll)itemList[activeItem].getCost());
+
+                    if (amount < 0)
+                        Message.Inst().Show("Nemáš dostatek surovin", "Můžeš měnit jak chceš, ale tohle kolo si to nekoupíš, nemáš na to.", GameResources.Inst().GetHudTexture(HUDTexture.IconMarket));
+                    else if(itemList[activeItem].getCost().HasPlayerSources(GameMaster.Inst().GetActivePlayer()))
+                        Message.Inst().Show("Kup to!", "Žádné suroviny ti nechybí. Nechápu, že to nevidíš.", GameResources.Inst().GetHudTexture(HUDTexture.IconMarket));
+                    else
+                        Message.Inst().Show("Navštiv tržnici", "Tohle za tamto, jiné za támhle to a můžeš směle nakupovat", GameResources.Inst().GetHudTexture(HUDTexture.IconMarket));
+                }
+
                 if (InputManager.Inst().GetGameAction("gamewindow", "left").IsPressed())
                 {
                     activeItem--;
