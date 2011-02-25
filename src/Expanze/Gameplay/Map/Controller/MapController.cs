@@ -455,6 +455,30 @@ namespace Expanze.Gameplay.Map
             return false;
         }
 
+        public int CanChangeSources(PriceKind kind)
+        {
+            SourceAll source = (SourceAll) GetPrice(kind);
+
+            Player player = GameMaster.Inst().GetActivePlayer();
+
+            if (source.HasPlayerSources(player))
+                return 0;
+
+            SourceAll delta = (SourceAll) player.GetSource() - source;
+
+            int minusSources = 0;
+            int plusSources = 0;
+            for (int loop1 = 0; loop1 < 5; loop1++)
+            {
+                if (delta[loop1] < 0)
+                    minusSources += -delta[loop1];
+                else
+                    plusSources += delta[loop1] / player.GetConversionRate((SourceKind)loop1);
+            }
+
+            return plusSources - minusSources;
+        }
+
         public ISourceAll GetPrice(PriceKind kind)
         {
             switch (kind)
