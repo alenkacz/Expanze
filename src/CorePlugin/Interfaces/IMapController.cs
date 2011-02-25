@@ -113,6 +113,18 @@ namespace CorePlugin
         /// <returns>MonasteryError.OK if it is OK, or some error.</returns>
         MonasteryError CanInventUpgrade(SourceBuildingKind source);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="kind"></param>
+        /// <returns></returns>
+        int CanChangeSources(PriceKind kind);
+
+        /// <summary>
+        /// Returns price of choosen building, upgrade, licence or action.
+        /// </summary>
+        /// <param name="kind">Kind of thing you are asking price.</param>
+        /// <returns>Price of choosen kind.</returns>
         ISourceAll GetPrice(PriceKind kind);
 
         IPlayer GetPlayerMe();
