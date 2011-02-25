@@ -93,13 +93,15 @@ namespace Expanze
             }
         }
 
-        public Boolean HasPlayerSources(Player player)
+        public Boolean HasPlayerSources(IPlayer player)
         {
-            return player.getCorn() >= corn &&
-                   player.getMeat() >= meat &&
-                   player.getOre() >= ore &&
-                   player.getStone() >= stone &&
-                   player.getWood() >= wood;
+            ISourceAll sourcePlayer = player.GetSource();
+
+            return sourcePlayer.GetCorn() >= corn &&
+                   sourcePlayer.GetMeat() >= meat &&
+                   sourcePlayer.GetOre() >= ore &&
+                   sourcePlayer.GetStone() >= stone &&
+                   sourcePlayer.GetWood() >= wood;
         }
 
         public SourceKind IntToKind(int index)

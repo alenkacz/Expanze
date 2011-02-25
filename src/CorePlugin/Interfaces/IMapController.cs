@@ -5,6 +5,9 @@ using System.Text;
 
 namespace CorePlugin
 {
+    public enum PriceKind { BRoad, BTown, BMill, BStepherd, BQuarry, BSaw, BMine, BMarket, BMonastery, BFort,
+                            UMill1, UStepherd1, UQuarry1, USaw1, UMine1, UMill2, UStepherd2, UQuarry2, USaw2, UMine2,
+                            ICorn1, IMeat1, IStone1, IWood1, IOre1, ICorn2, IMeat2, IStone2, IWood2, IOre2 }
     public enum EGameState { StateFirstTown, StateSecondTown, StateGame }
     public enum UpgradeKind { NoUpgrade, FirstUpgrade, SecondUpgrade }
     public enum LicenceKind { NoLicence, FirstLicence, SecondLicence }
@@ -109,6 +112,8 @@ namespace CorePlugin
         /// <param name="source">For which building kind you want invent upgrade.</param>
         /// <returns>MonasteryError.OK if it is OK, or some error.</returns>
         MonasteryError CanInventUpgrade(SourceBuildingKind source);
+
+        ISourceAll GetPrice(PriceKind kind);
 
         IPlayer GetPlayerMe();
         IHexa GetIHexa(int x, int y);

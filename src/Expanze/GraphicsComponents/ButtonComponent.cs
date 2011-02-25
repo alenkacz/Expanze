@@ -181,7 +181,7 @@ namespace Expanze
 
         public bool isActive()
         {
-            return GameMaster.Inst().GetActivePlayer().HaveEnoughMaterial(sourceKind);
+            return GameMaster.Inst().GetActivePlayer().HaveEnoughMaterialForConversion(sourceKind);
         }
 
         public void changeText()
@@ -204,7 +204,7 @@ namespace Expanze
 
                 if (sourceKind != SourceKind.Null)
                 {
-                    if (!GameMaster.Inst().GetActivePlayer().HaveEnoughMaterial(sourceKind) && nonactiveTexture != null)
+                    if (!GameMaster.Inst().GetActivePlayer().HaveEnoughMaterialForConversion(sourceKind) && nonactiveTexture != null)
                     {
                         spriteBatch.Draw(nonactiveTexture, spritePosition, c);
                     }

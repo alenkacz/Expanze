@@ -42,6 +42,8 @@ namespace CorePlugin
         /// <returns>Source kind according to index number</returns>
         SourceKind IntToKind(int index);
 
+        Boolean HasPlayerSources(IPlayer player);
+
         int this[int index]
         {
             get;

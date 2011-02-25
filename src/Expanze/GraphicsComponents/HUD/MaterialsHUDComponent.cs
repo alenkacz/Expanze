@@ -61,7 +61,7 @@ namespace Expanze
                 c = Color.White;
 
             spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,null,null,null,null,Settings.spriteScale);
-            spritePosition.Y = 750;
+            spritePosition.Y = 755;
             spritePosition.X = 350;
 
             Player act = GameMaster.Inst().GetActivePlayer();

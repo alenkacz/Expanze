@@ -8,8 +8,17 @@ namespace AIEasy
     delegate bool Condition();
     delegate void Action();
 
-    interface TreeNode
+    public interface ITreeNode
     {
         void Execute();
+    }
+
+    public abstract class DecisionNode : ITreeNode
+    {
+        public virtual void Execute()
+        {
+            GetBranch().Execute();
+        }
+        public abstract ITreeNode GetBranch();       
     }
 }

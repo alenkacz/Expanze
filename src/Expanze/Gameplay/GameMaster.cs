@@ -416,7 +416,7 @@ namespace Expanze
         /// <returns></returns>
         protected bool IsMaterialAvailable(SourceKind from, int rate)
         {
-            return GetActivePlayer().HaveEnoughMaterial(from);
+            return GetActivePlayer().HaveEnoughMaterialForConversion(from);
         }
 
 

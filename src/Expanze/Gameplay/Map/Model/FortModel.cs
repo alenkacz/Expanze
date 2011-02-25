@@ -99,7 +99,7 @@ namespace Expanze.Gameplay
                     switch (upgradeNumber)
                     {
                         case 0 :
-                            costCaptureHexa += new SourceAll(30);
+                            //costCaptureHexa += new SourceAll(30);
                             gm.GetActivePlayer().AddSources(GetUpgradeCost(upgradeKind, upgradeNumber), TransactionState.TransactionStart);
                             gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
                             gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
@@ -118,7 +118,7 @@ namespace Expanze.Gameplay
                             break;
 
                         case 2 :
-                            costSources += new SourceAll(30);
+                            //costSources += new SourceAll(30);
                             gm.GetActivePlayer().AddSources(GetUpgradeCost(upgradeKind, upgradeNumber), TransactionState.TransactionStart);
                             gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
                             gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
@@ -135,7 +135,7 @@ namespace Expanze.Gameplay
 
                         case 3 :
                             GameMaster.Inst().GetActivePlayer().AddPoints(Settings.pointsFortParade);
-                            costParade = costParade + new SourceAll(30);
+                            //costParade = costParade + new SourceAll(30);
                             if (GameMaster.Inst().GetActivePlayer().GetIsAI())
                             {
                                 Message.Inst().Show(Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE, Strings.PROMPT_DESCTIPTION_MESSAGE_FORT_ACTION_PARADE, GameResources.Inst().GetHudTexture(HUDTexture.IconFortParade));

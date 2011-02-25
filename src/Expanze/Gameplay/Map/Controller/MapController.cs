@@ -455,6 +455,45 @@ namespace Expanze.Gameplay.Map
             return false;
         }
 
+        public ISourceAll GetPrice(PriceKind kind)
+        {
+            switch (kind)
+            {
+                case PriceKind.BRoad: return Settings.costRoad;
+                case PriceKind.BTown: return Settings.costTown;
+                case PriceKind.BFort: return Settings.costFort;
+                case PriceKind.BMarket: return Settings.costMarket;
+                case PriceKind.BMonastery: return Settings.costMonastery;
+                case PriceKind.BMill: return Settings.costMill;
+                case PriceKind.BStepherd: return Settings.costStephard;
+                case PriceKind.BSaw: return Settings.costSaw;
+                case PriceKind.BQuarry: return Settings.costQuarry;
+                case PriceKind.BMine: return Settings.costMine;
+                case PriceKind.UMill1: return Settings.costMonasteryCorn1;
+                case PriceKind.UStepherd1: return Settings.costMonasteryMeat1;
+                case PriceKind.UQuarry1: return Settings.costMonasteryStone1;
+                case PriceKind.USaw1: return Settings.costMonasteryWood1;
+                case PriceKind.UMine1: return Settings.costMonasteryOre1;
+                case PriceKind.UMill2: return Settings.costMonasteryCorn2;
+                case PriceKind.UStepherd2: return Settings.costMonasteryMeat2;
+                case PriceKind.UQuarry2: return Settings.costMonasteryStone2;
+                case PriceKind.USaw2: return Settings.costMonasteryWood2;
+                case PriceKind.UMine2: return Settings.costMonasteryOre2;
+                case PriceKind.ICorn1: return Settings.costMarketCorn1;
+                case PriceKind.IMeat1: return Settings.costMarketMeat1;
+                case PriceKind.IStone1: return Settings.costMarketStone1;
+                case PriceKind.IWood1: return Settings.costMarketWood1;
+                case PriceKind.IOre1: return Settings.costMarketOre1;
+                case PriceKind.ICorn2: return Settings.costMarketCorn2;
+                case PriceKind.IMeat2: return Settings.costMarketMeat2;
+                case PriceKind.IStone2: return Settings.costMarketStone2;
+                case PriceKind.IWood2: return Settings.costMarketWood2;
+                case PriceKind.IOre2: return Settings.costMarketOre2;
+            }
+
+            return null;
+        }
+
         public void Init()
         {
             townByID = new ITown[TownModel.GetTownCount()];

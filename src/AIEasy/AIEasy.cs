@@ -13,6 +13,7 @@ namespace AIEasy
         IMapController mapController;
         ITown town;
         List<ITown> towns;
+        DecisionTree decisionTree;
 
         public String GetAIName()
         {
@@ -23,21 +24,7 @@ namespace AIEasy
         {
             this.mapController = mapController;
             towns = new List<ITown>();
-            MakeDecisionTree();
-        }
-
-        TreeNode root;
-        private void MakeDecisionTree()
-        {
-            TreeNode actionBestTown = new ActionNode(BuildTown);
-            TreeNode actionBuildSourceBuildings = new ActionNode(BuildSourceBuildingsInTowns);
-            TreeNode stateFirstTown;
-            TreeNode state23;
-            TreeNode stateSecondTown;
-            TreeNode stateGame;
-
-            state23 = new DecisionNode(actionBestTown, actionBuildSourceBuildings, () => { return mapController.GetState() == EGameState.StateSecondTown; });
-            root = new DecisionNode(actionBestTown, state23, () => { return mapController.GetState() == EGameState.StateFirstTown; });
+            decisionTree = new DecisionTree(mapController, this);
         }
 
         public void BuildSourceBuildingsInTowns()
@@ -65,7 +52,16 @@ namespace AIEasy
 
         public void ResolveAI()
         {
-            root.Execute();
+            switch (mapController.GetState())
+            {
+                case EGameState.StateFirstTown :
+                    break;
+                case EGameState.StateSecondTown :
+                    break;
+                case EGameState.StateGame :
+                    decisionTree.SolveAI();
+                    break;
+            }
         }
 
         public IComponentAI Clone()

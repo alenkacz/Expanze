@@ -219,7 +219,7 @@ namespace Expanze
             return prevSource;
         }
 
-        public bool HaveEnoughMaterial(SourceKind kind)
+        public bool HaveEnoughMaterialForConversion(SourceKind kind)
         {
             return source.Get(kind) >= GetConversionRate(kind);
         }

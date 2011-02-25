@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AIEasy
 {
-    class ActionNode : TreeNode
+    class ActionNode : ITreeNode
     {
         Action action;
         public ActionNode(Action action)
