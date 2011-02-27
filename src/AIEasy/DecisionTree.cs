@@ -17,6 +17,7 @@ namespace AIEasy
         bool wasAction;
 
         ITown activeTown;
+        IRoad activeRoad;
         byte activeTownPos;
 
         public DecisionTree(IMapController map, AIEasy ai)
@@ -31,11 +32,13 @@ namespace AIEasy
         {
             EA = new FakeActionNode(ai.EmptyLeave, this);
 
+            CanHaveSourcesNode canHaveSourceForRoad = new CanHaveSourcesNode(MakeBuildRoadTree(EA), EA, PriceKind.BRoad, map);
+
             CanHaveSourcesNode canHaveSourceForSourceBuilding = new CanHaveSourcesNode(MakeBuildSourceBuildingTree(EA), EA, () => { return GetPriceForSourceBuilding(activeTown, activeTownPos); }, map);
             DecisionBinaryNode isThatHexaDesert = new DecisionBinaryNode(EA /* special building */, canHaveSourceForSourceBuilding, () => { return activeTown.GetIHexa(activeTownPos).GetKind() == HexaKind.Desert; });
-            
-            ForEachFreeHexInTownNode forEachFreeHexaInTown = new ForEachFreeHexInTownNode(isThatHexaDesert, EA /* build road */, this);
-            DecisionBinaryNode hasFreeHexaInTown = new DecisionBinaryNode(forEachFreeHexaInTown, EA /* build road */, ai.IsFreeHexaInTown);
+
+            ForEachFreeHexInTownNode forEachFreeHexaInTown = new ForEachFreeHexInTownNode(isThatHexaDesert, canHaveSourceForRoad, this);
+            DecisionBinaryNode hasFreeHexaInTown = new DecisionBinaryNode(forEachFreeHexaInTown, canHaveSourceForRoad, ai.IsFreeHexaInTown);
             root = new CanHaveSourcesNode(MakeBuildTownTree(hasFreeHexaInTown), hasFreeHexaInTown, PriceKind.BTown, map);
         }
 
@@ -60,12 +63,23 @@ namespace AIEasy
             return localRoot;
         }
 
+        public ITreeNode MakeBuildRoadTree(ITreeNode falseNode)
+        {
+            ActionNode actionBuildRoad = new ActionNode(() => ai.BuildRoad(activeRoad), this);
+            HaveSourcesNode hasSourcesForRoad = new HaveSourcesNode(actionBuildRoad, EA, PriceKind.BRoad, map);
+            ForEachRoadNode localRoot = new ForEachRoadNode(hasSourcesForRoad, falseNode, this);
+
+            return localRoot;
+        }
+
         public AIEasy GetAI() { return ai; }
         public void SetWasAction(bool action) { wasAction = action; }
         public bool GetWasAction() { return wasAction; }
 
         public void SetActiveTown(ITown town) { activeTown = town; }
         public ITown GetActiveTown() { return activeTown; }
+        public void SetActiveRoad(IRoad road) { activeRoad = road; }
+        public IRoad GetActiveRoad() { return activeRoad; }
 
         public void SetActivePosInTown(byte pos) { activeTownPos = pos; }
 

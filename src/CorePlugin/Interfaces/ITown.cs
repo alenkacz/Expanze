@@ -22,6 +22,7 @@ namespace CorePlugin
         int GetTownID();
         ISourceAll GetCost();
         IHexa GetIHexa(byte pos);
+        IRoad GetIRoad(byte pos);
         BuildingKind GetBuildingKind(byte pos);
     }
 }

@@ -28,6 +28,7 @@ namespace Expanze
         public Player GetPlayerOwner() { return playerOwner; }
         public ISourceAll GetCost() { return Settings.costTown; }
         public IHexa GetIHexa(byte pos) { return GetHexa(pos); }
+        public IRoad GetIRoad(byte pos) { return roadNeighbour[pos]; }
         public HexaModel GetHexa(int pos) { return hexaNeighbour[pos]; }
         public static int GetTownCount() { return counter; }    // number of towns
 

@@ -13,8 +13,9 @@ namespace AIEasy
         IMapController mapController;
 
         List<ITown> freeTownPlaces;
+        List<IRoad> freeRoadPlaces;
         List<ITown> towns;
-        List<IRoad> leaveRoads;
+        //List<IRoad> leaveRoads;
         int freeHexaInTown;
         int[] sourceNormal;        // how many sources player get for one turn
 
@@ -31,7 +32,7 @@ namespace AIEasy
 
             freeTownPlaces = new List<ITown>();
             towns = new List<ITown>();
-            leaveRoads = new List<IRoad>();
+            freeRoadPlaces = new List<IRoad>();
             freeHexaInTown = 0;
             sourceNormal = new int[5];
             for (int loop1 = 0; loop1 < 5; loop1++)
@@ -47,15 +48,18 @@ namespace AIEasy
 
         public List<ITown> GetFreeTownPlaces() { return freeTownPlaces; }
         public List<ITown> GetTowns() { return towns; }
+        public List<IRoad> GetFreeRoadPlaces() { return freeRoadPlaces; }
         public int[] GetSourceNormal() { return sourceNormal; }
         public bool IsFreeHexaInTown()
         {
             return freeHexaInTown > 0;
         }
 
+
         public void BuildTown(int ID)
         {
             ITown town;
+            IRoad road;
 
             town = mapController.BuildTown(ID);
 
@@ -66,7 +70,29 @@ namespace AIEasy
                 {
                     if (town.GetIHexa(loop1).GetKind() != HexaKind.Water && town.GetIHexa(loop1).GetKind() != HexaKind.Nothing)
                         freeHexaInTown++;
+
+                    if (mapController.GetState() != EGameState.StateGame)
+                    {
+                        road = town.GetIRoad(loop1);
+                        if(road != null) // There is water
+                        {
+                            freeRoadPlaces.Add(road);
+                        }
+                    }
                 }
+            }
+        }
+
+        internal void BuildRoad(IRoad activeRoad)
+        {
+            if (activeRoad.Build() != null)
+            {
+                freeRoadPlaces.Remove(activeRoad);
+                // add townPlace and roadPlace
+            }
+            else
+            {
+                throw new Exception("Should not try build road which he cant build");
             }
         }
 
