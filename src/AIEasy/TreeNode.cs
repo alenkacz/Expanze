@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CorePlugin;
 
 namespace AIEasy
 {
     delegate bool Condition();
+    delegate PriceKind GetPrice();
     delegate void Action();
 
     public interface ITreeNode

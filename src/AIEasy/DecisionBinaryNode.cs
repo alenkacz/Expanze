@@ -7,8 +7,8 @@ namespace AIEasy
 {
     class DecisionBinaryNode : DecisionNode
     {
-        private ITreeNode trueNode;
-        private ITreeNode falseNode;
+        protected ITreeNode trueNode;
+        protected ITreeNode falseNode;
         protected Condition condition;
 
         public DecisionBinaryNode(ITreeNode trueNode, ITreeNode falseNode, Condition condition)

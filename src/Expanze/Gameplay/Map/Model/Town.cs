@@ -65,6 +65,14 @@ namespace Expanze
             return -1;
         }
 
+        public BuildingKind GetBuildingKind(byte pos)
+        {
+            if (pos >= 0 && pos <= 2)
+                return buildingKind[pos];
+            else
+                return BuildingKind.NoBuilding;
+        }
+
         public BuildingKind GetBuildingKind(int hexaID)
         {
             if (!isBuild)

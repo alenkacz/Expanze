@@ -8,13 +8,19 @@ namespace AIEasy
 {
     class HaveSourcesNode : DecisionBinaryNode
     {
-        ISourceAll source;
+        GetPrice getPrice;
         IMapController map;
 
         public HaveSourcesNode(ITreeNode trueNode, ITreeNode falseNode, PriceKind kind, IMapController map)
+            : this(trueNode, falseNode, () => {return kind;}, map)
+        {
+
+        }
+
+        public HaveSourcesNode(ITreeNode trueNode, ITreeNode falseNode, GetPrice getPrice, IMapController map)
             : base(trueNode, falseNode, null)
         {
-            this.source = map.GetPrice(kind);
+            this.getPrice = getPrice;
             condition = Condition;
             this.map = map;
         }
@@ -22,7 +28,7 @@ namespace AIEasy
         private bool Condition()
         {
             IPlayer player = map.GetPlayerMe();
-            return source.HasPlayerSources(player);
+            return map.GetPrice(getPrice()).HasPlayerSources(player);
         }
     }
 }

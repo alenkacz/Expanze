@@ -7,15 +7,19 @@ namespace AIEasy
 {
     class ActionNode : ITreeNode
     {
-        Action action;
-        public ActionNode(Action action)
+        protected Action action;
+        protected DecisionTree tree;
+
+        public ActionNode(Action action, DecisionTree tree)
         {
             this.action = action;
+            this.tree = tree;
         }
 
-        public void Execute()
+        public virtual void Execute()
         {
             action();
+            tree.SetWasAction(true);
         }
     }
 }
