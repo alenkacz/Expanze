@@ -315,7 +315,7 @@ namespace Expanze.Gameplay.Map
         public void CreateHexaWorldMatrices()
         {
             HexaModel.ResetCounter();
-            RoadModel.resetCounter();
+            RoadModel.ResetCounter();
             TownModel.ResetCounter();
             TownView.ResetTownView();
 

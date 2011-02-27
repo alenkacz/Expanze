@@ -91,7 +91,7 @@ namespace Expanze.Gameplay.Map.View
 
                 int a = 0;
 
-                Player player = model.getOwner();
+                Player player = model.GetOwner();
                 if (player == null)
                     player = GameMaster.Inst().GetActivePlayer();
                 Vector3 color = player.GetColor().ToVector3();

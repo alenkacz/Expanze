@@ -29,12 +29,13 @@ namespace Expanze
             playerOwner = null;
         }
 
-        public static void resetCounter() { counter = 0; }      // every new game have to be reseted
+        public static void ResetCounter() { counter = 0; }      // every new game have to be reseted
 
         public static int GetRoadCount() { return counter; }    // number of roads
-        public Player getOwner() { return playerOwner; }
+        public Player GetOwner() { return playerOwner; }
         public int GetRoadID() { return roadID; }
-        public bool getIsBuild() { return isBuild; }
+        public bool GetIsBuild() { return isBuild; }
+        public ITown[] GetITown() { return neighbour; }
 
         public void SetTownNeighbours(TownModel one, TownModel two)
         {

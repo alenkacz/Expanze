@@ -66,7 +66,9 @@ namespace AIEasy
             if (town != null)
             {
                 towns.Add(town);
-                for(byte loop1 = 0; loop1 < 3; loop1++)
+                freeTownPlaces.Remove(town);
+
+                for (byte loop1 = 0; loop1 < 3; loop1++)
                 {
                     if (town.GetIHexa(loop1).GetKind() != HexaKind.Water && town.GetIHexa(loop1).GetKind() != HexaKind.Nothing)
                         freeHexaInTown++;
@@ -74,12 +76,16 @@ namespace AIEasy
                     if (mapController.GetState() != EGameState.StateGame)
                     {
                         road = town.GetIRoad(loop1);
-                        if(road != null) // There is water
+                        if (road != null) // There is water
                         {
                             freeRoadPlaces.Add(road);
                         }
                     }
                 }
+            }
+            else
+            {
+                freeTownPlaces.Remove(town);
             }
         }
 
@@ -88,11 +94,31 @@ namespace AIEasy
             if (activeRoad.Build() != null)
             {
                 freeRoadPlaces.Remove(activeRoad);
+
+                foreach (ITown town in activeRoad.GetITown())
+                {
+                    for (byte loop1 = 0; loop1 < 3; loop1++)
+                    {
+                        IRoad road = town.GetIRoad(loop1);
+                        if (road != null &&
+                            !road.GetIsBuild() &&
+                            !freeRoadPlaces.Contains(road))
+                        {
+                            freeRoadPlaces.Add(road);
+                        }
+                    }
+
+                    TownBuildError error = town.CanBuildTown();
+                    if(error != TownBuildError.OtherTownIsClose &&
+                       error != TownBuildError.AlreadyBuild)
+                        freeTownPlaces.Add(town);
+                }
                 // add townPlace and roadPlace
             }
             else
             {
-                throw new Exception("Should not try build road which he cant build");
+                freeRoadPlaces.Remove(activeRoad);
+                //throw new Exception("Should not try build road which he cant build");
             }
         }
 
@@ -113,9 +139,13 @@ namespace AIEasy
             {
                 case EGameState.StateFirstTown :
                     BuildTown(15);
+                    BuildTown(18);
+                    BuildTown(22);
                     break;
                 case EGameState.StateSecondTown :
                     BuildTown(35);
+                    BuildTown(11);
+                    BuildTown(45);
                     break;
                 case EGameState.StateGame :
                     decisionTree.SolveAI();

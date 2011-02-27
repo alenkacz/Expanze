@@ -18,6 +18,8 @@ namespace CorePlugin
         RoadBuildError CanBuildRoad();
         IRoad Build();
 
+        bool GetIsBuild();
         int GetRoadID();
+        ITown[] GetITown();
     }
 }

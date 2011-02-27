@@ -195,7 +195,7 @@ namespace Expanze
             {
                 if (road != null)
                 {
-                    if (road.getOwner() == player)
+                    if (road.GetOwner() == player)
                         return true;
                 }
             }
@@ -277,16 +277,17 @@ namespace Expanze
                 Player activePlayer = gm.GetActivePlayer();
                 Boolean hasActivePlayerRoadNeighbour = false;
 
-                foreach (RoadModel road in roadNeighbour)
-                {
-                    if (road != null && road.getOwner() == activePlayer)
-                        hasActivePlayerRoadNeighbour = true;
-                }
-
                 if (isBuild)
                     return TownBuildError.AlreadyBuild;
                 if (HasTownBuildNeighbour())
                     return TownBuildError.OtherTownIsClose;
+
+                foreach (RoadModel road in roadNeighbour)
+                {
+                    if (road != null && road.GetOwner() == activePlayer)
+                        hasActivePlayerRoadNeighbour = true;
+                }
+
                 if (!Settings.costTown.HasPlayerSources(activePlayer))
                     return TownBuildError.NoSources;
                 if (!hasActivePlayerRoadNeighbour)
