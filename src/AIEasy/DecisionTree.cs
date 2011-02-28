@@ -67,7 +67,8 @@ namespace AIEasy
         {
             ActionNode actionBuildRoad = new ActionNode(() => ai.BuildRoad(activeRoad), this);
             HaveSourcesNode hasSourcesForRoad = new HaveSourcesNode(actionBuildRoad, EA, PriceKind.BRoad, map);
-            ForEachRoadNode localRoot = new ForEachRoadNode(hasSourcesForRoad, falseNode, this);
+            DecisionBinaryNode hasFreeTownPlace = new DecisionBinaryNode(hasSourcesForRoad, EA, () => { return ai.GetFreeTownPlaces().Count == 0; });
+            ForEachRoadNode localRoot = new ForEachRoadNode(hasFreeTownPlace, falseNode, this);
 
             return localRoot;
         }
@@ -80,7 +81,13 @@ namespace AIEasy
         public ITown GetActiveTown() { return activeTown; }
         public void SetActiveRoad(IRoad road) { activeRoad = road; }
         public IRoad GetActiveRoad() { return activeRoad; }
-
+        public void SetActiveObject(Object o)
+        {
+            if (o is ITown)
+                SetActiveTown((ITown)o);
+            else if (o is IRoad)
+                SetActiveRoad((IRoad)o);
+        }
         public void SetActivePosInTown(byte pos) { activeTownPos = pos; }
 
         public void SolveAI()

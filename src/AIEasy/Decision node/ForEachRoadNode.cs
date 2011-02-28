@@ -22,6 +22,27 @@ namespace AIEasy
 
             /// Order roads according desirability
 
+            float maxFitness = -0.1f;
+            IRoad maxObject = null;
+
+            float tempFitness;
+
+            foreach (IRoad r in roads)
+            {
+                tempFitness = Fitness.GetFitness(r);
+                if (tempFitness > maxFitness)
+                {
+                    maxFitness = tempFitness;
+                    maxObject = r;
+                }
+            }
+
+            ///
+
+            tree.SetActiveRoad(maxObject);
+            trueNode.Execute();
+
+            /*
             foreach (IRoad road in roads)
             {
                 tree.SetActiveRoad(road);
@@ -30,6 +51,7 @@ namespace AIEasy
                 if (tree.GetWasAction())
                     return;
             }
+            */
 
             falseNode.Execute();
         }

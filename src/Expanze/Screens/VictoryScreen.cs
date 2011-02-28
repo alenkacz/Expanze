@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework;
 using System;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 #endregion
 
 namespace Expanze
@@ -164,7 +165,18 @@ namespace Expanze
                 spriteBatch.Begin();
                 spriteBatch.DrawString(font, message, textPosition, color);
                 font = GameResources.Inst().GetFont(EFont.MedievalMedium);
-                foreach(Player player in GameMaster.Inst().GetPlayers()) {
+
+                Player[] players = new Player[GameMaster.Inst().GetPlayers().Count];
+                GameMaster.Inst().GetPlayers().CopyTo(players);
+
+                Array.Sort(players, delegate(Player p1, Player p2)
+                {
+                    return p1.GetPoints().CompareTo(p2.GetPoints()); // (user1.Age - user2.Age)
+                });
+                Array.Reverse(players);
+
+
+                foreach(Player player in players) {
                     spriteBatch.Draw(GameResources.Inst().GetHudTexture(HUDTexture.PlayerColor), new Vector2(startX + 20, startY), player.GetColor());
                     spriteBatch.DrawString(font, player.GetName(), new Vector2(startX + 140, startY), color);
                     if(player.GetIsAI())

@@ -36,6 +36,8 @@ namespace AIEasy
                 for(byte loop1 = 0; loop1 < 3; loop1++)
                 {
                     tempRoad = town1.GetIRoad(loop1);
+                    if (tempRoad == null)
+                        break;
                     foreach(ITown town2 in tempRoad.GetITown())
                     {
                         fitness += GetFitness(town2) / 2.0f;
