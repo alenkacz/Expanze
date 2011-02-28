@@ -29,6 +29,7 @@ namespace AIEasy
         public void InitAIComponent(IMapController mapController)
         {
             this.mapController = mapController;
+            Fitness.SetMapController(mapController, this);
 
             freeTownPlaces = new List<ITown>();
             towns = new List<ITown>();
@@ -108,9 +109,7 @@ namespace AIEasy
                         }
                     }
 
-                    TownBuildError error = town.CanBuildTown();
-                    if(error != TownBuildError.OtherTownIsClose &&
-                       error != TownBuildError.AlreadyBuild)
+                    if(town.IsPossibleToBuildTown())
                         freeTownPlaces.Add(town);
                 }
                 // add townPlace and roadPlace
@@ -138,19 +137,36 @@ namespace AIEasy
             switch (mapController.GetState())
             {
                 case EGameState.StateFirstTown :
-                    BuildTown(15);
-                    BuildTown(18);
-                    BuildTown(22);
+                    BuildTown(GetBestTownPlace());
                     break;
                 case EGameState.StateSecondTown :
-                    BuildTown(35);
-                    BuildTown(11);
-                    BuildTown(45);
+                    BuildTown(GetBestTownPlace());
                     break;
                 case EGameState.StateGame :
                     decisionTree.SolveAI();
                     break;
             }
+        }
+
+        private int GetBestTownPlace()
+        {
+            float tempFitness;
+            float maxFitness = -0.1f;
+            int maxTownID = -1;
+            
+            ITown town;
+
+            for (int loop1 = 1; loop1 <= mapController.GetMaxTownID(); loop1++)
+            {
+                town = mapController.GetITownByID(loop1);
+                if ((tempFitness = Fitness.GetFitness(town)) > maxFitness)
+                {
+                    maxFitness = tempFitness;
+                    maxTownID = town.GetTownID();
+                }
+            }
+
+            return maxTownID;
         }
 
         public IComponentAI Clone()

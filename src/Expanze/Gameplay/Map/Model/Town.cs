@@ -269,6 +269,16 @@ namespace Expanze
             return BuildingBuildError.NoSources;
         }
 
+        public bool IsPossibleToBuildTown()
+        {
+            if (isBuild)
+                return false;
+            if (HasTownBuildNeighbour())
+                return false;
+
+            return true;
+        }
+
         public TownBuildError CanBuildTown()
         {
             GameMaster gm = GameMaster.Inst();

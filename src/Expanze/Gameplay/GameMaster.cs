@@ -207,7 +207,12 @@ namespace Expanze
             {
                 Player player = GameMaster.Inst().GetActivePlayer();
                 player.SetActive(false);
-                Logger.Inst().Log(ai.GetAIName() + ".txt", exception.Message + " : from : " + exception.Source);
+                String log = exception.Message + " : from : " + exception.Source + System.Environment.NewLine +
+                             exception.HelpLink + System.Environment.NewLine +
+                             exception.StackTrace + System.Environment.NewLine +
+                             exception.TargetSite + System.Environment.NewLine +
+                             exception.InnerException;
+                Logger.Inst().Log(ai.GetAIName() + ".txt", log);
                 Message.Inst().Show(Strings.GAME_ALERT_TITLE_AI_EXCEPTION, player.GetName() + " " + Strings.GAME_ALERT_DESCRIPTION_AI_EXCEPTION, GameResources.Inst().GetHudTexture(HUDTexture.IconTown));
             }
         }

@@ -14,6 +14,13 @@ namespace CorePlugin
         TownBuildError CanBuildTown();
         ITown Build();
 
+        /// <summary>
+        /// Controls if is there town already or if another
+        /// town is too close.
+        /// </summary>
+        /// <returns>True if place is free to build town.</returns>
+        bool IsPossibleToBuildTown();
+
         bool BuildSourceBuilding(byte pos);
         IFort BuildFort(byte pos);
         IMonastery BuildMonastery(byte pos);
