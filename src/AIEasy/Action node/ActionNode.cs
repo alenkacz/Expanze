@@ -17,9 +17,8 @@ namespace AIEasy
         }
 
         public virtual void Execute()
-        {
-            action();
-            tree.SetWasAction(true);
+        {        
+            tree.SetWasAction(action());
         }
     }
 }

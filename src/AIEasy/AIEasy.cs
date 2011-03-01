@@ -42,9 +42,10 @@ namespace AIEasy
             decisionTree = new DecisionTree(mapController, this);
         }
 
-        public void EmptyLeave()
+        public bool EmptyLeave()
         {
             /// should be used another leave/node
+            return false;
         }
 
         public List<ITown> GetFreeTownPlaces() { return freeTownPlaces; }
@@ -57,7 +58,7 @@ namespace AIEasy
         }
 
 
-        public void BuildTown(int ID)
+        public bool BuildTown(int ID)
         {
             ITown town;
             IRoad road;
@@ -83,14 +84,16 @@ namespace AIEasy
                         }
                     }
                 }
+                return true;
             }
             else
             {
                 freeTownPlaces.Remove(town);
+                return false;
             }
         }
 
-        internal void BuildRoad(IRoad activeRoad)
+        internal bool BuildRoad(IRoad activeRoad)
         {
             if (activeRoad.Build() != null)
             {
@@ -112,16 +115,16 @@ namespace AIEasy
                     if(town.IsPossibleToBuildTown())
                         freeTownPlaces.Add(town);
                 }
-                // add townPlace and roadPlace
+                return true;
             }
             else
             {
                 freeRoadPlaces.Remove(activeRoad);
-                //throw new Exception("Should not try build road which he cant build");
+                return false;
             }
         }
 
-        internal void BuildSourceBuilding(ITown activeTown, byte activeTownPos)
+        internal bool BuildSourceBuilding(ITown activeTown, byte activeTownPos)
         {
             if (activeTown.BuildSourceBuilding(activeTownPos))
             {
@@ -129,7 +132,10 @@ namespace AIEasy
 
                 int amount = activeTown.GetIHexa(activeTownPos).GetStartSource();
                 sourceNormal[(int) (activeTown.GetIHexa(activeTownPos).GetKind())] += amount;
+
+                return true;
             }
+            return false;
         }
 
         public void ResolveAI()

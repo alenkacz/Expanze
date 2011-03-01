@@ -8,7 +8,7 @@ namespace AIEasy
 {
     delegate bool Condition();
     delegate PriceKind GetPrice();
-    delegate void Action();
+    delegate bool Action();
 
     public interface ITreeNode
     {
