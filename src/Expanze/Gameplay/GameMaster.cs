@@ -212,7 +212,7 @@ namespace Expanze
                              exception.StackTrace + System.Environment.NewLine +
                              exception.TargetSite + System.Environment.NewLine +
                              exception.InnerException;
-                Logger.Inst().Log(ai.GetAIName() + ".txt", log);
+                Logger.Inst().Log(ai.GetAIName() + "_" + player.GetName() + ".txt", log);
                 Message.Inst().Show(Strings.GAME_ALERT_TITLE_AI_EXCEPTION, player.GetName() + " " + Strings.GAME_ALERT_DESCRIPTION_AI_EXCEPTION, GameResources.Inst().GetHudTexture(HUDTexture.IconTown));
             }
         }

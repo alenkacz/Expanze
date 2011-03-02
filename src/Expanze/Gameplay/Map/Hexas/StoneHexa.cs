@@ -8,7 +8,7 @@ namespace Expanze
 {
     class StoneHexa : HexaModel
     {
-        public StoneHexa(int value) : base(value, HexaKind.Stone, Settings.costQuarry)
+        public StoneHexa(int value) : base(value, HexaKind.Stone, SourceKind.Stone, SourceBuildingKind.Quarry, Settings.costQuarry)
         {
         }
     }

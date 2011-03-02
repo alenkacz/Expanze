@@ -13,7 +13,7 @@ namespace Expanze
         public static Vector2 maximumResolution = new Vector2(1440,900);
 
         /// indexed by enum Types
-        public static String[] hexaSrcPath = new String[] { "Models/yellowhex", "Models/brownhex", "Models/greyhex", "Models/greenhex", "Models/redhex", "Models/orangehex", "Models/bluehex" };
+        public static String[] hexaSrcPath = new String[] { "Models/yellowhex", "Models/greenhex", "Models/greyhex", "Models/brownhex", "Models/redhex", "Models/orangehex", "Models/bluehex" };
 
         /// resources which get player on start
         public static SourceAll startResources = new SourceAll(100);
@@ -58,7 +58,7 @@ namespace Expanze
         public static SourceAll costMonasteryOre2 = new SourceAll(40, 0, 40, 0, 40);
 
         // goals
-        public static int[] winPoints = {50, 100, 150};
+        public static int[] winPoints = {50, 75, 100};
         public const int pointsTown = 5; /// points for new town
         public const int pointsRoad = 1; /// points for new road
         public const int pointsFort = 3; /// points for new fort

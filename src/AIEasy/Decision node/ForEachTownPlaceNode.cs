@@ -20,9 +20,9 @@ namespace AIEasy
         {
             List<ITown> towns = tree.GetAI().GetFreeTownPlaces();
 
-            foreach (ITown town in towns)
+            for(int loop1 = 0; loop1 < towns.Count; loop1++)
             {
-                tree.SetActiveTown(town);
+                tree.SetActiveTown(towns[loop1]);
                 trueNode.Execute();
 
                 if (tree.GetWasAction())

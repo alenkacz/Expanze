@@ -42,6 +42,8 @@ namespace Expanze
             source = new SourceAll(0);
             transactionSource = new SourceAll(0);
 
+            collectSourcesNormal = new SourceAll(0);
+
             buildingCount = new int[(int) Building.Count];
             for (int loop1 = 0; loop1 < (int)Building.Count; loop1++)
             {
@@ -184,7 +186,7 @@ namespace Expanze
             collectSourcesLastTurn += now;
         }
 
-        public SourceAll GetCollectSourcesNormal() { return collectSourcesNormal; }
+        public ISourceAll GetCollectSourcesNormal() { return collectSourcesNormal; }
         public SourceAll GetCollectSourcesLastTurn() { return collectSourcesLastTurn; }
 
         public void AddSources(SourceAll amount, TransactionState state)

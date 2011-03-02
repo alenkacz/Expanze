@@ -13,6 +13,7 @@ namespace CorePlugin
     public interface IHexa
     {
         HexaKind GetKind();
+        SourceKind GetSourceKind();
         int GetStartSource();
         int GetCurrentSource();
         ITown GetITown(TownPos townPos);

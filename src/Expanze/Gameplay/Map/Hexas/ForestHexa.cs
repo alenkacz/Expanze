@@ -8,7 +8,7 @@ namespace Expanze
 {
     class ForestHexa : HexaModel
     {
-        public ForestHexa(int value) : base(value, HexaKind.Forest, Settings.costSaw)
+        public ForestHexa(int value) : base(value, HexaKind.Forest, SourceKind.Wood, SourceBuildingKind.Saw, Settings.costSaw)
         {
         }
     }

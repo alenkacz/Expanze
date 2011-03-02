@@ -160,6 +160,19 @@ namespace Expanze
                    sourcePlayer.GetWood() >= wood;
         }
 
+        public int KindToInt(SourceKind kind)
+        {
+            switch (kind)
+            {
+                case SourceKind.Corn: return 0;
+                case SourceKind.Meat: return 1;
+                case SourceKind.Stone: return 2;
+                case SourceKind.Wood: return 3;
+                case SourceKind.Ore: return 4;
+            }
+            return -1;
+        }
+
         public SourceKind IntToKind(int index)
         {
             switch (index)

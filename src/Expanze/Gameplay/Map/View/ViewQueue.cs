@@ -33,7 +33,7 @@ namespace Expanze.Gameplay.Map
         Queue<ItemQueue> queue; /// queue of player actions
         MapView mapView; /// reference to map
 
-        private const int ENQUEUE_TIME = 150; /// Delay time between two actions
+        private const int ENQUEUE_TIME = 0; /// Delay time between two actions
         private int lastEnque;  /// how much time last to new enque from queue
 
         public ViewQueue(MapView mapView)

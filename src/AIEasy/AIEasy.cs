@@ -70,6 +70,7 @@ namespace AIEasy
                 towns.Add(town);
                 freeTownPlaces.Remove(town);
 
+
                 for (byte loop1 = 0; loop1 < 3; loop1++)
                 {
                     if (town.GetIHexa(loop1).GetKind() != HexaKind.Water && town.GetIHexa(loop1).GetKind() != HexaKind.Nothing)
@@ -88,13 +89,16 @@ namespace AIEasy
             }
             else
             {
-                freeTownPlaces.Remove(town);
+                freeTownPlaces.Remove(mapController.GetITownByID(ID));
                 return false;
             }
         }
 
         internal bool BuildRoad(IRoad activeRoad)
         {
+            if (activeRoad == null)
+                return false;
+
             if (activeRoad.Build() != null)
             {
                 freeRoadPlaces.Remove(activeRoad);

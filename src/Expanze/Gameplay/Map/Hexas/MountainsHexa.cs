@@ -8,7 +8,7 @@ namespace Expanze
 {
     class MountainsHexa : HexaModel
     {
-        public MountainsHexa(int value) : base(value, HexaKind.Mountains, Settings.costMine)
+        public MountainsHexa(int value) : base(value, HexaKind.Mountains, SourceKind.Ore, SourceBuildingKind.Mine, Settings.costMine)
         {
         }
     }

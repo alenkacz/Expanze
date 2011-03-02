@@ -35,7 +35,10 @@ namespace Expanze
         private static int hexaIDFort;     /// from which hexa are soldiers send to capturing/destroying hexas?
         SourceAll sourceBuildingCost;      /// source cost of building according hexa kind
 
-        private HexaKind kind = HexaKind.Water;
+        private HexaKind kind;
+        private SourceKind sourceKind;
+        private SourceBuildingKind buildingKind;
+
         private HexaModel[] hexaNeighbours;      /// neighbours of hexa, to index use RoadPos
         private TownModel[] towns;               /// possible towns on hexa, to index use Town Pos
         private Boolean[] townOwner;             /// was this town made by this hexa? if was, this hexa will draw it, handle picking, get sources...
@@ -44,18 +47,22 @@ namespace Expanze
 
 
 
-        public HexaModel() : this(0, HexaKind.Water, new SourceAll(0)) { }
+        public HexaModel() : this(0, HexaKind.Water, SourceKind.Null, SourceBuildingKind.Count, new SourceAll(0)) { }
 
-        public HexaModel(int value, HexaKind type, SourceAll sourceBuildingCost)
+        public HexaModel(int value, HexaKind kind, SourceKind sourceKind, SourceBuildingKind buildingKind,SourceAll sourceBuildingCost)
         {
-            if (type == HexaKind.Water)
+            if (kind == HexaKind.Water)
             {
                 this.hexaID = -1;
             } else
                 this.hexaID = ++counter;
 
             this.sourceBuildingCost = sourceBuildingCost;
-            this.kind = type;
+
+            this.kind = kind;
+            this.sourceKind = sourceKind;
+            this.buildingKind = buildingKind;
+
             this.startSource = value;
             this.towns = new TownModel[(int) TownPos.Count];
             this.roads = new RoadModel[(int)RoadPos.Count];
@@ -75,6 +82,10 @@ namespace Expanze
         public static void SetHexaIDFort(int hexaID) { hexaIDFort = hexaID; }
         public bool GetCaptured() { return captureIs; }
         public Player GetCapturedPlayer() { return capturePlayer; }
+
+        public HexaKind GetKind() { return this.kind; }
+        public SourceKind GetSourceKind() { return sourceKind; }
+        public SourceBuildingKind GetSourceBuildingKind() { return buildingKind; }
 
         public void Update(GameTime gameTime)
         {
@@ -489,11 +500,6 @@ namespace Expanze
                 multiply *= 0.5f;
 
             return (int) (startSource * multiply);
-        }
-
-        public HexaKind GetKind()
-        {
-            return this.kind;
         }
 
         public RoadModel GetRoad(RoadPos roadPos)

@@ -9,6 +9,7 @@ namespace CorePlugin
     {
         UpgradeKind GetMonasteryUpgrade(SourceBuildingKind kind);
         ISourceAll GetSource();
+        ISourceAll GetCollectSourcesNormal();
         String GetName();
     }
 }

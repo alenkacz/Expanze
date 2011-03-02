@@ -41,6 +41,7 @@ namespace CorePlugin
         /// <param name="index">Number to be transfered</param>
         /// <returns>Source kind according to index number</returns>
         SourceKind IntToKind(int index);
+        int KindToInt(SourceKind kind);
 
         Boolean HasPlayerSources(IPlayer player);
 

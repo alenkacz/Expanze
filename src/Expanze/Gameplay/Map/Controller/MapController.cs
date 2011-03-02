@@ -466,7 +466,7 @@ namespace Expanze.Gameplay.Map
 
             SourceAll source2 = (SourceAll)source;
             SourceAll delta = (SourceAll) player.GetSource() - source2;
-            SourceAll collectSources = player.GetCollectSourcesNormal();
+            SourceAll collectSources = (SourceAll) player.GetCollectSourcesNormal();
             SourceKind[] kindOrdered = collectSources.Order();
 
             int plusSources = 0;
@@ -507,8 +507,8 @@ namespace Expanze.Gameplay.Map
 
             Player player = GameMaster.Inst().GetActivePlayer();
 
-            if (source.HasPlayerSources(player))
-                return 0;
+            //if (source.HasPlayerSources(player))
+            //    return 0;
 
             SourceAll delta = (SourceAll) player.GetSource() - source2;
 
