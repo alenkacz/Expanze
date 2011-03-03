@@ -7,7 +7,7 @@ namespace AIEasy
 {
     class FakeActionNode : ActionNode
     {
-        public FakeActionNode(Action action, DecisionTree tree) : base(action, tree)
+        public FakeActionNode(DelAction action, DecisionTree tree) : base(action, tree)
         {
         }
 

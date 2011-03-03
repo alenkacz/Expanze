@@ -7,10 +7,10 @@ namespace AIEasy
 {
     class ActionNode : ITreeNode
     {
-        protected Action action;
+        protected DelAction action;
         protected DecisionTree tree;
 
-        public ActionNode(Action action, DecisionTree tree)
+        public ActionNode(DelAction action, DecisionTree tree)
         {
             this.action = action;
             this.tree = tree;
