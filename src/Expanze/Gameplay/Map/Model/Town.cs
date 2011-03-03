@@ -325,6 +325,7 @@ namespace Expanze
             {
                 case BuildingKind.SourceBuilding :
                     building[pos] = new SourceBuildingModel(playerOwner, townID, hexaNeighbour[pos].GetID());
+
                     switch (hexaNeighbour[pos].GetKind())
                     {
                         case HexaKind.Cornfield: playerOwner.AddBuilding(Building.Mill); break;

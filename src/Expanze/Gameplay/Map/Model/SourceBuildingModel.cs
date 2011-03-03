@@ -38,9 +38,34 @@ namespace Expanze.Gameplay
             int buildingPos = town.FindBuildingByHexaID(hexaID);
             HexaModel hexa = town.GetHexa(buildingPos);
 
+            SourceAll sourceNormal = new SourceAll(0);
+            int amountNormal = hexa.GetStartSource();
+            switch (hexa.GetKind())
+            {
+                case HexaKind.Forest:
+                    sourceNormal = new SourceAll(amountNormal, 0, 0, 0, 0);
+                    break;
 
-            upgrade1cost = new SourceAll(0, 0, 0, 0, 0);
-            upgrade2cost = new SourceAll(0, 0, 0, 0, 0);
+                case HexaKind.Stone:
+                    sourceNormal = new SourceAll(0, amountNormal, 0, 0, 0);
+                    break;
+
+                case HexaKind.Cornfield:
+                    sourceNormal = new SourceAll(0, 0, amountNormal, 0, 0);
+                    break;
+
+                case HexaKind.Pasture:
+                    sourceNormal = new SourceAll(0, 0, 0, amountNormal, 0);
+                    break;
+
+                case HexaKind.Mountains:
+                    sourceNormal = new SourceAll(0, 0, 0, 0, amountNormal);
+                    break;
+            }
+            playerOwner.AddCollectSources(sourceNormal, new SourceAll(0));
+
+            upgrade1cost = new SourceAll(0);
+            upgrade2cost = new SourceAll(0);
             switch (hexa.GetKind())
             {
                 case HexaKind.Mountains:

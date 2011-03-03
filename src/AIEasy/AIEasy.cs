@@ -64,6 +64,10 @@ namespace AIEasy
             IRoad road;
 
             town = mapController.BuildTown(ID);
+            if (town == null)
+            {
+                town = mapController.BuildTown(ID);
+            }
 
             if (town != null)
             {

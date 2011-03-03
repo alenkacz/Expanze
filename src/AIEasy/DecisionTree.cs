@@ -172,7 +172,7 @@ namespace AIEasy
                 case HexaKind.Cornfield: return PriceKind.BMill;
                 case HexaKind.Pasture: return PriceKind.BStepherd;
                 case HexaKind.Stone: return PriceKind.BQuarry;
-                case HexaKind.Forest: return PriceKind.BMill;
+                case HexaKind.Forest: return PriceKind.BSaw;
                 case HexaKind.Mountains: return PriceKind.BMine;
             }
 
