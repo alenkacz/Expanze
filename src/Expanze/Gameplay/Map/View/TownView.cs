@@ -116,6 +116,7 @@ namespace Expanze.Gameplay.Map
                     player = GameMaster.Inst().GetActivePlayer();
                 Vector3 color = player.GetColor().ToVector3();
 
+                int sum = 0;
                 foreach (ModelMesh mesh in m.Meshes)
                 {
                     foreach (BasicEffect effect in mesh.Effects)
@@ -163,7 +164,13 @@ namespace Expanze.Gameplay.Map
                     mesh.Draw();
 
                     a++;
+                    foreach (ModelMeshPart part in mesh.MeshParts)
+                    {
+                        sum += part.PrimitiveCount;
+                    }
                 }
+
+                sum++;
 
                 if (pickTownID == townID || (pickVars.pickActive && isBuildView))
                 {

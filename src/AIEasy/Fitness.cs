@@ -17,11 +17,6 @@ namespace AIEasy
             ai = aiEasy;
         }
 
-        public static float GetFitness(Object o)
-        {
-            return 0.0f;
-        }
-
         public static float GetFitness(IHexa hexa)
         {
             if (hexa == null)

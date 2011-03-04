@@ -67,7 +67,7 @@ namespace Expanze
 
         public void AddToPlayerCount(int i) { playerCount += i; }
 
-        public bool StartGame(bool isAI, Map map)
+        public bool StartGame(Map map)
         {
             this.map = map;
 
@@ -106,6 +106,10 @@ namespace Expanze
             hasBuiltTown = false;
 
             turnNumber = 0;
+
+            PromptWindow.Inst().Deactive();
+            Message.Inst().ClearMessages();
+            MarketComponent.Inst().SetIsActive(false);
 
             return true;
         }
@@ -332,7 +336,7 @@ namespace Expanze
             bool status = true;
             if (state == EGameState.StateGame)
             {
-                MarketComponent.Inst().setIsActive(false);
+                MarketComponent.Inst().SetIsActive(false);
             }
 
             if (playerCount == 1)

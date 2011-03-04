@@ -124,7 +124,6 @@ namespace Expanze
             GameState.CurrentMouseState = Mouse.GetState();
         }
 
-
         /// <summary>
         /// Helper for checking if a key was newly pressed during this update. The
         /// controllingPlayer parameter specifies which player to read input for.

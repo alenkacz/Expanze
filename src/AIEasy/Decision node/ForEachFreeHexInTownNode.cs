@@ -23,7 +23,7 @@ namespace AIEasy
 
             foreach (ITown town in towns)
             {
-                tree.SetActiveTown(town);
+                tree.SetActiveObject(town);
 
                 for (byte loop1 = 0; loop1 < 3; loop1++)
                 {

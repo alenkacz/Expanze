@@ -96,17 +96,11 @@ namespace AIEasy
         public void SetWasAction(bool action) { wasAction = action; }
         public bool GetWasAction() { return wasAction; }
 
-        public void SetActiveTown(ITown town) { activeTown = town; }
+        public void SetActiveObject(ITown town) { activeTown = town; }
         public ITown GetActiveTown() { return activeTown; }
-        public void SetActiveRoad(IRoad road) { activeRoad = road; }
+        public void SetActiveObject(IRoad road) { activeRoad = road; }
         public IRoad GetActiveRoad() { return activeRoad; }
-        public void SetActiveObject(Object o)
-        {
-            if (o is ITown)
-                SetActiveTown((ITown)o);
-            else if (o is IRoad)
-                SetActiveRoad((IRoad)o);
-        }
+
         public void SetActivePosInTown(byte pos) { activeTownPos = pos; }
 
         public void SolveAI()

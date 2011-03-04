@@ -34,8 +34,6 @@ namespace Expanze.Gameplay.Map
             //rotation = (hexaID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaID % 6));
             Matrix tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
 
-
-
             foreach (ModelMesh mesh in m.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)

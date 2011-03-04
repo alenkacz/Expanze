@@ -59,6 +59,11 @@ namespace Expanze
 
         public bool GetIsActive() {return messageActive != null;}
 
+        public void ClearMessages()
+        {
+            messageActive = null;
+            queue.Clear();
+        }
 
         private void NextMessage()
         {

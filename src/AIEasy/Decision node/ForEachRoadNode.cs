@@ -39,8 +39,11 @@ namespace AIEasy
 
             ///
 
-            tree.SetActiveRoad(maxObject);
+            tree.SetActiveObject(maxObject);
             trueNode.Execute();
+
+            if (tree.GetWasAction())
+                return;
 
             /*
             foreach (IRoad road in roads)

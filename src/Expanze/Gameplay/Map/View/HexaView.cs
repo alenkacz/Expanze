@@ -266,6 +266,7 @@ namespace Expanze
 
         public virtual void Draw(GameTime gameTime)
         {
+
             Model m = GameResources.Inst().GetHexaModel(kind);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
@@ -277,8 +278,6 @@ namespace Expanze
             Matrix rotation;
             rotation = (hexaID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaID % 6));
             Matrix tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
-
-
 
             foreach (ModelMesh mesh in m.Meshes)
             {

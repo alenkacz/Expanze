@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using CorePlugin;
+using Expanze.Gameplay;
 
 namespace Expanze
 {
@@ -34,6 +35,8 @@ namespace Expanze
         List<IFort> fort;
 
         IComponentAI componentAI;   // is null if player is NOT controled by computer but is controled by human
+
+        private Statistic statistic;
 
         public Player(String name, Color color, IComponentAI componentAI)
         {
@@ -72,6 +75,8 @@ namespace Expanze
             monastery = new List<IMonastery>();
             market = new List<IMarket>();
             fort = new List<IFort>();
+
+            statistic = new Statistic();
         }
 
         public int GetBuildingCount(Building building) { return buildingCount[(int)building]; }
@@ -81,11 +86,18 @@ namespace Expanze
         public bool GetActive() { return active; }
         public UpgradeKind GetMonasteryUpgrade(SourceBuildingKind kind) { return upgradeMonastery[(int)kind]; }
         public LicenceKind GetMarketLicence(SourceKind kind) { return licenceMarket[(int)kind]; }
+        public Statistic GetStatistic() { return statistic; }
 
         public void AddBuilding(Building building)
         {
             buildingCount[(int)building]++;
             GameMaster.Inst().PlayerWantMedail(this, building);
+
+            int turn = GameMaster.Inst().GetTurnNumber();
+            switch (building)
+            {
+                case Building.Town: statistic.AddStat(Statistic.Kind.Towns, 1, turn); break;
+            }
         }
 
         public void AddMarket(IMarket m)
@@ -112,6 +124,7 @@ namespace Expanze
 
         public void AddPoints(int add) { 
             points += add;
+            statistic.AddStat(Statistic.Kind.Points, add, GameMaster.Inst().GetTurnNumber());
             GameMaster.Inst().CheckWinner(this);
         }
 

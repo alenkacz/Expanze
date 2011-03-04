@@ -27,7 +27,7 @@ namespace AIEasy
 
             foreach (Object o in objectList)
             {
-                tempFitness = Fitness.GetFitness(o);
+                tempFitness = 0.0f; // Fitness.GetFitness(o);
                 if (tempFitness > maxFitness)
                 {
                     maxFitness = tempFitness;
@@ -35,7 +35,7 @@ namespace AIEasy
                 }
             }
 
-            tree.SetActiveObject(maxObject);
+            //tree.SetActiveObject(maxObject);
 
             return branch;
         }

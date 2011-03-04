@@ -67,7 +67,7 @@ namespace Expanze
             return isActive;
         }
 
-        public void setIsActive(bool active)
+        public void SetIsActive(bool active)
         {
             if (active)
             {
@@ -312,7 +312,7 @@ namespace Expanze
         /// </summary>
         void CloseButtonAction(object sender, PlayerIndexEventArgs e)
         {
-            setIsActive(false);
+            SetIsActive(false);
         }
 
         #endregion
@@ -350,7 +350,7 @@ namespace Expanze
             marketSlider.Update(gameTime);
 
             if (InputManager.Inst().GetGameAction("gamemarket", "close").IsPressed())
-                MarketComponent.Inst().setIsActive(false);
+                MarketComponent.Inst().SetIsActive(false);
 
             if (InputManager.Inst().GetGameAction("gamemarket", "ok").IsPressed())
                 ChangeMaterial();

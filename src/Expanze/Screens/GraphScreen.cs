@@ -1,4 +1,4 @@
-#region File Description
+ï»¿#region File Description
 //-----------------------------------------------------------------------------
 // PauseMenuScreen.cs
 //
@@ -13,6 +13,8 @@ using System;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using Expanze.Utils;
+using Expanze.Gameplay;
 #endregion
 
 namespace Expanze
@@ -21,18 +23,15 @@ namespace Expanze
     /// The pause menu comes up over the top of the game,
     /// giving the player options to resume or quit.
     /// </summary>
-    class VictoryScreen : GameScreen
+    class GraphScreen : GameScreen
     {
         #region Fields
 
         bool userCancelled;
 
-        bool firstTimeHandleInput;
-        bool wasMousePressedWhenVictory;
-
-        ScreenManager screenManager;
-
         GameScreen[] screensToLoad;
+        ScreenManager screenManager;
+        PrimitiveBatch primitiveBatch;
 
         #endregion
 
@@ -43,13 +42,13 @@ namespace Expanze
         /// The constructor is private: loading screens should
         /// be activated via the static Load method instead.
         /// </summary>
-        private VictoryScreen(ScreenManager screenManager,
+        private GraphScreen(ScreenManager screenManager,
                               GameScreen[] screensToLoad)
         {
             this.userCancelled = false;
-            firstTimeHandleInput = true;
             this.screensToLoad = screensToLoad;
             this.screenManager = screenManager;
+            this.primitiveBatch = new PrimitiveBatch(screenManager.GraphicsDevice);
         }
 
 
@@ -65,7 +64,7 @@ namespace Expanze
                 screen.ExitScreen();
 
             // Create and activate the loading screen.
-            VictoryScreen loadingScreen = new VictoryScreen(screenManager,
+            GraphScreen loadingScreen = new GraphScreen(screenManager,
                                                             screensToLoad);
 
             screenManager.AddScreen(loadingScreen, controllingPlayer);
@@ -88,33 +87,15 @@ namespace Expanze
             // Look up inputs for the active player profile.
             int playerIndex = (int)ControllingPlayer.Value;
 
-            MouseState mouseState = input.CurrentMouseState;
+            PlayerIndex index;
 
-            if (firstTimeHandleInput)
+            if (input.IsNewKeyPress(Keys.Tab, null, out index) || 
+                input.IsNewKeyPress(Keys.Enter, null, out index) ||
+                input.IsNewKeyPress(Keys.Escape, null, out index) ||
+                input.IsNewLeftMouseButtonPressed())
             {
-                wasMousePressedWhenVictory = Mouse.GetState().LeftButton == ButtonState.Pressed;
-                firstTimeHandleInput = false;
                 InputState.waitForRelease();
-            }
-            else
-            {
-                if (Mouse.GetState().LeftButton == ButtonState.Released)
-                    wasMousePressedWhenVictory = false;
-
-                PlayerIndex index;
-
-                if (input.IsNewKeyPress(Keys.Tab, null, out index))
-                {
-                    GraphScreen.Load(screenManager, false, ControllingPlayer, new GameScreen[] {this});
-                }
-
-                if (input.IsNewKeyPress(Keys.Escape, null, out index) || 
-                    input.IsNewKeyPress(Keys.Enter, null, out index) || 
-                    (input.IsNewLeftMouseButtonPressed() && !wasMousePressedWhenVictory && !firstTimeHandleInput))
-                {
-                    InputState.waitForRelease();
-                    userCancelled = true;
-                }
+                userCancelled = true;
             }
         }
 
@@ -138,7 +119,7 @@ namespace Expanze
                         ScreenManager.AddScreen(screen, ControllingPlayer);
                     }
                 }
-
+                InputState.waitForRelease();
                 // Once the load has finished, we use ResetElapsedTime to tell
                 // the  game timing mechanism that we have just finished a very
                 // long frame, and that it should not try to catch up.
@@ -155,51 +136,71 @@ namespace Expanze
         {
 
 
-                SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
-                SpriteFont font;
+            SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
+            SpriteFont font;
 
-                String message = "Vítìzství! A prohra jiného v " + GameMaster.Inst().GetTurnNumber() +". kole.";
+            String message = "Grafy";
 
-                // Center the text in the viewport.
-                font = GameResources.Inst().GetFont(EFont.MedievalBig);
-                Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
-                Vector2 viewportSize = new Vector2(viewport.Width, viewport.Height);
-                Vector2 textSize = font.MeasureString(message);
-                Vector2 textPosition = (viewportSize - textSize) / 2;
+            // Center the text in the viewport.
+            font = GameResources.Inst().GetFont(EFont.MedievalBig);
+            Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
+            Vector2 viewportSize = new Vector2(viewport.Width, viewport.Height);
+            Vector2 textSize = font.MeasureString(message);
+            Vector2 textPosition = (viewportSize - textSize) / 2;
 
-                Color color = Color.White * TransitionAlpha;
+            Color color = Color.White * TransitionAlpha;
 
-                textPosition.Y -= 150;
-                int startY = (int) textPosition.Y + 70;
-                int startX = 100;
-                
-                // Draw the text.
-                spriteBatch.Begin();
-                spriteBatch.DrawString(font, message, textPosition, color);
-                font = GameResources.Inst().GetFont(EFont.MedievalMedium);
+            textPosition.Y -= 150;
+            int startY = (int)textPosition.Y + 70;
+            int startX = 100;
 
-                Player[] players = new Player[GameMaster.Inst().GetPlayers().Count];
-                GameMaster.Inst().GetPlayers().CopyTo(players);
+            // Draw the text.
+            spriteBatch.Begin();
+            spriteBatch.DrawString(font, message, textPosition, color);
+            spriteBatch.End();
 
-                Array.Sort(players, delegate(Player p1, Player p2)
-                {
-                    return p1.GetPoints().CompareTo(p2.GetPoints()); // (user1.Age - user2.Age)
-                });
-                Array.Reverse(players);
-
-
-                foreach(Player player in players) {
-                    spriteBatch.Draw(GameResources.Inst().GetHudTexture(HUDTexture.PlayerColor), new Vector2(startX + 20, startY), player.GetColor());
-                    spriteBatch.DrawString(font, player.GetName(), new Vector2(startX + 140, startY), color);
-                    if(player.GetIsAI())
-                        spriteBatch.DrawString(font, player.GetComponentAI().GetAIName(), new Vector2(startX + 450, startY), color);
-                    spriteBatch.DrawString(font, player.GetPoints() + "", new Vector2(startX + 80, startY), color);
-                    startY += 50;
-                }
-                spriteBatch.End();
-            
+            DrawGraph(Statistic.Kind.Points);
         }
 
+        private void DrawGraph(Statistic.Kind kind)
+        {
+            List<Player> players = GameMaster.Inst().GetPlayers();
+
+            Color c;
+            int[][] statistic;
+            int col = GameMaster.Inst().GetTurnNumber();
+            int sum;
+            int k = (int) kind;
+
+            float windowWidth = screenManager.GraphicsDevice.Viewport.Width;
+            float windowHeight = screenManager.GraphicsDevice.Viewport.Height;
+
+            int row = 0;
+            foreach (Player player in players)
+            {
+                sum = 0;
+                statistic = player.GetStatistic().GetStat();
+                for (int loop1 = 0; loop1 < col; loop1++)
+                {
+                    sum += statistic[k][loop1];
+                }
+                if (sum > row)
+                    row = sum;
+            }
+            foreach (Player player in players)
+            {
+                c = player.GetColor();
+                sum = 0;
+                statistic = player.GetStatistic().GetStat();
+                primitiveBatch.Begin(PrimitiveType.LineStrip);
+                for (int loop1 = 0; loop1 < col; loop1++)
+                {
+                    sum += statistic[k][loop1];
+                    primitiveBatch.AddVertex(new Vector2(30.0f + loop1 * (windowWidth - 60.0f) / (float)col, windowHeight - 30.0f - sum * (windowHeight - 60.0f) / (float)row), c);
+                }
+                primitiveBatch.End();
+            }
+        }
 
         #endregion
     }

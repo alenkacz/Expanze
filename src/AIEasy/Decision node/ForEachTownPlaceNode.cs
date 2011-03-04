@@ -22,7 +22,7 @@ namespace AIEasy
 
             for(int loop1 = 0; loop1 < towns.Count; loop1++)
             {
-                tree.SetActiveTown(towns[loop1]);
+                tree.SetActiveObject(towns[loop1]);
                 trueNode.Execute();
 
                 if (tree.GetWasAction())
