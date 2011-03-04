@@ -122,15 +122,17 @@ namespace Expanze
                 posMiddleDraw.X += middleSize;
             }
 
-            Vector2 positionScore = new Vector2(positionTotalPoints.X - font.MeasureString(gMaster.GetActivePlayer().GetPoints().ToString()).X, positionTotalPoints.Y);
+            Player player = gMaster.GetTargetPlayer();
+
+            Vector2 positionScore = new Vector2(positionTotalPoints.X - font.MeasureString(player.GetPoints().ToString()).X, positionTotalPoints.Y);
 
             // draw texts
-            spriteBatch.DrawString(font, gMaster.GetActivePlayer().GetName(), positionName, Color.White);
-            spriteBatch.DrawString(font, gMaster.GetActivePlayer().GetPoints().ToString(), positionScore, Color.White);
+            spriteBatch.DrawString(font, player.GetName(), positionName, Color.White);
+            spriteBatch.DrawString(font, player.GetPoints().ToString(), positionScore, Color.White);
             spriteBatch.DrawString(font, " / " + GameMaster.Inst().GetGameSettings().getPoints(), positionTotalPoints, Color.White);
 
             // draw player color
-            spriteBatch.Draw(textureColor, positionColor, gMaster.GetActivePlayer().GetColor());
+            spriteBatch.Draw(textureColor, positionColor, player.GetColor());
 
             //draw medal
             spriteBatch.Draw(textureMedaile, new Vector2(positionScore.X - medalWidth - space,positionScore.Y), Color.White);

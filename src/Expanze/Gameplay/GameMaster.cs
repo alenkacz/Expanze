@@ -23,6 +23,8 @@ namespace Expanze
         private Player[] medailOwner;
 
         private Player activePlayer;
+        private Player targetPlayer;
+
         private int activePlayerIndex;
         private EGameState state;
         private EFortState fortState;
@@ -89,6 +91,7 @@ namespace Expanze
             
             activePlayerIndex = 0;
             activePlayer = players.ElementAt(activePlayerIndex);
+            targetPlayer = activePlayer;
 
             pausedNew = false;
             paused = false;
@@ -245,6 +248,8 @@ namespace Expanze
 
         public bool GetHasBuiltTown() { return hasBuiltTown; }
         public Player GetActivePlayer() { return activePlayer; }
+        public Player GetTargetPlayer() { return targetPlayer; }
+        public void SetTargetPlayer(Player p) { targetPlayer = p; }
         public int GetPlayerCount() { return players.Count; }
         public Player GetPlayer(int index) { return players[index]; }
         public Player GetPlayer(String playerName)
@@ -337,6 +342,8 @@ namespace Expanze
             }
 
             status &= ChangeActivePlayer();
+            targetPlayer = activePlayer;
+
             hasBuiltTown = false;
 
             status &= StartTurn();
@@ -555,7 +562,7 @@ namespace Expanze
             spriteBatch.Begin();
             for (int loop1 = 0; loop1 < medailOwner.Length; loop1++)
             {
-                if (medailOwner[loop1] == activePlayer)
+                if (medailOwner[loop1] == targetPlayer)
                 {
                     spriteBatch.Draw(GetMedaileIcon((Building) loop1), medailPosition, Color.White);
                     medailPosition += new Vector2(0.0f, 85.0f);

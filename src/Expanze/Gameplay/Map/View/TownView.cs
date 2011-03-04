@@ -218,9 +218,15 @@ namespace Expanze.Gameplay.Map
                 if (model.GetIsBuild() && GameMaster.Inst().GetState() == EGameState.StateGame)
                 {
                     if (pickTownID == townID)
+                    {
+                        gm.SetTargetPlayer(gm.GetActivePlayer());
                         pickTownID = -1;
+                    }
                     else
+                    {
+                        gm.SetTargetPlayer(model.GetPlayerOwner());
                         pickTownID = townID;
+                    }
                 }
                 else
                 {
