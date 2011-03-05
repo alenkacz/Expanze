@@ -140,7 +140,7 @@ namespace Expanze
                     break;
             }
 
-            
+            pointsForMedail = 5;
 
             if((medailOwner[(int) medal] == null && player.GetBuildingCount(medal) >= minCount) ||
                (medailOwner[(int) medal] != null && player.GetBuildingCount(medal) > medailOwner[(int) medal].GetBuildingCount(medal)))
@@ -148,8 +148,10 @@ namespace Expanze
                 if (medailOwner[(int)medal] != null)
                 {
                     medailOwner[(int)medal].AddPoints(-pointsForMedail);
+                    medailOwner[(int)medal].GetStatistic().AddStat(Statistic.Kind.Medals, -1, turnNumber);
                 }
                 medailOwner[(int)medal] = player;
+                medailOwner[(int)medal].GetStatistic().AddStat(Statistic.Kind.Medals, 1, turnNumber);
                 player.AddPoints(pointsForMedail);
                 Message.Inst().Show(GetMedalTitle(medal),GetMedalDescription(medal),GetMedaileIcon(medal));
             }

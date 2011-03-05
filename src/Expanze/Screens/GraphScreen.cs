@@ -28,10 +28,17 @@ namespace Expanze
         #region Fields
 
         bool userCancelled;
+        int graphKind;
 
         GameScreen[] screensToLoad;
         ScreenManager screenManager;
         PrimitiveBatch primitiveBatch;
+
+        private const float border = 120.0f;
+        private float windowWidth;
+        private float windowHeight;
+        int columnNumber;
+        int rowNumber;
 
         #endregion
 
@@ -45,10 +52,15 @@ namespace Expanze
         private GraphScreen(ScreenManager screenManager,
                               GameScreen[] screensToLoad)
         {
+            graphKind = 0;
             this.userCancelled = false;
             this.screensToLoad = screensToLoad;
             this.screenManager = screenManager;
             this.primitiveBatch = new PrimitiveBatch(screenManager.GraphicsDevice);
+            windowWidth = screenManager.GraphicsDevice.Viewport.Width;
+            windowHeight = screenManager.GraphicsDevice.Viewport.Height;
+            columnNumber = GameMaster.Inst().GetTurnNumber();
+            SetRowNumber();
         }
 
 
@@ -61,7 +73,10 @@ namespace Expanze
         {
             // Tell all the current screens to transition off.
             foreach (GameScreen screen in screenManager.GetScreens())
-                screen.ExitScreen();
+            {
+                if(!(screen is BackgroundScreen))
+                     screen.ExitScreen();
+            }
 
             // Create and activate the loading screen.
             GraphScreen loadingScreen = new GraphScreen(screenManager,
@@ -88,6 +103,18 @@ namespace Expanze
             int playerIndex = (int)ControllingPlayer.Value;
 
             PlayerIndex index;
+
+            if (input.IsNewKeyPress(Keys.Left, null, out index))
+            {
+                graphKind--;
+                if (graphKind < 0)
+                    graphKind = (int)Statistic.Kind.Count - 1;
+                SetRowNumber();
+            } else if(input.IsNewKeyPress(Keys.Right, null, out index))
+            {
+                graphKind = (++graphKind) % (int) Statistic.Kind.Count;
+                SetRowNumber();
+            }
 
             if (input.IsNewKeyPress(Keys.Tab, null, out index) || 
                 input.IsNewKeyPress(Keys.Enter, null, out index) ||
@@ -137,29 +164,33 @@ namespace Expanze
 
 
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
-            SpriteFont font;
+            SpriteFont fontBig;
+            SpriteFont fontSmall;
 
-            String message = "Grafy";
+            String message = "Graf";
 
             // Center the text in the viewport.
-            font = GameResources.Inst().GetFont(EFont.MedievalBig);
+            fontBig = GameResources.Inst().GetFont(EFont.MedievalBig);
+            fontSmall = GameResources.Inst().GetFont(EFont.MedievalSmall);
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
             Vector2 viewportSize = new Vector2(viewport.Width, viewport.Height);
-            Vector2 textSize = font.MeasureString(message);
-            Vector2 textPosition = (viewportSize - textSize) / 2;
+            Vector2 textSize = fontBig.MeasureString(message);
+            Vector2 textPosition = (viewportSize - textSize) / 8;
 
             Color color = Color.White * TransitionAlpha;
 
-            textPosition.Y -= 150;
+            //textPosition.Y -= 150;
             int startY = (int)textPosition.Y + 70;
             int startX = 100;
 
             // Draw the text.
             spriteBatch.Begin();
-            spriteBatch.DrawString(font, message, textPosition, color);
+            spriteBatch.DrawString(fontBig, message, textPosition, color);
+            textPosition += new Vector2(40, 40);
+            spriteBatch.DrawString(fontSmall, Statistic.GetGraphName((Statistic.Kind)graphKind), textPosition, color);
             spriteBatch.End();
 
-            DrawGraph(Statistic.Kind.Points);
+            DrawGraph((Statistic.Kind) graphKind);
         }
 
         private void DrawGraph(Statistic.Kind kind)
@@ -168,40 +199,85 @@ namespace Expanze
 
             Color c;
             int[][] statistic;
-            int col = GameMaster.Inst().GetTurnNumber();
             int sum;
-            int k = (int) kind;
+            int k = (int)kind;
+           
+            int playerID = 0;
+            float offset = 1.0f;
 
-            float windowWidth = screenManager.GraphicsDevice.Viewport.Width;
-            float windowHeight = screenManager.GraphicsDevice.Viewport.Height;
-
-            int row = 0;
-            foreach (Player player in players)
-            {
-                sum = 0;
-                statistic = player.GetStatistic().GetStat();
-                for (int loop1 = 0; loop1 < col; loop1++)
-                {
-                    sum += statistic[k][loop1];
-                }
-                if (sum > row)
-                    row = sum;
-            }
             foreach (Player player in players)
             {
                 c = player.GetColor();
                 sum = 0;
                 statistic = player.GetStatistic().GetStat();
                 primitiveBatch.Begin(PrimitiveType.LineStrip);
-                for (int loop1 = 0; loop1 < col; loop1++)
+                primitiveBatch.AddVertex(new Vector2(playerID * offset + border + 0 * (windowWidth - border * 2) / (float)columnNumber, 
+                                                     windowHeight - border - sum * (windowHeight - border * 2) / (float)rowNumber), c);
+
+                for (int loop1 = 0; loop1 < columnNumber; loop1++)
                 {
                     sum += statistic[k][loop1];
-                    primitiveBatch.AddVertex(new Vector2(30.0f + loop1 * (windowWidth - 60.0f) / (float)col, windowHeight - 30.0f - sum * (windowHeight - 60.0f) / (float)row), c);
+                    float xbase = border + loop1 * (windowWidth - border * 2) / (float)columnNumber;
+                    float ybase = windowHeight - border;
+                    primitiveBatch.AddVertex(new Vector2(playerID * offset + xbase,
+                                                         ybase - sum * (windowHeight - border * 2) / (float)rowNumber), c);                  
                 }
+
                 primitiveBatch.End();
+                playerID++;
             }
+
+            DrawAxisNumbers();
         }
 
+        private void DrawAxisNumbers()
+        {
+            SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
+            SpriteFont font = GameResources.Inst().GetFont(EFont.HudMaterialsFont);
+
+            spriteBatch.Begin();
+            for (int loop1 = 0; loop1 < columnNumber + 1; loop1 += 5)
+            {
+                string number = loop1 + "";
+                Vector2 d = font.MeasureString(number);
+
+                float xbase = border + loop1 * (windowWidth - border * 2) / (float)columnNumber;
+                float ybase = windowHeight - border;
+
+                spriteBatch.DrawString(font, number, new Vector2(xbase - d.X / 2.0f, ybase + d.Y / 3.0f), Color.White);
+            }
+
+            for (int loop1 = 0; loop1 < rowNumber + 1; loop1 += rowNumber / 5 + 1)
+            {
+                float xbase = windowWidth - border;
+                float ybase = windowHeight - border  - loop1 * (windowHeight - border * 2) / (float)rowNumber;
+                string number = loop1 + "";
+                float dy = font.MeasureString(number).Y;
+                spriteBatch.DrawString(font, number, new Vector2(xbase, ybase - dy / 2), Color.White);
+            }
+            spriteBatch.End();
+        }
         #endregion
+
+        private void SetRowNumber()
+        {
+            int k = this.graphKind;
+            int sum;
+            int[][] statistic;
+
+            rowNumber = 0;
+            foreach (Player player in GameMaster.Inst().GetPlayers())
+            {
+                sum = 0;
+                statistic = player.GetStatistic().GetStat();
+                for (int loop1 = 0; loop1 < columnNumber; loop1++)
+                {
+                    sum += statistic[k][loop1];
+
+                    if (sum > rowNumber)
+                        rowNumber = sum;
+                }
+            }
+        }
     }
 }

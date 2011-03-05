@@ -68,6 +68,7 @@ namespace Expanze
             VictoryScreen loadingScreen = new VictoryScreen(screenManager,
                                                             screensToLoad);
 
+            screenManager.AddScreen(new BackgroundScreen(), controllingPlayer);
             screenManager.AddScreen(loadingScreen, controllingPlayer);
         }
 

@@ -49,6 +49,14 @@ namespace Expanze
         public static string MENU_CREATORS_ALENA = "Alena Varkočková - programátorka";
         public static string MENU_CREATORS_PAVLA = "Pavla Balíková - grafička";
 
+        public static string MENU_GRAPH_POINTS = "Počet bodů";
+        public static string MENU_GRAPH_TOWNS = "Počet měst";
+        public static string MENU_GRAPH_ROADS = "Počet cest";
+        public static string MENU_GRAPH_MEDALS = "Počet medailí";
+        public static string MENU_GRAPH_FORT = "Počet pevností";
+        public static string MENU_GRAPH_MONASTERY = "Počet klášterů";
+        public static string MENU_GRAPH_MARKET = "Počet tržišť"; 
+
         public static string GAME_SETTINGS_MAP_SIZE_SMALL = "Malá";
         public static string GAME_SETTINGS_MAP_SIZE_MEDIUM = "Střední";
         public static string GAME_SETTINGS_MAP_SIZE_BIG = "Velká";

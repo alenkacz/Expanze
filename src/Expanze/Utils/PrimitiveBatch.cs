@@ -209,12 +209,13 @@ namespace Expanze.Utils
 
             // submit the draw call to the graphics card
 
-            if (primitiveType != PrimitiveType.LineStrip)
-            {
-                device.DrawUserPrimitives<VertexPositionColor>(primitiveType, vertices, 0,
-                    primitiveCount);
-            } else
-                device.DrawUserPrimitives<VertexPositionColor>(PrimitiveType.LineStrip, vertices, 0, positionInBuffer - 1);
+            if(positionInBuffer >= 2)
+                if (primitiveType != PrimitiveType.LineStrip)
+                {
+                    device.DrawUserPrimitives<VertexPositionColor>(primitiveType, vertices, 0,
+                        primitiveCount);
+                } else
+                    device.DrawUserPrimitives<VertexPositionColor>(PrimitiveType.LineStrip, vertices, 0, positionInBuffer - 1);
 
             // now that we've drawn, it's ok to reset positionInBuffer back to zero,
             // and write over any vertices that may have been set previously.

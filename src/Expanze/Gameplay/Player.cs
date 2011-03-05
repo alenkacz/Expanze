@@ -97,6 +97,10 @@ namespace Expanze
             switch (building)
             {
                 case Building.Town: statistic.AddStat(Statistic.Kind.Towns, 1, turn); break;
+                case Building.Road: statistic.AddStat(Statistic.Kind.Roads, 1, turn); break;
+                case Building.Fort: statistic.AddStat(Statistic.Kind.Fort, 1, turn); break;
+                case Building.Monastery: statistic.AddStat(Statistic.Kind.Monastery, 1, turn); break;
+                case Building.Market: statistic.AddStat(Statistic.Kind.Market, 1, turn); break;
             }
         }
 

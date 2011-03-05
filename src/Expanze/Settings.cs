@@ -58,7 +58,7 @@ namespace Expanze
         public static SourceAll costMonasteryOre2 = new SourceAll(40, 0, 40, 0, 40);
 
         // goals
-        public static int[] winPoints = {10, 75, 100};
+        public static int[] winPoints = {50, 75, 100};
         public const int pointsTown = 5; /// points for new town
         public const int pointsRoad = 1; /// points for new road
         public const int pointsFort = 3; /// points for new fort

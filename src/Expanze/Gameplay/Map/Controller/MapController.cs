@@ -484,7 +484,7 @@ namespace Expanze.Gameplay.Map
                             if (plusSources > -delta[minus])
                             {
                                 ChangeSources(kindOrdered[plus], (SourceKind)minus, -delta[minus] * player.GetConversionRate(kindOrdered[plus]));
-                                delta[plus] -= delta[minus] * player.GetConversionRate(kindOrdered[plus]);
+                                delta[(int) kindOrdered[plus]] -= delta[minus] * player.GetConversionRate(kindOrdered[plus]);
                                 delta[minus] = 0;
                             }
                             else
