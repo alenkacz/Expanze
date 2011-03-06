@@ -119,11 +119,6 @@ namespace AIEasy
 
         public void AddActionSource(ActionSource action)
         {
-            if (map.CanChangeSourcesFor(map.GetPrice(action.GetPriceKind())) < 0)
-            {
-                int a = 5;
-                a++;
-            }
             action.SetSourceChange(map.CanChangeSourcesFor(map.GetPrice(action.GetPriceKind())));
             actionSource.Add(action);
         }
@@ -145,11 +140,6 @@ namespace AIEasy
                     }
                 }
 
-                if (map == null || bestAction == null)
-                {
-                    int a = 6;
-                    a++;
-                }
                 {
                     map.ChangeSourcesFor(map.GetPrice(bestAction.GetPriceKind()));
                     bestAction.GetAction()();

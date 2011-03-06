@@ -111,7 +111,7 @@ namespace Expanze.Gameplay.Map
 
                 int a = 0;
 
-                Player player = model.GetPlayerOwner();
+                Player player = model.GetOwner();
                 if (player == null)
                     player = GameMaster.Inst().GetActivePlayer();
                 Vector3 color = player.GetColor().ToVector3();
@@ -231,7 +231,7 @@ namespace Expanze.Gameplay.Map
                     }
                     else
                     {
-                        gm.SetTargetPlayer(model.GetPlayerOwner());
+                        gm.SetTargetPlayer(model.GetOwner());
                         pickTownID = townID;
                     }
                 }

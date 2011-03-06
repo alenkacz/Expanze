@@ -13,6 +13,7 @@ namespace CorePlugin
     {
         TownBuildError CanBuildTown();
         ITown Build();
+        IPlayer GetIOwner();
 
         /// <summary>
         /// Controls if is there town already or if another

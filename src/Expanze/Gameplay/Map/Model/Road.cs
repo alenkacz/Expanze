@@ -33,6 +33,7 @@ namespace Expanze
 
         public static int GetRoadCount() { return counter; }    // number of roads
         public Player GetOwner() { return playerOwner; }
+        public IPlayer GetIOwner() { return playerOwner; }
         public int GetRoadID() { return roadID; }
         public bool GetIsBuild() { return isBuild; }
         public ITown[] GetITown() { return neighbour; }
@@ -53,7 +54,7 @@ namespace Expanze
         {
             foreach (TownModel town in neighbour)
             {
-                if (town.HasPlayerRoadNeighbour(player) && (town.GetPlayerOwner() == player || !town.GetIsBuild()))
+                if (town.HasPlayerRoadNeighbour(player) && (town.GetOwner() == player || !town.GetIsBuild()))
                     return true;
             }
 
@@ -69,7 +70,7 @@ namespace Expanze
         {
             foreach(TownModel town in neighbour)
             {
-                if (town.GetPlayerOwner() == player)
+                if (town.GetOwner() == player)
                     return true;
             }
 

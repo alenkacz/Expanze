@@ -25,7 +25,8 @@ namespace Expanze
 
         public int GetTownID() { return townID; }
         public bool GetIsBuild() { return isBuild; }
-        public Player GetPlayerOwner() { return playerOwner; }
+        public Player GetOwner() { return playerOwner; }
+        public IPlayer GetIOwner() { return playerOwner; }
         public ISourceAll GetCost() { return Settings.costTown; }
         public IHexa GetIHexa(byte pos) { return GetHexa(pos); }
         public IRoad GetIRoad(byte pos) { return roadNeighbour[pos]; }

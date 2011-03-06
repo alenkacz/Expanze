@@ -201,7 +201,7 @@ namespace Expanze
                         {
                             tempTown = town.getTownModel();
                             if (tempTown.GetBuildingKind(hexaID) != BuildingKind.NoBuilding || 
-                                tempTown.GetPlayerOwner() == GameMaster.Inst().GetActivePlayer())
+                                tempTown.GetOwner() == GameMaster.Inst().GetActivePlayer())
                                 drawNumber = false;
                             break;
                         }
@@ -244,7 +244,7 @@ namespace Expanze
                 }
                 else if(GameMaster.Inst().GetFortState() == EFortState.Normal)
                 {
-                    if (tempTown.GetBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.GetPlayerOwner() == GameMaster.Inst().GetActivePlayer())
+                    if (tempTown.GetBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.GetOwner() == GameMaster.Inst().GetActivePlayer())
                     {
                         DrawHexaIcon(spriteBatch, posHexaIcon, HUDTexture.HammersPassive, HUDTexture.HammersActive);
                         DrawHexaNumber(spriteBatch, point2D);
@@ -372,7 +372,7 @@ namespace Expanze
                     {
                         if (a == roofID)
                         {
-                            Vector3 color = model.getTown((CorePlugin.TownPos)loop1).GetPlayerOwner().GetColor().ToVector3();
+                            Vector3 color = model.getTown((CorePlugin.TownPos)loop1).GetOwner().GetColor().ToVector3();
                             effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
                             effect.DiffuseColor = color * 0.6f;
                             effect.AmbientLightColor = color * 0.3f;
@@ -467,7 +467,7 @@ namespace Expanze
                                 switch (townView[loop1].getTownModel().GetBuildingKind(hexaID))
                                 {
                                     case BuildingKind.NoBuilding:
-                                        if (townView[loop1].getTownModel().GetPlayerOwner() == GameMaster.Inst().GetActivePlayer())
+                                        if (townView[loop1].getTownModel().GetOwner() == GameMaster.Inst().GetActivePlayer())
                                         {
                                             String titleWindow = "";
                                             String titleBuilding = "";
@@ -506,7 +506,7 @@ namespace Expanze
                                             }
 
                                             int townID = townView[loop1].getTownModel().GetTownID();
-                                            mod = (townView[loop1].getTownModel().GetPlayerOwner() == GameMaster.Inst().GetActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
+                                            mod = (townView[loop1].getTownModel().GetOwner() == GameMaster.Inst().GetActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
                                             PromptWindow.Inst().Show(mod, titleWindow, true);
                                             if (kind != HexaKind.Desert)
                                                 PromptWindow.Inst().AddPromptItem(
@@ -528,7 +528,7 @@ namespace Expanze
                                         break;
 
                                     default:
-                                        mod = (townView[loop1].getTownModel().GetPlayerOwner() == GameMaster.Inst().GetActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
+                                        mod = (townView[loop1].getTownModel().GetOwner() == GameMaster.Inst().GetActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
                                         townView[loop1].getTownModel().GetSpecialBuilding(hexaID).SetPromptWindow(mod);
                                         break;
                                 }

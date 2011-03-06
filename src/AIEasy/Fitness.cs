@@ -36,9 +36,29 @@ namespace AIEasy
 
             float fitness = 0.0f;
             IRoad tempRoad;
+            bool con;
+
             foreach (ITown town1 in road.GetITown())
             {
+                if (town1.GetIOwner() == map.GetPlayerMe())
+                    continue;
+
                 fitness += GetFitness(town1);
+
+                con = false;
+                for (byte loop1 = 0; loop1 < 3; loop1++)
+                {
+                    tempRoad = town1.GetIRoad(loop1);
+                    if (tempRoad != null &&
+                        tempRoad.GetIOwner() == map.GetPlayerMe())
+                    {
+                        con = true;
+                        break ;
+                    }
+                }
+                if (con)
+                    continue;
+
 
                 for(byte loop1 = 0; loop1 < 3; loop1++)
                 {
@@ -47,7 +67,7 @@ namespace AIEasy
                         break;
                     foreach(ITown town2 in tempRoad.GetITown())
                     {
-                        fitness += GetFitness(town2) / 2.0f;
+                        fitness += GetFitness(town2) / 2.5f;
                     }
                 }
             }

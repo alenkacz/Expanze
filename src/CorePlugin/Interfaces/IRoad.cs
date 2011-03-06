@@ -17,6 +17,7 @@ namespace CorePlugin
     {
         RoadBuildError CanBuildRoad();
         IRoad Build();
+        IPlayer GetIOwner();
 
         bool GetIsBuild();
         int GetRoadID();
