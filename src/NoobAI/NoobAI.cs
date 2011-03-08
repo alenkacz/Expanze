@@ -26,7 +26,7 @@ namespace NoobAI
 
         public String GetAIName()
         {
-            return "Noob AI";
+            return "AI primitivní";
         }
 
         public void InitAIComponent(IMapController mapController)
@@ -80,9 +80,9 @@ namespace NoobAI
                         }
                     }
                 }
-                //if (turn % 7 == 0)
-                //    if (hasFort)
-                //        myFort.ShowParade();
+                if (turn % 7 == 0)
+                    if (hasFort)
+                        myFort.ShowParade();
             }
         }
 
@@ -131,7 +131,7 @@ namespace NoobAI
                     hexa = town.GetIHexa(loop2);
                     hexaID = hexa.GetID();
 
-                    if (turn > 1500)
+                    if (turn > 10)
                     {
                         if (hexa.GetStartSource() <= 12)
                         {

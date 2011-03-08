@@ -483,15 +483,27 @@ namespace Expanze.Gameplay.Map
 
                             if (plusSources > -delta[minus])
                             {
-                                ChangeSources(kindOrdered[plus], (SourceKind)minus, -delta[minus] * player.GetConversionRate(kindOrdered[plus]));
-                                delta[(int) kindOrdered[plus]] -= delta[minus] * player.GetConversionRate(kindOrdered[plus]);
-                                delta[minus] = 0;
+                                if (ChangingSourcesError.OK == ChangeSources(kindOrdered[plus], (SourceKind)minus, -delta[minus] * player.GetConversionRate(kindOrdered[plus])))
+                                {
+                                    delta[(int)kindOrdered[plus]] += delta[minus] * player.GetConversionRate(kindOrdered[plus]);
+                                    delta[minus] = 0;
+                                }
+                                else
+                                {
+                                    throw new Exception("Clever changing sources is not as clever as developers thought.");
+                                }
                             }
                             else
                             {
-                                ChangeSources(kindOrdered[plus], (SourceKind)minus, plusSources * player.GetConversionRate(kindOrdered[plus]));
-                                delta[(int) kindOrdered[plus]] -= plusSources * player.GetConversionRate(kindOrdered[plus]);
-                                delta[minus] += plusSources;
+                                if (ChangingSourcesError.OK == ChangeSources(kindOrdered[plus], (SourceKind)minus, plusSources * player.GetConversionRate(kindOrdered[plus])))
+                                {
+                                    delta[(int)kindOrdered[plus]] -= plusSources * player.GetConversionRate(kindOrdered[plus]);
+                                    delta[minus] += plusSources;
+                                }
+                                else
+                                {
+                                    throw new Exception("Clever changing sources is not as clever as developers thought.");
+                                }
                             }
                         }
                     }

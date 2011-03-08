@@ -265,7 +265,7 @@ namespace Expanze
             int sum;
             int[][] statistic;
 
-            rowNumber = 1;
+            rowNumber = 2;
             foreach (Player player in GameMaster.Inst().GetPlayers())
             {
                 sum = 0;

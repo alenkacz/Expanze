@@ -451,6 +451,7 @@ namespace Expanze
                 frames = 0;
             }
 
+            /*
             if (gameTime.ElapsedGameTime.Milliseconds != 0)
             {
                 spriteBatch.Begin();
@@ -458,7 +459,7 @@ namespace Expanze
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), showFrames + " ", new Vector2(10, 10), Color.White);
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), InputManager.Inst().GetActiveState(), new Vector2(10, 60), Color.White);
                 spriteBatch.End();
-            }
+            }*/
 
             // If the game is transitioning on or off, fade it out to black.
             if (TransitionPosition > 0 || pauseAlpha > 0)

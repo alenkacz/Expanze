@@ -26,6 +26,18 @@ namespace AIEasy
 
             fitness = hexa.GetStartSource() / 24.0f;
 
+            /*
+             * Ore and stone is more useful than other sources 
+             */
+            if (hexa.GetKind() != HexaKind.Mountains &&
+               hexa.GetKind() != HexaKind.Stone)
+            {
+                fitness *= 0.95f;
+            }
+
+            if (hexa.GetKind() == HexaKind.Desert)
+                fitness = 0.2f;
+
             return fitness;
         }
 
@@ -43,8 +55,6 @@ namespace AIEasy
                 if (town1.GetIOwner() == map.GetPlayerMe())
                     continue;
 
-                fitness += GetFitness(town1);
-
                 con = false;
                 for (byte loop1 = 0; loop1 < 3; loop1++)
                 {
@@ -59,6 +69,8 @@ namespace AIEasy
                 if (con)
                     continue;
 
+                if (town1.IsPossibleToBuildTown())
+                    fitness += GetFitness(town1);
 
                 for(byte loop1 = 0; loop1 < 3; loop1++)
                 {
@@ -67,7 +79,8 @@ namespace AIEasy
                         break;
                     foreach(ITown town2 in tempRoad.GetITown())
                     {
-                        fitness += GetFitness(town2) / 2.5f;
+                        if(town2.IsPossibleToBuildTown())
+                            fitness += GetFitness(town2) / 2.5f;
                     }
                 }
             }
