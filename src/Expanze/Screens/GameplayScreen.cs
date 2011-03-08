@@ -456,6 +456,7 @@ namespace Expanze
                 spriteBatch.Begin();
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), showFrames + " ", new Vector2(12, 12), Color.Black);
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), showFrames + " ", new Vector2(10, 10), Color.White);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), InputManager.Inst().GetActiveState(), new Vector2(10, 60), Color.White);
                 spriteBatch.End();
             }
 

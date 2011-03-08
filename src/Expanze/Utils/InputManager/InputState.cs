@@ -68,6 +68,7 @@ namespace Expanze.Utils
             for (int loop1 = 0; loop1 < keyActions.Length; loop1++)
             {
                 GameAction gameAction = keyActions[loop1];
+         
                 if (gameAction != null)
                 {
                     if (keyboardState.IsKeyDown((Keys)loop1))

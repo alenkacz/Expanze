@@ -120,8 +120,11 @@ namespace AIEasy
                         }
                     }
 
-                    if(town.IsPossibleToBuildTown())
+                    if (town.IsPossibleToBuildTown())
+                    {
+                        freeTownPlaces.Remove(town);
                         freeTownPlaces.Add(town);
+                    }
                 }
                 return true;
             }

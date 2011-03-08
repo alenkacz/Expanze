@@ -522,7 +522,9 @@ namespace Expanze.Gameplay.Map
                     plusSources += delta[loop1] / player.GetConversionRate((SourceKind)loop1);
             }
 
-            return plusSources - minusSources;
+            if (minusSources > plusSources)
+                return -1;
+            return minusSources;
         }
 
         public ISourceAll GetPrice(PriceKind kind)

@@ -54,8 +54,8 @@ namespace Expanze.Utils
             if (temp != 0) {
                 if (state == ActionState.Released) {
                     amount = 0;
-                }
-                else if (behavior == ActionKind.OnlyInitialPress) {
+                } else
+                if (behavior == ActionKind.OnlyInitialPress) {
                     state = ActionState.WaitingForReleased;
                     amount = 0;
                 }

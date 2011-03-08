@@ -179,6 +179,7 @@ namespace Expanze.Gameplay.Map.View
 
             if (pickVars.pickNewPress)
             {
+                pickVars.pickNewPress = false;
                 if (GameMaster.Inst().GetState() == EGameState.StateGame)
                 {
                     PromptWindow.Inst().Show(PromptWindow.Mod.Buyer, Strings.HEXA_DUO, true);

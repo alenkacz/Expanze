@@ -128,12 +128,12 @@ namespace AIEasy
             if (actionSource.Count > 0)
             {
                 ActionSource bestAction = null;
-                int bestPrice = -1;
+                int bestPrice = 1000;
 
                 foreach (ActionSource action in actionSource)
                 {
                     int price = action.GetSourceChange();
-                    if (price > bestPrice)
+                    if (price + 15 < bestPrice)
                     {
                         bestPrice = price;
                         bestAction = action;

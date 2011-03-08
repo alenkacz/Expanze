@@ -36,6 +36,11 @@ namespace Expanze.Utils
             }
         }
 
+        public string GetActiveState()
+        {
+            return activeStateList[activeStateList.Count - 1];
+        }
+
         public void SetActiveState(String stateName)
         {
             InputState state = FindStateInAllStates(stateName);

@@ -214,13 +214,13 @@ namespace Expanze
                 primitiveBatch.AddVertex(new Vector2(playerID * offset + border + 0 * (windowWidth - border * 2) / (float)columnNumber, 
                                                      windowHeight - border - sum * (windowHeight - border * 2) / (float)rowNumber), c);
 
-                for (int loop1 = 0; loop1 < columnNumber; loop1++)
+                for (int loop1 = 0; loop1 <= columnNumber; loop1++)
                 {
                     sum += statistic[k][loop1];
                     float xbase = border + loop1 * (windowWidth - border * 2) / (float)columnNumber;
                     float ybase = windowHeight - border;
                     primitiveBatch.AddVertex(new Vector2(playerID * offset + xbase,
-                                                         ybase - sum * (windowHeight - border * 2) / (float)rowNumber), c);                  
+                                                         ybase - sum * (windowHeight - border * 2) / (float)rowNumber + 1), c);                  
                 }
 
                 primitiveBatch.End();
@@ -265,12 +265,12 @@ namespace Expanze
             int sum;
             int[][] statistic;
 
-            rowNumber = 0;
+            rowNumber = 1;
             foreach (Player player in GameMaster.Inst().GetPlayers())
             {
                 sum = 0;
                 statistic = player.GetStatistic().GetStat();
-                for (int loop1 = 0; loop1 < columnNumber; loop1++)
+                for (int loop1 = 0; loop1 <= columnNumber; loop1++)
                 {
                     sum += statistic[k][loop1];
 
