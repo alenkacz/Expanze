@@ -191,5 +191,56 @@ namespace AIEasy
             IComponentAI component = new AIEasy();
             return component;
         }
+
+        internal bool EveryTurnALotOfOneSource(int amountLimit)
+        {
+            ISourceAll source = mapController.GetPlayerMe().GetCollectSourcesNormal();
+
+            int max = 0;
+            int temp;
+            SourceKind maxKind = SourceKind.Count;
+
+            for(int loop1 = 0; loop1 < 5; loop1++)
+            {
+                temp = source.Get((SourceKind)loop1);
+                if (temp > max)
+                {
+                    max = temp;
+                    maxKind = (SourceKind)loop1;
+                }
+            }
+
+            if (max >= amountLimit)
+            {
+                decisionTree.SetActiveObject(maxKind);
+                return true;
+            }
+            return false;
+        }
+
+        internal bool BuildMarket(ITown town, byte pos)
+        {
+
+            if (town.BuildMarket(pos) == null)
+            {
+                throw new Exception("Market should have been built.");
+                //return false;
+            }
+            else
+            {
+                freeHexaInTown--;
+                return true;
+            }
+        }
+
+        internal bool BuyLicence(SourceKind activeSourceKind)
+        {
+            if (mapController.BuyLicence(activeSourceKind))
+                return true;
+            else
+            {
+                return false;
+            }
+        }
     }
 }

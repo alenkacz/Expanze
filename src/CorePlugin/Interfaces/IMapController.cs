@@ -7,7 +7,7 @@ namespace CorePlugin
 {
     public enum PriceKind { BRoad, BTown, BMill, BStepherd, BQuarry, BSaw, BMine, BMarket, BMonastery, BFort,
                             UMill1, UStepherd1, UQuarry1, USaw1, UMine1, UMill2, UStepherd2, UQuarry2, USaw2, UMine2,
-                            ICorn1, IMeat1, IStone1, IWood1, IOre1, ICorn2, IMeat2, IStone2, IWood2, IOre2 }
+                            MCorn1, MMeat1, MStone1, MWood1, MOre1, MCorn2, MMeat2, MStone2, MWood2, MOre2 }
     public enum EGameState { StateFirstTown, StateSecondTown, StateGame }
     public enum UpgradeKind { NoUpgrade, FirstUpgrade, SecondUpgrade }
     public enum LicenceKind { NoLicence, FirstLicence, SecondLicence }

@@ -563,16 +563,16 @@ namespace Expanze.Gameplay.Map
                 case PriceKind.UQuarry2: return Settings.costMonasteryStone2;
                 case PriceKind.USaw2: return Settings.costMonasteryWood2;
                 case PriceKind.UMine2: return Settings.costMonasteryOre2;
-                case PriceKind.ICorn1: return Settings.costMarketCorn1;
-                case PriceKind.IMeat1: return Settings.costMarketMeat1;
-                case PriceKind.IStone1: return Settings.costMarketStone1;
-                case PriceKind.IWood1: return Settings.costMarketWood1;
-                case PriceKind.IOre1: return Settings.costMarketOre1;
-                case PriceKind.ICorn2: return Settings.costMarketCorn2;
-                case PriceKind.IMeat2: return Settings.costMarketMeat2;
-                case PriceKind.IStone2: return Settings.costMarketStone2;
-                case PriceKind.IWood2: return Settings.costMarketWood2;
-                case PriceKind.IOre2: return Settings.costMarketOre2;
+                case PriceKind.MCorn1: return Settings.costMarketCorn1;
+                case PriceKind.MMeat1: return Settings.costMarketMeat1;
+                case PriceKind.MStone1: return Settings.costMarketStone1;
+                case PriceKind.MWood1: return Settings.costMarketWood1;
+                case PriceKind.MOre1: return Settings.costMarketOre1;
+                case PriceKind.MCorn2: return Settings.costMarketCorn2;
+                case PriceKind.MMeat2: return Settings.costMarketMeat2;
+                case PriceKind.MStone2: return Settings.costMarketStone2;
+                case PriceKind.MWood2: return Settings.costMarketWood2;
+                case PriceKind.MOre2: return Settings.costMarketOre2;
             }
 
             return null;

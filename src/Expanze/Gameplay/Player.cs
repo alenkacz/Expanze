@@ -9,7 +9,6 @@ using Expanze.Gameplay;
 namespace Expanze
 {
     public enum TransactionState {TransactionStart, TransactionMiddle, TransactionEnd };
-    public enum Building { Town, Road, Market, Monastery, Fort, Mill, Stepherd, Quarry, Saw, Mine, Count }
 
     class Player : IPlayer
     {

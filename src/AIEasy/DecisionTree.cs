@@ -19,6 +19,8 @@ namespace AIEasy
 
         ITown activeTown;
         IRoad activeRoad;
+        SourceKind activeSourceKind;
+        LicenceKind activeLicenceKind;
         byte activeTownPos;
 
         List<ActionSource> actionSource;
@@ -37,10 +39,17 @@ namespace AIEasy
         {
             EA = new FakeActionNode(ai.EmptyLeave, this);
 
-            CanHaveSourcesNode canHaveSourceForRoad = new CanHaveSourcesNode(MakeBuildRoadTree(EA), EA, PriceKind.BRoad, map);
+            ITreeNode marketTree = MakeBuyLicenceTree(EA);
+            CanHaveSourcesNode canHaveSourceForRoad = new CanHaveSourcesNode(MakeBuildRoadTree(marketTree), marketTree, PriceKind.BRoad, map);
 
-            CanHaveSourcesNode canHaveSourceForSourceBuilding = new CanHaveSourcesNode(MakeBuildSourceBuildingTree(EA), EA, () => { return GetPriceForSourceBuilding(activeTown, activeTownPos); }, map);
-            DecisionBinaryNode isThatHexaDesert = new DecisionBinaryNode(EA /* special building */, canHaveSourceForSourceBuilding, () => { return activeTown.GetIHexa(activeTownPos).GetKind() == HexaKind.Desert; });
+            List<ITreeNode> specialBuildingList;
+            specialBuildingList = new List<ITreeNode>();
+            specialBuildingList.Add(MakeBuildMarketTree());
+
+            StochasticNodeMultiple specialBuilding = new StochasticNodeMultiple(specialBuildingList);
+            DecisionBinaryNode canBuildSpecialBuilding = new DecisionBinaryNode(specialBuilding, EA, () => { return activeTown.GetIHexa(activeTownPos).GetKind() != HexaKind.Mountains; });
+            CanHaveSourcesNode canHaveSourceForSourceBuilding = new CanHaveSourcesNode(MakeBuildSourceBuildingTree(canBuildSpecialBuilding), canBuildSpecialBuilding, () => { return GetPriceForSourceBuilding(activeTown, activeTownPos); }, map);
+            DecisionBinaryNode isThatHexaDesert = new DecisionBinaryNode(specialBuilding, canHaveSourceForSourceBuilding, () => { return activeTown.GetIHexa(activeTownPos).GetKind() == HexaKind.Desert; });
 
             ForEachFreeHexInTownNode forEachFreeHexaInTown = new ForEachFreeHexInTownNode(isThatHexaDesert, canHaveSourceForRoad, this);
             DecisionBinaryNode hasFreeHexaInTown = new DecisionBinaryNode(forEachFreeHexaInTown, canHaveSourceForRoad, ai.IsFreeHexaInTown);
@@ -80,7 +89,7 @@ namespace AIEasy
             return localRoot;
         }
 
-        public ITreeNode MakeBuildRoadTree(ITreeNode falseNode)
+        private ITreeNode MakeBuildRoadTree(ITreeNode falseNode)
         {
             ActionNode actionBuildRoad = new ActionNode(() => ai.BuildRoad(activeRoad), this);
             ChangeSourcesActionNode addActionRoad = new ChangeSourcesActionNode(new ActionSource(() => ai.BuildRoad(activeRoad), PriceKind.BRoad), this);
@@ -92,10 +101,35 @@ namespace AIEasy
             return localRoot;
         }
 
+        private ITreeNode MakeBuildMarketTree()
+        {
+            ActionNode actionBuildMarket = new ActionNode(() => ai.BuildMarket(activeTown, activeTownPos), this);
+            ChangeSourcesActionNode addActionMarket = new ChangeSourcesActionNode(new ActionSource(() => ai.BuildMarket(activeTown, activeTownPos), PriceKind.BMarket), this);
+
+            HaveSourcesNode haveSourcesForMarket = new HaveSourcesNode(actionBuildMarket, addActionMarket, PriceKind.BMarket, map);
+            DecisionBinaryNode hasMarketWithFreeSlot = new DecisionBinaryNode(haveSourcesForMarket, EA, () => { return map.GetPlayerMe().GetBuildingCount(Building.Market) == 0; });
+            DecisionBinaryNode everyTurnALotOfOneSource = new DecisionBinaryNode(hasMarketWithFreeSlot, EA, () => { return ai.EveryTurnALotOfOneSource(48); });
+            CanHaveSourcesNode canHaveSourcesForMarket = new CanHaveSourcesNode(everyTurnALotOfOneSource, EA, PriceKind.BMarket, map);
+
+            return canHaveSourcesForMarket;
+        }
+
+        private ITreeNode MakeBuyLicenceTree(ITreeNode falseNode)
+        {
+            ActionNode actionBuyLicence = new ActionNode(() => ai.BuyLicence(activeSourceKind), this);
+            //ChangeSourcesActionNode addActionBuyLicence = new ChangeSourcesActionNode(new ActionSource() , this);
+
+            HaveSourcesNode hasMoneyForLicence = new HaveSourcesNode(actionBuyLicence, EA, () => { return GetPriceForMarketLicence(activeLicenceKind, activeSourceKind); }, map);
+            DecisionBinaryNode hasSecondLicence = new DecisionBinaryNode(EA, hasMoneyForLicence, () => { return (activeLicenceKind = map.GetPlayerMe().GetMarketLicence(activeSourceKind)) == LicenceKind.SecondLicence; });
+            DecisionBinaryNode everyTurnALotOfOneSource = new DecisionBinaryNode(hasSecondLicence, falseNode, () => { return ai.EveryTurnALotOfOneSource(48); });
+            return everyTurnALotOfOneSource;
+        }
+
         public AIEasy GetAI() { return ai; }
         public void SetWasAction(bool action) { wasAction = action; }
         public bool GetWasAction() { return wasAction; }
 
+        internal void SetActiveObject(SourceKind maxKind) { activeSourceKind = maxKind; }
         public void SetActiveObject(ITown town) { activeTown = town; }
         public ITown GetActiveTown() { return activeTown; }
         public void SetActiveObject(IRoad road) { activeRoad = road; }
@@ -146,6 +180,35 @@ namespace AIEasy
                     SetWasAction(true);
                 }
             }
+        }
+
+        public PriceKind GetPriceForMarketLicence(LicenceKind licenceKind, SourceKind sourceKind)
+        {
+            switch (licenceKind)
+            {
+                case LicenceKind.NoLicence :
+                    switch (sourceKind)
+                    {
+                        case SourceKind.Corn: return PriceKind.MCorn1;
+                        case SourceKind.Meat: return PriceKind.MMeat1;
+                        case SourceKind.Stone: return PriceKind.MStone1;
+                        case SourceKind.Wood: return PriceKind.MWood1;
+                        case SourceKind.Ore: return PriceKind.MOre1;
+                    }
+                    break;
+
+                case LicenceKind.FirstLicence:
+                    switch (sourceKind)
+                    {
+                        case SourceKind.Corn: return PriceKind.MCorn2;
+                        case SourceKind.Meat: return PriceKind.MMeat2;
+                        case SourceKind.Stone: return PriceKind.MStone2;
+                        case SourceKind.Wood: return PriceKind.MWood2;
+                        case SourceKind.Ore: return PriceKind.MOre2;
+                    }
+                    break;
+            }
+            return PriceKind.MCorn1;
         }
 
         public PriceKind GetPriceForSourceBuilding(ITown town, byte pos)
