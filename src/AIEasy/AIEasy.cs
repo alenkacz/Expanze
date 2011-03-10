@@ -223,8 +223,8 @@ namespace AIEasy
 
             if (town.BuildMarket(pos) == null)
             {
-                throw new Exception("Market should have been built.");
-                //return false;
+                //throw new Exception("Market should have been built.");
+                return false;
             }
             else
             {
