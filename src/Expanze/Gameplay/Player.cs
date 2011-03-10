@@ -158,27 +158,27 @@ namespace Expanze
             return this.name;
         }
 
-        public int getCorn()
+        public int GetCorn()
         {
             return source.corn;
         }
 
-        public int getWood()
+        public int GetWood()
         {
             return source.wood;
         }
 
-        public int getOre()
+        public int GetOre()
         {
             return source.ore;
         }
 
-        public int getMeat()
+        public int GetMeat()
         {
             return source.meat;
         }
 
-        public int getStone()
+        public int GetStone()
         {
             return source.stone;
         }
@@ -275,12 +275,19 @@ namespace Expanze
 
         public void SetSourceBuildingUpdate(UpgradeKind upgradeKind, int upgradeNumber)
         {
+            statistic.AddStat(Statistic.Kind.Upgrades, 1, GameMaster.Inst().GetTurnNumber());
             upgradeMonastery[upgradeNumber] = upgradeKind;
         }
 
         public void BuyMarketLicence(LicenceKind licenceKind, int upgradeNumber)
         {
+            statistic.AddStat(Statistic.Kind.Licences, 1, GameMaster.Inst().GetTurnNumber());
             licenceMarket[upgradeNumber] = licenceKind;
+        }
+
+        public void AddFortAction()
+        {
+            statistic.AddStat(Statistic.Kind.Actions, 1, GameMaster.Inst().GetTurnNumber());
         }
     }
 }

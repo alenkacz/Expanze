@@ -7,7 +7,7 @@ namespace Expanze.Gameplay
 {
     public class Statistic
     {
-        public enum Kind { Points, Towns, Roads, Medals, Market, Monastery, Fort, Count }
+        public enum Kind { Points, Towns, Roads, Medals, Market, Licences, Monastery, Upgrades, Fort, Actions, Count }
         
         private const int MAX_TURNS = 150;
         int[][] statistic;
@@ -38,14 +38,18 @@ namespace Expanze.Gameplay
                 case Kind.Monastery: return Strings.MENU_GRAPH_MONASTERY;
                 case Kind.Fort: return Strings.MENU_GRAPH_FORT;
                 case Kind.Market: return Strings.MENU_GRAPH_MARKET;
+                case Kind.Actions: return Strings.MENU_GRAPH_ACTION;
+                case Kind.Licences: return Strings.MENU_GRAPH_LICENCE;
+                case Kind.Upgrades: return Strings.MENU_GRAPH_UPGRADE;
+
+                default: throw new Exception("Statistic kind doesnt exist.");
             }
-            return "";
         }
 
         public void AddStat(Kind kind, int amount, int turn)
         {
             if(turn >= MAX_TURNS)
-                throw new Exception("Statistic can have only 150 columns");
+                throw new Exception("Statistic can have only " + MAX_TURNS + " columns");
 
             statistic[(int)kind][turn] += amount;
         }

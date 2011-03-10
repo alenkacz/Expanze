@@ -49,7 +49,7 @@ namespace AIEasy
             StochasticNodeMultiple specialBuilding = new StochasticNodeMultiple(specialBuildingList);
             DecisionBinaryNode canBuildSpecialBuilding = new DecisionBinaryNode(specialBuilding, EA, () => { return activeTown.GetIHexa(activeTownPos).GetKind() != HexaKind.Mountains; });
             CanHaveSourcesNode canHaveSourceForSourceBuilding = new CanHaveSourcesNode(MakeBuildSourceBuildingTree(canBuildSpecialBuilding), canBuildSpecialBuilding, () => { return GetPriceForSourceBuilding(activeTown, activeTownPos); }, map);
-            DecisionBinaryNode isThatHexaDesert = new DecisionBinaryNode(specialBuilding, canHaveSourceForSourceBuilding, () => { return activeTown.GetIHexa(activeTownPos).GetKind() == HexaKind.Desert; });
+            DecisionBinaryNode isThatHexaDesert = new DecisionBinaryNode(canBuildSpecialBuilding, canHaveSourceForSourceBuilding, () => { return activeTown.GetIHexa(activeTownPos).GetKind() == HexaKind.Desert; });
 
             ForEachFreeHexInTownNode forEachFreeHexaInTown = new ForEachFreeHexInTownNode(isThatHexaDesert, canHaveSourceForRoad, this);
             DecisionBinaryNode hasFreeHexaInTown = new DecisionBinaryNode(forEachFreeHexaInTown, canHaveSourceForRoad, ai.IsFreeHexaInTown);
@@ -107,7 +107,7 @@ namespace AIEasy
             ChangeSourcesActionNode addActionMarket = new ChangeSourcesActionNode(new ActionSource(() => ai.BuildMarket(activeTown, activeTownPos), PriceKind.BMarket), this);
 
             HaveSourcesNode haveSourcesForMarket = new HaveSourcesNode(actionBuildMarket, addActionMarket, PriceKind.BMarket, map);
-            DecisionBinaryNode hasMarketWithFreeSlot = new DecisionBinaryNode(haveSourcesForMarket, EA, () => { return map.GetPlayerMe().GetBuildingCount(Building.Market) == 0; });
+            DecisionBinaryNode hasMarketWithFreeSlot = new DecisionBinaryNode(EA, haveSourcesForMarket, ai.HasFreeSlotInMarket);
             DecisionBinaryNode everyTurnALotOfOneSource = new DecisionBinaryNode(hasMarketWithFreeSlot, EA, () => { return ai.EveryTurnALotOfOneSource(48); });
             CanHaveSourcesNode canHaveSourcesForMarket = new CanHaveSourcesNode(everyTurnALotOfOneSource, EA, PriceKind.BMarket, map);
 
@@ -122,7 +122,9 @@ namespace AIEasy
             HaveSourcesNode hasMoneyForLicence = new HaveSourcesNode(actionBuyLicence, EA, () => { return GetPriceForMarketLicence(activeLicenceKind, activeSourceKind); }, map);
             DecisionBinaryNode hasSecondLicence = new DecisionBinaryNode(EA, hasMoneyForLicence, () => { return (activeLicenceKind = map.GetPlayerMe().GetMarketLicence(activeSourceKind)) == LicenceKind.SecondLicence; });
             DecisionBinaryNode everyTurnALotOfOneSource = new DecisionBinaryNode(hasSecondLicence, falseNode, () => { return ai.EveryTurnALotOfOneSource(48); });
-            return everyTurnALotOfOneSource;
+            DecisionBinaryNode hasMarketWithFreeSlot = new DecisionBinaryNode(everyTurnALotOfOneSource, EA, ai.HasFreeSlotInMarket);
+
+            return hasMarketWithFreeSlot;
         }
 
         public AIEasy GetAI() { return ai; }
@@ -141,14 +143,24 @@ namespace AIEasy
         {
             do
             {
+                ClearActiveObjects();
                 actionSource.Clear();
                 wasAction = false;
                 root.Execute();
                 if (!wasAction)
                 {
-                    TryMakeAction();
+                    //TryMakeAction();
                 }
             } while (wasAction);
+        }
+
+        public void ClearActiveObjects()
+        {
+            activeLicenceKind = LicenceKind.NoLicence;
+            activeRoad = null;
+            activeTown = null;
+            activeTownPos = 255;
+            activeSourceKind = SourceKind.Count;
         }
 
         public void AddActionSource(ActionSource action)

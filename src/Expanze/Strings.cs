@@ -55,7 +55,10 @@ namespace Expanze
         public static string MENU_GRAPH_MEDALS = "Počet medailí";
         public static string MENU_GRAPH_FORT = "Počet pevností";
         public static string MENU_GRAPH_MONASTERY = "Počet klášterů";
-        public static string MENU_GRAPH_MARKET = "Počet tržišť"; 
+        public static string MENU_GRAPH_MARKET = "Počet tržišť";
+        public static string MENU_GRAPH_LICENCE = "Koupených licencí";
+        public static string MENU_GRAPH_UPGRADE = "Vynalezených vylepšení";
+        public static string MENU_GRAPH_ACTION = "Provedených akcí";
 
         public static string GAME_SETTINGS_MAP_SIZE_SMALL = "Malá";
         public static string GAME_SETTINGS_MAP_SIZE_MEDIUM = "Střední";

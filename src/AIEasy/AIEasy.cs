@@ -18,6 +18,8 @@ namespace AIEasy
         //List<IRoad> leaveRoads;
         int freeHexaInTown;
         int[] sourceNormal;        // how many sources player get for one turn
+        int licenceAmount;         // how many licences player bought
+        int upgradeAmount;         // how many upgrades player did
 
         DecisionTree decisionTree;
 
@@ -38,6 +40,9 @@ namespace AIEasy
             sourceNormal = new int[5];
             for (int loop1 = 0; loop1 < 5; loop1++)
                 sourceNormal[loop1] = 0;
+
+            licenceAmount = 0;
+            upgradeAmount = 0;
 
             decisionTree = new DecisionTree(mapController, this);
         }
@@ -72,7 +77,7 @@ namespace AIEasy
             if (town != null)
             {
                 towns.Add(town);
-                freeTownPlaces.Remove(town);
+                ClearBadTownPlaces();
 
 
                 for (byte loop1 = 0; loop1 < 3; loop1++)
@@ -94,6 +99,7 @@ namespace AIEasy
             else
             {
                 freeTownPlaces.Remove(mapController.GetITownByID(ID));
+                //throw new Exception("Buidling town.");
                 return false;
             }
         }
@@ -131,21 +137,24 @@ namespace AIEasy
             else
             {
                 freeRoadPlaces.Remove(activeRoad);
-                return false;
+                throw new Exception("Buidling road.");
+                //return false;
             }
         }
 
-        internal bool BuildSourceBuilding(ITown activeTown, byte activeTownPos)
+        internal bool BuildSourceBuilding(ITown town, byte pos)
         {
-            if (activeTown.BuildSourceBuilding(activeTownPos))
+            if (town.BuildSourceBuilding(pos))
             {
                 freeHexaInTown--;
 
-                int amount = activeTown.GetIHexa(activeTownPos).GetStartSource();
-                sourceNormal[(int) (activeTown.GetIHexa(activeTownPos).GetKind())] += amount;
+                int amount = town.GetIHexa(pos).GetStartSource();
+                sourceNormal[(int) (town.GetIHexa(pos).GetKind())] += amount;
 
                 return true;
             }
+
+            //throw new Exception("Buidling source building.");
             return false;
         }
 
@@ -160,6 +169,7 @@ namespace AIEasy
                     BuildTown(GetBestTownPlace());
                     break;
                 case EGameState.StateGame :
+                    ClearBadTownPlaces();
                     decisionTree.SolveAI();
                     break;
             }
@@ -192,6 +202,58 @@ namespace AIEasy
             return component;
         }
 
+        internal void ClearBadTownPlaces()
+        {
+            bool wasClearing = true;
+            while (wasClearing)
+            {
+                for (int loop1 = 0; loop1 < freeTownPlaces.Count; loop1++)
+                {
+                    if (!freeTownPlaces[loop1].IsPossibleToBuildTown())
+                    {
+                        freeTownPlaces.RemoveAt(loop1);
+                        break;
+                    }
+                }
+                wasClearing = false;
+            }
+        }
+
+        internal bool BuildMarket(ITown town, byte pos)
+        {
+            if (town.BuildMarket(pos) == null)
+            {
+                throw new Exception("Market should have been built.");
+                //return false;
+            }
+            else
+            {
+                freeHexaInTown--;
+                return true;
+            }
+        }
+
+        internal bool BuyLicence(SourceKind activeSourceKind)
+        {
+            if (mapController.BuyLicence(activeSourceKind))
+            {
+                licenceAmount++;
+                return true;
+            }
+            else
+            {
+                throw new Exception("Buying licence.");
+                //return false;
+            }
+        }
+
+        internal bool HasFreeSlotInMarket()
+        {
+            int maxSlot = 3 * mapController.GetPlayerMe().GetBuildingCount(Building.Market);
+
+            return licenceAmount < maxSlot;
+        }
+
         internal bool EveryTurnALotOfOneSource(int amountLimit)
         {
             ISourceAll source = mapController.GetPlayerMe().GetCollectSourcesNormal();
@@ -200,7 +262,7 @@ namespace AIEasy
             int temp;
             SourceKind maxKind = SourceKind.Count;
 
-            for(int loop1 = 0; loop1 < 5; loop1++)
+            for (int loop1 = 0; loop1 < 5; loop1++)
             {
                 temp = source.Get((SourceKind)loop1);
                 if (temp > max)
@@ -218,29 +280,5 @@ namespace AIEasy
             return false;
         }
 
-        internal bool BuildMarket(ITown town, byte pos)
-        {
-
-            if (town.BuildMarket(pos) == null)
-            {
-                //throw new Exception("Market should have been built.");
-                return false;
-            }
-            else
-            {
-                freeHexaInTown--;
-                return true;
-            }
-        }
-
-        internal bool BuyLicence(SourceKind activeSourceKind)
-        {
-            if (mapController.BuyLicence(activeSourceKind))
-                return true;
-            else
-            {
-                return false;
-            }
-        }
     }
 }

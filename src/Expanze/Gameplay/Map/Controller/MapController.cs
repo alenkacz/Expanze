@@ -385,6 +385,7 @@ namespace Expanze.Gameplay.Map
                 Player player = GameMaster.Inst().GetActivePlayer();
                 hexa.Capture(player);
                 player.PayForSomething(Settings.costFortCapture);
+                player.AddFortAction();
                 return true;
             }
             return false;
@@ -419,6 +420,7 @@ namespace Expanze.Gameplay.Map
                 HexaModel hexa = map.GetHexaByID(hexaID);
                 hexa.Destroy();
                 GameMaster.Inst().GetActivePlayer().PayForSomething(Settings.costFortDestroyHexa);
+                GameMaster.Inst().GetActivePlayer().AddFortAction();
                 return true;
             }
             return false;
@@ -450,6 +452,7 @@ namespace Expanze.Gameplay.Map
                 player.PayForSomething(new SourceAll(source / 2));
                 activePlayer.AddSources(-Settings.costFortSources, TransactionState.TransactionStart);
                 activePlayer.AddSources(source / 2, TransactionState.TransactionEnd);
+                activePlayer.AddFortAction();
                 return true;
             }
             return false;
