@@ -59,7 +59,12 @@ namespace CorePlugin
         /// <summary>
         /// You have not enough sources.
         /// </summary>
-        NoSources
+        NoSources,
+
+        /// <summary>
+        /// You have no fort
+        /// </summary>
+        NoFort
     }
 
     public enum CaptureHexaError {

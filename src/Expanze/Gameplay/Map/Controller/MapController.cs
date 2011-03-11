@@ -256,7 +256,7 @@ namespace Expanze.Gameplay.Map
                         gm.NextTurn();                   
                 }
                 else
-                    gm.GetActivePlayer().PayForSomething(Settings.costTown);
+                    gm.GetActivePlayer().PayForSomething(GetPrice(PriceKind.BTown));
 
                 return town;
             }
@@ -458,6 +458,36 @@ namespace Expanze.Gameplay.Map
             return false;
         }
 
+        public ParadeError CanShowParade()
+        {
+            Player activePlayer = GameMaster.Inst().GetActivePlayer();
+
+            if (!GetPrice(PriceKind.AParade).HasPlayerSources(activePlayer))
+                return ParadeError.NoSources;
+            if (activePlayer.GetBuildingCount(Building.Fort) == 0)
+                return ParadeError.NoFort;
+
+            return ParadeError.OK;
+        }
+
+        public bool ShowParade()
+        {
+            if (CanShowParade() == ParadeError.OK)
+            {
+                Player activePlayer = GameMaster.Inst().GetActivePlayer();
+                activePlayer.AddPoints(Settings.pointsFortParade);
+                activePlayer.AddFortAction();
+                activePlayer.PayForSomething(GetPrice(PriceKind.AParade));
+                if (GameMaster.Inst().GetActivePlayer().GetIsAI())
+                {
+                    Message.Inst().Show(Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE, Strings.PROMPT_DESCTIPTION_MESSAGE_FORT_ACTION_PARADE, GameResources.Inst().GetHudTexture(HUDTexture.IconFortParade));
+                }
+                return true;
+            }
+
+            return false;
+        }
+
         public bool ChangeSourcesFor(ISourceAll source)
         {
             if (CanChangeSourcesFor(source) < 0)
@@ -576,6 +606,9 @@ namespace Expanze.Gameplay.Map
                 case PriceKind.MStone2: return Settings.costMarketStone2;
                 case PriceKind.MWood2: return Settings.costMarketWood2;
                 case PriceKind.MOre2: return Settings.costMarketOre2;
+                case PriceKind.AParade: return Settings.costFortParade;
+                case PriceKind.ACaptureHexa: return Settings.costFortCapture;
+                case PriceKind.AStealSources: return Settings.costFortSources;
             }
 
             return null;

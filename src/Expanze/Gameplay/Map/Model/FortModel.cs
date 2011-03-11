@@ -134,13 +134,11 @@ namespace Expanze.Gameplay
                             break;
 
                         case 3 :
-                            GameMaster.Inst().GetActivePlayer().AddPoints(Settings.pointsFortParade);
-                            //costParade = costParade + new SourceAll(30);
-                            if (GameMaster.Inst().GetActivePlayer().GetIsAI())
-                            {
-                                Message.Inst().Show(Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE, Strings.PROMPT_DESCTIPTION_MESSAGE_FORT_ACTION_PARADE, GameResources.Inst().GetHudTexture(HUDTexture.IconFortParade));
-                            }
-                            win.Deactive();
+                            gm.GetActivePlayer().AddSources(GetUpgradeCost(upgradeKind, upgradeNumber), TransactionState.TransactionStart);
+                            gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
+                            gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
+                            ShowParade();
+                            //win.Deactive();
                             break;
                     }
                     break;
@@ -171,19 +169,12 @@ namespace Expanze.Gameplay
 
         public bool ShowParade()
         {
-            return GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, UpgradeKind.FirstUpgrade, 3);
+            return GameState.map.GetMapController().ShowParade();
         }
 
         public ParadeError CanShowParade()
         {
-            BuyingUpgradeError error = GameState.map.GetMapController().CanBuyUpgradeInSpecialBuilding(townID, hexaID, UpgradeKind.FirstUpgrade, 3);
-            switch (error)
-            {
-                case BuyingUpgradeError.NoSources: return ParadeError.NoSources;
-                case BuyingUpgradeError.OK: return ParadeError.OK;
-            }
-
-            return ParadeError.OK;
+            return GameState.map.GetMapController().CanShowParade();
         }
 
         public DestroySourcesError CanStealSources(String playerName)

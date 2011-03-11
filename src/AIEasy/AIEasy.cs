@@ -170,6 +170,7 @@ namespace AIEasy
                     break;
                 case EGameState.StateGame :
                     ClearBadTownPlaces();
+                    ClearBadRoadPlaces();
                     decisionTree.SolveAI();
                     break;
             }
@@ -202,7 +203,25 @@ namespace AIEasy
             return component;
         }
 
-        internal void ClearBadTownPlaces()
+        private void ClearBadRoadPlaces()
+        {
+            bool wasClearing = true;
+            while (wasClearing)
+            {
+                for (int loop1 = 0; loop1 < freeRoadPlaces.Count; loop1++)
+                {
+                    if (freeRoadPlaces[loop1].GetIsBuild())
+                    {
+                        freeRoadPlaces.RemoveAt(loop1);
+                        break;
+                    }
+                }
+
+                wasClearing = false;
+            }
+        }
+
+        private void ClearBadTownPlaces()
         {
             bool wasClearing = true;
             while (wasClearing)

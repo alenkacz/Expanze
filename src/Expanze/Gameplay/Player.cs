@@ -183,11 +183,13 @@ namespace Expanze
             return source.stone;
         }
 
-        public void PayForSomething(SourceAll cost)
+        public void PayForSomething(ISourceAll cost)
         {
-            ChangeSources(-cost.wood, -cost.stone, -cost.corn, -cost.meat, -cost.ore);
+            SourceAll sourceCost = (SourceAll)cost;
 
-            source = source - cost;
+            ChangeSources(-sourceCost.wood, -sourceCost.stone, -sourceCost.corn, -sourceCost.meat, -sourceCost.ore);
+
+            source = source - sourceCost;
         }
 
         public void ClearCollectSources()
