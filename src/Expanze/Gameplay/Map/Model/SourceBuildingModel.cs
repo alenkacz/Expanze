@@ -188,13 +188,22 @@ namespace Expanze.Gameplay
             if (upgradeKind == UpgradeKind.SecondUpgrade)
             {
                 if (upgrade == UpgradeKind.NoUpgrade)
+                {
+                    GameState.map.GetMapController().SetLastError(Strings.YOU_DONT_HAVE_FIRST_UPGRADE);
                     return BuyingUpgradeError.YouDontHaveFirstUpgrade;
+                }
                 if (upgrade == UpgradeKind.SecondUpgrade)
+                {
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_HAVE_SECOND_UPGRADE);
                     return BuyingUpgradeError.YouAlreadyHaveSecondUpgrade;
-            }     
+                }
+            }
 
             if (!GetUpgradeCost(upgradeKind, upgradeNumber).HasPlayerSources(activePlayer))
+            {
+                GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_SOURCES);
                 return BuyingUpgradeError.NoSources;
+            }
 
             return BuyingUpgradeError.OK;
         }

@@ -175,22 +175,24 @@ namespace Expanze
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
             Vector2 viewportSize = new Vector2(viewport.Width, viewport.Height);
             Vector2 textSize = fontBig.MeasureString(message);
-            Vector2 textPosition = (viewportSize - textSize) / 8;
+            Vector2 textPosition = (viewportSize - textSize) / 6;
 
             Color color = Color.White * TransitionAlpha;
 
             //textPosition.Y -= 150;
-            int startY = (int)textPosition.Y + 70;
+            int startY = (int)textPosition.Y + 60;
             int startX = 100;
+
+            DrawGraph((Statistic.Kind)graphKind);
 
             // Draw the text.
             spriteBatch.Begin();
-            spriteBatch.DrawString(fontBig, message, textPosition, color);
+            spriteBatch.DrawString(fontBig, message, textPosition, Color.Black);
+            spriteBatch.DrawString(fontBig, message, textPosition + new Vector2(2, -2), color);
             textPosition += new Vector2(40, 40);
-            spriteBatch.DrawString(fontSmall, Statistic.GetGraphName((Statistic.Kind)graphKind), textPosition, color);
-            spriteBatch.End();
-
-            DrawGraph((Statistic.Kind) graphKind);
+            spriteBatch.DrawString(fontSmall, Statistic.GetGraphName((Statistic.Kind)graphKind), textPosition, Color.Black);
+            spriteBatch.DrawString(fontSmall, Statistic.GetGraphName((Statistic.Kind)graphKind), textPosition + new Vector2(2,-2), color);
+            spriteBatch.End();        
         }
 
         private void DrawGraph(Statistic.Kind kind)

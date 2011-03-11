@@ -99,8 +99,8 @@ namespace AIEasy
             else
             {
                 freeTownPlaces.Remove(mapController.GetITownByID(ID));
-                //throw new Exception("Buidling town.");
-                return false;
+                throw new Exception("Building town. " + mapController.GetLastError());
+                //return false;
             }
         }
 
@@ -115,14 +115,24 @@ namespace AIEasy
 
                 foreach (ITown town in activeRoad.GetITown())
                 {
+                    if (town.GetIOwner() != mapController.GetPlayerMe() && town.GetIOwner() != null)
+                        continue;
+
                     for (byte loop1 = 0; loop1 < 3; loop1++)
                     {
                         IRoad road = town.GetIRoad(loop1);
-                        if (road != null &&
-                            !road.GetIsBuild() &&
-                            !freeRoadPlaces.Contains(road))
+
+                        if (road != null)
                         {
-                            freeRoadPlaces.Add(road);
+                            RoadBuildError tempError = road.CanBuildRoad();
+                            if (tempError == RoadBuildError.OK ||
+                                tempError == RoadBuildError.NoSources)
+                            {
+                                if (!freeRoadPlaces.Contains(road))
+                                {
+                                    freeRoadPlaces.Add(road);
+                                }
+                            }
                         }
                     }
 
@@ -137,7 +147,7 @@ namespace AIEasy
             else
             {
                 freeRoadPlaces.Remove(activeRoad);
-                throw new Exception("Buidling road.");
+                throw new Exception("Buidling road. " + mapController.GetLastError());
                 //return false;
             }
         }
@@ -154,8 +164,8 @@ namespace AIEasy
                 return true;
             }
 
-            //throw new Exception("Buidling source building.");
-            return false;
+            throw new Exception("Buidling source building. " + mapController.GetLastError());
+            //return false;
         }
 
         public void ResolveAI()
@@ -210,7 +220,10 @@ namespace AIEasy
             {
                 for (int loop1 = 0; loop1 < freeRoadPlaces.Count; loop1++)
                 {
-                    if (freeRoadPlaces[loop1].GetIsBuild())
+                    RoadBuildError tempError = freeRoadPlaces[loop1].CanBuildRoad();
+                    if (tempError == RoadBuildError.AlreadyBuild ||
+                        tempError == RoadBuildError.InvalidRoadID ||
+                        tempError == RoadBuildError.NoPlayerRoadOrTown)
                     {
                         freeRoadPlaces.RemoveAt(loop1);
                         break;
@@ -242,7 +255,21 @@ namespace AIEasy
         {
             if (town.BuildMarket(pos) == null)
             {
-                throw new Exception("Market should have been built.");
+                throw new Exception("Market should have been built. " + mapController.GetLastError());
+                //return false;
+            }
+            else
+            {
+                freeHexaInTown--;
+                return true;
+            }
+        }
+
+        internal bool BuildMonastery(ITown town, byte pos)
+        {
+            if (town.BuildMonastery(pos) == null)
+            {
+                throw new Exception("Monastery should have been built. " + mapController.GetLastError());
                 //return false;
             }
             else
@@ -261,7 +288,7 @@ namespace AIEasy
             }
             else
             {
-                throw new Exception("Buying licence.");
+                throw new Exception("Buying licence. " + mapController.GetLastError());
                 //return false;
             }
         }
@@ -271,6 +298,27 @@ namespace AIEasy
             int maxSlot = 3 * mapController.GetPlayerMe().GetBuildingCount(Building.Market);
 
             return licenceAmount < maxSlot;
+        }
+
+        internal bool InventUpgrade(SourceBuildingKind activeSourceBuildingKind)
+        {
+            if (mapController.InventUpgrade(activeSourceBuildingKind))
+            {
+                upgradeAmount++;
+                return true;
+            }
+            else
+            {
+                throw new Exception("Inventing upgrade. " + mapController.GetLastError());
+                //return false;
+            }
+        }
+
+        internal bool HasFreeSlotInMonastery()
+        {
+            int maxSlot = 3 * mapController.GetPlayerMe().GetBuildingCount(Building.Monastery);
+
+            return upgradeAmount < maxSlot;
         }
 
         internal bool EveryTurnALotOfOneSource(int amountLimit)
@@ -294,6 +342,14 @@ namespace AIEasy
             if (max >= amountLimit)
             {
                 decisionTree.SetActiveObject(maxKind);
+                switch (maxKind)
+                {
+                    case SourceKind.Corn: decisionTree.SetActiveObject(SourceBuildingKind.Mill); break;
+                    case SourceKind.Meat: decisionTree.SetActiveObject(SourceBuildingKind.Stepherd); break;
+                    case SourceKind.Stone: decisionTree.SetActiveObject(SourceBuildingKind.Quarry); break;
+                    case SourceKind.Wood: decisionTree.SetActiveObject(SourceBuildingKind.Saw); break;
+                    case SourceKind.Ore: decisionTree.SetActiveObject(SourceBuildingKind.Mine); break;
+                }
                 return true;
             }
             return false;

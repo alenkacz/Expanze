@@ -203,9 +203,15 @@ namespace Expanze.Gameplay
 
             switch (error)
             {
-                case BuyingUpgradeError.YouAlreadyHaveSecondUpgrade: return MarketError.HaveSecondLicence;
-                case BuyingUpgradeError.NoSources: return MarketError.NoSources;
-                case BuyingUpgradeError.MaxUpgrades: return MarketError.MaxLicences;
+                case BuyingUpgradeError.YouAlreadyHaveSecondUpgrade:
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_HAVE_SECOND_LICENCE);
+                    return MarketError.HaveSecondLicence;
+                case BuyingUpgradeError.NoSources:
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_SOURCES);
+                    return MarketError.NoSources;
+                case BuyingUpgradeError.MaxUpgrades:
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_MAX_LICENCES);
+                    return MarketError.MaxLicences;
                 case BuyingUpgradeError.OK: return MarketError.OK;
             }
 

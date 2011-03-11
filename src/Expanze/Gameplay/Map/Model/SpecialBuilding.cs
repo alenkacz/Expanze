@@ -84,10 +84,16 @@ namespace Expanze.Gameplay
             Player activePlayer = gm.GetActivePlayer();
 
             if (upgradeCount == upgradeMax)
-                return BuyingUpgradeError.MaxUpgrades;    
+            {
+                GameState.map.GetMapController().SetLastError(Strings.ERROR_MAX_UPGRADES);
+                return BuyingUpgradeError.MaxUpgrades;
+            }
 
             if (!GetUpgradeCost(upgradeKind, upgradeNumber).HasPlayerSources(activePlayer))
+            {
+                GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_SOURCES);
                 return BuyingUpgradeError.NoSources;
+            }
 
             return BuyingUpgradeError.OK;
         }

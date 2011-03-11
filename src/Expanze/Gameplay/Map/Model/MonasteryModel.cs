@@ -193,9 +193,15 @@ namespace Expanze.Gameplay
 
             switch (error)
             {
-                case BuyingUpgradeError.YouAlreadyHaveSecondUpgrade: return MonasteryError.HaveSecondUpgrade;
-                case BuyingUpgradeError.NoSources: return MonasteryError.NoSources;
-                case BuyingUpgradeError.MaxUpgrades: return MonasteryError.MaxUpgrades;
+                case BuyingUpgradeError.YouAlreadyHaveSecondUpgrade:
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_HAVE_SECOND_UPGRADE);
+                    return MonasteryError.HaveSecondUpgrade;
+                case BuyingUpgradeError.NoSources:
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_SOURCES);
+                    return MonasteryError.NoSources;
+                case BuyingUpgradeError.MaxUpgrades:
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_MAX_UPGRADES);
+                    return MonasteryError.MaxUpgrades;
                 case BuyingUpgradeError.OK: return MonasteryError.OK;
             }
 

@@ -109,11 +109,20 @@ namespace Expanze
                 Player activePlayer = gm.GetActivePlayer();
 
                 if (isBuild)
+                {
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_ALREADY_BUILD);
                     return RoadBuildError.AlreadyBuild;
-                if(!IsActivePlayersRoadOnEndOfRoad(activePlayer) && !IsActivePlayersTownOnEndOfRoad(activePlayer))
+                }
+                if (!IsActivePlayersRoadOnEndOfRoad(activePlayer) && !IsActivePlayersTownOnEndOfRoad(activePlayer))
+                {
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_PLAYER_ROAD_OR_TOWN);
                     return RoadBuildError.NoPlayerRoadOrTown;
-                if(!Settings.costRoad.HasPlayerSources(activePlayer))
+                }
+                if (!Settings.costRoad.HasPlayerSources(activePlayer))
+                {
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_SOURCES);
                     return RoadBuildError.NoSources;
+                }
                 return RoadBuildError.OK;
             }
 

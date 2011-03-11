@@ -243,5 +243,29 @@ namespace Expanze
         public static string MESSAGE_DESCRIPTION_MEDAL_QUARRY = "Postav víc lomů než ostatní, avšak minimálně tři a tato medaile je tvá.";
         public static string MESSAGE_DESCRIPTION_MEDAL_STEPHERD = "Postav víc chatrčí pastevce než ostatní, avšak minimálně tři a tato medaile je tvá.";
         public static string MESSAGE_DESCRIPTION_MEDAL_MINE = "Postav víc dolů na rudu než ostatní, avšak minimálně tři a tato medaile je tvá.";
+
+        public static string ERROR_NO_SOURCES = "No sources";
+        public static string ERROR_NOT_ENOUGHT_FROM_SOURCE = "Not enought from source";
+        public static string ERROR_THERE_IS_NO_TOWN = "There is no town";
+        public static string ERROR_THERE_IS_NO_BUILDING = "There is no building";
+        public static string ERROR_INVALID_ROAD_ID = "Invalid road ID";
+        public static string ERROR_INVALID_TOWN_ID = "Invalid town ID";
+        public static string ERROR_NO_BUILDING_FOR_WATER = "No building for water";
+        public static string ERROR_INVALID_HEXA_ID = "Invalid hexa ID";
+        public static string ERROR_NO_SOURCE_BUILDING_FOR_DESERT = "No source building for desert";
+        public static string ERROR_NO_SPECIAL_BUIDLING_FOR_MOUNTAINS = "No special building for mountains";
+        public static string ERROR_HAVE_SECOND_UPGRADE = "You already have second upgrade for this source kind";
+        public static string ERROR_HAVE_SECOND_LICENCE = "You already have second licence for this source kind";
+        public static string ERROR_MAX_UPGRADES = "You dont have free slot for upgrade";
+        public static string ERROR_MAX_LICENCES = "You dont have free slot for licence";
+        public static string ERROR_TOO_FAR_FROM_FORT = "Hexa is too far from any fort";
+        public static string ERROR_NO_FORT = "You dont have fort";
+        public static string ERROR_ALREADY_BUILD = "It has been already built";
+        public static string ERROR_NO_OWNER = "You are not owner of this";
+        public static string ERROR_OTHER_TOWN_IS_TOO_CLOSE = "Other town is too close";
+        public static string ERROR_NO_PLAYER_ROAD = "There is no your road connected with this spot.";
+        public static string ERROR_YOU_HAVE_BUILT_TOWN_THIS_TURN = "You have already built town this turn.";
+        public static string ERROR_NO_PLAYER_ROAD_OR_TOWN = "No your road or town is connected with this spot.";
+        public static string YOU_DONT_HAVE_FIRST_UPGRADE = "You dont have first upgrade";
     }
 }

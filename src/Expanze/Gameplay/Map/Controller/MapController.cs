@@ -11,6 +11,7 @@ namespace Expanze.Gameplay.Map
     {
         Map map;
         MapView mapView;
+        String lastError;
 
         ITown[] townByID;
         IRoad[] roadByID;
@@ -59,6 +60,9 @@ namespace Expanze.Gameplay.Map
         public EGameState GetState() { return GameMaster.Inst().GetState(); }
         public IHexa GetIHexa(int x, int y) { return map.GetHexaModel(x, y); }
 
+        public void SetLastError(String str) {lastError = str;}
+        public String GetLastError() { return lastError; }
+
         private HexaKind SourceKindToHexaKind(SourceKind source)
         {
             switch (source)
@@ -78,7 +82,10 @@ namespace Expanze.Gameplay.Map
             GameMaster gm = GameMaster.Inst();
             int rate = gm.GetActivePlayer().GetConversionRate(fromSource);
             if (fromAmount > gm.GetActivePlayer().GetSource().Get(fromSource))
+            {
+                SetLastError(Strings.ERROR_NOT_ENOUGHT_FROM_SOURCE);
                 return ChangingSourcesError.NotEnoughFromSource;
+            }
 
             gm.DoMaterialConversion(fromSource, toSource, gm.GetActivePlayer(), fromAmount - (fromAmount % rate), fromAmount / rate);
 
@@ -90,10 +97,16 @@ namespace Expanze.Gameplay.Map
             GameMaster gm = GameMaster.Inst();
             TownModel town = map.GetTownByID(townID);
             if (town == null)
+            {
+                SetLastError(Strings.ERROR_THERE_IS_NO_TOWN);
                 return BuyingUpgradeError.ThereIsNoTown;
+            }
             SpecialBuilding building = town.GetSpecialBuilding(hexaID);
             if (building == null)
+            {
+                SetLastError(Strings.ERROR_THERE_IS_NO_BUILDING);
                 return BuyingUpgradeError.ThereIsNoBuilding;
+            }
 
             return building.CanActivePlayerBuyUpgrade(upgradeKind, upgradeNumber);
         }
@@ -123,7 +136,10 @@ namespace Expanze.Gameplay.Map
         {
             RoadModel road = map.GetRoadByID(roadID);
             if (road == null)
+            {
+                SetLastError(Strings.ERROR_INVALID_ROAD_ID);
                 return RoadBuildError.InvalidRoadID;
+            }
             return road.CanBuildRoad();
         }
 
@@ -155,19 +171,34 @@ namespace Expanze.Gameplay.Map
             GameMaster gm = GameMaster.Inst();
             TownModel town = map.GetTownByID(townID);
             if (town == null)
+            {
+                SetLastError(Strings.ERROR_INVALID_TOWN_ID);
                 return BuildingBuildError.InvalidTownID;
+            }
 
             int buildingPos = town.FindBuildingByHexaID(hexaID);
             if (buildingPos == -1)
+            {
+                SetLastError(Strings.ERROR_INVALID_HEXA_ID);
                 return BuildingBuildError.TownHasNoHexaWithThatHexaID;
+            }
 
             HexaModel hexa = town.GetHexa(buildingPos);
             if (hexa.GetKind() == HexaKind.Desert && kind == BuildingKind.SourceBuilding)
+            {
+                SetLastError(Strings.ERROR_NO_SOURCE_BUILDING_FOR_DESERT);
                 return BuildingBuildError.NoSourceBuildingForDesert;
+            }
             if (hexa.GetKind() == HexaKind.Water)
+            {
+                SetLastError(Strings.ERROR_NO_BUILDING_FOR_WATER);
                 return BuildingBuildError.NoBuildingForWater;
+            }
             if (hexa.GetKind() == HexaKind.Mountains && kind != BuildingKind.SourceBuilding)
+            {
+                SetLastError(Strings.ERROR_NO_SPECIAL_BUIDLING_FOR_MOUNTAINS);
                 return BuildingBuildError.NoSpecialBuildingForMountains;
+            }
 
             return town.CanActivePlayerBuildBuildingInTown(buildingPos, kind);
         }
@@ -201,7 +232,10 @@ namespace Expanze.Gameplay.Map
         {
             TownModel town = map.GetTownByID(townID);
             if (town == null)
+            {
+                SetLastError(Strings.ERROR_INVALID_TOWN_ID);
                 return TownBuildError.InvalidTownID;
+            }
             return town.CanBuildTown();
         }
 
@@ -297,8 +331,10 @@ namespace Expanze.Gameplay.Map
                 switch (m.CanInventUpgrade(building))
                 {
                     case MonasteryError.HaveSecondUpgrade:
+                        SetLastError(Strings.ERROR_HAVE_SECOND_UPGRADE);
                         return MonasteryError.HaveSecondUpgrade;
                     case MonasteryError.NoSources:
+                        SetLastError(Strings.ERROR_NO_SOURCES);
                         return MonasteryError.NoSources;
                     case MonasteryError.OK:
                         return MonasteryError.OK;
@@ -307,6 +343,7 @@ namespace Expanze.Gameplay.Map
                 }
             }
 
+            SetLastError(Strings.ERROR_MAX_UPGRADES);
             return MonasteryError.MaxUpgrades;
         }
 
@@ -343,8 +380,10 @@ namespace Expanze.Gameplay.Map
                 switch (m.CanBuyLicence(source))
                 {
                     case MarketError.HaveSecondLicence :
+                        SetLastError(Strings.ERROR_HAVE_SECOND_LICENCE);
                         return MarketError.HaveSecondLicence;
                     case MarketError.NoSources :
+                        SetLastError(Strings.ERROR_NO_SOURCES);
                         return MarketError.NoSources;
                     case MarketError.OK :
                         return MarketError.OK;
@@ -353,13 +392,17 @@ namespace Expanze.Gameplay.Map
                 }
             }
 
+            SetLastError(Strings.ERROR_MAX_LICENCES);
             return MarketError.MaxLicences;
         }
 
         public CaptureHexaError CanCaptureHexa(int hexaID, FortModel fort)
         {
             if (!Settings.costFortCapture.HasPlayerSources(GameMaster.Inst().GetActivePlayer()))
+            {
+                SetLastError(Strings.ERROR_NO_SOURCES);
                 return CaptureHexaError.NoSources;
+            }
 
             if (fort == null)
                 return CaptureHexaError.OK;
@@ -369,10 +412,16 @@ namespace Expanze.Gameplay.Map
             HexaModel hexa = map.GetHexaByID(hexaID);
 
             if (hexa == null)
+            {
+                SetLastError(Strings.ERROR_INVALID_HEXA_ID);
                 return CaptureHexaError.InvalidHexaID;
+            }
 
             if (!hexa.IsInFortRadius())
+            {
+                SetLastError(Strings.ERROR_TOO_FAR_FROM_FORT);
                 return CaptureHexaError.TooFarFromFort;
+            }
 
             return CaptureHexaError.OK;
         }
@@ -395,7 +444,10 @@ namespace Expanze.Gameplay.Map
         public DestroyHexaError CanDestroyHexa(int hexaID, FortModel fort)
         {
             if (!Settings.costFortDestroyHexa.HasPlayerSources(GameMaster.Inst().GetActivePlayer()))
+            {
+                SetLastError(Strings.ERROR_NO_SOURCES);
                 return DestroyHexaError.NoSources;
+            }
 
             if (fort == null)
                 return DestroyHexaError.OK;
@@ -405,10 +457,16 @@ namespace Expanze.Gameplay.Map
             HexaModel hexa = map.GetHexaByID(hexaID);
 
             if (hexa == null)
+            {
+                SetLastError(Strings.ERROR_INVALID_HEXA_ID);
                 return DestroyHexaError.InvalidHexaID;
+            }
 
             if (!hexa.IsInFortRadius())
+            {
+                SetLastError(Strings.ERROR_TOO_FAR_FROM_FORT);
                 return DestroyHexaError.TooFarFromFort;
+            }
 
             return DestroyHexaError.OK;
         }
@@ -434,9 +492,15 @@ namespace Expanze.Gameplay.Map
 
             Player activePlayer = GameMaster.Inst().GetActivePlayer();
             if (activePlayer.GetBuildingCount(Building.Fort) == 0)
+            {
+                SetLastError(Strings.ERROR_NO_FORT);
                 return DestroySourcesError.NoFort;
+            }
             if (!Settings.costFortSources.HasPlayerSources(activePlayer))
+            {
+                SetLastError(Strings.ERROR_NO_SOURCES);
                 return DestroySourcesError.NoSources;
+            }
 
             return DestroySourcesError.OK;
         }
@@ -463,9 +527,15 @@ namespace Expanze.Gameplay.Map
             Player activePlayer = GameMaster.Inst().GetActivePlayer();
 
             if (!GetPrice(PriceKind.AParade).HasPlayerSources(activePlayer))
+            {
+                SetLastError(Strings.ERROR_NO_SOURCES);
                 return ParadeError.NoSources;
+            }
             if (activePlayer.GetBuildingCount(Building.Fort) == 0)
+            {
+                SetLastError(Strings.ERROR_NO_FORT);
                 return ParadeError.NoFort;
+            }
 
             return ParadeError.OK;
         }

@@ -10,12 +10,14 @@ namespace AIEasy
         List<ITreeNode> nodeList;
         int[] permutation;
         Random rnd;
+        DecisionTree tree;
 
-        public StochasticNodeMultiple(List<ITreeNode> nodeList)
+        public StochasticNodeMultiple(List<ITreeNode> nodeList, DecisionTree tree)
         {
             this.nodeList = nodeList;
             rnd = new Random();
             permutation = new int[nodeList.Count];
+            this.tree = tree;
         }
 
         public override void Execute()
@@ -23,7 +25,11 @@ namespace AIEasy
             MakeRandomPermutation();
 
             for (int loop1 = 0; loop1 < permutation.Length; loop1++)
+            {
                 nodeList[permutation[loop1]].Execute();
+                if (tree.GetWasAction())
+                    return;
+            }
         }
 
         private void MakeRandomPermutation()

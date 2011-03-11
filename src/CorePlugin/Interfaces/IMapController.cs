@@ -136,6 +136,7 @@ namespace CorePlugin
         ITown GetITownByID(int townID);
         IRoad GetIRoadByID(int roadID);       
         EGameState GetState();
+        String GetLastError();
 
         /// <summary>
         /// Min ID is 1 (not 0!)
