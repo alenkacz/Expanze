@@ -8,16 +8,18 @@ namespace AIEasy
     class StochasticNodeMultiple : DecisionNode
     {
         List<ITreeNode> nodeList;
+        ITreeNode backNode;
         int[] permutation;
         Random rnd;
         DecisionTree tree;
 
-        public StochasticNodeMultiple(List<ITreeNode> nodeList, DecisionTree tree)
+        public StochasticNodeMultiple(List<ITreeNode> nodeList, ITreeNode backNode, DecisionTree tree)
         {
             this.nodeList = nodeList;
             rnd = new Random();
             permutation = new int[nodeList.Count];
             this.tree = tree;
+            this.backNode = backNode;
         }
 
         public override void Execute()
@@ -30,6 +32,8 @@ namespace AIEasy
                 if (tree.GetWasAction())
                     return;
             }
+
+            backNode.Execute();
         }
 
         private void MakeRandomPermutation()

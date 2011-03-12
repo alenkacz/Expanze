@@ -29,6 +29,13 @@ namespace AIEasy
 
             foreach (IRoad r in roads)
             {
+                
+                RoadBuildError error = r.CanBuildRoad();
+                if (error == RoadBuildError.AlreadyBuild ||
+                    error == RoadBuildError.InvalidRoadID ||
+                    error == RoadBuildError.NoPlayerRoadOrTown)
+                    continue;
+
                 tempFitness = Fitness.GetFitness(r);
                 if (tempFitness > maxFitness)
                 {
@@ -37,24 +44,15 @@ namespace AIEasy
                 }
             }
 
-            ///
 
-            tree.SetActiveObject(maxObject);
-            trueNode.Execute();
-
-            if (tree.GetWasAction())
-                return;
-
-            /*
-            foreach (IRoad road in roads)
+            if (maxObject != null)
             {
-                tree.SetActiveRoad(road);
+                tree.SetActiveObject(maxObject);
                 trueNode.Execute();
 
                 if (tree.GetWasAction())
                     return;
             }
-            */
 
             falseNode.Execute();
         }

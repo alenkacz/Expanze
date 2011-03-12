@@ -251,6 +251,14 @@ namespace AIEasy
             }
         }
 
+        internal bool BuildFort(ITown town, byte pos)
+        {
+            if (town.BuildFort(pos) == null)
+                  throw new Exception("Fort should have been built. " + mapController.GetLastError());
+
+            return true;
+        }
+
         internal bool BuildMarket(ITown town, byte pos)
         {
             if (town.BuildMarket(pos) == null)
@@ -314,6 +322,11 @@ namespace AIEasy
             }
         }
 
+        internal bool ExistFreePlaceForRoad()
+        {
+            return GetFreeRoadPlaces().Count > 0;
+        }
+
         internal bool HasFreeSlotInMonastery()
         {
             int maxSlot = 3 * mapController.GetPlayerMe().GetBuildingCount(Building.Monastery);
@@ -355,5 +368,13 @@ namespace AIEasy
             return false;
         }
 
+
+        internal bool ActionShowParade()
+        {
+            if (mapController.ShowParade())
+                return true;
+
+            throw new Exception("Should have shown parade " + mapController.GetLastError());
+        }
     }
 }

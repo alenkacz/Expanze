@@ -9,19 +9,23 @@ namespace AIEasy
     class ActionSource
     {
         DelAction action;
-        PriceKind price;
         int sourceChange;
         ActiveState state;                // about which town, hexa etc it is about
+        GetPrice getPrice;
 
+        public ActionSource(DelAction action, PriceKind price) : this(action, () => { return price;})
+        {
 
-        public ActionSource(DelAction action, PriceKind price)
+        }
+
+        public ActionSource(DelAction action, GetPrice getPrice)
         {
             this.action = action;
-            this.price = price;
+            this.getPrice = getPrice;
             state = new ActiveState();
         }
 
-        public PriceKind GetPriceKind() { return price; }
+        public PriceKind GetPriceKind() { return getPrice(); }
         public DelAction GetAction() { return action; }
         public int GetSourceChange() { return sourceChange; }
         public void SetSourceChange(int sourceChange)
@@ -34,6 +38,8 @@ namespace AIEasy
             state.activeSourceKind = activeState.activeSourceKind;
             state.activeTown = activeState.activeTown;
             state.activeTownPos = activeState.activeTownPos;
+            state.activeSourceBuildingKind = activeState.activeSourceBuildingKind;
+            state.activeUpgradeKind = activeState.activeUpgradeKind;
         }
 
         internal ActiveState GetState()

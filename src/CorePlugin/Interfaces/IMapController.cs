@@ -123,6 +123,9 @@ namespace CorePlugin
         /// <returns></returns>
         int CanChangeSourcesFor(ISourceAll source);
 
+        ParadeError CanShowParade();
+        bool ShowParade();
+
         /// <summary>
         /// Returns price of choosen building, upgrade, licence or action.
         /// </summary>

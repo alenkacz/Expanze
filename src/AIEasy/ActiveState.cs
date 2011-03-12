@@ -18,12 +18,12 @@ namespace AIEasy
 
         public ActiveState()
         {
-            activeLicenceKind = LicenceKind.NoLicence;
+            activeLicenceKind = LicenceKind.SecondLicence;
             activeRoad = null;
             activeTown = null;
             activeTownPos = 255;
             activeSourceKind = SourceKind.Count;
-            activeUpgradeKind = UpgradeKind.NoUpgrade;
+            activeUpgradeKind = UpgradeKind.SecondUpgrade;
             activeSourceBuildingKind = SourceBuildingKind.Count;
         }
     }
