@@ -134,6 +134,7 @@ namespace CorePlugin
         ISourceAll GetPrice(PriceKind kind);
 
         IPlayer GetPlayerMe();
+        List<IPlayer> GetPlayerOthers();
         IHexa GetIHexa(int x, int y);
         IHexa GetIHexaByID(int hexaID);
         ITown GetITownByID(int townID);

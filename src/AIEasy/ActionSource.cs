@@ -40,6 +40,7 @@ namespace AIEasy
             state.activeTownPos = activeState.activeTownPos;
             state.activeSourceBuildingKind = activeState.activeSourceBuildingKind;
             state.activeUpgradeKind = activeState.activeUpgradeKind;
+            state.activePlayer = activeState.activePlayer;
         }
 
         internal ActiveState GetState()

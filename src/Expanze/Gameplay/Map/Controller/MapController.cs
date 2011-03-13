@@ -54,6 +54,22 @@ namespace Expanze.Gameplay.Map
         }
 
         public IPlayer GetPlayerMe() { return GameMaster.Inst().GetActivePlayer(); }
+
+        public List<IPlayer> GetPlayerOthers()
+        {
+            List<IPlayer> players = new List<IPlayer>();
+
+            foreach (IPlayer p in GameMaster.Inst().GetPlayers())
+            {
+                if (p != GetPlayerMe())
+                {
+                    players.Add(p);
+                }
+            }
+
+            return players;
+        }
+
         public int GetMaxRoadID() { return RoadModel.GetRoadCount(); }
         public int GetMaxTownID() { return TownModel.GetTownCount(); }
         public int GetMaxHexaID() { return HexaModel.GetHexaCount(); }
@@ -517,6 +533,10 @@ namespace Expanze.Gameplay.Map
                 activePlayer.AddSources(-Settings.costFortSources, TransactionState.TransactionStart);
                 activePlayer.AddSources(source / 2, TransactionState.TransactionEnd);
                 activePlayer.AddFortAction();
+                if (activePlayer.GetIsAI())
+                {
+                    Message.Inst().Show("Někdo krade!", activePlayer.GetName() + " se vloupal do skladišť " + player.GetName() + " a odnesl si lup polovinu jeho zásob.", GameResources.Inst().GetHudTexture(HUDTexture.IconFortSources));
+                }
                 return true;
             }
             return false;

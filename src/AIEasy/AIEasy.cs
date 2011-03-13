@@ -334,7 +334,24 @@ namespace AIEasy
             return upgradeAmount < maxSlot;
         }
 
-        internal bool EveryTurnALotOfOneSource(int amountLimit)
+        internal bool ExistPlayerWithFitnessMore(float fitness)
+        {
+            foreach (IPlayer p in mapController.GetPlayerOthers())
+            {
+                if (Fitness.GetFitness(p) >= fitness)
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="amountLimit"></param>
+        /// <param name="market">true if market, false if monastery</param>
+        /// <returns></returns>
+        internal bool EveryTurnALotOfOneSource(int amountLimit, bool market)
         {
             ISourceAll source = mapController.GetPlayerMe().GetCollectSourcesNormal();
 
@@ -344,7 +361,16 @@ namespace AIEasy
 
             for (int loop1 = 0; loop1 < 5; loop1++)
             {
+                if (market && 
+                    mapController.GetPlayerMe().GetMarketLicence((SourceKind)loop1) == LicenceKind.SecondLicence)
+                    continue;
+                else
+                if (!market && 
+                     mapController.GetPlayerMe().GetMonasteryUpgrade((SourceBuildingKind)loop1) == UpgradeKind.SecondUpgrade)
+                    continue;
+
                 temp = source.Get((SourceKind)loop1);
+
                 if (temp > max)
                 {
                     max = temp;
@@ -375,6 +401,14 @@ namespace AIEasy
                 return true;
 
             throw new Exception("Should have shown parade " + mapController.GetLastError());
+        }
+
+        internal bool StealSources(IPlayer player)
+        {
+            if (mapController.StealSources(player.GetName()))
+                return true;
+
+            throw new Exception("Should steal sources from " + player.GetName() + ". " + mapController.GetLastError());
         }
     }
 }

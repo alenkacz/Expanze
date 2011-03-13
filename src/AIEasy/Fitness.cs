@@ -88,6 +88,28 @@ namespace AIEasy
             return fitness / 2.0f;
         }
 
+        public static float GetFitness(IPlayer player)
+        {
+            int sum = 0;
+            int sourceHim;
+            int sourceMe;
+            ISourceAll source = player.GetSource();
+            IPlayer me = map.GetPlayerMe();
+
+            for (int loop1 = 0; loop1 < 5; loop1++)
+            {
+                sourceHim = source.Get((SourceKind)loop1);
+                sourceMe = me.GetCollectSourcesNormal().Get((SourceKind)loop1);
+                sum += (sourceMe <= 16) ? sourceHim * 2 : sourceHim;
+            }
+
+            float result = sum / 2000.0f;
+            if (result > 1.0f)
+                result = 1.0f;
+
+            return result;
+        }
+
         public static float GetFitness(ITown town)
         {
             if (town == null)

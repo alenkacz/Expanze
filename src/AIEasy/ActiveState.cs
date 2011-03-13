@@ -15,6 +15,7 @@ namespace AIEasy
         public UpgradeKind activeUpgradeKind;
         public SourceBuildingKind activeSourceBuildingKind;
         public byte activeTownPos;
+        public IPlayer activePlayer;
 
         public ActiveState()
         {
@@ -25,6 +26,7 @@ namespace AIEasy
             activeSourceKind = SourceKind.Count;
             activeUpgradeKind = UpgradeKind.SecondUpgrade;
             activeSourceBuildingKind = SourceBuildingKind.Count;
+            activePlayer = null;
         }
     }
 }
