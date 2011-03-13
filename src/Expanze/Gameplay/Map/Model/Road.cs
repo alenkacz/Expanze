@@ -29,12 +29,14 @@ namespace Expanze
             playerOwner = null;
         }
 
-        public static void resetCounter() { counter = 0; }      // every new game have to be reseted
+        public static void ResetCounter() { counter = 0; }      // every new game have to be reseted
 
         public static int GetRoadCount() { return counter; }    // number of roads
-        public Player getOwner() { return playerOwner; }
+        public Player GetOwner() { return playerOwner; }
+        public IPlayer GetIOwner() { return playerOwner; }
         public int GetRoadID() { return roadID; }
-        public bool getIsBuild() { return isBuild; }
+        public bool GetIsBuild() { return isBuild; }
+        public ITown[] GetITown() { return neighbour; }
 
         public void SetTownNeighbours(TownModel one, TownModel two)
         {
@@ -52,7 +54,7 @@ namespace Expanze
         {
             foreach (TownModel town in neighbour)
             {
-                if (town.HasPlayerRoadNeighbour(player) && (town.GetPlayerOwner() == player || !town.GetIsBuild()))
+                if (town.HasPlayerRoadNeighbour(player) && (town.GetOwner() == player || !town.GetIsBuild()))
                     return true;
             }
 
@@ -68,7 +70,7 @@ namespace Expanze
         {
             foreach(TownModel town in neighbour)
             {
-                if (town.GetPlayerOwner() == player)
+                if (town.GetOwner() == player)
                     return true;
             }
 
@@ -107,11 +109,20 @@ namespace Expanze
                 Player activePlayer = gm.GetActivePlayer();
 
                 if (isBuild)
+                {
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_ALREADY_BUILD);
                     return RoadBuildError.AlreadyBuild;
-                if(!IsActivePlayersRoadOnEndOfRoad(activePlayer) && !IsActivePlayersTownOnEndOfRoad(activePlayer))
+                }
+                if (!IsActivePlayersRoadOnEndOfRoad(activePlayer) && !IsActivePlayersTownOnEndOfRoad(activePlayer))
+                {
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_PLAYER_ROAD_OR_TOWN);
                     return RoadBuildError.NoPlayerRoadOrTown;
-                if(!Settings.costRoad.HasPlayerSources(activePlayer))
+                }
+                if (!Settings.costRoad.HasPlayerSources(activePlayer))
+                {
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_SOURCES);
                     return RoadBuildError.NoSources;
+                }
                 return RoadBuildError.OK;
             }
 

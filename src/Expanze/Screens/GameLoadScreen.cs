@@ -55,9 +55,14 @@ namespace Expanze
                                 PlayerIndex? controllingPlayer,
                                 params GameScreen[] screensToLoad)
         {
+            bool oneBackground = false;
             foreach (GameScreen screen in screenManager.GetScreens())
             {
                 if(screen is MainMenuScreen)
+                    screen.ExitScreen();
+                if (screen is BackgroundScreen && !oneBackground)
+                    oneBackground = true;
+                else if (screen is BackgroundScreen && oneBackground)
                     screen.ExitScreen();
             }
 

@@ -30,7 +30,7 @@ namespace Expanze
         {
             base.Update(gameTime);
 
-            Player act = GameMaster.Inst().GetActivePlayer();
+            Player act = GameMaster.Inst().GetTargetPlayer();
 
             if (act.HasMaterialChanged())
             {
@@ -61,10 +61,10 @@ namespace Expanze
                 c = Color.White;
 
             spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,null,null,null,null,Settings.spriteScale);
-            spritePosition.Y = 750;
+            spritePosition.Y = 755;
             spritePosition.X = 350;
 
-            Player act = GameMaster.Inst().GetActivePlayer();
+            Player act = GameMaster.Inst().GetTargetPlayer();
 
             spriteBatch.Draw(myButton, spritePosition, c);
             if (pick)
@@ -73,11 +73,11 @@ namespace Expanze
                 return;
             }
 
-            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), act.getCorn().ToString(), new Vector2(this.spritePosition.X + start, this.spritePosition.Y + 100), Color.White);
-            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), act.getMeat().ToString(), new Vector2(this.spritePosition.X + start + space, this.spritePosition.Y + 100), Color.White);
-            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), act.getStone().ToString(), new Vector2(this.spritePosition.X + start + 2 * space, this.spritePosition.Y + 100), Color.White);
-            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), act.getWood().ToString(), new Vector2(this.spritePosition.X + start + 3 * space, this.spritePosition.Y + 100), Color.White);
-            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), act.getOre().ToString(), new Vector2(this.spritePosition.X + start + 4 * space, this.spritePosition.Y + 100), Color.White);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), act.GetCorn().ToString(), new Vector2(this.spritePosition.X + start, this.spritePosition.Y + 100), Color.White);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), act.GetMeat().ToString(), new Vector2(this.spritePosition.X + start + space, this.spritePosition.Y + 100), Color.White);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), act.GetStone().ToString(), new Vector2(this.spritePosition.X + start + 2 * space, this.spritePosition.Y + 100), Color.White);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), act.GetWood().ToString(), new Vector2(this.spritePosition.X + start + 3 * space, this.spritePosition.Y + 100), Color.White);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), act.GetOre().ToString(), new Vector2(this.spritePosition.X + start + 4 * space, this.spritePosition.Y + 100), Color.White);
 
             //spriteBatch.DrawString(GameState.hudMaterialsFont, changeMaterials.ToString(), new Vector2(200, 200), Color.White);
 

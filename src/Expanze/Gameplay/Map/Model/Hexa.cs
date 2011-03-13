@@ -20,7 +20,10 @@ namespace Expanze
         private bool sourceMiracle;   /// is on hex miracle
         private int turnMiracle;      /// how many turns miracle will last
 
-        private bool hexaCaptured;    /// has been hexa captured from fort?
+        private bool captureIs;       /// has been hexa captured from fort?
+        private Player capturePlayer; /// who has captured hexa
+
+        /// destroying was in the game
         private bool hexaDestroy;      /// was hexa destroyed from fort
         private int turnDestroy;      /// how many turns will be hexa destroyed
 
@@ -32,7 +35,10 @@ namespace Expanze
         private static int hexaIDFort;     /// from which hexa are soldiers send to capturing/destroying hexas?
         SourceAll sourceBuildingCost;      /// source cost of building according hexa kind
 
-        private HexaKind kind = HexaKind.Water;
+        private HexaKind kind;
+        private SourceKind sourceKind;
+        private SourceBuildingKind buildingKind;
+
         private HexaModel[] hexaNeighbours;      /// neighbours of hexa, to index use RoadPos
         private TownModel[] towns;               /// possible towns on hexa, to index use Town Pos
         private Boolean[] townOwner;             /// was this town made by this hexa? if was, this hexa will draw it, handle picking, get sources...
@@ -41,18 +47,22 @@ namespace Expanze
 
 
 
-        public HexaModel() : this(0, HexaKind.Water, new SourceAll(0)) { }
+        public HexaModel() : this(0, HexaKind.Water, SourceKind.Null, SourceBuildingKind.Count, new SourceAll(0)) { }
 
-        public HexaModel(int value, HexaKind type, SourceAll sourceBuildingCost)
+        public HexaModel(int value, HexaKind kind, SourceKind sourceKind, SourceBuildingKind buildingKind,SourceAll sourceBuildingCost)
         {
-            if (type == HexaKind.Water)
+            if (kind == HexaKind.Water)
             {
                 this.hexaID = -1;
             } else
                 this.hexaID = ++counter;
 
             this.sourceBuildingCost = sourceBuildingCost;
-            this.kind = type;
+
+            this.kind = kind;
+            this.sourceKind = sourceKind;
+            this.buildingKind = buildingKind;
+
             this.startSource = value;
             this.towns = new TownModel[(int) TownPos.Count];
             this.roads = new RoadModel[(int)RoadPos.Count];
@@ -62,13 +72,20 @@ namespace Expanze
             sourceDisaster = false;
             sourceMiracle = false;
             hexaDestroy = false;
-            hexaCaptured = false;
+            captureIs = false;
+            capturePlayer = null;
         }
 
         public static void ResetCounter() { counter = 0; }
         public static int GetHexaCount() { return counter; }
         public static int GetHexaIDFort() { return hexaIDFort; }
         public static void SetHexaIDFort(int hexaID) { hexaIDFort = hexaID; }
+        public bool GetCaptured() { return captureIs; }
+        public Player GetCapturedPlayer() { return capturePlayer; }
+
+        public HexaKind GetKind() { return this.kind; }
+        public SourceKind GetSourceKind() { return sourceKind; }
+        public SourceBuildingKind GetSourceBuildingKind() { return buildingKind; }
 
         public void Update(GameTime gameTime)
         {
@@ -121,7 +138,7 @@ namespace Expanze
             else
             {
                 roads[(int)RoadPos.UpLeft] = neighboursModel[(int)RoadPos.UpLeft].GetRoad(RoadPos.BottomRight);
-                hexaView.setRoadView(RoadPos.UpLeft, neighboursView[(int)RoadPos.UpLeft].getRoadView(RoadPos.BottomRight));
+                hexaView.SetRoadView(RoadPos.UpLeft, neighboursView[(int)RoadPos.UpLeft].GetRoadView(RoadPos.BottomRight));
             }
 
             if (neighboursModel[(int)RoadPos.UpRight] == null ||
@@ -134,7 +151,7 @@ namespace Expanze
             else
             {
                 roads[(int)RoadPos.UpRight] = neighboursModel[(int)RoadPos.UpRight].GetRoad(RoadPos.BottomLeft);
-                hexaView.setRoadView(RoadPos.UpRight, neighboursView[(int)RoadPos.UpRight].getRoadView(RoadPos.BottomLeft));
+                hexaView.SetRoadView(RoadPos.UpRight, neighboursView[(int)RoadPos.UpRight].GetRoadView(RoadPos.BottomLeft));
             }
 
             if (neighboursModel[(int)RoadPos.MiddleLeft] == null ||
@@ -147,7 +164,7 @@ namespace Expanze
             else
             {
                 roads[(int)RoadPos.MiddleLeft] = neighboursModel[(int)RoadPos.MiddleLeft].GetRoad(RoadPos.MiddleRight);
-                hexaView.setRoadView(RoadPos.MiddleLeft, neighboursView[(int)RoadPos.MiddleLeft].getRoadView(RoadPos.MiddleRight));
+                hexaView.SetRoadView(RoadPos.MiddleLeft, neighboursView[(int)RoadPos.MiddleLeft].GetRoadView(RoadPos.MiddleRight));
             }
 
             if (neighboursModel[(int)RoadPos.MiddleRight] == null ||
@@ -160,7 +177,7 @@ namespace Expanze
             else
             {
                 roads[(int)RoadPos.MiddleRight] = neighboursModel[(int)RoadPos.MiddleRight].GetRoad(RoadPos.MiddleLeft);
-                hexaView.setRoadView(RoadPos.MiddleRight, neighboursView[(int)RoadPos.MiddleRight].getRoadView(RoadPos.MiddleLeft));
+                hexaView.SetRoadView(RoadPos.MiddleRight, neighboursView[(int)RoadPos.MiddleRight].GetRoadView(RoadPos.MiddleLeft));
             }
 
             if (neighboursModel[(int)RoadPos.BottomLeft] == null ||
@@ -173,7 +190,7 @@ namespace Expanze
             else
             {
                 roads[(int)RoadPos.BottomLeft] = neighboursModel[(int)RoadPos.BottomLeft].GetRoad(RoadPos.UpRight);
-                hexaView.setRoadView(RoadPos.BottomLeft, neighboursView[(int)RoadPos.BottomLeft].getRoadView(RoadPos.UpRight));
+                hexaView.SetRoadView(RoadPos.BottomLeft, neighboursView[(int)RoadPos.BottomLeft].GetRoadView(RoadPos.UpRight));
             }
             if (neighboursModel[(int)RoadPos.BottomRight] == null ||
                 neighboursModel[(int)RoadPos.BottomRight].GetRoad(RoadPos.UpLeft) == null)
@@ -185,7 +202,7 @@ namespace Expanze
             else
             {
                 roads[(int)RoadPos.BottomRight] = neighboursModel[(int)RoadPos.BottomRight].GetRoad(RoadPos.UpLeft);
-                hexaView.setRoadView(RoadPos.BottomRight, neighboursView[(int)RoadPos.BottomRight].getRoadView(RoadPos.UpLeft));
+                hexaView.SetRoadView(RoadPos.BottomRight, neighboursView[(int)RoadPos.BottomRight].GetRoadView(RoadPos.UpLeft));
             }
 
             ///////////////////////
@@ -205,12 +222,12 @@ namespace Expanze
                 if (neighboursModel[(int)RoadPos.UpLeft] != null && neighboursModel[(int)RoadPos.UpLeft].getTown(TownPos.BottomRight) != null)
                 {
                     towns[(int)TownPos.Up] = neighboursModel[(int)RoadPos.UpLeft].getTown(TownPos.BottomRight);
-                    hexaView.setTownView(TownPos.Up, neighboursView[(int)RoadPos.UpLeft].getTownView(TownPos.BottomRight));
+                    hexaView.SetTownView(TownPos.Up, neighboursView[(int)RoadPos.UpLeft].GetTownView(TownPos.BottomRight));
                 }
                 else
                 {
                     towns[(int)TownPos.Up] = neighboursModel[(int)RoadPos.UpRight].getTown(TownPos.BottomLeft);
-                    hexaView.setTownView(TownPos.Up, neighboursView[(int)RoadPos.UpRight].getTownView(TownPos.BottomLeft));
+                    hexaView.SetTownView(TownPos.Up, neighboursView[(int)RoadPos.UpRight].GetTownView(TownPos.BottomLeft));
                 }
             }
 
@@ -226,7 +243,7 @@ namespace Expanze
             else
             {
                 towns[(int)TownPos.Bottom] = neighboursModel[(int)RoadPos.BottomLeft].getTown(TownPos.UpRight);
-                hexaView.setTownView(TownPos.Bottom, neighboursView[(int)RoadPos.BottomLeft].getTownView(TownPos.UpRight));
+                hexaView.SetTownView(TownPos.Bottom, neighboursView[(int)RoadPos.BottomLeft].GetTownView(TownPos.UpRight));
             }
 
             if ((neighboursModel[(int)RoadPos.UpRight] == null ||
@@ -243,12 +260,12 @@ namespace Expanze
                 if (neighboursModel[(int)RoadPos.UpRight] != null && neighboursModel[(int)RoadPos.UpRight].getTown(TownPos.Bottom) != null)
                 {
                     towns[(int)TownPos.UpRight] = neighboursModel[(int)RoadPos.UpRight].getTown(TownPos.Bottom);
-                    hexaView.setTownView(TownPos.UpRight, neighboursView[(int)RoadPos.UpRight].getTownView(TownPos.Bottom));
+                    hexaView.SetTownView(TownPos.UpRight, neighboursView[(int)RoadPos.UpRight].GetTownView(TownPos.Bottom));
                 }
                 else
                 {
                     towns[(int)TownPos.UpRight] = neighboursModel[(int)RoadPos.MiddleRight].getTown(TownPos.UpLeft);
-                    hexaView.setTownView(TownPos.UpRight, neighboursView[(int)RoadPos.MiddleRight].getTownView(TownPos.UpLeft));
+                    hexaView.SetTownView(TownPos.UpRight, neighboursView[(int)RoadPos.MiddleRight].GetTownView(TownPos.UpLeft));
                 }
             }
 
@@ -264,7 +281,7 @@ namespace Expanze
             else
             {
                 towns[(int)TownPos.UpLeft] = neighboursModel[(int)RoadPos.UpLeft].getTown(TownPos.Bottom);
-                hexaView.setTownView(TownPos.UpLeft, neighboursView[(int)RoadPos.UpLeft].getTownView(TownPos.Bottom));
+                hexaView.SetTownView(TownPos.UpLeft, neighboursView[(int)RoadPos.UpLeft].GetTownView(TownPos.Bottom));
             }
 
             if ((neighboursModel[(int)RoadPos.BottomRight] == null ||
@@ -281,12 +298,12 @@ namespace Expanze
                 if (neighboursModel[(int)RoadPos.BottomRight] != null && neighboursModel[(int)RoadPos.BottomRight].getTown(TownPos.Bottom) != null)
                 {
                     towns[(int)TownPos.BottomRight] = neighboursModel[(int)RoadPos.BottomRight].getTown(TownPos.Up);
-                    hexaView.setTownView(TownPos.BottomRight, neighboursView[(int)RoadPos.BottomRight].getTownView(TownPos.Up));
+                    hexaView.SetTownView(TownPos.BottomRight, neighboursView[(int)RoadPos.BottomRight].GetTownView(TownPos.Up));
                 }
                 else
                 {
                     towns[(int)TownPos.BottomRight] = neighboursModel[(int)RoadPos.MiddleRight].getTown(TownPos.BottomLeft);
-                    hexaView.setTownView(TownPos.BottomRight, neighboursView[(int)RoadPos.MiddleRight].getTownView(TownPos.BottomLeft));
+                    hexaView.SetTownView(TownPos.BottomRight, neighboursView[(int)RoadPos.MiddleRight].GetTownView(TownPos.BottomLeft));
                 }
             }
             if ((neighboursModel[(int)RoadPos.BottomLeft] == null ||
@@ -303,12 +320,12 @@ namespace Expanze
                 if (neighboursModel[(int)RoadPos.BottomLeft] != null && neighboursModel[(int)RoadPos.BottomLeft].getTown(TownPos.Bottom) != null)
                 {
                     towns[(int)TownPos.BottomLeft] = neighboursModel[(int)RoadPos.BottomLeft].getTown(TownPos.Up);
-                    hexaView.setTownView(TownPos.BottomLeft, neighboursView[(int)RoadPos.BottomLeft].getTownView(TownPos.Up));
+                    hexaView.SetTownView(TownPos.BottomLeft, neighboursView[(int)RoadPos.BottomLeft].GetTownView(TownPos.Up));
                 }
                 else
                 {
                     towns[(int)TownPos.BottomLeft] = neighboursModel[(int)RoadPos.MiddleLeft].getTown(TownPos.BottomRight);
-                    hexaView.setTownView(TownPos.BottomLeft, neighboursView[(int)RoadPos.MiddleLeft].getTownView(TownPos.BottomRight));
+                    hexaView.SetTownView(TownPos.BottomLeft, neighboursView[(int)RoadPos.MiddleLeft].GetTownView(TownPos.BottomRight));
                 }
             }
         }
@@ -482,15 +499,7 @@ namespace Expanze
             if (hexaDestroy)
                 multiply *= 0.5f;
 
-            if (hexaCaptured)
-                multiply *= 0.0f;
-
             return (int) (startSource * multiply);
-        }
-
-        public HexaKind GetKind()
-        {
-            return this.kind;
         }
 
         public RoadModel GetRoad(RoadPos roadPos)
@@ -540,9 +549,36 @@ namespace Expanze
         public void SetCoord(int x, int y) { this.x = x; this.y = y; }
 
 
-        public void Capture()
+        public bool IsInFortRadius()
         {
-            hexaCaptured = !hexaCaptured;
+            /// You cant destroy or capture desert
+            if (kind == HexaKind.Desert)
+                return false;
+
+            if (hexaIDFort == hexaID)
+                return true;
+
+
+            for (int loop1 = 0; loop1 < 6; loop1++)
+            {
+                if (hexaNeighbours[loop1].GetID() == hexaIDFort)
+                    return true;
+            }
+            return false;
+        }
+
+        public void Capture(Player player)
+        {
+            if (!captureIs)
+            {
+                capturePlayer = player;
+            }
+            else
+            {
+                capturePlayer = null;
+            }
+
+            captureIs = !captureIs;
         }
 
         public void Destroy()

@@ -28,12 +28,11 @@ namespace Expanze.Gameplay.Map
             m.CopyAbsoluteBoneTransformsTo(transforms);
             RasterizerState rasterizerState = new RasterizerState();
             rasterizerState.CullMode = CullMode.None;
+            //rasterizerState.FillMode = FillMode.WireFrame;
             GameState.game.GraphicsDevice.RasterizerState = rasterizerState;
 
             //rotation = (hexaID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaID % 6));
             Matrix tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
-
-
 
             foreach (ModelMesh mesh in m.Meshes)
             {

@@ -25,9 +25,11 @@ namespace Expanze
 
         public int GetTownID() { return townID; }
         public bool GetIsBuild() { return isBuild; }
-        public Player GetPlayerOwner() { return playerOwner; }
+        public Player GetOwner() { return playerOwner; }
+        public IPlayer GetIOwner() { return playerOwner; }
         public ISourceAll GetCost() { return Settings.costTown; }
         public IHexa GetIHexa(byte pos) { return GetHexa(pos); }
+        public IRoad GetIRoad(byte pos) { return roadNeighbour[pos]; }
         public HexaModel GetHexa(int pos) { return hexaNeighbour[pos]; }
         public static int GetTownCount() { return counter; }    // number of towns
 
@@ -65,7 +67,15 @@ namespace Expanze
             return -1;
         }
 
-        public BuildingKind getBuildingKind(int hexaID)
+        public BuildingKind GetBuildingKind(byte pos)
+        {
+            if (pos >= 0 && pos <= 2)
+                return buildingKind[pos];
+            else
+                return BuildingKind.NoBuilding;
+        }
+
+        public BuildingKind GetBuildingKind(int hexaID)
         {
             if (!isBuild)
                 return BuildingKind.NoBuilding;
@@ -75,7 +85,7 @@ namespace Expanze
             return (buildingPos == -1) ? BuildingKind.NoBuilding : buildingKind[buildingPos];
         }
 
-        public SpecialBuilding getSpecialBuilding(int hexaID)
+        public SpecialBuilding GetSpecialBuilding(int hexaID)
         {
             if (!isBuild)
                 return null;
@@ -110,11 +120,10 @@ namespace Expanze
 
         public void CollectSources(Player player)
         {
-            if (playerOwner != player)
-                return;
-
-            SourceAll cost = new SourceAll(0);
-            int amount;
+            SourceAll sourceNow = new SourceAll(0);
+            SourceAll sourceNormal = new SourceAll(0);
+            int amountNow;
+            int amountNormal;
 
             for(int loop1 = 0; loop1 < 3; loop1++)
             {
@@ -123,33 +132,45 @@ namespace Expanze
                 {
                     SourceBuildingModel tempBuilding = (SourceBuildingModel) building[loop1];
                     float multiply = (tempBuilding.GetUpgrade() == UpgradeKind.SecondUpgrade) ? 2.0f : (tempBuilding.GetUpgrade() == UpgradeKind.FirstUpgrade) ? 1.5f : 1.0f;
-                    amount = (int)(hexaNeighbour[loop1].GetCurrentSource() * multiply);
-
-                    switch (hexaNeighbour[loop1].GetKind())
+                    
+                    amountNormal = hexaNeighbour[loop1].GetCurrentSource();
+                    amountNow = (int)(amountNormal * multiply);
+                    
+                    if (player == hexaNeighbour[loop1].GetCapturedPlayer() ||
+                        (player == playerOwner && !hexaNeighbour[loop1].GetCaptured()))
                     {
-                        case HexaKind.Forest:
-                            cost = cost + new SourceAll(amount, 0, 0, 0, 0);
-                            break;
+                        switch (hexaNeighbour[loop1].GetKind())
+                        {
+                            case HexaKind.Forest:
+                                sourceNow    += new SourceAll(amountNow, 0, 0, 0, 0);
+                                sourceNormal += new SourceAll(amountNormal, 0, 0, 0, 0);
+                                break;
 
-                        case HexaKind.Stone:
-                            cost = cost + new SourceAll(0, amount, 0, 0, 0);
-                            break;
+                            case HexaKind.Stone:
+                                sourceNow    += new SourceAll(0, amountNow, 0, 0, 0);
+                                sourceNormal += new SourceAll(0, amountNormal, 0, 0, 0);
+                                break;
 
-                        case HexaKind.Cornfield:
-                            cost = cost + new SourceAll(0, 0, amount, 0, 0);
-                            break;
+                            case HexaKind.Cornfield:
+                                sourceNow    += new SourceAll(0, 0, amountNow, 0, 0);
+                                sourceNormal += new SourceAll(0, 0, amountNormal, 0, 0);
+                                break;
 
-                        case HexaKind.Pasture:
-                            cost = cost + new SourceAll(0, 0, 0, amount, 0);
-                            break;
+                            case HexaKind.Pasture:
+                                sourceNow    += new SourceAll(0, 0, 0, amountNow, 0);
+                                sourceNormal += new SourceAll(0, 0, 0, amountNormal, 0);
+                                break;
 
-                        case HexaKind.Mountains:
-                            cost = cost + new SourceAll(0, 0, 0, 0, amount);
-                            break;
+                            case HexaKind.Mountains:
+                                sourceNow    += new SourceAll(0, 0, 0, 0, amountNow);
+                                sourceNormal += new SourceAll(0, 0, 0, 0, amountNormal);
+                                break;
+                        }
                     }
                 }
             }
-            player.AddSources(cost, TransactionState.TransactionMiddle);
+            player.AddSources(sourceNow, TransactionState.TransactionMiddle);
+            player.AddCollectSources(sourceNormal, sourceNow);
         }
 
         public void BuildTown(Player player)
@@ -175,7 +196,7 @@ namespace Expanze
             {
                 if (road != null)
                 {
-                    if (road.getOwner() == player)
+                    if (road.GetOwner() == player)
                         return true;
                 }
             }
@@ -230,13 +251,22 @@ namespace Expanze
             if (gm.GetState() == EGameState.StateGame)
             {
                 if (buildingKind[pos] != BuildingKind.NoBuilding)
+                {
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_ALREADY_BUILD);
                     return BuildingBuildError.AlreadyBuild;
+                }
 
                 if (gm.GetActivePlayer() != playerOwner)
+                {
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_OWNER);
                     return BuildingBuildError.NotOwner;
+                }
 
                 if (!cost.HasPlayerSources(gm.GetActivePlayer()))
+                {
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_SOURCES);
                     return BuildingBuildError.NoSources;
+                }
 
                 if (cost == new SourceAll(0))
                 {
@@ -249,6 +279,16 @@ namespace Expanze
             return BuildingBuildError.NoSources;
         }
 
+        public bool IsPossibleToBuildTown()
+        {
+            if (isBuild)
+                return false;
+            if (HasTownBuildNeighbour())
+                return false;
+
+            return true;
+        }
+
         public TownBuildError CanBuildTown()
         {
             GameMaster gm = GameMaster.Inst();
@@ -257,31 +297,54 @@ namespace Expanze
                 Player activePlayer = gm.GetActivePlayer();
                 Boolean hasActivePlayerRoadNeighbour = false;
 
+                if (isBuild)
+                {
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_ALREADY_BUILD);
+                    return TownBuildError.AlreadyBuild;
+                }
+                if (HasTownBuildNeighbour())
+                {
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_OTHER_TOWN_IS_TOO_CLOSE);
+                    return TownBuildError.OtherTownIsClose;
+                }
+
                 foreach (RoadModel road in roadNeighbour)
                 {
-                    if (road != null && road.getOwner() == activePlayer)
+                    if (road != null && road.GetOwner() == activePlayer)
                         hasActivePlayerRoadNeighbour = true;
                 }
 
-                if (isBuild)
-                    return TownBuildError.AlreadyBuild;
-                if (HasTownBuildNeighbour())
-                    return TownBuildError.OtherTownIsClose;
-                if (!Settings.costTown.HasPlayerSources(activePlayer))
-                    return TownBuildError.NoSources;
                 if (!hasActivePlayerRoadNeighbour)
+                {
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_PLAYER_ROAD);
                     return TownBuildError.NoPlayerRoad;
+                }
+
+                if (!Settings.costTown.HasPlayerSources(activePlayer))
+                {
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_SOURCES);
+                    return TownBuildError.NoSources;
+                }
 
                 return TownBuildError.OK;
             }
             else
             {
                 if (gm.GetHasBuiltTown())
+                {
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_YOU_HAVE_BUILT_TOWN_THIS_TURN);
                     return TownBuildError.YouHaveBuiltTownThisTurn;
+                }
                 if (isBuild)
+                {
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_ALREADY_BUILD);
                     return TownBuildError.AlreadyBuild;
+                }
                 if (HasTownBuildNeighbour())
+                {
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_OTHER_TOWN_IS_TOO_CLOSE);
                     return TownBuildError.OtherTownIsClose;
+                }
 
                 return TownBuildError.OK;
             }
@@ -294,6 +357,7 @@ namespace Expanze
             {
                 case BuildingKind.SourceBuilding :
                     building[pos] = new SourceBuildingModel(playerOwner, townID, hexaNeighbour[pos].GetID());
+
                     switch (hexaNeighbour[pos].GetKind())
                     {
                         case HexaKind.Cornfield: playerOwner.AddBuilding(Building.Mill); break;
@@ -305,31 +369,40 @@ namespace Expanze
                     break;
 
                 case BuildingKind.MarketBuilding :
-                    building[pos] = new MarketModel(playerOwner, townID, hexaNeighbour[pos].GetID());
+                    MarketModel marketModel = new MarketModel(playerOwner, townID, hexaNeighbour[pos].GetID());
+                    building[pos] = marketModel;
                     playerOwner.AddBuilding(Building.Market);
+                    playerOwner.AddPoints(Settings.pointsMarket);
+                    playerOwner.AddMarket(marketModel);
                     break;
                 case BuildingKind.MonasteryBuilding :
-                    building[pos] = new MonasteryModel(playerOwner, townID, hexaNeighbour[pos].GetID());
+                    MonasteryModel monasteryModel = new MonasteryModel(playerOwner, townID, hexaNeighbour[pos].GetID());
+                    building[pos] = monasteryModel;
                     playerOwner.AddBuilding(Building.Monastery);
+                    playerOwner.AddPoints(Settings.pointsMonastery);
+                    playerOwner.AddMonastery(monasteryModel);
                     break;
                 case BuildingKind.FortBuilding :
-                    building[pos] = new FortModel(playerOwner, townID, hexaNeighbour[pos].GetID());
+                    FortModel fortModel = new FortModel(playerOwner, townID, hexaNeighbour[pos].GetID());
+                    building[pos] = fortModel;
                     playerOwner.AddBuilding(Building.Fort);
+                    playerOwner.AddPoints(Settings.pointsFort);
+                    playerOwner.AddFort(fortModel);
                     break;
             }
 
             return building[pos];
         }
 
-        public ISourceBuilding BuildSourceBuilding(byte pos)
+        public bool BuildSourceBuilding(byte pos)
         {
             if (pos < 0 || pos > 2)
-                return null;
+                return false;
 
             if (GameState.map.GetMapController().BuildBuildingInTown(townID, hexaNeighbour[pos].GetID(), BuildingKind.SourceBuilding))
-                return (ISourceBuilding)building[pos];
+                return true;
             else
-                return null;
+                return false;
         }
 
         public IFort BuildFort(byte pos)

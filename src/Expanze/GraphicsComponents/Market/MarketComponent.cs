@@ -5,13 +5,14 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using CorePlugin;
+using Expanze.Utils;
 
 namespace Expanze
 {
     class MarketComponent : GuiComponent
     {
         #region Properties
-        public static bool isActive = false;
+        private static bool isActive = false;
         private bool wasActive = false;
         private static MarketComponent instance = null;
 
@@ -51,7 +52,7 @@ namespace Expanze
             fromIconPosition = new Vector2(this.range.Left + 30, (int)(range.Top + topMargin + buttonSize.Y + 3 * space + 30));
         }
 
-        public static MarketComponent getInstance()
+        public static MarketComponent Inst()
         {
             if (instance == null)
             {
@@ -66,8 +67,16 @@ namespace Expanze
             return isActive;
         }
 
-        public void setIsActive(bool active)
+        public void SetIsActive(bool active)
         {
+            if (active)
+            {
+                InputManager.Inst().SetActiveState("gamemarket");
+            }
+            else
+            {
+                InputManager.Inst().ClearActiveState("gamemarket");
+            }
             isActive = active;
         }
 
@@ -97,7 +106,7 @@ namespace Expanze
             GuiComponent secondRow = new GuiComponent(Settings.Game, range.Left + 3 * w_space, (int)(range.Top + topMargin + buttonSize.Y + 2 * space + 10), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(77), Settings.scaleH(14), "za_co_vymenit");
             this.content.Add(secondRow);
 
-            marketSlider = new MarketSliderComponent(Settings.Game, range.Left + 130, (int)(range.Top + topMargin + buttonSize.Y + 4 * space + 10), GameResources.Inst().GetFont(EFont.MedievalBig),392,16,"slider_market");
+            marketSlider = new MarketSliderComponent(Settings.Game, range.Left + 130, (int)(range.Top + topMargin + buttonSize.Y + 4 * space + 10), GameResources.Inst().GetFont(EFont.MedievalBig),372,16,"slider_market");
             //this.content.Add(marketSlider);
 
             foreach (GuiComponent g in content)
@@ -230,7 +239,7 @@ namespace Expanze
 
                 fromSelectKind = btn.getType();
                 marketSlider.setFromType(fromSelectKind);
-                marketSlider.moveSliderToStart();
+                marketSlider.MoveSliderToStart();
             }
 
             btn.setPicked(!btn.getPicked());
@@ -283,14 +292,18 @@ namespace Expanze
         /// </summary>
         void ChangeButtonAction(object sender, PlayerIndexEventArgs e)
         {
+            ChangeMaterial();
+        }
 
+        void ChangeMaterial()
+        {
             int actualFrom = GameMaster.Inst().GetActivePlayer().GetMaterialNumber(fromSelectKind);
             int actualTo = GameMaster.Inst().GetActivePlayer().GetMaterialNumber(toSelectKind);
 
             int convertedFrom = marketSlider.getConvertedFrom();
             int convertedTo = marketSlider.getConvertedTo();
 
-            GameMaster.Inst().DoMaterialConversion(fromSelectKind, toSelectKind, GameMaster.Inst().GetActivePlayer(),actualFrom - convertedFrom,convertedTo-actualTo);
+            GameMaster.Inst().DoMaterialConversion(fromSelectKind, toSelectKind, GameMaster.Inst().GetActivePlayer(), actualFrom - convertedFrom, convertedTo - actualTo);
             wasActive = false;
         }
 
@@ -299,7 +312,7 @@ namespace Expanze
         /// </summary>
         void CloseButtonAction(object sender, PlayerIndexEventArgs e)
         {
-            MarketComponent.isActive = false;
+            SetIsActive(false);
         }
 
         #endregion
@@ -329,12 +342,28 @@ namespace Expanze
 
                 fromSelectKind = SourceKind.Null;
                 toSelectKind = SourceKind.Null;
-                marketSlider.resetSlider();
+                marketSlider.ResetSlider();
 
                 wasActive = isActive;
             }
 
             marketSlider.Update(gameTime);
+
+            if (InputManager.Inst().GetGameAction("gamemarket", "close").IsPressed())
+                MarketComponent.Inst().SetIsActive(false);
+
+            if (InputManager.Inst().GetGameAction("gamemarket", "ok").IsPressed())
+                ChangeMaterial();
+
+            if (InputManager.Inst().GetGameAction("gamemarket", "left").IsPressed())
+            {
+                marketSlider.MoveSliderLeft();
+            }
+
+            if (InputManager.Inst().GetGameAction("gamemarket", "right").IsPressed())
+            {
+                marketSlider.MoveSliderRight();
+            }
         }
 
         private void drawSelectedKind()

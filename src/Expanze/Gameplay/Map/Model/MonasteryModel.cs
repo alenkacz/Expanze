@@ -30,8 +30,70 @@ namespace Expanze.Gameplay
 
         protected override void ApplyEffect(UpgradeKind upgradeKind, int upgradeNumber)
         {
-            GameMaster.Inst().GetActivePlayer().SetSourceBuildingUpdate(upgradeKind, upgradeNumber);
-            SetPromptWindow(PromptWindow.Mod.Buyer);
+            Player player = GameMaster.Inst().GetActivePlayer();
+            player.SetSourceBuildingUpdate(upgradeKind, upgradeNumber);
+            if (!player.GetIsAI())
+            {
+                int tempItem = PromptWindow.Inst().GetActiveItem();
+                SetPromptWindow(PromptWindow.Mod.Buyer);
+                PromptWindow.Inst().SetActiveItem(tempItem);
+            }
+            else
+            {
+                Message.Inst().Show(player.GetName() + " vynalezl pokrok", player.GetName() + " vynalezl " + GetUpgradeKindString(upgradeKind) + " pro větší zisky surovin z " + GetUpgradeBuildingName(upgradeNumber) + ".", GetUpgradeIcon(upgradeKind, upgradeNumber));
+            }
+        }
+
+        private Texture2D GetUpgradeIcon(UpgradeKind kind, int upgradeNumber)
+        {
+            switch (kind)
+            {
+                case UpgradeKind.FirstUpgrade:
+                    switch (upgradeNumber)
+                    {
+                        case 0: return GameResources.Inst().GetHudTexture(HUDTexture.IconMill1);
+                        case 1: return GameResources.Inst().GetHudTexture(HUDTexture.IconStepherd1);
+                        case 2: return GameResources.Inst().GetHudTexture(HUDTexture.IconQuarry1);
+                        case 3: return GameResources.Inst().GetHudTexture(HUDTexture.IconWood1);
+                        case 4: return GameResources.Inst().GetHudTexture(HUDTexture.IconMine1);
+                    }
+                    break;
+                case UpgradeKind.SecondUpgrade:
+                    switch (upgradeNumber)
+                    {
+                        case 0: return GameResources.Inst().GetHudTexture(HUDTexture.IconMill2);
+                        case 1: return GameResources.Inst().GetHudTexture(HUDTexture.IconStepherd2);
+                        case 2: return GameResources.Inst().GetHudTexture(HUDTexture.IconQuarry2);
+                        case 3: return GameResources.Inst().GetHudTexture(HUDTexture.IconWood2);
+                        case 4: return GameResources.Inst().GetHudTexture(HUDTexture.IconMine2);
+                    }
+                    break;
+            }
+
+            return null;
+        }
+
+        private String GetUpgradeBuildingName(int number)
+        {
+            switch (number)
+            {
+                case 0: return "větrného mlýna";
+                case 1: return "chatrče pastevce";
+                case 2: return "kamenného lomu";
+                case 3: return "pily";
+                case 4: return "dolu na rudu";
+            }
+            return "";
+        }
+
+        private String GetUpgradeKindString(UpgradeKind kind)
+        {
+            switch (kind)
+            {
+                case UpgradeKind.FirstUpgrade: return "první pokrok";
+                case UpgradeKind.SecondUpgrade: return "druhý pokrok";
+            }
+            return "";
         }
 
         public override void SetPromptWindow(PromptWindow.Mod mod)
@@ -107,9 +169,43 @@ namespace Expanze.Gameplay
 
         public bool InventUpgrade(SourceBuildingKind source)
         {
-            UpgradeKind kind = owner.GetMonasteryUpgrade(source);
+            UpgradeKind kind;
+            switch (owner.GetMonasteryUpgrade(source))
+            {
+                case UpgradeKind.NoUpgrade: kind = UpgradeKind.FirstUpgrade; break;
+                case UpgradeKind.FirstUpgrade: kind = UpgradeKind.SecondUpgrade; break;
+                default : return false;
+            }
 
-            return GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, kind, (int) source) == BuyingUpgradeError.OK;
+            return GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, kind, (int) source);
+        }
+
+        public MonasteryError CanInventUpgrade(SourceBuildingKind source)
+        {
+            UpgradeKind kind;
+            switch (owner.GetMonasteryUpgrade(source))
+            {
+                case UpgradeKind.NoUpgrade: kind = UpgradeKind.FirstUpgrade; break;
+                case UpgradeKind.FirstUpgrade: kind = UpgradeKind.SecondUpgrade; break;
+                default: kind = UpgradeKind.NoUpgrade; break;
+            }
+            BuyingUpgradeError error = GameState.map.GetMapController().CanBuyUpgradeInSpecialBuilding(townID, hexaID, kind, (int)source);
+
+            switch (error)
+            {
+                case BuyingUpgradeError.YouAlreadyHaveSecondUpgrade:
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_HAVE_SECOND_UPGRADE);
+                    return MonasteryError.HaveSecondUpgrade;
+                case BuyingUpgradeError.NoSources:
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_SOURCES);
+                    return MonasteryError.NoSources;
+                case BuyingUpgradeError.MaxUpgrades:
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_MAX_UPGRADES);
+                    return MonasteryError.MaxUpgrades;
+                case BuyingUpgradeError.OK: return MonasteryError.OK;
+            }
+
+            return MonasteryError.OK;
         }
     }
 }

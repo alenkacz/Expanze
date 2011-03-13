@@ -5,6 +5,10 @@ using System.Text;
 
 namespace CorePlugin
 {
+    public enum PriceKind { BRoad, BTown, BMill, BStepherd, BQuarry, BSaw, BMine, BMarket, BMonastery, BFort,
+                            UMill1, UStepherd1, UQuarry1, USaw1, UMine1, UMill2, UStepherd2, UQuarry2, USaw2, UMine2,
+                            MCorn1, MMeat1, MStone1, MWood1, MOre1, MCorn2, MMeat2, MStone2, MWood2, MOre2,
+                            AParade, AStealSources, ACaptureHexa}
     public enum EGameState { StateFirstTown, StateSecondTown, StateGame }
     public enum UpgradeKind { NoUpgrade, FirstUpgrade, SecondUpgrade }
     public enum LicenceKind { NoLicence, FirstLicence, SecondLicence }
@@ -73,14 +77,70 @@ namespace CorePlugin
         /// </summary>
         /// <param name="playerName">Name of player you want destroy sources.</param>
         /// <returns>True if destroying sources is succesful, otherwise false</returns>
-        bool DestroySources(String playerName);
+        bool StealSources(String playerName);
+
+        /// <summary>
+        /// Find out if you can destroy other player sources.
+        /// </summary>
+        /// <param name="playerName">Name of player you want destroy sources.</param>
+        /// <returns>Error why you cant destroy sources or DestroySourcesError.OK</returns>
+        DestroySourcesError CanStealSources(String playerName);
+
+        /// <summary>
+        /// Buy licence in random market for better conversion rate for source kind. 
+        /// If you have first licence, you buy second licence. 
+        /// Third licence doesn't exist.
+        /// </summary>
+        /// <param name="source">Kind of source.</param>
+        /// <returns>True if licence was bought, otherwise false.</returns>
+        bool BuyLicence(SourceKind source);
+
+        MarketError CanBuyLicence(SourceKind source);
+
+        /// <summary>
+        /// Invent upgrade for source building of source kind. 
+        /// If you have first upgrade, you invent second upgrade. 
+        /// Third upgrade doesnt exist.
+        /// </summary>
+        /// <param name="source">Kind of source building.</param>
+        /// <returns>True if upgrade was bought, otherwise false.</returns>
+        bool InventUpgrade(SourceBuildingKind source);
+
+        /// <summary>
+        /// Returns the reason why you cant invent upgrade or returns
+        /// MonasteryError.OK if there is no obstacle to invent upgrade.
+        /// </summary>
+        /// <param name="source">For which building kind you want invent upgrade.</param>
+        /// <returns>MonasteryError.OK if it is OK, or some error.</returns>
+        MonasteryError CanInventUpgrade(SourceBuildingKind source);
+
+        bool ChangeSourcesFor(ISourceAll source);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="kind"></param>
+        /// <returns></returns>
+        int CanChangeSourcesFor(ISourceAll source);
+
+        ParadeError CanShowParade();
+        bool ShowParade();
+
+        /// <summary>
+        /// Returns price of choosen building, upgrade, licence or action.
+        /// </summary>
+        /// <param name="kind">Kind of thing you are asking price.</param>
+        /// <returns>Price of choosen kind.</returns>
+        ISourceAll GetPrice(PriceKind kind);
 
         IPlayer GetPlayerMe();
+        List<IPlayer> GetPlayerOthers();
         IHexa GetIHexa(int x, int y);
         IHexa GetIHexaByID(int hexaID);
         ITown GetITownByID(int townID);
         IRoad GetIRoadByID(int roadID);       
         EGameState GetState();
+        String GetLastError();
 
         /// <summary>
         /// Min ID is 1 (not 0!)

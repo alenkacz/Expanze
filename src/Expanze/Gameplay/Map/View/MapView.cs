@@ -236,22 +236,29 @@ namespace Expanze.Gameplay.Map
 
         public void Draw(GameTime gameTime)
         {
+            
             for (int i = 0; i < hexaMapView.Length; i++)
             {
                 for (int j = 0; j < hexaMapView[i].Length; j++)
                 {
                     if (hexaMapView[i][j] != null)
                     {
-                        hexaMapView[i][j].Draw(gameTime);
+                        if(hexaMapView[i][j].IsOnScreen())
+                            hexaMapView[i][j].Draw(gameTime);
                     }
                 }
             }
-            
+
+            // DrawWater();
+        }
+
+        private void DrawWater()
+        {
             Matrix mWorld = Matrix.Identity;
             float dx = 0.591f;  // copyied from creating matrices
             float dy = 0.512f;
             HexaView tempView;
-            
+
             int rowWidth = 0;
             const int hexaBorder = 14;
 
@@ -263,7 +270,7 @@ namespace Expanze.Gameplay.Map
                     tempView = hexaMapView[i][j];
                     if (tempView != null)
                     {
-                        mWorld = hexaMapView[i][j].getWorldMatrix();
+                        mWorld = hexaMapView[i][j].GetWorldMatrix();
                         break;
                     }
                     rowWidth--;
@@ -273,14 +280,14 @@ namespace Expanze.Gameplay.Map
                 for (int loop2 = -hexaBorder; loop2 <= hexaBorder; loop2++)
                 {
                     DrawWaterHexa(mWorld);
-                    if(loop2 == -1)
+                    if (loop2 == -1)
                         mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, dx * rowWidth));
 
                     mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, dx));
                 }
             }
 
-            mWorld = hexaMapView[0][0].getWorldMatrix() * Matrix.CreateTranslation(new Vector3(-dy, 0.0f, dx / 2.0f - hexaBorder * dx));
+            mWorld = hexaMapView[0][0].GetWorldMatrix() * Matrix.CreateTranslation(new Vector3(-dy, 0.0f, dx / 2.0f - hexaBorder * dx));
 
             int maxRowWidth = hexaBorder * 2 + 3;
             for (int loop1 = 0; loop1 < maxRowWidth; loop1++)
@@ -293,7 +300,7 @@ namespace Expanze.Gameplay.Map
                 mWorld = mWorld * Matrix.CreateTranslation(new Vector3(-dy, 0.0f, -dx / 2.0f - dx * (maxRowWidth - ((loop1 % 2 == 0) ? 1 : 0))));
             }
 
-            mWorld = hexaMapView[hexaMapView.Length - 1][hexaMapView[hexaMapView.Length - 1].Length - rowWidth].getWorldMatrix() * Matrix.CreateTranslation(new Vector3(dy, 0.0f, dx / 2.0f - hexaBorder * dx));
+            mWorld = hexaMapView[hexaMapView.Length - 1][hexaMapView[hexaMapView.Length - 1].Length - rowWidth].GetWorldMatrix() * Matrix.CreateTranslation(new Vector3(dy, 0.0f, dx / 2.0f - hexaBorder * dx));
             for (int loop1 = 0; loop1 < maxRowWidth; loop1++)
             {
                 for (int loop2 = 0; loop2 < maxRowWidth; loop2++)
@@ -308,7 +315,7 @@ namespace Expanze.Gameplay.Map
         public void CreateHexaWorldMatrices()
         {
             HexaModel.ResetCounter();
-            RoadModel.resetCounter();
+            RoadModel.ResetCounter();
             TownModel.ResetCounter();
             TownView.ResetTownView();
 

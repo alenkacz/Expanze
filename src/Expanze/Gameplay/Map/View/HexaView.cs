@@ -77,6 +77,9 @@ namespace Expanze
         protected RoadView[] roadView;
         protected TownView[] townView;
         protected HexaKind kind;
+        bool centerOnScreen;
+        private HexaView[] hexaNeighbours;
+
         public HexaView(HexaModel model)
         {
             this.model = model;
@@ -104,9 +107,10 @@ namespace Expanze
             roadView[(int)pos] = new RoadView(model.GetRoad(pos), relative * world);
         }
 
-        public RoadView getRoadView(RoadPos pos) { return roadView[(int)pos]; }
+        public bool GetIsCenterOnScreen() { return centerOnScreen; }
+        public RoadView GetRoadView(RoadPos pos) { return roadView[(int)pos]; }
 
-        public void setRoadView(RoadPos pos, RoadView road)
+        public void SetRoadView(RoadPos pos, RoadView road)
         {
             roadView[(int)pos] = road;
         }
@@ -116,33 +120,12 @@ namespace Expanze
             townView[(int)pos] = new TownView(model.getTown(pos), relative * world);
         }
 
-        public TownView getTownView(TownPos pos) { return townView[(int)pos]; }
+        public TownView GetTownView(TownPos pos) { return townView[(int)pos]; }
 
-        public void setTownView(TownPos pos, TownView town)
+        public void SetTownView(TownPos pos, TownView town)
         {
             townView[(int)pos] = town;
         }
-
-        private bool IsInFortRadius()
-        {
-            int hexaIDFort = HexaModel.GetHexaIDFort();
-
-            /// You cant destroy or capture desert
-            if (kind == HexaKind.Desert)
-                return false;
-
-            if (hexaIDFort == hexaID)
-                return true;
-
-        
-            for(int loop1 = 0; loop1 < 6; loop1++)
-            {
-                if (model.GetHexaNeighbour(loop1).GetID() == hexaIDFort)
-                    return true;
-            }
-            return false;
-        }
-
 
         private void DrawHexaIcon(SpriteBatch spriteBatch, Vector2 pos, Texture2D passive, Texture2D active)
         {
@@ -178,11 +161,13 @@ namespace Expanze
 
         public void Draw2D()
         {
-            if (kind == HexaKind.Water)
-                return;
-
             BoundingFrustum frustum = new BoundingFrustum(GameState.view * GameState.projection);
             ContainmentType containmentType = frustum.Contains(Vector3.Transform(new Vector3(0.0f, 0.0f, 0.0f), world));
+
+            centerOnScreen = containmentType != ContainmentType.Disjoint;
+
+            if (kind == HexaKind.Water)
+                return;
 
             if (containmentType != ContainmentType.Disjoint)
             {
@@ -192,6 +177,10 @@ namespace Expanze
                 point2D.X = point3D.X;
                 point2D.Y = point3D.Y;
                 posHexaIcon = point2D;
+
+                Texture2D playerIcon = GameResources.Inst().GetHudTexture(HUDTexture.PlayerColor);
+                Rectangle playerIconRect = new Rectangle((int)point2D.X - playerIcon.Width / 2, (int)point2D.Y - playerIcon.Height / 2, playerIcon.Width, playerIcon.Height);
+
                 SpriteBatch spriteBatch = GameState.spriteBatch;
 
                 Vector2 stringCenter = GameResources.Inst().GetFont(EFont.MedievalMedium).MeasureString(model.GetCurrentSource() + "") * 0.5f;
@@ -211,8 +200,8 @@ namespace Expanze
                         if (town.getIsMarked())
                         {
                             tempTown = town.getTownModel();
-                            if (tempTown.getBuildingKind(hexaID) != BuildingKind.NoBuilding || 
-                                tempTown.GetPlayerOwner() == GameMaster.Inst().GetActivePlayer())
+                            if (tempTown.GetBuildingKind(hexaID) != BuildingKind.NoBuilding || 
+                                tempTown.GetOwner() == GameMaster.Inst().GetActivePlayer())
                                 drawNumber = false;
                             break;
                         }
@@ -244,21 +233,30 @@ namespace Expanze
                     }
                 }
 
+                if (model.GetCaptured())
+                {
+                    spriteBatch.Draw(playerIcon, playerIconRect, model.GetCapturedPlayer().GetColor());
+                }
+
                 if (drawNumber)
                 {
                     DrawHexaNumber(spriteBatch, point2D);
                 }
                 else if(GameMaster.Inst().GetFortState() == EFortState.Normal)
                 {
-                    if (tempTown.getBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.GetPlayerOwner() == GameMaster.Inst().GetActivePlayer())
+                    if (tempTown.GetBuildingKind(hexaID) == BuildingKind.NoBuilding && tempTown.GetOwner() == GameMaster.Inst().GetActivePlayer())
                     {
                         DrawHexaIcon(spriteBatch, posHexaIcon, HUDTexture.HammersPassive, HUDTexture.HammersActive);
                         DrawHexaNumber(spriteBatch, point2D);
                     }
                     else
                     {
-                            DrawHexaIcon(spriteBatch, posHexaIcon, tempTown.getSpecialBuilding(hexaID).GetIconPassive(), tempTown.getSpecialBuilding(hexaID).GetIconActive());
-                            if(tempTown.getBuildingKind(hexaID) == BuildingKind.SourceBuilding)
+                            DrawHexaIcon(spriteBatch, posHexaIcon, tempTown.GetSpecialBuilding(hexaID).GetIconPassive(), tempTown.GetSpecialBuilding(hexaID).GetIconActive());
+                            if (model.GetCaptured())
+                            {
+                                spriteBatch.Draw(playerIcon, playerIconRect, model.GetCapturedPlayer().GetColor());
+                            }
+                            if(tempTown.GetBuildingKind(hexaID) == BuildingKind.SourceBuilding)
                                 DrawHexaNumber(spriteBatch, point2D);
                     }
                 }
@@ -268,18 +266,18 @@ namespace Expanze
 
         public virtual void Draw(GameTime gameTime)
         {
+
             Model m = GameResources.Inst().GetHexaModel(kind);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
             RasterizerState rasterizerState = new RasterizerState();
             rasterizerState.CullMode = CullMode.None;
+            //rasterizerState.FillMode = FillMode.WireFrame;
             GameState.game.GraphicsDevice.RasterizerState = rasterizerState;
 
             Matrix rotation;
             rotation = (hexaID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaID % 6));
             Matrix tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
-
-
 
             foreach (ModelMesh mesh in m.Meshes)
             {
@@ -327,7 +325,7 @@ namespace Expanze
                 Matrix tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
 
                 int roofID = -1;
-                switch(model.getTown((CorePlugin.TownPos)loop1).getBuildingKind(model.GetID()))
+                switch(model.getTown((CorePlugin.TownPos)loop1).GetBuildingKind(model.GetID()))
                 {
                     case BuildingKind.NoBuilding :
                         m = null;
@@ -374,7 +372,7 @@ namespace Expanze
                     {
                         if (a == roofID)
                         {
-                            Vector3 color = model.getTown((CorePlugin.TownPos)loop1).GetPlayerOwner().GetColor().ToVector3();
+                            Vector3 color = model.getTown((CorePlugin.TownPos)loop1).GetOwner().GetColor().ToVector3();
                             effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
                             effect.DiffuseColor = color * 0.6f;
                             effect.AmbientLightColor = color * 0.3f;
@@ -466,10 +464,10 @@ namespace Expanze
                                 kind != HexaKind.Null)
                             {
                                 PromptWindow.Mod mod;
-                                switch (townView[loop1].getTownModel().getBuildingKind(hexaID))
+                                switch (townView[loop1].getTownModel().GetBuildingKind(hexaID))
                                 {
                                     case BuildingKind.NoBuilding:
-                                        if (townView[loop1].getTownModel().GetPlayerOwner() == GameMaster.Inst().GetActivePlayer())
+                                        if (townView[loop1].getTownModel().GetOwner() == GameMaster.Inst().GetActivePlayer())
                                         {
                                             String titleWindow = "";
                                             String titleBuilding = "";
@@ -508,7 +506,7 @@ namespace Expanze
                                             }
 
                                             int townID = townView[loop1].getTownModel().GetTownID();
-                                            mod = (townView[loop1].getTownModel().GetPlayerOwner() == GameMaster.Inst().GetActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
+                                            mod = (townView[loop1].getTownModel().GetOwner() == GameMaster.Inst().GetActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
                                             PromptWindow.Inst().Show(mod, titleWindow, true);
                                             if (kind != HexaKind.Desert)
                                                 PromptWindow.Inst().AddPromptItem(
@@ -523,15 +521,15 @@ namespace Expanze
                                             if (kind != HexaKind.Mountains)
                                             {
                                                 PromptWindow.Inst().AddPromptItem(MonasteryModel.GetPromptItemBuildMonastery(townID, hexaID));
-                                                PromptWindow.Inst().AddPromptItem(MarketModel.getPromptItemBuildMarket(townID, hexaID));
-                                                PromptWindow.Inst().AddPromptItem(FortModel.getPromptItemBuildFort(townID, hexaID));
+                                                PromptWindow.Inst().AddPromptItem(MarketModel.GetPromptItemBuildMarket(townID, hexaID));
+                                                PromptWindow.Inst().AddPromptItem(FortModel.GetPromptItemBuildFort(townID, hexaID));
                                             }
                                         }
                                         break;
 
                                     default:
-                                        mod = (townView[loop1].getTownModel().GetPlayerOwner() == GameMaster.Inst().GetActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
-                                        townView[loop1].getTownModel().getSpecialBuilding(hexaID).SetPromptWindow(mod);
+                                        mod = (townView[loop1].getTownModel().GetOwner() == GameMaster.Inst().GetActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
+                                        townView[loop1].getTownModel().GetSpecialBuilding(hexaID).SetPromptWindow(mod);
                                         break;
                                 }
                             }
@@ -541,7 +539,7 @@ namespace Expanze
                     case EFortState.DestroyingHexa:
                         if (IsInFortRadius())
                         {
-                            GameState.map.GetMapController().DestroyHexa(hexaID);
+                            GameState.map.GetMapController().DestroyHexa(hexaID, null);
                             GameMaster.Inst().SetFortState(EFortState.Normal);
                         }
                         break;
@@ -549,12 +547,17 @@ namespace Expanze
                     case EFortState.CapturingHexa:
                         if (IsInFortRadius())
                         {
-                            GameState.map.GetMapController().CaptureHexa(hexaID);
+                            GameState.map.GetMapController().CaptureHexa(hexaID, null);
                             GameMaster.Inst().SetFortState(EFortState.Normal);
                         }
                         break;
                 }
             }
+        }
+
+        private bool IsInFortRadius()
+        {
+            return model.IsInFortRadius();
         }
 
         public virtual RoadView GetRoadViewByID(int roadID)
@@ -581,9 +584,27 @@ namespace Expanze
             return null;
         }
 
-        public Matrix getWorldMatrix()
+        public Matrix GetWorldMatrix()
         {
             return world;
+        }
+
+        public bool IsOnScreen()
+        {
+            foreach (HexaView view in hexaNeighbours)
+            {
+                if (view == null || view.GetIsCenterOnScreen())
+                    return true;
+            }
+            return centerOnScreen;
+        }
+
+        public void SetHexaNeighbours(HexaView[] neighboursView)
+        {
+            hexaNeighbours = new HexaView[neighboursView.Length];
+            for (int loop1 = 0; loop1 < neighboursView.Length; loop1++)
+                hexaNeighbours[loop1] = neighboursView[loop1];
+
         }
     }
 }

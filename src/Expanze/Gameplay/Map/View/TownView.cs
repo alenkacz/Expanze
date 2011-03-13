@@ -111,11 +111,12 @@ namespace Expanze.Gameplay.Map
 
                 int a = 0;
 
-                Player player = model.GetPlayerOwner();
+                Player player = model.GetOwner();
                 if (player == null)
                     player = GameMaster.Inst().GetActivePlayer();
                 Vector3 color = player.GetColor().ToVector3();
 
+                int sum = 0;
                 foreach (ModelMesh mesh in m.Meshes)
                 {
                     foreach (BasicEffect effect in mesh.Effects)
@@ -163,7 +164,13 @@ namespace Expanze.Gameplay.Map
                     mesh.Draw();
 
                     a++;
+                    foreach (ModelMeshPart part in mesh.MeshParts)
+                    {
+                        sum += part.PrimitiveCount;
+                    }
                 }
+
+                sum++;
 
                 if (pickTownID == townID || (pickVars.pickActive && isBuildView))
                 {
@@ -218,9 +225,15 @@ namespace Expanze.Gameplay.Map
                 if (model.GetIsBuild() && GameMaster.Inst().GetState() == EGameState.StateGame)
                 {
                     if (pickTownID == townID)
+                    {
+                        gm.SetTargetPlayer(gm.GetActivePlayer());
                         pickTownID = -1;
+                    }
                     else
+                    {
+                        gm.SetTargetPlayer(model.GetOwner());
                         pickTownID = townID;
+                    }
                 }
                 else
                 {

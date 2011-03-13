@@ -99,7 +99,7 @@ namespace Expanze
                 playersSettings.Add(pSwitch);
                 colorPosition.Y += playerSpace;
 
-                if (counter <= 1)
+                if (counter <= 2)
                 {
                     // first two users are active
                     pSwitch.setActive(true);

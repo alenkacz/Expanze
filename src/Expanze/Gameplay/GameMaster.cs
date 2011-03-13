@@ -18,10 +18,13 @@ namespace Expanze
     {
         private int playerCount;
         private List<Player> players = new List<Player>();
+        private int turnNumber;
 
         private Player[] medailOwner;
 
         private Player activePlayer;
+        private Player targetPlayer;
+
         private int activePlayerIndex;
         private EGameState state;
         private EFortState fortState;
@@ -64,7 +67,7 @@ namespace Expanze
 
         public void AddToPlayerCount(int i) { playerCount += i; }
 
-        public bool StartGame(bool isAI, Map map)
+        public bool StartGame(Map map)
         {
             this.map = map;
 
@@ -88,6 +91,7 @@ namespace Expanze
             
             activePlayerIndex = 0;
             activePlayer = players.ElementAt(activePlayerIndex);
+            targetPlayer = activePlayer;
 
             pausedNew = false;
             paused = false;
@@ -100,6 +104,12 @@ namespace Expanze
             randomNumber = new System.Random();
 
             hasBuiltTown = false;
+
+            turnNumber = 0;
+
+            PromptWindow.Inst().Deactive();
+            Message.Inst().ClearMessages();
+            MarketComponent.Inst().SetIsActive(false);
 
             return true;
         }
@@ -130,7 +140,7 @@ namespace Expanze
                     break;
             }
 
-            
+            pointsForMedail = 5;
 
             if((medailOwner[(int) medal] == null && player.GetBuildingCount(medal) >= minCount) ||
                (medailOwner[(int) medal] != null && player.GetBuildingCount(medal) > medailOwner[(int) medal].GetBuildingCount(medal)))
@@ -138,8 +148,10 @@ namespace Expanze
                 if (medailOwner[(int)medal] != null)
                 {
                     medailOwner[(int)medal].AddPoints(-pointsForMedail);
+                    medailOwner[(int)medal].GetStatistic().AddStat(Statistic.Kind.Medals, -1, turnNumber);
                 }
                 medailOwner[(int)medal] = player;
+                medailOwner[(int)medal].GetStatistic().AddStat(Statistic.Kind.Medals, 1, turnNumber);
                 player.AddPoints(pointsForMedail);
                 Message.Inst().Show(GetMedalTitle(medal),GetMedalDescription(medal),GetMedaileIcon(medal));
             }
@@ -179,7 +191,7 @@ namespace Expanze
             }
             else
             {
-                return new GameSettings(50, Strings.GAME_SETTINGS_MAP_TYPE_NORMAL, Strings.GAME_SETTINGS_MAP_SIZE_SMALL, Strings.GAME_SETTINGS_MAP_WEALTH_MEDIUM);
+                return new GameSettings(Settings.winPoints[0], Strings.GAME_SETTINGS_MAP_TYPE_NORMAL, Strings.GAME_SETTINGS_MAP_SIZE_SMALL, Strings.GAME_SETTINGS_MAP_WEALTH_MEDIUM);
             }
         }
 
@@ -204,7 +216,12 @@ namespace Expanze
             {
                 Player player = GameMaster.Inst().GetActivePlayer();
                 player.SetActive(false);
-                Logger.Inst().Log(ai.GetAIName() + ".txt", exception.Message + " : from : " + exception.Source);
+                String log = exception.Message + " : from : " + exception.Source + System.Environment.NewLine +
+                             exception.HelpLink + System.Environment.NewLine +
+                             exception.StackTrace + System.Environment.NewLine +
+                             exception.TargetSite + System.Environment.NewLine +
+                             exception.InnerException;
+                Logger.Inst().Log(ai.GetAIName() + "_" + player.GetName() + ".txt", log);
                 Message.Inst().Show(Strings.GAME_ALERT_TITLE_AI_EXCEPTION, player.GetName() + " " + Strings.GAME_ALERT_DESCRIPTION_AI_EXCEPTION, GameResources.Inst().GetHudTexture(HUDTexture.IconTown));
             }
         }
@@ -237,6 +254,8 @@ namespace Expanze
 
         public bool GetHasBuiltTown() { return hasBuiltTown; }
         public Player GetActivePlayer() { return activePlayer; }
+        public Player GetTargetPlayer() { return targetPlayer; }
+        public void SetTargetPlayer(Player p) { targetPlayer = p; }
         public int GetPlayerCount() { return players.Count; }
         public Player GetPlayer(int index) { return players[index]; }
         public Player GetPlayer(String playerName)
@@ -265,8 +284,8 @@ namespace Expanze
             if (state == EGameState.StateGame)
             {
                 GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
-                GameState.map.getSources(activePlayer);
                 RandomEvents();
+                GameState.map.getSources(activePlayer);
             }
 
             hasAIThreadStarted = false;
@@ -286,11 +305,13 @@ namespace Expanze
         {
             if (state != EGameState.StateGame)
             {
+                Message.Inst().Show(Strings.GAME_ALERT_TITLE_NEXT_TURN_BAD_STATE, Strings.GAME_ALERT_DESCRIPTION_NEXT_TURN_BAD_STATE, GameResources.Inst().GetHudTexture(HUDTexture.IconTown));
                 return false;
             }
             
             if(activePlayer.GetIsAI())
             {
+                Message.Inst().Show(Strings.GAME_ALERT_TITLE_AI_IS_THINKING, Strings.GAME_ALERT_DESCRIPTION_AI_IS_THINKING, GameResources.Inst().GetHudTexture(HUDTexture.HammersPassive));
                 return false;
             }
 
@@ -317,7 +338,7 @@ namespace Expanze
             bool status = true;
             if (state == EGameState.StateGame)
             {
-                MarketComponent.isActive = false;
+                MarketComponent.Inst().SetIsActive(false);
             }
 
             if (playerCount == 1)
@@ -327,6 +348,8 @@ namespace Expanze
             }
 
             status &= ChangeActivePlayer();
+            targetPlayer = activePlayer;
+
             hasBuiltTown = false;
 
             status &= StartTurn();
@@ -354,6 +377,7 @@ namespace Expanze
         public void ChangeStateToStateGame()
         {
             state = EGameState.StateGame;
+
             Message.Inst().Show(Strings.GAME_ALERT_TITLE_GAME_STARTED, Strings.GAME_ALERT_DESCRIPTION_GAME_STARTED, GameResources.Inst().GetHudTexture(HUDTexture.IconRoad));
             foreach (Player player in players)
             {
@@ -367,6 +391,8 @@ namespace Expanze
             pausedNew = false;
             return temp;
         }
+
+        public int GetTurnNumber() { return turnNumber; }
 
         public bool GetPaused()
         {
@@ -385,6 +411,9 @@ namespace Expanze
 
         public void DoMaterialConversion(SourceKind from, SourceKind to, Player p, int fromAmount, int toAmount)
         {
+            if (from == SourceKind.Null || to == SourceKind.Null)
+                return;
+
             int rate = p.GetConversionRate(from);
 
             if (!this.IsMaterialAvailable(from,rate)) { return; }
@@ -399,41 +428,36 @@ namespace Expanze
             p.AddSources(get, TransactionState.TransactionEnd);
         }
 
+        public bool ChangeSourcesFor(SourceAll source)
+        {
+            return map.GetMapController().ChangeSourcesFor(source);
+        }
+
+        public int CanChangeSourcesFor(SourceAll source)
+        {
+            return map.GetMapController().CanChangeSourcesFor(source);
+        }
+
         /// <summary>
         /// Checks whether user has enough resources from the type he wants to change in market
         /// </summary>
         /// <returns></returns>
         protected bool IsMaterialAvailable(SourceKind from, int rate)
         {
-            return GetActivePlayer().HaveEnoughMaterial(from);
+            return GetActivePlayer().HaveEnoughMaterialForConversion(from);
         }
 
 
         protected SourceAll CreateSourceAllCost(SourceKind kind, int rate)
         {
-            if (kind == SourceKind.Wood)
+            switch (kind)
             {
-                return new SourceAll(rate, 0, 0, 0, 0);
-            }
-            else if (kind == SourceKind.Stone)
-            {
-                return new SourceAll(0, rate, 0, 0, 0);
-            }
-            else if (kind == SourceKind.Corn)
-            {
-                return new SourceAll(0, 0, rate, 0, 0);
-            }
-            else if (kind == SourceKind.Meat)
-            {
-                return new SourceAll(0, 0, 0, rate, 0);
-            }
-            else if (kind == SourceKind.Ore)
-            {
-                return new SourceAll(0, 0, 0, 0, rate);
-            }
-            else
-            {
-                return new SourceAll(0, 0, 0, 0, 0);
+                case SourceKind.Wood: return  new SourceAll(rate, 0, 0, 0, 0);
+                case SourceKind.Stone: return new SourceAll(0, rate, 0, 0, 0);
+                case SourceKind.Corn: return  new SourceAll(0, 0, rate, 0, 0);
+                case SourceKind.Meat: return  new SourceAll(0, 0, 0, rate, 0);
+                case SourceKind.Ore: return   new SourceAll(0, 0, 0, 0, rate);
+                default : return new SourceAll(0);
             }
         }
 
@@ -471,6 +495,9 @@ namespace Expanze
             }
 
             activePlayer = players[activePlayerIndex];
+
+            if (state == EGameState.StateGame && activePlayerIndex == 0)
+                turnNumber++;
 
             if (!activePlayer.GetActive())
                 return ChangeActivePlayer();
@@ -541,7 +568,7 @@ namespace Expanze
             spriteBatch.Begin();
             for (int loop1 = 0; loop1 < medailOwner.Length; loop1++)
             {
-                if (medailOwner[loop1] == activePlayer)
+                if (medailOwner[loop1] == targetPlayer)
                 {
                     spriteBatch.Draw(GetMedaileIcon((Building) loop1), medailPosition, Color.White);
                     medailPosition += new Vector2(0.0f, 85.0f);

@@ -65,14 +65,26 @@ namespace Expanze
             itemPick = new List<PickVariables>();
         }
 
+        public int GetActiveItem() { return activeItem; }
+
+        public void SetActiveItem(int index)
+        {
+            activeItem = index;
+            if (activeItem < 0)
+                activeItem = 0;
+            if (activeItem >= GetItemCount())
+                activeItem = GetItemCount() - 1;
+        }
+
         public bool GetIsActive()
         {
             return active;
         }
 
-        public void SetIsActive(bool active)
+        public void Deactive()
         {
-            this.active = active;
+            active = false;
+            InputManager.Inst().ClearActiveState("gamewindow");
         }
 
         public void AddPromptItem(PromptItem item)
@@ -86,6 +98,8 @@ namespace Expanze
 
         public void Show(Mod mod, String title, bool showIcons)
         {
+            if (Message.Inst().GetIsActive())
+                return;
             this.mod = mod;
             this.title = title;
             this.showIcons = showIcons;
@@ -94,6 +108,8 @@ namespace Expanze
 
             active = true;
             activeItem = 0;
+
+            InputManager.Inst().SetActiveState("gamewindow");
         }
 
         public override void LoadContent()
@@ -142,17 +158,48 @@ namespace Expanze
                     }
                 }
 
-                if (yesPick.pickNewPress || GameState.CurrentKeyboardState.IsKeyDown(Keys.Enter))
+                if (mod == Mod.Buyer && InputManager.Inst().GetGameAction("gamewindow", "changesources").IsPressed())
+                {
+                    GameMaster.Inst().ChangeSourcesFor((SourceAll) itemList[activeItem].getCost());
+                }
+
+                if (mod == Mod.Buyer && InputManager.Inst().GetGameAction("gamewindow", "canchange").IsPressed())
+                {
+                    int amount = GameMaster.Inst().CanChangeSourcesFor((SourceAll)itemList[activeItem].getCost());
+
+                    if (amount < 0)
+                        Message.Inst().Show("Nemáš dostatek surovin", "Můžeš měnit jak chceš, ale tohle kolo si to nekoupíš, nemáš na to.", GameResources.Inst().GetHudTexture(HUDTexture.IconMarket));
+                    else if(itemList[activeItem].getCost().HasPlayerSources(GameMaster.Inst().GetActivePlayer()))
+                        Message.Inst().Show("Kup to!", "Žádné suroviny ti nechybí. Nechápu, že to nevidíš.", GameResources.Inst().GetHudTexture(HUDTexture.IconMarket));
+                    else
+                        Message.Inst().Show("Navštiv tržnici", "Tohle za tamto, jiné za támhle to a můžeš směle nakupovat", GameResources.Inst().GetHudTexture(HUDTexture.IconMarket));
+                }
+
+                if (InputManager.Inst().GetGameAction("gamewindow", "left").IsPressed())
+                {
+                    activeItem--;
+                    if (activeItem < 0)
+                        activeItem = 0;
+                }
+
+                if (InputManager.Inst().GetGameAction("gamewindow", "right").IsPressed())
+                {
+                    activeItem++;
+                    if (activeItem >= itemList.Count)
+                        activeItem = itemList.Count - 1;
+                }
+
+                if (yesPick.pickNewPress || InputManager.Inst().GetGameAction("gamewindow", "confirm").IsPressed())
                 {
                     yesPick.pickNewPress = false;
-                    active = false;
+                    Deactive();
 
                     itemList[activeItem].Execute();
                 }
-                else if (noPick.pickNewPress)
+                else if (noPick.pickNewPress || InputManager.Inst().GetGameAction("gamewindow", "close").IsPressed())
                 {
                     noPick.pickNewPress = false;
-                    active = false;
+                    Deactive();
                 }
             }
         }
@@ -253,7 +300,7 @@ namespace Expanze
 
         void DrawSources()
         {
-            
+            GameMaster.Inst().GetActivePlayer().SetMaterialChange(-((SourceAll) itemList[activeItem].getCost()));
             float border = 16.0f;
             float sourcesWidth = -border;
             for (int loop1 = 0; loop1 < 5; loop1++)

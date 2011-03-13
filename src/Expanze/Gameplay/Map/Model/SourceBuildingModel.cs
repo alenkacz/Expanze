@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Expanze.Gameplay
 {
-    class SourceBuildingModel : SpecialBuilding, ISourceBuilding
+    class SourceBuildingModel : SpecialBuilding
     {
         int townID; // where is this building
         int hexaID;
@@ -38,9 +38,34 @@ namespace Expanze.Gameplay
             int buildingPos = town.FindBuildingByHexaID(hexaID);
             HexaModel hexa = town.GetHexa(buildingPos);
 
+            SourceAll sourceNormal = new SourceAll(0);
+            int amountNormal = hexa.GetStartSource();
+            switch (hexa.GetKind())
+            {
+                case HexaKind.Forest:
+                    sourceNormal = new SourceAll(amountNormal, 0, 0, 0, 0);
+                    break;
 
-            upgrade1cost = new SourceAll(50, 0, 0, 40, 20);
-            upgrade2cost = new SourceAll(0, 50, 50, 0, 40);
+                case HexaKind.Stone:
+                    sourceNormal = new SourceAll(0, amountNormal, 0, 0, 0);
+                    break;
+
+                case HexaKind.Cornfield:
+                    sourceNormal = new SourceAll(0, 0, amountNormal, 0, 0);
+                    break;
+
+                case HexaKind.Pasture:
+                    sourceNormal = new SourceAll(0, 0, 0, amountNormal, 0);
+                    break;
+
+                case HexaKind.Mountains:
+                    sourceNormal = new SourceAll(0, 0, 0, 0, amountNormal);
+                    break;
+            }
+            playerOwner.AddCollectSources(sourceNormal, new SourceAll(0));
+
+            upgrade1cost = new SourceAll(0);
+            upgrade2cost = new SourceAll(0);
             switch (hexa.GetKind())
             {
                 case HexaKind.Mountains:
@@ -108,10 +133,11 @@ namespace Expanze.Gameplay
 
         protected override void ApplyEffect(UpgradeKind upgradeKind, int upgradeNumber)
         {
-
+            upgrade = upgradeKind;
+            SetPromptWindow(PromptWindow.Mod.Buyer);
         }
 
-        public UpgradeKind GetUpgrade() { return upgrade;}
+        public UpgradeKind GetUpgrade() { return owner.GetMonasteryUpgrade(buildingKind);}
 
         public override Texture2D GetIconActive()
         {
@@ -120,7 +146,7 @@ namespace Expanze.Gameplay
 
         public override Texture2D GetIconPassive()
         {
-            switch (upgrade)
+            switch (GetUpgrade())
             {
                 case UpgradeKind.NoUpgrade: return upgrade0icon;
                 case UpgradeKind.FirstUpgrade: return upgrade1icon;
@@ -134,10 +160,17 @@ namespace Expanze.Gameplay
             PromptWindow win = PromptWindow.Inst();
             GameResources res = GameResources.Inst();
             win.Show(mod, titleBuilding, true);
+            upgrade = GetUpgrade();
             if (upgrade == UpgradeKind.NoUpgrade)
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, this, upgrade1Title, upgrade1Description, upgrade1cost, true, upgrade1icon));
-            else if(upgrade == UpgradeKind.FirstUpgrade)
+            else if (upgrade == UpgradeKind.FirstUpgrade)
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 0, this, upgrade2Title, upgrade2Description, upgrade2cost, true, upgrade2icon));
+            else
+            {
+                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 0, this, titleBuilding, Strings.PROMPT_DESCRIPTION_ALL_UPGRADES_USED, new SourceAll(0), true, upgrade2icon));
+           
+                //win.AddPromptItem(new PromptItem(titleBuilding, Strings.PROMPT_DESCRIPTION_ALL_UPGRADES_USED, new SourceAll(0), false, false, upgrade2icon));
+            }
         }
 
         public override BuyingUpgradeError CanActivePlayerBuyUpgrade(UpgradeKind upgradeKind, int upgradeNumber)
@@ -155,13 +188,22 @@ namespace Expanze.Gameplay
             if (upgradeKind == UpgradeKind.SecondUpgrade)
             {
                 if (upgrade == UpgradeKind.NoUpgrade)
+                {
+                    GameState.map.GetMapController().SetLastError(Strings.YOU_DONT_HAVE_FIRST_UPGRADE);
                     return BuyingUpgradeError.YouDontHaveFirstUpgrade;
+                }
                 if (upgrade == UpgradeKind.SecondUpgrade)
+                {
+                    GameState.map.GetMapController().SetLastError(Strings.ERROR_HAVE_SECOND_UPGRADE);
                     return BuyingUpgradeError.YouAlreadyHaveSecondUpgrade;
-            }     
+                }
+            }
 
             if (!GetUpgradeCost(upgradeKind, upgradeNumber).HasPlayerSources(activePlayer))
+            {
+                GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_SOURCES);
                 return BuyingUpgradeError.NoSources;
+            }
 
             return BuyingUpgradeError.OK;
         }
@@ -185,13 +227,6 @@ namespace Expanze.Gameplay
             }
 
             return new SourceAll(0);
-        }
-
-
-
-        public bool Upgrade()
-        {
-            return GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, upgrade, 0) == BuyingUpgradeError.OK;
         }
     }
 }

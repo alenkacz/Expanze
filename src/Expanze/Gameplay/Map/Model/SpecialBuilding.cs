@@ -27,7 +27,10 @@ namespace Expanze.Gameplay
 
         public override void Execute()
         {
+            int tempItem = PromptWindow.Inst().GetActiveItem();
             building.SetPromptWindow(PromptWindow.Mod.Buyer);
+            PromptWindow.Inst().SetActiveItem(tempItem);
+            
             GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, upgradeKind, upgradeNumber);            
         }
 
@@ -35,7 +38,7 @@ namespace Expanze.Gameplay
         {
             GameMaster gm = GameMaster.Inst();
             TownModel town = GameState.map.GetTownByID(townID);
-            SpecialBuilding building = town.getSpecialBuilding(hexaID);
+            SpecialBuilding building = town.GetSpecialBuilding(hexaID);
 
             BuyingUpgradeError error = building.CanActivePlayerBuyUpgrade(upgradeKind, upgradeNumber);
             switch (error)
@@ -43,7 +46,7 @@ namespace Expanze.Gameplay
                 case BuyingUpgradeError.NoSources: return "";
                 case BuyingUpgradeError.MaxUpgrades: return Strings.ALERT_TITLE_MAX_UPGRADES;
                 case BuyingUpgradeError.NoUpgrade: return Strings.ALERT_TITLE_NO_UPGRADE;
-                case BuyingUpgradeError.YouAlreadyHaveSecondUpgrade: return Strings.ALERT_TITLE_ALREADY_HAVE_SECOND_UPGRADE;
+                case BuyingUpgradeError.YouAlreadyHaveSecondUpgrade: return ""; // Strings.ALERT_TITLE_ALREADY_HAVE_SECOND_UPGRADE;
             }
 
             return base.TryExecute();
@@ -81,10 +84,16 @@ namespace Expanze.Gameplay
             Player activePlayer = gm.GetActivePlayer();
 
             if (upgradeCount == upgradeMax)
-                return BuyingUpgradeError.MaxUpgrades;    
+            {
+                GameState.map.GetMapController().SetLastError(Strings.ERROR_MAX_UPGRADES);
+                return BuyingUpgradeError.MaxUpgrades;
+            }
 
             if (!GetUpgradeCost(upgradeKind, upgradeNumber).HasPlayerSources(activePlayer))
+            {
+                GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_SOURCES);
                 return BuyingUpgradeError.NoSources;
+            }
 
             return BuyingUpgradeError.OK;
         }

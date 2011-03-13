@@ -5,6 +5,89 @@ using System.Text;
 
 namespace CorePlugin
 {
+    public enum DestroySourcesError { 
+        /// <summary>
+        /// There is no error.
+        /// </summary>
+        OK, 
+        
+        /// <summary>
+        /// Without fort you cant destroy sources.
+        /// </summary>
+        NoFort, 
+        
+        /// <summary>
+        /// Player with that name doesn't exist.
+        /// </summary>
+        NoPlayerWithName, 
+        
+        /// <summary>
+        /// You have not enough sources for buying this action.
+        /// </summary>
+        NoSources }
+
+    public enum DestroyHexaError
+    {
+        /// <summary>
+        /// There is no error.
+        /// </summary>
+        OK,
+
+        /// <summary>
+        /// You have not enough sources.
+        /// </summary>
+        NoSources,
+
+        /// <summary>
+        /// There is not your fort in neighbourghood of target hexa.
+        /// </summary>
+        TooFarFromFort,
+
+        /// <summary>
+        /// Target hexa doesnt exist.
+        /// </summary>
+        InvalidHexaID
+    }
+
+    public enum ParadeError
+    {
+        /// <summary>
+        /// There is no error.
+        /// </summary>
+        OK,
+
+        /// <summary>
+        /// You have not enough sources.
+        /// </summary>
+        NoSources,
+
+        /// <summary>
+        /// You have no fort
+        /// </summary>
+        NoFort
+    }
+
+    public enum CaptureHexaError {
+        /// <summary>
+        /// There is no error.
+        /// </summary>
+        OK, 
+
+        /// <summary>
+        /// You have not enough sources.
+        /// </summary>
+        NoSources, 
+        
+        /// <summary>
+        /// There is not your fort in neighbourghood of target hexa.
+        /// </summary>
+        TooFarFromFort, 
+        
+        /// <summary>
+        /// Target hexa doesnt exist.
+        /// </summary>
+        InvalidHexaID }
+
     public interface IFort
     {
         /// <summary>
@@ -14,12 +97,10 @@ namespace CorePlugin
         bool ShowParade();
 
         /// <summary>
-        /// Destroy target hexa with hexaID. 
-        /// This hexa have to neighbourgh of fort hexa or fort hexa itself.
+        /// Find out if you can show parade and get 3 points for it.
         /// </summary>
-        /// <param name="hexaID">ID of hexa which should be destroyed.</param>
-        /// <returns>True if hexa was destroyed, otherwise false.</returns>
-        bool DestroyHexa(int hexaID);
+        /// <returns>Error why you cant show parade or ParadeError.OK</returns>
+        ParadeError CanShowParade();
 
         /// <summary>
         /// Capture target hexa with hexaID. 
@@ -30,10 +111,24 @@ namespace CorePlugin
         bool CaptureHexa(int hexaID);
 
         /// <summary>
-        /// Destroy sources of one player.
+        /// Find out if you can capture hexa with hexaID.
         /// </summary>
-        /// <param name="playerID">Name of player you want destroy sources.</param>
-        /// <returns>True if destroying sources was succesful, otherwise false.</returns>
-        bool DestroySources(String playerName);
+        /// <param name="hexaID">Target hexa ID</param>
+        /// <returns>Error why you cant capture hexa or CaptureHexaError.OK</returns>
+        CaptureHexaError CanCaptureHexa(int hexaID);
+
+        /// <summary>
+        /// Steal sources of one player.
+        /// </summary>
+        /// <param name="playerID">Name of player you want to steal sources.</param>
+        /// <returns>True if stealing sources was succesful, otherwise false.</returns>
+        bool StealSources(String playerName);
+
+        /// <summary>
+        /// Find out if you can steal other player sources.
+        /// </summary>
+        /// <param name="playerName">Name of player you want to steal sources.</param>
+        /// <returns>Error why you cant steal sources or DestroySourcesError.OK</returns>
+        DestroySourcesError CanStealSources(String playerName);
     }
 }

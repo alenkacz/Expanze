@@ -91,10 +91,11 @@ namespace Expanze.Gameplay.Map.View
 
                 int a = 0;
 
-                Player player = model.getOwner();
+                Player player = model.GetOwner();
                 if (player == null)
                     player = GameMaster.Inst().GetActivePlayer();
                 Vector3 color = player.GetColor().ToVector3();
+
                 foreach (ModelMesh mesh in m.Meshes)
                 {
                     foreach (BasicEffect effect in mesh.Effects)
@@ -124,7 +125,7 @@ namespace Expanze.Gameplay.Map.View
                         }
 
                         // if player wants to build new Road, can he? Show it in red/green color
-                        
+
                         if (pickVars.pickActive && !isBuildView)
                         {
                             if (model.CanBuildRoad() != RoadBuildError.OK)
@@ -135,7 +136,8 @@ namespace Expanze.Gameplay.Map.View
                             else
                                 if (!(a % 5 == 1 || a % 5 == 2 || a % 5 == 3 || a == 4 || a == 5 || a == 15 || a == 14))
                                     effect.EmissiveColor = new Vector3(0, 0.5f, 0);
-                        } else
+                        }
+                        else
                             effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
 
                         effect.World = transforms[mesh.ParentBone.Index] * mWorld;
@@ -177,6 +179,7 @@ namespace Expanze.Gameplay.Map.View
 
             if (pickVars.pickNewPress)
             {
+                pickVars.pickNewPress = false;
                 if (GameMaster.Inst().GetState() == EGameState.StateGame)
                 {
                     PromptWindow.Inst().Show(PromptWindow.Mod.Buyer, Strings.HEXA_DUO, true);
