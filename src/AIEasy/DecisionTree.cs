@@ -121,7 +121,9 @@ namespace AIEasy
             DecisionBinaryNode everyTurnALotOfOneSource = new DecisionBinaryNode(hasMarketWithFreeSlot, EA, () => { return ai.EveryTurnALotOfOneSource(54, true); });  
             CanHaveSourcesNode canHaveSourcesForMarket = new CanHaveSourcesNode(everyTurnALotOfOneSource, EA, PriceKind.BMarket, map);
 
-            return canHaveSourcesForMarket;
+            DecisionBinaryNode hasSourcesLess16 = new DecisionBinaryNode(canHaveSourcesForMarket, EA, () => activeState.activeTown.GetIHexa(activeState.activeTownPos).GetStartSource() <= 16);
+
+            return hasSourcesLess16;
         }
 
         private ITreeNode MakeBuyLicenceTree(ITreeNode falseNode)
@@ -154,7 +156,10 @@ namespace AIEasy
             DecisionBinaryNode everyTurnALotOfOneSource = new DecisionBinaryNode(hasMonasteryWithFreeSlot, EA, () => { return ai.EveryTurnALotOfOneSource(60, false); });
             CanHaveSourcesNode canHaveSourcesForMonastery = new CanHaveSourcesNode(everyTurnALotOfOneSource, EA, PriceKind.BMonastery, map);
 
-            return canHaveSourcesForMonastery;
+            DecisionBinaryNode hasSourcesLess16 = new DecisionBinaryNode(canHaveSourcesForMonastery, EA, () => activeState.activeTown.GetIHexa(activeState.activeTownPos).GetStartSource() <= 16);
+
+
+            return hasSourcesLess16;
         }
 
         private ITreeNode MakeInventUpgradeTree(ITreeNode falseNode)
@@ -184,7 +189,10 @@ namespace AIEasy
             DecisionBinaryNode existFreePlaceForRoad = new DecisionBinaryNode(existPlayerWithFitnessMore, haveSourcesForFort, ai.ExistFreePlaceForRoad);
             DecisionBinaryNode hasFortAlready = new DecisionBinaryNode(EA, existFreePlaceForRoad, () => { return map.GetPlayerMe().GetBuildingCount(Building.Fort) > 0; });
             CanHaveSourcesNode canHaveSourcesForFort = new CanHaveSourcesNode(hasFortAlready, EA, PriceKind.BFort, map);
-            return canHaveSourcesForFort;
+
+            DecisionBinaryNode hasSourcesLess16 = new DecisionBinaryNode(canHaveSourcesForFort, EA, () => activeState.activeTown.GetIHexa(activeState.activeTownPos).GetStartSource() <= 16);
+
+            return hasSourcesLess16;
         }
 
         

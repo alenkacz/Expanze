@@ -173,10 +173,10 @@ namespace AIEasy
             switch (mapController.GetState())
             {
                 case EGameState.StateFirstTown :
-                    BuildTown(GetBestTownPlace());
+                    BuildTown(GetBestTownPlace(1));
                     break;
                 case EGameState.StateSecondTown :
-                    BuildTown(GetBestTownPlace());
+                    BuildTown(GetBestTownPlace(2));
                     break;
                 case EGameState.StateGame :
                     ClearBadTownPlaces();
@@ -186,7 +186,7 @@ namespace AIEasy
             }
         }
 
-        private int GetBestTownPlace()
+        private int GetBestTownPlace(int turn)
         {
             float tempFitness;
             float maxFitness = -0.1f;
@@ -197,6 +197,7 @@ namespace AIEasy
             for (int loop1 = 1; loop1 <= mapController.GetMaxTownID(); loop1++)
             {
                 town = mapController.GetITownByID(loop1);
+
                 if ((tempFitness = Fitness.GetFitness(town)) > maxFitness)
                 {
                     maxFitness = tempFitness;

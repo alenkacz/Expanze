@@ -32,7 +32,7 @@ namespace AIEasy
             if (hexa.GetKind() != HexaKind.Mountains &&
                hexa.GetKind() != HexaKind.Stone)
             {
-                fitness *= 0.95f;
+                fitness *= 0.85f;
             }
 
             if (hexa.GetKind() == HexaKind.Desert)
@@ -52,7 +52,8 @@ namespace AIEasy
 
             foreach (ITown town1 in road.GetITown())
             {
-                if (town1.GetIOwner() == map.GetPlayerMe())
+                // 
+                if (town1.GetIOwner() != null)
                     continue;
 
                 con = false;
@@ -75,11 +76,12 @@ namespace AIEasy
                 for(byte loop1 = 0; loop1 < 3; loop1++)
                 {
                     tempRoad = town1.GetIRoad(loop1);
-                    if (tempRoad == null)
-                        break;
+                    if (tempRoad == null || tempRoad.GetIsBuild())
+                        continue;
+
                     foreach(ITown town2 in tempRoad.GetITown())
                     {
-                        if(town2.IsPossibleToBuildTown())
+                        if(town2 != town1 && town2.IsPossibleToBuildTown())
                             fitness += GetFitness(town2) / 2.5f;
                     }
                 }
@@ -136,7 +138,7 @@ namespace AIEasy
                 if (!haveKind[normal.KindToInt(tempHexa.GetSourceKind())])
                 {
                     haveKind[normal.KindToInt(tempHexa.GetSourceKind())] = true;
-                    multiplier = 3.0f;
+                    multiplier = 3.5f;
                 }
                 else
                     multiplier = 1.0f;
