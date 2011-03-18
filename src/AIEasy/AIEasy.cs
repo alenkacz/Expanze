@@ -197,8 +197,13 @@ namespace AIEasy
             for (int loop1 = 1; loop1 <= mapController.GetMaxTownID(); loop1++)
             {
                 town = mapController.GetITownByID(loop1);
+                tempFitness = Fitness.GetFitness(town);
+                if (turn == 2)
+                {
+                    tempFitness *= 1.0f + mapController.GetDistance(town, towns[0]) / 40.0f;
+                }
 
-                if ((tempFitness = Fitness.GetFitness(town)) > maxFitness)
+                if (tempFitness > maxFitness)
                 {
                     maxFitness = tempFitness;
                     maxTownID = town.GetTownID();

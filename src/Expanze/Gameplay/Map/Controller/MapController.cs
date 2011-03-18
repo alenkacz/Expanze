@@ -662,6 +662,77 @@ namespace Expanze.Gameplay.Map
             return minusSources;
         }
 
+
+
+        public int GetDistance(ITown a, ITown b)
+        {
+            if (a == null || b == null)
+                return -1;
+
+            if (a.GetTownID() == b.GetTownID())
+                return 0;
+
+            Queue<ITown> open = new Queue<ITown>();
+            Queue<int> distances = new Queue<int>();
+            Queue<ITown> close = new Queue<ITown>();
+
+            distances.Enqueue(0);
+            open.Enqueue(a);
+
+            ITown tempTown1, tempTown2;
+            int tempDistance;
+            while (open.Count > 0)
+            {
+                tempTown1 = open.Dequeue();
+                tempDistance = distances.Dequeue();
+
+                if (tempTown1.GetTownID() == b.GetTownID())
+                {
+                    return tempDistance;
+                }
+
+                for (byte loop1 = 0; loop1 < 3; loop1++)
+                {
+                    tempTown2 = tempTown1.GetITown(loop1);
+                    if (tempTown2 == null)
+                        continue;
+
+                    bool isFresh = true;
+
+                    foreach (ITown closeTown in close)
+                    {
+                        if (tempTown2.GetTownID() == closeTown.GetTownID())
+                        {
+                            isFresh = false;
+                            break;
+                        }
+                    }
+
+                    if(isFresh)
+                        foreach (ITown openTown in open)
+                        {
+                            if (tempTown2.GetTownID() == openTown.GetTownID())
+                            {
+                                isFresh = false;
+                                break;
+                            }
+                        }
+
+                    if (isFresh)
+                    {
+                        open.Enqueue(tempTown2);
+                        distances.Enqueue(tempDistance + 1);
+                    }
+                }
+
+                close.Enqueue(tempTown1);
+            }
+
+
+            // Towns a and b are on different islands
+            return Int16.MaxValue; 
+        }
+
         public ISourceAll GetPrice(PriceKind kind)
         {
             switch (kind)

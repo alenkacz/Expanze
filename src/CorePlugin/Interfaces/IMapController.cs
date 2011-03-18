@@ -141,6 +141,7 @@ namespace CorePlugin
         IRoad GetIRoadByID(int roadID);       
         EGameState GetState();
         String GetLastError();
+        int GetDistance(ITown a, ITown b);
 
         /// <summary>
         /// Min ID is 1 (not 0!)

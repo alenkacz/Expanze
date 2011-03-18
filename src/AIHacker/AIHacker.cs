@@ -28,6 +28,9 @@ namespace AIHacker
         {
             int i = 0;
             //int a = 1 / i;
+
+            TestGetDistance();
+
             if (mapController.GetState() == EGameState.StateFirstTown)
             {
                 for (int loop1 = -5; loop1 < 20; loop1++)
@@ -73,6 +76,22 @@ namespace AIHacker
                     mapController.BuildRoad(loop1);
                 }
             }
+        }
+
+        private void TestGetDistance()
+        {
+            ITown townID1 = mapController.GetITownByID(1);
+            ITown townID2 = mapController.GetITownByID(2);
+            ITown townID3 = mapController.GetITownByID(3);
+            ITown townID47 = mapController.GetITownByID(47);
+            mapController.GetDistance(townID3, townID47);
+
+            if (mapController.GetDistance(townID1, townID1) != 0)
+                throw new Exception("Get Distance error 1. 0 != " + mapController.GetDistance(townID1, townID1));
+            if (mapController.GetDistance(townID1, townID2) != 3)
+                throw new Exception("Get Distance error 2. 3 != " + mapController.GetDistance(townID1, townID2));
+            if (mapController.GetDistance(townID1, townID3) != 1)
+                throw new Exception("Get Distance error 3. 1 != " + mapController.GetDistance(townID1, townID3));
         }
 
         public IComponentAI Clone()

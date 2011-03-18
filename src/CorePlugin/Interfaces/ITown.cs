@@ -31,6 +31,7 @@ namespace CorePlugin
         ISourceAll GetCost();
         IHexa GetIHexa(byte pos);
         IRoad GetIRoad(byte pos);
+        ITown GetITown(byte pos);
         BuildingKind GetBuildingKind(byte pos);
     }
 }
