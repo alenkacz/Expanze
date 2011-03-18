@@ -35,8 +35,12 @@ namespace AIEasy
                 fitness *= 0.85f;
             }
 
+            /*
+             * Better than water
+             */
+
             if (hexa.GetKind() == HexaKind.Desert)
-                fitness = 0.2f;
+                fitness = 0.15f;
 
             return fitness;
         }
