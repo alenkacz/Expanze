@@ -49,7 +49,7 @@ namespace AIEasy
             specialBuildingBuildList.Add(MakeBuildMonasteryTree());
             specialBuildingBuildList.Add(MakeBuildFortTree());
 
-            StochasticNodeMultiple specialBuildingBuild = new StochasticNodeMultiple(specialBuildingBuildList, EA, this);
+            RandomNodeMultiple specialBuildingBuild = new RandomNodeMultiple(specialBuildingBuildList, EA, this);
             DecisionBinaryNode canBuildSpecialBuilding = new DecisionBinaryNode(specialBuildingBuild, EA, () => { return activeState.activeTown.GetIHexa(activeState.activeTownPos).GetKind() != HexaKind.Mountains; });
             CanHaveSourcesNode canHaveSourceForSourceBuilding = new CanHaveSourcesNode(MakeBuildSourceBuildingTree(canBuildSpecialBuilding), canBuildSpecialBuilding, () => { return GetPriceForSourceBuilding(activeState.activeTown, activeState.activeTownPos); }, map);
             DecisionBinaryNode isThatHexaDesert = new DecisionBinaryNode(canBuildSpecialBuilding, canHaveSourceForSourceBuilding, () => { return activeState.activeTown.GetIHexa(activeState.activeTownPos).GetKind() == HexaKind.Desert; });
@@ -70,7 +70,7 @@ namespace AIEasy
             ChangeSourcesActionNode addActionTown = new ChangeSourcesActionNode(new ActionSource(() => ai.BuildTown(activeState.activeTown.GetTownID()), PriceKind.BTown), this);
 
             HaveSourcesNode haveSourcesForTown = new HaveSourcesNode(actionBuildTown, addActionTown /* back to for each */, PriceKind.BTown, map);
-            ForEachTownPlaceNode localRoot = new ForEachTownPlaceNode(haveSourcesForTown, falseNode, this);
+            ForBestTownPlaceNode localRoot = new ForBestTownPlaceNode(haveSourcesForTown, falseNode, this);
 
             return localRoot;
         }
@@ -104,7 +104,7 @@ namespace AIEasy
             
             HaveSourcesNode hasSourcesForRoad = new HaveSourcesNode(actionBuildRoad, addActionRoad, PriceKind.BRoad, map);
             DecisionBinaryNode hasFreeTownPlace = new DecisionBinaryNode(hasSourcesForRoad, EA, () => { return ai.GetFreeTownPlaces().Count == 0; });
-            ForEachRoadNode localRoot = new ForEachRoadNode(hasFreeTownPlace, falseNode, this);
+            ForBestRoadNode localRoot = new ForBestRoadNode(hasFreeTownPlace, falseNode, this);
 
             return localRoot;
         }
@@ -218,7 +218,7 @@ namespace AIEasy
 
             HaveSourcesNode haveSourcesForStealSources = new HaveSourcesNode(actionStealSources, addActionStealSources, PriceKind.AStealSources, map);
             DecisionBinaryNode enoughFitness = new DecisionBinaryNode(haveSourcesForStealSources, falseNode, () => { return Fitness.GetFitness(activeState.activePlayer) > 0.35; });
-            ForEachPlayerNode forEachPlayerNode = new ForEachPlayerNode(enoughFitness, falseNode, this);
+            ForBestPlayerNode forEachPlayerNode = new ForBestPlayerNode(enoughFitness, falseNode, this);
             CanHaveSourcesNode canHaveSourcesForStealSources = new CanHaveSourcesNode(forEachPlayerNode, falseNode, PriceKind.AStealSources, map);
             return canHaveSourcesForStealSources;
         }

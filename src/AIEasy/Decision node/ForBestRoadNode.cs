@@ -6,11 +6,11 @@ using CorePlugin;
 
 namespace AIEasy
 {
-    class ForEachPlayerNode : DecisionBinaryNode
+    class ForBestRoadNode : DecisionBinaryNode
     {
         DecisionTree tree;
 
-        public ForEachPlayerNode(ITreeNode trueNode, ITreeNode falseNode, DecisionTree tree)
+        public ForBestRoadNode(ITreeNode trueNode, ITreeNode falseNode, DecisionTree tree)
             : base(trueNode, falseNode, null)
         {
             this.tree = tree;
@@ -18,22 +18,29 @@ namespace AIEasy
 
         public override void Execute()
         {
-            List<IPlayer> players = tree.GetMapController().GetPlayerOthers();
+            List<IRoad> roads = tree.GetAI().GetFreeRoadPlaces();
 
             /// Order roads according desirability
 
             float maxFitness = -0.1f;
-            IPlayer maxObject = null;
+            IRoad maxObject = null;
 
             float tempFitness;
 
-            foreach (IPlayer p in players)
+            foreach (IRoad r in roads)
             {
-                tempFitness = Fitness.GetFitness(p);
+                
+                RoadBuildError error = r.CanBuildRoad();
+                if (error == RoadBuildError.AlreadyBuild ||
+                    error == RoadBuildError.InvalidRoadID ||
+                    error == RoadBuildError.NoPlayerRoadOrTown)
+                    continue;
+
+                tempFitness = Fitness.GetFitness(r);
                 if (tempFitness > maxFitness)
                 {
                     maxFitness = tempFitness;
-                    maxObject = p;
+                    maxObject = r;
                 }
             }
 

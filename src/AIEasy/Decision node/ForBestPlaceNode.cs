@@ -6,11 +6,11 @@ using CorePlugin;
 
 namespace AIEasy
 {
-    class ForEachTownPlaceNode : DecisionBinaryNode
+    class ForBestTownPlaceNode : DecisionBinaryNode
     {
         DecisionTree tree;
 
-        public ForEachTownPlaceNode(ITreeNode trueNode, ITreeNode falseNode, DecisionTree tree)
+        public ForBestTownPlaceNode(ITreeNode trueNode, ITreeNode falseNode, DecisionTree tree)
             : base(trueNode, falseNode, null)
         {
             this.tree = tree;

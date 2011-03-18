@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AIEasy
 {
-    class StochasticNodeMultiple : DecisionNode
+    class RandomNodeMultiple : DecisionNode
     {
         List<ITreeNode> nodeList;
         ITreeNode backNode;
@@ -13,7 +13,7 @@ namespace AIEasy
         Random rnd;
         DecisionTree tree;
 
-        public StochasticNodeMultiple(List<ITreeNode> nodeList, ITreeNode backNode, DecisionTree tree)
+        public RandomNodeMultiple(List<ITreeNode> nodeList, ITreeNode backNode, DecisionTree tree)
         {
             this.nodeList = nodeList;
             rnd = new Random();
@@ -33,7 +33,7 @@ namespace AIEasy
                     return;
             }
 
-            backNode.Execute();
+            GetBranch().Execute();
         }
 
         private void MakeRandomPermutation()
@@ -57,7 +57,7 @@ namespace AIEasy
 
         public override ITreeNode GetBranch()
         {
-            return nodeList[rnd.Next() % nodeList.Count];
+            return backNode;
         }
     }
 }

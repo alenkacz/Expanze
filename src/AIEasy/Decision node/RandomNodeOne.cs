@@ -5,12 +5,12 @@ using System.Text;
 
 namespace AIEasy
 {
-    class StochasticNodeOne : DecisionNode
+    class RandomNodeOne : DecisionNode
     {
         List<ITreeNode> nodeList;
         Random rnd;
 
-        public StochasticNodeOne(List<ITreeNode> nodeList)
+        public RandomNodeOne(List<ITreeNode> nodeList)
         {
             this.nodeList = nodeList;
             rnd = new Random();
