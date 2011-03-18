@@ -63,7 +63,10 @@ namespace Expanze
         /// <summary>
         /// Private constructor because of the Singleton
         /// </summary>
-        private GameMaster() {}
+        private GameMaster() 
+        {
+            randomNumber = new Random();
+        }
 
         public void AddToPlayerCount(int i) { playerCount += i; }
 
@@ -173,14 +176,24 @@ namespace Expanze
                 break;
             }
 
-            this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[3], Color.Red, null));
+            int nameCount = Strings.MENU_HOT_SEAT_NAMES.Length;
+
+            int firstPlayerNameID = randomNumber.Next() % nameCount;
+            int secondPlayerNameID;
+
+            do
+            {
+                secondPlayerNameID = randomNumber.Next() % nameCount;
+            } while (secondPlayerNameID == firstPlayerNameID);
+
+            this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[firstPlayerNameID], Color.Red, null));
 
             if (componentAI != null)
             {
                 IComponentAI componentAICopy = componentAI.Clone();
-                this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[2], Color.Blue, componentAICopy));
+                this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[secondPlayerNameID], Color.Blue, componentAICopy));
             } else
-                this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[2], Color.Blue, null));
+                this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[secondPlayerNameID], Color.Blue, null));
         }
 
         public GameSettings GetGameSettings()
@@ -270,7 +283,16 @@ namespace Expanze
         public List<Player> GetPlayers() { return this.players; }
         public EGameState GetState() { return state; }
         public EFortState GetFortState() { return fortState; }
-        public bool IsWinnerNew() { bool temp = winnerNew; winnerNew = false; return temp; }
+        public bool IsWinnerNew() 
+        {
+            if (Message.Inst().GetIsActive())
+                return false;
+                
+            bool temp = winnerNew; 
+            winnerNew = false; 
+
+            return temp; 
+        }
 
         public void SetHasBuiltTown(bool hasBuiltTown) { this.hasBuiltTown = hasBuiltTown; }
         public void SetFortState(EFortState state) { fortState = state; }
@@ -347,8 +369,13 @@ namespace Expanze
                 return true;
             }
 
-            status &= ChangeActivePlayer();
-            targetPlayer = activePlayer;
+            if (activePlayerIndex == players.Count - 1)
+                CheckWinner();
+            if (!winnerNew)
+            {
+                status &= ChangeActivePlayer();
+                targetPlayer = activePlayer;
+            }
 
             hasBuiltTown = false;
 
@@ -360,17 +387,34 @@ namespace Expanze
             return status;
         }
 
-        public void CheckWinner(Player player)
+        public void CheckWinner()
         {
-            bool isWinner = false;
-            if (player.GetPoints() >= GetGameSettings().getPoints())
+            if (!winnerNew)
             {
-                isWinner = true;
-            }
+                int points;
+                int maxPoints = -1;
+                Player bestPlayer = null;
 
-            if (isWinner)
-            {
-                winnerNew = true;
+                
+                foreach (Player player in players)
+                {
+                    points = player.GetPoints();
+                    if (points >= GetGameSettings().getPoints())
+                    {
+                        winnerNew = true;
+
+                        if (points > maxPoints)
+                        {
+                            maxPoints = points;
+                            bestPlayer = player;
+                        }
+                    }
+                }
+
+                if (winnerNew)
+                {
+                    Message.Inst().Show("Konec hry", bestPlayer.GetName() + " nejrychleji expandoval a ostatní ho uznali za nejvhodnějšího vládce ostrova.", GameResources.Inst().GetHudTexture(HUDTexture.IconFortParade));  
+                }
             }
         }
 

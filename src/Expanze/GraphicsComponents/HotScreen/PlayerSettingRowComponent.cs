@@ -47,6 +47,8 @@ namespace Expanze
             remButton.Initialize(); remButton.LoadContent();
         }
 
+        public string GetName() { return name; }
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);

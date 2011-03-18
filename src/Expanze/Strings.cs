@@ -21,7 +21,8 @@ namespace Expanze
         public static string MENU_MAIN_EXIT = "Konec";
 
         public static string MENU_HOT_SEAT_NO_AI = "Hráč";
-        public static string[] MENU_HOT_SEAT_NAMES = { "Pedro de Mendoza", "Raimundus Lullus", "Hernando de Soto", "Francisco Pizarro", "Diego de Almagro", "Juan de la Cosa" };
+        public static string[] MENU_HOT_SEAT_NAMES = { "Pedro de Mendoza", "Raimundus Lullus", "Hernando de Soto", "Francisco Pizarro", "Diego de Almagro", "Juan de la Cosa", "Francis Drake", "Willem Barents", "Willem Barents", "Vasco Núńez", "Abel Tasman", "Ibn Battúta", "Tolomeo Dias", "Kira Salak", "Frank Cole", "Michael Asher", "Robyn Davidson", "Lee Spence", "Rein Messner", "Robert Ballard", "Valentina Teresh", "Isabella Bird", "Xu Fu", "Dicuil", "Erik the Red", "Zheng he", "Piri Reis", 
+                                                       "Luis Váez", "Samuel Champlain", "Carl Linnaeus", "Alessandro Malas", "Alex Humboldt" , "Mungo Park" , "Sacagawea", "Charles Wilkes", "John Rae" , "Otto Sverdrup", "Tom Crean", "Helen Thayer", "Jonê County", "Victoria Murden"};
         public static string MENU_HOT_SEAT_POINTS = "Počet bodů";
         public static string MENU_HOT_SEAT_MAP_TYPE = "Druh mapy";
         public static string MENU_HOT_SEAT_MAP_SIZE = "Velikost mapy";

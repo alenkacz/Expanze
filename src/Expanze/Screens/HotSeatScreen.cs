@@ -45,6 +45,7 @@ namespace Expanze
         MapSettingRowComponent mapSize;
         MapSettingRowComponent wealth;
 
+        Random random;
 
         #region Initialization
 
@@ -55,7 +56,7 @@ namespace Expanze
         public HotSeatScreen()
         {
             colorPosition = new Vector2(150, 100);
-
+            random = new Random();
             // clearing all players in case of several game in one program launch
             GameMaster.Inst().DeleteAllPlayers();
         }
@@ -95,7 +96,8 @@ namespace Expanze
 
             foreach (Color c in Settings.playerColors)
             {
-                PlayerSettingRowComponent pSwitch = new PlayerSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameResources.Inst().GetFont(EFont.PlayerNameFont), 200, 200, c, Strings.MENU_HOT_SEAT_NAMES[counter]);
+                int playerNameID = GetRandomPlayerID();
+                PlayerSettingRowComponent pSwitch = new PlayerSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameResources.Inst().GetFont(EFont.PlayerNameFont), 200, 200, c, Strings.MENU_HOT_SEAT_NAMES[playerNameID]);
                 playersSettings.Add(pSwitch);
                 colorPosition.Y += playerSpace;
 
@@ -148,6 +150,28 @@ namespace Expanze
                 playerColorTexture = ScreenManager.Game.Content.Load<Texture2D>("pcolor");
                 startGameButton.Initialize(); startGameButton.LoadContent();
             ScreenManager.Game.ResetElapsedTime();
+        }
+
+        private int GetRandomPlayerID()
+        {
+            int nameCount = Strings.MENU_HOT_SEAT_NAMES.Length;
+            int nameID = -1;
+            bool uniqueID;
+            do
+            {
+                nameID = random.Next() % nameCount;
+                uniqueID = true;
+                foreach (PlayerSettingRowComponent player in playersSettings)
+                {
+                    if (0 == player.GetName().CompareTo(Strings.MENU_HOT_SEAT_NAMES[nameID]))
+                    {
+                        uniqueID = false;
+                        continue;
+                    }
+                }
+            } while (!uniqueID);
+
+            return nameID;
         }
 
         /// <summary>

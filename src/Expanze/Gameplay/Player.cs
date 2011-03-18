@@ -128,7 +128,6 @@ namespace Expanze
         public void AddPoints(int add) { 
             points += add;
             statistic.AddStat(Statistic.Kind.Points, add, GameMaster.Inst().GetTurnNumber());
-            GameMaster.Inst().CheckWinner(this);
         }
 
         public int GetPoints() { return points; }
@@ -225,7 +224,6 @@ namespace Expanze
                     source = source + transactionSource;               
                     ChangeSources(transactionSource.wood, transactionSource.stone, transactionSource.corn, transactionSource.meat, transactionSource.ore);
                     transactionSource = new SourceAll(0);
-                    GameMaster.Inst().CheckWinner(this);
                     break;
             }
         }
