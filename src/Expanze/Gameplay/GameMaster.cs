@@ -186,14 +186,14 @@ namespace Expanze
                 secondPlayerNameID = randomNumber.Next() % nameCount;
             } while (secondPlayerNameID == firstPlayerNameID);
 
-            this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[firstPlayerNameID], Color.Red, null));
-
             if (componentAI != null)
             {
                 IComponentAI componentAICopy = componentAI.Clone();
                 this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[secondPlayerNameID], Color.Blue, componentAICopy));
             } else
                 this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[secondPlayerNameID], Color.Blue, null));
+
+            this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[firstPlayerNameID], Color.Red, null));
         }
 
         public GameSettings GetGameSettings()

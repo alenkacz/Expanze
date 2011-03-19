@@ -424,5 +424,26 @@ namespace AIEasy
 
             throw new Exception("Should capture hexa. " + mapController.GetLastError());
         }
+
+        internal bool ExistHexaWithFitnessMore(float limit, IHexa hexa)
+        {
+            IMapController map = mapController;
+            IPlayer me = map.GetPlayerMe();
+            IPlayer someone = map.GetPlayerOthers()[0];
+            IHexa hexaNeighbour;
+
+            for (int loop1 = 0; loop1 < 6; loop1++)
+            {
+                hexaNeighbour = hexa.GetIHexaNeighbour((RoadPos)loop1);
+                if (hexaNeighbour == null)
+                    continue;
+
+                if (Fitness.GetFitness(me, hexaNeighbour) > limit ||
+                    Fitness.GetFitness(someone, hexaNeighbour) > limit)
+                    return true;
+            }
+
+            return false;
+        }
     }
 }

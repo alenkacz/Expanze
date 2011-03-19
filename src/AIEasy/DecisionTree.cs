@@ -194,7 +194,9 @@ namespace AIEasy
             ChangeSourcesActionNode addActionBuildFort = new ChangeSourcesActionNode(new ActionSource(buildFort, PriceKind.BFort), this);
 
             HaveSourcesNode haveSourcesForFort = new HaveSourcesNode(actionBuildFort, addActionBuildFort, PriceKind.BFort, map);
-            DecisionBinaryNode existPlayerWithFitnessMore = new DecisionBinaryNode(haveSourcesForFort, EA, () => { return ai.ExistPlayerWithFitnessMore(0.35f); });
+
+            DecisionBinaryNode existHexaWithFitnessMore = new DecisionBinaryNode(haveSourcesForFort, EA, () => { return ai.ExistHexaWithFitnessMore(0.4f, activeState.activeTown.GetIHexa(activeState.activeTownPos)); });
+            DecisionBinaryNode existPlayerWithFitnessMore = new DecisionBinaryNode(haveSourcesForFort, existHexaWithFitnessMore, () => { return ai.ExistPlayerWithFitnessMore(0.35f); });
             DecisionBinaryNode existFreePlaceForRoad = new DecisionBinaryNode(existPlayerWithFitnessMore, haveSourcesForFort, ai.ExistFreePlaceForRoad);
             DecisionBinaryNode hasFortAlready = new DecisionBinaryNode(EA, existFreePlaceForRoad, () => { return map.GetPlayerMe().GetBuildingCount(Building.Fort) > 0; });
             CanHaveSourcesNode canHaveSourcesForFort = new CanHaveSourcesNode(hasFortAlready, EA, PriceKind.BFort, map);
