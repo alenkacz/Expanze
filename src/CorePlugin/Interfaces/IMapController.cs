@@ -126,6 +126,9 @@ namespace CorePlugin
         ParadeError CanShowParade();
         bool ShowParade();
 
+        CaptureHexaError CanCaptureHexa(IHexa hexa);
+        bool CaptureHexa(IHexa hexa);
+
         /// <summary>
         /// Returns price of choosen building, upgrade, licence or action.
         /// </summary>

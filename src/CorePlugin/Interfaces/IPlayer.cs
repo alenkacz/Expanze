@@ -11,7 +11,11 @@ namespace CorePlugin
     {
         UpgradeKind GetMonasteryUpgrade(SourceBuildingKind kind);
         LicenceKind GetMarketLicence(SourceKind kind);
+        List<IMonastery> GetMonastery();
+        List<IMarket> GetMarket();
+        List<IFort> GetFort();
 
+        int GetPoints();
         ISourceAll GetSource();
         ISourceAll GetCollectSourcesNormal();
         int GetBuildingCount(Building building);

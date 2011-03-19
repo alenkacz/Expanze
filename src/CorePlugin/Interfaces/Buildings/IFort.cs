@@ -90,6 +90,8 @@ namespace CorePlugin
 
     public interface IFort
     {
+        int GetHexaID();
+
         /// <summary>
         /// You show parade at fort and you get 3 points for it.
         /// </summary>

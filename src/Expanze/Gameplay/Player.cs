@@ -125,6 +125,11 @@ namespace Expanze
             fort.Add(f);
         }
 
+        public List<IFort> GetFort()
+        {
+            return fort;
+        }
+
         public void AddPoints(int add) { 
             points += add;
             statistic.AddStat(Statistic.Kind.Points, add, GameMaster.Inst().GetTurnNumber());

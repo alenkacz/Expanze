@@ -50,13 +50,20 @@ namespace AIEasy
             specialBuildingBuildList.Add(MakeBuildFortTree());
 
             RandomNodeMultiple specialBuildingBuild = new RandomNodeMultiple(specialBuildingBuildList, EA, this);
-            DecisionBinaryNode canBuildSpecialBuilding = new DecisionBinaryNode(specialBuildingBuild, EA, () => { return activeState.activeTown.GetIHexa(activeState.activeTownPos).GetKind() != HexaKind.Mountains; });
-            CanHaveSourcesNode canHaveSourceForSourceBuilding = new CanHaveSourcesNode(MakeBuildSourceBuildingTree(canBuildSpecialBuilding), canBuildSpecialBuilding, () => { return GetPriceForSourceBuilding(activeState.activeTown, activeState.activeTownPos); }, map);
-            DecisionBinaryNode isThatHexaDesert = new DecisionBinaryNode(canBuildSpecialBuilding, canHaveSourceForSourceBuilding, () => { return activeState.activeTown.GetIHexa(activeState.activeTownPos).GetKind() == HexaKind.Desert; });
+            DecisionBinaryNode isThatHexaMountain = new DecisionBinaryNode(EA, specialBuildingBuild, () => { return activeState.activeTown.GetIHexa(activeState.activeTownPos).GetKind() == HexaKind.Mountains; });
+            
+            CanHaveSourcesNode canHaveSourceForSourceBuilding = new CanHaveSourcesNode(MakeBuildSourceBuildingTree(EA), EA, () => { return GetPriceForSourceBuilding(activeState.activeTown, activeState.activeTownPos); }, map);
+            DecisionBinaryNode isThatHexaDesert = new DecisionBinaryNode(EA, canHaveSourceForSourceBuilding, () => { return activeState.activeTown.GetIHexa(activeState.activeTownPos).GetKind() == HexaKind.Desert; });
 
-            ForEachFreeHexInTownNode forEachFreeHexaInTown = new ForEachFreeHexInTownNode(isThatHexaDesert, canHaveSourceForRoad, true, 
-                this);
-            DecisionBinaryNode hasFreeHexaInTown = new DecisionBinaryNode(forEachFreeHexaInTown, canHaveSourceForRoad, ai.IsFreeHexaInTown);
+            ForEachFreeHexInTownNode forEachFreeHexaSpecialBuidling = new ForEachFreeHexInTownNode(isThatHexaMountain, EA, false, this);
+            ForEachFreeHexInTownNode forEachFreeHexaSourceBuilding = new ForEachFreeHexInTownNode(isThatHexaDesert, EA, true, this);
+            List<ITreeNode> freeHexaList = new List<ITreeNode>();
+            freeHexaList.Add(forEachFreeHexaSourceBuilding);
+            freeHexaList.Add(forEachFreeHexaSpecialBuidling);
+            SerialNode freeHexaSerial = new SerialNode(freeHexaList, canHaveSourceForRoad, this);
+
+
+            DecisionBinaryNode hasFreeHexaInTown = new DecisionBinaryNode(freeHexaSerial, canHaveSourceForRoad, ai.IsFreeHexaInTown);
             CanHaveSourcesNode canHaveSourceForTown = new CanHaveSourcesNode(MakeBuildTownTree(hasFreeHexaInTown), hasFreeHexaInTown, PriceKind.BTown, map);
 
             DecisionBinaryNode haveFort1 = new DecisionBinaryNode(MakeActionStealSources(canHaveSourceForTown), canHaveSourceForTown, () => { return map.GetPlayerMe().GetBuildingCount(Building.Fort) > 0; });
@@ -193,7 +200,9 @@ namespace AIEasy
 
             DecisionBinaryNode hasSourcesLess16 = new DecisionBinaryNode(canHaveSourcesForFort, EA, () => activeState.activeTown.GetIHexa(activeState.activeTownPos).GetStartSource() <= 16);
 
-            return hasSourcesLess16;
+            DecisionBinaryNode hasPointsMore18 = new DecisionBinaryNode(hasSourcesLess16, EA, () => { return map.GetPlayerMe().GetPoints() >= 18; });
+            
+            return hasPointsMore18;
         }
 
         
@@ -228,6 +237,7 @@ namespace AIEasy
         public void SetWasAction(bool action) { wasAction = action; }
         public bool GetWasAction() { return wasAction; }
 
+        internal void SetActiveObject(IHexa hexa) { activeState.activeHexa = hexa; }
         internal void SetActiveObject(SourceBuildingKind kind) { activeState.activeSourceBuildingKind = kind; }
         internal void SetActiveObject(SourceKind kind) { activeState.activeSourceKind = kind; }
         public void SetActiveObject(ITown town) { activeState.activeTown = town; }

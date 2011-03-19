@@ -18,5 +18,6 @@ namespace CorePlugin
         int GetCurrentSource();
         ITown GetITown(TownPos townPos);
         int GetID();
+        IHexa GetIHexaNeighbour(RoadPos pos);
     }
 }

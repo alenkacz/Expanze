@@ -547,7 +547,7 @@ namespace Expanze
                     case EFortState.CapturingHexa:
                         if (IsInFortRadius())
                         {
-                            GameState.map.GetMapController().CaptureHexa(hexaID, null);
+                            GameState.map.GetMapController().CaptureHexa(hexaID, HexaModel.GetHexaFort());
                             GameMaster.Inst().SetFortState(EFortState.Normal);
                         }
                         break;

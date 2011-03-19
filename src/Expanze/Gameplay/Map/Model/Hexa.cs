@@ -32,7 +32,7 @@ namespace Expanze
         private int y;                  /// y coord in map
 
         private static int counter = 0;    /// how many hexas are created
-        private static int hexaIDFort;     /// from which hexa are soldiers send to capturing/destroying hexas?
+        private static IFort hexaFort;     /// from which hexa are soldiers send to capturing/destroying hexas?
         SourceAll sourceBuildingCost;      /// source cost of building according hexa kind
 
         private HexaKind kind;
@@ -78,14 +78,15 @@ namespace Expanze
 
         public static void ResetCounter() { counter = 0; }
         public static int GetHexaCount() { return counter; }
-        public static int GetHexaIDFort() { return hexaIDFort; }
-        public static void SetHexaIDFort(int hexaID) { hexaIDFort = hexaID; }
+        public static IFort GetHexaFort() { return hexaFort; }
+        public static void SetHexaFort(IFort fort) { hexaFort = fort; }
         public bool GetCaptured() { return captureIs; }
         public Player GetCapturedPlayer() { return capturePlayer; }
 
         public HexaKind GetKind() { return this.kind; }
         public SourceKind GetSourceKind() { return sourceKind; }
         public SourceBuildingKind GetSourceBuildingKind() { return buildingKind; }
+        public IHexa GetIHexaNeighbour(RoadPos pos) { return hexaNeighbours[(int)pos]; }
 
         public void Update(GameTime gameTime)
         {
@@ -555,13 +556,13 @@ namespace Expanze
             if (kind == HexaKind.Desert)
                 return false;
 
-            if (hexaIDFort == hexaID)
+            if (hexaFort.GetHexaID() == hexaID)
                 return true;
 
 
             for (int loop1 = 0; loop1 < 6; loop1++)
             {
-                if (hexaNeighbours[loop1].GetID() == hexaIDFort)
+                if (hexaNeighbours[loop1].GetID() == hexaFort.GetHexaID())
                     return true;
             }
             return false;

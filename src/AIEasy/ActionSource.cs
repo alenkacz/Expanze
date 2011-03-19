@@ -41,6 +41,7 @@ namespace AIEasy
             state.activeSourceBuildingKind = activeState.activeSourceBuildingKind;
             state.activeUpgradeKind = activeState.activeUpgradeKind;
             state.activePlayer = activeState.activePlayer;
+            state.activeHexa = activeState.activeHexa;
         }
 
         internal ActiveState GetState()

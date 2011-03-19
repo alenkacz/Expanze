@@ -103,7 +103,7 @@ namespace Expanze.Gameplay
                             gm.GetActivePlayer().AddSources(GetUpgradeCost(upgradeKind, upgradeNumber), TransactionState.TransactionStart);
                             gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
                             gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
-                            HexaModel.SetHexaIDFort(hexaID);
+                            HexaModel.SetHexaFort(this);
                             gm.SetFortState(EFortState.CapturingHexa);
                             win.Deactive();
                             break;
@@ -112,7 +112,7 @@ namespace Expanze.Gameplay
                             gm.GetActivePlayer().AddSources(GetUpgradeCost(upgradeKind, upgradeNumber), TransactionState.TransactionStart);
                             gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
                             gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
-                            HexaModel.SetHexaIDFort(hexaID);
+                            HexaModel.SetHexaFort(this);
                             gm.SetFortState(EFortState.DestroyingHexa);
                             win.Deactive();
                             break;

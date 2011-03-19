@@ -412,7 +412,42 @@ namespace Expanze.Gameplay.Map
             return MarketError.MaxLicences;
         }
 
-        public CaptureHexaError CanCaptureHexa(int hexaID, FortModel fort)
+        public bool CaptureHexa(IHexa hexa)
+        {
+            List<IFort> forts = GetPlayerMe().GetFort();
+            CaptureHexaError error;
+
+            foreach (IFort fort in forts)
+            {
+                HexaModel.SetHexaFort(fort);
+                error = CanCaptureHexa(hexa.GetID(), fort);
+
+                if (error == CaptureHexaError.OK)
+                    return CaptureHexa(hexa.GetID(), fort);
+            }
+
+            return false;
+        }
+
+        public CaptureHexaError CanCaptureHexa(IHexa hexa)
+        {
+            List<IFort> forts = GetPlayerMe().GetFort();
+            CaptureHexaError error;
+
+            foreach (IFort fort in forts)
+            {
+                HexaModel.SetHexaFort(fort);
+                error = CanCaptureHexa(hexa.GetID(), fort);
+                if (error == CaptureHexaError.TooFarFromFort)
+                    continue;
+
+                return error;
+            }
+
+            return CaptureHexaError.TooFarFromFort;
+        }
+
+        public CaptureHexaError CanCaptureHexa(int hexaID, IFort fort)
         {
             if (!Settings.costFortCapture.HasPlayerSources(GameMaster.Inst().GetActivePlayer()))
             {
@@ -420,10 +455,7 @@ namespace Expanze.Gameplay.Map
                 return CaptureHexaError.NoSources;
             }
 
-            if (fort == null)
-                return CaptureHexaError.OK;
-
-            HexaModel.SetHexaIDFort(fort.GetHexaID());
+            HexaModel.SetHexaFort(fort);
 
             HexaModel hexa = map.GetHexaByID(hexaID);
 
@@ -442,7 +474,7 @@ namespace Expanze.Gameplay.Map
             return CaptureHexaError.OK;
         }
 
-        public bool CaptureHexa(int hexaID, FortModel fort)
+        public bool CaptureHexa(int hexaID, IFort fort)
         {
             if (CanCaptureHexa(hexaID, fort) == CaptureHexaError.OK)
             {
@@ -457,7 +489,7 @@ namespace Expanze.Gameplay.Map
         }
 
 
-        public DestroyHexaError CanDestroyHexa(int hexaID, FortModel fort)
+        public DestroyHexaError CanDestroyHexa(int hexaID, IFort fort)
         {
             if (!Settings.costFortDestroyHexa.HasPlayerSources(GameMaster.Inst().GetActivePlayer()))
             {
@@ -468,7 +500,7 @@ namespace Expanze.Gameplay.Map
             if (fort == null)
                 return DestroyHexaError.OK;
 
-            HexaModel.SetHexaIDFort(fort.GetHexaID());
+            HexaModel.SetHexaFort(fort);
 
             HexaModel hexa = map.GetHexaByID(hexaID);
 
@@ -487,7 +519,7 @@ namespace Expanze.Gameplay.Map
             return DestroyHexaError.OK;
         }
 
-        public bool DestroyHexa(int hexaID, FortModel fort)
+        public bool DestroyHexa(int hexaID, IFort fort)
         {
             if (CanDestroyHexa(hexaID, fort) == DestroyHexaError.OK)
             {
