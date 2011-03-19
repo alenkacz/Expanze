@@ -36,8 +36,9 @@ namespace AIEasy
         {
             EA = new FakeActionNode(ai.EmptyLeave, this);
 
-            DecisionBinaryNode haveFort2 = new DecisionBinaryNode(MakeActionStealSources(MakeActionShowParade()), EA, () => { return map.GetPlayerMe().GetBuildingCount(Building.Fort) > 0; });
+            ForBestFortHexaNeighbourNode forBestFortHexaNeighbour = new ForBestFortHexaNeighbourNode(MakeActionCaptureHexa(), MakeActionShowParade(), this);
 
+            DecisionBinaryNode haveFort2 = new DecisionBinaryNode(forBestFortHexaNeighbour, EA, () => { return map.GetPlayerMe().GetBuildingCount(Building.Fort) > 0; });
 
             ITreeNode upgradeTree = MakeInventUpgradeTree(haveFort2);
             ITreeNode licenceTree = MakeBuyLicenceTree(upgradeTree);
@@ -217,6 +218,22 @@ namespace AIEasy
             CanHaveSourcesNode canHaveSourcesForParade = new CanHaveSourcesNode(existFreePlaceForRoad, EA, PriceKind.AParade, map);
 
             return canHaveSourcesForParade;
+        }
+
+        private ITreeNode MakeActionCaptureHexa()
+        {
+            ITreeNode falseNode = EA;
+
+            DelAction captureHexa = () => { return ai.ActionCaptureHexa(activeState.activeHexa); };
+            ActionNode actionCaptureHexa = new ActionNode(captureHexa, this);
+            ChangeSourcesActionNode addActionCaptureHexa = new ChangeSourcesActionNode(new ActionSource(captureHexa, PriceKind.ACaptureHexa), this);
+
+            HaveSourcesNode haveSourcesForCaptureHexa = new HaveSourcesNode(actionCaptureHexa, addActionCaptureHexa, PriceKind.ACaptureHexa, map);
+
+            DecisionBinaryNode isFitnessMoreThan = new DecisionBinaryNode(haveSourcesForCaptureHexa, falseNode, () => { return 0.35 < Fitness.GetFitness(map.GetPlayerMe(), activeState.activeHexa); });
+            CanHaveSourcesNode canHaveSourcesForCaptureHexa = new CanHaveSourcesNode(isFitnessMoreThan, falseNode, PriceKind.ACaptureHexa, map);
+
+            return canHaveSourcesForCaptureHexa;
         }
 
         private ITreeNode MakeActionStealSources(ITreeNode falseNode)

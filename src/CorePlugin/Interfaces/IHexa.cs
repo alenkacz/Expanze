@@ -19,5 +19,15 @@ namespace CorePlugin
         ITown GetITown(TownPos townPos);
         int GetID();
         IHexa GetIHexaNeighbour(RoadPos pos);
+        bool GetCaptured();
+        IPlayer GetCapturedIPlayer();
+
+        /// <summary>
+        /// How many sources normaly get player from that hexa.
+        /// It is affected by Monastery upgrades
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns>Sum of source building productivities</returns>
+        int GetNormalProductivity(IPlayer player);
     }
 }

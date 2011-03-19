@@ -82,6 +82,7 @@ namespace Expanze
         public static void SetHexaFort(IFort fort) { hexaFort = fort; }
         public bool GetCaptured() { return captureIs; }
         public Player GetCapturedPlayer() { return capturePlayer; }
+        public IPlayer GetCapturedIPlayer() { return capturePlayer; }
 
         public HexaKind GetKind() { return this.kind; }
         public SourceKind GetSourceKind() { return sourceKind; }
@@ -548,6 +549,35 @@ namespace Expanze
         public HexaModel GetHexaNeighbour(int i) { return hexaNeighbours[i]; }
         public SourceAll GetSourceBuildingCost() { return sourceBuildingCost; }
         public void SetCoord(int x, int y) { this.x = x; this.y = y; }
+
+        public int GetNormalProductivity(IPlayer player)
+        {
+            float mult = 1.0f;
+            int productivity = 0;
+            if (kind == HexaKind.Desert ||
+               kind == HexaKind.Nothing ||
+               kind == HexaKind.Null ||
+               kind == HexaKind.Water)
+                return 0;
+
+            foreach (TownModel town in towns)
+            {
+                if (town.GetOwner() == player &&
+                    town.GetBuildingKind(hexaID) == BuildingKind.SourceBuilding)
+                {
+                    switch (player.GetMonasteryUpgrade(buildingKind))
+                    {
+                        case UpgradeKind.NoUpgrade: mult = 1.0f; break;
+                        case UpgradeKind.FirstUpgrade: mult = 1.5f; break;
+                        case UpgradeKind.SecondUpgrade: mult = 2.0f; break;
+                    }
+
+                    productivity += (int)(mult * startSource);
+                }
+            }
+
+            return productivity;
+        }
 
 
         public bool IsInFortRadius()

@@ -19,7 +19,8 @@ namespace AIEasy
         public override void Execute()
         {
             IMapController map = tree.GetMapController();
-            List<IFort> forts = map.GetPlayerMe().GetFort();
+            IPlayer me = map.GetPlayerMe();
+            List<IFort> forts = me.GetFort();
 
             /// Order roads according desirability
 
@@ -28,14 +29,18 @@ namespace AIEasy
 
             float tempFitness;
             IHexa hexa;
-
+            IHexa hexaNeighbour;
             foreach (IFort fort in forts)
             {
                 hexa = map.GetIHexaByID(fort.GetHexaID());
 
                 for (int loop1 = 0; loop1 < 6; loop1++)
                 {
-                    tempFitness = Fitness.GetFitness(hexa.GetIHexaNeighbour((RoadPos) loop1));
+                    hexaNeighbour = hexa.GetIHexaNeighbour((RoadPos) loop1);
+                    if (hexaNeighbour == null)
+                        continue;
+
+                    tempFitness = Fitness.GetFitness(me, hexaNeighbour);
                     if (tempFitness > maxFitness)
                     {
                         maxFitness = tempFitness;

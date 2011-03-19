@@ -416,5 +416,13 @@ namespace AIEasy
 
             throw new Exception("Should steal sources from " + player.GetName() + ". " + mapController.GetLastError());
         }
+
+        internal bool ActionCaptureHexa(IHexa hexa)
+        {
+            if (mapController.CaptureHexa(hexa))
+                return true;
+
+            throw new Exception("Should capture hexa. " + mapController.GetLastError());
+        }
     }
 }

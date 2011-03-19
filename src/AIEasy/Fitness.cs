@@ -17,6 +17,37 @@ namespace AIEasy
             ai = aiEasy;
         }
 
+        /// <summary>
+        /// Use in decisioning about capturing hexa
+        /// </summary>
+        /// <param name="attacker">Player with fort (me)</param>
+        /// <param name="hexa">Target hexa</param>
+        /// <returns></returns>
+        public static float GetFitness(IPlayer attacker, IHexa hexa)
+        {
+            if (hexa.GetCapturedIPlayer() == attacker)
+                return 0.0f;
+
+            int enemySum = 0;
+            int attackerSum = hexa.GetNormalProductivity(attacker);
+
+            foreach (IPlayer player in map.GetPlayerOthers())
+            {
+                if (player == attacker)
+                {
+                    enemySum += hexa.GetNormalProductivity(map.GetPlayerMe());
+                }
+                enemySum += hexa.GetNormalProductivity(player);
+            }
+
+            if(hexa.GetCaptured() && hexa.GetCapturedIPlayer() != attacker)
+            {
+                return (enemySum + attackerSum) / 144.0f;
+            }
+
+            return (enemySum) / 144.0f;
+        }
+
         public static float GetFitness(IHexa hexa)
         {
             if (hexa == null)

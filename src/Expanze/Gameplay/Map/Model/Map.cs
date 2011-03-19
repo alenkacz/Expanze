@@ -138,11 +138,16 @@ namespace Expanze.Gameplay.Map
 
         public override void Initialize()
         {
+            HexaModel.ResetCounter();
+            RoadModel.ResetCounter();
+            TownModel.ResetCounter();
+
             hexaMapModel = getMap();
 
             mapView.Initialize();
 
             CreateHexaWorldMatrices(); // have to be before Create Towns and roads
+
             CreateTownsAndRoads();
             for (int i = 0; i < hexaMapModel.Length; i++)
                 for (int j = 0; j < hexaMapModel[i].Length; j++)
