@@ -67,6 +67,9 @@ namespace Expanze.Gameplay.Map
         private Matrix world;
 
         private bool[] buildingIsBuild; /// is building on 1-3 position build?
+                                        /// 
+        public static void SetPickTownID(int id) { pickTownID = id; }
+        public static int GetPickTownID() { return pickTownID; }
 
         public TownView(TownModel model, Matrix world)
         {
@@ -227,12 +230,12 @@ namespace Expanze.Gameplay.Map
                     if (pickTownID == townID)
                     {
                         gm.SetTargetPlayer(gm.GetActivePlayer());
-                        pickTownID = -1;
+                        SetPickTownID(-1);
                     }
                     else
                     {
                         gm.SetTargetPlayer(model.GetOwner());
-                        pickTownID = townID;
+                        SetPickTownID(townID);
                     }
                 }
                 else
@@ -257,7 +260,7 @@ namespace Expanze.Gameplay.Map
 
         public static void ResetTownView()
         {
-            pickTownID = -1;
+            SetPickTownID(-1);
         }
     }
 }

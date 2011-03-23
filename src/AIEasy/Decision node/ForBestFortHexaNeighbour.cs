@@ -34,8 +34,11 @@ namespace AIEasy
             {
                 hexa = map.GetIHexaByID(fort.GetHexaID());
 
+                if (hexa == null)
+                    continue;
+
                 for (int loop1 = 0; loop1 < 6; loop1++)
-                {
+                {                    
                     hexaNeighbour = hexa.GetIHexaNeighbour((RoadPos) loop1);
                     if (hexaNeighbour == null)
                         continue;

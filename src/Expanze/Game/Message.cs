@@ -94,9 +94,9 @@ namespace Expanze
                 }
             }
 
-            if (GameState.CurrentKeyboardState.IsKeyDown(Keys.P) && !disabled)
+            if (InputManager.Inst().GetGameAction("game", "disablemessages").IsPressed())
             {
-                disabled = true;
+                disabled = !disabled;
             }
         }
 

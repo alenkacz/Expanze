@@ -128,7 +128,12 @@ namespace Expanze
                 GameAction cameradown = new GameAction("cameradown", GameAction.ActionKind.Normal);
                 GameAction cameratop = new GameAction("cameratop", GameAction.ActionKind.Normal);
                 GameAction camerabottom = new GameAction("camerabottom", GameAction.ActionKind.Normal);
-     
+
+                GameAction disablemessages = new GameAction("disablemessages", GameAction.ActionKind.OnlyInitialPress);
+                GameAction selectTown = new GameAction("selecttown", GameAction.ActionKind.OnlyInitialPress);
+                im.MapToKey(stateGame, disablemessages, Keys.P);
+                im.MapToKey(stateGame, selectTown, Keys.T);
+
                 im.MapToKey(stateGame, pause, Keys.Escape);
                 im.MapToKey(stateGame, nextTurn, Keys.Tab);
                 im.MapToKey(stateGame, market, Keys.M);
@@ -155,8 +160,8 @@ namespace Expanze
                 im.MapToKey(stateGameWindow, close, Keys.Escape);
                 im.MapToKey(stateGameWindow, left, Keys.Left);
                 im.MapToKey(stateGameWindow, right, Keys.Right);
-                im.MapToKey(stateGameWindow, quickChangeSources, Keys.T);
-                im.MapToKey(stateGameWindow, canChangeSources, Keys.R);
+                im.MapToKey(stateGameWindow, quickChangeSources, Keys.N);
+                im.MapToKey(stateGameWindow, canChangeSources, Keys.B);
             }
 
             String stateMessage = "gamemessage";
@@ -165,6 +170,7 @@ namespace Expanze
                 GameAction close = new GameAction("close", GameAction.ActionKind.OnlyInitialPress);
                 GameAction cheatsources = new GameAction("cheatsources", GameAction.ActionKind.OnlyInitialPress);
                 GameAction cheatpoints = new GameAction("cheatpoints", GameAction.ActionKind.OnlyInitialPress);
+                
                 im.MapToKey(stateMessage, close, Keys.Escape);
                 im.MapToKey(stateMessage, close, Keys.Enter);
                 im.MapToKey(stateMessage, cheatsources, Keys.F11);

@@ -236,9 +236,9 @@ namespace Expanze
 
         public static string MESSAGE_DESCRIPTION_MEDAL_TOWN = "Získá ji ten, který má nejvíce měst, avšak minimálně 5.";
         public static string MESSAGE_DESCRIPTION_MEDAL_ROAD = "Získá ji ten, jenž postaví nejvíce cest, avšak nejméně 10.";
-        public static string MESSAGE_DESCRIPTION_MEDAL_MARKET = "Získá ji ten, kdo alespoň 3 tržiště má a pokud nikdo jiný jich nemá víc.";
-        public static string MESSAGE_DESCRIPTION_MEDAL_FORT = "Máš-li alespoň tři pevnosti a zároveň víc pevností než kdokoliv jiný, medaile je tvá.";
-        public static string MESSAGE_DESCRIPTION_MEDAL_MONASTERY = "Potřebuješ postavit 3 kláštery a mít jich víc než tví soupeři.";
+        public static string MESSAGE_DESCRIPTION_MEDAL_MARKET = "Rozený obchodník, jsi první, kdo postavil tržiště.";
+        public static string MESSAGE_DESCRIPTION_MEDAL_FORT = "Jako první bojovník si postavil pevnost, medaile patří tobě.";
+        public static string MESSAGE_DESCRIPTION_MEDAL_MONASTERY = "Medaile patří tomu, kdo první postaví klášter pro učence.";
         public static string MESSAGE_DESCRIPTION_MEDAL_SAW = "Postav víc pil než ostatní, avšak minimálně tři a tato medaile je tvá.";
         public static string MESSAGE_DESCRIPTION_MEDAL_MILL = "Postav víc mlýnů než ostatní, avšak minimálně tři a tato medaile je tvá.";
         public static string MESSAGE_DESCRIPTION_MEDAL_QUARRY = "Postav víc lomů než ostatní, avšak minimálně tři a tato medaile je tvá.";

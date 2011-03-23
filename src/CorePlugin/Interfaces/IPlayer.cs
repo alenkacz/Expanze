@@ -14,6 +14,7 @@ namespace CorePlugin
         List<IMonastery> GetMonastery();
         List<IMarket> GetMarket();
         List<IFort> GetFort();
+        List<ITown> GetTown();
 
         int GetPoints();
         ISourceAll GetSource();

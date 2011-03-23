@@ -179,6 +179,7 @@ namespace Expanze
             playerOwner = player;
             player.AddPoints(Settings.pointsTown);
             player.AddBuilding(Building.Town);
+            player.AddTown(this);
             isBuild = true;
         }
 

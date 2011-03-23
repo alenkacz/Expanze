@@ -120,42 +120,37 @@ namespace Expanze
         public void PlayerWantMedail(Player player, Building medal)
         {
             int minCount = 10;
-            int pointsForMedail = 15;
+            int pointsForMedal = 5;
             switch(medal)
             {
                 case Building.Town :
                     minCount = 5;
-                    pointsForMedail = 15;
                     break;
                 case Building.Road :
                     minCount = 10;
-                    pointsForMedail = 15;
                     break;
                 case Building.Market :
                 case Building.Fort :
                 case Building.Monastery :
-                    minCount = 3;
-                    pointsForMedail = 10;
+                    minCount = 1;
                     break;
                 default :
                     minCount = 4;
-                    pointsForMedail = 5;
                     break;
             }
 
-            pointsForMedail = 5;
-
             if((medailOwner[(int) medal] == null && player.GetBuildingCount(medal) >= minCount) ||
-               (medailOwner[(int) medal] != null && player.GetBuildingCount(medal) > medailOwner[(int) medal].GetBuildingCount(medal)))
+               (minCount != 1 && /// medal for special buildings
+                medailOwner[(int) medal] != null && player.GetBuildingCount(medal) > medailOwner[(int) medal].GetBuildingCount(medal)))
             {
                 if (medailOwner[(int)medal] != null)
                 {
-                    medailOwner[(int)medal].AddPoints(-pointsForMedail);
+                    medailOwner[(int)medal].AddPoints(-pointsForMedal);
                     medailOwner[(int)medal].GetStatistic().AddStat(Statistic.Kind.Medals, -1, turnNumber);
                 }
                 medailOwner[(int)medal] = player;
                 medailOwner[(int)medal].GetStatistic().AddStat(Statistic.Kind.Medals, 1, turnNumber);
-                player.AddPoints(pointsForMedail);
+                player.AddPoints(pointsForMedal);
                 Message.Inst().Show(GetMedalTitle(medal),GetMedalDescription(medal),GetMedaileIcon(medal));
             }
         }
@@ -242,6 +237,29 @@ namespace Expanze
 
         public void Update(GameTime gameTime)
         {
+            if(state == EGameState.StateGame &&
+               InputManager.Inst().GetGameAction("game", "selecttown").IsPressed())
+            {
+                int id = TownView.GetPickTownID();
+                List<ITown> town = activePlayer.GetTown();
+
+                int loop1;
+                for(loop1 = 0; loop1 < town.Count; loop1++)
+                {
+                    if(id == town[loop1].GetTownID())
+                    {
+                        if(loop1 == town.Count - 1)
+                            TownView.SetPickTownID(-1);
+                        else
+                            TownView.SetPickTownID(town[loop1 + 1].GetTownID());
+                        break;
+                    }
+                }
+                if(loop1 == town.Count)
+                    TownView.SetPickTownID(town[0].GetTownID());
+            }
+
+
             if (activePlayer.GetIsAI())
             {
                 if (!hasAIThreadStarted && !Message.Inst().GetIsActive())
@@ -371,12 +389,13 @@ namespace Expanze
 
             if (activePlayerIndex == players.Count - 1)
                 CheckWinner();
-            if (!winnerNew)
+            if (winnerNew)
             {
-                status &= ChangeActivePlayer();
-                targetPlayer = activePlayer;
+                return true;
             }
 
+            status &= ChangeActivePlayer();
+            targetPlayer = activePlayer;
             hasBuiltTown = false;
 
             status &= StartTurn();
@@ -414,6 +433,12 @@ namespace Expanze
                 if (winnerNew)
                 {
                     Message.Inst().Show("Konec hry", bestPlayer.GetName() + " nejrychleji expandoval a ostatní ho uznali za nejvhodnějšího vládce ostrova.", GameResources.Inst().GetHudTexture(HUDTexture.IconFortParade));  
+                }
+
+                if (turnNumber == 100)
+                {
+                    winnerNew = true;
+                    Message.Inst().Show("Konec hry", "Nikdo nevyhrál, všichni prohráli. Nikomu nestačilo 100 kol k zisku dostatečného počtu bodů.", GameResources.Inst().GetHudTexture(HUDTexture.HammersPassive));
                 }
             }
         }

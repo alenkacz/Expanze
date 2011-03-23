@@ -32,6 +32,7 @@ namespace Expanze
         List<IMonastery> monastery;
         List<IMarket> market;
         List<IFort> fort;
+        List<ITown> town;
 
         IComponentAI componentAI;   // is null if player is NOT controled by computer but is controled by human
 
@@ -74,6 +75,7 @@ namespace Expanze
             monastery = new List<IMonastery>();
             market = new List<IMarket>();
             fort = new List<IFort>();
+            town = new List<ITown>();
 
             statistic = new Statistic();
         }
@@ -102,6 +104,9 @@ namespace Expanze
                 case Building.Market: statistic.AddStat(Statistic.Kind.Market, 1, turn); break;
             }
         }
+
+        public void AddTown(ITown t) { town.Add(t); }
+        public List<ITown> GetTown() { return town; }
 
         public void AddMarket(IMarket m)
         {
