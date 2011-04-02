@@ -35,7 +35,7 @@ namespace Expanze.Utils
                     return keyActions[loop1];
             }
 
-            return null;
+            throw new Exception("Action doesnt exist with name : " + actionName);
         }
 
         public void ClearMap(GameAction gameAction)

@@ -69,11 +69,13 @@ namespace Expanze
 
     class HexaView
     {
-        protected int                           hexaID;           // from counter, useable for picking
-        Color                         pickHexaColor;    // color o hexa in render texture
+        private static int              activeHexaID;     // focused hexa with keys
+        private static bool             activeHexaEnter;  // press someone enter when was activeHexaID != -1?
+        protected int                   hexaID;           // from counter, useable for picking
+        Color                           pickHexaColor;    // color o hexa in render texture
         protected PickVariables         pickVars;
-        protected Matrix                world;   // wordl position of Hex
-        protected HexaModel model;    // reference to model
+        protected Matrix                world;            // wordl position of Hex
+        protected HexaModel model;                        // reference to model
         protected RoadView[] roadView;
         protected TownView[] townView;
         protected HexaKind kind;
@@ -97,7 +99,7 @@ namespace Expanze
             }
         }
 
-        public void setWorld(Matrix m)
+        public void SetWorld(Matrix m)
         {
             world = m;
         }
@@ -109,6 +111,9 @@ namespace Expanze
 
         public bool GetIsCenterOnScreen() { return centerOnScreen; }
         public RoadView GetRoadView(RoadPos pos) { return roadView[(int)pos]; }
+        public static void SetActiveHexaID(int id) { activeHexaID = id; }
+        public static int GetActiveHexaID() { return activeHexaID; }
+        public static void ActiveHexaEnter() { activeHexaEnter = true; }
 
         public void SetRoadView(RoadPos pos, RoadView road)
         {
@@ -131,7 +136,7 @@ namespace Expanze
         {
             Texture2D text = passive;
             spriteBatch.Draw(text, new Vector2(pos.X - (text.Width >> 1), pos.Y - (text.Height >> 1)), Color.White);
-            if (!pickVars.pickActive)
+            if (!pickVars.pickActive && activeHexaID != hexaID)
             {
                 text = active;
                 spriteBatch.Draw(text, new Vector2(pos.X - (text.Width >> 1), pos.Y - (text.Height >> 1)), Color.White);
@@ -152,6 +157,9 @@ namespace Expanze
                 numberColor = Color.Red;
             else
                 numberColor = Color.DarkRed;
+
+            if (hexaID == activeHexaID)
+                numberColor = Color.IndianRed;
 
             if (model.GetCurrentSource() != 0) // desert
             {
@@ -429,6 +437,112 @@ namespace Expanze
                     townView[loop1].DrawPickableAreas();
         }
 
+        /// <summary>
+        /// What happens when you click/press enter on hexa
+        /// </summary>
+        public void ActionOnHexa()
+        {
+            switch (GameMaster.Inst().GetFortState())
+            {
+                case EFortState.Normal:
+                    for (int loop1 = 0; loop1 < townView.Length; loop1++)
+                    {
+                        if (townView[loop1].getIsMarked() &&
+                            kind != HexaKind.Nothing &&
+                            kind != HexaKind.Water &&
+                            kind != HexaKind.Null)
+                        {
+                            PromptWindow.Mod mod;
+                            switch (townView[loop1].getTownModel().GetBuildingKind(hexaID))
+                            {
+                                case BuildingKind.NoBuilding:
+                                    if (townView[loop1].getTownModel().GetOwner() == GameMaster.Inst().GetActivePlayer())
+                                    {
+                                        String titleWindow = "";
+                                        String titleBuilding = "";
+                                        String descriptionBuilding = "";
+                                        Texture2D icon = null;
+                                        switch (kind)
+                                        {
+                                            case HexaKind.Mountains:
+                                                titleWindow = Strings.HEXA_NAME_MOUNTAINS;
+                                                titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_MINE;
+                                                descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_MINE;
+                                                icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMine); break;
+                                            case HexaKind.Forest:
+                                                titleWindow = Strings.HEXA_NAME_FOREST;
+                                                titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_SAW;
+                                                descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_SAW;
+                                                icon = GameResources.Inst().GetHudTexture(HUDTexture.IconSaw); break;
+                                            case HexaKind.Cornfield:
+                                                titleWindow = Strings.HEXA_NAME_CORNFIELD;
+                                                titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_MILL;
+                                                descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_MILL;
+                                                icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMill); break;
+                                            case HexaKind.Pasture:
+                                                titleWindow = Strings.HEXA_NAME_PASTURE;
+                                                titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_STEPHERD;
+                                                descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_STEPHERD;
+                                                icon = GameResources.Inst().GetHudTexture(HUDTexture.IconStepherd); break;
+                                            case HexaKind.Stone:
+                                                titleWindow = Strings.HEXA_NAME_STONE;
+                                                titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_QUARRY;
+                                                descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_QUARRY;
+                                                icon = GameResources.Inst().GetHudTexture(HUDTexture.IconQuarry); break;
+                                            case HexaKind.Desert:
+                                                titleWindow = Strings.HEXA_NAME_DESERT;
+                                                break;
+                                        }
+
+                                        int townID = townView[loop1].getTownModel().GetTownID();
+                                        mod = (townView[loop1].getTownModel().GetOwner() == GameMaster.Inst().GetActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
+                                        PromptWindow.Inst().Show(mod, titleWindow, true);
+                                        if (kind != HexaKind.Desert)
+                                            PromptWindow.Inst().AddPromptItem(
+                                                new BuildingPromptItem(townID,
+                                                                   hexaID,
+                                                                   BuildingKind.SourceBuilding,
+                                                                   titleBuilding,
+                                                                   descriptionBuilding,
+                                                                   model.GetSourceBuildingCost(), true,
+                                                                   icon));
+
+                                        if (kind != HexaKind.Mountains)
+                                        {
+                                            PromptWindow.Inst().AddPromptItem(MonasteryModel.GetPromptItemBuildMonastery(townID, hexaID));
+                                            PromptWindow.Inst().AddPromptItem(MarketModel.GetPromptItemBuildMarket(townID, hexaID));
+                                            PromptWindow.Inst().AddPromptItem(FortModel.GetPromptItemBuildFort(townID, hexaID));
+                                        }
+                                    }
+                                    break;
+
+                                default:
+                                    mod = (townView[loop1].getTownModel().GetOwner() == GameMaster.Inst().GetActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
+                                    townView[loop1].getTownModel().GetSpecialBuilding(hexaID).SetPromptWindow(mod);
+                                    break;
+                            }
+                        }
+                    }
+                    break;
+
+                case EFortState.DestroyingHexa:
+                    if (IsInFortRadius())
+                    {
+                        GameState.map.GetMapController().DestroyHexa(hexaID, null);
+                        GameMaster.Inst().SetFortState(EFortState.Normal);
+                    }
+                    break;
+
+                case EFortState.CapturingHexa:
+                    if (IsInFortRadius())
+                    {
+                        GameState.map.GetMapController().CaptureHexa(hexaID, HexaModel.GetHexaFort());
+                        GameMaster.Inst().SetFortState(EFortState.Normal);
+                    }
+                    break;
+            }
+        }
+
         public void HandlePickableAreas(Color c)
         {
             // Water is not pickable
@@ -449,109 +563,13 @@ namespace Expanze
 
             Map.SetPickVariables(c == pickHexaColor, pickVars);
 
-            if (pickVars.pickNewPress)
+            if (pickVars.pickNewPress ||
+                (activeHexaEnter && activeHexaID == hexaID))
             {
                 pickVars.pickNewPress = false;
+                activeHexaEnter = false;
 
-                switch (GameMaster.Inst().GetFortState())
-                {
-                    case EFortState.Normal:
-                        for (int loop1 = 0; loop1 < townView.Length; loop1++)
-                        {
-                            if (townView[loop1].getIsMarked() &&
-                                kind != HexaKind.Nothing &&
-                                kind != HexaKind.Water &&
-                                kind != HexaKind.Null)
-                            {
-                                PromptWindow.Mod mod;
-                                switch (townView[loop1].getTownModel().GetBuildingKind(hexaID))
-                                {
-                                    case BuildingKind.NoBuilding:
-                                        if (townView[loop1].getTownModel().GetOwner() == GameMaster.Inst().GetActivePlayer())
-                                        {
-                                            String titleWindow = "";
-                                            String titleBuilding = "";
-                                            String descriptionBuilding = "";
-                                            Texture2D icon = null;
-                                            switch (kind)
-                                            {
-                                                case HexaKind.Mountains:
-                                                    titleWindow = Strings.HEXA_NAME_MOUNTAINS;
-                                                    titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_MINE;
-                                                    descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_MINE;
-                                                    icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMine); break;
-                                                case HexaKind.Forest:
-                                                    titleWindow = Strings.HEXA_NAME_FOREST;
-                                                    titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_SAW;
-                                                    descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_SAW;
-                                                    icon = GameResources.Inst().GetHudTexture(HUDTexture.IconSaw); break;
-                                                case HexaKind.Cornfield:
-                                                    titleWindow = Strings.HEXA_NAME_CORNFIELD;
-                                                    titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_MILL;
-                                                    descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_MILL;
-                                                    icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMill); break;
-                                                case HexaKind.Pasture:
-                                                    titleWindow = Strings.HEXA_NAME_PASTURE;
-                                                    titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_STEPHERD;
-                                                    descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_STEPHERD;
-                                                    icon = GameResources.Inst().GetHudTexture(HUDTexture.IconStepherd); break;
-                                                case HexaKind.Stone:
-                                                    titleWindow = Strings.HEXA_NAME_STONE;
-                                                    titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_QUARRY;
-                                                    descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_QUARRY;
-                                                    icon = GameResources.Inst().GetHudTexture(HUDTexture.IconQuarry); break;
-                                                case HexaKind.Desert:
-                                                    titleWindow = Strings.HEXA_NAME_DESERT;
-                                                    break;
-                                            }
-
-                                            int townID = townView[loop1].getTownModel().GetTownID();
-                                            mod = (townView[loop1].getTownModel().GetOwner() == GameMaster.Inst().GetActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
-                                            PromptWindow.Inst().Show(mod, titleWindow, true);
-                                            if (kind != HexaKind.Desert)
-                                                PromptWindow.Inst().AddPromptItem(
-                                                    new BuildingPromptItem(townID,
-                                                                       hexaID,
-                                                                       BuildingKind.SourceBuilding,
-                                                                       titleBuilding,
-                                                                       descriptionBuilding,
-                                                                       model.GetSourceBuildingCost(), true,
-                                                                       icon));
-
-                                            if (kind != HexaKind.Mountains)
-                                            {
-                                                PromptWindow.Inst().AddPromptItem(MonasteryModel.GetPromptItemBuildMonastery(townID, hexaID));
-                                                PromptWindow.Inst().AddPromptItem(MarketModel.GetPromptItemBuildMarket(townID, hexaID));
-                                                PromptWindow.Inst().AddPromptItem(FortModel.GetPromptItemBuildFort(townID, hexaID));
-                                            }
-                                        }
-                                        break;
-
-                                    default:
-                                        mod = (townView[loop1].getTownModel().GetOwner() == GameMaster.Inst().GetActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
-                                        townView[loop1].getTownModel().GetSpecialBuilding(hexaID).SetPromptWindow(mod);
-                                        break;
-                                }
-                            }
-                        }
-                        break;
-
-                    case EFortState.DestroyingHexa:
-                        if (IsInFortRadius())
-                        {
-                            GameState.map.GetMapController().DestroyHexa(hexaID, null);
-                            GameMaster.Inst().SetFortState(EFortState.Normal);
-                        }
-                        break;
-
-                    case EFortState.CapturingHexa:
-                        if (IsInFortRadius())
-                        {
-                            GameState.map.GetMapController().CaptureHexa(hexaID, HexaModel.GetHexaFort());
-                            GameMaster.Inst().SetFortState(EFortState.Normal);
-                        }
-                        break;
-                }
+                ActionOnHexa();
             }
         }
 

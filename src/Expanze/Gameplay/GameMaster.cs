@@ -229,34 +229,103 @@ namespace Expanze
                              exception.StackTrace + System.Environment.NewLine +
                              exception.TargetSite + System.Environment.NewLine +
                              exception.InnerException;
-                Logger.Inst().Log(ai.GetAIName() + "_" + player.GetName() + ".txt", log);
-                Message.Inst().Show(Strings.GAME_ALERT_TITLE_AI_EXCEPTION, player.GetName() + " " + Strings.GAME_ALERT_DESCRIPTION_AI_EXCEPTION, GameResources.Inst().GetHudTexture(HUDTexture.IconTown));
+                Logger.Inst().Log(ai.GetAIName() + " - " + player.GetName() + ".txt", log);
             }
         }
 
+        private void SetNewActiveHexa()
+        {
+            HexaModel hexa;
+            TownModel townModel = map.GetTownByID(TownView.GetPickTownID());
+                    
+            for (byte loop1 = 0; loop1 < 3; loop1++)
+            {
+                hexa = townModel.GetHexa(loop1);
+                if (hexa.GetKind() != HexaKind.Water &&
+                    hexa.GetKind() != HexaKind.Nothing &&
+                    hexa.GetKind() != HexaKind.Null)
+                {
+                    HexaView.SetActiveHexaID(hexa.GetID());
+                    break;
+                }
+            }
+        }
 
         public void Update(GameTime gameTime)
         {
-            if(state == EGameState.StateGame &&
-               InputManager.Inst().GetGameAction("game", "selecttown").IsPressed())
+            if (state == EGameState.StateGame)
             {
-                int id = TownView.GetPickTownID();
-                List<ITown> town = activePlayer.GetTown();
-
-                int loop1;
-                for(loop1 = 0; loop1 < town.Count; loop1++)
+                if (InputManager.Inst().GetGameAction("game", "selecttown").IsPressed())
                 {
-                    if(id == town[loop1].GetTownID())
+                    int id = TownView.GetPickTownID();
+                    List<ITown> town = activePlayer.GetTown();
+
+                    int loop1;
+                    for (loop1 = 0; loop1 < town.Count; loop1++)
                     {
-                        if(loop1 == town.Count - 1)
-                            TownView.SetPickTownID(-1);
-                        else
-                            TownView.SetPickTownID(town[loop1 + 1].GetTownID());
-                        break;
+                        if (id == town[loop1].GetTownID())
+                        {
+                            if (loop1 == town.Count - 1)
+                                TownView.SetPickTownID(-1);
+                            else
+                                TownView.SetPickTownID(town[loop1 + 1].GetTownID());
+                            break;
+                        }
+                    }
+                    if (loop1 == town.Count)
+                        TownView.SetPickTownID(town[0].GetTownID());
+                }
+
+                if (TownView.GetPickTownID() >= 0 &&
+                    InputManager.Inst().GetGameAction("game", "selecthexa").IsPressed())
+                {
+                    TownModel townModel = map.GetTownByID(TownView.GetPickTownID());
+                    int hexaID = HexaView.GetActiveHexaID();
+                    HexaModel hexa;
+
+                    /// No hexa is selected
+                    if (hexaID == -1)
+                    {
+                        SetNewActiveHexa();
+                    }
+                    else
+                    {
+                        for (byte loop1 = 0; loop1 < 3; loop1++)
+                        {
+                            hexa = townModel.GetHexa(loop1);
+                            if (hexaID == hexa.GetID())
+                            {
+                                for (int loop2 = loop1 + 1; loop2 < 4; loop2++)
+                                {
+                                    if (loop2 == 3)
+                                    {
+                                        SetNewActiveHexa();
+                                        break;
+                                    }
+
+                                    hexa = townModel.GetHexa(loop2);
+
+                                    if (hexa.GetKind() != HexaKind.Water &&
+                                       hexa.GetKind() != HexaKind.Nothing &&
+                                       hexa.GetKind() != HexaKind.Null)
+                                    {
+                                        HexaView.SetActiveHexaID(hexa.GetID());
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
                     }
                 }
-                if(loop1 == town.Count)
-                    TownView.SetPickTownID(town[0].GetTownID());
+
+                if (InputManager.Inst().GetGameAction("game", "activatehexa").IsPressed())
+                {
+                    if (HexaView.GetActiveHexaID() != -1)
+                    {
+                        HexaView.ActiveHexaEnter();
+                    }
+                }
             }
 
 
@@ -402,6 +471,7 @@ namespace Expanze
 
             map.NextTurn();
             TownView.ResetTownView();
+            HexaView.SetActiveHexaID(-1);
 
             return status;
         }

@@ -131,8 +131,14 @@ namespace Expanze
 
                 GameAction disablemessages = new GameAction("disablemessages", GameAction.ActionKind.OnlyInitialPress);
                 GameAction selectTown = new GameAction("selecttown", GameAction.ActionKind.OnlyInitialPress);
+                GameAction selectHexa = new GameAction("selecthexa", GameAction.ActionKind.OnlyInitialPress);
+                GameAction activateHexa = new GameAction("activatehexa", GameAction.ActionKind.OnlyInitialPress);
+                GameAction resignGame = new GameAction("resigngame", GameAction.ActionKind.OnlyInitialPress);
                 im.MapToKey(stateGame, disablemessages, Keys.P);
                 im.MapToKey(stateGame, selectTown, Keys.T);
+                im.MapToKey(stateGame, selectHexa, Keys.H);
+                im.MapToKey(stateGame, activateHexa, Keys.Enter);
+                im.MapToKey(stateGame, resignGame, Keys.F12);
 
                 im.MapToKey(stateGame, pause, Keys.Escape);
                 im.MapToKey(stateGame, nextTurn, Keys.Tab);
@@ -365,6 +371,9 @@ namespace Expanze
 
             if (InputManager.Inst().GetGameAction("game", "market").IsPressed())
                 MarketWindowOpenClose();
+
+            if (InputManager.Inst().GetGameAction("game", "resigngame").IsPressed())
+                gMaster.GetActivePlayer().SetActive(false);
 
             if (InputManager.Inst().GetGameAction("gamemessage", "cheatsources").IsPressed())
                 GameMaster.Inst().GetActivePlayer().PayForSomething(new SourceAll(-1000));

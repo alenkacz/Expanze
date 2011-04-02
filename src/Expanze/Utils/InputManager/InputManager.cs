@@ -103,7 +103,8 @@ namespace Expanze.Utils
             {
                 return state.GetGameAction(actionName);
             }
-            return null;
+            else
+                throw new Exception("Input state doesnt exist with name : " + stateName);
         }
     }
 }

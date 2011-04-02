@@ -68,7 +68,7 @@ namespace Expanze.Gameplay.Map
 
         private bool[] buildingIsBuild; /// is building on 1-3 position build?
                                         /// 
-        public static void SetPickTownID(int id) { pickTownID = id; }
+        public static void SetPickTownID(int id) { pickTownID = id; HexaView.SetActiveHexaID(-1); }
         public static int GetPickTownID() { return pickTownID; }
 
         public TownView(TownModel model, Matrix world)

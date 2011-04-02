@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ * I have used :
+ * Introduction to Building a Plug-In Architecture Using C#
+ * Matthew Cochran
+ * September 10, 2007 
+ * http://www.c-sharpcorner.com/uploadfile/rmcochran/plug_in_architecture09092007111353am/plug_in_architecture.aspx
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

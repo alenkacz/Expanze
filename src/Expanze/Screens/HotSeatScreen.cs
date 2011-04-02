@@ -97,7 +97,9 @@ namespace Expanze
             foreach (Color c in Settings.playerColors)
             {
                 int playerNameID = GetRandomPlayerID();
-                PlayerSettingRowComponent pSwitch = new PlayerSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameResources.Inst().GetFont(EFont.PlayerNameFont), 200, 200, c, Strings.MENU_HOT_SEAT_NAMES[playerNameID]);
+                
+                PlayerSettingRowComponent pSwitch = new PlayerSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameResources.Inst().GetFont(EFont.PlayerNameFont), 200, 200, c, Strings.MENU_HOT_SEAT_NAMES[playerNameID],
+                                                                                  (counter == 0 || counter ==2) ? 1 : 0);
                 playersSettings.Add(pSwitch);
                 colorPosition.Y += playerSpace;
 

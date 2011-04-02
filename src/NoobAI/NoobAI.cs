@@ -26,7 +26,7 @@ namespace NoobAI
 
         public String GetAIName()
         {
-            return "AI primitivní";
+            return "AI lehká";
         }
 
         public void InitAIComponent(IMapController mapController)

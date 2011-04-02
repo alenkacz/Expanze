@@ -25,7 +25,7 @@ namespace AIEasy
 
         public String GetAIName()
         {
-            return "AI lehká";
+            return "AI střední";
         }
 
         public void InitAIComponent(IMapController mapController)

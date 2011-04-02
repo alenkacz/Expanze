@@ -30,7 +30,7 @@ namespace Expanze
         ButtonComponent addButton;
         ButtonComponent remButton;
 
-        public PlayerSettingRowComponent(Game game, int x, int y, SpriteFont font, int width, int height, Color c,String name) 
+        public PlayerSettingRowComponent(Game game, int x, int y, SpriteFont font, int width, int height, Color c,String name, int changeState) 
             : base(game,x,y,font,width,height,null) 
         {
             playerColorTexture = game.Content.Load<Texture2D>("pcolor");
@@ -38,6 +38,9 @@ namespace Expanze
             this.name = name;
             playerState = new ButtonComponent(game, x + 500, y - 6, font, Settings.scaleW(200), Settings.scaleH(45), null, Settings.PlayerState);
             playerState.Actions += PlayerStateButtonAction;
+            for(int loop1 = 0; loop1 < changeState; loop1++)
+                playerState.nextText();
+
             playerState.Initialize(); playerState.LoadContent();
             addButton = new ButtonComponent(game, x, y, new Rectangle(), font, 34, 32, "HUD/hotseat_plus");
             addButton.Actions += AddButtonAction;

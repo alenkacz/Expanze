@@ -277,7 +277,10 @@ namespace Expanze
         public void SetActive(bool active) 
         {
             if (this.active && !active)
+            {
                 GameMaster.Inst().AddToPlayerCount(-1);
+                Message.Inst().Show(Strings.GAME_ALERT_TITLE_AI_EXCEPTION, GetName() + " " + Strings.GAME_ALERT_DESCRIPTION_AI_EXCEPTION, GameResources.Inst().GetHudTexture(HUDTexture.IconTown));
+            }
 
             this.active = active; 
             

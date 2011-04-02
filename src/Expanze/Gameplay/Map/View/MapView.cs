@@ -315,6 +315,7 @@ namespace Expanze.Gameplay.Map
         public void CreateHexaWorldMatrices()
         {
             TownView.ResetTownView();
+            HexaView.SetActiveHexaID(-1);
 
             float dx = 0.591f;
             float dy = 0.512f;
@@ -325,7 +326,7 @@ namespace Expanze.Gameplay.Map
                 {
                     if (hexaMapView[i][j] != null)
                     {
-                        hexaMapView[i][j].setWorld(mWorld);
+                        hexaMapView[i][j].SetWorld(mWorld);
                     }
                     mWorld = mWorld * Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, dx));
                 }
