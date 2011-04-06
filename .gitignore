@@ -13,6 +13,8 @@ src/AIHacker/bin
 src/AIHacker/obj
 src/AIEasy/bin
 src/AIEasy/obj
+src/AIHard/bin
+src/AIHard/obj
 src/Content/obj
 *.user
 *.zip
