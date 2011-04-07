@@ -547,7 +547,7 @@ namespace Expanze
         public Boolean GetRoadOwner(int i) { return roadOwner[i]; }
         public Boolean GetTownOwner(int i) { return townOwner[i]; }
         public HexaModel GetHexaNeighbour(int i) { return hexaNeighbours[i]; }
-        public SourceAll GetSourceBuildingCost() { return sourceBuildingCost; }
+        public ISourceAll GetSourceBuildingCost() { return sourceBuildingCost; }
         public void SetCoord(int x, int y) { this.x = x; this.y = y; }
 
         public int GetNormalProductivity(IPlayer player)

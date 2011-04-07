@@ -6,7 +6,7 @@ using CorePlugin;
 
 namespace AIHard
 {
-    class CompositeGoal : Goal
+    abstract class CompositeGoal : Goal
     {
         protected Stack<Goal> subgoals;
 
@@ -15,10 +15,12 @@ namespace AIHard
             subgoals = new Stack<Goal>();
         }
 
+        public abstract void Init();
+
         override public GoalState Process()
         {
             if (subgoals.Count == 0)
-                return GoalState.NoSubgoal;
+                return GoalState.Failed;
 
             Goal actualGoal = subgoals.Peek();
 

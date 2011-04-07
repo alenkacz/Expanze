@@ -694,7 +694,14 @@ namespace Expanze.Gameplay.Map
             return minusSources;
         }
 
+        public List<IRoad> GetRoadsToTown(ITown town, IPlayer player)
+        {
+            List<IRoad> roadWay = new List<IRoad>();
 
+            throw new Exception("Is not implemented");
+
+            //return roadWay;
+        }
 
         public int GetDistance(ITown a, ITown b)
         {

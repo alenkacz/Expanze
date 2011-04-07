@@ -226,7 +226,7 @@ namespace Expanze
             switch (kind)
             {
                 case BuildingKind.SourceBuilding:
-                    cost = hexaNeighbour[pos].GetSourceBuildingCost();
+                    cost = (SourceAll) hexaNeighbour[pos].GetSourceBuildingCost();
                     break;
 
                 case BuildingKind.FortBuilding:

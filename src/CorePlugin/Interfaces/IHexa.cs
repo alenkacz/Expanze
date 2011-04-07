@@ -21,6 +21,7 @@ namespace CorePlugin
         IHexa GetIHexaNeighbour(RoadPos pos);
         bool GetCaptured();
         IPlayer GetCapturedIPlayer();
+        ISourceAll GetSourceBuildingCost();
 
         /// <summary>
         /// How many sources normaly get player from that hexa.

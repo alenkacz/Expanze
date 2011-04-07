@@ -15,13 +15,21 @@ namespace AIHard
         {
             mainGoals = new LinkedList<CompositeGoal>();
             mainGoals.AddFirst(new BuildTown(map));
+            mainGoals.AddLast(new BuildSourceBuilding(map));
+
+            Init();
+        }
+
+        public override void Init()
+        {
+            // empty
         }
 
         public override GoalState Process()
         {
             GoalState state = base.Process();
 
-            if (state == GoalState.NoSubgoal)
+            if (state != GoalState.EndTurn)
             {
                 CompositeGoal bestGoal = null;
                 double bestFitness = 0.0;
@@ -39,13 +47,15 @@ namespace AIHard
                             break;
                     }
                 }
-                if (bestGoal != null)
+                if (bestGoal != null &&
+                    bestFitness > 0.1)
                 {
                     subgoals.Push(bestGoal);
+                    bestGoal.Init();
                     return Process();
                 }
 
-                return GoalState.NoSubgoal;
+                return GoalState.EndTurn;
             }
             else
                 return state;

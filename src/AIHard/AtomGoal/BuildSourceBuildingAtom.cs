@@ -6,26 +6,24 @@ using CorePlugin;
 
 namespace AIHard
 {
-    class BuildTownAtom : Goal
+    class BuildSourceBuildingAtom : Goal
     {
         ITown town;
+        byte pos;
 
-        public BuildTownAtom(IMapController map, ITown town) : base(map)
+        public BuildSourceBuildingAtom(IMapController map, ITown town, byte pos)
+            : base(map)
         {
             this.town = town;
+            this.pos = pos;
         }
 
         public override GoalState Process()
         {
-            if (town.Build() == null)
+            if (town.BuildSourceBuilding(pos))
                 return GoalState.Failed;
             else
-            {
-                if (map.GetState() == EGameState.StateGame)
-                    return GoalState.Succesed;
-                else
-                    return GoalState.EndTurn;
-            }
+                return GoalState.Succesed;
         }
     }
 }

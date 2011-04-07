@@ -26,7 +26,8 @@ namespace AIHard
 
         public void ResolveAI()
         {
-            thinkGoal.Process();
+            while (thinkGoal.Process() != GoalState.EndTurn)
+                ;
         }
 
         public IComponentAI Clone()

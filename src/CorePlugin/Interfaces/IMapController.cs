@@ -146,6 +146,8 @@ namespace CorePlugin
         String GetLastError();
         int GetDistance(ITown a, ITown b);
 
+        List<IRoad> GetRoadsToTown(ITown town, IPlayer player);
+
         /// <summary>
         /// Min ID is 1 (not 0!)
         /// </summary>

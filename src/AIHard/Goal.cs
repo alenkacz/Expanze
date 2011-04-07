@@ -8,9 +8,9 @@ namespace AIHard
 {
     public enum GoalState
     {
-        NoSubgoal,
         Succesed,
-        Failed
+        Failed,
+        EndTurn
     }
 
     abstract class Goal

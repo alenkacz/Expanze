@@ -8,40 +8,49 @@ namespace AIHard
 {
     class BuildTown : CompositeGoal
     {
+        ITown lastBestTown;
+        List<IRoad> lastBestRoads;
+
         public BuildTown(IMapController map)
             : base(map)
         {
+            lastBestTown = null;
+            lastBestRoads = null;
         }
 
+        public override void Init()
+        {
+            switch (map.GetState())
+            {
+                case EGameState.StateFirstTown:
+                case EGameState.StateSecondTown:
+                    FirstTwoStates();
+                    if (lastBestTown != null)
+                    {
+                        AddSubgoal(new BuildTownAtom(map, lastBestTown));
+                        lastBestTown = null;
+                    }
+                    break;
+
+                case EGameState.StateGame:
+                    if (lastBestTown != null)
+                    {
+                        AddSubgoal(new BuildTownAtom(map, lastBestTown));
+                        lastBestTown = null;
+                    }
+                    break;
+            }
+        }
+
+        
         public override GoalState Process()
         {
-            GoalState state = base.Process();
-
-            if (state == GoalState.NoSubgoal)
-            {
-                ITown tempTown;
-
-                switch (map.GetState())
-                {
-                    case EGameState.StateFirstTown :
-                    case EGameState.StateSecondTown :
-                        tempTown = FirstTwoStates();
-                        if (tempTown != null)
-                        {
-                            AddSubgoal(new BuildTownAtom(map, tempTown));
-                            return Process();
-                        }
-                        break;
-
-                    case EGameState.StateGame :
-                        break;
-                }
-            }
+            GoalState state = base.Process();          
 
             return state;
         }
 
-        private ITown FirstTwoStates()
+        private void FirstTwoStates()
         {
             int townMaxID = map.GetMaxTownID();
             ITown tempTown;
@@ -60,15 +69,44 @@ namespace AIHard
                 }
             }
 
-            return bestTown;
+            lastBestTown = bestTown;
         }
 
         public override double GetFitness()
         {
+            double bestFitness = 0.0f;
+            double tempFitness;
+            ITown tempTown;
+            lastBestTown = null;
+
             if (map.GetState() != EGameState.StateGame)
                 return 2.0f;
             else
-                return 0.0f;
+            {
+                int maxTownID = map.GetMaxTownID();
+                for (int loop1 = 1; loop1 < maxTownID; loop1++)
+                {
+                    tempTown = map.GetITownByID(loop1);
+                    tempFitness = GetFitness(tempTown);
+
+                    /// it is not possible to build town on that place
+                    if (tempFitness < 0.01)
+                        continue;
+
+                    List<IRoad> roads = map.GetRoadsToTown(tempTown, map.GetPlayerMe());
+                    double coef = (roads.Count <= 2) ? 1 - (roads.Count * 0.1) : 1 - (roads.Count * 0.15);
+                    tempFitness = tempFitness * coef;
+
+                    if (tempFitness > bestFitness)
+                    {
+                        bestFitness = tempFitness;
+                        lastBestTown = tempTown;
+                        lastBestRoads = roads;
+                    }
+                }
+            }
+
+            return bestFitness;
         }
 
         private double GetFitness(IHexa hexa)

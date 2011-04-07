@@ -504,7 +504,7 @@ namespace Expanze
                                                                    BuildingKind.SourceBuilding,
                                                                    titleBuilding,
                                                                    descriptionBuilding,
-                                                                   model.GetSourceBuildingCost(), true,
+                                                                   (SourceAll) model.GetSourceBuildingCost(), true,
                                                                    icon));
 
                                         if (kind != HexaKind.Mountains)
