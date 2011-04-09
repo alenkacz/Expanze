@@ -22,8 +22,9 @@ namespace AIHard
         {
             if (lastBestTown == null)
                 GetFitness();
-            
-            subgoals.Enqueue(new BuildSourceBuildingAtom(map, lastBestTown, lastBestPos));
+
+            AddSubgoal(new RaiseSources(map, lastBestTown.GetIHexa(lastBestPos).GetSourceBuildingCost()));
+            AddSubgoal(new BuildSourceBuildingAtom(map, lastBestTown, lastBestPos));
             
             lastBestTown = null;
         }

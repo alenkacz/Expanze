@@ -28,7 +28,6 @@ namespace AIHard
 
             switch (state)
             {
-                case GoalState.Completed:
                 case GoalState.Failed:
                     subgoals.Clear();
                     return state;

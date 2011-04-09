@@ -35,7 +35,16 @@ namespace AIHard
                 case EGameState.StateGame:
                     if (lastBestTown != null)
                     {
+                        ISourceAll cost = map.GetPrice(PriceKind.BTown);
+                        AddSubgoal(new RaiseSources(map, cost));
+
                         List<IRoad> path = map.GetRoadsToTown(lastBestTown, map.GetPlayerMe());
+                        foreach (IRoad road in path)
+                        {
+                            AddSubgoal(new RaiseSources(map, map.GetPrice(PriceKind.BRoad)));
+                        }
+                        //AddSubgoal(new RaiseSources(map, cost));
+
                         foreach (IRoad road in path)
                         {
                             AddSubgoal(new BuildRoadAtom(map, road));
