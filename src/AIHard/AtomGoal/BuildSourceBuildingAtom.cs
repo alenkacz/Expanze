@@ -21,9 +21,15 @@ namespace AIHard
         public override GoalState Process()
         {
             if (town.BuildSourceBuilding(pos))
-                return GoalState.Failed;
-            else
+            {
+                map.Log("goal.txt", "SourceBuildingAtom - sucess");
                 return GoalState.Succesed;
+            }
+            else
+            {
+                map.Log("goal.txt", "SourceBuildingAtom - failed");
+                return GoalState.Failed;
+            }
         }
     }
 }

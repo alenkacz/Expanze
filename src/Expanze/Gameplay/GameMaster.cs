@@ -592,11 +592,11 @@ namespace Expanze
         {
             switch (kind)
             {
-                case SourceKind.Wood: return  new SourceAll(rate, 0, 0, 0, 0);
-                case SourceKind.Stone: return new SourceAll(0, rate, 0, 0, 0);
-                case SourceKind.Corn: return  new SourceAll(0, 0, rate, 0, 0);
-                case SourceKind.Meat: return  new SourceAll(0, 0, 0, rate, 0);
-                case SourceKind.Ore: return   new SourceAll(0, 0, 0, 0, rate);
+                case SourceKind.Wood: return new SourceAll(0, 0, 0, rate, 0);
+                case SourceKind.Stone: return new SourceAll(0, 0, rate, 0, 0);
+                case SourceKind.Corn: return new SourceAll(rate, 0, 0, 0, 0);
+                case SourceKind.Meat: return new SourceAll(0, rate, 0, 0, 0);
+                case SourceKind.Ore: return new SourceAll(0, 0, 0, 0, rate);
                 default : return new SourceAll(0);
             }
         }

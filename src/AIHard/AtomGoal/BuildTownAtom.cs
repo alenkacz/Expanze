@@ -18,13 +18,22 @@ namespace AIHard
         public override GoalState Process()
         {
             if (town.Build() == null)
+            {
+                map.Log("goal.txt", "TownAtom - failed");
                 return GoalState.Failed;
+            }
             else
             {
                 if (map.GetState() == EGameState.StateGame)
+                {
+                    map.Log("goal.txt", "TownAtom - succes");
                     return GoalState.Succesed;
+                }
                 else
+                {
+                    map.Log("goal.txt", "TownAtom - endturn");
                     return GoalState.EndTurn;
+                }
             }
         }
     }

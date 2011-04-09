@@ -43,19 +43,19 @@ namespace Expanze.Gameplay
             switch (hexa.GetKind())
             {
                 case HexaKind.Forest:
-                    sourceNormal = new SourceAll(amountNormal, 0, 0, 0, 0);
+                    sourceNormal = new SourceAll(0, 0, 0, amountNormal, 0);
                     break;
 
                 case HexaKind.Stone:
-                    sourceNormal = new SourceAll(0, amountNormal, 0, 0, 0);
-                    break;
-
-                case HexaKind.Cornfield:
                     sourceNormal = new SourceAll(0, 0, amountNormal, 0, 0);
                     break;
 
+                case HexaKind.Cornfield:
+                    sourceNormal = new SourceAll(amountNormal, 0, 0, 0, 0);
+                    break;
+
                 case HexaKind.Pasture:
-                    sourceNormal = new SourceAll(0, 0, 0, amountNormal, 0);
+                    sourceNormal = new SourceAll(0, amountNormal, 0, 0, 0);
                     break;
 
                 case HexaKind.Mountains:

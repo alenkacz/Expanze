@@ -10,7 +10,8 @@ namespace AIHard
     {
         Succesed,
         Failed,
-        EndTurn
+        EndTurn,
+        Completed
     }
 
     abstract class Goal

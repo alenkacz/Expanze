@@ -20,14 +20,22 @@ namespace AIHard
             Init();
         }
 
+        int count;
         public override void Init()
         {
-            // empty
+            count = 0;
         }
 
         public override GoalState Process()
         {
+            count++;
+            if (count > 15)
+                count = 6;
+
             GoalState state = base.Process();
+
+            if (state == GoalState.Failed)
+                return GoalState.EndTurn;
 
             if (state != GoalState.EndTurn)
             {
@@ -48,7 +56,7 @@ namespace AIHard
                     }
                 }
                 if (bestGoal != null &&
-                    bestFitness > 0.1)
+                    bestFitness > 0.01)
                 {
                     subgoals.Enqueue(bestGoal);
                     bestGoal.Init();

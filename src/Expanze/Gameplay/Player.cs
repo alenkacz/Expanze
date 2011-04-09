@@ -253,7 +253,7 @@ namespace Expanze
         public void ChangeSources(int wood, int stone, int corn, int meat, int ore)
         {
             materialChanged = true;
-            prevSource = new SourceAll(wood, stone, corn, meat, ore);
+            prevSource = new SourceAll(corn, meat, stone, wood, ore);
         }
 
         public bool HasMaterialChanged()

@@ -19,9 +19,13 @@ namespace AIHard
         public override GoalState Process()
         {
             if (road.Build() == null)
+            {
+                map.Log("goal.txt", "RoadAtom - sucess");
                 return GoalState.Failed;
+            }
             else
             {
+                map.Log("goal.txt", "RoadAtom - failed");
                 return GoalState.Succesed;
             }
         }
