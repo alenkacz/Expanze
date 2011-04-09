@@ -85,8 +85,7 @@ namespace Expanze
         {
             playerOwner = player;
             isBuild = true;
-            player.AddPoints(Settings.pointsRoad);
-            player.AddBuilding(Building.Road);
+            player.AddRoad(this);
         }
 
         /// <summary>

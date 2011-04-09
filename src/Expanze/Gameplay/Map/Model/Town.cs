@@ -22,6 +22,7 @@ namespace Expanze
 
         private int townID;             /// unique ID of town place, from 1 to counter
         public static int counter = 0;  /// how many town places are on the map
+        private PathNode pathNode;      /// node used for finding path to town
 
         public int GetTownID() { return townID; }
         public bool GetIsBuild() { return isBuild; }
@@ -32,6 +33,7 @@ namespace Expanze
         public IRoad GetIRoad(byte pos) { return roadNeighbour[pos]; }
         public HexaModel GetHexa(int pos) { return hexaNeighbour[pos]; }
         public ITown GetITown(byte pos) { return townNeighbour[pos]; }
+        public TownModel GetTown(byte pos) { return townNeighbour[pos]; }
         public static int GetTownCount() { return counter; }    // number of towns
 
         public TownModel()
@@ -44,6 +46,7 @@ namespace Expanze
             hexaNeighbour = new HexaModel[3];
             buildingKind = new BuildingKind[3];
             building = new SpecialBuilding[3];
+            pathNode = new PathNode();
 
             for (int loop1 = 0; loop1 < buildingKind.Length; loop1++)
                 buildingKind[loop1] = BuildingKind.NoBuilding;
@@ -438,6 +441,17 @@ namespace Expanze
                 return (IMarket)building[pos];
             else
                 return null;
+        }
+
+        internal void ClearNodePath()
+        {
+            pathNode.Clear();
+        }
+
+        internal PathNode GetPathNode() { return pathNode; }
+        internal void SetPathNode(int distance, TownModel ancestorTown, IRoad ancestorRoad)
+        {
+            pathNode.Set(distance, ancestorTown, ancestorRoad);
         }
     }
 }

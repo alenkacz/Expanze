@@ -35,6 +35,11 @@ namespace AIHard
                 case EGameState.StateGame:
                     if (lastBestTown != null)
                     {
+                        List<IRoad> path = map.GetRoadsToTown(lastBestTown, map.GetPlayerMe());
+                        foreach (IRoad road in path)
+                        {
+                            AddSubgoal(new BuildRoadAtom(map, road));
+                        }
                         AddSubgoal(new BuildTownAtom(map, lastBestTown));
                         lastBestTown = null;
                     }
@@ -93,15 +98,17 @@ namespace AIHard
                     if (tempFitness < 0.01)
                         continue;
 
-                    List<IRoad> roads = map.GetRoadsToTown(tempTown, map.GetPlayerMe());
-                    double coef = (roads.Count <= 2) ? 1 - (roads.Count * 0.1) : 1 - (roads.Count * 0.15);
+                    //List<IRoad> roads = map.GetRoadsToTown(tempTown, map.GetPlayerMe());
+                    int dst = map.GetDistanceToTown(tempTown, map.GetPlayerMe());
+                    //map.Log("ahoj.txt", dst + "");
+                    double coef = (dst <= 2) ? 1 - (dst * 0.1) : 1 - (dst * 0.15);
                     tempFitness = tempFitness * coef;
 
                     if (tempFitness > bestFitness)
                     {
                         bestFitness = tempFitness;
                         lastBestTown = tempTown;
-                        lastBestRoads = roads;
+                        //lastBestRoads = roads;
                     }
                 }
             }

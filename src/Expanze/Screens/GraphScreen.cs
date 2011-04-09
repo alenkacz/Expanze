@@ -181,7 +181,6 @@ namespace Expanze
 
             //textPosition.Y -= 150;
             int startY = (int)textPosition.Y + 60;
-            int startX = 100;
 
             DrawGraph((Statistic.Kind)graphKind);
 

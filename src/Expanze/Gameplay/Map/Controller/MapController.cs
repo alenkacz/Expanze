@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using CorePlugin;
 using Expanze.Gameplay.Map.View;
+using Expanze.Utils;
 
 namespace Expanze.Gameplay.Map
 {
@@ -28,7 +29,7 @@ namespace Expanze.Gameplay.Map
 
         public ITown GetITownByID(int townID)
         {
-            if (townID < 1 || townID >= townByID.Length)
+            if (townID < 1 || townID > townByID.Length)
                 return null;
             if(townByID[townID - 1] == null)
                 townByID[townID - 1] = map.GetTownByID(townID);
@@ -37,7 +38,7 @@ namespace Expanze.Gameplay.Map
 
         public IHexa GetIHexaByID(int hexaID)
         {
-            if (hexaID < 1 || hexaID >= hexaByID.Length)
+            if (hexaID < 1 || hexaID > hexaByID.Length)
                 return null;
             if (hexaByID[hexaID - 1] == null)
                 hexaByID[hexaID - 1] = map.GetHexaByID(hexaID);
@@ -169,6 +170,7 @@ namespace Expanze.Gameplay.Map
             RoadBuildError error = road.CanBuildRoad();
             if (error == RoadBuildError.OK)
             {
+                PathNode.SetIsValid(false);
                 road.BuildRoad(gm.GetActivePlayer());
 
                 ItemQueue item = new RoadItemQueue(mapView, roadID);
@@ -265,6 +267,7 @@ namespace Expanze.Gameplay.Map
             TownBuildError error = town.CanBuildTown();
             if (error == TownBuildError.OK)
             {
+                PathNode.SetIsValid(false);
                 town.BuildTown(gm.GetActivePlayer());
 
                 ItemQueue item = new TownItemQueue(mapView, townID);
@@ -694,13 +697,102 @@ namespace Expanze.Gameplay.Map
             return minusSources;
         }
 
+        private void FindWaysToAllTowns(IPlayer player)
+        {
+            if (PathNode.GetIsValid() && PathNode.GetPlayerReference() == player)
+                return;
+
+            for (int loop1 = 1; loop1 <= GetMaxTownID(); loop1++)
+            {
+                TownModel town = (TownModel)GetITownByID(loop1);
+               
+                town.ClearNodePath();
+            }
+
+            Queue<TownModel> openList = new Queue<TownModel>();
+            List<ITown> buildedTowns = player.GetTown();
+
+            foreach (ITown itown in buildedTowns)
+            {
+                TownModel town = (TownModel)itown;
+                town.SetPathNode(0, null, null);
+                openList.Enqueue(town);
+            }
+            List<IRoad> buildedRoads = player.GetRoad();
+            foreach (IRoad road in buildedRoads)
+            {
+                TownModel town;
+                foreach(ITown itown in road.GetITown())
+                {
+                    town = (TownModel)itown;
+                    if (town.GetPathNode().GetDistance() == PathNode.INFINITY)
+                    {
+                        town.SetPathNode(0, null, null);
+                        openList.Enqueue(town);
+                    }
+                }
+            }
+            
+            while (openList.Count > 0)
+            {
+                TownModel ancestor = openList.Dequeue();
+                int dst = ancestor.GetPathNode().GetDistance();
+
+                for(byte loop1 = 0; loop1 < 3; loop1++)
+                {
+                    IRoad road = ancestor.GetIRoad(loop1);
+                    if (road != null &&
+                        !road.GetIsBuild())
+                    {
+                        foreach (ITown itown in road.GetITown())
+                        {
+                            if (itown != null && 
+                                itown.GetTownID() != ancestor.GetTownID() &&
+                                itown.GetIOwner() == null)
+                            {
+                                TownModel town = (TownModel)itown;
+                                if (town.GetPathNode().GetDistance() == PathNode.INFINITY)
+                                {
+                                    town.SetPathNode(dst + 1, ancestor, road);
+                                    openList.Enqueue(town);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            PathNode.SetIsValid(true);
+            PathNode.SetPlayerReference(player);
+        }
+
+        public int GetDistanceToTown(ITown town, IPlayer player)
+        {
+            FindWaysToAllTowns(player);
+
+            TownModel townModel = (TownModel)town;
+            return townModel.GetPathNode().GetDistance();
+        }
+
         public List<IRoad> GetRoadsToTown(ITown town, IPlayer player)
         {
+            FindWaysToAllTowns(player);
+
             List<IRoad> roadWay = new List<IRoad>();
 
-            throw new Exception("Is not implemented");
+            TownModel townModel = (TownModel)town;
 
-            //return roadWay;
+            while (townModel.GetPathNode().GetAncestorTown() != null)
+            {        
+                PathNode node = townModel.GetPathNode();
+
+                roadWay.Add(node.GetAncestorRoad());
+                townModel = node.GetAncestorTown();
+            }
+
+            roadWay.Reverse();
+
+            return roadWay;
         }
 
         public int GetDistance(ITown a, ITown b)
@@ -826,6 +918,11 @@ namespace Expanze.Gameplay.Map
             for (int loop1 = 0; loop1 < hexaByID.Length; loop1++)
                 hexaByID[loop1] = null;
 
+        }
+
+        public void Log(string srcFile, string msg)
+        {
+            Logger.Inst().Log(srcFile, msg);
         }
     }
 }

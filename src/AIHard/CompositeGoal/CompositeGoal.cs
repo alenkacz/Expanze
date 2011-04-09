@@ -8,11 +8,11 @@ namespace AIHard
 {
     abstract class CompositeGoal : Goal
     {
-        protected Stack<Goal> subgoals;
+        protected Queue<Goal> subgoals;
 
         public CompositeGoal(IMapController map) : base(map)
         {
-            subgoals = new Stack<Goal>();
+            subgoals = new Queue<Goal>();
         }
 
         public abstract void Init();
@@ -30,7 +30,7 @@ namespace AIHard
             {
                 case GoalState.Succesed:
                 case GoalState.Failed: 
-                    subgoals.Pop(); break;
+                    subgoals.Dequeue(); break;
             }
 
             return state;
@@ -38,7 +38,7 @@ namespace AIHard
 
         protected void AddSubgoal(Goal goal)
         {
-            subgoals.Push(goal);
+            subgoals.Enqueue(goal);
         }
 
         public virtual double GetFitness()

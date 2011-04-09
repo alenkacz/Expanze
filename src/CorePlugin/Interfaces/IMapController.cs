@@ -146,6 +146,7 @@ namespace CorePlugin
         String GetLastError();
         int GetDistance(ITown a, ITown b);
 
+        int GetDistanceToTown(ITown town, IPlayer player);
         List<IRoad> GetRoadsToTown(ITown town, IPlayer player);
 
         /// <summary>
@@ -165,5 +166,7 @@ namespace CorePlugin
         /// </summary>
         /// <returns>Max ID of possible road</returns>
         int GetMaxRoadID();
+
+        void Log(string srcFile, string msg);
     }
 }

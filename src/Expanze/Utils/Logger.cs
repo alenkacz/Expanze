@@ -22,9 +22,10 @@ namespace Expanze.Utils
 
         public void Log(String src, String message)
         {
-            TextWriter tw = new StreamWriter(src);
-            tw.WriteLine(message);
-            tw.Close();
+            FileInfo file = new FileInfo(src);
+            StreamWriter sw = file.AppendText();
+            sw.WriteLine(message);
+            sw.Close();
         }
     }
 }

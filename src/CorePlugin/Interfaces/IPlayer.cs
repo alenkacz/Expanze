@@ -15,6 +15,7 @@ namespace CorePlugin
         List<IMarket> GetMarket();
         List<IFort> GetFort();
         List<ITown> GetTown();
+        List<IRoad> GetRoad();
 
         int GetPoints();
         ISourceAll GetSource();

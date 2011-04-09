@@ -50,7 +50,7 @@ namespace AIHard
                 if (bestGoal != null &&
                     bestFitness > 0.1)
                 {
-                    subgoals.Push(bestGoal);
+                    subgoals.Enqueue(bestGoal);
                     bestGoal.Init();
                     return Process();
                 }

@@ -33,6 +33,7 @@ namespace Expanze
         List<IMarket> market;
         List<IFort> fort;
         List<ITown> town;
+        List<IRoad> road;
 
         IComponentAI componentAI;   // is null if player is NOT controled by computer but is controled by human
 
@@ -76,6 +77,7 @@ namespace Expanze
             market = new List<IMarket>();
             fort = new List<IFort>();
             town = new List<ITown>();
+            road = new List<IRoad>();
 
             statistic = new Statistic();
         }
@@ -105,6 +107,13 @@ namespace Expanze
             }
         }
 
+        public void AddRoad(IRoad t) { 
+            road.Add(t);
+            AddPoints(Settings.pointsRoad);
+            AddBuilding(Building.Road);
+        }
+
+        public List<IRoad> GetRoad() { return road; }
         public void AddTown(ITown t) { town.Add(t); }
         public List<ITown> GetTown() { return town; }
 

@@ -24,7 +24,7 @@ namespace AIHard
                 GetFitness();
             
             if(lastBestTown.GetIHexa(lastBestPos).GetSourceBuildingCost().HasPlayerSources(map.GetPlayerMe()))
-                subgoals.Push(new BuildSourceBuildingAtom(map, lastBestTown, lastBestPos));
+                subgoals.Enqueue(new BuildSourceBuildingAtom(map, lastBestTown, lastBestPos));
             
             lastBestTown = null;
         }

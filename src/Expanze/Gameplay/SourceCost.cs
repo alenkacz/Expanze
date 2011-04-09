@@ -113,6 +113,11 @@ namespace Expanze
                    b.ore == ore;
         }
 
+        public override int GetHashCode()
+        {
+            return corn + meat << 6 + stone << 12 + wood << 18 + ore << 24;
+        }
+
         public static implicit operator int[](SourceAll a)
         {
             int[] b = new int[5];

@@ -113,6 +113,7 @@ namespace Expanze
             PromptWindow.Inst().Deactive();
             Message.Inst().ClearMessages();
             MarketComponent.Inst().SetIsActive(false);
+            PathNode.SetIsValid(false);
 
             return true;
         }
