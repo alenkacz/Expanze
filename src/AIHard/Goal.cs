@@ -8,10 +8,9 @@ namespace AIHard
 {
     public enum GoalState
     {
-        Succesed,
-        Failed,
-        EndTurn,
-        Completed
+        Succesed, /// all subgoals were succesful
+        Failed,   /// some of subgoals failed
+        Active   /// subgoals need next turn
     }
 
     abstract class Goal
@@ -24,5 +23,10 @@ namespace AIHard
         }
 
         public abstract GoalState Process();
+
+        protected bool IsStillActual()
+        {
+            return true;
+        }
     }
 }

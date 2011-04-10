@@ -8,24 +8,24 @@ namespace AIHard
 {
     class ChangeSourcesAtom : Goal
     {
-        ISourceAll source;
+        List<ISourceAll> sourceList;
 
-        public ChangeSourcesAtom(IMapController map, ISourceAll source)
+        public ChangeSourcesAtom(IMapController map, List<ISourceAll> sourceList)
             : base(map)
         {
-            this.source = source;
+            this.sourceList = sourceList;
         }
 
         public override GoalState Process()
         {
-            if (map.ChangeSourcesFor(source))
+            if (map.ChangeSourcesFor(sourceList))
             {
-                map.Log("goal.txt", "ChangeSourcesAtom - succes");
+                map.Log("goal", "ChangeSourcesAtom - succes");
                 return GoalState.Succesed;
             }
             else
             {
-                map.Log("goal.txt", "ChangeSourcesAtom - failed");
+                map.Log("goal", "ChangeSourcesAtom - failed > " + map.GetLastError());
                 return GoalState.Failed;
             }
         }

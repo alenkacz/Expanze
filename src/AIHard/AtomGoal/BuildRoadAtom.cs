@@ -20,12 +20,12 @@ namespace AIHard
         {
             if (road.Build() == null)
             {
-                map.Log("goal.txt", "RoadAtom - sucess");
+                map.Log("goal", "RoadAtom - failed > " + map.GetLastError());
                 return GoalState.Failed;
             }
             else
             {
-                map.Log("goal.txt", "RoadAtom - failed");
+                map.Log("goal", "RoadAtom - succes");
                 return GoalState.Succesed;
             }
         }

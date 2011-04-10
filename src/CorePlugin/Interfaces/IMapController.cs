@@ -114,6 +114,7 @@ namespace CorePlugin
         /// <returns>MonasteryError.OK if it is OK, or some error.</returns>
         MonasteryError CanInventUpgrade(SourceBuildingKind source);
 
+        bool ChangeSourcesFor(List<ISourceAll> sourceList);
         bool ChangeSourcesFor(ISourceAll source);
 
         /// <summary>

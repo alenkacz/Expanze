@@ -9,13 +9,11 @@ namespace AIHard
     class BuildTown : CompositeGoal
     {
         ITown lastBestTown;
-        List<IRoad> lastBestRoads;
 
         public BuildTown(IMapController map)
             : base(map)
         {
             lastBestTown = null;
-            lastBestRoads = null;
         }
 
         public override void Init()
@@ -35,20 +33,22 @@ namespace AIHard
                 case EGameState.StateGame:
                     if (lastBestTown != null)
                     {
-                        ISourceAll cost = map.GetPrice(PriceKind.BTown);
-                        AddSubgoal(new RaiseSources(map, cost));
+                        List<ISourceAll> sourceList = new List<ISourceAll>();
+                        sourceList.Add(map.GetPrice(PriceKind.BTown));
 
                         List<IRoad> path = map.GetRoadsToTown(lastBestTown, map.GetPlayerMe());
                         foreach (IRoad road in path)
                         {
-                            AddSubgoal(new RaiseSources(map, map.GetPrice(PriceKind.BRoad)));
+                            sourceList.Add(map.GetPrice(PriceKind.BRoad));
                         }
-                        //AddSubgoal(new RaiseSources(map, cost));
+
+                        AddSubgoal(new RaiseSources(map, sourceList));
 
                         foreach (IRoad road in path)
                         {
                             AddSubgoal(new BuildRoadAtom(map, road));
                         }
+
                         AddSubgoal(new BuildTownAtom(map, lastBestTown));
                         lastBestTown = null;
                     }
@@ -59,7 +59,10 @@ namespace AIHard
         
         public override GoalState Process()
         {
-            GoalState state = base.Process();          
+            GoalState state = base.Process();
+
+            if (state == GoalState.Active)
+                subgoals.Clear();
 
             return state;
         }
@@ -94,7 +97,7 @@ namespace AIHard
             lastBestTown = null;
 
             if (map.GetState() != EGameState.StateGame)
-                return 2.0f;
+                return 10.0f;
             else
             {
                 int maxTownID = map.GetMaxTownID();
@@ -127,7 +130,7 @@ namespace AIHard
 
         private double GetFitness(IHexa hexa)
         {
-            if (hexa == null)
+            if (hexa == null || hexa.GetKind() == HexaKind.Water)
                 return 0.0f;
 
             double fitness;

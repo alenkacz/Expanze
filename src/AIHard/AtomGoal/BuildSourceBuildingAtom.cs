@@ -22,12 +22,12 @@ namespace AIHard
         {
             if (town.BuildSourceBuilding(pos))
             {
-                map.Log("goal.txt", "SourceBuildingAtom - sucess");
+                map.Log("goal", "SourceBuildingAtom - sucess");
                 return GoalState.Succesed;
             }
             else
             {
-                map.Log("goal.txt", "SourceBuildingAtom - failed");
+                map.Log("goal", "SourceBuildingAtom - failed > " + map.GetLastError());
                 return GoalState.Failed;
             }
         }

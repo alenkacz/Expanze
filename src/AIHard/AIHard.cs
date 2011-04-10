@@ -27,7 +27,7 @@ namespace AIHard
         public void ResolveAI()
         {
             thinkGoal.Init();
-            while (thinkGoal.Process() != GoalState.EndTurn)
+            while (thinkGoal.Process() != GoalState.Active)
                 ;
         }
 

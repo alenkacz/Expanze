@@ -613,10 +613,25 @@ namespace Expanze.Gameplay.Map
             return false;
         }
 
+        public bool ChangeSourcesFor(List<ISourceAll> sourceList)
+        {
+            SourceAll source = new SourceAll(0);
+
+            foreach (ISourceAll isource in sourceList)
+            {
+                source = source + (SourceAll)isource;
+            }
+
+            return ChangeSourcesFor(source);
+        }
+
         public bool ChangeSourcesFor(ISourceAll source)
         {
             if (CanChangeSourcesFor(source) < 0)
+            {
+                SetLastError(Strings.ERROR_NOT_ENOUGHT_FROM_SOURCE);
                 return false;
+            }
 
             Player player = GameMaster.Inst().GetActivePlayer();
             if (source.HasPlayerSources(player))
@@ -702,6 +717,7 @@ namespace Expanze.Gameplay.Map
             if (PathNode.GetIsValid() && PathNode.GetPlayerReference() == player)
                 return;
 
+            PathNode.SetIsValid(false);
             for (int loop1 = 1; loop1 <= GetMaxTownID(); loop1++)
             {
                 TownModel town = (TownModel)GetITownByID(loop1);
@@ -922,7 +938,7 @@ namespace Expanze.Gameplay.Map
 
         public void Log(string srcFile, string msg)
         {
-            Logger.Inst().Log(srcFile, msg);
+            Logger.Inst().Log(srcFile + GameMaster.Inst().GetActivePlayer().GetName() + ".txt", msg);
         }
     }
 }

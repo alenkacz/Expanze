@@ -8,18 +8,27 @@ namespace AIHard
 {
     class RaiseSources : CompositeGoal
     {
-        ISourceAll source;
+        List<ISourceAll> source;
+
+        public RaiseSources(IMapController map, List<ISourceAll> sourceList)
+            : base(map)
+        {
+            this.source = sourceList;
+            Init();
+        }
 
         public RaiseSources(IMapController map, ISourceAll source)
             : base(map)
         {
-            this.source = source;
+            List<ISourceAll> sourceList = new List<ISourceAll>();
+            sourceList.Add(source);
+            this.source = sourceList;
             Init();
         }
 
         public override void Init()
         {
-            if (!source.HasPlayerSources(map.GetPlayerMe()))
+            //if (!source.HasPlayerSources(map.GetPlayerMe()))
             {
                 AddSubgoal(new ChangeSourcesAtom(map, source));
             }
@@ -28,6 +37,12 @@ namespace AIHard
         public override GoalState Process()
         {
             GoalState state = base.Process();
+
+            if (state == GoalState.Failed)
+            {
+                AddSubgoal(new ChangeSourcesAtom(map, source));
+                return GoalState.Active;
+            }
 
             return state;
         }

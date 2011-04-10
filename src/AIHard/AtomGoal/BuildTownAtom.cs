@@ -19,21 +19,16 @@ namespace AIHard
         {
             if (town.Build() == null)
             {
-                map.Log("goal.txt", "TownAtom - failed");
+                map.Log("goal", "TownAtom - failed > " + map.GetLastError());
                 return GoalState.Failed;
             }
             else
             {
+                map.Log("goal", "TownAtom - succes");
                 if (map.GetState() == EGameState.StateGame)
-                {
-                    map.Log("goal.txt", "TownAtom - succes");
                     return GoalState.Succesed;
-                }
                 else
-                {
-                    map.Log("goal.txt", "TownAtom - endturn");
-                    return GoalState.EndTurn;
-                }
+                    return GoalState.Active;
             }
         }
     }

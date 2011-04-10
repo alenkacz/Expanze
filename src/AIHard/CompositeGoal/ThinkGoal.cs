@@ -9,13 +9,13 @@ namespace AIHard
 {
     class ThinkGoal : CompositeGoal
     {
-        LinkedList<CompositeGoal> mainGoals;
+        LinkedList<MainGoal> mainGoals;
 
         public ThinkGoal(IMapController map) : base(map)
         {
-            mainGoals = new LinkedList<CompositeGoal>();
-            mainGoals.AddFirst(new BuildTown(map));
-            mainGoals.AddLast(new BuildSourceBuilding(map));
+            mainGoals = new LinkedList<MainGoal>();
+            mainGoals.AddFirst(new MainGoal(new BuildTown(map), 0.7));
+            mainGoals.AddLast(new MainGoal(new BuildSourceBuilding(map), 0.9));
 
             Init();
         }
@@ -29,22 +29,33 @@ namespace AIHard
         public override GoalState Process()
         {
             count++;
-            if (count > 15)
+            if (count > 20)
                 count = 6;
 
             GoalState state = base.Process();
 
-            if (state == GoalState.Failed)
-                return GoalState.EndTurn;
-
-            if (state != GoalState.EndTurn)
+            if (state == GoalState.Active)
+            {
+                if (subgoals.Count > 0 &&
+                    subgoals.Peek() is BuildTown)
+                    subgoals.Clear();
+                return state;
+            }
+            else
             {
                 CompositeGoal bestGoal = null;
                 double bestFitness = 0.0;
                 double tempFitness;
-                foreach (CompositeGoal goal in mainGoals)
+
+                double desirabilityCoef;
+                CompositeGoal goal;
+                foreach (MainGoal mainGoal in mainGoals)
                 {
+                    goal = mainGoal.goal;
+                    desirabilityCoef = mainGoal.desirabilityCoef;
+
                     tempFitness = goal.GetFitness();
+                    tempFitness *= desirabilityCoef;
                     if (tempFitness > bestFitness)
                     {
                         bestGoal = goal;
@@ -63,10 +74,8 @@ namespace AIHard
                     return Process();
                 }
 
-                return GoalState.EndTurn;
+                return GoalState.Active;
             }
-            else
-                return state;
         }
     }
 }

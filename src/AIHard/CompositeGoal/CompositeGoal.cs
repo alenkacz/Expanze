@@ -20,9 +20,9 @@ namespace AIHard
         override public GoalState Process()
         {
             if (subgoals.Count == 0)
-                return GoalState.Completed;
+                return GoalState.Succesed;
 
-            Goal actualGoal = subgoals.Dequeue();
+            Goal actualGoal = subgoals.Peek();
 
             GoalState state = actualGoal.Process();
 
@@ -33,7 +33,11 @@ namespace AIHard
                     return state;
 
                 case GoalState.Succesed:
+                    subgoals.Dequeue();
                     return Process();
+
+                case GoalState.Active :
+                    return state;
             }
 
             return state;
