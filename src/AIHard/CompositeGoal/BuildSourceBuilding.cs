@@ -21,7 +21,7 @@ namespace AIHard
         public override void Init()
         {
             if (lastBestTown == null)
-                GetFitness();
+                GetDesirability();
 
             AddSubgoal(new RaiseSources(map, lastBestTown.GetIHexa(lastBestPos).GetSourceBuildingCost()));
             AddSubgoal(new BuildSourceBuildingAtom(map, lastBestTown, lastBestPos));
@@ -34,7 +34,7 @@ namespace AIHard
             return base.Process();
         }
 
-        public override double GetFitness()
+        public override double GetDesirability()
         {
             List<ITown> towns = map.GetPlayerMe().GetTown();
 

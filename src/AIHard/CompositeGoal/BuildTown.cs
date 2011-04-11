@@ -89,7 +89,7 @@ namespace AIHard
             lastBestTown = bestTown;
         }
 
-        public override double GetFitness()
+        public override double GetDesirability()
         {
             double bestFitness = 0.0f;
             double tempFitness;
@@ -143,7 +143,7 @@ namespace AIHard
             if (hexa.GetKind() != HexaKind.Mountains &&
                hexa.GetKind() != HexaKind.Stone)
             {
-                fitness *= 0.85;
+                fitness *= 0.75;
             }
 
             /*

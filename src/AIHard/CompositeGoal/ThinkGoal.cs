@@ -44,8 +44,8 @@ namespace AIHard
             else
             {
                 CompositeGoal bestGoal = null;
-                double bestFitness = 0.0;
-                double tempFitness;
+                double bestDesirability = 0.0;
+                double tempDesirability;
 
                 double desirabilityCoef;
                 CompositeGoal goal;
@@ -54,20 +54,20 @@ namespace AIHard
                     goal = mainGoal.goal;
                     desirabilityCoef = mainGoal.desirabilityCoef;
 
-                    tempFitness = goal.GetFitness();
-                    tempFitness *= desirabilityCoef;
-                    if (tempFitness > bestFitness)
+                    tempDesirability = goal.GetDesirability();
+                    tempDesirability *= desirabilityCoef;
+                    if (tempDesirability > bestDesirability)
                     {
                         bestGoal = goal;
-                        bestFitness = tempFitness;
+                        bestDesirability = tempDesirability;
 
                         // fitness more than 1.0 has only goal BuildTown in first two stages of the game
-                        if (bestFitness > 1.1)
+                        if (bestDesirability > 1.1)
                             break;
                     }
                 }
                 if (bestGoal != null &&
-                    bestFitness > 0.01)
+                    bestDesirability > 0.005)
                 {
                     subgoals.Enqueue(bestGoal);
                     bestGoal.Init();

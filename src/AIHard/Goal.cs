@@ -24,7 +24,7 @@ namespace AIHard
 
         public abstract GoalState Process();
 
-        protected bool IsStillActual()
+        public virtual bool IsStillActual()
         {
             return true;
         }

@@ -232,6 +232,19 @@ namespace Expanze
         /// </summary>
         void StartGameSelected(object sender, PlayerIndexEventArgs e)
         {
+            //counting all players
+            int playerCount = 0;
+
+            foreach (PlayerSettingRowComponent p in playersSettings)
+            {
+                if (p.isActive())
+                {
+                    playerCount++;
+                }
+            }
+            if (playerCount < 2)
+                return;
+
             saveScreenData();
 
             //ScreenManager.RemoveScreen(this);

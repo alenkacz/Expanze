@@ -16,6 +16,11 @@ namespace AIHard
             this.road = road;
         }
 
+        public override bool IsStillActual()
+        {
+            return !road.GetIsBuild();
+        }
+
         public override GoalState Process()
         {
             if (road.Build() == null)

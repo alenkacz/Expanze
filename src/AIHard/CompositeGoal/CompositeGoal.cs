@@ -22,6 +22,12 @@ namespace AIHard
             if (subgoals.Count == 0)
                 return GoalState.Succesed;
 
+            foreach (Goal goal in subgoals)
+            {
+                if (!goal.IsStillActual())
+                    return GoalState.Failed;
+            }
+
             Goal actualGoal = subgoals.Peek();
 
             GoalState state = actualGoal.Process();
@@ -48,7 +54,7 @@ namespace AIHard
             subgoals.Enqueue(goal);
         }
 
-        public virtual double GetFitness()
+        public virtual double GetDesirability()
         {
             return 0.0f;
         }

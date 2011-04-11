@@ -15,6 +15,11 @@ namespace AIHard
             this.town = town;
         }
 
+        public override bool IsStillActual()
+        {
+            return town.IsPossibleToBuildTown();
+        }
+
         public override GoalState Process()
         {
             if (town.Build() == null)
