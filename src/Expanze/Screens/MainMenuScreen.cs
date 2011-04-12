@@ -53,13 +53,17 @@ namespace Expanze
 
         #region Handle Input
 
-
         /// <summary>
         /// Event handler for when the Play Game menu entry is selected.
         /// </summary>
         void HotseatMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            ScreenManager.AddScreen(new HotSeatScreen(), e.PlayerIndex);
+            // clearing all players in case of several game in one program launch
+
+            if (GameState.hotSeatScreen == null)
+                GameState.hotSeatScreen = new HotSeatScreen();
+
+            ScreenManager.AddScreen(GameState.hotSeatScreen, e.PlayerIndex);
         }
 
         /// <summary>

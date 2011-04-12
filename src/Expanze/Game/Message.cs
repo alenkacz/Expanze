@@ -63,6 +63,7 @@ namespace Expanze
         {
             messageActive = null;
             queue.Clear();
+            InputManager.Inst().ClearActiveState("gamemessage");
         }
 
         private void NextMessage()
@@ -94,9 +95,15 @@ namespace Expanze
                 }
             }
 
-            if (InputManager.Inst().GetGameAction("game", "disablemessages").IsPressed())
+            if (InputManager.Inst().GetGameAction("game", "enablemessages").IsPressed())
+            {
+                disabled = false;
+                Show("Zprávy znovu aktivovány.", "Opět budeš informován o akcích hráče, nových medailích, katastrofách a zázracích.", null);
+            } else
+            if (InputManager.Inst().GetGameAction("gamemessage", "disablemessages").IsPressed())
             {
                 disabled = !disabled;
+                ClearMessages();
             }
         }
 

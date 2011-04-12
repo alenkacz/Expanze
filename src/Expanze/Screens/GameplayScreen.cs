@@ -117,6 +117,7 @@ namespace Expanze
 
             InputManager im = InputManager.Inst();
             String stateGame = "game";
+            
             if (im.AddState(stateGame))
             {
                 GameAction pause = new GameAction("pause", GameAction.ActionKind.OnlyInitialPress);
@@ -129,12 +130,12 @@ namespace Expanze
                 GameAction cameratop = new GameAction("cameratop", GameAction.ActionKind.Normal);
                 GameAction camerabottom = new GameAction("camerabottom", GameAction.ActionKind.Normal);
 
-                GameAction disablemessages = new GameAction("disablemessages", GameAction.ActionKind.OnlyInitialPress);
+                GameAction enablemessages = new GameAction("enablemessages", GameAction.ActionKind.OnlyInitialPress);
                 GameAction selectTown = new GameAction("selecttown", GameAction.ActionKind.OnlyInitialPress);
                 GameAction selectHexa = new GameAction("selecthexa", GameAction.ActionKind.OnlyInitialPress);
                 GameAction activateHexa = new GameAction("activatehexa", GameAction.ActionKind.OnlyInitialPress);
                 GameAction resignGame = new GameAction("resigngame", GameAction.ActionKind.OnlyInitialPress);
-                im.MapToKey(stateGame, disablemessages, Keys.P);
+                im.MapToKey(stateGame, enablemessages, Keys.P);
                 im.MapToKey(stateGame, selectTown, Keys.T);
                 im.MapToKey(stateGame, selectHexa, Keys.H);
                 im.MapToKey(stateGame, activateHexa, Keys.Enter);
@@ -176,7 +177,8 @@ namespace Expanze
                 GameAction close = new GameAction("close", GameAction.ActionKind.OnlyInitialPress);
                 GameAction cheatsources = new GameAction("cheatsources", GameAction.ActionKind.OnlyInitialPress);
                 GameAction cheatpoints = new GameAction("cheatpoints", GameAction.ActionKind.OnlyInitialPress);
-                
+                GameAction disablemessages = new GameAction("disablemessages", GameAction.ActionKind.OnlyInitialPress);
+                im.MapToKey(stateMessage, disablemessages, Keys.P);
                 im.MapToKey(stateMessage, close, Keys.Escape);
                 im.MapToKey(stateMessage, close, Keys.Enter);
                 im.MapToKey(stateMessage, cheatsources, Keys.F11);

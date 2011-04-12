@@ -26,5 +26,7 @@ namespace Expanze
         public static Map map;
 
         public static SpriteBatch spriteBatch;
+
+        public static HotSeatScreen hotSeatScreen;
     }
 }
