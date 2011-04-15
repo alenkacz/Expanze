@@ -23,6 +23,8 @@ namespace CorePlugin
         int GetStone();
         int GetCorn();
 
+        int Get(SourceKind sourceKind);
+
         /// <summary>
         /// Transfer source kind to int.
         /// Corn 0
@@ -32,16 +34,22 @@ namespace CorePlugin
         /// Ore 4
         /// </summary>
         /// <param name="sourceKind">Source kind to be transfered</param>
-        /// <returns>Number between 0 - 4</returns>
-        int Get(SourceKind sourceKind);
+        /// <returns>Number between 0 - 4</returns>  
+        int KindToInt(SourceKind kind);
 
         /// <summary>
-        /// Opposite of int Get(SourceKind sourceKind);
+        /// Opposite of int KindToInt(SourceKind kind);
         /// </summary>
         /// <param name="index">Number to be transfered</param>
         /// <returns>Source kind according to index number</returns>
         SourceKind IntToKind(int index);
-        int KindToInt(SourceKind kind);
+
+        /// <summary>
+        /// Create new ISourceAll using array[5]
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        ISourceAll Create(int[] source);
 
         Boolean HasPlayerSources(IPlayer player);
 

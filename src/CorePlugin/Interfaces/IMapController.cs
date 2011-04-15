@@ -145,8 +145,8 @@ namespace CorePlugin
         IRoad GetIRoadByID(int roadID);       
         EGameState GetState();
         String GetLastError();
-        int GetDistance(ITown a, ITown b);
 
+        int GetDistance(ITown a, ITown b);
         int GetDistanceToTown(ITown town, IPlayer player);
         List<IRoad> GetRoadsToTown(ITown town, IPlayer player);
 

@@ -741,7 +741,8 @@ namespace Expanze.Gameplay.Map
                 foreach(ITown itown in road.GetITown())
                 {
                     town = (TownModel)itown;
-                    if (town.GetPathNode().GetDistance() == PathNode.INFINITY)
+                    if (town.GetPathNode().GetDistance() == PathNode.INFINITY &&
+                        (!town.GetIsBuild() || town.GetIOwner() == player))
                     {
                         town.SetPathNode(0, null, null);
                         openList.Enqueue(town);

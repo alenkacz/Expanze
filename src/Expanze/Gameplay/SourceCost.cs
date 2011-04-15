@@ -32,6 +32,12 @@ namespace Expanze
             ore = b.ore;
         }
 
+        public SourceAll(int[] source)
+        {
+            for (int loop1 = 0; loop1 < 5; loop1++)
+                this[loop1] = source[loop1];
+        }
+
         public SourceAll(int corn, int meat, int stone, int wood, int ore)
         {
             this.corn = corn;
@@ -189,6 +195,11 @@ namespace Expanze
                 case 4: return SourceKind.Ore;
                 default: return SourceKind.Count; // shouldnt happened;
             }
+        }
+
+        public ISourceAll Create(int[] source)
+        {
+            return new SourceAll(source);
         }
 
         public int Get(SourceKind sourceKind)

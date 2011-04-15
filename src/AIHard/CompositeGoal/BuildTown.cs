@@ -33,22 +33,15 @@ namespace AIHard
                 case EGameState.StateGame:
                     if (lastBestTown != null)
                     {
-                        List<ISourceAll> sourceList = new List<ISourceAll>();
-                        sourceList.Add(map.GetPrice(PriceKind.BTown));
-
                         List<IRoad> path = map.GetRoadsToTown(lastBestTown, map.GetPlayerMe());
-                        foreach (IRoad road in path)
-                        {
-                            sourceList.Add(map.GetPrice(PriceKind.BRoad));
-                        }
-
-                        AddSubgoal(new RaiseSources(map, sourceList));
 
                         foreach (IRoad road in path)
                         {
+                            AddSubgoal(new RaiseSources(map, map.GetPrice(PriceKind.BRoad)));
                             AddSubgoal(new BuildRoadAtom(map, road));
                         }
 
+                        AddSubgoal(new RaiseSources(map, map.GetPrice(PriceKind.BTown)));
                         AddSubgoal(new BuildTownAtom(map, lastBestTown));
                         lastBestTown = null;
                     }
@@ -176,10 +169,12 @@ namespace AIHard
             {
                 tempHexa = town.GetIHexa(loop1);
 
-                if (tempHexa.GetStartSource() == 0)
+                if (tempHexa.GetStartSource() == 0 &&
+                    tempHexa.GetKind() != HexaKind.Desert)
                     continue;
 
-                if (!haveKind[normal.KindToInt(tempHexa.GetSourceKind())])
+                if (tempHexa.GetKind() != HexaKind.Desert && 
+                    !haveKind[normal.KindToInt(tempHexa.GetSourceKind())])
                 {
                     haveKind[normal.KindToInt(tempHexa.GetSourceKind())] = true;
                     multiplier = 3.5;

@@ -6,15 +6,14 @@ using CorePlugin;
 
 namespace AIHard
 {
-    class BuildSourceBuilding : CompositeGoal
+    class BuildFort : CompositeGoal
     {
         ITown lastBestTown;
         byte lastBestPos;
 
-        public BuildSourceBuilding(IMapController map)
-            : base(map)
+        public BuildFort(IMapController map) : base(map)
         {
-            lastBestTown = null;
+           lastBestTown = null;
             lastBestPos = 0;
         }
 
@@ -23,22 +22,17 @@ namespace AIHard
             if (lastBestTown == null)
                 GetDesirability();
 
-            AddSubgoal(new RaiseSources(map, lastBestTown.GetIHexa(lastBestPos).GetSourceBuildingCost()));
-            AddSubgoal(new BuildSourceBuildingAtom(map, lastBestTown, lastBestPos));
+            AddSubgoal(new RaiseSources(map, PriceKind.BFort));
+            AddSubgoal(new BuildFortAtom(map, lastBestTown, lastBestPos));
             
             lastBestTown = null;
-        }
-
-        public override GoalState Process()
-        {
-            return base.Process();
         }
 
         public override double GetDesirability()
         {
             List<ITown> towns = map.GetPlayerMe().GetTown();
 
-            double bestFitness = 0.0;
+            double bestDesirability = 0.0;
             double tempFitness;
             lastBestTown = null;
 
@@ -50,23 +44,39 @@ namespace AIHard
                         continue;
 
                     tempFitness = GetDesirability(town, loop1);
-                    if (tempFitness > bestFitness)
+                    if (tempFitness > bestDesirability)
                     {
                         lastBestTown = town;
                         lastBestPos = loop1;
-                        bestFitness = tempFitness;
+                        bestDesirability = tempFitness;
                     }
                 }
             }
 
-            return bestFitness;
+            if (bestDesirability == 0.0)
+                return bestDesirability;
+
+            double hasFortDesirability = (map.GetPlayerMe().GetBuildingCount(Building.Fort) > 0) ? 0.01 : 1.0;
+            double hasMoneyDesirability = Desirability.GetHasSources(PriceKind.BFort) / 2.0;
+            double desirability = (bestDesirability / 2.0 + hasMoneyDesirability) * hasFortDesirability;
+
+            return desirability;
         }
 
         private double GetDesirability(ITown town, byte pos)
         {
-            int startSource = town.GetIHexa(pos).GetStartSource();
+            IHexa hexa = town.GetIHexa(pos);
+            HexaKind kind = hexa.GetKind();
+            if (kind == HexaKind.Mountains ||
+               kind == HexaKind.Water)
+                return 0.0;
 
-            return startSource / 24.0;
+
+            int startSource = hexa.GetStartSource();
+
+            double desirability = 1 - startSource / 24.0;
+
+            return desirability;
         }
     }
 }

@@ -17,6 +17,11 @@ namespace AIHard
             Init();
         }
 
+        public RaiseSources(IMapController map, PriceKind priceKind)
+            : this(map, map.GetPrice(priceKind))
+        {
+        }
+
         public RaiseSources(IMapController map, ISourceAll source)
             : base(map)
         {
@@ -45,6 +50,11 @@ namespace AIHard
             }
 
             return state;
+        }
+
+        public override double GetDesirability()
+        {
+            return 0.0f;
         }
     }
 }

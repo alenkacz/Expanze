@@ -54,9 +54,6 @@ namespace AIHard
             subgoals.Enqueue(goal);
         }
 
-        public virtual double GetDesirability()
-        {
-            return 0.0f;
-        }
+        public abstract double GetDesirability();
     }
 }

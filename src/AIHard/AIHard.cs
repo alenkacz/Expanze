@@ -21,6 +21,7 @@ namespace AIHard
         public void InitAIComponent(IMapController mapController)
         {
             this.mapController = mapController;
+            Desirability.SetMapController(mapController);
             thinkGoal = new ThinkGoal(mapController);
         }
 
