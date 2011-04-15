@@ -7,74 +7,101 @@ using CorePlugin;
 
 namespace Expanze
 {
-    class GameSettings
+    class GameSettings : IGameSetting
     {
 
         int points = 0;
-        string mapType = "";
-        string mapSize = "";
-        string mapWealth = "";
+        MapType mapType;
+        MapSize mapSize;
+        MapWealth mapWealth;
 
         public GameSettings(int points, string mapType, string mapSize, string mapWealth) 
         {
             this.points = points;
-            this.mapType = mapType;
-            this.mapSize = mapSize;
-            this.mapWealth = mapWealth;
+
+            if (mapType == Strings.GAME_SETTINGS_MAP_TYPE_LOWLAND)
+                this.mapType = MapType.LOWLAND;
+            else if (mapType == Strings.GAME_SETTINGS_MAP_TYPE_NORMAL)
+                this.mapType = MapType.NORMAL;
+            else
+                this.mapType = MapType.WASTELAND;
+
+            if (mapSize == Strings.GAME_SETTINGS_MAP_SIZE_SMALL)
+                this.mapSize = MapSize.SMALL;
+            else if (mapSize == Strings.GAME_SETTINGS_MAP_SIZE_MEDIUM)
+                this.mapSize = MapSize.MEDIUM;
+            else
+                this.mapSize = MapSize.BIG;
+
+            if (mapWealth == Strings.GAME_SETTINGS_MAP_WEALTH_LOW)
+                this.mapWealth = MapWealth.LOW;
+            else if (mapWealth == Strings.GAME_SETTINGS_MAP_WEALTH_MEDIUM)
+                this.mapWealth = MapWealth.MEDIUM;
+            else
+                this.mapWealth = MapWealth.HIGH;
         }
 
-        public int getPoints()
+        public int GetPoints()
         {
             return points;
         }
 
-        public string getMapSize() 
+        public string GetMapSizeXML() 
         {
-            if (mapSize == Strings.GAME_SETTINGS_MAP_SIZE_SMALL)
+            switch (mapSize)
             {
-                return "small";
+                case MapSize.SMALL: return "small";
+                case MapSize.MEDIUM: return "medium";
+                case MapSize.BIG: return "big";
             }
-            else if (mapSize == Strings.GAME_SETTINGS_MAP_SIZE_MEDIUM)
-            {
-                return "medium";
-            }
-            else
-            {
-                return "big";
-            }
+            return "";
         }
 
-        public string getMapType()
+        public string GetMapTypeXML()
         {
-            if (mapType == Strings.GAME_SETTINGS_MAP_TYPE_NORMAL)
+            switch (mapType)
             {
-                return "normal";
+                case MapType.NORMAL: return "normal";
+                case MapType.LOWLAND: return "lowland";
+                case MapType.WASTELAND: return "wasteland";
             }
-            else if (mapType == Strings.GAME_SETTINGS_MAP_TYPE_LOWLAND)
-            {
-                return "lowland";
-            }
-            else
-            {
-                return "wasteland";
-            }
+            return "";
         }
 
-        public string getMapWealth()
+        public string GetMapWealthXML()
         {
-            if (mapWealth == Strings.GAME_SETTINGS_MAP_WEALTH_LOW)
+            switch (mapWealth)
             {
-                return "low";
+                case MapWealth.LOW: return "low";
+                case MapWealth.MEDIUM: return "medium";
+                case MapWealth.HIGH: return "high";
             }
-            else if (mapWealth == Strings.GAME_SETTINGS_MAP_WEALTH_MEDIUM)
-            {
-                return "medium";
-            }
-            else
-            {
-                return "high";
-            }
+            return "";
         }
 
+
+        #region IGameSetting Members
+
+        public MapSize GetMapSize()
+        {
+            return mapSize;
+        }
+
+        public MapType GetMapType()
+        {
+            return mapType;
+        }
+
+        public MapWealth GetMapWealth()
+        {
+            return mapWealth;
+        }
+
+        public int GetWinningPoints()
+        {
+            return points;
+        }
+
+        #endregion
     }
 }

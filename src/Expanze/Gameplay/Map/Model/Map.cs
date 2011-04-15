@@ -176,7 +176,7 @@ namespace Expanze.Gameplay.Map
         {
             MapParser parser = new MapParser();
             GameSettings gs = GameMaster.Inst().GetGameSettings();
-            return parser.getMap(gs.getMapSize(), gs.getMapType(), gs.getMapWealth());
+            return parser.getMap(gs.GetMapSizeXML(), gs.GetMapTypeXML(), gs.GetMapWealthXML());
         }
 
         public override void LoadContent()

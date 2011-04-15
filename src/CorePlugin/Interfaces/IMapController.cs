@@ -144,6 +144,7 @@ namespace CorePlugin
         ITown GetITownByID(int townID);
         IRoad GetIRoadByID(int roadID);       
         EGameState GetState();
+        IGameSetting GetGameSettings();
         String GetLastError();
 
         int GetDistance(ITown a, ITown b);

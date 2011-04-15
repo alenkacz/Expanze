@@ -489,7 +489,7 @@ namespace Expanze
                 foreach (Player player in players)
                 {
                     points = player.GetPoints();
-                    if (points >= GetGameSettings().getPoints())
+                    if (points >= GetGameSettings().GetPoints())
                     {
                         winnerNew = true;
 

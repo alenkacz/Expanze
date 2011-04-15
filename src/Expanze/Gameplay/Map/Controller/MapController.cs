@@ -13,6 +13,7 @@ namespace Expanze.Gameplay.Map
         Map map;
         MapView mapView;
         String lastError;
+        GameMaster gm;
 
         ITown[] townByID;
         IRoad[] roadByID;
@@ -22,6 +23,7 @@ namespace Expanze.Gameplay.Map
         {
             this.map = map;
             this.mapView = mapView;
+            this.gm = GameMaster.Inst();
 
             PromptWindow.Inst().Deactive();
             MarketComponent.Inst().SetIsActive(false);
@@ -54,13 +56,13 @@ namespace Expanze.Gameplay.Map
             return roadByID[roadID - 1];
         }
 
-        public IPlayer GetPlayerMe() { return GameMaster.Inst().GetActivePlayer(); }
+        public IPlayer GetPlayerMe() { return gm.GetActivePlayer(); }
 
         public List<IPlayer> GetPlayerOthers()
         {
             List<IPlayer> players = new List<IPlayer>();
 
-            foreach (IPlayer p in GameMaster.Inst().GetPlayers())
+            foreach (IPlayer p in gm.GetPlayers())
             {
                 if (p != GetPlayerMe())
                 {
@@ -74,7 +76,7 @@ namespace Expanze.Gameplay.Map
         public int GetMaxRoadID() { return RoadModel.GetRoadCount(); }
         public int GetMaxTownID() { return TownModel.GetTownCount(); }
         public int GetMaxHexaID() { return HexaModel.GetHexaCount(); }
-        public EGameState GetState() { return GameMaster.Inst().GetState(); }
+        public EGameState GetState() { return gm.GetState(); }
         public IHexa GetIHexa(int x, int y) { return map.GetHexaModel(x, y); }
 
         public void SetLastError(String str) {lastError = str;}
@@ -319,7 +321,7 @@ namespace Expanze.Gameplay.Map
 
         public bool InventUpgrade(SourceBuildingKind building)
         {
-            Player p = GameMaster.Inst().GetActivePlayer();
+            Player p = gm.GetActivePlayer();
             List<IMonastery> monastery = p.GetMonastery();
 
             foreach (IMonastery m in monastery)
@@ -342,7 +344,7 @@ namespace Expanze.Gameplay.Map
 
         public MonasteryError CanInventUpgrade(SourceBuildingKind building)
         {
-            Player p = GameMaster.Inst().GetActivePlayer();
+            Player p = gm.GetActivePlayer();
             List<IMonastery> monastery = p.GetMonastery();
 
             foreach (IMonastery m in monastery)
@@ -368,7 +370,7 @@ namespace Expanze.Gameplay.Map
 
         public bool BuyLicence(SourceKind source)
         {
-            Player p = GameMaster.Inst().GetActivePlayer();
+            Player p = gm.GetActivePlayer();
             List<IMarket> market = p.GetMarket();
 
             foreach (IMarket m in market)
@@ -391,7 +393,7 @@ namespace Expanze.Gameplay.Map
 
         public MarketError CanBuyLicence(SourceKind source)
         {
-            Player p = GameMaster.Inst().GetActivePlayer();
+            Player p = gm.GetActivePlayer();
             List<IMarket> market = p.GetMarket();
 
             foreach (IMarket m in market)
@@ -452,7 +454,7 @@ namespace Expanze.Gameplay.Map
 
         public CaptureHexaError CanCaptureHexa(int hexaID, IFort fort)
         {
-            if (!Settings.costFortCapture.HasPlayerSources(GameMaster.Inst().GetActivePlayer()))
+            if (!Settings.costFortCapture.HasPlayerSources(gm.GetActivePlayer()))
             {
                 SetLastError(Strings.ERROR_NO_SOURCES);
                 return CaptureHexaError.NoSources;
@@ -482,7 +484,7 @@ namespace Expanze.Gameplay.Map
             if (CanCaptureHexa(hexaID, fort) == CaptureHexaError.OK)
             {
                 HexaModel hexa = map.GetHexaByID(hexaID);
-                Player player = GameMaster.Inst().GetActivePlayer();
+                Player player = gm.GetActivePlayer();
                 hexa.Capture(player);
                 player.PayForSomething(Settings.costFortCapture);
                 player.AddFortAction();
@@ -494,7 +496,7 @@ namespace Expanze.Gameplay.Map
 
         public DestroyHexaError CanDestroyHexa(int hexaID, IFort fort)
         {
-            if (!Settings.costFortDestroyHexa.HasPlayerSources(GameMaster.Inst().GetActivePlayer()))
+            if (!Settings.costFortDestroyHexa.HasPlayerSources(gm.GetActivePlayer()))
             {
                 SetLastError(Strings.ERROR_NO_SOURCES);
                 return DestroyHexaError.NoSources;
@@ -528,8 +530,8 @@ namespace Expanze.Gameplay.Map
             {
                 HexaModel hexa = map.GetHexaByID(hexaID);
                 hexa.Destroy();
-                GameMaster.Inst().GetActivePlayer().PayForSomething(Settings.costFortDestroyHexa);
-                GameMaster.Inst().GetActivePlayer().AddFortAction();
+                gm.GetActivePlayer().PayForSomething(Settings.costFortDestroyHexa);
+                gm.GetActivePlayer().AddFortAction();
                 return true;
             }
             return false;
@@ -537,11 +539,11 @@ namespace Expanze.Gameplay.Map
 
         public DestroySourcesError CanStealSources(String playerName)
         {
-            Player player = GameMaster.Inst().GetPlayer(playerName);
+            Player player = gm.GetPlayer(playerName);
             if (player == null)
                 return DestroySourcesError.NoPlayerWithName;
 
-            Player activePlayer = GameMaster.Inst().GetActivePlayer();
+            Player activePlayer = gm.GetActivePlayer();
             if (activePlayer.GetBuildingCount(Building.Fort) == 0)
             {
                 SetLastError(Strings.ERROR_NO_FORT);
@@ -558,8 +560,8 @@ namespace Expanze.Gameplay.Map
 
         public bool StealSources(String playerName)
         {
-            Player player = GameMaster.Inst().GetPlayer(playerName);
-            Player activePlayer = GameMaster.Inst().GetActivePlayer();
+            Player player = gm.GetPlayer(playerName);
+            Player activePlayer = gm.GetActivePlayer();
 
             if (CanStealSources(playerName) == DestroySourcesError.OK)
             {
@@ -579,7 +581,7 @@ namespace Expanze.Gameplay.Map
 
         public ParadeError CanShowParade()
         {
-            Player activePlayer = GameMaster.Inst().GetActivePlayer();
+            Player activePlayer = gm.GetActivePlayer();
 
             if (!GetPrice(PriceKind.AParade).HasPlayerSources(activePlayer))
             {
@@ -599,11 +601,11 @@ namespace Expanze.Gameplay.Map
         {
             if (CanShowParade() == ParadeError.OK)
             {
-                Player activePlayer = GameMaster.Inst().GetActivePlayer();
+                Player activePlayer = gm.GetActivePlayer();
                 activePlayer.AddPoints(Settings.pointsFortParade);
                 activePlayer.AddFortAction();
                 activePlayer.PayForSomething(GetPrice(PriceKind.AParade));
-                if (GameMaster.Inst().GetActivePlayer().GetIsAI())
+                if (gm.GetActivePlayer().GetIsAI())
                 {
                     Message.Inst().Show(Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE, Strings.PROMPT_DESCTIPTION_MESSAGE_FORT_ACTION_PARADE, GameResources.Inst().GetHudTexture(HUDTexture.IconFortParade));
                 }
@@ -633,7 +635,7 @@ namespace Expanze.Gameplay.Map
                 return false;
             }
 
-            Player player = GameMaster.Inst().GetActivePlayer();
+            Player player = gm.GetActivePlayer();
             if (source.HasPlayerSources(player))
                 return true;
 
@@ -690,7 +692,7 @@ namespace Expanze.Gameplay.Map
         {
             SourceAll source2 = (SourceAll) source;
 
-            Player player = GameMaster.Inst().GetActivePlayer();
+            Player player = gm.GetActivePlayer();
 
             //if (source.HasPlayerSources(player))
             //    return 0;
@@ -939,7 +941,17 @@ namespace Expanze.Gameplay.Map
 
         public void Log(string srcFile, string msg)
         {
-            Logger.Inst().Log(srcFile + GameMaster.Inst().GetActivePlayer().GetName() + ".txt", msg);
+            Logger.Inst().Log(srcFile + gm.GetActivePlayer().GetName() + ".txt", msg);
         }
+
+        #region IMapController Members
+
+
+        public IGameSetting GetGameSettings()
+        {
+            return gm.GetGameSettings();
+        }
+
+        #endregion
     }
 }

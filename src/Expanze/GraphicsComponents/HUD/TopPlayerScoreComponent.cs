@@ -129,7 +129,7 @@ namespace Expanze
             // draw texts
             spriteBatch.DrawString(font, player.GetName(), positionName, Color.White);
             spriteBatch.DrawString(font, player.GetPoints().ToString(), positionScore, Color.White);
-            spriteBatch.DrawString(font, " / " + GameMaster.Inst().GetGameSettings().getPoints(), positionTotalPoints, Color.White);
+            spriteBatch.DrawString(font, " / " + GameMaster.Inst().GetGameSettings().GetPoints(), positionTotalPoints, Color.White);
 
             // draw player color
             spriteBatch.Draw(textureColor, positionColor, player.GetColor());
