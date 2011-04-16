@@ -84,8 +84,10 @@ namespace AIHard
         {
             {
                 int turn = GetNTurnsToWait();
-                map.Log("turn", turn + "hoj \n");
-
+                if (turn > 5)
+                    turn = 5;
+       
+                AddSubgoal(new WaitTurnAtom(map, (turn <= 2) ? turn : 2));
                 AddSubgoal(new ChangeSourcesAtom(map, source));
             }
         }

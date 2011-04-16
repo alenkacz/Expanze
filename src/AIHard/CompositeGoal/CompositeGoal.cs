@@ -55,5 +55,10 @@ namespace AIHard
         }
 
         public abstract double GetDesirability();
+
+        internal void Clear()
+        {
+            subgoals.Clear();
+        }
     }
 }

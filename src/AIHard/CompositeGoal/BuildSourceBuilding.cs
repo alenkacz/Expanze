@@ -64,9 +64,14 @@ namespace AIHard
 
         private double GetDesirability(ITown town, byte pos)
         {
-            int startSource = town.GetIHexa(pos).GetStartSource();
+            IHexa hexa = town.GetIHexa(pos);
+            if (hexa.GetKind() == HexaKind.Desert ||
+               hexa.GetKind() == HexaKind.Water)
+                return 0.0f;
 
-            return startSource / 24.0;
+            int startSource = hexa.GetStartSource();
+
+            return startSource / 24.0 / 2.0 + Desirability.GetHasSources(hexa.GetSourceBuildingCost()) / 2.0;
         }
     }
 }

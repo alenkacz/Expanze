@@ -35,14 +35,29 @@ namespace AIHard
                     {
                         List<IRoad> path = map.GetRoadsToTown(lastBestTown, map.GetPlayerMe());
 
-                        foreach (IRoad road in path)
+                        for(int loop1 = 0; loop1 < path.Count - 1; loop1++)
                         {
                             AddSubgoal(new RaiseSources(map, map.GetPrice(PriceKind.BRoad)));
-                            AddSubgoal(new BuildRoadAtom(map, road));
+                            AddSubgoal(new BuildRoadAtom(map, path[loop1]));
                         }
 
-                        AddSubgoal(new RaiseSources(map, map.GetPrice(PriceKind.BTown)));
+                        List<ISourceAll> sourceList = new List<ISourceAll>();
+                        sourceList.Add(map.GetPrice(PriceKind.BTown));
+
+                        if (path.Count > 0)
+                        {
+                            sourceList.Add(map.GetPrice(PriceKind.BRoad));
+                        }
+
+                        AddSubgoal(new RaiseSources(map, sourceList));
+
+                        if (path.Count > 0)
+                        {
+                            AddSubgoal(new BuildRoadAtom(map, path[path.Count - 1]));
+                        }
+
                         AddSubgoal(new BuildTownAtom(map, lastBestTown));
+
                         lastBestTown = null;
                     }
                     break;
@@ -54,7 +69,8 @@ namespace AIHard
         {
             GoalState state = base.Process();
 
-            if (state == GoalState.Active)
+            if (state == GoalState.Active &&
+                map.GetState() != EGameState.StateGame)
                 subgoals.Clear();
 
             return state;
@@ -103,9 +119,8 @@ namespace AIHard
                     if (tempFitness < 0.01)
                         continue;
 
-                    //List<IRoad> roads = map.GetRoadsToTown(tempTown, map.GetPlayerMe());
                     int dst = map.GetDistanceToTown(tempTown, map.GetPlayerMe());
-                    //map.Log("ahoj.txt", dst + "");
+
                     double coef = (dst <= 2) ? 1 - (dst * 0.1) : 1 - (dst * 0.15);
                     tempFitness = tempFitness * coef;
 
@@ -113,7 +128,6 @@ namespace AIHard
                     {
                         bestFitness = tempFitness;
                         lastBestTown = tempTown;
-                        //lastBestRoads = roads;
                     }
                 }
             }

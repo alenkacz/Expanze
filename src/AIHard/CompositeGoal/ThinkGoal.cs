@@ -17,7 +17,7 @@ namespace AIHard
             mainGoals.AddLast(new MainGoal(new BuildTown(map), 0.7));
             mainGoals.AddLast(new MainGoal(new BuildSourceBuilding(map), 0.9));
             mainGoals.AddLast(new MainGoal(new BuildFort(map), 0.2));
-            mainGoals.AddLast(new MainGoal(new FortShowParade(map), 0.05));
+            mainGoals.AddLast(new MainGoal(new FortShowParade(map), 0.01));
 
             Init();
         }
@@ -32,14 +32,15 @@ namespace AIHard
         {
             count++;
             if (count > 20)
-                count = 6;
+                count = 21;
 
             GoalState state = base.Process();
 
             if (state == GoalState.Active)
             {
                 if (subgoals.Count > 0 &&
-                    subgoals.Peek() is BuildTown)
+                    subgoals.Peek() is BuildTown &&
+                    map.GetState() != EGameState.StateGame)
                     subgoals.Clear();
                 return state;
             }
@@ -72,6 +73,7 @@ namespace AIHard
                     bestDesirability > 0.005)
                 {
                     subgoals.Enqueue(bestGoal);
+                    bestGoal.Clear();
                     bestGoal.Init();
                     return Process();
                 }
