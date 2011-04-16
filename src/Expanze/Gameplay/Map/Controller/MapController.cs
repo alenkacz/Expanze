@@ -947,6 +947,11 @@ namespace Expanze.Gameplay.Map
         #region IMapController Members
 
 
+        public int GetTurnNumber()
+        {
+            return gm.GetTurnNumber();
+        }
+
         public IGameSetting GetGameSettings()
         {
             return gm.GetGameSettings();

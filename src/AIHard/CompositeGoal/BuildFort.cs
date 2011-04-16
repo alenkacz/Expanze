@@ -32,6 +32,9 @@ namespace AIHard
         {
             List<ITown> towns = map.GetPlayerMe().GetTown();
 
+            if (map.GetTurnNumber() < 4)
+                return 0.0f;
+
             double bestDesirability = 0.0;
             double tempFitness;
             lastBestTown = null;
@@ -56,9 +59,11 @@ namespace AIHard
             if (bestDesirability == 0.0)
                 return bestDesirability;
 
+
             double hasFortDesirability = (map.GetPlayerMe().GetBuildingCount(Building.Fort) > 0) ? 0.01 : 1.0;
-            double hasMoneyDesirability = Desirability.GetHasSources(PriceKind.BFort) / 2.0;
-            double desirability = (bestDesirability / 2.0 + hasMoneyDesirability) * hasFortDesirability;
+            double hasMoneyDesirability = Desirability.GetHasSources(PriceKind.BFort) / 3.0;
+            double pointsToWinDesirability = (map.GetPlayerMe().GetPoints() / (double)map.GetGameSettings().GetWinningPoints()) / 3.0;
+            double desirability = (bestDesirability / 3.0 + hasMoneyDesirability + pointsToWinDesirability) * hasFortDesirability;
 
             return desirability;
         }

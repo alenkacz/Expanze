@@ -49,7 +49,9 @@ namespace CorePlugin
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        ISourceAll Create(int[] source);
+        ISourceAll CreateFromArray(int[] source);
+
+        int[] GetAsArray();
 
         Boolean HasPlayerSources(IPlayer player);
 

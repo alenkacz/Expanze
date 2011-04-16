@@ -178,34 +178,34 @@ namespace Expanze
 
         public int GetCorn()
         {
-            return source.corn;
+            return source.GetCorn();
         }
 
         public int GetWood()
         {
-            return source.wood;
+            return source.GetWood();
         }
 
         public int GetOre()
         {
-            return source.ore;
+            return source.GetOre();
         }
 
         public int GetMeat()
         {
-            return source.meat;
+            return source.GetMeat();
         }
 
         public int GetStone()
         {
-            return source.stone;
+            return source.GetStone();
         }
 
         public void PayForSomething(ISourceAll cost)
         {
             SourceAll sourceCost = (SourceAll)cost;
 
-            ChangeSources(-sourceCost.wood, -sourceCost.stone, -sourceCost.corn, -sourceCost.meat, -sourceCost.ore);
+            ChangeSources(-sourceCost.GetWood(), -sourceCost.GetStone(), -sourceCost.GetCorn(), -sourceCost.GetMeat(), -sourceCost.GetOre());
 
             source = source - sourceCost;
         }
@@ -241,7 +241,7 @@ namespace Expanze
                 case TransactionState.TransactionEnd :
                     transactionSource = transactionSource + amount;
                     source = source + transactionSource;               
-                    ChangeSources(transactionSource.wood, transactionSource.stone, transactionSource.corn, transactionSource.meat, transactionSource.ore);
+                    ChangeSources(transactionSource.GetWood(), transactionSource.GetStone(), transactionSource.GetCorn(), transactionSource.GetMeat(), transactionSource.GetOre());
                     transactionSource = new SourceAll(0);
                     break;
             }

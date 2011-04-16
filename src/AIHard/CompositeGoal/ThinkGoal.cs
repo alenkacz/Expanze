@@ -16,7 +16,7 @@ namespace AIHard
             mainGoals = new LinkedList<MainGoal>();
             mainGoals.AddLast(new MainGoal(new BuildTown(map), 0.7));
             mainGoals.AddLast(new MainGoal(new BuildSourceBuilding(map), 0.9));
-            mainGoals.AddLast(new MainGoal(new BuildFort(map), 0.3));
+            mainGoals.AddLast(new MainGoal(new BuildFort(map), 0.2));
             mainGoals.AddLast(new MainGoal(new FortShowParade(map), 0.05));
 
             Init();

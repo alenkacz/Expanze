@@ -8,11 +8,11 @@ namespace Expanze
 {
     class SourceAll : ISourceAll
     {
-        public int corn = 0;
-        public int wood = 0;
-        public int stone = 0;
-        public int meat = 0;
-        public int ore = 0;
+        private int corn = 0;
+        private int wood = 0;
+        private int stone = 0;
+        private int meat = 0;
+        private int ore = 0;
 
         public SourceAll(int amount)
         {
@@ -197,7 +197,7 @@ namespace Expanze
             }
         }
 
-        public ISourceAll Create(int[] source)
+        public ISourceAll CreateFromArray(int[] source)
         {
             return new SourceAll(source);
         }
@@ -214,5 +214,19 @@ namespace Expanze
                 default: return 0;
             }
         }
+
+        #region ISourceAll Members
+
+
+        public int[] GetAsArray()
+        {
+            int[] array = new int[5];
+            for (int loop1 = 0; loop1 < 5; loop1++)
+                array[loop1] = this[loop1];
+
+            return array;
+        }
+
+        #endregion
     }
 }

@@ -145,6 +145,7 @@ namespace CorePlugin
         IRoad GetIRoadByID(int roadID);       
         EGameState GetState();
         IGameSetting GetGameSettings();
+        int GetTurnNumber();
         String GetLastError();
 
         int GetDistance(ITown a, ITown b);

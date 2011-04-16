@@ -31,10 +31,61 @@ namespace AIHard
             Init();
         }
 
+        private int[] SumSourceList(List<ISourceAll> list)
+        {
+            int[] sum = new int[5];
+
+            foreach (ISourceAll s in list)
+            {
+                sum = AIHard.SumVector(sum, s.GetAsArray());
+            }
+
+            return sum;
+        }
+
+        private int GetNTurnsToWait()
+        {
+            int[] sourceCost = SumSourceList(source);
+            int[] sourceNow = map.GetPlayerMe().GetSource().GetAsArray();
+            int[] sourcePerTurn = map.GetPlayerMe().GetCollectSourcesNormal().GetAsArray();
+
+            bool[] dontHaveToChange = new bool[5];
+            for (int loop1 = 0; loop1 < 5; loop1++)
+            {
+                dontHaveToChange[loop1] = false;
+
+                if (sourceNow[loop1] > sourceCost[loop1] || sourcePerTurn[loop1] > 0)
+                    dontHaveToChange[loop1] = true;
+
+            }
+
+            int turn = 0;
+            bool done = false;
+            do
+            {
+                done = true;
+                for (int loop1 = 0; loop1 < 5; loop1++)
+                {
+                    if (sourceNow[loop1] < sourceCost[loop1] &&
+                       dontHaveToChange[loop1])
+                    {
+                        done = false;
+                        turn++;
+                        sourceNow = AIHard.SumVector(sourceNow, sourcePerTurn);
+                    }
+                }
+
+            }  while (!done);
+
+            return turn;
+        }
+
         public override void Init()
         {
-            //if (!source.HasPlayerSources(map.GetPlayerMe()))
             {
+                int turn = GetNTurnsToWait();
+                map.Log("turn", turn + "hoj \n");
+
                 AddSubgoal(new ChangeSourcesAtom(map, source));
             }
         }

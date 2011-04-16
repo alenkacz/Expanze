@@ -24,9 +24,10 @@ namespace AIHard
             if (map.GetPlayerMe().GetBuildingCount(Building.Fort) == 0)
                 return 0.0;
 
-            double des = Desirability.GetHasSources(PriceKind.AParade);
+            double pointsToWinDesirability = (map.GetPlayerMe().GetPoints() / (double) map.GetGameSettings().GetWinningPoints()) / 3.0 * 2.0;
+            double desirability = Desirability.GetHasSources(PriceKind.AParade) / 3.0 + pointsToWinDesirability;
 
-            return des;
+            return desirability;
         }
     }
 }

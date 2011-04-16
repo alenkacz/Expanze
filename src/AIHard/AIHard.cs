@@ -37,5 +37,15 @@ namespace AIHard
             IComponentAI component = new AIHard();
             return component;
         }
+
+        public static int[] SumVector(int[] a, int[] b)
+        {
+            int[] c = new int[a.Length];
+
+            for (int loop1 = 0; loop1 < c.Length; loop1++)
+                c[loop1] = a[loop1] + b[loop1];
+
+            return c;
+        }
     }
 }
