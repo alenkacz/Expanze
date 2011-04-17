@@ -37,7 +37,7 @@ namespace AIHard
 
             foreach (ISourceAll s in list)
             {
-                sum = AIHard.SumVector(sum, s.GetAsArray());
+                sum = AIHard.Sum2Vectors(sum, s.GetAsArray());
             }
 
             return sum;
@@ -71,7 +71,7 @@ namespace AIHard
                     {
                         done = false;
                         turn++;
-                        sourceNow = AIHard.SumVector(sourceNow, sourcePerTurn);
+                        sourceNow = AIHard.Sum2Vectors(sourceNow, sourcePerTurn);
                     }
                 }
 
@@ -80,13 +80,35 @@ namespace AIHard
             return turn;
         }
 
+        private bool HasSomeoneFort()
+        {
+            List<IPlayer> players = map.GetPlayerOthers();
+
+            foreach (IPlayer player in players)
+            {
+                if (player.GetBuildingCount(Building.Fort) > 0)
+                    return true;
+            }
+            return false;
+        }
+
+
+
         public override void Init()
         {
             {
                 int turn = GetNTurnsToWait();
-                if (turn > 5)
-                    turn = 5;
-       
+
+                if (HasSomeoneFort())
+                {
+                    if (AIHard.SumVector(map.GetPlayerMe().GetSource().GetAsArray()) * 3.0 / 2.0 > AIHard.SumVector(map.GetPrice(PriceKind.AStealSources).GetAsArray()))
+                    {
+                        turn = 0;
+                    }
+                    else
+                        turn = 1;
+                }
+
                 AddSubgoal(new WaitTurnAtom(map, (turn <= 2) ? turn : 2));
                 AddSubgoal(new ChangeSourcesAtom(map, source));
             }

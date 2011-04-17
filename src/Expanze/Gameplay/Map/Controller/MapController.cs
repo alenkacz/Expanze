@@ -944,6 +944,63 @@ namespace Expanze.Gameplay.Map
             Logger.Inst().Log(srcFile + gm.GetActivePlayer().GetName() + ".txt", msg);
         }
 
+        private PriceKind GetPriceForMonasteryUpgrade(UpgradeKind upgradeKind, SourceBuildingKind buildingKind)
+        {
+            switch (upgradeKind)
+            {
+                case UpgradeKind.FirstUpgrade:
+                    switch (buildingKind)
+                    {
+                        case SourceBuildingKind.Mill: return PriceKind.UMill1;
+                        case SourceBuildingKind.Stepherd: return PriceKind.UStepherd1;
+                        case SourceBuildingKind.Quarry: return PriceKind.UQuarry1;
+                        case SourceBuildingKind.Saw: return PriceKind.USaw1;
+                        case SourceBuildingKind.Mine: return PriceKind.UMine1;
+                    }
+                    break;
+                case UpgradeKind.SecondUpgrade:
+                    switch (buildingKind)
+                    {
+                        case SourceBuildingKind.Mill: return PriceKind.UMill2;
+                        case SourceBuildingKind.Stepherd: return PriceKind.UStepherd2;
+                        case SourceBuildingKind.Quarry: return PriceKind.UQuarry2;
+                        case SourceBuildingKind.Saw: return PriceKind.USaw2;
+                        case SourceBuildingKind.Mine: return PriceKind.UMine2;
+                    }
+                    break;
+            }
+            return PriceKind.UMill1;
+        }
+
+        private PriceKind GetPriceForMarketLicence(LicenceKind licenceKind, SourceKind sourceKind)
+        {
+            switch (licenceKind)
+            {
+                case LicenceKind.FirstLicence:
+                    switch (sourceKind)
+                    {
+                        case SourceKind.Corn: return PriceKind.MCorn1;
+                        case SourceKind.Meat: return PriceKind.MMeat1;
+                        case SourceKind.Stone: return PriceKind.MStone1;
+                        case SourceKind.Wood: return PriceKind.MWood1;
+                        case SourceKind.Ore: return PriceKind.MOre1;
+                    }
+                    break;
+
+                case LicenceKind.SecondLicence:
+                    switch (sourceKind)
+                    {
+                        case SourceKind.Corn: return PriceKind.MCorn2;
+                        case SourceKind.Meat: return PriceKind.MMeat2;
+                        case SourceKind.Stone: return PriceKind.MStone2;
+                        case SourceKind.Wood: return PriceKind.MWood2;
+                        case SourceKind.Ore: return PriceKind.MOre2;
+                    }
+                    break;
+            }
+            return PriceKind.MCorn1;
+        }
+
         #region IMapController Members
 
 
@@ -955,6 +1012,22 @@ namespace Expanze.Gameplay.Map
         public IGameSetting GetGameSettings()
         {
             return gm.GetGameSettings();
+        }
+
+        public ISourceAll GetPrice(SourceKind sourceKind, LicenceKind licenceKind)
+        {
+            if (licenceKind == LicenceKind.NoLicence)
+                return new SourceAll(0);
+
+            return GetPrice(GetPriceForMarketLicence(licenceKind, sourceKind));
+        }
+
+        public ISourceAll GetPrice(SourceBuildingKind buildingKind, UpgradeKind upgradeKind)
+        {
+            if (upgradeKind == UpgradeKind.NoUpgrade)
+                return new SourceAll(0);
+
+            return GetPrice(GetPriceForMonasteryUpgrade(upgradeKind, buildingKind));
         }
 
         #endregion

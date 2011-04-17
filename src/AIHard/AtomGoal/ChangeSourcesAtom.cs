@@ -25,8 +25,9 @@ namespace AIHard
             }
             else
             {
-                map.Log("goal", "ChangeSourcesAtom - failed > " + map.GetLastError());
-                return GoalState.Failed;
+                return GoalState.Active;
+                //map.Log("goal", "ChangeSourcesAtom - failed > " + map.GetLastError());
+                //return GoalState.Failed;
             }
         }
     }

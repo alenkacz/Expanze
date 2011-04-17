@@ -38,7 +38,14 @@ namespace AIHard
             return component;
         }
 
-        public static int[] SumVector(int[] a, int[] b)
+        public static int SumVector(int[] a)
+        {
+            int sum = 0;
+            for (int loop1 = 0; loop1 < a.Length; loop1++)
+                sum += a[loop1];
+            return sum;
+        }
+        public static int[] Sum2Vectors(int[] a, int[] b)
         {
             int[] c = new int[a.Length];
 

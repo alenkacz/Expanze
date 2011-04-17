@@ -10,7 +10,7 @@ namespace Expanze.Gameplay.Map
 {
     class MountainsView : HexaView
     {
-        public MountainsView(HexaModel model) : base(model)
+        public MountainsView(HexaModel model, int x, int y) : base(model, x, y)
         {
 
         }

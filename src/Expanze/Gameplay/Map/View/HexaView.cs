@@ -81,9 +81,13 @@ namespace Expanze
         protected HexaKind kind;
         bool centerOnScreen;
         private HexaView[] hexaNeighbours;
+        private int x, y;
 
-        public HexaView(HexaModel model)
+        public HexaView(HexaModel model, int x, int y)
         {
+            this.x = x;
+            this.y = y;
+
             this.model = model;
             this.hexaID = model.GetID();
             this.kind = model.GetKind();
@@ -149,8 +153,16 @@ namespace Expanze
 
         private void DrawHexaNumber(SpriteBatch spriteBatch, Vector2 pos)
         {
-            if (model.GetCurrentSource() != 0) // desert
-                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), model.GetCurrentSource() + "", new Vector2(pos.X + 1, pos.Y + 1), Color.Black);
+            /* Draw x, y coord
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), "[" + x + ";" + y + "]", new Vector2(pos.X + 2, pos.Y + 2), Color.Black);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), "[" + x + ";" + y + "]", new Vector2(pos.X, pos.Y), Color.White);
+            return;
+             */
+
+            if (model.GetCurrentSource() == 0) // desert
+                return;
+
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), model.GetCurrentSource() + "", new Vector2(pos.X + 1, pos.Y + 1), Color.Black);
 
             Color numberColor;
             if (pickVars.pickActive)
@@ -161,10 +173,7 @@ namespace Expanze
             if (hexaID == activeHexaID)
                 numberColor = Color.IndianRed;
 
-            if (model.GetCurrentSource() != 0) // desert
-            {
-                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), model.GetCurrentSource() + "", pos, numberColor);
-            }
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), model.GetCurrentSource() + "", pos, numberColor);
         }
 
         public void Draw2D()
@@ -175,7 +184,9 @@ namespace Expanze
             centerOnScreen = containmentType != ContainmentType.Disjoint;
 
             if (kind == HexaKind.Water)
+            {
                 return;
+            }
 
             if (containmentType != ContainmentType.Disjoint)
             {
@@ -193,11 +204,23 @@ namespace Expanze
 
                 Vector2 stringCenter = GameResources.Inst().GetFont(EFont.MedievalMedium).MeasureString(model.GetCurrentSource() + "") * 0.5f;
 
+                /* x, y coord
+                Vector2 stringCenter = GameResources.Inst().GetFont(EFont.MedievalMedium).MeasureString("[" + x + ";" + y + "]") * 0.5f;
+                */
+
                 // now subtract the string center from the text position to find correct position 
                 point2D.X = (int)(point2D.X - stringCenter.X);
                 point2D.Y = (int)(point2D.Y - stringCenter.Y);
 
                 spriteBatch.Begin();
+
+                /* x, y coord
+                if (kind == HexaKind.Water)
+                {
+                    DrawHexaNumber(spriteBatch, point2D);
+                    spriteBatch.End();
+                    return;
+                }*/
 
                 bool drawNumber = true;
                 TownModel tempTown = null;
@@ -279,7 +302,7 @@ namespace Expanze
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
             RasterizerState rasterizerState = new RasterizerState();
-            rasterizerState.CullMode = CullMode.None;
+            rasterizerState.CullMode = CullMode.CullCounterClockwiseFace;
             //rasterizerState.FillMode = FillMode.WireFrame;
             GameState.game.GraphicsDevice.RasterizerState = rasterizerState;
 

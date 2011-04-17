@@ -10,8 +10,8 @@ namespace Expanze.Gameplay.Map
 {
     class StoneView : HexaView
     {
-        public StoneView(HexaModel model)
-            : base(model)
+        public StoneView(HexaModel model, int x, int y)
+            : base(model, x, y)
         {
 
         }

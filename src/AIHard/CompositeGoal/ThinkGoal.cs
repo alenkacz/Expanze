@@ -18,6 +18,10 @@ namespace AIHard
             mainGoals.AddLast(new MainGoal(new BuildSourceBuilding(map), 0.9));
             mainGoals.AddLast(new MainGoal(new BuildFort(map), 0.2));
             mainGoals.AddLast(new MainGoal(new FortShowParade(map), 0.01));
+            mainGoals.AddLast(new MainGoal(new BuildMarket(map), 0.3));
+            mainGoals.AddLast(new MainGoal(new BuildMonastery(map), 0.25));
+            mainGoals.AddLast(new MainGoal(new InventUpgrade(map), 0.3));
+            mainGoals.AddLast(new MainGoal(new BuyLicence(map), 0.5));
 
             Init();
         }

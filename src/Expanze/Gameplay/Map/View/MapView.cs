@@ -40,19 +40,19 @@ namespace Expanze.Gameplay.Map
                         switch (hexaMapModel[i][j].GetKind())
                         {
                             case HexaKind.Mountains:
-                                hexaMapView[i][j] = new MountainsView(hexaMapModel[i][j]);
+                                hexaMapView[i][j] = new MountainsView(hexaMapModel[i][j], i, j);
                                 break;
                             case HexaKind.Cornfield:
-                                hexaMapView[i][j] = new CornfieldView(hexaMapModel[i][j]);
+                                hexaMapView[i][j] = new CornfieldView(hexaMapModel[i][j], i, j);
                                 break;
                             case HexaKind.Stone:
-                                hexaMapView[i][j] = new StoneView(hexaMapModel[i][j]);
+                                hexaMapView[i][j] = new StoneView(hexaMapModel[i][j], i, j);
                                 break;
                             case HexaKind.Water:
                                 hexaMapView[i][j] = getWaterView(i, j);
                                 break;
                             default:
-                                hexaMapView[i][j] = new HexaView(hexaMapModel[i][j]);
+                                hexaMapView[i][j] = new HexaView(hexaMapModel[i][j], i, j);
                                 break;
                         }
                     }
@@ -170,7 +170,7 @@ namespace Expanze.Gameplay.Map
 
             Model m = GameResources.Inst().GetHexaModel(HexaKind.Water + neighbours);
 
-            return new WaterView(hexaMapModel[i][j], m, rotation);
+            return new WaterView(hexaMapModel[i][j], m, rotation, i, j);
         }
 
         public void Update(GameTime gameTime)

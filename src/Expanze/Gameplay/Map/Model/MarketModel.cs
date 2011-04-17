@@ -217,5 +217,15 @@ namespace Expanze.Gameplay
 
             return MarketError.OK;
         }
+
+        #region IMarket Members
+
+
+        public int GetFreeSlot()
+        {
+            return upgradeMax - upgradeCount;
+        }
+
+        #endregion
     }
 }

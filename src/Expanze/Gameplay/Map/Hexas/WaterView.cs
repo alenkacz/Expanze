@@ -14,8 +14,8 @@ namespace Expanze.Gameplay.Map
         Model waterModel;
         Matrix rotation;
 
-        public WaterView(HexaModel model, Model waterModel, Matrix rotation)
-            : base(model)
+        public WaterView(HexaModel model, Model waterModel, Matrix rotation, int x, int y)
+            : base(model, x, y)
         {
             this.waterModel = waterModel;
             this.rotation = rotation;

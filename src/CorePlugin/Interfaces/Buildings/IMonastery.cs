@@ -47,5 +47,7 @@ namespace CorePlugin
         /// <param name="source">For which building kind you want invent upgrade.</param>
         /// <returns>MonasteryError.OK if it is OK, or some error.</returns>
         MonasteryError CanInventUpgrade(SourceBuildingKind source);
+
+        int GetFreeSlot();
     }
 }

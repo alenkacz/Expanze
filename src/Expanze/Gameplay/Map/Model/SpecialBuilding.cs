@@ -55,7 +55,7 @@ namespace Expanze.Gameplay
 
     abstract class SpecialBuilding : ISpecialBuildingGet
     {
-        const int upgradeMax = 3;             /// upgradeCount limit
+        protected const int upgradeMax = 3;             /// upgradeCount limit
         protected int upgradeCount;           /// how many upgrades player has bought in this building?
         protected Player owner;               /// owner of that building
             

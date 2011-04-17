@@ -46,5 +46,7 @@ namespace CorePlugin
         /// <param name="source"></param>
         /// <returns></returns>
         MarketError CanBuyLicence(SourceKind source);
+
+        int GetFreeSlot();
     }
 }

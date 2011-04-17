@@ -136,6 +136,8 @@ namespace CorePlugin
         /// <param name="kind">Kind of thing you are asking price.</param>
         /// <returns>Price of choosen kind.</returns>
         ISourceAll GetPrice(PriceKind kind);
+        ISourceAll GetPrice(SourceKind sourceKind, LicenceKind licenceKind);
+        ISourceAll GetPrice(SourceBuildingKind buildingKind, UpgradeKind upgradeKind);
 
         IPlayer GetPlayerMe();
         List<IPlayer> GetPlayerOthers();

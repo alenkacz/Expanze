@@ -207,5 +207,15 @@ namespace Expanze.Gameplay
 
             return MonasteryError.OK;
         }
+
+        #region IMonastery Members
+
+
+        public int GetFreeSlot()
+        {
+            return upgradeMax - upgradeCount;
+        }
+
+        #endregion
     }
 }

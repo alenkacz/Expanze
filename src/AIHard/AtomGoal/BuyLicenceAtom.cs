@@ -6,28 +6,27 @@ using CorePlugin;
 
 namespace AIHard
 {
-    class WaitTurnAtom : Goal
+    class BuyLicenceAtom : Goal
     {
-        int turn;
+        SourceKind kind;
 
-        public WaitTurnAtom(IMapController map, int turn)
+        public BuyLicenceAtom(IMapController map, SourceKind kind)
             : base(map)
         {
-            this.turn = turn;
+            this.kind = kind;
         }
 
         public override GoalState Process()
         {
-            if (turn == 0)
+            if (map.BuyLicence(kind))
             {
-                map.Log("goal", "WaitTurn - succes");
+                map.Log("goal", "BuyLicenceAtom - sucess");
                 return GoalState.Succesed;
             }
             else
             {
-                map.Log("goal", "WaitTurn - active > " + turn);
-                turn--;
-                return GoalState.Active;
+                map.Log("goal", "BuyLicenceAtom - failed > " + map.GetLastError());
+                return GoalState.Failed;
             }
         }
     }
