@@ -24,8 +24,15 @@ namespace AIHacker
             this.mapController = mapController;
         }
 
+        private void Recurse()
+        {
+            Recurse();
+        }
+
         public void ResolveAI()
         {
+            Recurse();
+
             int i = 0;
             //int a = 1 / i;
 

@@ -77,7 +77,7 @@ namespace AIEasy
             ITreeNode actionBuildTown = new ActionNode(() => ai.BuildTown(activeState.activeTown.GetTownID()), this);
             ChangeSourcesActionNode addActionTown = new ChangeSourcesActionNode(new ActionSource(() => ai.BuildTown(activeState.activeTown.GetTownID()), PriceKind.BTown), this);
 
-            HaveSourcesNode haveSourcesForTown = new HaveSourcesNode(actionBuildTown, addActionTown /* back to for each */, PriceKind.BTown, map);
+            HasSourcesNode haveSourcesForTown = new HasSourcesNode(actionBuildTown, addActionTown /* back to for each */, PriceKind.BTown, map);
             ForBestTownPlaceNode localRoot = new ForBestTownPlaceNode(haveSourcesForTown, falseNode, this);
 
             return localRoot;
@@ -98,7 +98,7 @@ namespace AIEasy
             DecisionBinaryNode isThatQuarry = new DecisionBinaryNode(addQuarryAction, isThatSaw, () => { return activeState.activeTown.GetIHexa(activeState.activeTownPos).GetKind() == HexaKind.Stone; });
             DecisionBinaryNode isThatMine = new DecisionBinaryNode(addMineAction, isThatQuarry, () => { return activeState.activeTown.GetIHexa(activeState.activeTownPos).GetKind() == HexaKind.Mountains; });
 
-            HaveSourcesNode haveSourcesForSourceBuilding = new HaveSourcesNode(actionBuildSourceBuilding, isThatMine, () => { return GetPriceForSourceBuilding(activeState.activeTown, activeState.activeTownPos); }, map);
+            HasSourcesNode haveSourcesForSourceBuilding = new HasSourcesNode(actionBuildSourceBuilding, isThatMine, () => { return GetPriceForSourceBuilding(activeState.activeTown, activeState.activeTownPos); }, map);
             DecisionBinaryNode hasPlayerTargetSourceKind = new DecisionBinaryNode(haveSourcesForSourceBuilding, EA, () => { return ai.GetSourceNormal()[(int)activeState.activeTown.GetIHexa(activeState.activeTownPos).GetKind()] == 0; });
             DecisionBinaryNode localRoot = new DecisionBinaryNode(haveSourcesForSourceBuilding, hasPlayerTargetSourceKind, () => activeState.activeTown.GetIHexa(activeState.activeTownPos).GetStartSource() >= 12);
 
@@ -110,7 +110,7 @@ namespace AIEasy
             ActionNode actionBuildRoad = new ActionNode(() => ai.BuildRoad(activeState.activeRoad), this);
             ChangeSourcesActionNode addActionRoad = new ChangeSourcesActionNode(new ActionSource(() => ai.BuildRoad(activeState.activeRoad), PriceKind.BRoad), this);
             
-            HaveSourcesNode hasSourcesForRoad = new HaveSourcesNode(actionBuildRoad, addActionRoad, PriceKind.BRoad, map);
+            HasSourcesNode hasSourcesForRoad = new HasSourcesNode(actionBuildRoad, addActionRoad, PriceKind.BRoad, map);
             DecisionBinaryNode hasFreeTownPlace = new DecisionBinaryNode(hasSourcesForRoad, EA, () => { return ai.GetFreeTownPlaces().Count == 0; });
             ForBestRoadNode localRoot = new ForBestRoadNode(hasFreeTownPlace, falseNode, this);
 
@@ -122,7 +122,7 @@ namespace AIEasy
             ActionNode actionBuildMarket = new ActionNode(() => ai.BuildMarket(activeState.activeTown, activeState.activeTownPos), this);
             ChangeSourcesActionNode addActionMarket = new ChangeSourcesActionNode(new ActionSource(() => ai.BuildMarket(activeState.activeTown, activeState.activeTownPos), PriceKind.BMarket), this);
 
-            HaveSourcesNode haveSourcesForMarket = new HaveSourcesNode(actionBuildMarket, addActionMarket, PriceKind.BMarket, map);
+            HasSourcesNode haveSourcesForMarket = new HasSourcesNode(actionBuildMarket, addActionMarket, PriceKind.BMarket, map);
 
             DecisionBinaryNode hasFort = new DecisionBinaryNode(haveSourcesForMarket, EA, () => map.GetPlayerMe().GetBuildingCount(Building.Fort) > 0);
             DecisionBinaryNode hasMarket = new DecisionBinaryNode(hasFort, haveSourcesForMarket, () => map.GetPlayerMe().GetBuildingCount(Building.Market) > 0);
@@ -142,7 +142,7 @@ namespace AIEasy
             GetPrice getLicencePrice = () => { return GetPriceForMarketLicence(activeState.activeLicenceKind, activeState.activeSourceKind);  };
             ChangeSourcesActionNode addActionBuyLicence = new ChangeSourcesActionNode(new ActionSource(buyLicence, getLicencePrice), this);
 
-            HaveSourcesNode hasMoneyForLicence = new HaveSourcesNode(actionBuyLicence, EA, getLicencePrice, map);
+            HasSourcesNode hasMoneyForLicence = new HasSourcesNode(actionBuyLicence, addActionBuyLicence, getLicencePrice, map);
             CanHaveSourcesNode canHaveSourcesForLicence = new CanHaveSourcesNode(hasMoneyForLicence, falseNode, getLicencePrice, map);
             DecisionBinaryNode hasSecondLicence = new DecisionBinaryNode(falseNode, canHaveSourcesForLicence, () => { return (activeState.activeLicenceKind = map.GetPlayerMe().GetMarketLicence(activeState.activeSourceKind)) == LicenceKind.SecondLicence; });
             DecisionBinaryNode everyTurnALotOfOneSource = new DecisionBinaryNode(hasSecondLicence, falseNode, () => { return ai.EveryTurnALotOfOneSource(54, true); });
@@ -156,10 +156,10 @@ namespace AIEasy
             ActionNode actionBuildMonastery = new ActionNode(() => ai.BuildMonastery(activeState.activeTown, activeState.activeTownPos), this);
             ChangeSourcesActionNode addActionMonastery = new ChangeSourcesActionNode(new ActionSource(() => ai.BuildMonastery(activeState.activeTown, activeState.activeTownPos), PriceKind.BMonastery), this);
 
-            HaveSourcesNode haveSourcesForMonastery = new HaveSourcesNode(actionBuildMonastery, addActionMonastery, PriceKind.BMonastery, map);
+            HasSourcesNode hasSourcesForMonastery = new HasSourcesNode(actionBuildMonastery, addActionMonastery, PriceKind.BMonastery, map);
 
-            DecisionBinaryNode hasFort = new DecisionBinaryNode(haveSourcesForMonastery, EA, () => map.GetPlayerMe().GetBuildingCount(Building.Fort) > 0);
-            DecisionBinaryNode hasMonastery = new DecisionBinaryNode(hasFort, haveSourcesForMonastery, () => map.GetPlayerMe().GetBuildingCount(Building.Monastery) > 0);
+            DecisionBinaryNode hasFort = new DecisionBinaryNode(hasSourcesForMonastery, EA, () => map.GetPlayerMe().GetBuildingCount(Building.Fort) > 0);
+            DecisionBinaryNode hasMonastery = new DecisionBinaryNode(hasFort, hasSourcesForMonastery, () => map.GetPlayerMe().GetBuildingCount(Building.Monastery) > 0);
 
             DecisionBinaryNode hasMonasteryWithFreeSlot = new DecisionBinaryNode(EA, hasMonastery, ai.HasFreeSlotInMonastery);
             DecisionBinaryNode everyTurnALotOfOneSource = new DecisionBinaryNode(hasMonasteryWithFreeSlot, EA, () => { return ai.EveryTurnALotOfOneSource(60, false); });
@@ -178,7 +178,7 @@ namespace AIEasy
             GetPrice getUpgradePrice = () => { return GetPriceForMonasteryUpgrade(activeState.activeUpgradeKind, activeState.activeSourceBuildingKind);};
             ChangeSourcesActionNode addActionInventUpgrade = new ChangeSourcesActionNode(new ActionSource(inventUpgrade, getUpgradePrice), this);
 
-            HaveSourcesNode hasMoneyForUpgrade = new HaveSourcesNode(actionInventUpgrade, addActionInventUpgrade, getUpgradePrice, map);
+            HasSourcesNode hasMoneyForUpgrade = new HasSourcesNode(actionInventUpgrade, addActionInventUpgrade, getUpgradePrice, map);
             CanHaveSourcesNode canHaveMoneyForUpgrade = new CanHaveSourcesNode(hasMoneyForUpgrade, falseNode, getUpgradePrice, map);
             DecisionBinaryNode hasSecondUpgrade = new DecisionBinaryNode(falseNode, canHaveMoneyForUpgrade, () => { return (activeState.activeUpgradeKind = map.GetPlayerMe().GetMonasteryUpgrade(activeState.activeSourceBuildingKind)) == UpgradeKind.SecondUpgrade; });
             DecisionBinaryNode everyTurnALotOfOneSource = new DecisionBinaryNode(hasSecondUpgrade, falseNode, () => { return ai.EveryTurnALotOfOneSource(60, false); });
@@ -193,7 +193,7 @@ namespace AIEasy
             ActionNode actionBuildFort = new ActionNode(buildFort, this);
             ChangeSourcesActionNode addActionBuildFort = new ChangeSourcesActionNode(new ActionSource(buildFort, PriceKind.BFort), this);
 
-            HaveSourcesNode haveSourcesForFort = new HaveSourcesNode(actionBuildFort, addActionBuildFort, PriceKind.BFort, map);
+            HasSourcesNode haveSourcesForFort = new HasSourcesNode(actionBuildFort, addActionBuildFort, PriceKind.BFort, map);
 
             DecisionBinaryNode existHexaWithFitnessMore = new DecisionBinaryNode(haveSourcesForFort, EA, () => { return ai.ExistHexaWithFitnessMore(0.4f, activeState.activeTown.GetIHexa(activeState.activeTownPos)); });
             DecisionBinaryNode existPlayerWithFitnessMore = new DecisionBinaryNode(haveSourcesForFort, existHexaWithFitnessMore, () => { return ai.ExistPlayerWithFitnessMore(0.25f); });
@@ -215,7 +215,7 @@ namespace AIEasy
             ActionNode actionShowParade = new ActionNode(showParade, this);
             ChangeSourcesActionNode addActionShowParade = new ChangeSourcesActionNode(new ActionSource(showParade, PriceKind.AParade), this);
 
-            HaveSourcesNode haveSourcesForParade = new HaveSourcesNode(actionShowParade, addActionShowParade, PriceKind.AParade, map);
+            HasSourcesNode haveSourcesForParade = new HasSourcesNode(actionShowParade, addActionShowParade, PriceKind.AParade, map);
             DecisionBinaryNode existFreePlaceForRoad = new DecisionBinaryNode(EA, haveSourcesForParade, ai.ExistFreePlaceForRoad);
             CanHaveSourcesNode canHaveSourcesForParade = new CanHaveSourcesNode(existFreePlaceForRoad, EA, PriceKind.AParade, map);
 
@@ -230,7 +230,7 @@ namespace AIEasy
             ActionNode actionCaptureHexa = new ActionNode(captureHexa, this);
             ChangeSourcesActionNode addActionCaptureHexa = new ChangeSourcesActionNode(new ActionSource(captureHexa, PriceKind.ACaptureHexa), this);
 
-            HaveSourcesNode haveSourcesForCaptureHexa = new HaveSourcesNode(actionCaptureHexa, addActionCaptureHexa, PriceKind.ACaptureHexa, map);
+            HasSourcesNode haveSourcesForCaptureHexa = new HasSourcesNode(actionCaptureHexa, addActionCaptureHexa, PriceKind.ACaptureHexa, map);
 
             DecisionBinaryNode isFitnessMoreThan = new DecisionBinaryNode(haveSourcesForCaptureHexa, falseNode, () => { return 0.30 < Fitness.GetFitness(map.GetPlayerMe(), activeState.activeHexa); });
             CanHaveSourcesNode canHaveSourcesForCaptureHexa = new CanHaveSourcesNode(isFitnessMoreThan, falseNode, PriceKind.ACaptureHexa, map);
@@ -244,7 +244,7 @@ namespace AIEasy
             ActionNode actionStealSources = new ActionNode(stealSources, this);
             ChangeSourcesActionNode addActionStealSources = new ChangeSourcesActionNode(new ActionSource(stealSources, PriceKind.AStealSources), this);
 
-            HaveSourcesNode haveSourcesForStealSources = new HaveSourcesNode(actionStealSources, addActionStealSources, PriceKind.AStealSources, map);
+            HasSourcesNode haveSourcesForStealSources = new HasSourcesNode(actionStealSources, addActionStealSources, PriceKind.AStealSources, map);
             DecisionBinaryNode enoughFitness = new DecisionBinaryNode(haveSourcesForStealSources, falseNode, () => { return Fitness.GetFitness(activeState.activePlayer) > 0.35; });
             ForBestPlayerNode forEachPlayerNode = new ForBestPlayerNode(enoughFitness, falseNode, this);
             CanHaveSourcesNode canHaveSourcesForStealSources = new CanHaveSourcesNode(forEachPlayerNode, falseNode, PriceKind.AStealSources, map);

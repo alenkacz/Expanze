@@ -334,7 +334,7 @@ namespace Expanze
             {
                 if (!hasAIThreadStarted && !Message.Inst().GetIsActive())
                 {
-                    actualAIThread = new Thread(X => AIThread(activePlayer.GetComponentAI()));
+                    actualAIThread = new Thread(X => AIThread(activePlayer.GetComponentAI()), 10000);
                     actualAIThread.Start();
                     actualAITime = AI_TIME;
                     hasAIThreadStarted = true;

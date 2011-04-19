@@ -27,5 +27,17 @@ namespace AIHard
 
             return hasMoneyDesirability;
         }
+
+        public static bool HasSomeoneBuilding(Building building)
+        {
+            List<IPlayer> players = map.GetPlayerOthers();
+
+            foreach (IPlayer player in players)
+            {
+                if (player.GetBuildingCount(building) > 0)
+                    return true;
+            }
+            return false;
+        }
     }
 }

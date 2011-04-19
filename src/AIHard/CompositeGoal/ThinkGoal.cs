@@ -22,6 +22,7 @@ namespace AIHard
             mainGoals.AddLast(new MainGoal(new BuildMonastery(map), 0.25));
             mainGoals.AddLast(new MainGoal(new InventUpgrade(map), 0.3));
             mainGoals.AddLast(new MainGoal(new BuyLicence(map), 0.5));
+            mainGoals.AddLast(new MainGoal(new FortStealSources(map), 1.0));
 
             Init();
         }

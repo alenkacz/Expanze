@@ -6,18 +6,18 @@ using CorePlugin;
 
 namespace AIEasy
 {
-    class HaveSourcesNode : DecisionBinaryNode
+    class HasSourcesNode : DecisionBinaryNode
     {
         GetPrice getPrice;
         IMapController map;
 
-        public HaveSourcesNode(ITreeNode trueNode, ITreeNode falseNode, PriceKind kind, IMapController map)
+        public HasSourcesNode(ITreeNode trueNode, ITreeNode falseNode, PriceKind kind, IMapController map)
             : this(trueNode, falseNode, () => {return kind;}, map)
         {
 
         }
 
-        public HaveSourcesNode(ITreeNode trueNode, ITreeNode falseNode, GetPrice getPrice, IMapController map)
+        public HasSourcesNode(ITreeNode trueNode, ITreeNode falseNode, GetPrice getPrice, IMapController map)
             : base(trueNode, falseNode, null)
         {
             this.getPrice = getPrice;

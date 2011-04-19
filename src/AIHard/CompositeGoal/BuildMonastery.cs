@@ -64,11 +64,12 @@ namespace AIHard
 
 
             double hasMonasteryDesirability = (map.GetPlayerMe().GetBuildingCount(Building.Monastery) > 0) ? 0.01 : 1.0;
-            double hasMoneyDesirability = Desirability.GetHasSources(PriceKind.BMonastery) / 4.0;
-            double bestSourceDesirability = ((GetBestSource() - 40) / 60.0) / 2.0;
-            if (bestSourceDesirability > 0.5)
-                bestSourceDesirability = 0.5;
-            double desirability = (bestDesirability / 4.0 + hasMoneyDesirability + bestSourceDesirability) * hasMonasteryDesirability;
+            double hasMoneyDesirability = Desirability.GetHasSources(PriceKind.BMonastery);
+            double bestSourceDesirability = ((GetBestSource() - 40) / 60.0);
+            double hasSomeoneMonastery = (Desirability.HasSomeoneBuilding(Building.Monastery)) ? 0.0 : 1.0;
+            if (bestSourceDesirability > 1.0)
+                bestSourceDesirability = 1.0;
+            double desirability = (bestDesirability * 3.0 / 8.0 + hasMoneyDesirability / 8.0 + bestSourceDesirability / 4.0 + hasSomeoneMonastery / 4.0) * hasMonasteryDesirability;
 
             return desirability;
         }

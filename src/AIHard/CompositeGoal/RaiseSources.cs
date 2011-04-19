@@ -80,26 +80,12 @@ namespace AIHard
             return turn;
         }
 
-        private bool HasSomeoneFort()
-        {
-            List<IPlayer> players = map.GetPlayerOthers();
-
-            foreach (IPlayer player in players)
-            {
-                if (player.GetBuildingCount(Building.Fort) > 0)
-                    return true;
-            }
-            return false;
-        }
-
-
-
         public override void Init()
         {
             {
                 int turn = GetNTurnsToWait();
 
-                if (HasSomeoneFort())
+                if (Desirability.HasSomeoneBuilding(Building.Fort))
                 {
                     if (AIHard.SumVector(map.GetPlayerMe().GetSource().GetAsArray()) * 3.0 / 2.0 > AIHard.SumVector(map.GetPrice(PriceKind.AStealSources).GetAsArray()))
                     {
