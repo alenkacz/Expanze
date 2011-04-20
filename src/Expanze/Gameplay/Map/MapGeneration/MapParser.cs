@@ -140,10 +140,21 @@ namespace Expanze
         {
             int index = 0;
             int type = 0;
+            int[] rndIndex = { 0, 1, 2, 3, 4 };
+            ShuffleArray(rndIndex);
 
             if (!ranOutOfProductivities())
             {
 
+                for (int loop1 = 0; loop1 < rndIndex.Length; loop1++)
+                {
+                    if (activeProductivityList.ElementAt(rndIndex[loop1]).Value > 0)
+                    {
+                        type = activeProductivityList.ElementAt(rndIndex[loop1]).Key;
+                        break;
+                    }
+                }
+                /*
                 while (true)
                 {
                     // trying to find nonzero random type
@@ -154,7 +165,7 @@ namespace Expanze
                         type = activeProductivityList.ElementAt(index).Key;
                         break;
                     }
-                }
+                }*/
 
                 // decrement number of available productivity numbers
                 --activeProductivityList[type];
@@ -174,9 +185,21 @@ namespace Expanze
             int index = 0;
             string type = "";
 
+            int[] rndIndex = { 0, 1, 2, 3, 4, 5 };
+            ShuffleArray(rndIndex);
+
             if (!ranOutOfMapTypes())
             {
+                for (int loop1 = 0; loop1 < rndIndex.Length; loop1++)
+                {
+                    if (activeMapTypes.ElementAt(rndIndex[loop1]).Value > 0)
+                    {
+                        type = activeMapTypes.ElementAt(rndIndex[loop1]).Key;
+                        break;
+                    }
+                }
 
+                /*
                 while (true)
                 {
                     // trying to find nonzero random type
@@ -187,7 +210,7 @@ namespace Expanze
                         type = activeMapTypes.ElementAt(index).Key;
                         break;
                     }
-                }
+                }*/
 
                 // decrement number of available productivity numbers
                 --activeMapTypes[type];
@@ -198,11 +221,28 @@ namespace Expanze
             return HexaKind.Nothing;
         }
 
+
+
+        private void ShuffleArray(int[] rndIndex)
+        {
+            int id1, id2;
+
+            for (int loop1 = 0; loop1 < rndIndex.Length * 3; loop1++)
+            {
+                id1 = generator.Next() % rndIndex.Length;
+                id2 = generator.Next() % rndIndex.Length;
+
+                int temp = rndIndex[id1];
+                rndIndex[id1] = rndIndex[id2];
+                rndIndex[id2] = temp;
+            }
+        }
+
         /// <summary>
         /// Checks whether there are some productivitiy points available - fix for indefinite loop, bad map design
         /// </summary>
         /// <returns>true if there are no productivity points left</returns>
-        private bool ranOutOfProductivities( )
+        private bool ranOutOfProductivities()
         {
             foreach (int i in activeProductivityList.Values)
             {
