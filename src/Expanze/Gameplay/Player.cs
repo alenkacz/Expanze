@@ -14,6 +14,7 @@ namespace Expanze
     {
         private String name;
         private Color color;
+        private int orderID;
         private bool materialChanged;
         private int points;
         private bool active;            /// is he still playing? (ex. AI make exception and it cant continue in game
@@ -39,8 +40,9 @@ namespace Expanze
 
         private Statistic statistic;
 
-        public Player(String name, Color color, IComponentAI componentAI)
+        public Player(String name, Color color, IComponentAI componentAI, int orderID)
         {
+            this.orderID = orderID;
             points = 0;
             prevSource = new SourceAll(0);
             source = new SourceAll(0);
@@ -90,6 +92,7 @@ namespace Expanze
         public UpgradeKind GetMonasteryUpgrade(SourceBuildingKind kind) { return upgradeMonastery[(int)kind]; }
         public LicenceKind GetMarketLicence(SourceKind kind) { return licenceMarket[(int)kind]; }
         public Statistic GetStatistic() { return statistic; }
+        public int GetOrderID() { return orderID; }
 
         public void AddBuilding(Building building)
         {

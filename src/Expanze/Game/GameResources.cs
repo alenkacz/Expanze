@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using CorePlugin;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
+using Expanze.Utils;
 
 namespace Expanze
 {
@@ -284,7 +285,7 @@ namespace Expanze
             }
             catch (Exception e)
             {
-                
+                Logger.Inst().Log("Exception", e.Message + "***" + e.Source + "***" + e.StackTrace);
             }
         }
 

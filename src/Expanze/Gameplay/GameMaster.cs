@@ -83,9 +83,10 @@ namespace Expanze
             }
 
             IComponentAI AI;
-            foreach (Player player in players)
+            for(int loop1 = 0; loop1 < players.Count; loop1++)
             {
-                AI = player.GetComponentAI();
+                players[loop1] = new Player(players[loop1].GetName(), players[loop1].GetColor(), players[loop1].GetComponentAI(), loop1);
+                AI = players[loop1].GetComponentAI();
                 if (AI != null) // its computer then
                 {
                     AI.InitAIComponent(map.GetMapController());
@@ -185,11 +186,11 @@ namespace Expanze
             if (componentAI != null)
             {
                 IComponentAI componentAICopy = componentAI.Clone();
-                this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[secondPlayerNameID], Color.Blue, componentAICopy));
+                this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[secondPlayerNameID], Color.Blue, componentAICopy, 0));
             } else
-                this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[secondPlayerNameID], Color.Blue, null));
+                this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[secondPlayerNameID], Color.Blue, null, 0));
 
-            this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[firstPlayerNameID], Color.Red, null));
+            this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[firstPlayerNameID], Color.Red, null, 1));
         }
 
         public GameSettings GetGameSettings()
@@ -715,6 +716,12 @@ namespace Expanze
                 }
             }
             spriteBatch.End();
+        }
+
+        internal void RestartGame()
+        {
+            map.Initialize();
+            StartGame(map);
         }
     }
 }

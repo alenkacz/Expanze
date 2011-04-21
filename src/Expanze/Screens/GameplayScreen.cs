@@ -19,6 +19,7 @@ using Microsoft.Xna.Framework.Input;
 using Expanze.Gameplay.Map;
 using CorePlugin;
 using Expanze.Utils;
+using Expanze.Gameplay;
 #endregion
 
 namespace Expanze
@@ -44,7 +45,7 @@ namespace Expanze
 
         bool isAI;
         bool isGameLoaded;
-
+        int gameCount;
 
         Random random = new Random();
 
@@ -60,6 +61,7 @@ namespace Expanze
         /// </summary>
         public GameplayScreen(bool AI)
         {
+            gameCount = 1;
             isAI = AI;
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
@@ -317,7 +319,7 @@ namespace Expanze
             else
                 pauseAlpha = Math.Max(pauseAlpha - 1f / 32, 0);
 
-            if (IsActive)
+            //if (IsActive)
             {
                 foreach (GameComponent gameComponent in gameComponents)
                 {
@@ -333,6 +335,21 @@ namespace Expanze
                 }
 
                 MarketComponent.Inst().Update(gameTime);
+
+                if (GameMaster.Inst().IsWinnerNew())
+                {
+                    if (gameCount <= 1000)
+                    {
+                        LogWinner();
+                        GameMaster.Inst().RestartGame();
+                        gameCount++;
+                    }
+                    else
+                    {
+                        VictoryScreen.Load(ScreenManager, true, ControllingPlayer,
+                                   new GameScreen[] { new MainMenuScreen() });
+                    }
+                }
             }
 
             
@@ -381,12 +398,41 @@ namespace Expanze
                 GameMaster.Inst().GetActivePlayer().PayForSomething(new SourceAll(-1000));
             if (InputManager.Inst().GetGameAction("gamemessage", "cheatpoints").IsPressed())
                 GameMaster.Inst().GetActivePlayer().AddPoints(10);
+        }
 
-            if (GameMaster.Inst().IsWinnerNew())
+        private void LogWinner()
+        {
+            Player[] players = new Player[GameMaster.Inst().GetPlayers().Count];
+            GameMaster.Inst().GetPlayers().CopyTo(players);
+
+            Array.Sort(players, delegate(Player p1, Player p2)
             {
-                VictoryScreen.Load(ScreenManager, true, ControllingPlayer,
-                               new GameScreen[] {new MainMenuScreen() });
+                return p1.GetPoints().CompareTo(p2.GetPoints()); // (user1.Age - user2.Age)
+            });
+            Array.Reverse(players);
+
+            GameMaster gm = GameMaster.Inst();
+            GameSettings gs = gm.GetGameSettings();
+
+            //Player p = players[0]; // winner
+            String playersACR = "";
+            String message = gameCount + ";" + gm.GetTurnNumber();
+            foreach (Player p in players)
+            {
+                message += ";" + p.GetComponentAI().GetAIName();
+                playersACR += p.GetComponentAI().GetAIName()[3];
+                message += ";" + p.GetOrderID();
+                for (int loop1 = 0; loop1 < (int)Statistic.Kind.Count; loop1++)
+                {
+                    int[] array = p.GetStatistic().GetStat()[loop1];
+                    int sum = 0;
+                    foreach (int i in array)
+                        sum += i;
+                    message += ";" + sum;
+                }
             }
+
+            Logger.Inst().Log(playersACR.ToUpper() + gs.GetMapSizeXML() + gs.GetMapTypeXML() + gs.GetMapWealthXML() + gs.GetPoints() + ".txt", message);
         }
 
         int frames = 0;
@@ -398,7 +444,6 @@ namespace Expanze
         /// </summary>
         public override void Draw(GameTime gameTime)
         {
-
             //render to texture
             ScreenManager.GraphicsDevice.SetRenderTarget(renderTarget);
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
@@ -436,6 +481,8 @@ namespace Expanze
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
                                                Color.SkyBlue, /*new Color(33, 156, 185), */0, 0);
             //ScreenManager.GraphicsDevice.RasterizerState.FillMode = FillMode.WireFrame;
+
+            //return;
 
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
            

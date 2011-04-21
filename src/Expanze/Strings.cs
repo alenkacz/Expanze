@@ -30,6 +30,7 @@ namespace Expanze
 
         public static string MENU_PAUSE_GAME_ITEM_RESUME = "Zpět do hry";
         public static string MENU_PAUSE_GAME_ITEM_QUIT_GAME = "Ukončit hru";
+        public static string MENU_PAUSE_GAME_ITEM_RESTART = "Restartovat hru";
         public static string MENU_PAUSE_GAME_ARE_YOU_SURE = "Opravdu chcete ukončit hru?";
 
         public static string MENU_LOADING_LOADING = "Načítání obsahu";

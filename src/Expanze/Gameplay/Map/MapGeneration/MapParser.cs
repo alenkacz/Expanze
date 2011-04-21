@@ -138,7 +138,7 @@ namespace Expanze
         /// <returns>value of productivity</returns>
         private int getRandomProductivity()
         {
-            int index = 0;
+            //int index = 0;
             int type = 0;
             int[] rndIndex = { 0, 1, 2, 3, 4 };
             ShuffleArray(rndIndex);
@@ -182,7 +182,7 @@ namespace Expanze
         /// <returns>value of productivity</returns>
         private HexaKind getRandomType()
         {
-            int index = 0;
+            //int index = 0;
             string type = "";
 
             int[] rndIndex = { 0, 1, 2, 3, 4, 5 };

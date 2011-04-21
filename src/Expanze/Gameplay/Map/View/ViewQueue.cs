@@ -33,7 +33,7 @@ namespace Expanze.Gameplay.Map
         Queue<ItemQueue> queue; /// queue of player actions
         MapView mapView; /// reference to map
 
-        private const int ENQUEUE_TIME = 0; /// Delay time between two actions
+        private int ENQUEUE_TIME = 0; /// Delay time between two actions
         private int lastEnque;  /// how much time last to new enque from queue
 
         public ViewQueue(MapView mapView)
@@ -58,7 +58,11 @@ namespace Expanze.Gameplay.Map
         /// <param name="item">Item added to queue</param>
         public void Add(ItemQueue item)
         {
-            queue.Enqueue(item);
+            if (ENQUEUE_TIME == 0)
+            {
+                item.Execute();
+            } else
+                queue.Enqueue(item);
         }
 
         /// <summary>
@@ -67,9 +71,12 @@ namespace Expanze.Gameplay.Map
         /// <param name="gameTime">Time last from last frame</param>
         public void Update(GameTime gameTime)
         {
+            if (ENQUEUE_TIME == 0)
+                return;
+
             lastEnque -= gameTime.ElapsedGameTime.Milliseconds;
 
-            if (queue.Count > 0 && lastEnque < 0 && !Message.Inst().GetIsActive())
+            if (queue.Count > 0 && lastEnque <= 0 && !Message.Inst().GetIsActive())
             {
                 ItemQueue item = queue.Dequeue();
                 item.Execute();

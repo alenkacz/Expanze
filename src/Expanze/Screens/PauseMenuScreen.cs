@@ -30,16 +30,19 @@ namespace Expanze
         {
             // Create our menu entries.
             MenuEntry resumeGameMenuEntry = new MenuEntry(Strings.MENU_PAUSE_GAME_ITEM_RESUME);
+            MenuEntry restartGameMenuEntry = new MenuEntry(Strings.MENU_PAUSE_GAME_ITEM_RESTART);
             MenuEntry quitGameMenuEntry = new MenuEntry(Strings.MENU_PAUSE_GAME_ITEM_QUIT_GAME);
             
             // Hook up menu event handlers.
             resumeGameMenuEntry.Selected += OnCancel;
             resumeGameMenuEntry.Selected += ResumeGameMenuEntrySelected;
             quitGameMenuEntry.Selected += QuitGameMenuEntrySelected;
+            restartGameMenuEntry.Selected += RestartGameMenuEntrySelected;
 
             // Add entries to the menu.
             MenuEntries.Add(resumeGameMenuEntry);
-            MenuEntries.Add(quitGameMenuEntry);
+            MenuEntries.Add(restartGameMenuEntry);
+            MenuEntries.Add(quitGameMenuEntry);         
         }
 
 
@@ -57,6 +60,11 @@ namespace Expanze
         void ResumeGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
             GameMaster.Inst().SetPaused(false);
+        }
+
+        void RestartGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        {
+            GameMaster.Inst().RestartGame();
         }
 
         /// <summary>

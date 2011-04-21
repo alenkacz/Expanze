@@ -71,7 +71,7 @@ namespace Expanze
             if (active)
             {
                 if (Strings.MENU_HOT_SEAT_NO_AI == playerState.getSelectedState())
-                    return new Player(name, playerColor, null);
+                    return new Player(name, playerColor, null, GameMaster.Inst().GetPlayerCount());
                 else
                 {
                     IComponentAI componentAI = null;
@@ -84,7 +84,7 @@ namespace Expanze
                         }
                     }
                     IComponentAI componentAICopy = componentAI.Clone();
-                    return new Player(name, playerColor, componentAICopy);
+                    return new Player(name, playerColor, componentAICopy, GameMaster.Inst().GetPlayerCount());
                 }
             }
 
