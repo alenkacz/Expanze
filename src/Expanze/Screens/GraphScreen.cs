@@ -217,7 +217,11 @@ namespace Expanze
 
                 for (int loop1 = 0; loop1 <= columnNumber; loop1++)
                 {
-                    sum += statistic[k][loop1];
+                    if (k == (int)Statistic.Kind.SumSources)
+                        sum = statistic[k][loop1];
+                    else
+                        sum += statistic[k][loop1];
+
                     float xbase = border + loop1 * (windowWidth - border * 2) / (float)columnNumber;
                     float ybase = windowHeight - border;
                     primitiveBatch.AddVertex(new Vector2(playerID * offset + xbase,
@@ -273,10 +277,18 @@ namespace Expanze
                 statistic = player.GetStatistic().GetStat();
                 for (int loop1 = 0; loop1 <= columnNumber; loop1++)
                 {
-                    sum += statistic[k][loop1];
+                    if (k == (int)Statistic.Kind.SumSources)
+                    {
+                        if (statistic[k][loop1] > rowNumber)
+                            rowNumber = statistic[k][loop1];
+                    }
+                    else
+                    {
+                        sum += statistic[k][loop1];
 
-                    if (sum > rowNumber)
-                        rowNumber = sum;
+                        if (sum > rowNumber)
+                            rowNumber = sum;
+                    }
                 }
             }
         }

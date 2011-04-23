@@ -452,7 +452,7 @@ namespace Expanze
                 MarketComponent.Inst().SetIsActive(false);
             }
 
-            if (playerCount == 1)
+            if (playerCount == 0)
             {
                 winnerNew = true;
                 return true;
@@ -464,6 +464,9 @@ namespace Expanze
             {
                 return true;
             }
+
+            if (state == EGameState.StateGame)
+                activePlayer.AddSumSourcesStat();
 
             status &= ChangeActivePlayer();
             targetPlayer = activePlayer;

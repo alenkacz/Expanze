@@ -249,7 +249,7 @@ namespace Expanze
                     playerCount++;
                 }
             }
-            if (playerCount < 2)
+            if (playerCount < 1)
                 return;
 
             saveScreenData();
@@ -325,7 +325,7 @@ namespace Expanze
                 }
             }
 
-            if( playerCount >= 2 )
+            if( playerCount >= 1 )
                 startGameButton.Draw(gameTime);
 
             spriteBatch.End();

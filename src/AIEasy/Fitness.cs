@@ -25,6 +25,9 @@ namespace AIEasy
         /// <returns></returns>
         public static float GetFitness(IPlayer attacker, IHexa hexa)
         {
+            if (map.GetPlayerOthers().Count == 0)
+                return 0.0f;
+
             if (hexa.GetCapturedIPlayer() == attacker)
                 return 0.0f;
 
@@ -36,8 +39,8 @@ namespace AIEasy
                 if (player == attacker)
                 {
                     enemySum += hexa.GetNormalProductivity(map.GetPlayerMe());
-                }
-                enemySum += hexa.GetNormalProductivity(player);
+                } else
+                    enemySum += hexa.GetNormalProductivity(player);
             }
 
             if(hexa.GetCaptured() && hexa.GetCapturedIPlayer() != attacker)
@@ -127,6 +130,9 @@ namespace AIEasy
 
         public static float GetFitness(IPlayer player)
         {
+            if (map.GetPlayerOthers().Count == 0)
+                return 0.0f;
+
             int sum = 0;
             int sourceHim;
             int sourceMe;

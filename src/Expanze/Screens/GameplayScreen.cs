@@ -20,6 +20,7 @@ using Expanze.Gameplay.Map;
 using CorePlugin;
 using Expanze.Utils;
 using Expanze.Gameplay;
+using Microsoft.Xna.Framework.Audio;
 #endregion
 
 namespace Expanze
@@ -346,6 +347,8 @@ namespace Expanze
                     }
                     else
                     {
+                        SoundEffect fanfara = ScreenManager.Game.Content.Load<SoundEffect>("Sounds/assembly");
+                        fanfara.Play();
                         VictoryScreen.Load(ScreenManager, true, ControllingPlayer,
                                    new GameScreen[] { new MainMenuScreen() });
                     }
@@ -420,9 +423,8 @@ namespace Expanze
             foreach (Player p in players)
             {
                 message += ";" + p.GetComponentAI().GetAIName();
-                playersACR += p.GetComponentAI().GetAIName()[3];
                 message += ";" + p.GetOrderID();
-                for (int loop1 = 0; loop1 < (int)Statistic.Kind.Count; loop1++)
+                for (int loop1 = 0; loop1 < (int)Statistic.Kind.Count - 1 /* - SourceSum */; loop1++)
                 {
                     int[] array = p.GetStatistic().GetStat()[loop1];
                     int sum = 0;
@@ -430,6 +432,11 @@ namespace Expanze
                         sum += i;
                     message += ";" + sum;
                 }
+            }
+
+            foreach (Player p in gm.GetPlayers())
+            {
+                playersACR += p.GetComponentAI().GetAIName()[3];
             }
 
             Logger.Inst().Log(playersACR.ToUpper() + gs.GetMapSizeXML() + gs.GetMapTypeXML() + gs.GetMapWealthXML() + gs.GetPoints() + ".txt", message);
@@ -521,7 +528,8 @@ namespace Expanze
                 spriteBatch.Begin();
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), showFrames + " ", new Vector2(12, 12), Color.Black);
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), showFrames + " ", new Vector2(10, 10), Color.White);
-                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), InputManager.Inst().GetActiveState(), new Vector2(10, 60), Color.White);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Turn " + GameMaster.Inst().GetTurnNumber(), new Vector2(10, 60), Color.White);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Game " + gameCount, new Vector2(10, 100), Color.White);
                 spriteBatch.End();
             }
 

@@ -428,6 +428,8 @@ namespace AIEasy
         internal bool ExistHexaWithFitnessMore(float limit, IHexa hexa)
         {
             IMapController map = mapController;
+            if (map.GetPlayerOthers().Count == 0)
+                return false;
             IPlayer me = map.GetPlayerMe();
             IPlayer someone = map.GetPlayerOthers()[0];
             IHexa hexaNeighbour;

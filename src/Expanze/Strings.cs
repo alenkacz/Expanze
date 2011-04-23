@@ -61,6 +61,7 @@ namespace Expanze
         public static string MENU_GRAPH_LICENCE = "Koupených licencí";
         public static string MENU_GRAPH_UPGRADE = "Vynalezených vylepšení";
         public static string MENU_GRAPH_ACTION = "Provedených akcí";
+        public static string MENU_GRAPH_SUMSOURCES = "Suma surovin na konci kola";
 
         public static string GAME_SETTINGS_MAP_SIZE_SMALL = "Malá";
         public static string GAME_SETTINGS_MAP_SIZE_MEDIUM = "Střední";

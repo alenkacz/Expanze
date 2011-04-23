@@ -91,7 +91,7 @@ namespace AIHard
                     {
                         turn = 0;
                     }
-                    else
+                    else if(turn > 1)
                         turn = 1;
                 }
 

@@ -314,5 +314,10 @@ namespace Expanze
         {
             statistic.AddStat(Statistic.Kind.Actions, 1, GameMaster.Inst().GetTurnNumber());
         }
+
+        internal void AddSumSourcesStat()
+        {
+            statistic.AddStat(Statistic.Kind.SumSources, source.GetAsArray().Sum(), GameMaster.Inst().GetTurnNumber());
+        }
     }
 }

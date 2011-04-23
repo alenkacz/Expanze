@@ -7,7 +7,7 @@ namespace Expanze.Gameplay
 {
     public class Statistic
     {
-        public enum Kind { Points, Towns, Roads, Medals, Market, Licences, Monastery, Upgrades, Fort, Actions, Count }
+        public enum Kind { Points, Towns, Roads, Medals, Market, Licences, Monastery, Upgrades, Fort, Actions, SumSources, Count }
         
         private const int MAX_TURNS = 150;
         int[][] statistic;
@@ -41,6 +41,7 @@ namespace Expanze.Gameplay
                 case Kind.Actions: return Strings.MENU_GRAPH_ACTION;
                 case Kind.Licences: return Strings.MENU_GRAPH_LICENCE;
                 case Kind.Upgrades: return Strings.MENU_GRAPH_UPGRADE;
+                case Kind.SumSources: return Strings.MENU_GRAPH_SUMSOURCES;
 
                 default: throw new Exception("Statistic kind doesnt exist.");
             }
