@@ -10,43 +10,68 @@ namespace AIHard
     {
         protected Queue<Goal> subgoals;
 
-        public CompositeGoal(IMapController map, int depth) : base(map, depth)
+        public CompositeGoal(IMapController map, int depth, string name) : base(map, depth, name)
         {
             subgoals = new Queue<Goal>();
         }
 
         public abstract void Init();
 
+        protected void Log(LogEnd end)
+        {
+            string logMsg = "";
+
+            logMsg += name;
+
+            switch (end)
+            {
+                case LogEnd.Start: logMsg += " {"; break;
+                case LogEnd.End: logMsg = "} " + logMsg; break;
+            }
+
+            for (int loop1 = 0; loop1 < depth; loop1++)
+            {
+                logMsg = "  " + logMsg;
+            }
+
+            map.Log("goalHiearchy", logMsg);
+        }
+
         override public GoalState Process()
         {
-            if (subgoals.Count == 0)
-                return GoalState.Succesed;
+            Log(LogEnd.Start);
 
-            foreach (Goal goal in subgoals)
+            while (subgoals.Count > 0)
             {
-                if (!goal.IsStillActual())
-                    return GoalState.Failed;
+                foreach (Goal goal in subgoals)
+                {
+                    if (!goal.IsStillActual())
+                        return GoalState.Failed;
+                }
+
+                Goal actualGoal = subgoals.Peek();
+
+                GoalState state = actualGoal.Process();
+
+                switch (state)
+                {
+                    case GoalState.Failed:
+                        subgoals.Clear();
+                        return GoalState.Failed;
+
+                    case GoalState.Succesed:
+                        subgoals.Dequeue();
+                        break;
+
+                    case GoalState.Active:
+                        Log(LogEnd.End);
+                        return GoalState.Active;
+                }
             }
 
-            Goal actualGoal = subgoals.Peek();
+            Log(LogEnd.End);
 
-            GoalState state = actualGoal.Process();
-
-            switch (state)
-            {
-                case GoalState.Failed:
-                    subgoals.Clear();
-                    return state;
-
-                case GoalState.Succesed:
-                    subgoals.Dequeue();
-                    return Process();
-
-                case GoalState.Active :
-                    return state;
-            }
-
-            return state;
+            return GoalState.Succesed;
         }
 
         protected void AddSubgoal(Goal goal)

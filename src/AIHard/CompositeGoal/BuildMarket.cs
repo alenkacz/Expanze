@@ -12,7 +12,7 @@ namespace AIHard
         byte lastBestPos;
 
         public BuildMarket(IMapController map, int depth)
-            : base(map, depth)
+            : base(map, depth, "BuildMarket")
         {
            lastBestTown = null;
            lastBestPos = 0;

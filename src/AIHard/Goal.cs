@@ -13,16 +13,23 @@ namespace AIHard
         Active   /// subgoals need next turn
     }
 
+    public enum LogEnd
+    {
+        Start,
+        End
+    }
+
     abstract class Goal
     {
         protected int depth;
-
+        protected string name;
         protected IMapController map;
 
-        public Goal(IMapController map, int depth)
+        public Goal(IMapController map, int depth, string name)
         {
             this.map = map;
             this.depth = depth;
+            this.name = name;
         }
 
         public abstract GoalState Process();

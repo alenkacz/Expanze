@@ -11,7 +11,7 @@ namespace AIHard
         List<ISourceAll> source;
 
         public RaiseSources(IMapController map, List<ISourceAll> sourceList, int depth)
-            : base(map, depth)
+            : base(map, depth, "Raise sources")
         {
             this.source = sourceList;
             Init();
@@ -23,7 +23,7 @@ namespace AIHard
         }
 
         public RaiseSources(IMapController map, ISourceAll source, int depth)
-            : base(map, depth)
+            : base(map, depth, "Raise sources")
         {
             List<ISourceAll> sourceList = new List<ISourceAll>();
             sourceList.Add(source);

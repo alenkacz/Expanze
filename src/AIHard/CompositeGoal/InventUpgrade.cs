@@ -11,7 +11,7 @@ namespace AIHard
         SourceBuildingKind bestKind;
 
         public InventUpgrade(IMapController map, int depth)
-            : base(map, depth)
+            : base(map, depth, "Invent upgrade")
         {
         }
 

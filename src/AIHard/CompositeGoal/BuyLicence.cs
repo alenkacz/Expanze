@@ -11,7 +11,7 @@ namespace AIHard
         SourceKind bestKind;
 
         public BuyLicence(IMapController map, int depth)
-            : base(map, depth)
+            : base(map, depth, "Buy Licence")
         {
         }
 

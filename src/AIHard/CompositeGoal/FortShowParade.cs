@@ -9,7 +9,7 @@ namespace AIHard
     class FortShowParade : CompositeGoal
     {
         public FortShowParade(IMapController map, int depth)
-            : base(map, depth)
+            : base(map, depth, "Show Parade")
         {
         }
 

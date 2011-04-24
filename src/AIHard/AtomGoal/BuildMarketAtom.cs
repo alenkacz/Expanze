@@ -6,13 +6,13 @@ using CorePlugin;
 
 namespace AIHard
 {
-    class BuildMarketAtom : Goal
+    class BuildMarketAtom : AtomGoal
     {
         ITown town;
         byte pos;
 
         public BuildMarketAtom(IMapController map, ITown town, byte pos, int depth)
-            : base(map, depth)
+            : base(map, depth, "Build market Atom")
         {
             this.town = town;
             this.pos = pos;

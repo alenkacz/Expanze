@@ -11,7 +11,7 @@ namespace AIHard
         SourceBuildingKind kind;
 
         public InventUpgradeAtom(IMapController map, SourceBuildingKind kind, int depth)
-            : base(map, depth)
+            : base(map, depth, "Invent upgrade Atom")
         {
             this.kind = kind;
         }

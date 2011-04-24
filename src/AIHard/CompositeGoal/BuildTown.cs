@@ -11,7 +11,7 @@ namespace AIHard
         ITown lastBestTown;
 
         public BuildTown(IMapController map, int depth)
-            : base(map, depth)
+            : base(map, depth, "Build Town")
         {
             lastBestTown = null;
         }

@@ -12,7 +12,7 @@ namespace AIHard
         byte pos;
 
         public BuildMonasteryAtom(IMapController map, ITown town, byte pos, int depth)
-            : base(map, depth)
+            : base(map, depth, "Build monastery Atom")
         {
             this.town = town;
             this.pos = pos;

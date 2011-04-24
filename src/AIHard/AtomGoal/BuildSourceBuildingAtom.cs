@@ -12,7 +12,7 @@ namespace AIHard
         byte pos;
 
         public BuildSourceBuildingAtom(IMapController map, ITown town, byte pos, int depth)
-            : base(map, depth)
+            : base(map, depth, "Build source building Atom")
         {
             this.town = town;
             this.pos = pos;

@@ -11,7 +11,7 @@ namespace AIHard
     {
         LinkedList<MainGoal> mainGoals;
 
-        public ThinkGoal(IMapController map, int depth) : base(map, depth)
+        public ThinkGoal(IMapController map, int depth) : base(map, depth, "Think")
         {
             mainGoals = new LinkedList<MainGoal>();
             mainGoals.AddLast(new MainGoal(new BuildTown(map, depth + 1), 0.7));

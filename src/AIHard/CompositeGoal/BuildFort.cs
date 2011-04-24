@@ -11,7 +11,7 @@ namespace AIHard
         ITown lastBestTown;
         byte lastBestPos;
 
-        public BuildFort(IMapController map, int depth) : base(map, depth)
+        public BuildFort(IMapController map, int depth) : base(map, depth, "Build fort")
         {
            lastBestTown = null;
             lastBestPos = 0;

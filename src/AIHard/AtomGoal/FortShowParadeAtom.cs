@@ -9,7 +9,7 @@ namespace AIHard
     class FortShowParadeAtom : Goal
     {
         public FortShowParadeAtom(IMapController map, int depth)
-            : base(map, depth)
+            : base(map, depth, "Show parade Atom")
         {
         }
 

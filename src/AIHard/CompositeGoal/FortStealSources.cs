@@ -11,7 +11,7 @@ namespace AIHard
         IPlayer bestPlayer;
 
         public FortStealSources(IMapController map, int depth)
-            : base(map, depth)
+            : base(map, depth, "Steal sources")
         {
         }
 

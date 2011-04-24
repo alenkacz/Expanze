@@ -6,13 +6,13 @@ using CorePlugin;
 
 namespace AIHard
 {
-    class BuildFortAtom : Goal
+    class BuildFortAtom : AtomGoal
     {
         ITown town;
         byte pos;
 
         public BuildFortAtom(IMapController map, ITown town, byte pos, int depth)
-            : base(map, depth)
+            : base(map, depth, "Build fort Atom")
         {
             this.town = town;
             this.pos = pos;

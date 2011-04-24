@@ -11,7 +11,7 @@ namespace AIHard
         int turn;
 
         public WaitTurnAtom(IMapController map, int turn, int depth)
-            : base(map, depth)
+            : base(map, depth, "Wait turn Atom")
         {
             this.turn = turn;
         }

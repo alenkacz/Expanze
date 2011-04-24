@@ -12,7 +12,7 @@ namespace AIHard
         byte lastBestPos;
 
         public BuildSourceBuilding(IMapController map, int depth)
-            : base(map, depth)
+            : base(map, depth, "Build Source Building")
         {
             lastBestTown = null;
             lastBestPos = 0;
