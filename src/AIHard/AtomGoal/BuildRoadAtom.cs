@@ -6,12 +6,12 @@ using CorePlugin;
 
 namespace AIHard
 {
-    class BuildRoadAtom : Goal
+    class BuildRoadAtom : AtomGoal
     {
         IRoad road;
 
         public BuildRoadAtom(IMapController map, IRoad road, int depth)
-            : base(map, depth, "Build road Atom")
+            : base(map, depth, "Build road")
         {
             this.road = road;
         }
@@ -25,12 +25,12 @@ namespace AIHard
         {
             if (road.Build() == null)
             {
-                map.Log("goal", "RoadAtom - failed > " + map.GetLastError());
+                Log(GoalState.Failed);
                 return GoalState.Failed;
             }
             else
             {
-                map.Log("goal", "RoadAtom - succes");
+                Log(GoalState.Succesed);
                 return GoalState.Succesed;
             }
         }

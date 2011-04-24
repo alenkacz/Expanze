@@ -12,7 +12,7 @@ namespace AIHard
         byte pos;
 
         public BuildFortAtom(IMapController map, ITown town, byte pos, int depth)
-            : base(map, depth, "Build fort Atom")
+            : base(map, depth, "Build fort")
         {
             this.town = town;
             this.pos = pos;
@@ -22,12 +22,12 @@ namespace AIHard
         {
             if (town.BuildFort(pos) != null)
             {
-                map.Log("goal", "BuildFortAtom - sucess");
+                Log(GoalState.Succesed);
                 return GoalState.Succesed;
             }
             else
             {
-                map.Log("goal", "BuildFortAtom - failed > " + map.GetLastError());
+                Log(GoalState.Failed);
                 return GoalState.Failed;
             }
         }

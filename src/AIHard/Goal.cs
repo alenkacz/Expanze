@@ -16,7 +16,8 @@ namespace AIHard
     public enum LogEnd
     {
         Start,
-        End
+        End,
+        Middle
     }
 
     abstract class Goal
@@ -33,6 +34,11 @@ namespace AIHard
         }
 
         public abstract GoalState Process();
+
+        protected void Log(string msg)
+        {
+            //map.Log("goalHiearchy", msg);
+        }
 
         public virtual bool IsStillActual()
         {

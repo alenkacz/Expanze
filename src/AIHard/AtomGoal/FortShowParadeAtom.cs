@@ -6,10 +6,10 @@ using CorePlugin;
 
 namespace AIHard
 {
-    class FortShowParadeAtom : Goal
+    class FortShowParadeAtom : AtomGoal
     {
         public FortShowParadeAtom(IMapController map, int depth)
-            : base(map, depth, "Show parade Atom")
+            : base(map, depth, "Show parade")
         {
         }
 
@@ -17,11 +17,11 @@ namespace AIHard
         {
             if (map.ShowParade())
             {
-                map.Log("goal", "ShowParade - succes");
+                Log(GoalState.Succesed);
                 return GoalState.Succesed;
             } else
             {
-                map.Log("goal", "ShowParade - failed > " + map.GetLastError());
+                Log(GoalState.Failed);
                 return GoalState.Failed;
             }
         }

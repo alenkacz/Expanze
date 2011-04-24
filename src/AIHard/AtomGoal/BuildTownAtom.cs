@@ -6,12 +6,12 @@ using CorePlugin;
 
 namespace AIHard
 {
-    class BuildTownAtom : Goal
+    class BuildTownAtom : AtomGoal
     {
         ITown town;
 
         public BuildTownAtom(IMapController map, ITown town, int depth) 
-            : base(map, depth, "Build town Atom")
+            : base(map, depth, "Build town")
         {
             this.town = town;
         }
@@ -25,12 +25,12 @@ namespace AIHard
         {
             if (town.Build() == null)
             {
-                map.Log("goal", "TownAtom - failed > " + map.GetLastError());
+                Log(GoalState.Failed);
                 return GoalState.Failed;
             }
             else
             {
-                map.Log("goal", "TownAtom - succes");
+                Log(GoalState.Succesed);
                 if (map.GetState() == EGameState.StateGame)
                     return GoalState.Succesed;
                 else

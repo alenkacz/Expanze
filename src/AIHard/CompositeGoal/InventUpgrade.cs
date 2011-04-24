@@ -27,8 +27,8 @@ namespace AIHard
                     case UpgradeKind.SecondUpgrade: return;
                 }
 
-                AddSubgoal(new RaiseSources(map, map.GetPrice(bestKind, upgrade), depth));
-                AddSubgoal(new InventUpgradeAtom(map, bestKind, depth));
+                AddSubgoal(new RaiseSources(map, map.GetPrice(bestKind, upgrade), depth + 1));
+                AddSubgoal(new InventUpgradeAtom(map, bestKind, depth + 1));
             }
         }
 

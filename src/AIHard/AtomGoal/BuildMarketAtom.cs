@@ -12,7 +12,7 @@ namespace AIHard
         byte pos;
 
         public BuildMarketAtom(IMapController map, ITown town, byte pos, int depth)
-            : base(map, depth, "Build market Atom")
+            : base(map, depth, "Build market")
         {
             this.town = town;
             this.pos = pos;
@@ -22,12 +22,12 @@ namespace AIHard
         {
             if (town.BuildMarket(pos) != null)
             {
-                map.Log("goal", "BuildMarketAtom - sucess");
+                Log(GoalState.Succesed);
                 return GoalState.Succesed;
             }
             else
             {
-                map.Log("goal", "BuildMarketAtom - failed > " + map.GetLastError());
+                Log(GoalState.Failed);
                 return GoalState.Failed;
             }
         }

@@ -77,6 +77,9 @@ namespace AIHard
                 if (bestGoal != null &&
                     bestDesirability > 0.005)
                 {
+                    Log("");
+                    Log("New Plan");
+                    Log("  Fitness > " + bestDesirability);
                     subgoals.Enqueue(bestGoal);
                     bestGoal.Clear();
                     bestGoal.Init();

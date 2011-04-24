@@ -320,7 +320,7 @@ namespace Expanze
             else
                 pauseAlpha = Math.Max(pauseAlpha - 1f / 32, 0);
 
-            //if (IsActive)
+            if (IsActive)
             {
                 foreach (GameComponent gameComponent in gameComponents)
                 {
@@ -339,7 +339,8 @@ namespace Expanze
 
                 if (GameMaster.Inst().IsWinnerNew())
                 {
-                    if (gameCount <= 1000)
+                    if(false)
+                    //if (gameCount <= 1000)
                     {
                         LogWinner();
                         GameMaster.Inst().RestartGame();
@@ -432,6 +433,11 @@ namespace Expanze
                         sum += i;
                     message += ";" + sum;
                 }
+
+                for (int loop1 = 0; loop1 < 5; loop1++)
+                {
+                    message += ";" + p.GetSumSpentSources()[loop1];
+                }
             }
 
             foreach (Player p in gm.GetPlayers())
@@ -523,6 +529,7 @@ namespace Expanze
             }
 
             
+            /*
             if (gameTime.ElapsedGameTime.Milliseconds != 0)
             {
                 spriteBatch.Begin();
@@ -531,7 +538,7 @@ namespace Expanze
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Turn " + GameMaster.Inst().GetTurnNumber(), new Vector2(10, 60), Color.White);
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Game " + gameCount, new Vector2(10, 100), Color.White);
                 spriteBatch.End();
-            }
+            }*/
 
             // If the game is transitioning on or off, fade it out to black.
             if (TransitionPosition > 0 || pauseAlpha > 0)

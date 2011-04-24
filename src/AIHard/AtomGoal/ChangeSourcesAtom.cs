@@ -6,12 +6,12 @@ using CorePlugin;
 
 namespace AIHard
 {
-    class ChangeSourcesAtom : Goal
+    class ChangeSourcesAtom : AtomGoal
     {
         List<ISourceAll> sourceList;
 
         public ChangeSourcesAtom(IMapController map, List<ISourceAll> sourceList, int depth)
-            : base(map, depth, "Change sources Atom")
+            : base(map, depth, "Change sources")
         {
             this.sourceList = sourceList;
         }
@@ -20,11 +20,12 @@ namespace AIHard
         {
             if (map.ChangeSourcesFor(sourceList))
             {
-                map.Log("goal", "ChangeSourcesAtom - succes");
+                Log(GoalState.Succesed);
                 return GoalState.Succesed;
             }
             else
             {
+                Log(GoalState.Active);
                 return GoalState.Active;
                 //map.Log("goal", "ChangeSourcesAtom - failed > " + map.GetLastError());
                 //return GoalState.Failed;

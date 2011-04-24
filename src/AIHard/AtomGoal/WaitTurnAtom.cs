@@ -6,12 +6,12 @@ using CorePlugin;
 
 namespace AIHard
 {
-    class WaitTurnAtom : Goal
+    class WaitTurnAtom : AtomGoal
     {
         int turn;
 
         public WaitTurnAtom(IMapController map, int turn, int depth)
-            : base(map, depth, "Wait turn Atom")
+            : base(map, depth, "Wait turn")
         {
             this.turn = turn;
         }
@@ -20,12 +20,12 @@ namespace AIHard
         {
             if (turn == 0)
             {
-                map.Log("goal", "WaitTurn - succes");
+                Log(GoalState.Succesed);
                 return GoalState.Succesed;
             }
             else
             {
-                map.Log("goal", "WaitTurn - active > " + turn);
+                Log(GoalState.Active);
                 turn--;
                 return GoalState.Active;
             }

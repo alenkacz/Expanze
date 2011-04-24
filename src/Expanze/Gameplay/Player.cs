@@ -24,6 +24,7 @@ namespace Expanze
         SourceAll transactionSource;
         SourceAll collectSourcesLastTurn; /// sources getted on the start of player's last turn
         SourceAll collectSourcesNormal;   /// collect sources without disasters and miracles
+        SourceAll sumSpentSources;        /// which sources were used
 
         int[] buildingCount;
 
@@ -47,6 +48,7 @@ namespace Expanze
             prevSource = new SourceAll(0);
             source = new SourceAll(0);
             transactionSource = new SourceAll(0);
+            sumSpentSources = new SourceAll(0);
 
             collectSourcesNormal = new SourceAll(0);
 
@@ -169,6 +171,8 @@ namespace Expanze
             return -1;
         }
 
+        public SourceAll GetSumSpentSources() { return sumSpentSources; }
+
         public ISourceAll GetSource()
         {
             return source;
@@ -209,6 +213,8 @@ namespace Expanze
             SourceAll sourceCost = (SourceAll)cost;
 
             ChangeSources(-sourceCost.GetWood(), -sourceCost.GetStone(), -sourceCost.GetCorn(), -sourceCost.GetMeat(), -sourceCost.GetOre());
+            
+            sumSpentSources = sumSpentSources + sourceCost;
 
             source = source - sourceCost;
         }

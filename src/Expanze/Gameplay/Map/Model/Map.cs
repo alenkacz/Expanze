@@ -176,7 +176,7 @@ namespace Expanze.Gameplay.Map
 
         private HexaModel[][] getMap()
         {
-            if(parser == null)
+            //if(parser == null)
               parser = new MapParser();
             GameSettings gs = GameMaster.Inst().GetGameSettings();
             return parser.getMap(gs.GetMapSizeXML(), gs.GetMapTypeXML(), gs.GetMapWealthXML());

@@ -23,8 +23,8 @@ namespace AIHard
             if (lastBestTown == null)
                 GetDesirability();
 
-            AddSubgoal(new RaiseSources(map, PriceKind.BMonastery, depth));
-            AddSubgoal(new BuildMonasteryAtom(map, lastBestTown, lastBestPos, depth));
+            AddSubgoal(new RaiseSources(map, PriceKind.BMonastery, depth + 1));
+            AddSubgoal(new BuildMonasteryAtom(map, lastBestTown, lastBestPos, depth + 1));
 
             lastBestTown = null;
         }

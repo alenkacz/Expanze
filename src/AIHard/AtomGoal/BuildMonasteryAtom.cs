@@ -6,13 +6,13 @@ using CorePlugin;
 
 namespace AIHard
 {
-    class BuildMonasteryAtom : Goal
+    class BuildMonasteryAtom : AtomGoal
     {
         ITown town;
         byte pos;
 
         public BuildMonasteryAtom(IMapController map, ITown town, byte pos, int depth)
-            : base(map, depth, "Build monastery Atom")
+            : base(map, depth, "Build monastery")
         {
             this.town = town;
             this.pos = pos;
@@ -22,12 +22,12 @@ namespace AIHard
         {
             if (town.BuildMonastery(pos) != null)
             {
-                map.Log("goal", "BuildMonasteryAtom - sucess");
+                Log(GoalState.Succesed);
                 return GoalState.Succesed;
             }
             else
             {
-                map.Log("goal", "BuildMonasteryAtom - failed > " + map.GetLastError());
+                Log(GoalState.Failed);
                 return GoalState.Failed;
             }
         }

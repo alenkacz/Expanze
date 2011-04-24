@@ -6,12 +6,12 @@ using CorePlugin;
 
 namespace AIHard
 {
-    class FortStealSourcesAtom : Goal
+    class FortStealSourcesAtom : AtomGoal
     {
         IPlayer player;
 
         public FortStealSourcesAtom(IMapController map, IPlayer player, int depth)
-            : base(map, depth, "Steal sources Atom")
+            : base(map, depth, "Steal sources")
         {
             this.player = player;
         }
@@ -20,12 +20,12 @@ namespace AIHard
         {
             if (map.StealSources(player.GetName()))
             {
-                map.Log("goal", "StealSources - succes");
+                Log(GoalState.Succesed);
                 return GoalState.Succesed;
             }
             else
             {
-                map.Log("goal", "StealSources - failed > " + map.GetLastError());
+                Log(GoalState.Failed);
                 return GoalState.Failed;
             }
         }

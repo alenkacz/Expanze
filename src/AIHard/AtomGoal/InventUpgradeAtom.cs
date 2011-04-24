@@ -6,12 +6,12 @@ using CorePlugin;
 
 namespace AIHard
 {
-    class InventUpgradeAtom : Goal
+    class InventUpgradeAtom : AtomGoal
     {
         SourceBuildingKind kind;
 
         public InventUpgradeAtom(IMapController map, SourceBuildingKind kind, int depth)
-            : base(map, depth, "Invent upgrade Atom")
+            : base(map, depth, "Invent upgrade")
         {
             this.kind = kind;
         }
@@ -20,12 +20,12 @@ namespace AIHard
         {
             if (map.InventUpgrade(kind))
             {
-                map.Log("goal", "InventUpgradeAtom - sucess");
+                Log(GoalState.Succesed);
                 return GoalState.Succesed;
             }
             else
             {
-                map.Log("goal", "InventUpgradeAtom - failed > " + map.GetLastError());
+                Log(GoalState.Failed);
                 return GoalState.Failed;
             }
         }
