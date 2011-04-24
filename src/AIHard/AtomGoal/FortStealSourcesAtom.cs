@@ -10,8 +10,8 @@ namespace AIHard
     {
         IPlayer player;
 
-        public FortStealSourcesAtom(IMapController map, IPlayer player)
-            : base(map)
+        public FortStealSourcesAtom(IMapController map, IPlayer player, int depth)
+            : base(map, depth)
         {
             this.player = player;
         }

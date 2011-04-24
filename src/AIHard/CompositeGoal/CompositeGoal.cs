@@ -10,7 +10,7 @@ namespace AIHard
     {
         protected Queue<Goal> subgoals;
 
-        public CompositeGoal(IMapController map) : base(map)
+        public CompositeGoal(IMapController map, int depth) : base(map, depth)
         {
             subgoals = new Queue<Goal>();
         }

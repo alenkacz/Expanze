@@ -11,8 +11,8 @@ namespace AIHard
         ITown lastBestTown;
         byte lastBestPos;
 
-        public BuildMarket(IMapController map)
-            : base(map)
+        public BuildMarket(IMapController map, int depth)
+            : base(map, depth)
         {
            lastBestTown = null;
            lastBestPos = 0;
@@ -23,8 +23,8 @@ namespace AIHard
             if (lastBestTown == null)
                 GetDesirability();
 
-            AddSubgoal(new RaiseSources(map, PriceKind.BMarket));
-            AddSubgoal(new BuildMarketAtom(map, lastBestTown, lastBestPos));
+            AddSubgoal(new RaiseSources(map, PriceKind.BMarket, depth + 1));
+            AddSubgoal(new BuildMarketAtom(map, lastBestTown, lastBestPos, depth + 1));
             
             lastBestTown = null;
         }

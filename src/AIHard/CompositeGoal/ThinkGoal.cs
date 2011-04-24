@@ -11,18 +11,18 @@ namespace AIHard
     {
         LinkedList<MainGoal> mainGoals;
 
-        public ThinkGoal(IMapController map) : base(map)
+        public ThinkGoal(IMapController map, int depth) : base(map, depth)
         {
             mainGoals = new LinkedList<MainGoal>();
-            mainGoals.AddLast(new MainGoal(new BuildTown(map), 0.7));
-            mainGoals.AddLast(new MainGoal(new BuildSourceBuilding(map), 0.9));
-            mainGoals.AddLast(new MainGoal(new BuildFort(map), 0.2));
-            mainGoals.AddLast(new MainGoal(new FortShowParade(map), 0.01));
-            mainGoals.AddLast(new MainGoal(new BuildMarket(map), 0.3));
-            mainGoals.AddLast(new MainGoal(new BuildMonastery(map), 0.25));
-            mainGoals.AddLast(new MainGoal(new InventUpgrade(map), 0.3));
-            mainGoals.AddLast(new MainGoal(new BuyLicence(map), 0.5));
-            mainGoals.AddLast(new MainGoal(new FortStealSources(map), 1.0));
+            mainGoals.AddLast(new MainGoal(new BuildTown(map, depth + 1), 0.7));
+            mainGoals.AddLast(new MainGoal(new BuildSourceBuilding(map, depth + 1), 0.9));
+            mainGoals.AddLast(new MainGoal(new BuildFort(map, depth + 1), 0.2));
+            mainGoals.AddLast(new MainGoal(new FortShowParade(map, depth + 1), 0.01));
+            mainGoals.AddLast(new MainGoal(new BuildMarket(map, depth + 1), 0.3));
+            mainGoals.AddLast(new MainGoal(new BuildMonastery(map, depth + 1), 0.25));
+            mainGoals.AddLast(new MainGoal(new InventUpgrade(map, depth + 1), 0.3));
+            mainGoals.AddLast(new MainGoal(new BuyLicence(map, depth + 1), 0.5));
+            mainGoals.AddLast(new MainGoal(new FortStealSources(map, depth + 1), 1.0));
 
             Init();
         }

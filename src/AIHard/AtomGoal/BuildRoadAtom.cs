@@ -10,8 +10,8 @@ namespace AIHard
     {
         IRoad road;
 
-        public BuildRoadAtom(IMapController map, IRoad road)
-            : base(map)
+        public BuildRoadAtom(IMapController map, IRoad road, int depth)
+            : base(map, depth)
         {
             this.road = road;
         }

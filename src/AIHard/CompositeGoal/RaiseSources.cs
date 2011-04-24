@@ -10,20 +10,20 @@ namespace AIHard
     {
         List<ISourceAll> source;
 
-        public RaiseSources(IMapController map, List<ISourceAll> sourceList)
-            : base(map)
+        public RaiseSources(IMapController map, List<ISourceAll> sourceList, int depth)
+            : base(map, depth)
         {
             this.source = sourceList;
             Init();
         }
 
-        public RaiseSources(IMapController map, PriceKind priceKind)
-            : this(map, map.GetPrice(priceKind))
+        public RaiseSources(IMapController map, PriceKind priceKind, int depth)
+            : this(map, map.GetPrice(priceKind), depth)
         {
         }
 
-        public RaiseSources(IMapController map, ISourceAll source)
-            : base(map)
+        public RaiseSources(IMapController map, ISourceAll source, int depth)
+            : base(map, depth)
         {
             List<ISourceAll> sourceList = new List<ISourceAll>();
             sourceList.Add(source);
@@ -95,8 +95,8 @@ namespace AIHard
                         turn = 1;
                 }
 
-                AddSubgoal(new WaitTurnAtom(map, (turn <= 2) ? turn : 2));
-                AddSubgoal(new ChangeSourcesAtom(map, source));
+                AddSubgoal(new WaitTurnAtom(map, (turn <= 2) ? turn : 2, depth + 1));
+                AddSubgoal(new ChangeSourcesAtom(map, source, depth + 1));
             }
         }
 
@@ -106,7 +106,7 @@ namespace AIHard
 
             if (state == GoalState.Failed)
             {
-                AddSubgoal(new ChangeSourcesAtom(map, source));
+                AddSubgoal(new ChangeSourcesAtom(map, source, depth + 1));
                 return GoalState.Active;
             }
 

@@ -22,7 +22,7 @@ namespace AIHard
         {
             this.mapController = mapController;
             Desirability.SetMapController(mapController);
-            thinkGoal = new ThinkGoal(mapController);
+            thinkGoal = new ThinkGoal(mapController, 0);
         }
 
         public void ResolveAI()

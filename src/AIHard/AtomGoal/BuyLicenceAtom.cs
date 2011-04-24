@@ -10,8 +10,8 @@ namespace AIHard
     {
         SourceKind kind;
 
-        public BuyLicenceAtom(IMapController map, SourceKind kind)
-            : base(map)
+        public BuyLicenceAtom(IMapController map, SourceKind kind, int depth)
+            : base(map, depth)
         {
             this.kind = kind;
         }

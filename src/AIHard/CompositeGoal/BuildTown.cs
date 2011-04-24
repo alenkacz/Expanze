@@ -10,8 +10,8 @@ namespace AIHard
     {
         ITown lastBestTown;
 
-        public BuildTown(IMapController map)
-            : base(map)
+        public BuildTown(IMapController map, int depth)
+            : base(map, depth)
         {
             lastBestTown = null;
         }
@@ -25,7 +25,7 @@ namespace AIHard
                     FirstTwoStates();
                     if (lastBestTown != null)
                     {
-                        AddSubgoal(new BuildTownAtom(map, lastBestTown));
+                        AddSubgoal(new BuildTownAtom(map, lastBestTown, depth + 1));
                         lastBestTown = null;
                     }
                     break;
@@ -37,8 +37,8 @@ namespace AIHard
 
                         for(int loop1 = 0; loop1 < path.Count - 1; loop1++)
                         {
-                            AddSubgoal(new RaiseSources(map, map.GetPrice(PriceKind.BRoad)));
-                            AddSubgoal(new BuildRoadAtom(map, path[loop1]));
+                            AddSubgoal(new RaiseSources(map, map.GetPrice(PriceKind.BRoad), depth + 1));
+                            AddSubgoal(new BuildRoadAtom(map, path[loop1], depth + 1));
                         }
 
                         List<ISourceAll> sourceList = new List<ISourceAll>();
@@ -49,14 +49,14 @@ namespace AIHard
                             sourceList.Add(map.GetPrice(PriceKind.BRoad));
                         }
 
-                        AddSubgoal(new RaiseSources(map, sourceList));
+                        AddSubgoal(new RaiseSources(map, sourceList, depth + 1));
 
                         if (path.Count > 0)
                         {
-                            AddSubgoal(new BuildRoadAtom(map, path[path.Count - 1]));
+                            AddSubgoal(new BuildRoadAtom(map, path[path.Count - 1], depth + 1));
                         }
 
-                        AddSubgoal(new BuildTownAtom(map, lastBestTown));
+                        AddSubgoal(new BuildTownAtom(map, lastBestTown, depth + 1));
 
                         lastBestTown = null;
                     }

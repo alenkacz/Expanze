@@ -12,20 +12,25 @@ namespace Expanze
         XmlDocument xDoc;
         System.Random generator = new System.Random();
 
-        Dictionary<int,int> lowProductivityList = new Dictionary<int,int>();
-        Dictionary<int, int> mediumProductivityList = new Dictionary<int, int>();
-        Dictionary<int, int> highProductivityList = new Dictionary<int, int>();
+        Dictionary<int,int> lowProductivityList;
+        Dictionary<int, int> mediumProductivityList;
+        Dictionary<int, int> highProductivityList;
 
-        Dictionary<string, int> normalMapTypes = new Dictionary<string, int>();
-        Dictionary<string, int> wastelandMapTypes = new Dictionary<string, int>();
-        Dictionary<string, int> lowlandMapTypes = new Dictionary<string, int>();
+        Dictionary<string, int> normalMapTypes;
+        Dictionary<string, int> wastelandMapTypes;
+        Dictionary<string, int> lowlandMapTypes;
 
         Dictionary<int, int> activeProductivityList;
         Dictionary<string, int> activeMapTypes;
 
+        int[] rndIndexTypes;
+        int rndIndexTypesIndex;
+        int[] rndIndexProductivity;
+        int rndIndexProductivityIndex;
+
         public MapParser()
         {
-            xDoc = new XmlDocument();
+            
         }
 
         public HexaModel[][] getMap(string mapSize, string mapType, string mapWealth) 
@@ -33,8 +38,23 @@ namespace Expanze
             return this.parse(mapSize,mapType,mapWealth);
         }
 
+        private void Init()
+        {
+            xDoc = new XmlDocument();
+
+            lowProductivityList = new Dictionary<int, int>();
+            mediumProductivityList = new Dictionary<int, int>();
+            highProductivityList = new Dictionary<int, int>();
+
+            normalMapTypes = new Dictionary<string, int>();
+            wastelandMapTypes = new Dictionary<string, int>();
+            lowlandMapTypes = new Dictionary<string, int>();
+        }
+
         public HexaModel[][] parse(string mapSize, string mapType, string mapWealth)
         {
+            Init();
+
             HexaModel[][] map;
 
             //TODO user number parameter
@@ -48,6 +68,27 @@ namespace Expanze
 
             this.parseProductivity(productivities);
             this.parseMapTypes(mapTypes);
+
+            rndIndexTypesIndex = 0;
+            rndIndexProductivityIndex = 0;
+
+            if (rndIndexTypes == null)
+            {
+                rndIndexTypes = new int[200];
+                
+                for (int loop1 = 0; loop1 < rndIndexTypes.Length; loop1++)
+                {
+                    rndIndexTypes[loop1] = loop1 % 6;
+                }
+                ShuffleArray(rndIndexTypes);
+                
+                rndIndexProductivity = new int[200];
+                for (int loop1 = 0; loop1 < rndIndexProductivity.Length; loop1++)
+                {
+                    rndIndexProductivity[loop1] = loop1 % 5;
+                }
+                ShuffleArray(rndIndexProductivity);
+            }
 
             XmlNodeList rows = xDoc.GetElementsByTagName("row");
             map = new HexaModel[rows.Count][];
@@ -140,17 +181,15 @@ namespace Expanze
         {
             //int index = 0;
             int type = 0;
-            int[] rndIndex = { 0, 1, 2, 3, 4 };
-            ShuffleArray(rndIndex);
 
             if (!ranOutOfProductivities())
             {
-
-                for (int loop1 = 0; loop1 < rndIndex.Length; loop1++)
+                while(true)
                 {
-                    if (activeProductivityList.ElementAt(rndIndex[loop1]).Value > 0)
+                    rndIndexProductivityIndex = (rndIndexProductivityIndex + 1) % rndIndexProductivity.Length;
+                    if (activeProductivityList.ElementAt(rndIndexProductivity[rndIndexProductivityIndex]).Value > 0)
                     {
-                        type = activeProductivityList.ElementAt(rndIndex[loop1]).Key;
+                        type = activeProductivityList.ElementAt(rndIndexProductivity[rndIndexProductivityIndex]).Key;
                         break;
                     }
                 }
@@ -185,16 +224,14 @@ namespace Expanze
             //int index = 0;
             string type = "";
 
-            int[] rndIndex = { 0, 1, 2, 3, 4, 5 };
-            ShuffleArray(rndIndex);
-
             if (!ranOutOfMapTypes())
             {
-                for (int loop1 = 0; loop1 < rndIndex.Length; loop1++)
+                while (true)
                 {
-                    if (activeMapTypes.ElementAt(rndIndex[loop1]).Value > 0)
+                    rndIndexTypesIndex = (rndIndexTypesIndex + 1) % rndIndexTypes.Length;
+                    if (activeMapTypes.ElementAt(rndIndexTypes[rndIndexTypesIndex]).Value > 0)
                     {
-                        type = activeMapTypes.ElementAt(rndIndex[loop1]).Key;
+                        type = activeMapTypes.ElementAt(rndIndexTypes[rndIndexTypesIndex]).Key;
                         break;
                     }
                 }

@@ -8,15 +8,15 @@ namespace AIHard
 {
     class FortShowParade : CompositeGoal
     {
-        public FortShowParade(IMapController map)
-            : base(map)
+        public FortShowParade(IMapController map, int depth)
+            : base(map, depth)
         {
         }
 
         public override void Init()
         {
-            AddSubgoal(new RaiseSources(map, PriceKind.AParade));
-            AddSubgoal(new FortShowParadeAtom(map));
+            AddSubgoal(new RaiseSources(map, PriceKind.AParade, depth + 1));
+            AddSubgoal(new FortShowParadeAtom(map, depth + 1));
         }
 
         public override double GetDesirability()

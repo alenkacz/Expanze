@@ -10,8 +10,8 @@ namespace AIHard
     {
         int turn;
 
-        public WaitTurnAtom(IMapController map, int turn)
-            : base(map)
+        public WaitTurnAtom(IMapController map, int turn, int depth)
+            : base(map, depth)
         {
             this.turn = turn;
         }

@@ -10,8 +10,8 @@ namespace AIHard
     {
         SourceBuildingKind bestKind;
 
-        public InventUpgrade(IMapController map)
-            : base(map)
+        public InventUpgrade(IMapController map, int depth)
+            : base(map, depth)
         {
         }
 
@@ -27,8 +27,8 @@ namespace AIHard
                     case UpgradeKind.SecondUpgrade: return;
                 }
 
-                AddSubgoal(new RaiseSources(map, map.GetPrice(bestKind, upgrade)));
-                AddSubgoal(new InventUpgradeAtom(map, bestKind));
+                AddSubgoal(new RaiseSources(map, map.GetPrice(bestKind, upgrade), depth));
+                AddSubgoal(new InventUpgradeAtom(map, bestKind, depth));
             }
         }
 

@@ -172,9 +172,12 @@ namespace Expanze.Gameplay.Map
             mapController.Init();
         }
 
+        MapParser parser;
+
         private HexaModel[][] getMap()
         {
-            MapParser parser = new MapParser();
+            if(parser == null)
+              parser = new MapParser();
             GameSettings gs = GameMaster.Inst().GetGameSettings();
             return parser.getMap(gs.GetMapSizeXML(), gs.GetMapTypeXML(), gs.GetMapWealthXML());
         }

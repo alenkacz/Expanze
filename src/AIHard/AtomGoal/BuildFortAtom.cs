@@ -11,8 +11,8 @@ namespace AIHard
         ITown town;
         byte pos;
 
-        public BuildFortAtom(IMapController map, ITown town, byte pos)
-            : base(map)
+        public BuildFortAtom(IMapController map, ITown town, byte pos, int depth)
+            : base(map, depth)
         {
             this.town = town;
             this.pos = pos;

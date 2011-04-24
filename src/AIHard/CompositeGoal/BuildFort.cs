@@ -11,7 +11,7 @@ namespace AIHard
         ITown lastBestTown;
         byte lastBestPos;
 
-        public BuildFort(IMapController map) : base(map)
+        public BuildFort(IMapController map, int depth) : base(map, depth)
         {
            lastBestTown = null;
             lastBestPos = 0;
@@ -22,8 +22,8 @@ namespace AIHard
             if (lastBestTown == null)
                 GetDesirability();
 
-            AddSubgoal(new RaiseSources(map, PriceKind.BFort));
-            AddSubgoal(new BuildFortAtom(map, lastBestTown, lastBestPos));
+            AddSubgoal(new RaiseSources(map, PriceKind.BFort, depth + 1));
+            AddSubgoal(new BuildFortAtom(map, lastBestTown, lastBestPos, depth + 1));
             
             lastBestTown = null;
         }

@@ -10,8 +10,8 @@ namespace AIHard
     {
         IPlayer bestPlayer;
 
-        public FortStealSources(IMapController map)
-            : base(map)
+        public FortStealSources(IMapController map, int depth)
+            : base(map, depth)
         {
         }
 
@@ -22,8 +22,8 @@ namespace AIHard
                 GetDesirability();
             }
             
-            AddSubgoal(new RaiseSources(map, PriceKind.AStealSources));
-            AddSubgoal(new FortStealSourcesAtom(map, bestPlayer));
+            AddSubgoal(new RaiseSources(map, PriceKind.AStealSources, depth + 1));
+            AddSubgoal(new FortStealSourcesAtom(map, bestPlayer, depth + 1));
             bestPlayer = null;
         }
 

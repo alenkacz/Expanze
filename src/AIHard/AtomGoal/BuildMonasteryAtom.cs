@@ -11,8 +11,8 @@ namespace AIHard
         ITown town;
         byte pos;
 
-        public BuildMonasteryAtom(IMapController map, ITown town, byte pos)
-            : base(map)
+        public BuildMonasteryAtom(IMapController map, ITown town, byte pos, int depth)
+            : base(map, depth)
         {
             this.town = town;
             this.pos = pos;

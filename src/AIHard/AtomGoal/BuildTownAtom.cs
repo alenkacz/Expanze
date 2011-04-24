@@ -10,7 +10,7 @@ namespace AIHard
     {
         ITown town;
 
-        public BuildTownAtom(IMapController map, ITown town) : base(map)
+        public BuildTownAtom(IMapController map, ITown town, int depth) : base(map, depth)
         {
             this.town = town;
         }

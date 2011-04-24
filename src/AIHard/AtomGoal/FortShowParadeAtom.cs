@@ -8,8 +8,8 @@ namespace AIHard
 {
     class FortShowParadeAtom : Goal
     {
-        public FortShowParadeAtom(IMapController map)
-            : base(map)
+        public FortShowParadeAtom(IMapController map, int depth)
+            : base(map, depth)
         {
         }
 

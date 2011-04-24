@@ -11,8 +11,8 @@ namespace AIHard
         ITown lastBestTown;
         byte lastBestPos;
 
-        public BuildMonastery(IMapController map)
-            : base(map)
+        public BuildMonastery(IMapController map, int depth)
+            : base(map, depth)
         {
             lastBestTown = null;
             lastBestPos = 0;
@@ -23,8 +23,8 @@ namespace AIHard
             if (lastBestTown == null)
                 GetDesirability();
 
-            AddSubgoal(new RaiseSources(map, PriceKind.BMonastery));
-            AddSubgoal(new BuildMonasteryAtom(map, lastBestTown, lastBestPos));
+            AddSubgoal(new RaiseSources(map, PriceKind.BMonastery, depth));
+            AddSubgoal(new BuildMonasteryAtom(map, lastBestTown, lastBestPos, depth));
 
             lastBestTown = null;
         }

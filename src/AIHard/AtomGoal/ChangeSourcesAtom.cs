@@ -10,8 +10,8 @@ namespace AIHard
     {
         List<ISourceAll> sourceList;
 
-        public ChangeSourcesAtom(IMapController map, List<ISourceAll> sourceList)
-            : base(map)
+        public ChangeSourcesAtom(IMapController map, List<ISourceAll> sourceList, int depth)
+            : base(map, depth)
         {
             this.sourceList = sourceList;
         }

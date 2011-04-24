@@ -10,8 +10,8 @@ namespace AIHard
     {
         SourceKind bestKind;
 
-        public BuyLicence(IMapController map)
-            : base(map)
+        public BuyLicence(IMapController map, int depth)
+            : base(map, depth)
         {
         }
 
@@ -27,8 +27,8 @@ namespace AIHard
                     case LicenceKind.SecondLicence: return;
                 }
 
-                AddSubgoal(new RaiseSources(map, map.GetPrice(bestKind, upgrade)));
-                AddSubgoal(new BuyLicenceAtom(map, bestKind));
+                AddSubgoal(new RaiseSources(map, map.GetPrice(bestKind, upgrade), depth + 1));
+                AddSubgoal(new BuyLicenceAtom(map, bestKind, depth + 1));
             }
         }
 

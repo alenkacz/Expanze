@@ -15,11 +15,14 @@ namespace AIHard
 
     abstract class Goal
     {
+        protected int depth;
+
         protected IMapController map;
 
-        public Goal(IMapController map)
+        public Goal(IMapController map, int depth)
         {
             this.map = map;
+            this.depth = depth;
         }
 
         public abstract GoalState Process();
