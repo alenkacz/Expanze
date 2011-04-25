@@ -204,6 +204,7 @@ namespace Expanze.Gameplay.Map
         public void ChangeCamera(GameTime gameTime)
         {
             {
+
                 if (GameState.CurrentMouseState.RightButton == ButtonState.Pressed)
                 {
                     float dx = (GameState.CurrentMouseState.X - GameState.LastMouseState.X) / 3000.0f * gameTime.ElapsedGameTime.Milliseconds;
@@ -284,6 +285,8 @@ namespace Expanze.Gameplay.Map
                 eye.Y = 0.2f;
             if (eye.Y > 2.8f)
                 eye.Y = 2.8f;
+
+            GameState.view = Matrix.CreateLookAt(eye, target, up);
         }
 
         float lightAngle = 0;
@@ -348,8 +351,6 @@ namespace Expanze.Gameplay.Map
 
             game.GraphicsDevice.BlendState = BlendState.Opaque;
             game.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-
-            GameState.view = Matrix.CreateLookAt(eye, target, up);
 
             mapView.Draw(gameTime);
 

@@ -33,7 +33,7 @@ namespace Expanze
         IconMedalMill, IconMedalStepherd, IconMedalQuarry, IconMedalSaw, IconMedalMine,
 
         PlayerColor,
-        BackgroundWater, BackgroundPromptWindow, BackgroundMessageWindow, 
+        BackgroundWater, BackgroundPromptWindow, BackgroundMessageWindow, BackgroundVictoryScreen,
 
         ButtonYes, ButtonNo,
 
@@ -96,6 +96,7 @@ namespace Expanze
 
         private GameResources()
         {
+            hud = new Texture2D[(int)HUDTexture.HUDCount];
         }
 
         public Model GetHexaModel(HexaKind type)
@@ -146,12 +147,11 @@ namespace Expanze
 
             try
             {
-
-                hud = new Texture2D[(int)HUDTexture.HUDCount];
                 hud[(int)HUDTexture.PlayerColor] = content.Load<Texture2D>("pcolor");
                 hud[(int)HUDTexture.BackgroundWater] = content.Load<Texture2D>("Models/hexa_voda3");
                 hud[(int)HUDTexture.BackgroundMessageWindow] = content.Load<Texture2D>("HUD/messageBG");
                 hud[(int)HUDTexture.BackgroundPromptWindow] = content.Load<Texture2D>("HUD/WindowPromt");
+                hud[(int)HUDTexture.BackgroundVictoryScreen] = content.Load<Texture2D>("HUD/final_screen");
                 hud[(int)HUDTexture.ButtonNo] = content.Load<Texture2D>("HUD/NOPromt");
                 hud[(int)HUDTexture.ButtonYes] = content.Load<Texture2D>("HUD/OKPromt");
                 hud[(int)HUDTexture.SmallCorn] = content.Load<Texture2D>("HUD/scorn");

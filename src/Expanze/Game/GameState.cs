@@ -9,6 +9,13 @@ using Expanze.Gameplay.Map;
 
 namespace Expanze
 {
+    public enum PickingState
+    {
+        onlyNormal,
+        normalAndPicking,
+        onlyPicking
+    }
+
     static class GameState
     {
         public static Matrix view;
@@ -28,5 +35,8 @@ namespace Expanze
         public static SpriteBatch spriteBatch;
 
         public static HotSeatScreen hotSeatScreen;
+
+        public static bool wireModel = false;
+        public static PickingState pickingTexture = PickingState.onlyNormal;
     }
 }

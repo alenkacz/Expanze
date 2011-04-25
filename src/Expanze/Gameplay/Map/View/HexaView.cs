@@ -94,7 +94,7 @@ namespace Expanze
 
             if (kind != HexaKind.Water)
             {
-                this.pickHexaColor = new Color(this.hexaID / 256.0f, 0.0f, 0.0f);
+                this.pickHexaColor = new Color(1.0f - this.hexaID / 256.0f, 0.0f, 0.0f);
 
                 pickVars = new PickVariables(pickHexaColor);
 

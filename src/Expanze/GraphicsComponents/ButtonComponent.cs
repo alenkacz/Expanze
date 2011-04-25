@@ -197,7 +197,7 @@ namespace Expanze
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
 
             Color c;
-            c = Color.White;
+            c = (pick) ? Color.Black : Color.White;
 
             if (myButton != null)
             {

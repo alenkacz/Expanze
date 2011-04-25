@@ -62,17 +62,10 @@ namespace Expanze
         {
             base.Draw(gameTime);
             
-            Color c;
-            if (pick)
-            {
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Opaque, null, null, null, null, Settings.spriteScale);
-                c = Color.Black;
-            }
-            else
-            {
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
-                c = Color.White;
-            }
+            Color c = (pick) ? Color.Black : Color.White;
+
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
+
             if( myButton != null )
                 spriteBatch.Draw(myButton,spritePosition, c);
 

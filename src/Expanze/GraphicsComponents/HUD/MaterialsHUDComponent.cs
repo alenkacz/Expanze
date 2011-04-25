@@ -56,7 +56,7 @@ namespace Expanze
 
             Color c;
             if (pick)
-                c = Color.Black;
+                c = new Color(0, 0, 0, 255);
             else
                 c = Color.White;
 

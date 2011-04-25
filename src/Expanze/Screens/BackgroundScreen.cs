@@ -36,10 +36,12 @@ namespace Expanze
         /// <summary>
         /// Constructor.
         /// </summary>
-        public BackgroundScreen()
+        public BackgroundScreen(Texture2D background = null)
         {
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
+
+            backgroundTexture = background;
         }
 
 
@@ -55,7 +57,8 @@ namespace Expanze
             if (content == null)
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
 
-            backgroundTexture = content.Load<Texture2D>("background_new");
+            if(backgroundTexture == null)
+                backgroundTexture = content.Load<Texture2D>("background_new");
         }
 
 

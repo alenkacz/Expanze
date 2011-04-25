@@ -138,6 +138,13 @@ namespace Expanze
                 GameAction selectHexa = new GameAction("selecthexa", GameAction.ActionKind.OnlyInitialPress);
                 GameAction activateHexa = new GameAction("activatehexa", GameAction.ActionKind.OnlyInitialPress);
                 GameAction resignGame = new GameAction("resigngame", GameAction.ActionKind.OnlyInitialPress);
+
+                GameAction switchWireModel = new GameAction("switchwiremodel", GameAction.ActionKind.OnlyInitialPress);
+                GameAction showPickingTexture = new GameAction("showpickingtexture", GameAction.ActionKind.OnlyInitialPress);
+
+                im.MapToKey(stateGame, switchWireModel, Keys.W);
+                im.MapToKey(stateGame, showPickingTexture, Keys.Q);
+
                 im.MapToKey(stateGame, enablemessages, Keys.P);
                 im.MapToKey(stateGame, selectTown, Keys.T);
                 im.MapToKey(stateGame, selectHexa, Keys.H);
@@ -398,6 +405,18 @@ namespace Expanze
             if (InputManager.Inst().GetGameAction("game", "resigngame").IsPressed())
                 gMaster.GetActivePlayer().SetActive(false);
 
+            if (InputManager.Inst().GetGameAction("game", "switchwiremodel").IsPressed())
+                GameState.wireModel = !GameState.wireModel;
+            if (InputManager.Inst().GetGameAction("game", "showpickingtexture").IsPressed())
+            {
+                switch (GameState.pickingTexture)
+                {
+                    case PickingState.onlyNormal: GameState.pickingTexture = PickingState.normalAndPicking; break;
+                    case PickingState.normalAndPicking: GameState.pickingTexture = PickingState.onlyPicking; break;
+                    case PickingState.onlyPicking: GameState.pickingTexture = PickingState.onlyNormal; break;
+                }
+            }
+
             if (InputManager.Inst().GetGameAction("gamemessage", "cheatsources").IsPressed())
                 GameMaster.Inst().GetActivePlayer().PayForSomething(new SourceAll(-1000));
             if (InputManager.Inst().GetGameAction("gamemessage", "cheatpoints").IsPressed())
@@ -493,30 +512,29 @@ namespace Expanze
 
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
                                                Color.SkyBlue, /*new Color(33, 156, 185), */0, 0);
-            //ScreenManager.GraphicsDevice.RasterizerState.FillMode = FillMode.WireFrame;
-
-            //return;
 
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
-           
-            foreach (GameComponent gameComponent in gameComponents)
+            if (GameState.pickingTexture != PickingState.onlyPicking)
             {
-                gameComponent.Draw(gameTime);
-            }
+                foreach (GameComponent gameComponent in gameComponents)
+                {
+                    gameComponent.Draw(gameTime);
+                }
 
-            foreach (GameComponent gameComponent in gameComponents)
-            {
-                gameComponent.Draw2D();
-            }
+                foreach (GameComponent gameComponent in gameComponents)
+                {
+                    gameComponent.Draw2D();
+                }
 
-            foreach (GuiComponent guiComponent in guiComponents)
-            {
-                guiComponent.Draw(gameTime, false);
-            }
+                foreach (GuiComponent guiComponent in guiComponents)
+                {
+                    guiComponent.Draw(gameTime, false);
+                }
 
-            if (MarketComponent.Inst().getIsActive())
-            {
-                MarketComponent.Inst().Draw(gameTime, false);
+                if (MarketComponent.Inst().getIsActive())
+                {
+                    MarketComponent.Inst().Draw(gameTime, false);
+                }
             }
 
             frames++;
@@ -528,7 +546,13 @@ namespace Expanze
                 frames = 0;
             }
 
-            
+            if (GameState.pickingTexture != PickingState.onlyNormal)
+            {
+                spriteBatch.Begin();
+                spriteBatch.Draw(shadowMap, new Rectangle(0, 0, shadowMap.Width, shadowMap.Height), new Color(255, 255, 255, (GameState.pickingTexture == PickingState.onlyPicking) ? 255 : 40));
+                spriteBatch.End();
+            }
+
             /*
             if (gameTime.ElapsedGameTime.Milliseconds != 0)
             {
@@ -539,6 +563,7 @@ namespace Expanze
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Game " + gameCount, new Vector2(10, 100), Color.White);
                 spriteBatch.End();
             }*/
+
 
             // If the game is transitioning on or off, fade it out to black.
             if (TransitionPosition > 0 || pauseAlpha > 0)

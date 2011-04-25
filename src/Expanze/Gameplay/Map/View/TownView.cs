@@ -75,7 +75,7 @@ namespace Expanze.Gameplay.Map
         {
             this.model = model;
             this.townID = model.GetTownID();
-            this.pickTownColor = new Color(0.0f, 0.0f, townID / 256.0f);
+            this.pickTownColor = new Color(0.0f, 0.0f, 1.0f - townID / 256.0f);
             this.world = world;
             buildingIsBuild = new bool[3];
             for (int loop1 = 0; loop1 < buildingIsBuild.Length; loop1++)

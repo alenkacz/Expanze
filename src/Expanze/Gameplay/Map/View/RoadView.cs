@@ -69,7 +69,7 @@ namespace Expanze.Gameplay.Map.View
         {
             this.model = model;
             this.roadID = model.GetRoadID();
-            this.pickRoadColor = new Color(0.0f, roadID / 256.0f, 0.0f);
+            this.pickRoadColor = new Color(0.0f, 1.0f - roadID / 256.0f, 0.0f);
             this.world = world;
             pickVars = new PickVariables(pickRoadColor);
             isBuildView = false;

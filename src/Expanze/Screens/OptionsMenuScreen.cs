@@ -112,6 +112,8 @@ namespace Expanze
         /// </summary>
         void ApplyChangesSelected(object sender, PlayerIndexEventArgs e)
         {
+            GameState.hotSeatScreen = new HotSeatScreen();
+
             string selected = resolution[currentResolution];
             bool fullscreen = isFullscreen;
             GraphicsDeviceManager gdm = Settings.GraphicsDeviceManager;

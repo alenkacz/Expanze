@@ -106,7 +106,7 @@ namespace Expanze
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
 
-            Color c = Color.White;
+            Color c = (pick) ? Color.Black : Color.White;
             GameMaster gMaster = GameMaster.Inst();
 
             // draw textures
@@ -127,15 +127,15 @@ namespace Expanze
             Vector2 positionScore = new Vector2(positionTotalPoints.X - font.MeasureString(player.GetPoints().ToString()).X, positionTotalPoints.Y);
 
             // draw texts
-            spriteBatch.DrawString(font, player.GetName(), positionName, Color.White);
-            spriteBatch.DrawString(font, player.GetPoints().ToString(), positionScore, Color.White);
-            spriteBatch.DrawString(font, " / " + GameMaster.Inst().GetGameSettings().GetPoints(), positionTotalPoints, Color.White);
+            spriteBatch.DrawString(font, player.GetName(), positionName,c);
+            spriteBatch.DrawString(font, player.GetPoints().ToString(), positionScore, c);
+            spriteBatch.DrawString(font, " / " + GameMaster.Inst().GetGameSettings().GetPoints(), positionTotalPoints, c);
 
             // draw player color
-            spriteBatch.Draw(textureColor, positionColor, player.GetColor());
+            spriteBatch.Draw(textureColor, positionColor, (pick) ? c : player.GetColor());
 
             //draw medal
-            spriteBatch.Draw(textureMedaile, new Vector2(positionScore.X - medalWidth - space,positionScore.Y), Color.White);
+            spriteBatch.Draw(textureMedaile, new Vector2(positionScore.X - medalWidth - space,positionScore.Y), c);
 
             spriteBatch.End();
         }

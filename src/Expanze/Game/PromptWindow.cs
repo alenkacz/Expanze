@@ -222,7 +222,7 @@ namespace Expanze
                 else
                     color = Color.White;
 
-                spriteBatch.Begin(SpriteSortMode.Deferred, (drawingPickableAreas) ? BlendState.Opaque : BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
             
                 spriteBatch.Draw(background, bgPos, color);
 
@@ -238,6 +238,12 @@ namespace Expanze
                     spriteBatch.Draw(pickTextOK, noPos, noPick.pickColor);
                 else
                     spriteBatch.Draw(no, noPos, Color.White);
+
+                if (drawingPickableAreas)
+                {
+                    spriteBatch.End();
+                    return;
+                }
 
                 float titleWidth = GameResources.Inst().GetFont(EFont.MedievalBig).MeasureString(title).X;
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), title, new Vector2(bgPos.X + (background.Width - titleWidth) / 2, bgPos.Y + 20), Color.LightBlue);
