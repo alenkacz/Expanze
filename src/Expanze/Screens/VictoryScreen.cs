@@ -93,13 +93,12 @@ namespace Expanze
 
             if (firstTimeHandleInput)
             {
-                wasMousePressedWhenVictory = Mouse.GetState().LeftButton == ButtonState.Pressed;
+                wasMousePressedWhenVictory = mouseState.LeftButton == ButtonState.Pressed;
                 firstTimeHandleInput = false;
-                InputState.waitForRelease();
             }
             else
             {
-                if (Mouse.GetState().LeftButton == ButtonState.Released)
+                if (mouseState.LeftButton == ButtonState.Released)
                     wasMousePressedWhenVictory = false;
 
                 PlayerIndex index;
@@ -111,7 +110,7 @@ namespace Expanze
 
                 if (input.IsNewKeyPress(Keys.Escape, null, out index) || 
                     input.IsNewKeyPress(Keys.Enter, null, out index) || 
-                    (input.IsNewLeftMouseButtonPressed() && !wasMousePressedWhenVictory && !firstTimeHandleInput))
+                    (input.IsNewLeftMouseButtonPressed() && !wasMousePressedWhenVictory))
                 {
                     InputState.waitForRelease();
                     userCancelled = true;

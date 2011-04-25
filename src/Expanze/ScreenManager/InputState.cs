@@ -290,9 +290,9 @@ namespace Expanze
 
         public bool IsMenuMouseClicked(Rectangle res)
         {
-            if (IsNewLeftMouseButtonPressed())
+            if (IsInRange(res))
             {
-                return IsInRange(res);
+                return IsNewLeftMouseButtonPressed();
             }
 
             return false;
