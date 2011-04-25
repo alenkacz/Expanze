@@ -95,7 +95,12 @@ namespace AIHard
                         turn = 1;
                 }
 
-                AddSubgoal(new WaitTurnAtom(map, (turn <= 2) ? turn : 2, depth + 1));
+                if (map.GetPlayerMe().GetSource().GetAsArray().Sum() > 500)
+                    turn = 0;
+
+                if(turn > 0)
+                    AddSubgoal(new WaitTurnAtom(map, (turn <= 2) ? turn : 2, depth + 1));
+
                 AddSubgoal(new ChangeSourcesAtom(map, source, depth + 1));
             }
         }

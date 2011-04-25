@@ -37,7 +37,7 @@ namespace AIHard
 
         protected void Log(string msg)
         {
-            map.Log("goalHiearchy", msg);
+            //map.Log("goalHiearchy", msg);
         }
 
         public virtual bool IsStillActual()

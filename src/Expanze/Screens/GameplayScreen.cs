@@ -141,7 +141,8 @@ namespace Expanze
 
                 GameAction switchWireModel = new GameAction("switchwiremodel", GameAction.ActionKind.OnlyInitialPress);
                 GameAction showPickingTexture = new GameAction("showpickingtexture", GameAction.ActionKind.OnlyInitialPress);
-
+                GameAction debugInfo = new GameAction("debuginfo", GameAction.ActionKind.OnlyInitialPress);
+                im.MapToKey(stateGame, debugInfo, Keys.A);
                 im.MapToKey(stateGame, switchWireModel, Keys.W);
                 im.MapToKey(stateGame, showPickingTexture, Keys.Q);
 
@@ -327,7 +328,7 @@ namespace Expanze
             else
                 pauseAlpha = Math.Max(pauseAlpha - 1f / 32, 0);
 
-            if (IsActive)
+            //if (IsActive)
             {
                 foreach (GameComponent gameComponent in gameComponents)
                 {
@@ -346,8 +347,8 @@ namespace Expanze
 
                 if (GameMaster.Inst().IsWinnerNew())
                 {
-                    if(false)
-                    //if (gameCount <= 1000)
+                    //if(false)
+                    if (gameCount <= 1000)
                     {
                         LogWinner();
                         GameMaster.Inst().RestartGame();
@@ -406,7 +407,19 @@ namespace Expanze
                 gMaster.GetActivePlayer().SetActive(false);
 
             if (InputManager.Inst().GetGameAction("game", "switchwiremodel").IsPressed())
+            {
                 GameState.wireModel = !GameState.wireModel;
+                RasterizerState rasterizerState = new RasterizerState();
+                rasterizerState.CullMode = CullMode.CullCounterClockwiseFace;
+
+                rasterizerState.FillMode = (GameState.wireModel) ? FillMode.WireFrame : FillMode.Solid;
+                GameState.rasterizerState = rasterizerState;
+            }
+            if (InputManager.Inst().GetGameAction("game", "debuginfo").IsPressed())
+            {
+                GameState.debugInfo = !GameState.debugInfo;
+            }
+
             if (InputManager.Inst().GetGameAction("game", "showpickingtexture").IsPressed())
             {
                 switch (GameState.pickingTexture)
@@ -553,8 +566,9 @@ namespace Expanze
                 spriteBatch.End();
             }
 
-            /*
-            if (gameTime.ElapsedGameTime.Milliseconds != 0)
+            
+            if (gameTime.ElapsedGameTime.Milliseconds != 0 &&
+                GameState.debugInfo)
             {
                 spriteBatch.Begin();
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), showFrames + " ", new Vector2(12, 12), Color.Black);
@@ -562,7 +576,7 @@ namespace Expanze
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Turn " + GameMaster.Inst().GetTurnNumber(), new Vector2(10, 60), Color.White);
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Game " + gameCount, new Vector2(10, 100), Color.White);
                 spriteBatch.End();
-            }*/
+            }
 
 
             // If the game is transitioning on or off, fade it out to black.

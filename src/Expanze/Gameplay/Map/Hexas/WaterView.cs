@@ -26,10 +26,8 @@ namespace Expanze.Gameplay.Map
             Model m = waterModel;
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
-            RasterizerState rasterizerState = new RasterizerState();
-            rasterizerState.CullMode = CullMode.None;
-            //rasterizerState.FillMode = FillMode.WireFrame;
-            GameState.game.GraphicsDevice.RasterizerState = rasterizerState;
+
+            GameState.game.GraphicsDevice.RasterizerState = GameState.rasterizerState;
 
             //rotation = (hexaID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaID % 6));
             Matrix tempMatrix = Matrix.CreateScale(0.00028f) * rotation;

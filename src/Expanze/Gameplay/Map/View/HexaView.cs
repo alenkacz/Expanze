@@ -301,10 +301,8 @@ namespace Expanze
             Model m = GameResources.Inst().GetHexaModel(kind);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
-            RasterizerState rasterizerState = new RasterizerState();
-            rasterizerState.CullMode = CullMode.CullCounterClockwiseFace;
-            //rasterizerState.FillMode = FillMode.WireFrame;
-            GameState.game.GraphicsDevice.RasterizerState = rasterizerState;
+
+            GameState.game.GraphicsDevice.RasterizerState = GameState.rasterizerState;
 
             Matrix rotation;
             rotation = (hexaID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaID % 6));

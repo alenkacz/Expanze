@@ -80,17 +80,17 @@ namespace AIHard
         {
             int townMaxID = map.GetMaxTownID();
             ITown tempTown;
-            double tempFitness;
+            double tempDesirability;
             ITown bestTown = null;
-            double bestFitness = 0.0;
+            double bestDesirability = 0.0;
 
             for (int loop1 = 1; loop1 < townMaxID; loop1++)
             {
                 tempTown = map.GetITownByID(loop1);
-                tempFitness = GetFitness(tempTown);
-                if (tempFitness > bestFitness)
+                tempDesirability = GetFitness(tempTown);
+                if (tempDesirability > bestDesirability)
                 {
-                    bestFitness = tempFitness;
+                    bestDesirability = tempDesirability;
                     bestTown = tempTown;
                 }
             }

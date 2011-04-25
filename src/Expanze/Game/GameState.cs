@@ -37,6 +37,8 @@ namespace Expanze
         public static HotSeatScreen hotSeatScreen;
 
         public static bool wireModel = false;
+        public static RasterizerState rasterizerState = new RasterizerState();
         public static PickingState pickingTexture = PickingState.onlyNormal;
+        public static bool debugInfo = false;
     }
 }
