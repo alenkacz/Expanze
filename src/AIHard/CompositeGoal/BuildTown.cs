@@ -6,6 +6,18 @@ using CorePlugin;
 
 namespace AIHard
 {
+    class TownPlayer
+    {
+        public ITown town;
+        public bool me;
+
+        public TownPlayer(ITown town, bool me)
+        {
+            this.town = town;
+            this.me = me;
+        }
+    }
+
     class BuildTown : CompositeGoal
     {
         ITown lastBestTown;
@@ -83,11 +95,46 @@ namespace AIHard
             double tempDesirability;
             ITown bestTown = null;
             double bestDesirability = 0.0;
+            int count = 0;
+            int maxCount = 0;
+
+            switch (map.GetGameSettings().GetMapSize())
+            {
+                case MapSize.SMALL: maxCount = 20; break;
+                case MapSize.MEDIUM: maxCount = 30; break;
+                case MapSize.BIG: maxCount = 40; break;
+            }
+
+            for (int loop1 = 1; loop1 < townMaxID; loop1++)
+            {
+                tempTown = map.GetITownByID(loop1);
+                count = CountNearestTowns(tempTown);
+                if (count > maxCount)
+                    maxCount = count;
+            }
 
             for (int loop1 = 1; loop1 < townMaxID; loop1++)
             {
                 tempTown = map.GetITownByID(loop1);
                 tempDesirability = GetFitness(tempTown);
+                
+                if(tempDesirability > 0.1)
+                {
+                    count = CountNearestTowns(tempTown);
+                    
+                    /*
+                    map.Log("nearest", "" + count + " townID -" + tempTown.GetTownID() + " hexas -" +
+                        tempTown.GetIHexa(0).GetKind() + tempTown.GetIHexa(0).GetStartSource() + "  :  " +
+                        tempTown.GetIHexa(1).GetKind() + tempTown.GetIHexa(1).GetStartSource() + "  :  " +
+                        tempTown.GetIHexa(2).GetKind() + tempTown.GetIHexa(2).GetStartSource() + "  :  ");
+                    */
+                }
+
+                double k1 = 4 / 5.0;
+                double k2 = 1 - k1;
+
+                tempDesirability = tempDesirability * k1 + (count / (double) maxCount) * k2;
+
                 if (tempDesirability > bestDesirability)
                 {
                     bestDesirability = tempDesirability;
@@ -96,6 +143,84 @@ namespace AIHard
             }
 
             lastBestTown = bestTown;
+        }
+
+        private int CountNearestTowns(ITown futureTown)
+        {
+            Queue<TownPlayer> openList = new Queue<TownPlayer>();
+
+            foreach (IPlayer player in map.GetPlayerOthers())
+            {
+                foreach (ITown town in player.GetTown())
+                {
+                    openList.Enqueue(new TownPlayer(town, false));
+                }
+            }
+
+            foreach (ITown town in map.GetPlayerMe().GetTown())
+            {
+                openList.Enqueue(new TownPlayer(town, false));
+            }
+            openList.Enqueue(new TownPlayer(futureTown, true));
+
+            TownPlayer peekTown;
+            ITown neighbour;
+            List<ITown> closeList = new List<ITown>();
+
+            int count = 0;
+
+            while (openList.Count > 0)
+            {
+                peekTown = openList.Dequeue();
+                closeList.Add(peekTown.town);
+                if (peekTown.me && peekTown.town.IsPossibleToBuildTown())
+                {
+                    bool isNeighbour = false;
+
+                    for(byte loop1 = 0; loop1 < 3; loop1++)
+                    {
+                        if (peekTown.town.GetITown(loop1) != null &&
+                            peekTown.town.GetITown(loop1).GetTownID() == futureTown.GetTownID())
+                        {
+                            isNeighbour = true;
+                            break;
+                        }
+                    }
+
+                    if (!isNeighbour)
+                        count++;
+                }
+
+                /*
+                 * Expand 
+                 */
+
+                for (byte loop1 = 0; loop1 < 3; loop1++)
+                {
+                    neighbour = peekTown.town.GetITown(loop1);
+
+                    if (neighbour != null &&
+                        !closeList.Contains(neighbour))
+                    {
+                        bool isInOpenList = false;
+                        foreach (TownPlayer tp in openList)
+                        {
+                            if (tp.town.GetTownID() == neighbour.GetTownID())
+                            {
+                                isInOpenList = true;
+                                break;
+                            }
+                        }
+
+                        if (!isInOpenList)
+                        {
+                            openList.Enqueue(new TownPlayer(neighbour, peekTown.me));
+                        }
+                    }
+                }
+            }
+
+            return count - 1; // minus future town
         }
 
         public override double GetDesirability()

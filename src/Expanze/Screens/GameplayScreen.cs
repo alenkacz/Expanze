@@ -76,7 +76,7 @@ namespace Expanze
 
             //render to texture
             PresentationParameters pp = ScreenManager.GraphicsDevice.PresentationParameters;
-            renderTarget = new RenderTarget2D(ScreenManager.GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight, false, ScreenManager.GraphicsDevice.DisplayMode.Format, pp.DepthStencilFormat);
+            renderTarget = new RenderTarget2D(ScreenManager.GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight, false, SurfaceFormat.Color, pp.DepthStencilFormat);
 
             GameState.game = ScreenManager.Game;
 
@@ -477,7 +477,7 @@ namespace Expanze
                 playersACR += p.GetComponentAI().GetAIName()[3];
             }
 
-            Logger.Inst().Log(playersACR.ToUpper() + gs.GetMapSizeXML() + gs.GetMapTypeXML() + gs.GetMapWealthXML() + gs.GetPoints() + ".txt", message);
+            Logger.Inst().Log(playersACR.ToUpper() + gs.GetMapSizeXML() + gs.GetMapTypeXML() + gs.GetMapWealthXML() + gs.GetPoints() + ".csv", message);
         }
 
         int frames = 0;
@@ -512,7 +512,8 @@ namespace Expanze
             ScreenManager.GraphicsDevice.SetRenderTarget(null);
             shadowMap = renderTarget;
             Color[] c = new Color[shadowMap.Height * shadowMap.Width];
-            shadowMap.GetData<Color>(c);
+            
+            shadowMap.GetData(c);
 
             Color color = Color.Black;
             int x = GameState.CurrentMouseState.X, y = GameState.CurrentMouseState.Y;
