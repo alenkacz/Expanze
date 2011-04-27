@@ -11,10 +11,13 @@ namespace AIHard
     {
         IHexa bestHexa;
 
+        List<int> bestHexaIDs;
+
         public FortCaptureHexa(IMapController map, int depth)
             : base(map, depth, "Capture hexa")
         {
             bestHexa = null;
+            bestHexaIDs = new List<int>();
         }
 
         public override void Init()
@@ -24,6 +27,7 @@ namespace AIHard
 
             AddSubgoal(new RaiseSources(map, PriceKind.ACaptureHexa, depth + 1));
             AddSubgoal(new FortCaptureHexaAtom(map, bestHexa, depth + 1));
+            bestHexaIDs.Add(bestHexa.GetID());
 
             bestHexa = null;
         }
@@ -47,7 +51,18 @@ namespace AIHard
                 for (int loop1 = 0; loop1 < 6; loop1++)
                 {
                     hexaNeighbour = hexa.GetIHexaNeighbour((RoadPos)loop1);
+
                     if (hexaNeighbour == null)
+                        continue;
+
+                    int count = 0;
+                    foreach (int i in bestHexaIDs)
+                    {
+                        if (i == hexaNeighbour.GetID())
+                            count++;
+                    }
+
+                    if(count > 1) // dont fight about hexa
                         continue;
 
                     tempDesirability = GetDesirablity(me, hexaNeighbour);
