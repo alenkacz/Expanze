@@ -37,7 +37,8 @@ namespace Expanze.Utils.Genetic
         {
             Chromozone second = (Chromozone) obj;
 
-            return (int)(fitness - second.fitness);
+            double delta = fitness - second.fitness;
+            return (delta < 0) ? 1 : ((delta > 0) ? -1 : 0);
         }
 
         #endregion
@@ -45,6 +46,17 @@ namespace Expanze.Utils.Genetic
         internal double GetFitness()
         {
             return fitness;
+        }
+
+        internal void Log()
+        {
+            string msg = "";
+            foreach (double d in genes)
+            {
+                msg += d + "; ";
+            }
+            msg += fitness;
+            Logger.Inst().Log("chromozone.txt", msg);
         }
     }
 }

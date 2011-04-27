@@ -9,6 +9,7 @@ using System.Threading;
 using Expanze.Gameplay;
 using Microsoft.Xna.Framework.Graphics;
 using Expanze.Utils;
+using Expanze.Utils.Genetic;
 
 namespace Expanze
 {
@@ -50,6 +51,8 @@ namespace Expanze
 
         private GameSettings gameSettings;
 
+        private Genetic genetic;
+
         public static GameMaster Inst()
         {
             if (instance == null)
@@ -66,6 +69,7 @@ namespace Expanze
         private GameMaster() 
         {
             randomNumber = new Random();
+            genetic = new Genetic(20, 10);
         }
 
         public void AddToPlayerCount(int i) { playerCount += i; }
@@ -87,15 +91,18 @@ namespace Expanze
             {
                 players[loop1] = new Player(players[loop1].GetName(), players[loop1].GetColor(), players[loop1].GetComponentAI(), loop1);
                 AI = players[loop1].GetComponentAI();
+                double[] koef = null;
                 if (AI != null) // its computer then
                 {
+
                     // GENETICS ALG
                     if (AI.GetAIName() == "AI těžká")
                     {
+                        koef = genetic.GetChromozone();
                     }
                     // GENETICS 
 
-                    AI.InitAIComponent(map.GetMapController(), null);
+                    AI.InitAIComponent(map.GetMapController(), koef);
                 }
             }
             
@@ -521,6 +528,22 @@ namespace Expanze
                     winnerNew = true;
                     Message.Inst().Show("Konec hry", "Nikdo nevyhrál, všichni prohráli. Nikomu nestačilo 100 kol k zisku dostatečného počtu bodů.", GameResources.Inst().GetHudTexture(HUDTexture.HammersPassive));
                 }
+
+                // GENETICS
+                if (winnerNew)
+                {
+                    double fitness = 0.0;
+                    for (int loop1 = 0; loop1 < players.Count; loop1++)
+                    {
+                        if (players[loop1].GetComponentAI().GetAIName().CompareTo("AI těžká") == 0)
+                        {
+                            fitness = players[loop1].GetPoints() / (double)gameSettings.GetPoints();
+                            fitness = fitness * ((loop1 == 0) ? 1.5 : 0.5);
+                        }
+                    }
+                    genetic.SetFitness(fitness);
+                }
+                // GENETICS
             }
         }
 

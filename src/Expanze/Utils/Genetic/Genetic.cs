@@ -37,6 +37,7 @@ namespace Expanze.Utils.Genetic
             if (activeChromozomeID >= population.Length)
             {
                 NewPopulation();
+                activeChromozomeID = 0;
             }
         }
 
@@ -50,7 +51,13 @@ namespace Expanze.Utils.Genetic
 
         private void Log()
         {
-            throw new NotImplementedException();
+            double sum = 0.0;
+            foreach (Chromozone ch in population)
+            {
+                sum += ch.GetFitness();
+            }
+
+            Logger.Inst().Log("fitness.txt", "Fitness > " + sum / populationSize);
         }
 
         double mutationProb = 0.01;
@@ -122,6 +129,8 @@ namespace Expanze.Utils.Genetic
             Chromozone[] winners = new Chromozone[elits + others];
 
             Array.Sort(generation);
+
+            generation[0].Log();
 
             for (int loop1 = 0; loop1 < elits; loop1++)
             {
