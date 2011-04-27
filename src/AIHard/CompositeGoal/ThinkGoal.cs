@@ -11,19 +11,24 @@ namespace AIHard
     {
         LinkedList<MainGoal> mainGoals;
 
-        public ThinkGoal(IMapController map, int depth) : base(map, depth, "Think")
+        public ThinkGoal(IMapController map, double[] koef, int depth) : base(map, depth, "Think")
         {
+            if (koef == null)
+            {
+                koef = new double[] {0.7, 0.9, 10.0, 0.01, 0.3, 0.25, 0.3, 0.5, 1.0, 7.0 };
+            }
+
             mainGoals = new LinkedList<MainGoal>();
-            mainGoals.AddLast(new MainGoal(new BuildTown(map, depth + 1), 0.7));
-            mainGoals.AddLast(new MainGoal(new BuildSourceBuilding(map, depth + 1), 0.9));
-            mainGoals.AddLast(new MainGoal(new BuildFort(map, depth + 1), 10.2));
-            mainGoals.AddLast(new MainGoal(new FortShowParade(map, depth + 1), 0.01));
-            mainGoals.AddLast(new MainGoal(new BuildMarket(map, depth + 1), 0.3));
-            mainGoals.AddLast(new MainGoal(new BuildMonastery(map, depth + 1), 0.25));
-            mainGoals.AddLast(new MainGoal(new InventUpgrade(map, depth + 1), 0.3));
-            mainGoals.AddLast(new MainGoal(new BuyLicence(map, depth + 1), 0.5));
-            mainGoals.AddLast(new MainGoal(new FortStealSources(map, depth + 1), 1.0));
-            mainGoals.AddLast(new MainGoal(new FortCaptureHexa(map, depth + 1), 7.0));
+            mainGoals.AddLast(new MainGoal(new BuildTown(map, depth + 1), koef[0]));
+            mainGoals.AddLast(new MainGoal(new BuildSourceBuilding(map, depth + 1), koef[1]));
+            mainGoals.AddLast(new MainGoal(new BuildFort(map, depth + 1), koef[2]));
+            mainGoals.AddLast(new MainGoal(new FortShowParade(map, depth + 1), koef[3]));
+            mainGoals.AddLast(new MainGoal(new BuildMarket(map, depth + 1), koef[4]));
+            mainGoals.AddLast(new MainGoal(new BuildMonastery(map, depth + 1), koef[5]));
+            mainGoals.AddLast(new MainGoal(new InventUpgrade(map, depth + 1), koef[6]));
+            mainGoals.AddLast(new MainGoal(new BuyLicence(map, depth + 1), koef[7]));
+            mainGoals.AddLast(new MainGoal(new FortStealSources(map, depth + 1), koef[8]));
+            mainGoals.AddLast(new MainGoal(new FortCaptureHexa(map, depth + 1), koef[9]));
 
             Init();
         }

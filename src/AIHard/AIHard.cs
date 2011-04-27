@@ -18,11 +18,11 @@ namespace AIHard
             return "AI těžká";
         }
 
-        public void InitAIComponent(IMapController mapController)
+        public void InitAIComponent(IMapController mapController, double[] koef)
         {
             this.mapController = mapController;
             Desirability.SetMapController(mapController);
-            thinkGoal = new ThinkGoal(mapController, 0);
+            thinkGoal = new ThinkGoal(mapController, koef, 0);
         }
 
         public void ResolveAI()

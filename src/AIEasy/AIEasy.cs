@@ -28,7 +28,7 @@ namespace AIEasy
             return "AI střední";
         }
 
-        public void InitAIComponent(IMapController mapController)
+        public void InitAIComponent(IMapController mapController, double[] koef)
         {
             this.mapController = mapController;
             Fitness.SetMapController(mapController, this);

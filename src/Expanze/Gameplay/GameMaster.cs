@@ -89,7 +89,13 @@ namespace Expanze
                 AI = players[loop1].GetComponentAI();
                 if (AI != null) // its computer then
                 {
-                    AI.InitAIComponent(map.GetMapController());
+                    // GENETICS ALG
+                    if (AI.GetAIName() == "AI těžká")
+                    {
+                    }
+                    // GENETICS 
+
+                    AI.InitAIComponent(map.GetMapController(), null);
                 }
             }
             

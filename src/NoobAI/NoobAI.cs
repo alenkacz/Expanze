@@ -29,7 +29,7 @@ namespace NoobAI
             return "AI lehká";
         }
 
-        public void InitAIComponent(IMapController mapController)
+        public void InitAIComponent(IMapController mapController, double[] koef)
         {
             this.mapController = mapController;
 
