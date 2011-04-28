@@ -350,7 +350,7 @@ namespace Expanze
                     //if(false)
                     if (gameCount <= 5000)
                     {
-                        LogWinner();
+                        //LogWinner();
                         GameMaster.Inst().RestartGame();
                         gameCount++;
                     }

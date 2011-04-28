@@ -138,11 +138,16 @@ namespace Expanze.Gameplay.Map
 
         public override void Initialize()
         {
+            Initialize(true);
+        }
+
+        public void Initialize(bool newMap)
+        {
             HexaModel.ResetCounter();
             RoadModel.ResetCounter();
             TownModel.ResetCounter();
 
-            hexaMapModel = getMap();
+            hexaMapModel = GetMap(newMap);
 
             mapView.Initialize();
 
@@ -174,9 +179,9 @@ namespace Expanze.Gameplay.Map
 
         MapParser parser;
 
-        private HexaModel[][] getMap()
+        private HexaModel[][] GetMap(bool newMap)
         {
-            //if(parser == null)
+            if(parser == null || newMap)
               parser = new MapParser();
             GameSettings gs = GameMaster.Inst().GetGameSettings();
             return parser.getMap(gs.GetMapSizeXML(), gs.GetMapTypeXML(), gs.GetMapWealthXML());

@@ -11,9 +11,17 @@ namespace AIHard
         ITown lastBestTown;
         byte lastBestPos;
 
-        public BuildSourceBuilding(IMapController map, int depth)
+        double kBuildingItself;
+        double kHasSources;
+
+        public BuildSourceBuilding(IMapController map, double kBuildingItself, double kHasSources, int depth)
             : base(map, depth, "Build Source Building")
         {
+            double sum = kBuildingItself + kHasSources;
+
+            this.kBuildingItself = kBuildingItself / sum;
+            this.kHasSources = kHasSources / sum;
+
             lastBestTown = null;
             lastBestPos = 0;
         }
@@ -71,7 +79,7 @@ namespace AIHard
 
             int startSource = hexa.GetStartSource();
 
-            return startSource / 24.0 / 2.0 + Desirability.GetHasSources(hexa.GetSourceBuildingCost()) / 2.0;
+            return (startSource / 24.0) * kBuildingItself + Desirability.GetHasSources(hexa.GetSourceBuildingCost()) * kHasSources;
         }
     }
 }

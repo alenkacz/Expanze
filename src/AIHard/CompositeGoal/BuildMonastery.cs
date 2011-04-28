@@ -11,11 +11,26 @@ namespace AIHard
         ITown lastBestTown;
         byte lastBestPos;
 
-        public BuildMonastery(IMapController map, int depth)
+        double kHexa; 
+        double kHasSources;
+        double kBestSource;
+        double kHasOtherMonastery;
+        double kHasMonastery;
+
+        public BuildMonastery(IMapController map, double kHexa, double kHasSources, double kBestSource, double kHasOtherMonastery, double kHasMonastery, int depth)
             : base(map, depth, "Build Monastery")
         {
             lastBestTown = null;
             lastBestPos = 0;
+
+            this.kHasMonastery = kHasMonastery;
+
+            double sum = kHexa + kHasSources + kBestSource + kHasOtherMonastery;
+
+            this.kHexa = kHexa / sum;
+            this.kHasSources = kHasSources / sum;
+            this.kBestSource = kBestSource / sum;
+            this.kHasOtherMonastery = kHasOtherMonastery / sum;
         }
 
         public override void Init()
@@ -63,13 +78,13 @@ namespace AIHard
                 return 0.0;
 
 
-            double hasMonasteryDesirability = (map.GetPlayerMe().GetBuildingCount(Building.Monastery) > 0) ? 0.01 : 1.0;
+            double hasMonasteryDesirability = (map.GetPlayerMe().GetBuildingCount(Building.Monastery) > 0) ? kHasMonastery : 1.0;
             double hasMoneyDesirability = Desirability.GetHasSources(PriceKind.BMonastery);
             double bestSourceDesirability = ((GetBestSource() - 40) / 60.0);
             double hasSomeoneMonastery = (Desirability.HasSomeoneBuilding(Building.Monastery)) ? 0.0 : 1.0;
             if (bestSourceDesirability > 1.0)
                 bestSourceDesirability = 1.0;
-            double desirability = (bestDesirability * 3.0 / 8.0 + hasMoneyDesirability / 8.0 + bestSourceDesirability / 4.0 + hasSomeoneMonastery / 4.0) * hasMonasteryDesirability;
+            double desirability = (bestDesirability * kHexa + hasMoneyDesirability * kHasSources + bestSourceDesirability * kBestSource + hasSomeoneMonastery * kHasOtherMonastery) * hasMonasteryDesirability;
 
             return desirability;
         }

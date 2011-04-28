@@ -8,9 +8,15 @@ namespace AIHard
 {
     class FortShowParade : CompositeGoal
     {
-        public FortShowParade(IMapController map, int depth)
+        double kHasSources;
+        double kPointsToWin;
+
+        public FortShowParade(IMapController map, double kHasSources, double kPointsToWin, int depth)
             : base(map, depth, "Show Parade")
         {
+            double sum = kHasSources + kPointsToWin;
+            this.kHasSources = kHasSources / sum;
+            this.kPointsToWin = kPointsToWin / sum;
         }
 
         public override void Init()
@@ -24,8 +30,8 @@ namespace AIHard
             if (map.GetPlayerMe().GetBuildingCount(Building.Fort) == 0)
                 return 0.0;
 
-            double pointsToWinDesirability = (map.GetPlayerMe().GetPoints() / (double) map.GetGameSettings().GetWinningPoints()) / 3.0 * 2.0;
-            double desirability = Desirability.GetHasSources(PriceKind.AParade) / 3.0 + pointsToWinDesirability;
+            double pointsToWinDesirability = (map.GetPlayerMe().GetPoints() / (double) map.GetGameSettings().GetWinningPoints()) * kPointsToWin;
+            double desirability = Desirability.GetHasSources(PriceKind.AParade) * kHasSources + pointsToWinDesirability;
 
             return desirability;
         }

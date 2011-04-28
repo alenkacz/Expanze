@@ -11,9 +11,23 @@ namespace AIHard
         ITown lastBestTown;
         byte lastBestPos;
 
-        public BuildFort(IMapController map, int depth) : base(map, depth, "Build fort")
+        double kBestHexa;
+        double kHasMoney;
+        double kPointsToWin;
+        double kHasOtherFort;
+        double kHasFort;
+
+        public BuildFort(IMapController map, double kBestHexa, double kHasMoney, double kPointsToWin, double kHasOtherFort, double kHasFort,  int depth) : base(map, depth, "Build fort")
         {
-           lastBestTown = null;
+            this.kHasFort = kHasFort;
+
+            double sum = kBestHexa + kHasMoney + kPointsToWin + kHasOtherFort;
+            this.kBestHexa = kBestHexa / sum;
+            this.kHasMoney = kHasMoney / sum;
+            this.kHasOtherFort = kHasOtherFort / sum;
+            this.kPointsToWin = kPointsToWin / sum;
+
+            lastBestTown = null;
             lastBestPos = 0;
         }
 
@@ -60,11 +74,12 @@ namespace AIHard
                 return bestDesirability;
 
 
-            double hasFortDesirability = (map.GetPlayerMe().GetBuildingCount(Building.Fort) > 0) ? 0.01 : 1.0;
+            double hasFortDesirability = (map.GetPlayerMe().GetBuildingCount(Building.Fort) > 0) ? kHasFort : 1.0;
+
             double hasMoneyDesirability = Desirability.GetHasSources(PriceKind.BFort);
             double pointsToWinDesirability = (map.GetPlayerMe().GetPoints() / (double)map.GetGameSettings().GetWinningPoints());
             double hasSomeoneFort = (Desirability.HasSomeoneBuilding(Building.Fort)) ? 0.0 : 1.0;
-            double desirability = (bestDesirability * 3.0 / 8.0 + hasMoneyDesirability / 8.0 + pointsToWinDesirability / 4.0 + hasSomeoneFort / 4.0) * hasFortDesirability;
+            double desirability = (bestDesirability * kBestHexa + hasMoneyDesirability * kHasMoney + pointsToWinDesirability * kPointsToWin + hasSomeoneFort * kHasOtherFort) * hasFortDesirability;
 
             return desirability;
         }

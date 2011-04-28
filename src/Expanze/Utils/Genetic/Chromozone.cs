@@ -10,11 +10,10 @@ namespace Expanze.Utils.Genetic
         double[] genes;
         double fitness;
 
-        public Chromozone(int length)
+        public Chromozone(int length, Random rnd)
         {
             genes = new double[length];
 
-            Random rnd = new Random();
             for (int loop1 = 0; loop1 < length; loop1++)
                 genes[loop1] = rnd.NextDouble();
         }

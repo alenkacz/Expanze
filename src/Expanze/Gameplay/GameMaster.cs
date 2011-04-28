@@ -51,6 +51,7 @@ namespace Expanze
 
         private GameSettings gameSettings;
 
+        private int gameCount;
         private Genetic genetic;
 
         public static GameMaster Inst()
@@ -63,13 +64,15 @@ namespace Expanze
             return instance;
         }
 
+        int geneticPopulation = 20;
         /// <summary>
         /// Private constructor because of the Singleton
         /// </summary>
         private GameMaster() 
         {
             randomNumber = new Random();
-            genetic = new Genetic(20, 10);
+            gameCount = 0;
+            genetic = new Genetic(geneticPopulation, 21);
         }
 
         public void AddToPlayerCount(int i) { playerCount += i; }
@@ -77,6 +80,7 @@ namespace Expanze
         public bool StartGame(Map map)
         {
             this.map = map;
+            gameCount++;
 
             playerCount = players.Count;
 
@@ -752,7 +756,7 @@ namespace Expanze
 
         internal void RestartGame()
         {
-            map.Initialize();
+            map.Initialize(gameCount % geneticPopulation == 0);
             StartGame(map);
         }
     }

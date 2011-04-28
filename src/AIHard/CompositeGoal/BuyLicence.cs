@@ -55,8 +55,8 @@ namespace AIHard
             double bestSourceDesirability = ((max - 40) / 60.0) / 2.0;
             if (bestSourceDesirability < 0.0)
                 return 0.0;
-            if (bestSourceDesirability > 0.5)
-                bestSourceDesirability = 0.5;
+            if (bestSourceDesirability > 1.0)
+                bestSourceDesirability = 1.0;
 
             return bestSourceDesirability;
         }

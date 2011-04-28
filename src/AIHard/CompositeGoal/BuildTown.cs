@@ -22,10 +22,17 @@ namespace AIHard
     {
         ITown lastBestTown;
 
-        public BuildTown(IMapController map, int depth)
+        double kNearestTown;
+        double kTownItself;
+
+        public BuildTown(IMapController map, double kNearestTown, double kTownItself, int depth)
             : base(map, depth, "Build Town")
         {
             lastBestTown = null;
+
+            double sum = (kNearestTown + kTownItself);
+            this.kNearestTown = kNearestTown / sum;
+            this.kTownItself = kTownItself / sum;
         }
 
         public override void Init()
@@ -130,10 +137,7 @@ namespace AIHard
                     */
                 }
 
-                double k1 = 4 / 5.0;
-                double k2 = 1 - k1;
-
-                tempDesirability = tempDesirability * k1 + (count / (double) maxCount) * k2;
+                tempDesirability = tempDesirability * kTownItself + (count / (double) maxCount) * kNearestTown;
 
                 if (tempDesirability > bestDesirability)
                 {
@@ -275,7 +279,11 @@ namespace AIHard
             if (hexa.GetKind() != HexaKind.Mountains &&
                hexa.GetKind() != HexaKind.Stone)
             {
-                fitness *= 0.75;
+                if (hexa.GetKind() == HexaKind.Forest)
+                {
+                    fitness *= 0.6;
+                } else
+                    fitness *= 0.75;
             }
 
             /*

@@ -14,14 +14,15 @@ namespace Expanze.Utils.Genetic
 
         public Genetic(int populationSize, int chromozomeSize)
         {
+            rnd = new Random();
+
             this.populationSize = populationSize;
 
             population = new Chromozone[populationSize];
             for (int loop1 = 0; loop1 < populationSize; loop1++)
-                population[loop1] = new Chromozone(chromozomeSize);
+                population[loop1] = new Chromozone(chromozomeSize, rnd);
 
             activeChromozomeID = 0;
-            rnd = new Random();
         }
 
         public double[] GetChromozone()
@@ -86,15 +87,20 @@ namespace Expanze.Utils.Genetic
 
         private Chromozone[] CrossOver(Chromozone[] winners)
         {
-            Random rnd = new Random();
             Chromozone[] generation = new Chromozone[populationSize];
+            int winnersSize = winners.Length;
 
+            int id1, id2;
             for (int loop1 = 0; loop1 < populationSize; loop1++)
             {
-                int id1 = rnd.Next() % winners.Length;
-                int id2 = rnd.Next() % winners.Length;
+                id1 = rnd.Next() % winners.Length;
+
+                do {
+                    id2 = rnd.Next() % winners.Length;
+                } while(id2 == id1);
 
                 generation[loop1] = CrossOver(winners[id1], winners[id2]);
+                //generation[loop1] = CrossOver(winners[loop1 % winnersSize], winners[(loop1 + 1) % winnersSize]);
             }
 
             return generation;
@@ -114,7 +120,10 @@ namespace Expanze.Utils.Genetic
 
             for (int loop1 = 0; loop1 < chromLength; loop1++)
             {
-                newChromozone[loop1] = (rnd.NextDouble() < prob1) ? genes1[loop1] : genes2[loop1];
+                if (rnd.NextDouble() < 0.5)
+                    newChromozone[loop1] = (rnd.NextDouble() < prob1) ? genes1[loop1] : genes2[loop1];
+                else
+                    newChromozone[loop1] = genes1[loop1] * prob1 + genes2[loop1] * prob2;
             }
 
             return new Chromozone(newChromozone);
@@ -122,14 +131,15 @@ namespace Expanze.Utils.Genetic
 
         private Chromozone[] Selection(Chromozone[] generation)
         {
-            Random rnd = new Random();
-
             int elits = populationSize / 2;
             int others = populationSize / 4;
             Chromozone[] winners = new Chromozone[elits + others];
 
             Array.Sort(generation);
 
+            //foreach (Chromozone ch in generation)
+            //    ch.Log();
+            //Logger.Inst().Log("chromozone.txt", "---------");
             generation[0].Log();
 
             for (int loop1 = 0; loop1 < elits; loop1++)
