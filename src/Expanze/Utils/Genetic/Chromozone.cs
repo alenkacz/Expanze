@@ -49,12 +49,11 @@ namespace Expanze.Utils.Genetic
 
         internal void Log()
         {
-            string msg = "";
+            string msg = fitness + " > ";
             foreach (double d in genes)
             {
                 msg += d + "; ";
             }
-            msg += fitness;
             Logger.Inst().Log("chromozone.txt", msg);
         }
     }

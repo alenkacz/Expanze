@@ -348,7 +348,7 @@ namespace Expanze
                 if (GameMaster.Inst().IsWinnerNew())
                 {
                     //if(false)
-                    if (gameCount <= 5000)
+                    if (gameCount <= 10000)
                     {
                         //LogWinner();
                         GameMaster.Inst().RestartGame();

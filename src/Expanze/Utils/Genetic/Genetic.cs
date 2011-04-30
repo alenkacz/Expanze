@@ -89,9 +89,20 @@ namespace Expanze.Utils.Genetic
         {
             Chromozone[] generation = new Chromozone[populationSize];
             int winnersSize = winners.Length;
+            int steadyState = 0;
 
             int id1, id2;
-            for (int loop1 = 0; loop1 < populationSize; loop1++)
+            for (int loop1 = 0; loop1 < steadyState; loop1++)
+            {
+                do
+                {
+                    id2 = rnd.Next() % winners.Length;
+                } while (id2 == loop1);
+
+                generation[loop1] = CrossOver(winners[loop1], winners[id2]);
+            }
+
+            for (int loop1 = steadyState; loop1 < populationSize; loop1++)
             {
                 id1 = rnd.Next() % winners.Length;
 
@@ -131,8 +142,8 @@ namespace Expanze.Utils.Genetic
 
         private Chromozone[] Selection(Chromozone[] generation)
         {
-            int elits = populationSize / 2;
-            int others = populationSize / 4;
+            int elits = populationSize / 4;
+            int others = populationSize / 6;
             Chromozone[] winners = new Chromozone[elits + others];
 
             Array.Sort(generation);

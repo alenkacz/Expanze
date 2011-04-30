@@ -53,6 +53,8 @@ namespace Expanze
 
         private int gameCount;
         private Genetic genetic;
+        private double fitness;
+        private double[] chromozone;
 
         public static GameMaster Inst()
         {
@@ -72,6 +74,7 @@ namespace Expanze
         {
             randomNumber = new Random();
             gameCount = 0;
+            fitness = 0.0;
             genetic = new Genetic(geneticPopulation, 21);
         }
 
@@ -95,18 +98,19 @@ namespace Expanze
             {
                 players[loop1] = new Player(players[loop1].GetName(), players[loop1].GetColor(), players[loop1].GetComponentAI(), loop1);
                 AI = players[loop1].GetComponentAI();
-                double[] koef = null;
+
                 if (AI != null) // its computer then
                 {
 
                     // GENETICS ALG
-                    if (AI.GetAIName() == "AI těžká")
+                    if (AI.GetAIName() == "AI těžká" && 
+                        gameCount % 2 == 1)
                     {
-                        koef = genetic.GetChromozone();
+                        chromozone = genetic.GetChromozone();
                     }
                     // GENETICS 
 
-                    AI.InitAIComponent(map.GetMapController(), koef);
+                    AI.InitAIComponent(map.GetMapController(), chromozone);
                 }
             }
             
@@ -536,16 +540,23 @@ namespace Expanze
                 // GENETICS
                 if (winnerNew)
                 {
-                    double fitness = 0.0;
-                    for (int loop1 = 0; loop1 < players.Count; loop1++)
+                    int winnerID = (players[0].GetPoints() > players[1].GetPoints()) ? 0 : 1;
+                    int looserID = (winnerID == 0) ? 1 : 0;
+
+                    if (players[winnerID].GetComponentAI().GetAIName().CompareTo("AI těžká") == 0)
                     {
-                        if (players[loop1].GetComponentAI().GetAIName().CompareTo("AI těžká") == 0)
-                        {
-                            fitness = players[loop1].GetPoints() / (double)gameSettings.GetPoints();
-                            fitness = fitness * ((loop1 == 0) ? 1.5 : 0.5);
-                        }
+                        fitness += 3.0 + (players[winnerID].GetPoints() - players[looserID].GetPoints()) / 10.0;
                     }
-                    genetic.SetFitness(fitness);
+                    else if (players[looserID].GetComponentAI().GetAIName().CompareTo("AI těžká") == 0)
+                    {
+                        fitness += 1.0 + (double)players[looserID].GetPoints() / players[winnerID].GetPoints();
+                    }
+
+                    if (gameCount % 2 == 0)
+                    {
+                        genetic.SetFitness(fitness);
+                        fitness = 0;
+                    }
                 }
                 // GENETICS
             }
@@ -756,7 +767,12 @@ namespace Expanze
 
         internal void RestartGame()
         {
-            map.Initialize(gameCount % geneticPopulation == 0);
+            map.Initialize(gameCount % (geneticPopulation * 2) == 0);
+
+            Player tempPlayer = players[0];
+            players[0] = players[1];
+            players[1] = tempPlayer;
+
             StartGame(map);
         }
     }
