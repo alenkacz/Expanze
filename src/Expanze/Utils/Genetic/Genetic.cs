@@ -12,6 +12,7 @@ namespace Expanze.Utils.Genetic
         int populationSize;
         double probCrossOver;
         double probMutability;
+        int generationNumber;
         Random rnd;
 
         public Genetic(int populationSize, int chromozomeSize, double probCrossOver, double probMutability)
@@ -20,6 +21,7 @@ namespace Expanze.Utils.Genetic
             this.probCrossOver = probCrossOver;
             this.probMutability = probMutability;
             this.populationSize = populationSize;
+            generationNumber = 0;
 
             population = new Chromozone[populationSize];
             for (int loop1 = 0; loop1 < populationSize; loop1++)
@@ -42,6 +44,7 @@ namespace Expanze.Utils.Genetic
             {
                 NewPopulation();
                 activeChromozomeID = 0;
+                generationNumber++;
             }
         }
 
@@ -131,10 +134,24 @@ namespace Expanze.Utils.Genetic
 
             if (rnd.NextDouble() < probCrossOver)
             {
-                int breakID = rnd.Next() % dad.Length;
+                int breakID1 = 1 + rnd.Next() % (dad.Length - 1);
+                int breakID2;
+                do
+                {
+                    breakID2 = 1 + rnd.Next() % (dad.Length - 1);
+                } while (breakID2 == breakID1);
+
+                int temp;
+                if (breakID2 < breakID1)
+                {
+                    temp = breakID1;
+                    breakID1 = breakID2;
+                    breakID2 = temp;
+                }
+
                 for (int loop1 = 0; loop1 < dad.Length; loop1++)
                 {
-                    if (breakID < loop1 + 1)
+                    if (loop1 < breakID1 || loop1 > breakID2)
                     {
                         sons[0][loop1] = mum[loop1];
                         sons[1][loop1] = dad[loop1];
@@ -175,6 +192,14 @@ namespace Expanze.Utils.Genetic
                 id = population.Length - 1;
 
             return population[id].GetGenes();
+        }
+
+        internal void PrintAllChromozones()
+        {
+            foreach (Chromozone ch in population)
+            {
+                ch.Log("chrom" + generationNumber + ".txt");
+            }
         }
     }
 }

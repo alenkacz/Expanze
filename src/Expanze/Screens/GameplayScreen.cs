@@ -21,6 +21,7 @@ using CorePlugin;
 using Expanze.Utils;
 using Expanze.Gameplay;
 using Microsoft.Xna.Framework.Audio;
+using Expanze.Utils.Genetic;
 #endregion
 
 namespace Expanze
@@ -194,6 +195,11 @@ namespace Expanze
                 im.MapToKey(stateMessage, close, Keys.Enter);
                 im.MapToKey(stateMessage, cheatsources, Keys.F11);
                 im.MapToKey(stateMessage, cheatpoints, Keys.F12);
+
+#if GENETIC
+                GameAction printAllChromozones = new GameAction("printgenetic", GameAction.ActionKind.OnlyInitialPress);
+                im.MapToKey(stateMessage, printAllChromozones, Keys.G);
+#endif
             }
 
             String stateMarket = "gamemarket";
@@ -439,6 +445,11 @@ namespace Expanze
                 GameMaster.Inst().GetActivePlayer().PayForSomething(new SourceAll(-1000));
             if (InputManager.Inst().GetGameAction("gamemessage", "cheatpoints").IsPressed())
                 GameMaster.Inst().GetActivePlayer().AddPoints(10);
+
+#if GENETIC
+            if (InputManager.Inst().GetGameAction("gamemessage", "printgenetic").IsPressed())
+                GameMaster.Inst().PrintGenetic();
+#endif
         }
 
         private void LogWinner()

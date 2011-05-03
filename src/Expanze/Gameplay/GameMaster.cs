@@ -83,9 +83,9 @@ namespace Expanze
             gameCount = 0;
 #if GENETIC       
             fitness = 0.0;
-            geneticPopulation = 20;
+            geneticPopulation = 100;
             geneticFitnessRound = 6;
-            genetic = new Genetic(geneticPopulation, 19, 0.75, 0.001);
+            genetic = new Genetic(geneticPopulation, 19, 0.75, 0.01);
 #endif
         }
 
@@ -806,5 +806,12 @@ namespace Expanze
 
             StartGame(map);
         }
+
+#if GENETIC
+        internal void PrintGenetic()
+        {
+            genetic.PrintAllChromozones();
+        }
+#endif
     }
 }

@@ -50,12 +50,17 @@ namespace Expanze.Utils.Genetic
 
         internal void Log()
         {
-            string msg = fitness + " > ";
+            Log("chromozone.txt");
+        }
+
+        internal void Log(string src)
+        {
+            string msg = String.Format("{0:0.000}", fitness) + ";;";
             foreach (double d in genes)
             {
-                msg += d + "; ";
+                msg += String.Format("{0:0.00000000}", d) + "; ";
             }
-            Logger.Inst().Log("chromozone.txt", msg);
+            Logger.Inst().Log(src, msg);
         }
 
         internal void SetProbability(double p)
