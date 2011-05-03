@@ -11,6 +11,11 @@ namespace AIHard
         double kHasSources;
         double kPointsToWin;
 
+        public FortShowParade(IMapController map, double kHasSources, int depth)
+            : this(map, kHasSources, 1 - kHasSources, depth)
+        {
+        }
+
         public FortShowParade(IMapController map, double kHasSources, double kPointsToWin, int depth)
             : base(map, depth, "Show Parade")
         {

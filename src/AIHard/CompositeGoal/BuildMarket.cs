@@ -17,8 +17,24 @@ namespace AIHard
         double kHasOtherMarket;
         double kHasMarket;
 
-        public BuildMarket(IMapController map, double kHexa, double kHasSources, double kBestSource, double kHasOtherMarket, double kHasMarket, int depth)
+        public BuildMarket(IMapController map, double k, double kHasMarket, int depth)
             : base(map, depth, "BuildMarket")
+        {
+            const double koef = 1000.0;
+
+            k *= koef;
+            kHasSources = k;
+            k = (k - (int)kHasSources) * koef;
+            kBestSource = k;
+            k = (k - (int)kBestSource) * koef;
+            kHexa = k;
+            k = (k - (int)kHexa) * koef;
+            kHasOtherMarket = k;
+
+            BaseInit(kHasMarket);
+        }
+
+        private void BaseInit(double kHasMarket)
         {
             this.kHasMarket = kHasMarket;
 
@@ -31,6 +47,12 @@ namespace AIHard
 
             lastBestTown = null;
             lastBestPos = 0;
+        }
+
+        public BuildMarket(IMapController map, double kHexa, double kHasSources, double kBestSource, double kHasOtherMarket, double kHasMarket, int depth)
+            : base(map, depth, "BuildMarket")
+        {
+            BaseInit(kHasMarket);
         }
 
         public override void Init()

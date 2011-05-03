@@ -328,7 +328,9 @@ namespace Expanze
             else
                 pauseAlpha = Math.Max(pauseAlpha - 1f / 32, 0);
 
-            //if (IsActive)
+#if !GENETIC && !LOG_A_LOT_OF_GAMES
+            if (IsActive)
+#endif
             {
                 foreach (GameComponent gameComponent in gameComponents)
                 {
@@ -347,14 +349,17 @@ namespace Expanze
 
                 if (GameMaster.Inst().IsWinnerNew())
                 {
-                    //if(false)
-                    if (gameCount <= 10000)
+
+#if GENETIC || LOG_A_LOT_OF_GAMES
+                    if (gameCount > -1)
                     {
-                        //LogWinner();
+#if LOG_A_LOT_OF_GAMES
+                        LogWinner();
+#endif
                         GameMaster.Inst().RestartGame();
                         gameCount++;
-                    }
-                    else
+                    } else
+#endif
                     {
                         SoundEffect fanfara = ScreenManager.Game.Content.Load<SoundEffect>("Sounds/assembly");
                         fanfara.Play();

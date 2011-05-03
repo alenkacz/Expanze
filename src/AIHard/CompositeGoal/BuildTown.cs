@@ -25,6 +25,11 @@ namespace AIHard
         double kNearestTown;
         double kTownItself;
 
+        public BuildTown(IMapController map, double kNearestTown, int depth)
+            : this(map, kNearestTown, 1 - kNearestTown, depth)
+        {
+        }
+
         public BuildTown(IMapController map, double kNearestTown, double kTownItself, int depth)
             : base(map, depth, "Build Town")
         {

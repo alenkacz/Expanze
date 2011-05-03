@@ -1,4 +1,7 @@
-﻿using System;
+﻿#define CHANGE_FIRST_2_PLAYERS
+#define CHANGE_MAP_EVERY_TURN
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -52,9 +55,14 @@ namespace Expanze
         private GameSettings gameSettings;
 
         private int gameCount;
+#if GENETIC
         private Genetic genetic;
         private double fitness;
         private double[] chromozone;
+
+        private int geneticPopulation;
+        private int geneticFitnessRound;
+#endif
 
         public static GameMaster Inst()
         {
@@ -66,7 +74,6 @@ namespace Expanze
             return instance;
         }
 
-        int geneticPopulation = 20;
         /// <summary>
         /// Private constructor because of the Singleton
         /// </summary>
@@ -74,8 +81,12 @@ namespace Expanze
         {
             randomNumber = new Random();
             gameCount = 0;
+#if GENETIC       
             fitness = 0.0;
-            genetic = new Genetic(geneticPopulation, 21);
+            geneticPopulation = 20;
+            geneticFitnessRound = 6;
+            genetic = new Genetic(geneticPopulation, 19, 0.75, 0.001);
+#endif
         }
 
         public void AddToPlayerCount(int i) { playerCount += i; }
@@ -94,6 +105,7 @@ namespace Expanze
             }
 
             IComponentAI AI;
+            double[] setArray = null;
             for(int loop1 = 0; loop1 < players.Count; loop1++)
             {
                 players[loop1] = new Player(players[loop1].GetName(), players[loop1].GetColor(), players[loop1].GetComponentAI(), loop1);
@@ -101,16 +113,18 @@ namespace Expanze
 
                 if (AI != null) // its computer then
                 {
-
+#if GENETIC
                     // GENETICS ALG
-                    if (AI.GetAIName() == "AI těžká" && 
-                        gameCount % 2 == 1)
+                    if (AI.GetAIName() == "AI těžká" &&
+                        (gameCount - 1) % geneticFitnessRound == 0)
                     {
                         chromozone = genetic.GetChromozone();
+                        setArray = chromozone;
                     }
                     // GENETICS 
+#endif
 
-                    AI.InitAIComponent(map.GetMapController(), chromozone);
+                    AI.InitAIComponent(map.GetMapController(), setArray);
                 }
             }
             
@@ -538,26 +552,36 @@ namespace Expanze
                 }
 
                 // GENETICS
+#if GENETIC             
                 if (winnerNew)
                 {
                     int winnerID = (players[0].GetPoints() > players[1].GetPoints()) ? 0 : 1;
                     int looserID = (winnerID == 0) ? 1 : 0;
 
+                    double add;
                     if (players[winnerID].GetComponentAI().GetAIName().CompareTo("AI těžká") == 0)
                     {
-                        fitness += 3.0 + (players[winnerID].GetPoints() - players[looserID].GetPoints()) / 10.0;
+                        add = ((double)players[winnerID].GetPoints() - 10) / (players[looserID].GetPoints() - 10) - 1.0;
+                        fitness += 3.0 + add;
                     }
                     else if (players[looserID].GetComponentAI().GetAIName().CompareTo("AI těžká") == 0)
                     {
-                        fitness += 1.0 + (double)players[looserID].GetPoints() / players[winnerID].GetPoints();
+                        add = (double) (players[looserID].GetPoints() - 10) / (players[winnerID].GetPoints() - 10) * 3.0;
+                        fitness += add;
                     }
 
-                    if (gameCount % 2 == 0)
+                    if (gameCount % geneticFitnessRound == 0)
                     {
+                        fitness -= 12;
+                        if (fitness < 0.0)
+                            fitness = 0.0;
+
                         genetic.SetFitness(fitness);
                         fitness = 0;
                     }
                 }
+#endif
+
                 // GENETICS
             }
         }
@@ -767,11 +791,18 @@ namespace Expanze
 
         internal void RestartGame()
         {
-            map.Initialize(gameCount % (geneticPopulation * 2) == 0);
+#if CHANGE_MAP_EVERY_TURN
+            map.Initialize(true);
+#else
+            map.Initialize(false);
+#endif
 
+#if CHANGE_FIRST_2_PLAYERS
+            // GENETIC
             Player tempPlayer = players[0];
             players[0] = players[1];
             players[1] = tempPlayer;
+#endif
 
             StartGame(map);
         }

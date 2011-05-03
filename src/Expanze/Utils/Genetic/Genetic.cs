@@ -10,12 +10,15 @@ namespace Expanze.Utils.Genetic
         Chromozone[] population;
         int activeChromozomeID;
         int populationSize;
+        double probCrossOver;
+        double probMutability;
         Random rnd;
 
-        public Genetic(int populationSize, int chromozomeSize)
+        public Genetic(int populationSize, int chromozomeSize, double probCrossOver, double probMutability)
         {
             rnd = new Random();
-
+            this.probCrossOver = probCrossOver;
+            this.probMutability = probMutability;
             this.populationSize = populationSize;
 
             population = new Chromozone[populationSize];
@@ -45,126 +48,133 @@ namespace Expanze.Utils.Genetic
         private void NewPopulation()
         {
             Log();
-            Chromozone[] winners = Selection(population);
-            population = CrossOver(winners);
-            Mutation(population);
+            List<Chromozone> newPopulation = new List<Chromozone>();
+
+            double sumFitness = 0.0;
+            double sumProb = 0.0;
+            foreach (Chromozone ch in population)
+            {
+                sumFitness += ch.GetFitness();
+            }
+            foreach (Chromozone ch in population)
+            {
+                double prob = sumProb + ch.GetFitness() / sumFitness;
+                ch.SetProbability(prob);
+                sumProb += ch.GetFitness() / sumFitness;
+            }
+
+            double[][] sons;
+
+            while(newPopulation.Count < populationSize)
+            {
+                double[] dad = Selection();
+                double[] mum = Selection();
+                
+                sons = CrossOver(dad, mum);
+
+                for (int loop1 = 0; loop1 < 2; loop1++)
+                {
+                    sons[loop1] = Mutation(sons[loop1]);
+                    newPopulation.Add(new Chromozone(sons[loop1]));
+                }
+            }
+
+            population = newPopulation.ToArray();
         }
 
         private void Log()
         {
             double sum = 0.0;
+
+            Chromozone best = null;
+            double maxFitness = 0.0;
+            string msg = "";
             foreach (Chromozone ch in population)
             {
                 sum += ch.GetFitness();
-            }
-
-            Logger.Inst().Log("fitness.txt", "Fitness > " + sum / populationSize);
-        }
-
-        double mutationProb = 0.01;
-
-        private void Mutation(Chromozone[] generation)
-        {
-            for (int loop1 = 0; loop1 < generation.Length; loop1++)
-            {
-                if (rnd.NextDouble() < mutationProb)
+                msg += ";" + String.Format("{0:0.00}", ch.GetFitness());
+                if(ch.GetFitness() > maxFitness)
                 {
-                    double[] origin = generation[loop1].GetGenes();
-                    double[] mutated = new double[origin.Length];
-
-                    for (int loop2 = 0; loop2 < origin.Length; loop2++)
-                    {
-                        double gene = origin[loop2] + (rnd.NextDouble() - 0.5) / 20.0;
-                        if (gene > 1.0) gene = 1.0;
-                        if (gene < 0.0) gene = 0.0;
-                        mutated[loop2] = gene;
-                    }
-
-                    generation[loop1] = new Chromozone(mutated);
+                    best = ch;
+                    maxFitness = ch.GetFitness();
                 }
             }
+
+            msg = "Fitness;" + String.Format("{0:0.00}", sum / populationSize) + msg;
+            Logger.Inst().Log("fitness.txt", msg);
+
+            best.Log();          
         }
 
-        private Chromozone[] CrossOver(Chromozone[] winners)
+        private double[] Mutation(double[] entity)
         {
-            Chromozone[] generation = new Chromozone[populationSize];
-            int winnersSize = winners.Length;
-            int steadyState = 0;
-
-            int id1, id2;
-            for (int loop1 = 0; loop1 < steadyState; loop1++)
+            for (int loop = 0; loop < entity.Length; loop++)
             {
-                do
+                double gene = entity[loop];
+                if (rnd.NextDouble() < probMutability)
                 {
-                    id2 = rnd.Next() % winners.Length;
-                } while (id2 == loop1);
-
-                generation[loop1] = CrossOver(winners[loop1], winners[id2]);
+                    gene += (rnd.NextDouble() - 0.5) / 20.0;
+                    if (gene > 1.0) gene = 1.0;
+                    if (gene < 0.0) gene = 0.0;
+                }
+                entity[loop] = gene;
             }
 
-            for (int loop1 = steadyState; loop1 < populationSize; loop1++)
-            {
-                id1 = rnd.Next() % winners.Length;
-
-                do {
-                    id2 = rnd.Next() % winners.Length;
-                } while(id2 == id1);
-
-                generation[loop1] = CrossOver(winners[id1], winners[id2]);
-                //generation[loop1] = CrossOver(winners[loop1 % winnersSize], winners[(loop1 + 1) % winnersSize]);
-            }
-
-            return generation;
+            return entity;
         }
 
-        private Chromozone CrossOver(Chromozone chromozone1, Chromozone chromozone2)
+        private double[][] CrossOver(double[] dad, double[] mum)
         {
-            int chromLength = chromozone1.GetGenes().Length;
-            double [] newChromozone = new double[chromLength];
+            double[][] sons = new double[2][];
+            for (int loop1 = 0; loop1 < sons.Length; loop1++)
+                sons[loop1] = new double[dad.Length];
 
-            double fitness1 = chromozone1.GetFitness();
-            double fitness2 = chromozone2.GetFitness();
-            double prob1 = fitness1 / (fitness1 + fitness2);
-            double prob2 = fitness2 / (fitness1 + fitness2);
-            double[] genes1 = chromozone1.GetGenes();
-            double[] genes2 = chromozone2.GetGenes();
-
-            for (int loop1 = 0; loop1 < chromLength; loop1++)
+            if (rnd.NextDouble() < probCrossOver)
             {
-                if (rnd.NextDouble() < 0.5)
-                    newChromozone[loop1] = (rnd.NextDouble() < prob1) ? genes1[loop1] : genes2[loop1];
-                else
-                    newChromozone[loop1] = genes1[loop1] * prob1 + genes2[loop1] * prob2;
+                int breakID = rnd.Next() % dad.Length;
+                for (int loop1 = 0; loop1 < dad.Length; loop1++)
+                {
+                    if (breakID < loop1 + 1)
+                    {
+                        sons[0][loop1] = mum[loop1];
+                        sons[1][loop1] = dad[loop1];
+                    }
+                    else
+                    {
+                        sons[0][loop1] = dad[loop1];
+                        sons[1][loop1] = mum[loop1];
+                    }
+                }
+            }
+            else
+            {
+                sons[0] = mum;
+                sons[1] = dad;
             }
 
-            return new Chromozone(newChromozone);
+            return sons;
         }
 
-        private Chromozone[] Selection(Chromozone[] generation)
+        private double[] Selection()
         {
-            int elits = populationSize / 4;
-            int others = populationSize / 6;
-            Chromozone[] winners = new Chromozone[elits + others];
+            double probRnd = rnd.NextDouble();
 
-            Array.Sort(generation);
+            int id = -1;
 
-            //foreach (Chromozone ch in generation)
-            //    ch.Log();
-            //Logger.Inst().Log("chromozone.txt", "---------");
-            generation[0].Log();
-
-            for (int loop1 = 0; loop1 < elits; loop1++)
+            for (int loop = 0; loop < population.Length; loop++)
             {
-                winners[loop1] = generation[loop1];
+                double prob = population[loop].GetProbability();
+                if (prob > probRnd)
+                {
+                    id = loop;
+                    break;
+                }
             }
 
-            for (int loop1 = elits; loop1 < elits + others; loop1++)
-            {
-                int id = (rnd.Next() % (populationSize - elits)) + elits;
-                winners[loop1] = generation[id];
-            }
+            if (id < 0)
+                id = population.Length - 1;
 
-            return winners;
+            return population[id].GetGenes();
         }
     }
 }

@@ -9,6 +9,7 @@ namespace Expanze.Utils.Genetic
     {
         double[] genes;
         double fitness;
+        double probability;
 
         public Chromozone(int length, Random rnd)
         {
@@ -56,5 +57,12 @@ namespace Expanze.Utils.Genetic
             }
             Logger.Inst().Log("chromozone.txt", msg);
         }
+
+        internal void SetProbability(double p)
+        {
+            probability = p;
+        }
+
+        internal double GetProbability() { return probability; }
     }
 }

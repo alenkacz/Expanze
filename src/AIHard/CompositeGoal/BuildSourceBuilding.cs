@@ -14,6 +14,11 @@ namespace AIHard
         double kBuildingItself;
         double kHasSources;
 
+        public BuildSourceBuilding(IMapController map, double kBuildingItself, int depth)
+            : this(map, kBuildingItself, 1 - kBuildingItself, depth)
+        {
+        }
+
         public BuildSourceBuilding(IMapController map, double kBuildingItself, double kHasSources, int depth)
             : base(map, depth, "Build Source Building")
         {

@@ -17,6 +17,28 @@ namespace AIHard
         double kHasOtherFort;
         double kHasFort;
 
+        public BuildFort(IMapController map, double k, double kHasFort, int depth) : base(map, depth, "Build fort")
+        {
+            this.kHasFort = kHasFort;
+
+            const double koef = 1000.0;
+
+            k *= koef;
+            kHasMoney = k;
+            k = (k - (int) kHasMoney) * koef;
+            kPointsToWin = k;
+            k = (k - (int) kPointsToWin) * koef;
+            kBestHexa = k;
+            k = (k - (int) kBestHexa) * koef;
+            kHasOtherFort = k;
+
+            double sum = kBestHexa + kHasMoney + kPointsToWin + kHasOtherFort;
+            kBestHexa = kBestHexa / sum;
+            kHasMoney = kHasMoney / sum;
+            kPointsToWin = kPointsToWin / sum;
+            kHasOtherFort = kHasOtherFort / sum;
+        }
+
         public BuildFort(IMapController map, double kBestHexa, double kHasMoney, double kPointsToWin, double kHasOtherFort, double kHasFort,  int depth) : base(map, depth, "Build fort")
         {
             this.kHasFort = kHasFort;

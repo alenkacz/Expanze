@@ -17,12 +17,25 @@ namespace AIHard
         double kHasOtherMonastery;
         double kHasMonastery;
 
-        public BuildMonastery(IMapController map, double kHexa, double kHasSources, double kBestSource, double kHasOtherMonastery, double kHasMonastery, int depth)
+         public BuildMonastery(IMapController map, double k, double kHasMonastery, int depth)
             : base(map, depth, "Build Monastery")
         {
-            lastBestTown = null;
-            lastBestPos = 0;
+            const double koef = 1000.0;
 
+            k *= koef;
+            kHasSources = k;
+            k = (k - (int)kHasSources) * koef;
+            kBestSource = k;
+            k = (k - (int)kBestSource) * koef;
+            kHexa = k;
+            k = (k - (int)kHexa) * koef;
+            kHasOtherMonastery = k;
+
+            BaseInit(kHasMonastery);
+        }
+
+        private void BaseInit(double kHasMonastery)
+        {
             this.kHasMonastery = kHasMonastery;
 
             double sum = kHexa + kHasSources + kBestSource + kHasOtherMonastery;
@@ -31,6 +44,15 @@ namespace AIHard
             this.kHasSources = kHasSources / sum;
             this.kBestSource = kBestSource / sum;
             this.kHasOtherMonastery = kHasOtherMonastery / sum;
+
+            lastBestTown = null;
+            lastBestPos = 0;
+        }
+
+        public BuildMonastery(IMapController map, double kHexa, double kHasSources, double kBestSource, double kHasOtherMonastery, double kHasMonastery, int depth)
+            : base(map, depth, "Build Monastery")
+        {
+            BaseInit(kHasMonastery);
         }
 
         public override void Init()
