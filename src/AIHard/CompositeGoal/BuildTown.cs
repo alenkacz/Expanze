@@ -128,7 +128,7 @@ namespace AIHard
             for (int loop1 = 1; loop1 < townMaxID; loop1++)
             {
                 tempTown = map.GetITownByID(loop1);
-                tempDesirability = GetFitness(tempTown);
+                tempDesirability = GetDesirability(tempTown);
                 
                 if(tempDesirability > 0.1)
                 {
@@ -235,7 +235,7 @@ namespace AIHard
         public override double GetDesirability()
         {
             double bestFitness = 0.0f;
-            double tempFitness;
+            double tempDesirability;
             ITown tempTown;
             lastBestTown = null;
 
@@ -247,20 +247,20 @@ namespace AIHard
                 for (int loop1 = 1; loop1 < maxTownID; loop1++)
                 {
                     tempTown = map.GetITownByID(loop1);
-                    tempFitness = GetFitness(tempTown);
+                    tempDesirability = GetDesirability(tempTown);
 
                     /// it is not possible to build town on that place
-                    if (tempFitness < 0.01)
+                    if (tempDesirability < 0.01)
                         continue;
 
                     int dst = map.GetDistanceToTown(tempTown, map.GetPlayerMe());
 
                     double coef = (dst <= 2) ? 1 - (dst * 0.1) : 1 - (dst * 0.15);
-                    tempFitness = tempFitness * coef;
+                    tempDesirability = tempDesirability * coef;
 
-                    if (tempFitness > bestFitness)
+                    if (tempDesirability > bestFitness)
                     {
-                        bestFitness = tempFitness;
+                        bestFitness = tempDesirability;
                         lastBestTown = tempTown;
                     }
                 }
@@ -301,7 +301,7 @@ namespace AIHard
             return fitness;
         }
 
-        private double GetFitness(ITown town)
+        private double GetDesirability(ITown town)
         {
             if (town == null)
                 return 0.0;

@@ -357,7 +357,7 @@ namespace Expanze
                 {
 
 #if GENETIC || LOG_A_LOT_OF_GAMES
-                    if (gameCount > -1)
+                    if (gameCount <= 100000)
                     {
 #if LOG_A_LOT_OF_GAMES
                         LogWinner();
@@ -490,7 +490,14 @@ namespace Expanze
 
             foreach (Player p in gm.GetPlayers())
             {
-                playersACR += p.GetComponentAI().GetAIName()[3];
+                switch(p.GetComponentAI().GetAIName()[3])
+                {
+                    case 'T' :
+                    case 't' : playersACR += 'G'; break;
+                    case 'S' :
+                    case 's' : playersACR += 'T'; break;
+                    default : playersACR += 'Z'; break;
+                }
             }
 
             Logger.Inst().Log(playersACR.ToUpper() + gs.GetMapSizeXML() + gs.GetMapTypeXML() + gs.GetMapWealthXML() + gs.GetPoints() + ".csv", message);

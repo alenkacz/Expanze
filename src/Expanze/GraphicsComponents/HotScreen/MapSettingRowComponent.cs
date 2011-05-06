@@ -25,9 +25,7 @@ namespace Expanze
         // if true, it means that this click was already catched - fix because add/rem buttons are on the same place
         //private bool alreadyChanged = false;
 
-        RadioButtonComponent radio1;
-        RadioButtonComponent radio2;
-        RadioButtonComponent radio3;
+        RadioButtonComponent[] radio;
 
         String title = "";
         String selected = "";
@@ -45,24 +43,24 @@ namespace Expanze
         {
             base.LoadContent();
 
-            radio1 = new RadioButtonComponent(Settings.Game, (int)(spritePosition.X + 400), (int)spritePosition.Y + 10, GameResources.Inst().GetFont(EFont.PlayerNameFont), Settings.scaleW(27), Settings.scaleH(28));
-            radio2 = new RadioButtonComponent(Settings.Game, (int)(spritePosition.X + 650), (int)spritePosition.Y + 10, GameResources.Inst().GetFont(EFont.PlayerNameFont), Settings.scaleW(27), Settings.scaleH(28));
-            radio3 = new RadioButtonComponent(Settings.Game, (int)(spritePosition.X + 900), (int)spritePosition.Y + 10, GameResources.Inst().GetFont(EFont.PlayerNameFont), Settings.scaleW(27), Settings.scaleH(28));
+            radio = new RadioButtonComponent[3];
 
-            radio2.clicked(); //first one will be selected by default
+            radio[0] = new RadioButtonComponent(Settings.Game, (int)(spritePosition.X + 400), (int)spritePosition.Y + 10, GameResources.Inst().GetFont(EFont.PlayerNameFont), Settings.scaleW(27), Settings.scaleH(28));
+            radio[1] = new RadioButtonComponent(Settings.Game, (int)(spritePosition.X + 650), (int)spritePosition.Y + 10, GameResources.Inst().GetFont(EFont.PlayerNameFont), Settings.scaleW(27), Settings.scaleH(28));
+            radio[2] = new RadioButtonComponent(Settings.Game, (int)(spritePosition.X + 900), (int)spritePosition.Y + 10, GameResources.Inst().GetFont(EFont.PlayerNameFont), Settings.scaleW(27), Settings.scaleH(28));
 
-            radio1.LoadContent();
-            radio2.LoadContent();
-            radio3.LoadContent();
+            radio[1].SetSelected(true); //first one will be selected by default
+
+            foreach (RadioButtonComponent r in radio)
+                r.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
 
-            radio1.Update(gameTime);
-            radio2.Update(gameTime);
-            radio3.Update(gameTime);
+            foreach (RadioButtonComponent r in radio)
+                r.Update(gameTime);
 
             mouseState = Mouse.GetState();
 
@@ -73,26 +71,20 @@ namespace Expanze
             {
                 pressed = true;
 
-                if (radio1.isInRange(mousex, mousey))
+                for(int loop1 = 0; loop1 < 3; loop1++)
                 {
-                    radio2.setSelected(false);
-                    radio3.setSelected(false);
+                    if (radio[loop1].isInRange(mousex, mousey))
+                    {
+                        if (radio[loop1].GetIsActive())
+                        {
+                            for (int loop2 = 0; loop2 < 3; loop2++)
+                                radio[loop2].SetSelected(false);
 
-                    radio1.clicked();
-                }
-                else if (radio2.isInRange(mousex, mousey))
-                {
-                    radio1.setSelected(false);
-                    radio3.setSelected(false);
-
-                    radio2.clicked();
-                }
-                else if (radio3.isInRange(mousex, mousey))
-                {
-                    radio2.setSelected(false);
-                    radio1.setSelected(false);
-
-                    radio3.clicked();
+                            radio[loop1].SetSelected(true);
+                        }
+     
+                        break;
+                    }
                 }
             }
 
@@ -104,17 +96,22 @@ namespace Expanze
 
         public String getSelectedSettings()
         {
-            if (radio1.isSelected())
+            for (int loop1 = 0; loop1 < 3; loop1++)
             {
-                return options[0];
+                if (radio[loop1].isSelected())
+                    return options[loop1];
             }
-            else if (radio2.isSelected())
+
+            return "";
+        }
+
+        public void SetActiveRadio(bool active, int which)
+        {
+            radio[which].SetIsActive(active);
+            if (!active && radio[which].isSelected())
             {
-                return options[1];
-            }
-            else
-            {
-                return options[2];
+                radio[which].SetSelected(false);
+                radio[(which + 1) % 3].SetSelected(true);
             }
         }
 
@@ -131,9 +128,8 @@ namespace Expanze
 
             Vector2 position = new Vector2(spritePosition.X + 200,spritePosition.Y);
 
-            radio1.Draw(gameTime);
-            radio2.Draw(gameTime);
-            radio3.Draw(gameTime);
+            foreach (RadioButtonComponent r in radio)
+                r.Draw(gameTime);
 
             foreach (String s in options)
             {

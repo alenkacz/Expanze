@@ -116,9 +116,7 @@ namespace Expanze.Utils.Genetic
                 double gene = entity[loop];
                 if (rnd.NextDouble() < probMutability)
                 {
-                    gene += (rnd.NextDouble() - 0.5) / 20.0;
-                    if (gene > 1.0) gene = 1.0;
-                    if (gene < 0.0) gene = 0.0;
+                    gene = rnd.NextDouble();
                 }
                 entity[loop] = gene;
             }

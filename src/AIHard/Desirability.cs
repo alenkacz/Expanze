@@ -23,9 +23,9 @@ namespace AIHard
         public static double GetHasSources(ISourceAll source)
         {
             int sourceToChange = map.CanChangeSourcesFor(source);
-            double hasMoneyDesirability = 1.0 - ((sourceToChange > 100) ? 100 : sourceToChange) / 100.0;
+            double hasSourcesDesirability = 1.0 - ((sourceToChange > 100) ? 100 : sourceToChange) / 100.0;
 
-            return hasMoneyDesirability;
+            return hasSourcesDesirability;
         }
 
         public static bool HasSomeoneBuilding(Building building)

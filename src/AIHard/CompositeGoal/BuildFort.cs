@@ -114,6 +114,11 @@ namespace AIHard
                kind == HexaKind.Water)
                 return 0.0;
 
+            foreach (IFort fort in map.GetPlayerMe().GetFort())
+            {
+                if (fort.GetHexaID() == hexa.GetID())
+                    return 0.0;
+            }
 
             int startSource = hexa.GetStartSource();
 

@@ -223,6 +223,34 @@ namespace Expanze
                 guiComponent.Update(gameTime);
             }
 
+            points.SetActiveRadio(true, 2);
+            mapSize.SetActiveRadio(true, 0);
+            mapSize.SetActiveRadio(true, 1);
+            mapSize.SetActiveRadio(true, 2);
+            switch (GetActivePlayerCount())
+            {
+                default: 
+                    break;
+                case 3 :
+                    if (mapSize.getSelectedSettings() == Strings.GAME_SETTINGS_MAP_SIZE_SMALL)
+                        points.SetActiveRadio(false, 2);
+                    break;
+                case 4 :
+                    mapSize.SetActiveRadio(false, 0);
+                    mapSize.SetActiveRadio(true, 1);
+                    mapSize.SetActiveRadio(true, 2);
+                    if (mapSize.getSelectedSettings() == Strings.GAME_SETTINGS_MAP_SIZE_MEDIUM)
+                        points.SetActiveRadio(false, 2);
+                    break;
+                case 5:
+                case 6:
+                    mapSize.SetActiveRadio(false, 0);
+                    mapSize.SetActiveRadio(false, 1);
+                    mapSize.SetActiveRadio(true, 2);
+                    points.SetActiveRadio(false, 2);
+                    break;
+            }
+
             foreach (PlayerSettingRowComponent p in playersSettings)
             {
                 p.Update(gameTime);
@@ -234,12 +262,8 @@ namespace Expanze
 
         #endregion
 
-        /// <summary>
-        /// Event handler for when the Play Game menu entry is selected.
-        /// </summary>
-        void StartGameSelected(object sender, PlayerIndexEventArgs e)
+        int GetActivePlayerCount()
         {
-            //counting all players
             int playerCount = 0;
 
             foreach (PlayerSettingRowComponent p in playersSettings)
@@ -249,7 +273,17 @@ namespace Expanze
                     playerCount++;
                 }
             }
-            if (playerCount < 1)
+            return playerCount;
+        }
+
+        /// <summary>
+        /// Event handler for when the Play Game menu entry is selected.
+        /// </summary>
+        void StartGameSelected(object sender, PlayerIndexEventArgs e)
+        {
+            //counting all players
+
+            if (GetActivePlayerCount() < 1)
                 return;
 
             saveScreenData();

@@ -1,5 +1,6 @@
 ﻿#define CHANGE_FIRST_2_PLAYERS
 #define CHANGE_MAP_EVERY_TURN
+//#define TURN_ON_RANDOM_EVENTS
 
 using System;
 using System.Collections.Generic;
@@ -83,9 +84,9 @@ namespace Expanze
             gameCount = 0;
 #if GENETIC       
             fitness = 0.0;
-            geneticPopulation = 100;
+            geneticPopulation = 50;
             geneticFitnessRound = 6;
-            genetic = new Genetic(geneticPopulation, 19, 0.75, 0.01);
+            genetic = new Genetic(geneticPopulation, 19, 0.75, 0.002);
 #endif
         }
 
@@ -105,7 +106,7 @@ namespace Expanze
             }
 
             IComponentAI AI;
-            double[] setArray = null;
+            double[] setArray = new double[] { 0.50753910, 0.69240258, 0.75383028, 0.005387260, 0.03888009, 0.31205954, 0.73031067, 0.38760135, 0.33115000, 0.85088233, 0.55350950, 0.39943568, 0.18883969, 0.41989920, 0.20405476, 0.34062831, 0.33398948, 0.71093270, 0.69218646 };
             for(int loop1 = 0; loop1 < players.Count; loop1++)
             {
                 players[loop1] = new Player(players[loop1].GetName(), players[loop1].GetColor(), players[loop1].GetComponentAI(), loop1);
@@ -430,7 +431,9 @@ namespace Expanze
             if (state == EGameState.StateGame)
             {
                 GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
+#if TURN_ON_RANDOM_EVENTS
                 RandomEvents();
+#endif
                 GameState.map.getSources(activePlayer);
             }
 
@@ -802,6 +805,13 @@ namespace Expanze
             Player tempPlayer = players[0];
             players[0] = players[1];
             players[1] = tempPlayer;
+
+            if (players.Count == 4)
+            {
+                tempPlayer = players[2];
+                players[2] = players[3];
+                players[3] = tempPlayer;
+            }
 #endif
 
             StartGame(map);

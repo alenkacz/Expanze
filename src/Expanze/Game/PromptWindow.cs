@@ -91,7 +91,7 @@ namespace Expanze
         {
             itemList.Add(item);
             int size = itemList.Count;
-            itemPick.Add(new PickVariables(new Color(size / 256.0f, size / 256.0f, 0.0f)));
+            itemPick.Add(new PickVariables(new Color(size / 16.0f, size / 16.0f, 0.0f)));
         }
 
         public int GetItemCount() { return itemList.Count; }
@@ -239,21 +239,21 @@ namespace Expanze
                 else
                     spriteBatch.Draw(no, noPos, Color.White);
 
-                if (drawingPickableAreas)
+                if (!drawingPickableAreas)
                 {
-                    spriteBatch.End();
-                    return;
+                    float titleWidth = GameResources.Inst().GetFont(EFont.MedievalBig).MeasureString(title).X;
+                    spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), title, new Vector2(bgPos.X + (background.Width - titleWidth) / 2, bgPos.Y + 20), Color.LightBlue);
                 }
-
-                float titleWidth = GameResources.Inst().GetFont(EFont.MedievalBig).MeasureString(title).X;
-                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), title, new Vector2(bgPos.X + (background.Width - titleWidth) / 2, bgPos.Y + 20), Color.LightBlue);
 
                 if(showIcons)
                     DrawIcons();
 
-                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), itemList[activeItem].getTitle(), new Vector2(bgPos.X + 20, bgPos.Y + 160), Color.LightBlue);
-                TextWrapping.DrawStringIntoRectangle(itemList[activeItem].getDescription(),
-                    GameResources.Inst().GetFont(EFont.MedievalSmall), Color.LightSteelBlue, bgPos.X + 20, bgPos.Y + 195, background.Width - 40);
+                if (!drawingPickableAreas)
+                {
+                    spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), itemList[activeItem].getTitle(), new Vector2(bgPos.X + 20, bgPos.Y + 160), Color.LightBlue);
+                    TextWrapping.DrawStringIntoRectangle(itemList[activeItem].getDescription(),
+                        GameResources.Inst().GetFont(EFont.MedievalSmall), Color.LightSteelBlue, bgPos.X + 20, bgPos.Y + 195, background.Width - 40);
+                }
 
                 String error = itemList[activeItem].TryExecute();
                 if (mod == Mod.Viewer)
@@ -261,7 +261,7 @@ namespace Expanze
                 int errorY = 265;
                 if (itemList[activeItem].getCost().Equals(new SourceAll(0)))
                     errorY = 300;
-                if (error != null)
+                if (error != null && !drawingPickableAreas)
                 {
                     TextWrapping.DrawStringIntoRectangle(error,
                      GameResources.Inst().GetFont(EFont.MedievalSmall), Color.DarkSlateGray, bgPos.X + 22, bgPos.Y + errorY + 2, background.Width - 40);

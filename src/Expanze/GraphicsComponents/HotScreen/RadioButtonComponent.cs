@@ -20,8 +20,10 @@ namespace Expanze
         //bool pressed = false;
 
         private bool selected = false;
+        private bool isActive;
         Texture2D activeTexture;
         Texture2D bgTexture;
+        Texture2D bgPassiveTexture;
         //bool previouslyNotPressed = true;
 
         //Rectangle range;
@@ -32,6 +34,7 @@ namespace Expanze
             //also text after radiobutton should be clickable
             this.clickablePos = new Rectangle(Settings.scaleW(x), Settings.scaleH(y), width + Settings.scaleW(150), height);
             spritePosition = new Vector2(x, y);
+            isActive = true;
         }
 
         public override void LoadContent()
@@ -41,6 +44,7 @@ namespace Expanze
             spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
             activeTexture = myGame.Content.Load<Texture2D>("radiobutton_active");
             bgTexture = myGame.Content.Load<Texture2D>("radiobutton_bg");
+            bgPassiveTexture = myGame.Content.Load<Texture2D>("radiobutton_bgpas");
         }
 
         public override void Update(GameTime gameTime)
@@ -58,8 +62,11 @@ namespace Expanze
             return false;
         }
 
-        public void setSelected(bool b) 
+        public void SetSelected(bool b) 
         {
+            if (b && !isActive)
+                return;
+
             this.selected = b;
         }
 
@@ -68,10 +75,8 @@ namespace Expanze
             return this.selected;
         }
 
-        public void clicked()
-        {
-            this.selected = true;
-        }
+        public void SetIsActive(bool active) { isActive = active; }
+        public bool GetIsActive() { return isActive; }
 
         public override void Draw(GameTime gameTime)
         {
@@ -82,11 +87,14 @@ namespace Expanze
 
             spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,null,null,null,null,Settings.spriteScale);
 
-            spriteBatch.Draw(bgTexture, spritePosition, Color.White);
+            if(isActive)
+                spriteBatch.Draw(bgTexture, spritePosition, Color.White);
+            else
+                spriteBatch.Draw(bgPassiveTexture, spritePosition, Color.White);
 
             if (this.selected)
             {
-                spriteBatch.Draw(activeTexture, new Vector2((int)spritePosition.X + 3, (int)spritePosition.Y + 6), Color.White);
+                spriteBatch.Draw(activeTexture, new Vector2((int)spritePosition.X + 1, (int)spritePosition.Y + 1), Color.White);
             }
 
             spriteBatch.End();
