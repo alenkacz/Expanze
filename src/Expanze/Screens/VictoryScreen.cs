@@ -29,6 +29,8 @@ namespace Expanze
 
         bool firstTimeHandleInput;
         bool wasMousePressedWhenVictory;
+        ButtonComponent toMenuButton;
+        ButtonComponent toGraphButton;
 
         ScreenManager screenManager;
 
@@ -50,6 +52,15 @@ namespace Expanze
             firstTimeHandleInput = true;
             this.screensToLoad = screensToLoad;
             this.screenManager = screenManager;
+
+            toGraphButton = new ButtonComponent(screenManager.Game, (int)(Settings.maximumResolution.X - 150), (int)(Settings.maximumResolution.Y - 200), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(79), Settings.scaleH(66), "HUD/menu_next");
+            toGraphButton.Actions += ToGraph;
+
+            toMenuButton = new ButtonComponent(screenManager.Game, 60, (int)(Settings.maximumResolution.Y - 200), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(79), Settings.scaleH(66), "HUD/hotseat_back");
+            toMenuButton.Actions += ToMenu;
+
+            toGraphButton.LoadContent();
+            toMenuButton.LoadContent();
         }
 
 
@@ -105,17 +116,37 @@ namespace Expanze
 
                 if (input.IsNewKeyPress(Keys.Tab, null, out index))
                 {
-                    GraphScreen.Load(screenManager, false, ControllingPlayer, new GameScreen[] {this});
+                    AddGraphScreen();
                 }
 
                 if (input.IsNewKeyPress(Keys.Escape, null, out index) || 
-                    input.IsNewKeyPress(Keys.Enter, null, out index) || 
-                    (input.IsNewLeftMouseButtonPressed() && !wasMousePressedWhenVictory))
+                    input.IsNewKeyPress(Keys.Enter, null, out index))
                 {
                     InputState.waitForRelease();
                     userCancelled = true;
                 }
             }
+        }
+
+        private void AddGraphScreen()
+        {
+            GraphScreen.Load(screenManager, false, ControllingPlayer, new GameScreen[] { this });
+        }
+
+        /// <summary>
+        /// Event handler for when the Back button is selected
+        /// </summary>
+        void ToMenu(object sender, PlayerIndexEventArgs e)
+        {
+            userCancelled = true;
+        }
+
+        /// <summary>
+        /// Event handler for when the Back button is selected
+        /// </summary>
+        void ToGraph(object sender, PlayerIndexEventArgs e)
+        {
+            AddGraphScreen();
         }
 
 
@@ -127,6 +158,8 @@ namespace Expanze
         {
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
 
+            toGraphButton.Update(gameTime);
+            toMenuButton.Update(gameTime);
             // If all the previous screens have finished transitioning
             // off, it is time to actually perform the load.
             if (userCancelled)
@@ -197,7 +230,9 @@ namespace Expanze
                     startY += 50;
                 }
                 spriteBatch.End();
-            
+
+                toGraphButton.Draw(gameTime);
+                toMenuButton.Draw(gameTime);
         }
 
 

@@ -102,6 +102,8 @@ namespace Expanze
             return this.sourceKind;
         }
 
+        MouseState lastMouseState;
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
@@ -111,7 +113,8 @@ namespace Expanze
             mousex = mouseState.X;
             mousey = mouseState.Y;
 
-            if (ButtonState.Pressed == mouseState.LeftButton && !pressed)
+            if (ButtonState.Pressed == mouseState.LeftButton && !pressed && lastMouseState != null &&
+                lastMouseState.LeftButton == ButtonState.Released)
             {
 
                 if ((mousex > clickablePos.Left && mousex < (clickablePos.Right)) && (mousey < (clickablePos.Bottom) && mousey > clickablePos.Top && previouslyNotPressed))//identify mouse over x y posotions for the button
@@ -135,6 +138,8 @@ namespace Expanze
             {
                 pressed = false;
             }
+
+            lastMouseState = mouseState;
         }
 
         /// <summary>

@@ -33,6 +33,8 @@ namespace Expanze
         GameScreen[] screensToLoad;
         ScreenManager screenManager;
         PrimitiveBatch primitiveBatch;
+        ButtonComponent toMenuButton;
+        ButtonComponent nextGraphButton;
 
         private const float border = 120.0f;
         private float windowWidth;
@@ -61,6 +63,14 @@ namespace Expanze
             windowHeight = screenManager.GraphicsDevice.Viewport.Height;
             columnNumber = GameMaster.Inst().GetTurnNumber();
             SetRowNumber();
+
+            toMenuButton = new ButtonComponent(screenManager.Game, 60, (int)(Settings.maximumResolution.Y - 200), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(79), Settings.scaleH(66), "HUD/hotseat_back");
+            toMenuButton.Actions += ToMenu;
+            toMenuButton.LoadContent();
+
+            nextGraphButton = new ButtonComponent(screenManager.Game, (int)(Settings.maximumResolution.X - 150), (int)(Settings.maximumResolution.Y - 200), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(79), Settings.scaleH(66), "HUD/menu_next");
+            nextGraphButton.Actions += NextGraph;
+            nextGraphButton.LoadContent();
         }
 
 
@@ -112,20 +122,39 @@ namespace Expanze
                 SetRowNumber();
             } else if(input.IsNewKeyPress(Keys.Right, null, out index))
             {
-                graphKind = (++graphKind) % (int) Statistic.Kind.Count;
-                SetRowNumber();
+                ToNextGraph();
             }
 
             if (input.IsNewKeyPress(Keys.Tab, null, out index) || 
                 input.IsNewKeyPress(Keys.Enter, null, out index) ||
-                input.IsNewKeyPress(Keys.Escape, null, out index) ||
-                input.IsNewLeftMouseButtonPressed())
+                input.IsNewKeyPress(Keys.Escape, null, out index))
             {
                 InputState.waitForRelease();
                 userCancelled = true;
             }
         }
 
+        private void ToNextGraph()
+        {
+            graphKind = (++graphKind) % (int)Statistic.Kind.Count;
+            SetRowNumber();
+        }
+
+        /// <summary>
+        /// Event handler for when the Back button is selected
+        /// </summary>
+        void ToMenu(object sender, PlayerIndexEventArgs e)
+        {
+            userCancelled = true;
+        }
+
+        /// <summary>
+        /// Event handler for when the Back button is selected
+        /// </summary>
+        void NextGraph(object sender, PlayerIndexEventArgs e)
+        {
+            ToNextGraph();
+        }
 
         /// <summary>
         /// Updates the loading screen.
@@ -134,6 +163,9 @@ namespace Expanze
                                                        bool coveredByOtherScreen)
         {
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+
+            toMenuButton.Update(gameTime);
+            nextGraphButton.Update(gameTime);
 
             // If all the previous screens have finished transitioning
             // off, it is time to actually perform the load.
@@ -191,7 +223,10 @@ namespace Expanze
             textPosition += new Vector2(40, 40);
             spriteBatch.DrawString(fontSmall, Statistic.GetGraphName((Statistic.Kind)graphKind), textPosition, Color.Black);
             spriteBatch.DrawString(fontSmall, Statistic.GetGraphName((Statistic.Kind)graphKind), textPosition + new Vector2(2,-2), color);
-            spriteBatch.End();        
+            spriteBatch.End();
+
+            toMenuButton.Draw(gameTime);
+            nextGraphButton.Draw(gameTime);
         }
 
         private void DrawGraph(Statistic.Kind kind)
