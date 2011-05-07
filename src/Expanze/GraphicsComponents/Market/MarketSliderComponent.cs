@@ -214,7 +214,10 @@ namespace Expanze
 
         private int getSliderUnit()
         {
-            return width / getMaxToKindSourcesToConvert();
+            int temp =  getMaxToKindSourcesToConvert();
+            if(temp == 0)
+                return width;
+            return width / temp;
         }
 
         public void setFromType(SourceKind k)

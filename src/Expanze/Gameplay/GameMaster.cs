@@ -575,7 +575,7 @@ namespace Expanze
 
                     if (gameCount % geneticFitnessRound == 0)
                     {
-                        fitness -= 12;
+                        fitness -= 8;
                         if (fitness < 0.0)
                             fitness = 0.0;
 
