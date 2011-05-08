@@ -357,7 +357,7 @@ namespace Expanze
                 {
 
 #if GENETIC || LOG_A_LOT_OF_GAMES
-                    if (gameCount <= 100000)
+                    if (gameCount <= 4000)
                     {
 #if LOG_A_LOT_OF_GAMES
                         LogWinner();
@@ -576,10 +576,10 @@ namespace Expanze
 
             frames++;
             timeMS += gameTime.ElapsedGameTime.Milliseconds;
-            if (timeMS > 3000)
+            if (timeMS > 1000)
             {
-                showFrames = frames / 3;
-                timeMS -= 3000;
+                showFrames = frames;
+                timeMS -= 1000;
                 frames = 0;
             }
 

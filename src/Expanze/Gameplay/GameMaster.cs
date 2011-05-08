@@ -1,6 +1,6 @@
-﻿#define CHANGE_FIRST_2_PLAYERS
+﻿//#define CHANGE_FIRST_2_PLAYERS
 #define CHANGE_MAP_EVERY_TURN
-//#define TURN_ON_RANDOM_EVENTS
+#define TURN_ON_RANDOM_EVENTS
 
 using System;
 using System.Collections.Generic;
