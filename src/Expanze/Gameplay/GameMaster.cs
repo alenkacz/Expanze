@@ -1,6 +1,6 @@
 ﻿//#define CHANGE_FIRST_2_PLAYERS
-#define CHANGE_MAP_EVERY_TURN
-#define TURN_ON_RANDOM_EVENTS
+//#define CHANGE_MAP_EVERY_TURN
+//#define TURN_ON_RANDOM_EVENTS
 
 using System;
 using System.Collections.Generic;
@@ -84,7 +84,7 @@ namespace Expanze
             gameCount = 0;
 #if GENETIC       
             fitness = 0.0;
-            geneticPopulation = 5;
+            geneticPopulation = 20;
             geneticFitnessRound = 1;
             genetic = new Genetic(geneticPopulation, 19, 0.75, 0.002);
 #endif
@@ -548,34 +548,41 @@ namespace Expanze
                     Message.Inst().Show("Konec hry", bestPlayer.GetName() + " nejrychleji expandoval a ostatní ho uznali za nejvhodnějšího vládce ostrova.", GameResources.Inst().GetHudTexture(HUDTexture.IconFortParade));  
                 }
 
-                if (turnNumber == 100)
+                if (turnNumber == Settings.maxTurn)
                 {
                     winnerNew = true;
-                    Message.Inst().Show("Konec hry", "Nikdo nevyhrál, všichni prohráli. Nikomu nestačilo 100 kol k zisku dostatečného počtu bodů.", GameResources.Inst().GetHudTexture(HUDTexture.HammersPassive));
+                    Message.Inst().Show("Konec hry", "Nikdo nevyhrál, všichni prohráli. Nikomu nestačilo " + Settings.maxTurn + " kol k zisku dostatečného počtu bodů.", GameResources.Inst().GetHudTexture(HUDTexture.HammersPassive));
                 }
 
                 // GENETICS
 #if GENETIC             
                 if (winnerNew)
                 {
-                    int winnerID = (players[0].GetPoints() > players[1].GetPoints()) ? 0 : 1;
-                    int looserID = (winnerID == 0) ? 1 : 0;
-
-                    double add;
-                    if (players[winnerID].GetComponentAI().GetAIName().CompareTo("AI těžká") == 0)
+                    if (playerCount == 1)
                     {
-                        add = ((double)players[winnerID].GetPoints() - 10) / (players[looserID].GetPoints() - 10) - 1.0;
-                        fitness += 3.0 + add;
+                        fitness += players[0].GetPoints() * 5 + 30 - turnNumber + players[0].GetCollectSourcesLastTurn().GetAsArray().Sum() / 100.0f;
                     }
-                    else if (players[looserID].GetComponentAI().GetAIName().CompareTo("AI těžká") == 0)
+                    else
                     {
-                        add = (double) (players[looserID].GetPoints() - 10) / (players[winnerID].GetPoints() - 10) * 3.0;
-                        fitness += add;
+                        int winnerID = (players[0].GetPoints() > players[1].GetPoints()) ? 0 : 1;
+                        int looserID = (winnerID == 0) ? 1 : 0;
+
+                        double add;
+                        if (players[winnerID].GetComponentAI().GetAIName().CompareTo("AI těžká") == 0)
+                        {
+                            add = ((double)players[winnerID].GetPoints()) / (players[looserID].GetPoints()) - 1.0;
+                            fitness += 3.0 + add;
+                        }
+                        else if (players[looserID].GetComponentAI().GetAIName().CompareTo("AI těžká") == 0)
+                        {
+                            add = (double)(players[looserID].GetPoints()) / (players[winnerID].GetPoints()) * 3.0;
+                            fitness += add;
+                        }
                     }
 
                     if (gameCount % geneticFitnessRound == 0)
                     {
-                        fitness -= 8;
+                        //fitness -= 8;
                         if (fitness < 0.0)
                             fitness = 0.0;
 

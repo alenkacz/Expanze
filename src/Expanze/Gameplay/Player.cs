@@ -307,12 +307,21 @@ namespace Expanze
         public void SetSourceBuildingUpdate(UpgradeKind upgradeKind, int upgradeNumber)
         {
             statistic.AddStat(Statistic.Kind.Upgrades, 1, GameMaster.Inst().GetTurnNumber());
+            if (upgradeKind == UpgradeKind.FirstUpgrade)
+                AddPoints(Settings.pointsUpgradeLvl1);
+            else
+                AddPoints(Settings.pointsUpgradeLvl2);
             upgradeMonastery[upgradeNumber] = upgradeKind;
         }
 
         public void BuyMarketLicence(LicenceKind licenceKind, int upgradeNumber)
         {
             statistic.AddStat(Statistic.Kind.Licences, 1, GameMaster.Inst().GetTurnNumber());
+            if (licenceKind == LicenceKind.FirstLicence)
+                AddPoints(Settings.pointsMarketLvl1);
+            else
+                AddPoints(Settings.pointsMarketLvl2);
+
             licenceMarket[upgradeNumber] = licenceKind;
         }
 

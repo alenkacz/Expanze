@@ -346,7 +346,11 @@ namespace Expanze.Gameplay.Map
         public override void Draw2D()
         {
             mapView.Draw2D();
+#if GENETIC
+            return;
+#else
             GameMaster.Inst().Draw2D();
+#endif
         }
 
         public override void Draw(GameTime gameTime)

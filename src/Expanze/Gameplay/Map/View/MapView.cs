@@ -236,7 +236,9 @@ namespace Expanze.Gameplay.Map
 
         public void Draw(GameTime gameTime)
         {
-            
+#if GENETIC  
+            return;
+#else
             for (int i = 0; i < hexaMapView.Length; i++)
             {
                 for (int j = 0; j < hexaMapView[i].Length; j++)
@@ -248,7 +250,7 @@ namespace Expanze.Gameplay.Map
                     }
                 }
             }
-
+#endif
             //DrawWater();
         }
 

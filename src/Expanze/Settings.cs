@@ -58,15 +58,19 @@ namespace Expanze
         public static SourceAll costMonasteryOre2 = new SourceAll(40, 0, 0, 40, 40);
 
         // goals
-        public static int[] winPoints = {20, 25, 30};
-        public const int pointsTown = 3; /// points for new town
-        public const int pointsRoad = 1; /// points for new road
-        public const int pointsFort = 1; /// points for new fort
-        public const int pointsMonastery = 1; /// points for new monastery
-        public const int pointsMarket = 1;    /// points for new market
-        public const int pointsMedal = 1;     /// points for medal
-        public const int pointsFortParade = 2; /// points for parade from fort
-
+        public static int maxTurn = 30;
+        public static int[] winPoints = {5, 25, 30};
+        public static int pointsTown = 0; /// points for new town
+        public static int pointsRoad = 0; /// points for new road
+        public static int pointsFort = 0; /// points for new fort
+        public static int pointsMonastery = 0; /// points for new monastery
+        public static int pointsMarket = 0;    /// points for new market
+        public static int pointsMedal = 0;     /// points for medal
+        public static int pointsFortParade = 0; /// points for parade from fort
+        public static int pointsUpgradeLvl1 = 0;
+        public static int pointsMarketLvl1 = 1;
+        public static int pointsUpgradeLvl2 = 0;
+        public static int pointsMarketLvl2 = 0;
 
         public static Vector2 activeResolution = new Vector2(800,600);
 
