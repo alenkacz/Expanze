@@ -69,7 +69,7 @@ namespace AIHard
                         subgoals.Clear();
                         return GoalState.Failed;
 
-                    case GoalState.Succesed:
+                    case GoalState.Completed:
                         subgoals.Dequeue();
                         break;
 
@@ -82,7 +82,7 @@ namespace AIHard
             if(!wasEmpty)
                 Log(LogEnd.End);
 
-            return GoalState.Succesed;
+            return GoalState.Completed;
         }
 
         protected void AddSubgoal(Goal goal)

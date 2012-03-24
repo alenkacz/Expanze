@@ -20,8 +20,8 @@ namespace AIHard
         {
             if (map.InventUpgrade(kind))
             {
-                Log(GoalState.Succesed);
-                return GoalState.Succesed;
+                Log(GoalState.Completed);
+                return GoalState.Completed;
             }
             else
             {

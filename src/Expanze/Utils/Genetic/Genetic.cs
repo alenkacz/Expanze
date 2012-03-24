@@ -90,7 +90,7 @@ namespace Expanze.Utils.Genetic
             double sum = 0.0;
 
             Chromozone best = null;
-            double maxFitness = 0.0;
+            double maxFitness = -0.1;
             string msg = "";
             foreach (Chromozone ch in population)
             {

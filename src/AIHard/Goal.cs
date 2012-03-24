@@ -8,7 +8,7 @@ namespace AIHard
 {
     public enum GoalState
     {
-        Succesed, /// all subgoals were succesful
+        Completed, /// all subgoals were succesful
         Failed,   /// some of subgoals failed
         Active   /// subgoals need next turn
     }

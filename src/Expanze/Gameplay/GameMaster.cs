@@ -84,8 +84,8 @@ namespace Expanze
             gameCount = 0;
 #if GENETIC       
             fitness = 0.0;
-            geneticPopulation = 50;
-            geneticFitnessRound = 6;
+            geneticPopulation = 5;
+            geneticFitnessRound = 1;
             genetic = new Genetic(geneticPopulation, 19, 0.75, 0.002);
 #endif
         }

@@ -17,8 +17,8 @@ namespace AIHard
         {
             if (map.ShowParade())
             {
-                Log(GoalState.Succesed);
-                return GoalState.Succesed;
+                Log(GoalState.Completed);
+                return GoalState.Completed;
             } else
             {
                 Log(GoalState.Failed);

@@ -30,8 +30,8 @@ namespace AIHard
             }
             else
             {
-                Log(GoalState.Succesed);
-                return GoalState.Succesed;
+                Log(GoalState.Completed);
+                return GoalState.Completed;
             }
         }
     }

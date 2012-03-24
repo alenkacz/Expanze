@@ -112,10 +112,6 @@ namespace AIHard
 
         public override GoalState Process()
         {
-            count++;
-            if (count > 20)
-                count = 21;
-
             GoalState state = base.Process();
 
             if (state == GoalState.Active)

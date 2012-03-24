@@ -23,7 +23,7 @@ namespace AIHard
             {
                 case GoalState.Active: logMsg += "active"; break;
                 case GoalState.Failed: logMsg += "fail - " + map.GetLastError(); break;
-                case GoalState.Succesed: logMsg += "succes"; break;
+                case GoalState.Completed: logMsg += "completed"; break;
             }
 
             for (int loop1 = 0; loop1 < depth; loop1++)

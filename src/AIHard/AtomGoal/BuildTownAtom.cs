@@ -30,9 +30,9 @@ namespace AIHard
             }
             else
             {
-                Log(GoalState.Succesed);
+                Log(GoalState.Completed);
                 if (map.GetState() == EGameState.StateGame)
-                    return GoalState.Succesed;
+                    return GoalState.Completed;
                 else
                     return GoalState.Active;
             }

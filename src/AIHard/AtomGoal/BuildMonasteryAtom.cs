@@ -22,8 +22,8 @@ namespace AIHard
         {
             if (town.BuildMonastery(pos) != null)
             {
-                Log(GoalState.Succesed);
-                return GoalState.Succesed;
+                Log(GoalState.Completed);
+                return GoalState.Completed;
             }
             else
             {

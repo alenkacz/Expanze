@@ -357,7 +357,7 @@ namespace Expanze
                 {
 
 #if GENETIC || LOG_A_LOT_OF_GAMES
-                    if (gameCount <= 4000)
+                    if (gameCount <= 2000)
                     {
 #if LOG_A_LOT_OF_GAMES
                         LogWinner();

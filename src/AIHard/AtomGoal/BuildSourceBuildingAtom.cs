@@ -22,8 +22,8 @@ namespace AIHard
         {
             if (town.BuildSourceBuilding(pos))
             {
-                Log(GoalState.Succesed);
-                return GoalState.Succesed;
+                Log(GoalState.Completed);
+                return GoalState.Completed;
             }
             else
             {
