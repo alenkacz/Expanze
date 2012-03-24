@@ -593,7 +593,13 @@ namespace Expanze
             for (int loop1 = 0; loop1 < 6; loop1++)
             {
                 if (hexaNeighbours[loop1].GetID() == hexaFort.GetHexaID())
+                {
                     return true;
+                }
+                for (int loop2 = 0; loop2 < 6; loop2++)
+                    if (hexaNeighbours[loop1].hexaNeighbours[loop2] != null &&
+                        hexaNeighbours[loop1].hexaNeighbours[loop2].GetID() == hexaFort.GetHexaID())
+                        return true;
             }
             return false;
         }

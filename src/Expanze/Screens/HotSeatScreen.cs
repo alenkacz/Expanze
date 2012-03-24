@@ -295,6 +295,20 @@ namespace Expanze
         }
 
         /// <summary>
+        /// Lets the game respond to player input. Unlike the Update method,
+        /// this will only be called when the gameplay screen is active.
+        /// </summary>
+        public override void HandleInput(InputState input)
+        {
+            if (input == null)
+                throw new ArgumentNullException("input");
+
+            PlayerIndex index;
+            if (input.IsNewKeyPress(Microsoft.Xna.Framework.Input.Keys.Enter, null, out index))
+                StartGameSelected(null, new PlayerIndexEventArgs(index));
+        }
+
+        /// <summary>
         /// Event handler for when the Back button is selected
         /// </summary>
         void BackSelected(object sender, PlayerIndexEventArgs e)

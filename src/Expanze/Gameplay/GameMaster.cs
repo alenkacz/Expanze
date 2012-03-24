@@ -158,7 +158,7 @@ namespace Expanze
         public void PlayerWantMedail(Player player, Building medal)
         {
             int minCount = 10;
-            int pointsForMedal = 5;
+            int pointsForMedal = Settings.pointsMedal;
             switch(medal)
             {
                 case Building.Town :
