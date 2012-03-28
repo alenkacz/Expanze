@@ -51,11 +51,49 @@ namespace Expanze
             lowlandMapTypes = new Dictionary<string, int>();
         }
 
+        public HexaModel[][] parseCampaignMap(int campaign, int scenario)
+        {
+            HexaModel[][] map;
+            xDoc = new XmlDocument();
+            xDoc.Load("Content/Maps/cam01sce01.xml");
+
+            XmlNodeList rows = xDoc.GetElementsByTagName("row");
+            map = new HexaModel[rows.Count][];
+
+            for (int i = 0; i < rows.Count; ++i)
+            {
+                map[i] = new HexaModel[rows[i].ChildNodes.Count];
+                XmlNodeList hexas = rows[i].ChildNodes;
+
+                for (int loop1 = 0; loop1 < hexas.Count; ++loop1)
+                {
+                    HexaKind type = HexaKind.Nothing;
+                    int hexanum = 0;
+                    foreach (XmlAttribute attribute in hexas[loop1].Attributes)
+                    {
+                        if (attribute.Name == "type")
+                            type = decideType(attribute.Value);
+                        if (attribute.Name == "productivity")
+                            hexanum = Convert.ToInt32(attribute.Value);
+                    }
+
+                    map[i][loop1] = HexaCreator.create(type, hexanum);
+                }
+
+            }
+
+            return map;
+        }
+
         public HexaModel[][] parse(string mapSize, string mapType, string mapWealth)
         {
+            HexaModel[][] map = parseCampaignMap(0, 0);
+            if (map != null)
+                return map;
+
             Init();
 
-            HexaModel[][] map;
+            
 
             //TODO user number parameter
             xDoc.Load("Content/Maps/" + mapSize + ".xml");
@@ -444,6 +482,7 @@ namespace Expanze
                 case "water":
                     return HexaKind.Water;
                 case "nothing" :
+                case "space":
                     return HexaKind.Nothing;
                 default :
                     return HexaKind.Null;

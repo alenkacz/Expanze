@@ -168,7 +168,8 @@ namespace Expanze.Gameplay.Map
                 rotation = Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (4));
             }
 
-            Model m = GameResources.Inst().GetHexaModel(HexaKind.Water + neighbours);
+            int n = (neighbours > 2) ? 2 : neighbours;
+            Model m = GameResources.Inst().GetHexaModel(HexaKind.Water + n);
 
             return new WaterView(hexaMapModel[i][j], m, rotation, i, j);
         }
