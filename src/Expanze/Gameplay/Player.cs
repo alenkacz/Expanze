@@ -110,6 +110,15 @@ namespace Expanze
                 case Building.Monastery: statistic.AddStat(Statistic.Kind.Monastery, 1, turn); break;
                 case Building.Market: statistic.AddStat(Statistic.Kind.Market, 1, turn); break;
             }
+
+            switch (building)
+            {
+                case Building.Saw: AddPoints(Settings.pointsSaw); break;
+                case Building.Mine: AddPoints(Settings.pointsMine); break;
+                case Building.Stepherd: AddPoints(Settings.pointsStepherd); break;
+                case Building.Quarry: AddPoints(Settings.pointsQuarry); break;
+                case Building.Mill: AddPoints(Settings.pointsMill); break;
+            }
         }
 
         public void AddRoad(IRoad t) { 

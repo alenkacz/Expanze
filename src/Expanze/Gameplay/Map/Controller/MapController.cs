@@ -488,6 +488,7 @@ namespace Expanze.Gameplay.Map
                 hexa.Capture(player);
                 player.PayForSomething(Settings.costFortCapture);
                 player.AddFortAction();
+                player.AddPoints(Settings.pointsFortCapture);
                 return true;
             }
             return false;
@@ -570,6 +571,7 @@ namespace Expanze.Gameplay.Map
                 activePlayer.AddSources(-Settings.costFortSources, TransactionState.TransactionStart);
                 activePlayer.AddSources(source / 2, TransactionState.TransactionEnd);
                 activePlayer.AddFortAction();
+                activePlayer.AddPoints(Settings.pointsFortSteal);
                 if (activePlayer.GetIsAI())
                 {
                     Message.Inst().Show("Někdo krade!", activePlayer.GetName() + " se vloupal do skladišť " + player.GetName() + " a odnesl si lup polovinu jeho zásob.", GameResources.Inst().GetHudTexture(HUDTexture.IconFortSources));
@@ -923,6 +925,48 @@ namespace Expanze.Gameplay.Map
             }
 
             return null;
+        }
+
+        public int GetPoints(PriceKind kind)
+        {
+            switch (kind)
+            {
+                case PriceKind.BRoad: return Settings.pointsRoad;
+                case PriceKind.BTown: return Settings.pointsTown;
+                case PriceKind.BFort: return Settings.pointsFort;
+                case PriceKind.BMarket: return Settings.pointsMarket;
+                case PriceKind.BMonastery: return Settings.pointsMonastery;
+                case PriceKind.BMill: return Settings.pointsMill;
+                case PriceKind.BStepherd: return Settings.pointsStepherd;
+                case PriceKind.BSaw: return Settings.pointsSaw;
+                case PriceKind.BQuarry: return Settings.pointsQuarry;
+                case PriceKind.BMine: return Settings.pointsMine;
+                case PriceKind.UMill1: return Settings.pointsUpgradeLvl1;
+                case PriceKind.UStepherd1: return Settings.pointsUpgradeLvl1;
+                case PriceKind.UQuarry1: return Settings.pointsUpgradeLvl1;
+                case PriceKind.USaw1: return Settings.pointsUpgradeLvl1;
+                case PriceKind.UMine1: return Settings.pointsUpgradeLvl1;
+                case PriceKind.UMill2: return Settings.pointsUpgradeLvl2;
+                case PriceKind.UStepherd2: return Settings.pointsUpgradeLvl2;
+                case PriceKind.UQuarry2: return Settings.pointsUpgradeLvl2;
+                case PriceKind.USaw2: return Settings.pointsUpgradeLvl2;
+                case PriceKind.UMine2: return Settings.pointsUpgradeLvl2;
+                case PriceKind.MCorn1: return Settings.pointsMarketLvl1;
+                case PriceKind.MMeat1: return Settings.pointsMarketLvl1;
+                case PriceKind.MStone1: return Settings.pointsMarketLvl1;
+                case PriceKind.MWood1: return Settings.pointsMarketLvl1;
+                case PriceKind.MOre1: return Settings.pointsMarketLvl1;
+                case PriceKind.MCorn2: return Settings.pointsMarketLvl2;
+                case PriceKind.MMeat2: return Settings.pointsMarketLvl2;
+                case PriceKind.MStone2: return Settings.pointsMarketLvl2;
+                case PriceKind.MWood2: return Settings.pointsMarketLvl2;
+                case PriceKind.MOre2: return Settings.pointsMarketLvl2;
+                case PriceKind.AParade: return Settings.pointsFortParade;
+                case PriceKind.ACaptureHexa: return Settings.pointsFortCapture;
+                case PriceKind.AStealSources: return Settings.pointsFortSteal;
+            }
+
+            return 0;
         }
 
         public void Init()
