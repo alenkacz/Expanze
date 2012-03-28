@@ -435,6 +435,7 @@ namespace Expanze
                 RandomEvents();
 #endif
                 GameState.map.getSources(activePlayer);
+                GameState.map.FreeCapturedHexa(activePlayer);
             }
 
             hasAIThreadStarted = false;
@@ -797,6 +798,11 @@ namespace Expanze
                 }
             }
             spriteBatch.End();
+        }
+
+        public double GetRandomNumber()
+        {
+            return randomNumber.NextDouble();
         }
 
         internal void RestartGame()

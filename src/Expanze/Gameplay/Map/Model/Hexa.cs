@@ -642,5 +642,14 @@ namespace Expanze
                 }
             }
         }
+
+        internal void SetFree()
+        {
+            if (captureIs)
+            {
+                capturePlayer = null;
+                captureIs = false;
+            }
+        }
     }
 }

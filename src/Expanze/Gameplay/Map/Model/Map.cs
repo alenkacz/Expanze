@@ -483,5 +483,21 @@ namespace Expanze.Gameplay.Map
                         hexaMapModel[i][j].ApplyEvent(rndEvent);
                     }
         }
+
+        internal void FreeCapturedHexa(Player activePlayer)
+        {
+            for (int i = 0; i < hexaMapModel.Length; i++)
+                for (int j = 0; j < hexaMapModel[i].Length; j++)
+                {
+                    if (hexaMapModel[i][j] != null)
+                    {
+                        if (GameMaster.Inst().GetRandomNumber() < Settings.captureFreeChance && 
+                            activePlayer == hexaMapModel[i][j].GetCapturedPlayer())
+                        {
+                            hexaMapModel[i][j].SetFree();
+                        }
+                    }
+                }
+        }
     }
 }

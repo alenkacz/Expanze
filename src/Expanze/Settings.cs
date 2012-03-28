@@ -57,6 +57,7 @@ namespace Expanze
         public static SourceAll costMonasteryOre1 = new SourceAll(0, 40, 40, 0, 0);
         public static SourceAll costMonasteryOre2 = new SourceAll(40, 0, 0, 40, 40);
 
+        public static double captureFreeChance = 0.25;
         // goals
         public static int maxTurn = 100;
         public static int[] winPoints = {5, 25, 30};
