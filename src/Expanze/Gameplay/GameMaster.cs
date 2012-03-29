@@ -159,6 +159,9 @@ namespace Expanze
         {
             int minCount = 10;
             int pointsForMedal = Settings.pointsMedal;
+            if (pointsForMedal == 0)
+                return;
+
             switch(medal)
             {
                 case Building.Town :

@@ -15,7 +15,7 @@ namespace Expanze
         Texture2D textureRight;
         Texture2D textureMiddle;
         Texture2D textureColor;
-        Texture2D textureMedaile;
+        Texture2D textureMedal;
 
         SpriteFont font = Settings.Game.Content.Load<SpriteFont>("playername");
         //SpriteBatch spriteBatch;
@@ -57,7 +57,7 @@ namespace Expanze
             textureLeft = Settings.Game.Content.Load<Texture2D>("HUD/hud-top-left");
             textureRight = Settings.Game.Content.Load<Texture2D>("HUD/hud-top-right");
             textureMiddle = Settings.Game.Content.Load<Texture2D>("HUD/hud-top-middle");
-            textureMedaile = Settings.Game.Content.Load<Texture2D>("HUD/score_medaile");
+            textureMedal = Settings.Game.Content.Load<Texture2D>("HUD/score_medaile");
             textureColor = Settings.Game.Content.Load<Texture2D>("pcolor");
         }
 
@@ -126,6 +126,10 @@ namespace Expanze
 
             Vector2 positionScore = new Vector2(positionTotalPoints.X - font.MeasureString(player.GetPoints().ToString()).X, positionTotalPoints.Y);
 
+            //draw medal
+            Texture2D medal = GetPointPicture();
+            spriteBatch.Draw(medal, new Vector2(positionScore.X - textureMedal.Width - space, positionScore.Y), c);
+
             // draw texts
             spriteBatch.DrawString(font, player.GetName(), positionName,c);
             spriteBatch.DrawString(font, player.GetPoints().ToString(), positionScore, c);
@@ -134,10 +138,37 @@ namespace Expanze
             // draw player color
             spriteBatch.Draw(textureColor, positionColor, (pick) ? c : player.GetColor());
 
-            //draw medal
-            spriteBatch.Draw(textureMedaile, new Vector2(positionScore.X - medalWidth - space,positionScore.Y), c);
-
             spriteBatch.End();
+        }
+
+        private Texture2D GetPointPicture()
+        {
+            if (Settings.pointsTown + Settings.pointsRoad + Settings.pointsMedal > 1)
+                return textureMedal;
+
+            if (Settings.pointsTown > 0)
+                return GameMaster.Inst().GetMedaileIcon(Building.Town);
+
+            if (Settings.pointsRoad > 0)
+                return GameMaster.Inst().GetMedaileIcon(Building.Road);
+
+            if (Settings.pointsMill > 0) return GameMaster.Inst().GetMedaileIcon(Building.Mill);
+            if (Settings.pointsMine > 0) return GameMaster.Inst().GetMedaileIcon(Building.Mine);
+            if (Settings.pointsQuarry > 0) return GameMaster.Inst().GetMedaileIcon(Building.Quarry);
+            if (Settings.pointsSaw > 0) return GameMaster.Inst().GetMedaileIcon(Building.Saw);
+            if (Settings.pointsStepherd > 0) return GameMaster.Inst().GetMedaileIcon(Building.Stepherd);
+            if (Settings.pointsFort > 0) return GameMaster.Inst().GetMedaileIcon(Building.Fort);
+            if (Settings.pointsMarket > 0) return GameMaster.Inst().GetMedaileIcon(Building.Market);
+            if (Settings.pointsMonastery > 0) return GameMaster.Inst().GetMedaileIcon(Building.Monastery);
+            if (Settings.pointsFortParade > 0) return GameResources.Inst().GetHudTexture(HUDTexture.IconFortParade);
+            if (Settings.pointsFortCapture > 0) return GameResources.Inst().GetHudTexture(HUDTexture.IconFortCapture);
+            if (Settings.pointsFortSteal > 0) return GameResources.Inst().GetHudTexture(HUDTexture.IconFortSources);
+            if (Settings.pointsMarketLvl1 > 0) return GameResources.Inst().GetHudTexture(HUDTexture.IconOre1);
+            if (Settings.pointsUpgradeLvl1 > 0) return GameResources.Inst().GetHudTexture(HUDTexture.IconQuarry1);
+            if (Settings.pointsMarketLvl2 > 0) return GameResources.Inst().GetHudTexture(HUDTexture.IconOre2);
+            if (Settings.pointsUpgradeLvl2 > 0) return GameResources.Inst().GetHudTexture(HUDTexture.IconQuarry2);
+
+            return textureMedal;
         }
 
     }

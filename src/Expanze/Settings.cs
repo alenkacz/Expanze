@@ -66,8 +66,8 @@ namespace Expanze
         public static int pointsFort = 0; /// points for new fort
         public static int pointsMonastery = 0; /// points for new monastery
         public static int pointsMarket = 0;    /// points for new market
-        public static int pointsMedal = 1;     /// points for medal
-        public static int pointsFortParade = 0; /// points for parade from fort
+        public static int pointsMedal = 0;     /// points for medal
+        public static int pointsFortParade = 1; /// points for parade from fort
         public static int pointsUpgradeLvl1 = 0;
         public static int pointsMarketLvl1 = 0;
         public static int pointsUpgradeLvl2 = 0;
