@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<map>
+  <settings>
+	<points>
+		<WinPoints>3</WinPoints>
+        <Town>0</Town>
+        <Road>0</Road>
+        <Fort>1</Fort>
+        <Monastery>0</Monastery>
+        <Market>0</Market>
+        <Medal>0</Medal>
+        <FortParade>0</FortParade>
+        <UpgradeLvl1>0</UpgradeLvl1>
+        <MarketLvl1>0</MarketLvl1>
+        <UpgradeLvl2>0</UpgradeLvl2>
+        <MarketLvl2>0</MarketLvl2>
+        <Mill>0</Mill>
+        <Stepherd>0</Stepherd>
+        <Saw>0</Saw>
+        <Quarry>0</Quarry>
+        <Mine>0</Mine>
+        <FortCapture>0</FortCapture>
+        <FortSteal>0</FortSteal>
+	</points>
+  </settings>
+  <map-definition>
+    <row>
+      <hexa type="space" />
+      <hexa type="water" />
+      <hexa type="water" />
+    </row>
+	<row>
+      <hexa type="water" />
+	  <hexa type="water" />
+      <hexa type="pasture" productivity="16" />
+      <hexa type="water" />
+      <hexa type="water" />
+    </row>
+    <row>
+      <hexa type="water" />
+      <hexa type="mountains" productivity="16" />
+	  <hexa type="mountains" productivity="16" />
+      <hexa type="water" />
+      <hexa type="cornfield" productivity="16" />
+      <hexa type="water" />
+    </row>
+    <row>
+	  <hexa type="space" />
+	  <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="mountains" productivity="16" />
+      <hexa type="cornfield" productivity="16" />
+      <hexa type="water" />
+    </row>
+    <row>
+	  <hexa type="space" />
+      <hexa type="water" />
+      <hexa type="stone" productivity="16" />
+      <hexa type="stone" productivity="16" />
+	  <hexa type="water" />
+      <hexa type="cornfield" productivity="16" />
+      <hexa type="water" />
+    </row>
+	<row>
+	  <hexa type="space" />
+	  <hexa type="space" />
+      <hexa type="water" />
+	  <hexa type="water" />
+      <hexa type="pasture" productivity="16" />
+      <hexa type="water" />
+      <hexa type="water" />
+    </row>
+    <row>
+      <hexa type="space" />
+      <hexa type="space" />
+	  <hexa type="space" />
+	  <hexa type="space" />
+	  <hexa type="water" />
+      <hexa type="water" />
+    </row>
+  </map-definition>
+</map>

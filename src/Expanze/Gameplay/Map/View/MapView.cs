@@ -169,6 +169,16 @@ namespace Expanze.Gameplay.Map
             }
 
             int n = (neighbours > 2) ? 2 : neighbours;
+            if (n == 2 && ((!bottomRight || !bottomLeft) &&
+                          (!bottomRight || !right) &&
+                          (!right || !upRight) &&
+                          (!upRight || !upLeft) &&
+                          (!upLeft || !left) &&
+                          (!left || !bottomLeft)))
+            {
+                n = 1;
+            }
+
             Model m = GameResources.Inst().GetHexaModel(HexaKind.Water + n);
 
             return new WaterView(hexaMapModel[i][j], m, rotation, i, j);

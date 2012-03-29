@@ -55,7 +55,7 @@ namespace Expanze
         {
             HexaModel[][] map;
             xDoc = new XmlDocument();
-            xDoc.Load("Content/Maps/cam01sce01.xml");
+            xDoc.Load("Content/Maps/cam01sce06.xml");
 
             XmlNodeList rows = xDoc.GetElementsByTagName("row");
             map = new HexaModel[rows.Count][];
