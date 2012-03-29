@@ -60,13 +60,13 @@ namespace Expanze
         public static double captureFreeChance = 0.25;
         // goals
         public static int maxTurn = 100;
-        public static int[] winPoints = {5, 25, 30};
+        public static int[] winPoints = {3, 25, 30};
         public static int pointsTown = 0; /// points for new town
         public static int pointsRoad = 0; /// points for new road
         public static int pointsFort = 0; /// points for new fort
         public static int pointsMonastery = 0; /// points for new monastery
         public static int pointsMarket = 0;    /// points for new market
-        public static int pointsMedal = 0;     /// points for medal
+        public static int pointsMedal = 1;     /// points for medal
         public static int pointsFortParade = 0; /// points for parade from fort
         public static int pointsUpgradeLvl1 = 0;
         public static int pointsMarketLvl1 = 0;
@@ -75,7 +75,7 @@ namespace Expanze
         public static int pointsMill = 0;
         public static int pointsStepherd = 0;
         public static int pointsSaw = 0;
-        public static int pointsQuarry = 1;
+        public static int pointsQuarry = 0;
         public static int pointsMine = 0;
         public static int pointsFortCapture = 0;
         public static int pointsFortSteal = 0;

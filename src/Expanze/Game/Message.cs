@@ -98,7 +98,7 @@ namespace Expanze
             if (InputManager.Inst().GetGameAction("game", "enablemessages").IsPressed())
             {
                 disabled = false;
-                Show("Zprávy znovu aktivovány.", "Opět budeš informován o akcích hráče, nových medailích, katastrofách a zázracích.", null);
+                Show(Strings.MESSAGE_TITLE_MESSAGE_ON, Strings.MESSAGE_DESCRIPTION_MESSAGE_ON, null);
             } else
             if (InputManager.Inst().GetGameAction("gamemessage", "disablemessages").IsPressed())
             {

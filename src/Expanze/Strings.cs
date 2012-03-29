@@ -224,6 +224,9 @@ namespace Expanze
 
         public static string MESSAGE_TITLE_MIRACLE = "Zázrak";
 
+        public static string MESSAGE_TITLE_MESSAGE_ON = "Zprávy znovu aktivovány.";
+        public static string MESSAGE_DESCRIPTION_MESSAGE_ON = "Opět budeš informován o akcích hráče, nových medailích, katastrofách a zázracích.";
+
         // Medals //
         public static string MESSAGE_TITLE_MEDAL_TOWN = "Medaile za expanzi";
         public static string MESSAGE_TITLE_MEDAL_ROAD = "Medaile cestovatele";
@@ -246,6 +249,18 @@ namespace Expanze
         public static string MESSAGE_DESCRIPTION_MEDAL_QUARRY = "Postav víc lomů než ostatní, avšak minimálně tři a tato medaile je tvá.";
         public static string MESSAGE_DESCRIPTION_MEDAL_STEPHERD = "Postav víc chatrčí pastevce než ostatní, avšak minimálně tři a tato medaile je tvá.";
         public static string MESSAGE_DESCRIPTION_MEDAL_MINE = "Postav víc dolů na rudu než ostatní, avšak minimálně tři a tato medaile je tvá.";
+
+        public static string MESSAGE_TITLE_MARKET_NOT_SOURCES = "Nemáš dostatek surovin";
+        public static string MESSAGE_TITLE_MARKET_BUY_IT = "Kup to!";
+        public static string MESSAGE_TITLE_MARKET_CHANGE_SOURCES = "Navštiv tržnici";
+        public static string MESSAGE_DESCRIPTION_MARKET_NOT_SOURCES = "Můžeš měnit jak chceš, ale tohle kolo si to nekoupíš, nemáš na to.";
+        public static string MESSAGE_DESCRIPTION_MARKET_BUY_IT = "Žádné suroviny ti nechybí. Nechápu, že to nevidíš.";
+        public static string MESSAGE_DESCRIPTION_MARKET_CHANGE_SOURCES = "Tohle za tamto, jiné za támhle to a můžeš směle nakupovat";
+
+        public static string MESSAGE_TITLE_END_GAME = "Konec hry";
+        public static string MESSAGE_DESCRIPTION_END_GAME_WIN = " nejrychleji expandoval a ostatní ho uznali za nejvhodnějšího vládce ostrova.";
+        public static string MESSAGE_DESCRIPTION_END_GAME_LOOSE1 = "Nikdo nevyhrál, všichni prohráli. Nikomu nestačilo ";
+        public static string MESSAGE_DESCRIPTION_END_GAME_LOOSE2 = " kol k zisku dostatečného počtu bodů.";
 
         public static string ERROR_NO_SOURCES = "No sources";
         public static string ERROR_NOT_ENOUGHT_FROM_SOURCE = "Not enought from source";

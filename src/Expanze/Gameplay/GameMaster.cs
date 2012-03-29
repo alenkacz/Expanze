@@ -544,15 +544,15 @@ namespace Expanze
                     }
                 }
 
-                if (winnerNew)
+                if (winnerNew && turnNumber < Settings.maxTurn)
                 {
-                    Message.Inst().Show("Konec hry", bestPlayer.GetName() + " nejrychleji expandoval a ostatní ho uznali za nejvhodnějšího vládce ostrova.", GameResources.Inst().GetHudTexture(HUDTexture.IconFortParade));  
+                    Message.Inst().Show(Strings.MESSAGE_TITLE_END_GAME, bestPlayer.GetName() + Strings.MESSAGE_DESCRIPTION_END_GAME_WIN, GameResources.Inst().GetHudTexture(HUDTexture.IconFortParade));  
                 }
 
                 if (turnNumber == Settings.maxTurn)
                 {
                     winnerNew = true;
-                    Message.Inst().Show("Konec hry", "Nikdo nevyhrál, všichni prohráli. Nikomu nestačilo " + Settings.maxTurn + " kol k zisku dostatečného počtu bodů.", GameResources.Inst().GetHudTexture(HUDTexture.HammersPassive));
+                    Message.Inst().Show(Strings.MESSAGE_TITLE_END_GAME, Strings.MESSAGE_DESCRIPTION_END_GAME_LOOSE1 + Settings.maxTurn + Strings.MESSAGE_DESCRIPTION_END_GAME_LOOSE2, GameResources.Inst().GetHudTexture(HUDTexture.HammersPassive));
                 }
 
                 // GENETICS

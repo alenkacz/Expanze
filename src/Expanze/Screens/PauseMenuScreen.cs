@@ -37,6 +37,7 @@ namespace Expanze
             resumeGameMenuEntry.Selected += OnCancel;
             resumeGameMenuEntry.Selected += ResumeGameMenuEntrySelected;
             quitGameMenuEntry.Selected += QuitGameMenuEntrySelected;
+            restartGameMenuEntry.Selected += OnCancel;
             restartGameMenuEntry.Selected += RestartGameMenuEntrySelected;
 
             // Add entries to the menu.
