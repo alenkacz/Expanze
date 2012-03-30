@@ -184,7 +184,10 @@ namespace Expanze.Gameplay.Map
             if(parser == null || newMap)
               parser = new MapParser();
             GameSettings gs = GameMaster.Inst().GetGameSettings();
-            return parser.getMap(gs.GetMapSizeXML(), gs.GetMapTypeXML(), gs.GetMapWealthXML());
+            if (GameMaster.Inst().GetMapSource() == null)
+                return parser.getMap(gs.GetMapSizeXML(), gs.GetMapTypeXML(), gs.GetMapWealthXML());
+            else
+                return parser.parseCampaignMap(GameMaster.Inst().GetMapSource());
         }
 
         public override void LoadContent()

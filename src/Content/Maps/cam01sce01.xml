@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <map>
   <settings>
+    <name>Boot</name>
 	<points>
 		<WinPoints>3</WinPoints>
         <Town>0</Town>

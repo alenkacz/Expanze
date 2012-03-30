@@ -33,7 +33,7 @@ namespace Expanze.Gameplay.Map
         Queue<ItemQueue> queue; /// queue of player actions
         MapView mapView; /// reference to map
 
-#if GENETIC
+#if  GENETIC
         private int ENQUEUE_TIME = 0; /// Delay time between two actions
 #else
         private int ENQUEUE_TIME = 1000; /// Delay time between two actions
@@ -53,6 +53,11 @@ namespace Expanze.Gameplay.Map
         /// </summary>
         public void Clear()
         {
+#if  GENETIC
+
+#else
+            lastEnque = 2 * ENQUEUE_TIME;
+#endif
             queue.Clear();
         }
 

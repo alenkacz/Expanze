@@ -51,11 +51,11 @@ namespace Expanze
             lowlandMapTypes = new Dictionary<string, int>();
         }
 
-        public HexaModel[][] parseCampaignMap(int campaign, int scenario)
+        public HexaModel[][] parseCampaignMap(string mapSource)
         {
             HexaModel[][] map;
             xDoc = new XmlDocument();
-            xDoc.Load("Content/Maps/cam01sce02.xml");
+            xDoc.Load("Content/Maps/" + mapSource);
 
             XmlNodeList rows = xDoc.GetElementsByTagName("row");
             map = new HexaModel[rows.Count][];
@@ -87,9 +87,7 @@ namespace Expanze
 
         public HexaModel[][] parse(string mapSize, string mapType, string mapWealth)
         {
-            HexaModel[][] map = parseCampaignMap(0, 0);
-            if (map != null)
-                return map;
+            HexaModel[][] map;
 
             Init();
 

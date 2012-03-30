@@ -338,6 +338,7 @@ namespace Expanze
             String wealthMap = wealth.getSelectedSettings();
 
             GameMaster.Inst().ResetGameSettings();
+            GameMaster.Inst().SetMapSource(null);
             GameMaster.Inst().SetGameSettings(point,type,size,wealthMap);
         }
 

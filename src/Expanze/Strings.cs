@@ -14,6 +14,7 @@ namespace Expanze
         public static string MENU_COMMON_YES = "Ano";
         public static string MENU_COMMON_NO = "Ne";
 
+        public static string MENU_MAIN_CAMPAIGN = "Kampaň";
         public static string MENU_MAIN_HOT_SEAT = "Hot seat";
         public static string MENU_MAIN_QUICK_GAME = "Rychlá hra";
         public static string MENU_MAIN_OPTION = "Nastavení";

@@ -54,6 +54,7 @@ namespace Expanze
         private static GameMaster instance = null;
 
         private GameSettings gameSettings;
+        private string mapSource;
 
         private int gameCount;
 #if GENETIC
@@ -196,9 +197,51 @@ namespace Expanze
             }
         }
 
+        public void SetMapSource(string source)
+        {
+            mapSource = source;
+        }
+        public string GetMapSource()
+        {
+            return mapSource;
+        }
         public void SetGameSettings(int points, string mapType, string mapSize, string mapWealth)
         {
             gameSettings = new GameSettings(points,mapType,mapSize,mapWealth);
+        }
+
+        internal void PrepareCampaignMap(string mapName)
+        {
+            mapSource = mapName;
+
+            this.ResetGameSettings();
+            players.Clear();
+            IComponentAI componentAI = null;
+            foreach (IComponentAI AI in CoreProviderAI.AI)
+            {
+                componentAI = AI;
+                break;
+            }
+
+            int nameCount = Strings.MENU_HOT_SEAT_NAMES.Length;
+
+            int firstPlayerNameID = randomNumber.Next() % nameCount;
+            int secondPlayerNameID;
+
+            do
+            {
+                secondPlayerNameID = randomNumber.Next() % nameCount;
+            } while (secondPlayerNameID == firstPlayerNameID);
+
+            if (componentAI != null)
+            {
+                IComponentAI componentAICopy = componentAI.Clone();
+                this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[secondPlayerNameID], Color.Blue, componentAICopy, 0));
+            }
+            else
+                this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[secondPlayerNameID], Color.Blue, null, 0));
+
+            this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[firstPlayerNameID], Color.Red, null, 1));
         }
 
         public void PrepareQuickGame()
@@ -839,5 +882,6 @@ namespace Expanze
             genetic.PrintAllChromozones();
         }
 #endif
+
     }
 }
