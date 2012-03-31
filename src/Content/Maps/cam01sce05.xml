@@ -6,7 +6,7 @@
 		<WinPoints>3</WinPoints>
         <Town>0</Town>
         <Road>0</Road>
-        <Fort>1</Fort>
+        <Fort>0</Fort>
         <Monastery>0</Monastery>
         <Market>0</Market>
         <Medal>0</Medal>
@@ -14,7 +14,7 @@
         <UpgradeLvl1>0</UpgradeLvl1>
         <MarketLvl1>0</MarketLvl1>
         <UpgradeLvl2>0</UpgradeLvl2>
-        <MarketLvl2>0</MarketLvl2>
+        <MarketLvl2>1</MarketLvl2>
         <Mill>0</Mill>
         <Stepherd>0</Stepherd>
         <Saw>0</Saw>

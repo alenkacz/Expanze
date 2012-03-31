@@ -103,5 +103,10 @@ namespace Expanze
         }
 
         #endregion
+
+        internal void SetPoints(int points)
+        {
+            this.points = points;
+        }
     }
 }

@@ -43,7 +43,7 @@ namespace Expanze
             exitMenuEntry.Selected += OnCancel;
 
             // Add entries to the menu.
-            MenuEntries.Add(quickMenuEntry);
+            //MenuEntries.Add(quickMenuEntry);
             MenuEntries.Add(campaignMenuEntry);
             MenuEntries.Add(hotseatMenuEntry);
             MenuEntries.Add(settingsMenuEntry);

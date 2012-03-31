@@ -6,7 +6,7 @@
 		<WinPoints>3</WinPoints>
         <Town>0</Town>
         <Road>0</Road>
-        <Fort>1</Fort>
+        <Fort>0</Fort>
         <Monastery>0</Monastery>
         <Market>0</Market>
         <Medal>0</Medal>
@@ -20,7 +20,7 @@
         <Saw>0</Saw>
         <Quarry>0</Quarry>
         <Mine>0</Mine>
-        <FortCapture>0</FortCapture>
+        <FortCapture>1</FortCapture>
         <FortSteal>0</FortSteal>
 	</points>
   </settings>

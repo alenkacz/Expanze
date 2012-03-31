@@ -214,7 +214,8 @@ namespace Expanze
         {
             mapSource = mapName;
 
-            this.ResetGameSettings();
+            //this.ResetGameSettings();
+            //gameSettings.SetPoints(Settings.points);
             players.Clear();
             IComponentAI componentAI = null;
             foreach (IComponentAI AI in CoreProviderAI.AI)
@@ -283,7 +284,8 @@ namespace Expanze
             }
             else
             {
-                return new GameSettings(Settings.winPoints[0], Strings.GAME_SETTINGS_MAP_TYPE_NORMAL, Strings.GAME_SETTINGS_MAP_SIZE_SMALL, Strings.GAME_SETTINGS_MAP_WEALTH_MEDIUM);
+                gameSettings = new GameSettings(Settings.winPoints[0], Strings.GAME_SETTINGS_MAP_TYPE_NORMAL, Strings.GAME_SETTINGS_MAP_SIZE_SMALL, Strings.GAME_SETTINGS_MAP_WEALTH_MEDIUM);
+                return gameSettings;
             }
         }
 

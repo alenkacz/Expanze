@@ -82,6 +82,34 @@ namespace Expanze
 
             }
 
+            XmlNodeList points = xDoc.GetElementsByTagName("points")[0].ChildNodes;
+            foreach (XmlNode goal in points)
+            {
+                int value = Convert.ToInt32(goal.InnerText);
+                switch (goal.Name)
+                {
+                    case "WinPoints": GameMaster.Inst().GetGameSettings().SetPoints(value);  break;
+                    case "Town": Settings.pointsTown = value; break;
+                    case "Road": Settings.pointsRoad = value; break;
+                    case "Fort": Settings.pointsFort = value; break;
+                    case "Monastery": Settings.pointsMonastery = value; break;
+                    case "Market": Settings.pointsMarket = value; break;
+                    case "Medal": Settings.pointsMedal = value; break;
+                    case "FortParade": Settings.pointsFortParade = value; break;
+                    case "FortSteal": Settings.pointsFortSteal = value; break;
+                    case "FortCapture": Settings.pointsFortCapture = value; break;
+                    case "Mine": Settings.pointsMine = value; break;
+                    case "Quarry": Settings.pointsQuarry = value; break;
+                    case "Stepherd": Settings.pointsStepherd = value; break;
+                    case "Saw": Settings.pointsSaw = value; break;
+                    case "Mill": Settings.pointsMill = value; break;
+                    case "UpgradeLvl1": Settings.pointsUpgradeLvl1 = value; break;
+                    case "UpgradeLvl2": Settings.pointsUpgradeLvl2 = value; break;
+                    case "MarketLvl1": Settings.pointsMarketLvl1 = value; break;
+                    case "MarketLvl2": Settings.pointsMarketLvl2 = value; break;
+                }
+            }
+
             return map;
         }
 

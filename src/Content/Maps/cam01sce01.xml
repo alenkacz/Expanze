@@ -3,10 +3,10 @@
   <settings>
     <name>Boot</name>
 	<points>
-		<WinPoints>3</WinPoints>
-        <Town>0</Town>
+		<WinPoints>4</WinPoints>
+        <Town>1</Town>
         <Road>0</Road>
-        <Fort>1</Fort>
+        <Fort>0</Fort>
         <Monastery>0</Monastery>
         <Market>0</Market>
         <Medal>0</Medal>
