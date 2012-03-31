@@ -120,11 +120,11 @@ namespace Expanze
             base.Draw(gameTime);
 
             Color c;
-            c = Color.White;
+            c = Color.BurlyWood;
 
             spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,null,null,null,null,Settings.spriteScale);
 
-            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.PlayerNameFont), title, new Vector2(spritePosition.X, spritePosition.Y), Color.White);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.PlayerNameFont), title, new Vector2(spritePosition.X, spritePosition.Y), Color.BurlyWood);
 
             Vector2 position = new Vector2(spritePosition.X + 200,spritePosition.Y);
 
@@ -136,7 +136,7 @@ namespace Expanze
                 // nessesary spacing
                 position.X += 250;
 
-                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.PlayerNameFont), s, position, Color.White);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.PlayerNameFont), s, position, Color.BurlyWood);
             }
 
             spriteBatch.End();

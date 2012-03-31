@@ -167,7 +167,7 @@ namespace Expanze
             noPosition = new Vector2(textPosition.X + 600, textPosition.Y + 80);
 
             // Fade the popup alpha during transitions.
-            Color color = Color.White * TransitionAlpha;
+            Color color = Color.BurlyWood * TransitionAlpha;
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
 

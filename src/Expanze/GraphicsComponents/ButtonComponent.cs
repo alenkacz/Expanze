@@ -231,7 +231,7 @@ namespace Expanze
 
             if (switchTexts != null)
             {
-                spriteBatch.DrawString(gameFont, switchTexts.ElementAt(activeText), spritePosition, Color.White);
+                spriteBatch.DrawString(gameFont, switchTexts.ElementAt(activeText), spritePosition, Color.BurlyWood);
             }
 
             spriteBatch.End();

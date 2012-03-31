@@ -140,7 +140,7 @@ namespace Expanze
             Vector2 textPosition2 = (viewportSize - textSize2) / 2;
             textPosition2.Y += textSize2.Y / 2.0f;
 
-            Color color = Color.White * TransitionAlpha;
+            Color color = Color.BurlyWood * TransitionAlpha;
 
             // Draw the text.
             spriteBatch.Begin();
