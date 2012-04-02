@@ -199,6 +199,10 @@ namespace Expanze.Gameplay
                 default: upgradeKind = UpgradeKind.NoUpgrade; break;
             }
 
+            if (upgradeKind == UpgradeKind.SecondUpgrade &&
+               Settings.banSecondLicence)
+                return MarketError.BanSecondLicence;
+
             BuyingUpgradeError error = GameState.map.GetMapController().CanBuyUpgradeInSpecialBuilding(townID, hexaID, upgradeKind, (int)source);
 
             switch (error)

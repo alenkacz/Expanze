@@ -189,6 +189,11 @@ namespace Expanze.Gameplay
                 case UpgradeKind.FirstUpgrade: kind = UpgradeKind.SecondUpgrade; break;
                 default: kind = UpgradeKind.NoUpgrade; break;
             }
+
+            if (kind == UpgradeKind.SecondUpgrade &&
+               Settings.banSecondUpgrade)
+                return MonasteryError.BanSecondUpgrade;
+
             BuyingUpgradeError error = GameState.map.GetMapController().CanBuyUpgradeInSpecialBuilding(townID, hexaID, kind, (int)source);
 
             switch (error)

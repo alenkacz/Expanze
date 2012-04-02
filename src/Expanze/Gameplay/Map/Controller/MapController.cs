@@ -188,6 +188,24 @@ namespace Expanze.Gameplay.Map
 
         public BuildingBuildError CanBuildBuildingInTown(int townID, int hexaID, BuildingKind kind)
         {
+            if (kind == BuildingKind.FortBuilding && Settings.banFort)
+            {
+                SetLastError(Strings.ERROR_BAN_FORT);
+                return BuildingBuildError.Ban;
+            }
+
+            if (kind == BuildingKind.MarketBuilding && Settings.banMarket)
+            {
+                SetLastError(Strings.ERROR_BAN_MARKET);
+                return BuildingBuildError.Ban;
+            }
+
+            if (kind == BuildingKind.MonasteryBuilding && Settings.banMonastery)
+            {
+                SetLastError(Strings.ERROR_BAN_MONASTERY);
+                return BuildingBuildError.Ban;
+            }
+
             GameMaster gm = GameMaster.Inst();
             TownModel town = map.GetTownByID(townID);
             if (town == null)
@@ -328,6 +346,7 @@ namespace Expanze.Gameplay.Map
             {
                 switch (m.CanInventUpgrade(building))
                 {
+                    case MonasteryError.BanSecondUpgrade:
                     case MonasteryError.HaveSecondUpgrade:
                         return false;
                     case MonasteryError.NoSources:
@@ -357,6 +376,9 @@ namespace Expanze.Gameplay.Map
                     case MonasteryError.NoSources:
                         SetLastError(Strings.ERROR_NO_SOURCES);
                         return MonasteryError.NoSources;
+                    case MonasteryError.BanSecondUpgrade:
+                        SetLastError(Strings.ERROR_BAN_SECOND_UPGRADE);
+                        return MonasteryError.BanSecondUpgrade;
                     case MonasteryError.OK:
                         return MonasteryError.OK;
                     case MonasteryError.MaxUpgrades:          // May be free slot in another monastery
@@ -378,6 +400,7 @@ namespace Expanze.Gameplay.Map
                 switch (m.CanBuyLicence(source))
                 {
                     case MarketError.HaveSecondLicence:
+                    case MarketError.BanSecondLicence:
                         return false;
                     case MarketError.NoSources:
                         return false;
@@ -400,6 +423,9 @@ namespace Expanze.Gameplay.Map
             {
                 switch (m.CanBuyLicence(source))
                 {
+                    case MarketError.BanSecondLicence :
+                        SetLastError(Strings.ERROR_BAN_SECOND_LICENCE);
+                        return MarketError.BanSecondLicence;
                     case MarketError.HaveSecondLicence :
                         SetLastError(Strings.ERROR_HAVE_SECOND_LICENCE);
                         return MarketError.HaveSecondLicence;
@@ -454,6 +480,12 @@ namespace Expanze.Gameplay.Map
 
         public CaptureHexaError CanCaptureHexa(int hexaID, IFort fort)
         {
+            if (Settings.banFortCaptureHexa)
+            {
+                SetLastError(Strings.ERROR_BAN_FORT_CAPTURE_HEXA);
+                return CaptureHexaError.Ban;
+            }
+
             if (!Settings.costFortCapture.HasPlayerSources(gm.GetActivePlayer()))
             {
                 SetLastError(Strings.ERROR_NO_SOURCES);
@@ -540,6 +572,12 @@ namespace Expanze.Gameplay.Map
 
         public DestroySourcesError CanStealSources(String playerName)
         {
+            if (Settings.banFortStealSources)
+            {
+                SetLastError(Strings.ERROR_BAN_FORT_STEAL_SOURCES);
+                return DestroySourcesError.Ban;
+            }
+
             Player player = gm.GetPlayer(playerName);
             if (player == null)
                 return DestroySourcesError.NoPlayerWithName;
@@ -583,6 +621,12 @@ namespace Expanze.Gameplay.Map
 
         public ParadeError CanShowParade()
         {
+            if (Settings.banFortParade)
+            {
+                SetLastError(Strings.ERROR_BAN_FORT_SHOW_PARADE);
+                return ParadeError.Ban;
+            }
+
             Player activePlayer = gm.GetActivePlayer();
 
             if (!GetPrice(PriceKind.AParade).HasPlayerSources(activePlayer))
