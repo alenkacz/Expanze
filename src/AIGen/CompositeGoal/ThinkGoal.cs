@@ -78,27 +78,39 @@ namespace AIGen
             {
                 mainGoals.AddLast(new MainGoal(new BuildTown(map, koefInGoal[0], koefInGoal[1], depth + 1), koefMainGoal[0]));
                 mainGoals.AddLast(new MainGoal(new BuildSourceBuilding(map, koefInGoal[2], koefInGoal[3], depth + 1), koefMainGoal[1]));
-                mainGoals.AddLast(new MainGoal(new BuildFort(map, koefInGoal[4], koefInGoal[5], koefInGoal[6], koefInGoal[7], koefInGoal[8], depth + 1), koefMainGoal[2]));
-                mainGoals.AddLast(new MainGoal(new FortShowParade(map, koefInGoal[9], koefInGoal[10], depth + 1), koefMainGoal[3]));
-                mainGoals.AddLast(new MainGoal(new BuildMarket(map, koefInGoal[11], koefInGoal[12], koefInGoal[13], koefInGoal[14], koefInGoal[15], depth + 1), koefMainGoal[4]));
-                mainGoals.AddLast(new MainGoal(new BuildMonastery(map, koefInGoal[16], koefInGoal[17], koefInGoal[18], koefInGoal[19], koefInGoal[20], depth + 1), koefMainGoal[5]));
+                if (map.CanBuildBuildingInTown(0, 0, BuildingKind.FortBuilding) != BuildingBuildError.Ban)
+                    mainGoals.AddLast(new MainGoal(new BuildFort(map, koefInGoal[4], koefInGoal[5], koefInGoal[6], koefInGoal[7], koefInGoal[8], depth + 1), koefMainGoal[2]));
+                if (map.CanShowParade() != ParadeError.Ban)
+                    mainGoals.AddLast(new MainGoal(new FortShowParade(map, koefInGoal[9], koefInGoal[10], depth + 1), koefMainGoal[3]));
+                if (map.CanBuildBuildingInTown(0, 0, BuildingKind.MarketBuilding) != BuildingBuildError.Ban)
+                    mainGoals.AddLast(new MainGoal(new BuildMarket(map, koefInGoal[11], koefInGoal[12], koefInGoal[13], koefInGoal[14], koefInGoal[15], depth + 1), koefMainGoal[4]));
+                if (map.CanBuildBuildingInTown(0, 0, BuildingKind.MonasteryBuilding) != BuildingBuildError.Ban)
+                    mainGoals.AddLast(new MainGoal(new BuildMonastery(map, koefInGoal[16], koefInGoal[17], koefInGoal[18], koefInGoal[19], koefInGoal[20], depth + 1), koefMainGoal[5]));
                 mainGoals.AddLast(new MainGoal(new InventUpgrade(map, depth + 1), koefMainGoal[6]));
                 mainGoals.AddLast(new MainGoal(new BuyLicence(map, depth + 1), koefMainGoal[7]));
-                mainGoals.AddLast(new MainGoal(new FortStealSources(map, depth + 1), koefMainGoal[8]));
-                mainGoals.AddLast(new MainGoal(new FortCaptureHexa(map, depth + 1), koefMainGoal[9]));
+                if (map.CanStealSources("") != DestroySourcesError.Ban)
+                    mainGoals.AddLast(new MainGoal(new FortStealSources(map, depth + 1), koefMainGoal[8]));
+                if (map.CanCaptureHexa(null) != CaptureHexaError.Ban)
+                    mainGoals.AddLast(new MainGoal(new FortCaptureHexa(map, depth + 1), koefMainGoal[9]));
             }
             else
             {
                 mainGoals.AddLast(new MainGoal(new BuildTown(map, koefInGoal[0], depth + 1), koefMainGoal[0]));
                 mainGoals.AddLast(new MainGoal(new BuildSourceBuilding(map, koefInGoal[1], depth + 1), koefMainGoal[1]));
-                mainGoals.AddLast(new MainGoal(new BuildFort(map, koefInGoal[2], koefInGoal[3], depth + 1), koefMainGoal[2]));
-                mainGoals.AddLast(new MainGoal(new FortShowParade(map, koefInGoal[4], depth + 1), koefMainGoal[3]));
-                mainGoals.AddLast(new MainGoal(new BuildMarket(map, koefInGoal[5], koefInGoal[6], depth + 1), koefMainGoal[4]));
-                mainGoals.AddLast(new MainGoal(new BuildMonastery(map, koefInGoal[7], koefInGoal[8], depth + 1), koefMainGoal[5]));
+                if (map.CanBuildBuildingInTown(0, 0, BuildingKind.FortBuilding) != BuildingBuildError.Ban)
+                    mainGoals.AddLast(new MainGoal(new BuildFort(map, koefInGoal[2], koefInGoal[3], depth + 1), koefMainGoal[2]));
+                if (map.CanShowParade() != ParadeError.Ban)
+                    mainGoals.AddLast(new MainGoal(new FortShowParade(map, koefInGoal[4], depth + 1), koefMainGoal[3]));
+                if (map.CanBuildBuildingInTown(0, 0, BuildingKind.MarketBuilding) != BuildingBuildError.Ban)
+                    mainGoals.AddLast(new MainGoal(new BuildMarket(map, koefInGoal[5], koefInGoal[6], depth + 1), koefMainGoal[4]));
+                if (map.CanBuildBuildingInTown(0, 0, BuildingKind.MonasteryBuilding) != BuildingBuildError.Ban)
+                    mainGoals.AddLast(new MainGoal(new BuildMonastery(map, koefInGoal[7], koefInGoal[8], depth + 1), koefMainGoal[5]));
                 mainGoals.AddLast(new MainGoal(new InventUpgrade(map, depth + 1), koefMainGoal[6]));
                 mainGoals.AddLast(new MainGoal(new BuyLicence(map, depth + 1), koefMainGoal[7]));
-                mainGoals.AddLast(new MainGoal(new FortStealSources(map, depth + 1), koefMainGoal[8]));
-                mainGoals.AddLast(new MainGoal(new FortCaptureHexa(map, depth + 1), koefMainGoal[9]));
+                if (map.CanStealSources("") != DestroySourcesError.Ban)
+                    mainGoals.AddLast(new MainGoal(new FortStealSources(map, depth + 1), koefMainGoal[8]));
+                if (map.CanCaptureHexa(null) != CaptureHexaError.Ban)
+                    mainGoals.AddLast(new MainGoal(new FortCaptureHexa(map, depth + 1), koefMainGoal[9]));
             }
 
             Init();

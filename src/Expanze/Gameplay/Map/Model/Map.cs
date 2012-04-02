@@ -406,6 +406,9 @@ namespace Expanze.Gameplay.Map
         public TownModel GetTownByID(int townID)
         {
             TownModel town = null;
+            if (hexaMapModel == null)
+                return null;
+
             for (int i = 0; i < hexaMapModel.Length; i++)
                 for (int j = 0; j < hexaMapModel[i].Length; j++)
                     if (hexaMapModel[i][j] != null)

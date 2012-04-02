@@ -259,6 +259,9 @@ namespace AIEasy
 
         internal bool BuildFort(ITown town, byte pos)
         {
+            if (mapController.CanBuildBuildingInTown(0, 0, BuildingKind.FortBuilding) == BuildingBuildError.Ban)
+                return false;
+
             if (town.BuildFort(pos) == null)
                   throw new Exception("Fort should have been built. " + mapController.GetLastError());
 
@@ -267,6 +270,9 @@ namespace AIEasy
 
         internal bool BuildMarket(ITown town, byte pos)
         {
+            if (mapController.CanBuildBuildingInTown(0, 0, BuildingKind.MarketBuilding) == BuildingBuildError.Ban)
+                return false;
+
             if (town.BuildMarket(pos) == null)
             {
                 throw new Exception("Market should have been built. " + mapController.GetLastError());
@@ -281,6 +287,9 @@ namespace AIEasy
 
         internal bool BuildMonastery(ITown town, byte pos)
         {
+            if (mapController.CanBuildBuildingInTown(0, 0, BuildingKind.MonasteryBuilding) == BuildingBuildError.Ban)
+                return false;
+
             if (town.BuildMonastery(pos) == null)
             {
                 throw new Exception("Monastery should have been built. " + mapController.GetLastError());
@@ -302,6 +311,9 @@ namespace AIEasy
             }
             else
             {
+                if (mapController.CanBuyLicence(activeSourceKind) == MarketError.BanSecondLicence)
+                    return false;
+
                 throw new Exception("Buying licence. " + mapController.GetLastError());
                 //return false;
             }
@@ -323,6 +335,8 @@ namespace AIEasy
             }
             else
             {
+                if (mapController.CanInventUpgrade(activeSourceBuildingKind) == MonasteryError.BanSecondUpgrade)
+                    return false;
                 throw new Exception("Inventing upgrade. " + mapController.GetLastError());
                 //return false;
             }
@@ -405,6 +419,8 @@ namespace AIEasy
         {
             if (mapController.ShowParade())
                 return true;
+            if (mapController.CanShowParade() == ParadeError.Ban)
+                return false;
 
             throw new Exception("Should have shown parade " + mapController.GetLastError());
         }
@@ -413,6 +429,8 @@ namespace AIEasy
         {
             if (mapController.StealSources(player.GetName()))
                 return true;
+            if (mapController.CanStealSources(player.GetName()) == DestroySourcesError.Ban)
+                return false;
 
             throw new Exception("Should steal sources from " + player.GetName() + ". " + mapController.GetLastError());
         }
@@ -421,6 +439,8 @@ namespace AIEasy
         {
             if (mapController.CaptureHexa(hexa))
                 return true;
+            if (mapController.CanCaptureHexa(hexa) == CaptureHexaError.Ban)
+                return false;
 
             throw new Exception("Should capture hexa. " + mapController.GetLastError());
         }

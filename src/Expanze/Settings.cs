@@ -80,9 +80,9 @@ namespace Expanze
         public static int pointsFortCapture = 0;
         public static int pointsFortSteal = 0;
 
-        public static bool banMonastery = true;
-        public static bool banFort = true;
-        public static bool banMarket = true;
+        public static bool banMonastery = false;
+        public static bool banFort = false;
+        public static bool banMarket = false;
         public static bool banSecondLicence = true;
         public static bool banSecondUpgrade = true;
         public static bool banFortParade = false;

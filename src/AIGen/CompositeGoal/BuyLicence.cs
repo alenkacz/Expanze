@@ -47,6 +47,9 @@ namespace AIGen
                 if (source[loop1] > max &&
                     me.GetMarketLicence((SourceKind)loop1) != LicenceKind.SecondLicence)
                 {
+                    if (me.GetMarketLicence((SourceKind)loop1) == LicenceKind.FirstLicence &&
+                        map.CanBuyLicence((SourceKind)loop1) == MarketError.BanSecondLicence)
+                        continue;
                     max = source[loop1];
                     bestKind = (SourceKind)loop1;
                 }

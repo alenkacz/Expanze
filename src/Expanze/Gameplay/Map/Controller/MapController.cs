@@ -347,6 +347,7 @@ namespace Expanze.Gameplay.Map
                 switch (m.CanInventUpgrade(building))
                 {
                     case MonasteryError.BanSecondUpgrade:
+                        return false;
                     case MonasteryError.HaveSecondUpgrade:
                         return false;
                     case MonasteryError.NoSources:
@@ -462,6 +463,11 @@ namespace Expanze.Gameplay.Map
 
         public CaptureHexaError CanCaptureHexa(IHexa hexa)
         {
+            if (Settings.banFortCaptureHexa)
+                return CaptureHexaError.Ban;
+            if (hexa == null)
+                return CaptureHexaError.InvalidHexaID;
+
             List<IFort> forts = GetPlayerMe().GetFort();
             CaptureHexaError error;
 
