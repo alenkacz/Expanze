@@ -530,9 +530,12 @@ namespace Expanze
 
                                         if (kind != HexaKind.Mountains)
                                         {
-                                            PromptWindow.Inst().AddPromptItem(MonasteryModel.GetPromptItemBuildMonastery(townID, hexaID));
-                                            PromptWindow.Inst().AddPromptItem(MarketModel.GetPromptItemBuildMarket(townID, hexaID));
-                                            PromptWindow.Inst().AddPromptItem(FortModel.GetPromptItemBuildFort(townID, hexaID));
+                                            if(!Settings.banMonastery)
+                                                PromptWindow.Inst().AddPromptItem(MonasteryModel.GetPromptItemBuildMonastery(townID, hexaID));
+                                            if (!Settings.banMarket)
+                                                PromptWindow.Inst().AddPromptItem(MarketModel.GetPromptItemBuildMarket(townID, hexaID));
+                                            if (!Settings.banFort)
+                                                PromptWindow.Inst().AddPromptItem(FortModel.GetPromptItemBuildFort(townID, hexaID));
                                         }
                                     }
                                     break;

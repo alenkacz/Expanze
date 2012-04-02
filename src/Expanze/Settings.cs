@@ -80,6 +80,14 @@ namespace Expanze
         public static int pointsFortCapture = 0;
         public static int pointsFortSteal = 0;
 
+        public static bool banMonastery = false;
+        public static bool banFort = false;
+        public static bool banMarket = false;
+        public static bool banSecondLicence = true;
+        public static bool banSecondUpgrade = true;
+        public static bool banFortParade = true;
+        public static bool banFortCaptureHexa = true;
+
         public static Vector2 activeResolution = new Vector2(800,600);
 
         public static float getScale()

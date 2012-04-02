@@ -118,12 +118,12 @@ namespace Expanze
         public static string ALERT_TITLE_BUILDING_IS_BUILD = "Už tu stojí budova.";
 
         public static string PROMT_TITLE_WANT_TO_BUILD_TOWN = "Město";
-        public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_TOWN = "U města můžeš stavět chatrč pastevce, lom, důl, mlýn, pilu, či pevnost, tržiště, klášter.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_TOWN = "U města můžeš postavit spoustu užitečných budov.";
         public static string PROMT_TITLE_WANT_TO_BUILD_ROAD = "Cesta";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_ROAD = "Umožní rozšířit tvé území, stavět nová města na konci cest.";
 
         public static string PROMT_TITLE_WANT_TO_BUILD_MINE = "Důl na rudu";
-        public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_MINE = "Horníci budou pro tebe těžit z dolu rudu. Po vynalezení pokroku z Kláštera lze důl vylepšit, aby těžba byla ještě vyšší.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_MINE = "Horníci budou pro tebe těžit z dolu rudu.";
         public static string PROMPT_TITLE_WANT_TO_UPGRADE_1_MINE = "Vozíky na rudu";
         public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_MINE = "Pořídíš-li horníkům nové vozíky, budou pracovat o 50% lépe.";
         public static string PROMPT_TITLE_WANT_TO_UPGRADE_2_MINE = "Nové helmy";
