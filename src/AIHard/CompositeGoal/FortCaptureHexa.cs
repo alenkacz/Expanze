@@ -34,6 +34,9 @@ namespace AIHard
 
         public override double GetDesirability()
         {
+            if(map.IsBanAction(PlayerAction.FortCaptureHexa))
+                return 0.0f;
+
             IPlayer me = map.GetPlayerMe();
             List<IFort> forts = me.GetFort();
             IHexa hexa;

@@ -1,0 +1,5 @@
+C:\_Projekty\Expanze2\src\Expanze\bin\x86\Release Genetic\Plugins\1AIGen.dll
+C:\_Projekty\Expanze2\src\Expanze\bin\x86\Release Genetic\Plugins\1AIGen.pdb
+C:\_Projekty\Expanze2\src\AIGen\obj\Release Genetic\ResolveAssemblyReference.cache
+C:\_Projekty\Expanze2\src\AIGen\obj\Release Genetic\1AIGen.dll
+C:\_Projekty\Expanze2\src\AIGen\obj\Release Genetic\1AIGen.pdb

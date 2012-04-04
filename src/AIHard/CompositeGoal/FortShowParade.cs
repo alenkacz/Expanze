@@ -32,6 +32,9 @@ namespace AIHard
 
         public override double GetDesirability()
         {
+            if(map.IsBanAction(PlayerAction.FortParade))
+                return 0.0f;
+
             if (map.GetPlayerMe().GetBuildingCount(Building.Fort) == 0)
                 return 0.0;
 

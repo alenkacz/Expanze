@@ -118,7 +118,7 @@ namespace Expanze
                 {
 #if GENETIC
                     // GENETICS ALG
-                    if (AI.GetAIName() == "AI těžká" &&
+                    if (AI.GetAIName() == "AI Gen" &&
                         (gameCount - 1) % geneticFitnessRound == 0)
                     {
                         chromozone = genetic.GetChromozone();
@@ -256,14 +256,23 @@ namespace Expanze
                             break;
                         case "AI":
                             if (info.InnerText.ToLower() == "human")
+                            {
+#if GENETIC
+                                foreach (IComponentAI AI in CoreProviderAI.AI)
+                                {
+                                    if (AI.GetAIName() == "AI těžká")
+                                        playerAI = AI.Clone();
+                                }
+#else
                                 playerAI = null;
+#endif
+                            }
                             else
                             {
                                 foreach (IComponentAI AI in CoreProviderAI.AI)
                                 {
                                     if (AI.GetAIName() == info.InnerText)
                                         playerAI = AI.Clone();
-                                    break;
                                 }
                             }
                             break;
@@ -651,12 +660,12 @@ namespace Expanze
                         int looserID = (winnerID == 0) ? 1 : 0;
 
                         double add;
-                        if (players[winnerID].GetComponentAI().GetAIName().CompareTo("AI těžká") == 0)
+                        if (players[winnerID].GetComponentAI().GetAIName().CompareTo("AI Gen") == 0)
                         {
                             add = ((double)players[winnerID].GetPoints()) / (players[looserID].GetPoints()) - 1.0;
                             fitness += 3.0 + add;
                         }
-                        else if (players[looserID].GetComponentAI().GetAIName().CompareTo("AI těžká") == 0)
+                        else if (players[looserID].GetComponentAI().GetAIName().CompareTo("AI Gen") == 0)
                         {
                             add = (double)(players[looserID].GetPoints()) / (players[winnerID].GetPoints()) * 3.0;
                             fitness += add;
@@ -879,6 +888,12 @@ namespace Expanze
                     medailPosition += new Vector2(0.0f, 85.0f);
                 }
             }
+
+#if GENETIC
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), genetic.GetGenerationNumber() + "" , new Vector2(10, 200), Color.White);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), genetic.GetChromozonID() + "", new Vector2(10, 220), Color.White);
+#endif
+
             spriteBatch.End();
         }
 

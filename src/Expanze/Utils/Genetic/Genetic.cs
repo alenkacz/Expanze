@@ -199,5 +199,15 @@ namespace Expanze.Utils.Genetic
                 ch.Log("chrom" + generationNumber + ".txt");
             }
         }
+
+        public int GetGenerationNumber()
+        {
+            return generationNumber;
+        }
+
+        public int GetChromozonID()
+        {
+            return activeChromozomeID;
+        }
     }
 }
