@@ -1124,6 +1124,47 @@ namespace Expanze.Gameplay.Map
             return GetPrice(GetPriceForMonasteryUpgrade(upgradeKind, buildingKind));
         }
 
+        public bool IsBanAction(PlayerAction action)
+        {
+            switch (action)
+            {
+                case PlayerAction.BuildFort: return Settings.banFort;
+                case PlayerAction.BuildMarket: return Settings.banMarket;
+                case PlayerAction.BuildMonastery: return Settings.banMonastery;
+                case PlayerAction.BuySecondLicence: return Settings.banSecondLicence;
+                case PlayerAction.InventSecondUpgrade: return Settings.banSecondUpgrade;
+                case PlayerAction.FortCaptureHexa: return Settings.banFortCaptureHexa;
+                case PlayerAction.FortStealSources: return Settings.banFortStealSources;
+                case PlayerAction.FortParade: return Settings.banFortParade;
+            }
+            return false;
+        }
+        public int GetActionPoints(PlayerPoints action)
+        {
+            switch (action)
+            {
+                case PlayerPoints.Fort: return Settings.pointsFort;
+                case PlayerPoints.FortCaptureHexa: return Settings.pointsFortCapture;
+                case PlayerPoints.FortParade: return Settings.pointsFortParade;
+                case PlayerPoints.FortStealSources: return Settings.pointsFortSteal;
+                case PlayerPoints.LicenceLvl1: return Settings.pointsMarketLvl1;
+                case PlayerPoints.LicenceLvl2: return Settings.pointsMarketLvl2;
+                case PlayerPoints.Market: return Settings.pointsMarket;
+                case PlayerPoints.Medal: return Settings.pointsMedal;
+                case PlayerPoints.Mill: return Settings.pointsMill;
+                case PlayerPoints.Mine: return Settings.pointsMine;
+                case PlayerPoints.Monastery: return Settings.pointsMonastery;
+                case PlayerPoints.Quarry: return Settings.pointsQuarry;
+                case PlayerPoints.Road: return Settings.pointsRoad;
+                case PlayerPoints.Saw: return Settings.pointsSaw;
+                case PlayerPoints.Stepherd: return Settings.pointsStepherd;
+                case PlayerPoints.Town: return Settings.pointsTown;
+                case PlayerPoints.UpgradeLvl1: return Settings.pointsUpgradeLvl1;
+                case PlayerPoints.UpgradeLvl2: return Settings.pointsUpgradeLvl2;
+            }
+            return 0;
+        }
+
         #endregion
     }
 }

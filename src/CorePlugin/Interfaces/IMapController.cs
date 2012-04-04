@@ -14,9 +14,14 @@ namespace CorePlugin
     public enum UpgradeKind { NoUpgrade, FirstUpgrade, SecondUpgrade }
     public enum LicenceKind { NoLicence, FirstLicence, SecondLicence }
     public enum SourceBuildingKind { Mill, Stepherd, Quarry, Saw, Mine, Count} // have to be in this order
+    public enum PlayerAction { BuildMonastery, BuildMarket, BuildFort, BuySecondLicence, InventSecondUpgrade, FortParade, FortCaptureHexa, FortStealSources }
+    public enum PlayerPoints { Town, Road, Market, Fort, Monastery, Quarry, Mine, Stepherd, Mill, Saw, FortParade, FortStealSources, FortCaptureHexa, UpgradeLvl1, UpgradeLvl2, LicenceLvl1, LicenceLvl2, Medal}
 
     public interface IMapController
     {
+        bool IsBanAction(PlayerAction action);
+        int GetActionPoints(PlayerPoints action);
+
         /// <summary>
         /// If it is possible, it builds town on town place with townID.
         /// </summary>
