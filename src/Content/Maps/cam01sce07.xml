@@ -23,6 +23,16 @@
         <FortCapture>0</FortCapture>
         <FortSteal>0</FortSteal>
 	</points>
+	<ban>
+		<Fort>0</Fort>
+        <Monastery>0</Monastery>
+        <Market>0</Market>
+		<FortCapture>0</FortCapture>
+        <FortSteal>0</FortSteal>
+		<FortParade>0</FortParade>
+		<UpgradeLvl2>0</UpgradeLvl2>
+        <MarketLvl2>0</MarketLvl2>
+	</ban>
   </settings>
   <map-definition>
     <row>

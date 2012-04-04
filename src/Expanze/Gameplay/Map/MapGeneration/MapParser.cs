@@ -110,6 +110,23 @@ namespace Expanze
                 }
             }
 
+            XmlNodeList ban = xDoc.GetElementsByTagName("ban")[0].ChildNodes;
+            foreach (XmlNode action in ban)
+            {
+                bool value = (Convert.ToInt32(action.InnerText) == 0) ? false : true;
+                switch (action.Name)
+                {
+                    case "Fort": Settings.banFort = value; break;
+                    case "Monastery": Settings.banMonastery = value; break;
+                    case "Market": Settings.banMarket = value; break;
+                    case "FortParade": Settings.banFortParade = value; break;
+                    case "FortSteal": Settings.banFortStealSources = value; break;
+                    case "FortCapture": Settings.banFortCaptureHexa = value; break;
+                    case "UpgradeLvl2": Settings.banSecondUpgrade = value; break;
+                    case "MarketLvl2": Settings.banSecondLicence = value; break;
+                }
+            }
+
             return map;
         }
 
