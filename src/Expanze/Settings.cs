@@ -66,7 +66,7 @@ namespace Expanze
         public static int pointsFort = 0; /// points for new fort
         public static int pointsMonastery = 0; /// points for new monastery
         public static int pointsMarket = 0;    /// points for new market
-        public static int pointsMedal = 0;     /// points for medal
+        public static int pointsMedal = 1;     /// points for medal
         public static int pointsFortParade = 1; /// points for parade from fort
         public static int pointsUpgradeLvl1 = 0;
         public static int pointsMarketLvl1 = 0;
@@ -85,7 +85,7 @@ namespace Expanze
         public static bool banMarket = false;
         public static bool banSecondLicence = true;
         public static bool banSecondUpgrade = true;
-        public static bool banFortParade = false;
+        public static bool banFortParade = true;
         public static bool banFortCaptureHexa = true;
         public static bool banFortStealSources = true;
 

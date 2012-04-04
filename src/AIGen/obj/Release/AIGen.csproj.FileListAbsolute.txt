@@ -1,0 +1,5 @@
+C:\_Projekty\Expanze2\src\AIGen\obj\Release\ResolveAssemblyReference.cache
+C:\_Projekty\Expanze2\src\Expanze\bin\x86\Release\Plugins\1AIGen.dll
+C:\_Projekty\Expanze2\src\Expanze\bin\x86\Release\Plugins\1AIGen.pdb
+C:\_Projekty\Expanze2\src\AIGen\obj\Release\1AIGen.dll
+C:\_Projekty\Expanze2\src\AIGen\obj\Release\1AIGen.pdb
