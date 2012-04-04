@@ -14,6 +14,7 @@ using Expanze.Gameplay;
 using Microsoft.Xna.Framework.Graphics;
 using Expanze.Utils;
 using Expanze.Utils.Genetic;
+using System.Xml;
 
 namespace Expanze
 {
@@ -210,39 +211,72 @@ namespace Expanze
             gameSettings = new GameSettings(points,mapType,mapSize,mapWealth);
         }
 
+        private void PrepareCampaignPlayers()
+        {
+            players.Clear();
+
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load("Content/Maps/" + mapSource);
+
+            XmlNodeList playersNodes = xDoc.GetElementsByTagName("players")[0].ChildNodes;
+
+            String playerName;
+            Color playerColor;
+            IComponentAI playerAI;
+            int playerOrder;
+
+            foreach (XmlNode player in playersNodes)
+            {
+                playerName = "";
+                playerColor = Color.Black;
+                playerAI = null;
+                playerOrder = 0;
+
+                foreach (XmlNode info in player.ChildNodes)
+                {
+                    switch (info.Name)
+                    {
+                        case "order":
+                            playerOrder = Convert.ToInt32(info.InnerText);
+                            break;
+                        case "name":
+                            playerName = info.InnerText;
+                            break;
+                        case "color":
+                            switch (info.InnerText)
+                            {
+                                case "Red": playerColor = Color.Red; break;
+                                case "Blue": playerColor = Color.Blue; break;
+                                case "Green": playerColor = Color.Green; break;
+                                case "Orange": playerColor = Color.Orange; break;
+                                case "Yellow": playerColor = Color.Yellow; break;
+                                case "Black": playerColor = Color.Black; break;
+                                case "Purple": playerColor = Color.Purple; break;
+                            }
+                            break;
+                        case "AI":
+                            if (info.InnerText.ToLower() == "human")
+                                playerAI = null;
+                            else
+                            {
+                                foreach (IComponentAI AI in CoreProviderAI.AI)
+                                {
+                                    if (AI.GetAIName() == info.InnerText)
+                                        playerAI = AI.Clone();
+                                    break;
+                                }
+                            }
+                            break;
+                    }
+                }
+                players.Add(new Player(playerName, playerColor, playerAI, playerOrder));
+            }
+        }
+
         internal void PrepareCampaignMap(string mapName)
         {
             mapSource = mapName;
-
-            //this.ResetGameSettings();
-            //gameSettings.SetPoints(Settings.points);
-            players.Clear();
-            IComponentAI componentAI = null;
-            foreach (IComponentAI AI in CoreProviderAI.AI)
-            {
-                componentAI = AI;
-                break;
-            }
-
-            int nameCount = Strings.MENU_HOT_SEAT_NAMES.Length;
-
-            int firstPlayerNameID = randomNumber.Next() % nameCount;
-            int secondPlayerNameID;
-
-            do
-            {
-                secondPlayerNameID = randomNumber.Next() % nameCount;
-            } while (secondPlayerNameID == firstPlayerNameID);
-
-            if (componentAI != null)
-            {
-                IComponentAI componentAICopy = componentAI.Clone();
-                this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[secondPlayerNameID], Color.Blue, componentAICopy, 0));
-            }
-            else
-                this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[secondPlayerNameID], Color.Blue, null, 0));
-
-            this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[firstPlayerNameID], Color.Red, null, 1));
+            PrepareCampaignPlayers();
         }
 
         public void PrepareQuickGame()
