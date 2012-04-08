@@ -1,5 +1,0 @@
-C:\_Projekty\Expanze2\src\Expanze\bin\x86\Debug\Plugins\1AIGen.dll
-C:\_Projekty\Expanze2\src\Expanze\bin\x86\Debug\Plugins\1AIGen.pdb
-C:\_Projekty\Expanze2\src\AIGen\obj\Debug\ResolveAssemblyReference.cache
-C:\_Projekty\Expanze2\src\AIGen\obj\Debug\1AIGen.dll
-C:\_Projekty\Expanze2\src\AIGen\obj\Debug\1AIGen.pdb
