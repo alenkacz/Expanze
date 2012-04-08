@@ -165,6 +165,7 @@ namespace CorePlugin
 
         int GetDistance(ITown a, ITown b);
         int GetDistanceToTown(ITown town, IPlayer player);
+        int GetDistanceToRoad(IRoad road, IPlayer player);
         List<IRoad> GetRoadsToTown(ITown town, IPlayer player);
 
         /// <summary>

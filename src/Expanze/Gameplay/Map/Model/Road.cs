@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using CorePlugin;
+using Expanze.Gameplay;
 
 namespace Expanze
 {
@@ -20,11 +21,14 @@ namespace Expanze
 
         private TownModel[] neighbour;       /// every road must have two town neighbours
 
+        private PathNode pathNode;      /// node used for finding path to road
+                                        
         public RoadModel()
         {
             roadID = ++counter;
 
             neighbour = new TownModel[2];
+            pathNode = new PathNode();
             isBuild = false;
             playerOwner = null;
         }
@@ -126,6 +130,17 @@ namespace Expanze
             }
 
             return RoadBuildError.OK;
+        }
+
+        internal void ClearNodePath()
+        {
+            pathNode.Clear();
+        }
+
+        internal PathNode GetPathNode() { return pathNode; }
+        internal void SetPathNode(int distance, TownModel ancestorTown, IRoad ancestorRoad)
+        {
+            pathNode.Set(distance, ancestorTown, ancestorRoad);
         }
     }
 }

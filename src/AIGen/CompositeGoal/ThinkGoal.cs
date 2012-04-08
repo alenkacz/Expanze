@@ -36,7 +36,9 @@ namespace AIGen
 
             mainGoals = new LinkedList<MainGoal>();
 
+            
             mainGoals.AddLast(new MainGoal(new BuildTown(map, koefInGoal[0], depth + 1), koefMainGoal[0]));
+            mainGoals.AddLast(new MainGoal(new BuildRoad(map, 0.5, depth + 1), 0.1f));
             mainGoals.AddLast(new MainGoal(new BuildSourceBuilding(map, koefInGoal[1], depth + 1), koefMainGoal[1]));
             if (map.CanBuildBuildingInTown(0, 0, BuildingKind.FortBuilding) != BuildingBuildError.Ban)
                 mainGoals.AddLast(new MainGoal(new BuildFort(map, koefInGoal[2], koefInGoal[3], depth + 1), koefMainGoal[2]));

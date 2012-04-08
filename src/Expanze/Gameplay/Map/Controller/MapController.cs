@@ -49,7 +49,7 @@ namespace Expanze.Gameplay.Map
 
         public IRoad GetIRoadByID(int roadID)
         {
-            if (roadID < 1 || roadID >= roadByID.Length)
+            if (roadID < 1 || roadID > roadByID.Length)
                 return null;
             if (roadByID[roadID - 1] == null)
                 roadByID[roadID - 1] = map.GetRoadByID(roadID);
@@ -779,6 +779,12 @@ namespace Expanze.Gameplay.Map
                 town.ClearNodePath();
             }
 
+            for (int loop1 = 1; loop1 <= GetMaxRoadID(); loop1++)
+            {
+                RoadModel road = (RoadModel) GetIRoadByID(loop1);
+                road.ClearNodePath();
+            }
+
             Queue<TownModel> openList = new Queue<TownModel>();
             List<ITown> buildedTowns = player.GetTown();
 
@@ -792,6 +798,9 @@ namespace Expanze.Gameplay.Map
             foreach (IRoad road in buildedRoads)
             {
                 TownModel town;
+                RoadModel roadM = (RoadModel) road;
+                roadM.SetPathNode(0, null, null);
+
                 foreach(ITown itown in road.GetITown())
                 {
                     town = (TownModel)itown;
@@ -815,6 +824,8 @@ namespace Expanze.Gameplay.Map
                     if (road != null &&
                         !road.GetIsBuild())
                     {
+                        RoadModel roadM = (RoadModel)road;
+                        roadM.SetPathNode(dst + 1, ancestor, ancestor.GetPathNode().GetAncestorRoad());
                         foreach (ITown itown in road.GetITown())
                         {
                             if (itown != null && 
@@ -835,6 +846,14 @@ namespace Expanze.Gameplay.Map
 
             PathNode.SetIsValid(true);
             PathNode.SetPlayerReference(player);
+        }
+
+        public int GetDistanceToRoad(IRoad road, IPlayer player)
+        {
+            FindWaysToAllTowns(player);
+
+            RoadModel roadModel = (RoadModel)road;
+            return roadModel.GetPathNode().GetDistance();
         }
 
         public int GetDistanceToTown(ITown town, IPlayer player)

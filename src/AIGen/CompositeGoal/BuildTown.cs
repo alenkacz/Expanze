@@ -240,7 +240,7 @@ namespace AIGen
             lastBestTown = null;
 
             if (map.GetState() != EGameState.StateGame)
-                return 10.0f;
+                return Double.MaxValue;
             else
             {
                 int maxTownID = map.GetMaxTownID();
