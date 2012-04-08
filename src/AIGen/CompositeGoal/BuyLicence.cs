@@ -9,10 +9,14 @@ namespace AIGen
     class BuyLicence : CompositeGoal
     {
         SourceKind bestKind;
+        double kPoints;
+        double kLicence;
 
-        public BuyLicence(IMapController map, int depth)
+        public BuyLicence(IMapController map, double kPoints, int depth)
             : base(map, depth, "Buy Licence")
         {
+            this.kPoints = kPoints;
+            kLicence = 1 - kPoints;
         }
 
         public override void Init()
@@ -61,7 +65,23 @@ namespace AIGen
             if (bestSourceDesirability > 1.0)
                 bestSourceDesirability = 1.0;
 
-            return bestSourceDesirability;
+            double points;
+            switch (map.GetPlayerMe().GetMarketLicence(bestKind))
+            {
+                case LicenceKind.NoLicence:
+                    points = map.GetActionPoints(PlayerPoints.LicenceLvl1) + map.GetActionPoints(PlayerPoints.LicenceLvl2);
+                    break;
+                case LicenceKind.FirstLicence:
+                    points = map.GetActionPoints(PlayerPoints.LicenceLvl2);
+                    break;
+                default:
+                    points = 0.0f;
+                    break;
+            }
+            if (points > 1)
+                points = 1.0;
+
+            return kLicence * bestSourceDesirability + kPoints * points;
         }
 
         private bool HasFreeSlot()

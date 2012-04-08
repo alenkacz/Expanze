@@ -16,43 +16,23 @@ namespace AIGen
         double kBestSource;
         double kHasOtherMonastery;
         double kHasMonastery;
+        double kPoints;
 
-         public BuildMonastery(IMapController map, double k, double kHasMonastery, int depth)
+        public BuildMonastery(IMapController map, double kHexa, double kHasSources, double kBestSource, double kHasOtherMonastery, double kPoints, double kHasMonastery, int depth)
             : base(map, depth, "Build Monastery")
-        {
-            const double koef = 1000.0;
-
-            k *= koef;
-            kHasSources = k;
-            k = (k - (int)kHasSources) * koef;
-            kBestSource = k;
-            k = (k - (int)kBestSource) * koef;
-            kHexa = k;
-            k = (k - (int)kHexa) * koef;
-            kHasOtherMonastery = k;
-
-            BaseInit(kHasMonastery);
-        }
-
-        private void BaseInit(double kHasMonastery)
         {
             this.kHasMonastery = kHasMonastery;
 
-            double sum = kHexa + kHasSources + kBestSource + kHasOtherMonastery;
+            double sum = kHexa + kHasSources + kBestSource + kHasOtherMonastery + kPoints;
 
             this.kHexa = kHexa / sum;
             this.kHasSources = kHasSources / sum;
             this.kBestSource = kBestSource / sum;
             this.kHasOtherMonastery = kHasOtherMonastery / sum;
+            this.kPoints = kPoints / sum;
 
             lastBestTown = null;
             lastBestPos = 0;
-        }
-
-        public BuildMonastery(IMapController map, double kHexa, double kHasSources, double kBestSource, double kHasOtherMonastery, double kHasMonastery, int depth)
-            : base(map, depth, "Build Monastery")
-        {
-            BaseInit(kHasMonastery);
         }
 
         public override void Init()
@@ -100,13 +80,15 @@ namespace AIGen
                 return 0.0;
 
 
-            double hasMonasteryDesirability = (map.GetPlayerMe().GetBuildingCount(Building.Monastery) > 0) ? kHasMonastery : 1.0;
+            double hasMonasteryDesirability = (map.GetPlayerMe().GetBuildingCount(Building.Monastery) > 0 && map.GetActionPoints(PlayerPoints.Monastery) == 0) ? kHasMonastery : 1.0;
             double hasMoneyDesirability = Desirability.GetHasSources(PriceKind.BMonastery);
             double bestSourceDesirability = ((GetBestSource() - 40) / 60.0);
             double hasSomeoneMonastery = (Desirability.HasSomeoneBuilding(Building.Monastery)) ? 0.0 : 1.0;
             if (bestSourceDesirability > 1.0)
                 bestSourceDesirability = 1.0;
-            double desirability = (bestDesirability * kHexa + hasMoneyDesirability * kHasSources + bestSourceDesirability * kBestSource + hasSomeoneMonastery * kHasOtherMonastery) * hasMonasteryDesirability;
+            double points = map.GetActionPoints(PlayerPoints.Monastery) + map.GetActionPoints(PlayerPoints.UpgradeLvl1) + map.GetActionPoints(PlayerPoints.UpgradeLvl2);
+            points = (points > 0) ? 1.0 : 0.0;
+            double desirability = (points * kPoints + bestDesirability * kHexa + hasMoneyDesirability * kHasSources + bestSourceDesirability * kBestSource + hasSomeoneMonastery * kHasOtherMonastery) * hasMonasteryDesirability;
 
             return desirability;
         }

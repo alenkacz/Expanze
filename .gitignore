@@ -15,6 +15,8 @@ src/AIEasy/bin
 src/AIEasy/obj
 src/AIHard/bin
 src/AIHard/obj
+src/AIGen/bin
+src/AIGen/obj
 src/Content/obj
 *.user
 *.zip

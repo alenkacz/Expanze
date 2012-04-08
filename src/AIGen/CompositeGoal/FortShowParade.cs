@@ -9,19 +9,19 @@ namespace AIGen
     class FortShowParade : CompositeGoal
     {
         double kHasSources;
-        double kPointsToWin;
+        double kPoints;
 
         public FortShowParade(IMapController map, double kHasSources, int depth)
             : this(map, kHasSources, 1 - kHasSources, depth)
         {
         }
 
-        public FortShowParade(IMapController map, double kHasSources, double kPointsToWin, int depth)
+        public FortShowParade(IMapController map, double kHasSources, double kPoints, int depth)
             : base(map, depth, "Show Parade")
         {
-            double sum = kHasSources + kPointsToWin;
+            double sum = kHasSources + kPoints;
             this.kHasSources = kHasSources / sum;
-            this.kPointsToWin = kPointsToWin / sum;
+            this.kPoints = kPoints / sum;
         }
 
         public override void Init()
@@ -35,8 +35,8 @@ namespace AIGen
             if (map.GetPlayerMe().GetBuildingCount(Building.Fort) == 0)
                 return 0.0;
 
-            double pointsToWinDesirability = (map.GetPlayerMe().GetPoints() / (double) map.GetGameSettings().GetWinningPoints()) * kPointsToWin;
-            double desirability = Desirability.GetHasSources(PriceKind.AParade) * kHasSources + pointsToWinDesirability;
+            double pointsDesirability = (map.GetActionPoints(PlayerPoints.FortParade) > 0) ? 1.0 : 0.0;
+            double desirability = Desirability.GetHasSources(PriceKind.AParade) * kHasSources + pointsDesirability * kPoints;
 
             return desirability;
         }

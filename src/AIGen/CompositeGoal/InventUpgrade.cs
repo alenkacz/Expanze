@@ -10,9 +10,14 @@ namespace AIGen
     {
         SourceBuildingKind bestKind;
 
-        public InventUpgrade(IMapController map, int depth)
+        double kPoints;
+        double kUpgrade;
+
+        public InventUpgrade(IMapController map, double kPoints, int depth)
             : base(map, depth, "Invent upgrade")
         {
+            this.kPoints = kPoints;
+            kUpgrade = 1 - kPoints;
         }
 
         public override void Init()
@@ -62,7 +67,23 @@ namespace AIGen
             if (bestSourceDesirability > 1.0)
                 bestSourceDesirability = 1.0;
 
-            return bestSourceDesirability;
+            double points;
+            switch (map.GetPlayerMe().GetMonasteryUpgrade(bestKind))
+            {
+                case UpgradeKind.NoUpgrade :
+                    points = map.GetActionPoints(PlayerPoints.UpgradeLvl1) + map.GetActionPoints(PlayerPoints.UpgradeLvl2);
+                    break;
+                case UpgradeKind.FirstUpgrade:
+                    points = map.GetActionPoints(PlayerPoints.UpgradeLvl2);
+                    break;
+                default :
+                    points = 0.0f;
+                    break;
+            }
+            if (points > 1)
+                points = 1.0;
+
+            return kUpgrade * bestSourceDesirability + kPoints * points;
         }
 
         private bool HasFreeSlot()

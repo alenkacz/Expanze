@@ -10,9 +10,14 @@ namespace AIGen
     {
         IPlayer bestPlayer;
 
-        public FortStealSources(IMapController map, int depth)
+        double kPoints;
+        double kSteal;
+
+        public FortStealSources(IMapController map, double kPoints, int depth)
             : base(map, depth, "Steal sources")
         {
+            this.kPoints = kPoints;
+            kSteal = 1 - kPoints;
         }
 
         public override void Init()
@@ -44,7 +49,8 @@ namespace AIGen
                 }
             }
 
-            return maxDesirability;
+            double points = (map.GetActionPoints(PlayerPoints.FortStealSources) > 0) ? 1.0 : 0.0;
+            return maxDesirability * kSteal + points * kPoints;
         }
 
         public double GetDesirability(IPlayer player)

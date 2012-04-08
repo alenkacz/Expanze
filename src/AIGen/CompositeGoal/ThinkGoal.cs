@@ -37,23 +37,23 @@ namespace AIGen
             mainGoals = new LinkedList<MainGoal>();
 
             
-            mainGoals.AddLast(new MainGoal(new BuildTown(map, koefInGoal[0], depth + 1), koefMainGoal[0]));
+            mainGoals.AddLast(new MainGoal(new BuildTown(map, 0.5, 0.2, 0.3, depth + 1), koefMainGoal[0]));
             mainGoals.AddLast(new MainGoal(new BuildRoad(map, 0.5, depth + 1), 0.1f));
-            mainGoals.AddLast(new MainGoal(new BuildSourceBuilding(map, koefInGoal[1], depth + 1), koefMainGoal[1]));
-            if (map.CanBuildBuildingInTown(0, 0, BuildingKind.FortBuilding) != BuildingBuildError.Ban)
-                mainGoals.AddLast(new MainGoal(new BuildFort(map, koefInGoal[2], koefInGoal[3], depth + 1), koefMainGoal[2]));
-            if (map.CanShowParade() != ParadeError.Ban)
-                mainGoals.AddLast(new MainGoal(new FortShowParade(map, koefInGoal[4], depth + 1), koefMainGoal[3]));
-            if (map.CanBuildBuildingInTown(0, 0, BuildingKind.MarketBuilding) != BuildingBuildError.Ban)
-                mainGoals.AddLast(new MainGoal(new BuildMarket(map, koefInGoal[5], koefInGoal[6], depth + 1), koefMainGoal[4]));
-            if (map.CanBuildBuildingInTown(0, 0, BuildingKind.MonasteryBuilding) != BuildingBuildError.Ban)
-                mainGoals.AddLast(new MainGoal(new BuildMonastery(map, koefInGoal[7], koefInGoal[8], depth + 1), koefMainGoal[5]));
-            mainGoals.AddLast(new MainGoal(new InventUpgrade(map, depth + 1), koefMainGoal[6]));
-            mainGoals.AddLast(new MainGoal(new BuyLicence(map, depth + 1), koefMainGoal[7]));
-            if (map.CanStealSources("") != DestroySourcesError.Ban)
-                mainGoals.AddLast(new MainGoal(new FortStealSources(map, depth + 1), koefMainGoal[8]));
-            if (map.CanCaptureHexa(null) != CaptureHexaError.Ban)
-                mainGoals.AddLast(new MainGoal(new FortCaptureHexa(map, depth + 1), koefMainGoal[9]));
+            mainGoals.AddLast(new MainGoal(new BuildSourceBuilding(map, 0.3, 0.4, 0.3, depth + 1), koefMainGoal[1]));
+            if (!map.IsBanAction(PlayerAction.BuildFort))
+                mainGoals.AddLast(new MainGoal(new BuildFort(map, 0.1, 0.2, 0.3, 0.4, 0.5, depth + 1), koefMainGoal[2]));
+            if (!map.IsBanAction(PlayerAction.FortParade))
+                mainGoals.AddLast(new MainGoal(new FortShowParade(map, 0.4, depth + 1), koefMainGoal[3]));
+            if (!map.IsBanAction(PlayerAction.BuildMarket))
+                mainGoals.AddLast(new MainGoal(new BuildMarket(map, 0.1, 0.2, 0.3, 0.1, 0.1, 0.2, depth + 1), koefMainGoal[4]));
+            if (!map.IsBanAction(PlayerAction.BuildMonastery))
+                mainGoals.AddLast(new MainGoal(new BuildMonastery(map, 0.1, 0.2, 0.1, 0.3, 0.1, 0.2, depth + 1), koefMainGoal[5]));
+            mainGoals.AddLast(new MainGoal(new InventUpgrade(map, 0.4, depth + 1), koefMainGoal[6]));
+            mainGoals.AddLast(new MainGoal(new BuyLicence(map, 0.6, depth + 1), koefMainGoal[7]));
+            if (!map.IsBanAction(PlayerAction.FortStealSources))
+                mainGoals.AddLast(new MainGoal(new FortStealSources(map, 0.5, depth + 1), koefMainGoal[8]));
+            if (!map.IsBanAction(PlayerAction.FortCaptureHexa))
+                mainGoals.AddLast(new MainGoal(new FortCaptureHexa(map, 0.5, depth + 1), koefMainGoal[9]));
 
             Init();
         }
@@ -104,13 +104,21 @@ namespace AIGen
                 if (bestGoal != null &&
                     bestDesirability > 0.005)
                 {
+                    if (count > 40)
+                    {
+                        count = 1000;
+                        return GoalState.Failed;
+                    }
                     Log("");
                     Log("New Plan");
                     Log("  Fitness > " + bestDesirability);
                     subgoals.Enqueue(bestGoal);
                     bestGoal.Clear();
                     bestGoal.Init();
-                    return Process();
+                    count++;
+                    GoalState gstate = Process();
+                    count--;
+                    return gstate;
                 }
 
                 return GoalState.Active;

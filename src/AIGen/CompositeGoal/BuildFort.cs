@@ -13,41 +13,19 @@ namespace AIGen
 
         double kBestHexa;
         double kHasMoney;
-        double kPointsToWin;
+        double kPoints;
         double kHasOtherFort;
         double kHasFort;
 
-        public BuildFort(IMapController map, double k, double kHasFort, int depth) : base(map, depth, "Build fort")
+        public BuildFort(IMapController map, double kBestHexa, double kHasMoney, double kPoints, double kHasOtherFort, double kHasFort, int depth) : base(map, depth, "Build fort")
         {
             this.kHasFort = kHasFort;
 
-            const double koef = 1000.0;
-
-            k *= koef;
-            kHasMoney = k;
-            k = (k - (int) kHasMoney) * koef;
-            kPointsToWin = k;
-            k = (k - (int) kPointsToWin) * koef;
-            kBestHexa = k;
-            k = (k - (int) kBestHexa) * koef;
-            kHasOtherFort = k;
-
-            double sum = kBestHexa + kHasMoney + kPointsToWin + kHasOtherFort;
-            kBestHexa = kBestHexa / sum;
-            kHasMoney = kHasMoney / sum;
-            kPointsToWin = kPointsToWin / sum;
-            kHasOtherFort = kHasOtherFort / sum;
-        }
-
-        public BuildFort(IMapController map, double kBestHexa, double kHasMoney, double kPointsToWin, double kHasOtherFort, double kHasFort,  int depth) : base(map, depth, "Build fort")
-        {
-            this.kHasFort = kHasFort;
-
-            double sum = kBestHexa + kHasMoney + kPointsToWin + kHasOtherFort;
+            double sum = kBestHexa + kHasMoney + kPoints + kHasOtherFort;
             this.kBestHexa = kBestHexa / sum;
             this.kHasMoney = kHasMoney / sum;
+            this.kPoints = kPoints / sum;
             this.kHasOtherFort = kHasOtherFort / sum;
-            this.kPointsToWin = kPointsToWin / sum;
 
             lastBestTown = null;
             lastBestPos = 0;
@@ -96,12 +74,14 @@ namespace AIGen
                 return bestDesirability;
 
 
-            double hasFortDesirability = (map.GetPlayerMe().GetBuildingCount(Building.Fort) > 0) ? kHasFort : 1.0;
+            double hasFortDesirability = (map.GetPlayerMe().GetBuildingCount(Building.Fort) > 0 && map.GetActionPoints(PlayerPoints.Fort) == 0) ? kHasFort : 1.0;
 
             double hasMoneyDesirability = Desirability.GetHasSources(PriceKind.BFort);
-            double pointsToWinDesirability = (map.GetPlayerMe().GetPoints() / (double)map.GetGameSettings().GetWinningPoints());
+            double points = (map.GetActionPoints(PlayerPoints.Fort) + map.GetActionPoints(PlayerPoints.FortParade)) / 2.0f;
+            if (points > 1.0f)
+                points = 1.0f;
             double hasSomeoneFort = (Desirability.HasSomeoneBuilding(Building.Fort)) ? 0.0 : 1.0;
-            double desirability = (bestDesirability * kBestHexa + hasMoneyDesirability * kHasMoney + pointsToWinDesirability * kPointsToWin + hasSomeoneFort * kHasOtherFort) * hasFortDesirability;
+            double desirability = (bestDesirability * kBestHexa + hasMoneyDesirability * kHasMoney + points * kPoints + hasSomeoneFort * kHasOtherFort) * hasFortDesirability;
 
             return desirability;
         }

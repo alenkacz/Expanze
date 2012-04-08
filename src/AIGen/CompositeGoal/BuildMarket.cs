@@ -16,43 +16,23 @@ namespace AIGen
         double kBestSource;
         double kHasOtherMarket;
         double kHasMarket;
+        double kPoints;
 
-        public BuildMarket(IMapController map, double k, double kHasMarket, int depth)
+        public BuildMarket(IMapController map, double kHexa, double kHasSources, double kBestSource, double kHasOtherMarket, double kPoints, double kHasMarket, int depth)
             : base(map, depth, "BuildMarket")
-        {
-            const double koef = 1000.0;
-
-            k *= koef;
-            kHasSources = k;
-            k = (k - (int)kHasSources) * koef;
-            kBestSource = k;
-            k = (k - (int)kBestSource) * koef;
-            kHexa = k;
-            k = (k - (int)kHexa) * koef;
-            kHasOtherMarket = k;
-
-            BaseInit(kHasMarket);
-        }
-
-        private void BaseInit(double kHasMarket)
         {
             this.kHasMarket = kHasMarket;
 
-            double sum = kHexa + kHasSources + kBestSource + kHasOtherMarket;
+            double sum = kHexa + kHasSources + kBestSource + kHasOtherMarket + kPoints;
 
             this.kHexa = kHexa / sum;
             this.kHasSources = kHasSources / sum;
             this.kBestSource = kBestSource / sum;
             this.kHasOtherMarket = kHasOtherMarket / sum;
+            this.kPoints = kPoints / sum;
 
             lastBestTown = null;
             lastBestPos = 0;
-        }
-
-        public BuildMarket(IMapController map, double kHexa, double kHasSources, double kBestSource, double kHasOtherMarket, double kHasMarket, int depth)
-            : base(map, depth, "BuildMarket")
-        {
-            BaseInit(kHasMarket);
         }
 
         public override void Init()
@@ -100,17 +80,19 @@ namespace AIGen
                 return 0.0;
 
 
-            double hasMarketDesirability = (map.GetPlayerMe().GetBuildingCount(Building.Market) > 0) ? kHasMarket : 1.0;
+            double hasMarketDesirability = (map.GetPlayerMe().GetBuildingCount(Building.Market) > 0 && map.GetActionPoints(PlayerPoints.Market) == 0) ? kHasMarket : 1.0;
             double hasMoneyDesirability = Desirability.GetHasSources(PriceKind.BMarket);
             double bestSourceDesirability = ((GetBestSource() - 40) / 60.0);
             double hasSomeoneMarket = (Desirability.HasSomeoneBuilding(Building.Market)) ? 0.0 : 1.0;
             if(bestSourceDesirability > 1.0)
                 bestSourceDesirability = 1.0;
-            double desirability = (bestDesirability * kHexa + hasMoneyDesirability * kHasSources + bestSourceDesirability * kBestSource + hasSomeoneMarket * kHasOtherMarket) * hasMarketDesirability;
+            double points = map.GetActionPoints(PlayerPoints.Market) + map.GetActionPoints(PlayerPoints.LicenceLvl1) + map.GetActionPoints(PlayerPoints.LicenceLvl2);
+            points = (points > 0) ? 1.0 : 0.0;
+            double desirability = (points * kPoints + bestDesirability * kHexa + hasMoneyDesirability * kHasSources + bestSourceDesirability * kBestSource + hasSomeoneMarket * kHasOtherMarket) * hasMarketDesirability;
 
             return desirability;
         }
-
+        
         private int GetBestSource()
         {
             IPlayer me = map.GetPlayerMe();

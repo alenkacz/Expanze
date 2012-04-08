@@ -13,9 +13,14 @@ namespace AIGen
 
         List<int> bestHexaIDs;
 
-        public FortCaptureHexa(IMapController map, int depth)
+        double kCapture;
+        double kPoints;
+
+        public FortCaptureHexa(IMapController map, double kPoints, int depth)
             : base(map, depth, "Capture hexa")
         {
+            this.kPoints = kPoints;
+            kCapture = 1 - kPoints;
             bestHexa = null;
             bestHexaIDs = new List<int>();
         }
@@ -74,7 +79,8 @@ namespace AIGen
                 }
             }
 
-            return bestDesirability;
+            double points = (map.GetActionPoints(PlayerPoints.FortCaptureHexa) > 0) ? 1.0 : 0.0;
+            return bestDesirability * kCapture + points * kPoints;
         }
 
         public double GetDesirablity(IPlayer attacker, IHexa hexa)

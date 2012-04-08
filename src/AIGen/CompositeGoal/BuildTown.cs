@@ -24,20 +24,17 @@ namespace AIGen
 
         double kNearestTown;
         double kTownItself;
+        double kPoints;
 
-        public BuildTown(IMapController map, double kNearestTown, int depth)
-            : this(map, kNearestTown, 1 - kNearestTown, depth)
-        {
-        }
-
-        public BuildTown(IMapController map, double kNearestTown, double kTownItself, int depth)
+        public BuildTown(IMapController map, double kNearestTown, double kTownItself, double kPoints, int depth)
             : base(map, depth, "Build Town")
         {
             lastBestTown = null;
 
-            double sum = (kNearestTown + kTownItself);
+            double sum = (kNearestTown + kTownItself + kPoints);
             this.kNearestTown = kNearestTown / sum;
             this.kTownItself = kTownItself / sum;
+            this.kPoints = kPoints / sum;
         }
 
         public override void Init()
@@ -142,7 +139,9 @@ namespace AIGen
                     */
                 }
 
-                tempDesirability = tempDesirability * kTownItself + (count / (double) maxCount) * kNearestTown;
+                int points = map.GetActionPoints(PlayerPoints.Town);
+                tempDesirability = tempDesirability * kTownItself + (count / (double) maxCount) * kNearestTown +
+                    ((points > 0) ? 1.0f : 0.0f) * kPoints;
 
                 if (tempDesirability > bestDesirability)
                 {
