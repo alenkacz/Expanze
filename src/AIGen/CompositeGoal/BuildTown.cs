@@ -254,6 +254,8 @@ namespace AIGen
                         continue;
 
                     int dst = map.GetDistanceToTown(tempTown, map.GetPlayerMe());
+                    if (dst > 20)
+                        continue;
 
                     double coef = (dst <= 2) ? 1 - (dst * 0.1) : 1 - (dst * 0.15);
                     tempDesirability = tempDesirability * coef;
