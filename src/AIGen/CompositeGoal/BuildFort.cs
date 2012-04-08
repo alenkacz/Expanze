@@ -17,9 +17,9 @@ namespace AIGen
         double kHasOtherFort;
         double kHasFort;
 
-        public BuildFort(IMapController map, double kBestHexa, double kHasMoney, double kPoints, double kHasOtherFort, double kHasFort, int depth) : base(map, depth, "Build fort")
+        public BuildFort(IMapController map, double kBestHexa, double kHasMoney, double kPoints, double kHasOtherFort, int depth) : base(map, depth, "Build fort")
         {
-            this.kHasFort = kHasFort;
+            this.kHasFort = 0.2;
 
             double sum = kBestHexa + kHasMoney + kPoints + kHasOtherFort;
             this.kBestHexa = kBestHexa / sum;

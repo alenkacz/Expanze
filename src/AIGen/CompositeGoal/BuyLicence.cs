@@ -12,10 +12,10 @@ namespace AIGen
         double kPoints;
         double kLicence;
 
-        public BuyLicence(IMapController map, double kPoints, int depth)
+        public BuyLicence(IMapController map, int k, int depth)
             : base(map, depth, "Buy Licence")
         {
-            this.kPoints = kPoints;
+            kPoints = k / 1000.0f;
             kLicence = 1 - kPoints;
         }
 

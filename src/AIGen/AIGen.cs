@@ -18,10 +18,11 @@ namespace AIGen
             return "AI Gen";
         }
 
-        public void InitAIComponent(IMapController mapController, double[] koef)
+        public void InitAIComponent(IMapController mapController, int[][] koef)
         {
             this.mapController = mapController;
             Desirability.SetMapController(mapController);
+
             thinkGoal = new ThinkGoal(mapController, koef, 0);
         }
 

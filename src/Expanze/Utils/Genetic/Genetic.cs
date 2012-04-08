@@ -15,7 +15,7 @@ namespace Expanze.Utils.Genetic
         int generationNumber;
         Random rnd;
 
-        public Genetic(int populationSize, int chromozomeSize, double probCrossOver, double probMutability)
+        public Genetic(int populationSize, double probCrossOver, double probMutability)
         {
             rnd = new Random();
             this.probCrossOver = probCrossOver;
@@ -25,12 +25,12 @@ namespace Expanze.Utils.Genetic
 
             population = new Chromozone[populationSize];
             for (int loop1 = 0; loop1 < populationSize; loop1++)
-                population[loop1] = new Chromozone(chromozomeSize, rnd);
+                population[loop1] = new Chromozone(rnd);
 
             activeChromozomeID = 0;
         }
 
-        public double[] GetChromozone()
+        public int[][] GetChromozone()
         {
             return population[activeChromozomeID].GetGenes();
         }
@@ -66,12 +66,12 @@ namespace Expanze.Utils.Genetic
                 sumProb += ch.GetFitness() / sumFitness;
             }
 
-            double[][] sons;
+            int[][][] sons;
 
             while(newPopulation.Count < populationSize)
             {
-                double[] dad = Selection();
-                double[] mum = Selection();
+                int[][] dad = Selection();
+                int[][] mum = Selection();
                 
                 sons = CrossOver(dad, mum);
 
@@ -109,26 +109,35 @@ namespace Expanze.Utils.Genetic
             best.Log();          
         }
 
-        private double[] Mutation(double[] entity)
+        private int[][] Mutation(int[][] entity)
         {
-            for (int loop = 0; loop < entity.Length; loop++)
+            for (int loop1 = 0; loop1 < entity.Length; loop1++)
             {
-                double gene = entity[loop];
-                if (rnd.NextDouble() < probMutability)
+                for (int loop2 = 0; loop2 < entity[loop1].Length; loop2++)
                 {
-                    gene = rnd.NextDouble();
+                    int gene = entity[loop1][loop2];
+                    if (rnd.NextDouble() < probMutability)
+                    {
+                        gene = rnd.Next(1000);
+                    }
+                    entity[loop1][loop2] = gene;
                 }
-                entity[loop] = gene;
             }
 
             return entity;
         }
 
-        private double[][] CrossOver(double[] dad, double[] mum)
+        private int[][][] CrossOver(int[][] dad, int[][] mum)
         {
-            double[][] sons = new double[2][];
+            int[][][] sons = new int[2][][];
             for (int loop1 = 0; loop1 < sons.Length; loop1++)
-                sons[loop1] = new double[dad.Length];
+            {
+                sons[loop1] = new int[dad.Length][];
+                for (int loop2 = 0; loop2 < sons[loop1].Length; loop2++)
+                {
+                    sons[loop1][loop2] = new int[dad[loop2].Length];
+                }
+            }
 
             if (rnd.NextDouble() < probCrossOver)
             {
@@ -170,7 +179,7 @@ namespace Expanze.Utils.Genetic
             return sons;
         }
 
-        private double[] Selection()
+        private int[][] Selection()
         {
             double probRnd = rnd.NextDouble();
 

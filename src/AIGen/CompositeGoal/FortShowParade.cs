@@ -11,17 +11,11 @@ namespace AIGen
         double kHasSources;
         double kPoints;
 
-        public FortShowParade(IMapController map, double kHasSources, int depth)
-            : this(map, kHasSources, 1 - kHasSources, depth)
-        {
-        }
-
-        public FortShowParade(IMapController map, double kHasSources, double kPoints, int depth)
+        public FortShowParade(IMapController map, int k, int depth)
             : base(map, depth, "Show Parade")
         {
-            double sum = kHasSources + kPoints;
-            this.kHasSources = kHasSources / sum;
-            this.kPoints = kPoints / sum;
+            this.kHasSources = k / 1000.0f;
+            this.kPoints = 1- kHasSources;
         }
 
         public override void Init()

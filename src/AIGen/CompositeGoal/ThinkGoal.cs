@@ -11,49 +11,55 @@ namespace AIGen
     {
         LinkedList<MainGoal> mainGoals;
 
-        public ThinkGoal(IMapController map, double[] koef, int depth) : base(map, depth, "Think")
+        public ThinkGoal(IMapController map, int[][] koef, int depth) : base(map, depth, "Think")
         {
-            double[] koefMainGoal = koef;
-            double[] koefInGoal = null;
-
-            if (koef != null && koef.Length == 19)
+            if (koef == null)
             {
-                koefMainGoal = koef.Take<double>(10).ToArray<double>();
-                koefInGoal = koef.Skip<double>(10).ToArray<double>();
-            }
+                koef = new int[11][];
+                koef[0] = new int[4];
+                koef[1] = new int[2];
+                koef[2] = new int[4];
+                koef[3] = new int[5];
+                koef[4] = new int[2];
+                koef[5] = new int[6];
+                koef[6] = new int[6];
+                koef[7] = new int[2];
+                koef[8] = new int[2];
+                koef[9] = new int[2];
+                koef[10] = new int[2];
 
-
-            if (koefInGoal == null)
-            {
-                koefInGoal = new double[] {0.2, 0.8,                 // Build town
-                                           0.5, 0.5,                 // Build source building
-                                           0.6, 0.2, 0.2, 0.2, 0.05, // Build Fort
-                                           0.25, 0.75,               // Show parade
-                                           0.375, 0.125, 0.250, 0.250, 0.01, // Build Market
-                                           0.375, 0.125, 0.250, 0.250, 0.01  // Build Monastery
-                };
+                koef[0] = new int[] { 1, 300, 500, 100 };
+                koef[1] = new int[] {4, 100};
+                koef[2] = new int[] {1, 200, 100, 200};
+                koef[3] = new int[] {1, 2, 3, 4, 5};
+                koef[4] = new int[] {1, 200};
+                koef[5] = new int[] {1, 2, 3, 4, 5, 6};
+                koef[6] = new int[] {1, 2, 3, 4, 5, 6};
+                koef[7] = new int[] {1, 100};
+                koef[8] = new int[] {1, 200};
+                koef[9] = new int[] {2, 300};
+                koef[10] = new int[] {3, 100};
             }
 
             mainGoals = new LinkedList<MainGoal>();
+            mainGoals.AddLast(new MainGoal(new BuildTown(map, koef[0][1], koef[0][2], koef[0][3], depth + 1), koef[0][0]));
+            mainGoals.AddLast(new MainGoal(new BuildRoad(map, koef[1][1], depth + 1), koef[1][0]));
+            mainGoals.AddLast(new MainGoal(new BuildSourceBuilding(map, koef[2][1], koef[2][2], koef[2][3], depth + 1), koef[2][0]));
 
-            
-            mainGoals.AddLast(new MainGoal(new BuildTown(map, 0.5, 0.2, 0.3, depth + 1), koefMainGoal[0]));
-            mainGoals.AddLast(new MainGoal(new BuildRoad(map, 0.5, depth + 1), 0.1f));
-            mainGoals.AddLast(new MainGoal(new BuildSourceBuilding(map, 0.3, 0.4, 0.3, depth + 1), koefMainGoal[1]));
             if (!map.IsBanAction(PlayerAction.BuildFort))
-                mainGoals.AddLast(new MainGoal(new BuildFort(map, 0.1, 0.2, 0.3, 0.4, 0.5, depth + 1), koefMainGoal[2]));
+                mainGoals.AddLast(new MainGoal(new BuildFort(map, koef[3][1], koef[3][2], koef[3][3], koef[3][4], depth + 1), koef[3][0]));
             if (!map.IsBanAction(PlayerAction.FortParade))
-                mainGoals.AddLast(new MainGoal(new FortShowParade(map, 0.4, depth + 1), koefMainGoal[3]));
+                mainGoals.AddLast(new MainGoal(new FortShowParade(map, koef[4][1], depth + 1), koef[4][0]));
             if (!map.IsBanAction(PlayerAction.BuildMarket))
-                mainGoals.AddLast(new MainGoal(new BuildMarket(map, 0.1, 0.2, 0.3, 0.1, 0.1, 0.2, depth + 1), koefMainGoal[4]));
+                mainGoals.AddLast(new MainGoal(new BuildMarket(map, koef[5][1], koef[5][2], koef[5][3], koef[5][4], koef[5][5], depth + 1), koef[5][0]));
             if (!map.IsBanAction(PlayerAction.BuildMonastery))
-                mainGoals.AddLast(new MainGoal(new BuildMonastery(map, 0.1, 0.2, 0.1, 0.3, 0.1, 0.2, depth + 1), koefMainGoal[5]));
-            mainGoals.AddLast(new MainGoal(new InventUpgrade(map, 0.4, depth + 1), koefMainGoal[6]));
-            mainGoals.AddLast(new MainGoal(new BuyLicence(map, 0.6, depth + 1), koefMainGoal[7]));
+                mainGoals.AddLast(new MainGoal(new BuildMonastery(map, koef[6][1], koef[6][2], koef[6][3], koef[6][4], koef[6][5], depth + 1), koef[6][0]));
+            mainGoals.AddLast(new MainGoal(new InventUpgrade(map, koef[7][1], depth + 1), koef[7][0]));
+            mainGoals.AddLast(new MainGoal(new BuyLicence(map, koef[8][1], depth + 1), koef[8][0]));
             if (!map.IsBanAction(PlayerAction.FortStealSources))
-                mainGoals.AddLast(new MainGoal(new FortStealSources(map, 0.5, depth + 1), koefMainGoal[8]));
+                mainGoals.AddLast(new MainGoal(new FortStealSources(map, koef[9][1], depth + 1), koef[9][0]));
             if (!map.IsBanAction(PlayerAction.FortCaptureHexa))
-                mainGoals.AddLast(new MainGoal(new FortCaptureHexa(map, 0.5, depth + 1), koefMainGoal[9]));
+                mainGoals.AddLast(new MainGoal(new FortCaptureHexa(map, koef[10][1], depth + 1), koef[10][0]));
 
             Init();
         }
@@ -90,7 +96,7 @@ namespace AIGen
                     desirabilityCoef = mainGoal.desirabilityCoef;
 
                     tempDesirability = goal.GetDesirability();
-                    tempDesirability *= desirabilityCoef;
+                    tempDesirability *= desirabilityCoef / 1000.0f;
                     if (tempDesirability > bestDesirability)
                     {
                         bestGoal = goal;

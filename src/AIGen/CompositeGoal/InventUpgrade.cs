@@ -13,10 +13,10 @@ namespace AIGen
         double kPoints;
         double kUpgrade;
 
-        public InventUpgrade(IMapController map, double kPoints, int depth)
+        public InventUpgrade(IMapController map, int k, int depth)
             : base(map, depth, "Invent upgrade")
         {
-            this.kPoints = kPoints;
+            kPoints = k / 1000.0f;
             kUpgrade = 1 - kPoints;
         }
 

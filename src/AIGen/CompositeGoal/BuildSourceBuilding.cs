@@ -101,8 +101,9 @@ namespace AIGen
 
             int startSource = hexa.GetStartSource();
 
-            return (startSource / 24.0) * kBuildingItself + Desirability.GetHasSources(hexa.GetSourceBuildingCost()) * kHasSources +
+            double desirability = (startSource / 24.0) * kBuildingItself + Desirability.GetHasSources(hexa.GetSourceBuildingCost()) * kHasSources +
                 ((points > 0) ? 1.0 : 0.0) * kPoints;
+            return desirability;
         }
     }
 }

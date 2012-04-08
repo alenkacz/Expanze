@@ -7,24 +7,41 @@ namespace Expanze.Utils.Genetic
 {
     class Chromozone : IComparable
     {
-        double[] genes;
+        int[][] genes;
         double fitness;
         double probability;
 
-        public Chromozone(int length, Random rnd)
+        public Chromozone(Random rnd)
         {
-            genes = new double[length];
+            genes = new int[11][];
+            genes[0] = new int[4];
+            genes[1] = new int[2];
+            genes[2] = new int[4];
+            genes[3] = new int[5];
+            genes[4] = new int[2];
+            genes[5] = new int[6];
+            genes[6] = new int[6];
+            genes[7] = new int[2];
+            genes[8] = new int[2];
+            genes[9] = new int[2];
+            genes[10] = new int[2];
 
-            for (int loop1 = 0; loop1 < length; loop1++)
-                genes[loop1] = rnd.NextDouble();
+            for (int loop1 = 0; loop1 < genes.Length; loop1++)
+                for (int loop2 = 0; loop2 < genes[loop1].Length; loop2++)
+                {
+                    if(loop2 == 0)
+                        genes[loop1][loop2] = rnd.Next(1000);
+                    else
+                        genes[loop1][loop2] = rnd.Next(1000);
+                }
         }
 
-        internal Chromozone(double[] genes)
+        internal Chromozone(int [][] genes)
         {
             this.genes = genes;
         }
 
-        internal double[] GetGenes() { return genes; }
+        internal int[][] GetGenes() { return genes; }
 
         internal void SetFitness(double fitness)
         {
@@ -56,9 +73,10 @@ namespace Expanze.Utils.Genetic
         internal void Log(string src)
         {
             string msg = String.Format("{0:0.000}", fitness) + ";;";
-            foreach (double d in genes)
+            foreach (int[] action in genes)
             {
-                msg += String.Format("{0:0.00000000}", d) + "; ";
+                foreach(int koef in action)
+                    msg += String.Format("{0,3}", koef) + "; ";
             }
             Logger.Inst().Log(src, msg);
         }

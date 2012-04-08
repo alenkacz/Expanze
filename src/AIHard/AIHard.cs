@@ -18,12 +18,13 @@ namespace AIHard
             return "AI těžká";
         }
 
-        public void InitAIComponent(IMapController mapController, double[] koef)
+        public void InitAIComponent(IMapController mapController, int[][] koef)
         {
             this.mapController = mapController;
             Desirability.SetMapController(mapController);
-            koef = new double[] { 0.50753910, 0.69240258, 0.75383028, 0.005387260, 0.03888009, 0.31205954, 0.73031067, 0.38760135, 0.33115000, 0.85088233, 0.55350950, 0.39943568, 0.18883969, 0.41989920, 0.20405476, 0.34062831, 0.33398948, 0.71093270, 0.69218646 };
-            thinkGoal = new ThinkGoal(mapController, koef, 0);
+
+            double [] koefhard = new double[] { 0.50753910, 0.69240258, 0.75383028, 0.005387260, 0.03888009, 0.31205954, 0.73031067, 0.38760135, 0.33115000, 0.85088233, 0.55350950, 0.39943568, 0.18883969, 0.41989920, 0.20405476, 0.34062831, 0.33398948, 0.71093270, 0.69218646 };
+            thinkGoal = new ThinkGoal(mapController, koefhard, 0);
         }
 
         public void ResolveAI()

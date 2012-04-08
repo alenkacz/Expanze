@@ -18,10 +18,10 @@ namespace AIGen
         double kHasMonastery;
         double kPoints;
 
-        public BuildMonastery(IMapController map, double kHexa, double kHasSources, double kBestSource, double kHasOtherMonastery, double kPoints, double kHasMonastery, int depth)
+        public BuildMonastery(IMapController map, double kHexa, double kHasSources, double kBestSource, double kHasOtherMonastery, double kPoints, int depth)
             : base(map, depth, "Build Monastery")
         {
-            this.kHasMonastery = kHasMonastery;
+            kHasMonastery = 0.2;
 
             double sum = kHexa + kHasSources + kBestSource + kHasOtherMonastery + kPoints;
 

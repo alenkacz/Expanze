@@ -8,7 +8,7 @@ namespace CorePlugin
     public interface IComponentAI
     {
         String GetAIName();
-        void InitAIComponent(IMapController mapController, double[] koef);
+        void InitAIComponent(IMapController mapController, int[][] koef);
         void ResolveAI();
         IComponentAI Clone();
     }

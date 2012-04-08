@@ -18,10 +18,10 @@ namespace AIGen
         double kHasMarket;
         double kPoints;
 
-        public BuildMarket(IMapController map, double kHexa, double kHasSources, double kBestSource, double kHasOtherMarket, double kPoints, double kHasMarket, int depth)
+        public BuildMarket(IMapController map, double kHexa, double kHasSources, double kBestSource, double kHasOtherMarket, double kPoints, int depth)
             : base(map, depth, "BuildMarket")
         {
-            this.kHasMarket = kHasMarket;
+            this.kHasMarket = 0.2;
 
             double sum = kHexa + kHasSources + kBestSource + kHasOtherMarket + kPoints;
 

@@ -16,10 +16,10 @@ namespace AIGen
         double kCapture;
         double kPoints;
 
-        public FortCaptureHexa(IMapController map, double kPoints, int depth)
+        public FortCaptureHexa(IMapController map, int k, int depth)
             : base(map, depth, "Capture hexa")
         {
-            this.kPoints = kPoints;
+            kPoints = k / 1000.0f;
             kCapture = 1 - kPoints;
             bestHexa = null;
             bestHexaIDs = new List<int>();

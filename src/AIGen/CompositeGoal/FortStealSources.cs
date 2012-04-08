@@ -13,10 +13,10 @@ namespace AIGen
         double kPoints;
         double kSteal;
 
-        public FortStealSources(IMapController map, double kPoints, int depth)
+        public FortStealSources(IMapController map, int k, int depth)
             : base(map, depth, "Steal sources")
         {
-            this.kPoints = kPoints;
+            kPoints = k / 1000.0f;
             kSteal = 1 - kPoints;
         }
 

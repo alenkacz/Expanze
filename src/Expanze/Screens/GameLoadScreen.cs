@@ -115,7 +115,7 @@ namespace Expanze
         }
 
 
-        int time = 0;
+        //int time = 0;
         /// <summary>
         /// Draws the loading screen.
         /// </summary>

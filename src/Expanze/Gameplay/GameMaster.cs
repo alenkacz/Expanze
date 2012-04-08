@@ -61,7 +61,7 @@ namespace Expanze
 #if GENETIC
         private Genetic genetic;
         private double fitness;
-        private double[] chromozone;
+        private int[][] chromozone;
 
         private int geneticPopulation;
         private int geneticFitnessRound;
@@ -88,7 +88,7 @@ namespace Expanze
             fitness = 0.0;
             geneticPopulation = 20;
             geneticFitnessRound = 1;
-            genetic = new Genetic(geneticPopulation, 19, 0.75, 0.002);
+            genetic = new Genetic(geneticPopulation, 0.75, 0.002);
 #endif
         }
 
@@ -108,7 +108,7 @@ namespace Expanze
             }
 
             IComponentAI AI;
-            double[] setArray = new double[] { 0.50753910, 0.69240258, 0.75383028, 0.005387260, 0.03888009, 0.31205954, 0.73031067, 0.38760135, 0.33115000, 0.85088233, 0.55350950, 0.39943568, 0.18883969, 0.41989920, 0.20405476, 0.34062831, 0.33398948, 0.71093270, 0.69218646 };
+            int[][] setArray = null;
             for(int loop1 = 0; loop1 < players.Count; loop1++)
             {
                 players[loop1] = new Player(players[loop1].GetName(), players[loop1].GetColor(), players[loop1].GetComponentAI(), loop1);
@@ -662,12 +662,12 @@ namespace Expanze
                         double add;
                         if (players[winnerID].GetComponentAI().GetAIName().CompareTo("AI Gen") == 0)
                         {
-                            add = ((double)players[winnerID].GetPoints()) / (players[looserID].GetPoints()) - 1.0;
+                            add = players[winnerID].GetPoints();//((double)players[winnerID].GetPoints()) / (players[looserID].GetPoints()) - 1.0;
                             fitness += 3.0 + add;
                         }
                         else if (players[looserID].GetComponentAI().GetAIName().CompareTo("AI Gen") == 0)
                         {
-                            add = (double)(players[looserID].GetPoints()) / (players[winnerID].GetPoints()) * 3.0;
+                            add = players[looserID].GetPoints(); // / (players[winnerID].GetPoints()) * 3.0;
                             fitness += add;
                         }
                     }

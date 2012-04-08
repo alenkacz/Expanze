@@ -13,9 +13,10 @@ namespace AIGen
         IRoad lastBestRoad;
 
 
-        public BuildRoad(IMapController map, double kPoints, int depth)
+        public BuildRoad(IMapController map, int k, int depth)
             : base(map, depth, "Build road")
         {
+            kPoints = k / 1000.0f;
             kCantBuildTown = 1.0f - kPoints;
             lastBestRoad = null;
         }
