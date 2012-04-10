@@ -76,7 +76,9 @@ namespace Expanze.Utils.Genetic
             foreach (int[] action in genes)
             {
                 foreach(int koef in action)
-                    msg += String.Format("{0,3}", koef) + "; ";
+                    msg += String.Format("{0,3}", koef) + ";";
+
+                msg += ";";
             }
             Logger.Inst().Log(src, msg);
         }

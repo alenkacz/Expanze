@@ -237,6 +237,10 @@ namespace Expanze
             Thread loadingThread = new Thread(loadingThreadStart);
             loadingThread.Start();
 
+#if GENETIC
+            GameMaster.Inst().ResetGenetic();
+#endif
+
             while (!isGameLoaded)
             {
                 Thread.Sleep(100);

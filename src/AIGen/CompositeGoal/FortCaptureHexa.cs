@@ -41,6 +41,9 @@ namespace AIGen
         {
             IPlayer me = map.GetPlayerMe();
             List<IFort> forts = me.GetFort();
+            if (forts.Count == 0)
+                return 0.0f;
+
             IHexa hexa;
             IHexa hexaNeighbour;
             double tempDesirability;
@@ -78,6 +81,9 @@ namespace AIGen
                     }
                 }
             }
+
+            if (bestHexa == null)
+                return 0.0f;
 
             double points = (map.GetActionPoints(PlayerPoints.FortCaptureHexa) > 0) ? 1.0 : 0.0;
             return bestDesirability * kCapture + points * kPoints;

@@ -38,10 +38,14 @@ namespace Expanze
         List<IRoad> road;
 
         IComponentAI componentAI;   // is null if player is NOT controled by computer but is controled by human
+        int[][] personality;    // only for Gen AI
 
         private Statistic statistic;
 
-        public Player(String name, Color color, IComponentAI componentAI, int orderID)
+        public Player(String name, Color color, IComponentAI componentAI, int orderID) : this(name, color, componentAI, orderID, null)
+        {
+        }
+        public Player(String name, Color color, IComponentAI componentAI, int orderID, int[][] personality)
         {
             this.orderID = orderID;
             points = 0;
@@ -73,6 +77,7 @@ namespace Expanze
             this.color = color;
             this.name = name;
             this.componentAI = componentAI;
+            this.personality = personality;
 
             materialChanged = false;
             active = true;
@@ -306,6 +311,7 @@ namespace Expanze
             if (this.active && !active)
             {
                 GameMaster.Inst().AddToPlayerCount(-1);
+                points = 0;
                 Message.Inst().Show(Strings.GAME_ALERT_TITLE_AI_EXCEPTION, GetName() + " " + Strings.GAME_ALERT_DESCRIPTION_AI_EXCEPTION, GameResources.Inst().GetHudTexture(HUDTexture.IconTown));
             }
 
@@ -342,6 +348,11 @@ namespace Expanze
         internal void AddSumSourcesStat()
         {
             statistic.AddStat(Statistic.Kind.SumSources, source.GetAsArray().Sum(), GameMaster.Inst().GetTurnNumber());
+        }
+
+        internal int[][] GetPersonality()
+        {
+            return personality;
         }
     }
 }

@@ -84,15 +84,13 @@ namespace Expanze
         {
             randomNumber = new Random();
             gameCount = 0;
-#if GENETIC       
-            fitness = 0.0;
-            geneticPopulation = 20;
-            geneticFitnessRound = 1;
-            genetic = new Genetic(geneticPopulation, 0.75, 0.002);
-#endif
         }
 
-        public void AddToPlayerCount(int i) { playerCount += i; }
+        public void AddToPlayerCount(int i) { 
+            playerCount += i;
+            if (playerCount == 1)
+                winnerNew = true;
+        }
 
         public bool StartGame(Map map)
         {
@@ -108,9 +106,10 @@ namespace Expanze
             }
 
             IComponentAI AI;
-            int[][] setArray = null;
+            int[][] setArray;
             for(int loop1 = 0; loop1 < players.Count; loop1++)
             {
+                setArray = players[loop1].GetPersonality();
                 players[loop1] = new Player(players[loop1].GetName(), players[loop1].GetColor(), players[loop1].GetComponentAI(), loop1);
                 AI = players[loop1].GetComponentAI();
 
@@ -224,6 +223,7 @@ namespace Expanze
             Color playerColor;
             IComponentAI playerAI;
             int playerOrder;
+            int[][] playerPersonality;
 
             foreach (XmlNode player in playersNodes)
             {
@@ -231,6 +231,7 @@ namespace Expanze
                 playerColor = Color.Black;
                 playerAI = null;
                 playerOrder = 0;
+                playerPersonality = null;
 
                 foreach (XmlNode info in player.ChildNodes)
                 {
@@ -276,9 +277,38 @@ namespace Expanze
                                 }
                             }
                             break;
+
+                        case "personality" :
+                            playerPersonality = new int[11][];
+                            playerPersonality[0] = new int[4];
+                            playerPersonality[1] = new int[2];
+                            playerPersonality[2] = new int[4];
+                            playerPersonality[3] = new int[5];
+                            playerPersonality[4] = new int[2];
+                            playerPersonality[5] = new int[6];
+                            playerPersonality[6] = new int[6];
+                            playerPersonality[7] = new int[2];
+                            playerPersonality[8] = new int[2];
+                            playerPersonality[9] = new int[2];
+                            playerPersonality[10] = new int[2];
+                            
+                            String [] koef = info.InnerText.Split(";".ToCharArray());
+                            int koefID = 0;
+                            for (int loop1 = 0; loop1 < playerPersonality.Length; loop1++)
+                            {
+                                for (int loop2 = 0; loop2 < playerPersonality[loop1].Length; loop2++)
+                                {
+                                    while (koefID < koef.Length - 1 && koef[koefID] == "")
+                                        koefID++;
+
+                                    playerPersonality[loop1][loop2] = Convert.ToInt32(koef[koefID++]);
+                                }
+                            }
+
+                            break;
                     }
                 }
-                players.Add(new Player(playerName, playerColor, playerAI, playerOrder));
+                players.Add(new Player(playerName, playerColor, playerAI, playerOrder, playerPersonality));
             }
         }
 
@@ -660,16 +690,24 @@ namespace Expanze
                         int looserID = (winnerID == 0) ? 1 : 0;
 
                         double add;
+                        int genID = 0;
                         if (players[winnerID].GetComponentAI().GetAIName().CompareTo("AI Gen") == 0)
                         {
-                            add = players[winnerID].GetPoints();//((double)players[winnerID].GetPoints()) / (players[looserID].GetPoints()) - 1.0;
-                            fitness += 3.0 + add;
+                            genID = winnerID;
+                            add = ((double)players[winnerID].GetPoints() + 1) / (players[looserID].GetPoints() + 1) * 1000;
+
+                            if (turnNumber < Settings.maxTurn)
+                                fitness += 3000.0 + add;
                         }
                         else if (players[looserID].GetComponentAI().GetAIName().CompareTo("AI Gen") == 0)
                         {
-                            add = players[looserID].GetPoints(); // / (players[winnerID].GetPoints()) * 3.0;
+                            genID = looserID;
+                            add = ((double)players[looserID].GetPoints() + 1) / (players[winnerID].GetPoints() + 1) * 1000;
                             fitness += add;
                         }
+                        fitness += players[genID].GetTown().Count * 2;
+                        fitness += players[genID].GetRoad().Count;
+                        fitness += players[genID].GetCollectSourcesNormal().GetAsArray().Sum() / 50.0;
                     }
 
                     if (gameCount % geneticFitnessRound == 0)
@@ -677,7 +715,7 @@ namespace Expanze
                         //fitness -= 8;
                         if (fitness < 0.0)
                             fitness = 0.0;
-
+                        fitness /= 1000.0f;
                         genetic.SetFitness(fitness);
                         fitness = 0;
                     }
@@ -934,5 +972,16 @@ namespace Expanze
         }
 #endif
 
+
+        internal void ResetGenetic()
+        {
+            gameCount = 0;
+#if GENETIC
+            fitness = 0.0;
+            geneticPopulation = 20;
+            geneticFitnessRound = 1;
+            genetic = new Genetic(geneticPopulation, 0.75, 0.002);
+#endif
+        }
     }
 }
