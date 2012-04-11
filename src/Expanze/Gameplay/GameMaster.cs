@@ -980,7 +980,7 @@ namespace Expanze
             fitness = 0.0;
             geneticPopulation = 30;
             geneticFitnessRound = 1;
-            genetic = new Genetic(geneticPopulation, 0.95, 0.02, 2);
+            genetic = new Genetic(geneticPopulation, 0.85, 0.05, 2, 2000, 10, 2.0);
 #endif
         }
     }

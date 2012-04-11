@@ -833,7 +833,7 @@ namespace Expanze.Gameplay.Map
                                 itown.GetIOwner() == null)
                             {
                                 TownModel town = (TownModel)itown;
-                                if (town.GetPathNode().GetDistance() == PathNode.INFINITY)
+                                if (!openList.Contains(town) && town.GetPathNode().GetDistance() == PathNode.INFINITY)
                                 {
                                     town.SetPathNode(dst + 1, ancestor, road);
                                     openList.Enqueue(town);

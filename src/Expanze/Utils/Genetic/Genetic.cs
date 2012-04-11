@@ -19,13 +19,15 @@ namespace Expanze.Utils.Genetic
         int generationNumber;
         double shareSigma;
         double shareAlfa;
+        double scaleSigma;
         Random rnd;
 
-        public Genetic(int populationSize, double probCrossOver, double probMutability, int elitism)
+        public Genetic(int populationSize, double probCrossOver, double probMutability, int elitism, double shareSigma, double shareAlfa, double scaleSigma)
         {
             rnd = new Random();
-            shareSigma = 2000;
-            shareAlfa = 10;
+            this.shareSigma = shareSigma;
+            this.shareAlfa = shareAlfa;
+            this.scaleSigma = scaleSigma;
             this.elitism = elitism;
             this.probCrossOver = probCrossOver;
             this.probMutability = probMutability;
@@ -76,17 +78,53 @@ namespace Expanze.Utils.Genetic
 
         }
 
+        void ScaleFactor()
+        {
+            double sumFitness = population[0].GetFitness();
+            double avgFitness;
+            double maxFitness = population[0].GetFitness();
+            double minFitness = population[0].GetFitness();
+            double fitness;
+            for (int loop1 = 1; loop1 < population.Length; loop1++)
+            {
+                fitness = population[loop1].GetFitness();
+                sumFitness += fitness;
+                if (fitness > maxFitness)
+                    maxFitness = fitness;
+                if (fitness < minFitness)
+                    minFitness = fitness;
+            }
+            avgFitness = sumFitness / population.Length;
+            double divideFactor = (maxFitness / avgFitness) / scaleSigma;
+            double multiFactor = (avgFitness / minFitness) / scaleSigma;
+
+            for (int loop1 = 0; loop1 < population.Length; loop1++)
+            {
+                if (population[loop1].GetFitness() > avgFitness)
+                {
+                    population[loop1].SetFitness(population[loop1].GetFitness() / divideFactor);
+                }
+                else
+                {
+                    population[loop1].SetFitness(population[loop1].GetFitness() * multiFactor);
+                }
+            }
+        }
+
         private void NewPopulation()
         {
             Log();
             List<Chromozone> newPopulation = new List<Chromozone>();
-            ShareFactor();
+
+            ScaleFactor();
 
             Array.Sort(population);
             for (int loop1 = 0; loop1 < elitism; loop1++)
             {
                 newPopulation.Add(new Chromozone(population[loop1].GetGenes()));
             }
+
+            ShareFactor();
 
             double sumFitness = 0.0;
             double sumProb = 0.0;
