@@ -10,9 +10,12 @@ namespace Expanze.Utils.Genetic
         int[][] genes;
         double fitness;
         double probability;
+        Random rnd;
 
         public Chromozone(Random rnd)
         {
+            this.rnd = rnd;
+
             genes = new int[11][];
             genes[0] = new int[4];
             genes[1] = new int[2];
@@ -27,18 +30,26 @@ namespace Expanze.Utils.Genetic
             genes[10] = new int[2];
 
             for (int loop1 = 0; loop1 < genes.Length; loop1++)
-                for (int loop2 = 0; loop2 < genes[loop1].Length; loop2++)
-                {
-                    if(loop2 == 0)
-                        genes[loop1][loop2] = rnd.Next(1000);
-                    else
-                        genes[loop1][loop2] = rnd.Next(1000);
-                }
+                GenerateNewBigGen(loop1);
+
+            ScaleIt();
+        }
+
+        internal void GenerateNewBigGen(int id)
+        {
+            for (int loop2 = 0; loop2 < genes[id].Length; loop2++)
+            {
+                if (loop2 == 0)
+                    genes[id][loop2] = rnd.Next(1000);
+                else
+                    genes[id][loop2] = rnd.Next(Genetic.SUM_COEF);
+            }
         }
 
         internal Chromozone(int [][] genes)
         {
             this.genes = genes;
+            ScaleIt();
         }
 
         internal int[][] GetGenes() { return genes; }
@@ -65,6 +76,40 @@ namespace Expanze.Utils.Genetic
             return fitness;
         }
 
+        private void ScaleIt()
+        {
+            for (int loop1 = 0; loop1 < genes.Length; loop1++)
+            {
+                if(genes[loop1].Length > 2) // main goal coeficient and two params in one
+                {
+                    double oldSum = 0;
+                    int biggest = 0;
+                    int biggestID = -1;
+                    for (int loop2 = 1; loop2 < genes[loop1].Length; loop2++)
+                    {
+                        oldSum += genes[loop1][loop2];
+                        if (genes[loop1][loop2] > biggest)
+                        {
+                            biggest = genes[loop1][loop2];
+                            biggestID = loop2;
+                        }
+                    }
+
+                    int newSum = 0;
+                    for (int loop2 = 1; loop2 < genes[loop1].Length; loop2++)
+                    {
+                        genes[loop1][loop2] = (int) ((genes[loop1][loop2] / oldSum) * Genetic.SUM_COEF);
+                        newSum += genes[loop1][loop2];
+                    }
+
+                    if (newSum < Genetic.SUM_COEF)
+                    {
+                        genes[loop1][biggestID] += Genetic.SUM_COEF - newSum;
+                    }
+                }
+            }
+        }
+
         internal void Log()
         {
             Log("chromozone.txt");
@@ -81,6 +126,28 @@ namespace Expanze.Utils.Genetic
                 msg += ";";
             }
             Logger.Inst().Log(src, msg);
+        }
+
+        internal double DistanceTo(Chromozone b)
+        {
+            double chromDistance = 0.0;
+            for (int loop1 = 0; loop1 < genes.Length; loop1++)
+            {
+                for (int loop2 = 0; loop2 < genes[loop1].Length; loop2++)
+                {
+                    int genDistance = Math.Abs(genes[loop1][loop2] - b.genes[loop1][loop2]);
+
+                    if (loop2 == 0)
+                    {
+                        chromDistance += genDistance;
+                    }
+                    else
+                    {
+                        chromDistance += 5 * genDistance;
+                    }
+                }
+            }
+            return chromDistance;
         }
 
         internal void SetProbability(double p)

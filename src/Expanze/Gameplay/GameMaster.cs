@@ -694,20 +694,20 @@ namespace Expanze
                         if (players[winnerID].GetComponentAI().GetAIName().CompareTo("AI Gen") == 0)
                         {
                             genID = winnerID;
-                            add = ((double)players[winnerID].GetPoints() + 1) / (players[looserID].GetPoints() + 1) * 1000;
+                            add = (2 * players[winnerID].GetPoints() - players[looserID].GetPoints()) * 10;
 
                             if (turnNumber < Settings.maxTurn)
-                                fitness += 3000.0 + add;
+                                fitness += 300.0 + add;
                         }
                         else if (players[looserID].GetComponentAI().GetAIName().CompareTo("AI Gen") == 0)
                         {
                             genID = looserID;
-                            add = ((double)players[looserID].GetPoints() + 1) / (players[winnerID].GetPoints() + 1) * 1000;
+                            add = (2 * players[looserID].GetPoints() -  players[winnerID].GetPoints()) * 10;
                             fitness += add;
                         }
-                        fitness += players[genID].GetTown().Count * 2;
-                        fitness += players[genID].GetRoad().Count;
-                        fitness += players[genID].GetCollectSourcesNormal().GetAsArray().Sum() / 50.0;
+                        fitness += players[genID].GetTown().Count * 5 / turnNumber;
+                        fitness += players[genID].GetRoad().Count / turnNumber;
+                        fitness += players[genID].GetCollectSourcesNormal().GetAsArray().Sum() / 40.0 / turnNumber;
                     }
 
                     if (gameCount % geneticFitnessRound == 0)
@@ -715,7 +715,7 @@ namespace Expanze
                         //fitness -= 8;
                         if (fitness < 0.0)
                             fitness = 0.0;
-                        fitness /= 1000.0f;
+                        fitness /= 10.0f;
                         genetic.SetFitness(fitness);
                         fitness = 0;
                     }
@@ -978,9 +978,9 @@ namespace Expanze
             gameCount = 0;
 #if GENETIC
             fitness = 0.0;
-            geneticPopulation = 20;
+            geneticPopulation = 30;
             geneticFitnessRound = 1;
-            genetic = new Genetic(geneticPopulation, 0.75, 0.002);
+            genetic = new Genetic(geneticPopulation, 0.95, 0.02, 2);
 #endif
         }
     }

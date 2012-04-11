@@ -7,17 +7,26 @@ namespace Expanze.Utils.Genetic
 {
     class Genetic
     {
+        internal const int SUM_COEF = 100;
+
         Chromozone[] population;
+
         int activeChromozomeID;
         int populationSize;
+        int elitism;
         double probCrossOver;
         double probMutability;
         int generationNumber;
+        double shareSigma;
+        double shareAlfa;
         Random rnd;
 
-        public Genetic(int populationSize, double probCrossOver, double probMutability)
+        public Genetic(int populationSize, double probCrossOver, double probMutability, int elitism)
         {
             rnd = new Random();
+            shareSigma = 2000;
+            shareAlfa = 10;
+            this.elitism = elitism;
             this.probCrossOver = probCrossOver;
             this.probMutability = probMutability;
             this.populationSize = populationSize;
@@ -48,10 +57,36 @@ namespace Expanze.Utils.Genetic
             }
         }
 
+        private void ShareFactor()
+        {
+            for (int loop1 = 0; loop1 < population.Length; loop1++)
+            {
+                double share = 0.0;
+                for (int loop2 = 0; loop2 < population.Length; loop2++)
+                {
+                    double dist = population[loop1].DistanceTo(population[loop2]);
+                    if (dist < shareSigma)
+                    {
+                        share += 1.0 - Math.Pow((dist / shareSigma), shareAlfa);
+                    }
+                }
+                population[loop1].SetFitness(population[loop1].GetFitness() / share);
+            }
+
+
+        }
+
         private void NewPopulation()
         {
             Log();
             List<Chromozone> newPopulation = new List<Chromozone>();
+            ShareFactor();
+
+            Array.Sort(population);
+            for (int loop1 = 0; loop1 < elitism; loop1++)
+            {
+                newPopulation.Add(new Chromozone(population[loop1].GetGenes()));
+            }
 
             double sumFitness = 0.0;
             double sumProb = 0.0;
@@ -113,14 +148,18 @@ namespace Expanze.Utils.Genetic
         {
             for (int loop1 = 0; loop1 < entity.Length; loop1++)
             {
-                for (int loop2 = 0; loop2 < entity[loop1].Length; loop2++)
+                if (rnd.NextDouble() < probMutability)
                 {
-                    int gene = entity[loop1][loop2];
-                    if (rnd.NextDouble() < probMutability)
+                    for (int loop2 = 0; loop2 < entity[loop1].Length; loop2++)
                     {
-                        gene = rnd.Next(1000);
+                        int gene;// = entity[loop1][loop2];
+                        if (loop2 == 0)
+                            gene = rnd.Next(1000);
+                        else
+                            gene = rnd.Next(SUM_COEF);
+                        
+                        entity[loop1][loop2] = gene;
                     }
-                    entity[loop1][loop2] = gene;
                 }
             }
 
