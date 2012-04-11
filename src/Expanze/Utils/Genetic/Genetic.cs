@@ -8,6 +8,7 @@ namespace Expanze.Utils.Genetic
     class Genetic
     {
         internal const int SUM_COEF = 100;
+        internal const int MAX_MAIN_COEF = 1000;
 
         Chromozone[] population;
 
@@ -111,12 +112,32 @@ namespace Expanze.Utils.Genetic
             }
         }
 
+        private void KillTheWorsts(double trashhold)
+        {
+            int alive = 0;
+            for (alive = 0; alive < population.Length; alive++)
+            {
+                if (population[alive].GetFitness() < trashhold)
+                {
+                    break;
+                }
+            }
+
+            if (alive != population.Length)
+            {
+                Chromozone[] oldPopulation = new Chromozone[alive];
+                for (int loop1 = 0; loop1 < oldPopulation.Length; loop1++)
+                {
+                    oldPopulation[loop1] = population[loop1];
+                }
+                population = oldPopulation;
+            }
+        }
+
         private void NewPopulation()
         {
             Log();
             List<Chromozone> newPopulation = new List<Chromozone>();
-
-            ScaleFactor();
 
             Array.Sort(population);
             for (int loop1 = 0; loop1 < elitism; loop1++)
@@ -124,6 +145,9 @@ namespace Expanze.Utils.Genetic
                 newPopulation.Add(new Chromozone(population[loop1].GetGenes()));
             }
 
+            KillTheWorsts(0.00001);
+            AddFreshOnes(newPopulation);
+            ScaleFactor();
             ShareFactor();
 
             double sumFitness = 0.0;
@@ -156,6 +180,15 @@ namespace Expanze.Utils.Genetic
             }
 
             population = newPopulation.ToArray();
+        }
+
+        private void AddFreshOnes(List<Chromozone> newPopulation)
+        {
+            int newOnes = 0;
+            while (newPopulation.Count < populationSize && newOnes++ <= populationSize - population.Length)
+            {
+                newPopulation.Add(new Chromozone(rnd));
+            }
         }
 
         private void Log()
@@ -192,7 +225,7 @@ namespace Expanze.Utils.Genetic
                     {
                         int gene;// = entity[loop1][loop2];
                         if (loop2 == 0)
-                            gene = rnd.Next(1000);
+                            gene = rnd.Next(MAX_MAIN_COEF);
                         else
                             gene = rnd.Next(SUM_COEF);
                         
@@ -204,6 +237,42 @@ namespace Expanze.Utils.Genetic
             return entity;
         }
 
+        private int CrossoverGenes(int a, int b, int range)
+        {
+            if (a == b)
+                return a;
+
+            double probSum = 0.0;
+            double [] prob;
+            prob = new double[range];
+            double sigma = -Math.Abs(a-b)/2.0;
+            double tempProb1;
+            double tempProb2;
+            for(int loop1 = 0; loop1 < prob.Length; loop1++)
+            {
+                int delta = a - loop1;
+                tempProb1 = Math.Pow(Math.E, delta * delta / sigma);
+                delta = b - loop1;
+                tempProb2 = Math.Pow(Math.E, delta * delta / sigma);
+
+                prob[loop1] = (tempProb1 > tempProb2) ? tempProb1 : tempProb2;
+
+                probSum += prob[loop1];
+            }
+
+            double probPartSum = 0.0;
+            Random rnd = new Random();
+            double rndNumber = rnd.NextDouble();
+            for(int loop1 = 0; loop1 < prob.Length; loop1++)
+            {
+                prob[loop1] = prob[loop1] / probSum + probPartSum;
+                probPartSum = prob[loop1];
+                if(probPartSum > rndNumber)
+                    return loop1;
+            }
+            return range;
+        }
+
         private int[][][] CrossOver(int[][] dad, int[][] mum)
         {
             int[][][] sons = new int[2][][];
@@ -213,44 +282,23 @@ namespace Expanze.Utils.Genetic
                 for (int loop2 = 0; loop2 < sons[loop1].Length; loop2++)
                 {
                     sons[loop1][loop2] = new int[dad[loop2].Length];
-                }
-            }
 
-            if (rnd.NextDouble() < probCrossOver)
-            {
-                int breakID1 = 1 + rnd.Next() % (dad.Length - 1);
-                int breakID2;
-                do
-                {
-                    breakID2 = 1 + rnd.Next() % (dad.Length - 1);
-                } while (breakID2 == breakID1);
-
-                int temp;
-                if (breakID2 < breakID1)
-                {
-                    temp = breakID1;
-                    breakID1 = breakID2;
-                    breakID2 = temp;
-                }
-
-                for (int loop1 = 0; loop1 < dad.Length; loop1++)
-                {
-                    if (loop1 < breakID1 || loop1 > breakID2)
+                    if (rnd.NextDouble() < probCrossOver)
                     {
-                        sons[0][loop1] = mum[loop1];
-                        sons[1][loop1] = dad[loop1];
+                        sons[loop1][loop2][0] = CrossoverGenes(dad[loop2][0], mum[loop2][0], MAX_MAIN_COEF);
+                        for (int loop3 = 1; loop3 < sons[loop1][loop2].Length; loop3++)
+                        {
+                            sons[loop1][loop2][loop3] = CrossoverGenes(dad[loop2][loop3], mum[loop2][loop3], SUM_COEF);
+                        }
                     }
                     else
                     {
-                        sons[0][loop1] = dad[loop1];
-                        sons[1][loop1] = mum[loop1];
+                        for (int loop3 = 0; loop3 < sons[loop1][loop2].Length; loop3++)
+                        {
+                            sons[loop1][loop2][loop3] = (loop1 == 0) ? dad[loop2][loop3] : mum[loop2][loop3];
+                        }
                     }
                 }
-            }
-            else
-            {
-                sons[0] = mum;
-                sons[1] = dad;
             }
 
             return sons;

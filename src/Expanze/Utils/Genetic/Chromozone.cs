@@ -40,7 +40,7 @@ namespace Expanze.Utils.Genetic
             for (int loop2 = 0; loop2 < genes[id].Length; loop2++)
             {
                 if (loop2 == 0)
-                    genes[id][loop2] = rnd.Next(1000);
+                    genes[id][loop2] = rnd.Next(Genetic.MAX_MAIN_COEF);
                 else
                     genes[id][loop2] = rnd.Next(Genetic.SUM_COEF);
             }
@@ -48,6 +48,7 @@ namespace Expanze.Utils.Genetic
 
         internal Chromozone(int [][] genes)
         {
+            rnd = new Random();
             this.genes = genes;
             ScaleIt();
         }
