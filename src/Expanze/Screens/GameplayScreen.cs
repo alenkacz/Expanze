@@ -606,6 +606,7 @@ namespace Expanze
                 spriteBatch.End();
             }
 
+            GameMaster.Inst().DrawGeneticInfo();
 
             // If the game is transitioning on or off, fade it out to black.
             if (TransitionPosition > 0 || pauseAlpha > 0)

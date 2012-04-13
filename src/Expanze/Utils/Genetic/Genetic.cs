@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 
 namespace Expanze.Utils.Genetic
 {
@@ -11,6 +12,11 @@ namespace Expanze.Utils.Genetic
         internal const int MAX_MAIN_COEF = 1000;
 
         Chromozone[] population;
+        Chromozone theBestOne;
+        double fitnessBestOne;
+        
+        double lastFitness;
+        Stopwatch stopwatch;
 
         int activeChromozomeID;
         int populationSize;
@@ -39,7 +45,13 @@ namespace Expanze.Utils.Genetic
             for (int loop1 = 0; loop1 < populationSize; loop1++)
                 population[loop1] = new Chromozone(rnd);
 
+            theBestOne = new Chromozone(rnd);
+            fitnessBestOne = 0.0;
+
             activeChromozomeID = 0;
+            lastFitness = 0.0;
+            stopwatch = new Stopwatch();
+            stopwatch.Start();
         }
 
         public int[][] GetChromozone()
@@ -50,6 +62,7 @@ namespace Expanze.Utils.Genetic
         public void SetFitness(double fitness)
         {
             population[activeChromozomeID].SetFitness(fitness);
+            lastFitness = fitness;
             activeChromozomeID++;
 
             if (activeChromozomeID >= population.Length)
@@ -140,12 +153,18 @@ namespace Expanze.Utils.Genetic
             List<Chromozone> newPopulation = new List<Chromozone>();
 
             Array.Sort(population);
+            if (population[0].GetFitness() > fitnessBestOne)
+            {
+                fitnessBestOne = population[0].GetFitness();
+                theBestOne = population[0];
+            }
+
             for (int loop1 = 0; loop1 < elitism; loop1++)
             {
                 newPopulation.Add(new Chromozone(population[loop1].GetGenes()));
             }
 
-            KillTheWorsts(0.00001);
+            KillTheWorsts(0.01);
             AddFreshOnes(newPopulation);
             ScaleFactor();
             ShareFactor();
@@ -225,9 +244,9 @@ namespace Expanze.Utils.Genetic
                     {
                         int gene;// = entity[loop1][loop2];
                         if (loop2 == 0)
-                            gene = rnd.Next(MAX_MAIN_COEF);
+                            gene = rnd.Next(MAX_MAIN_COEF) + 1;
                         else
-                            gene = rnd.Next(SUM_COEF);
+                            gene = rnd.Next(SUM_COEF) + 1;
                         
                         entity[loop1][loop2] = gene;
                     }
@@ -339,9 +358,24 @@ namespace Expanze.Utils.Genetic
             return generationNumber;
         }
 
+        public double GetLastFitness()
+        {
+            return lastFitness;
+        }
+
         public int GetChromozonID()
         {
             return activeChromozomeID;
+        }
+
+        public int[][] GetBestOnePersonality()
+        {
+            return theBestOne.GetGenes();
+        }
+
+        public long GetTime()
+        {
+            return stopwatch.ElapsedMilliseconds;
         }
     }
 }

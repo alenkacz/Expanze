@@ -110,18 +110,23 @@ namespace Expanze
             for(int loop1 = 0; loop1 < players.Count; loop1++)
             {
                 setArray = players[loop1].GetPersonality();
-                players[loop1] = new Player(players[loop1].GetName(), players[loop1].GetColor(), players[loop1].GetComponentAI(), loop1);
+                players[loop1] = new Player(players[loop1].GetName(), players[loop1].GetColor(), players[loop1].GetComponentAI(), loop1, setArray, players[loop1].GetGen());
                 AI = players[loop1].GetComponentAI();
 
                 if (AI != null) // its computer then
                 {
 #if GENETIC
                     // GENETICS ALG
-                    if (AI.GetAIName() == "AI Gen" &&
+                    if (players[loop1].GetGen() &&
                         (gameCount - 1) % geneticFitnessRound == 0)
                     {
                         chromozone = genetic.GetChromozone();
                         setArray = chromozone;
+                    }
+
+                    if (!players[loop1].GetGen())
+                    {
+                        setArray = genetic.GetBestOnePersonality();
                     }
                     // GENETICS 
 #endif
@@ -224,6 +229,7 @@ namespace Expanze
             IComponentAI playerAI;
             int playerOrder;
             int[][] playerPersonality;
+            bool playerGen;
 
             foreach (XmlNode player in playersNodes)
             {
@@ -232,6 +238,7 @@ namespace Expanze
                 playerAI = null;
                 playerOrder = 0;
                 playerPersonality = null;
+                playerGen = false;
 
                 foreach (XmlNode info in player.ChildNodes)
                 {
@@ -256,12 +263,16 @@ namespace Expanze
                             }
                             break;
                         case "AI":
+                            if (info.InnerText.ToLower() == "ai gen")
+                            {
+                                playerGen = true;
+                            }
                             if (info.InnerText.ToLower() == "human")
                             {
 #if GENETIC
                                 foreach (IComponentAI AI in CoreProviderAI.AI)
                                 {
-                                    if (AI.GetAIName() == "AI těžká")
+                                    if (AI.GetAIName() == "AI Gen")
                                         playerAI = AI.Clone();
                                 }
 #else
@@ -308,7 +319,7 @@ namespace Expanze
                             break;
                     }
                 }
-                players.Add(new Player(playerName, playerColor, playerAI, playerOrder, playerPersonality));
+                players.Add(new Player(playerName, playerColor, playerAI, playerOrder, playerPersonality, playerGen));
             }
         }
 
@@ -691,23 +702,24 @@ namespace Expanze
 
                         double add;
                         int genID = 0;
-                        if (players[winnerID].GetComponentAI().GetAIName().CompareTo("AI Gen") == 0)
+                        if (players[winnerID].GetGen())
                         {
                             genID = winnerID;
                             add = (2 * players[winnerID].GetPoints() - players[looserID].GetPoints()) * 10;
 
                             if (turnNumber < Settings.maxTurn)
-                                fitness += 300.0 + add;
+                                fitness += 30.0 + add;
                         }
-                        else if (players[looserID].GetComponentAI().GetAIName().CompareTo("AI Gen") == 0)
+                        else if (players[looserID].GetGen())
                         {
                             genID = looserID;
                             add = (2 * players[looserID].GetPoints() -  players[winnerID].GetPoints()) * 10;
-                            fitness += add;
+                            if(add > 0.0)
+                                fitness += add;
                         }
-                        fitness += players[genID].GetTown().Count * 5 / turnNumber;
-                        fitness += players[genID].GetRoad().Count / turnNumber;
-                        fitness += players[genID].GetCollectSourcesNormal().GetAsArray().Sum() / 40.0 / turnNumber;
+                        fitness += (double) players[genID].GetTown().Count * 5.0 / turnNumber;
+                        fitness += (double) players[genID].GetRoad().Count * 1.0 / turnNumber;
+                        fitness += (double) players[genID].GetCollectSourcesNormal().GetAsArray().Sum() / 40.0 / turnNumber;
                     }
 
                     if (gameCount % geneticFitnessRound == 0)
@@ -927,12 +939,28 @@ namespace Expanze
                 }
             }
 
-#if GENETIC
-            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), genetic.GetGenerationNumber() + "" , new Vector2(10, 200), Color.White);
-            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), genetic.GetChromozonID() + "", new Vector2(10, 220), Color.White);
-#endif
-
             spriteBatch.End();
+        }
+
+        public void DrawGeneticInfo()
+        {
+#if GENETIC
+            SpriteBatch spriteBatch = GameState.spriteBatch;
+            spriteBatch.Begin();
+            int x = 15;
+            int y = 200;
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), genetic.GetGenerationNumber() + "", new Vector2(x, y + 2), Color.Black);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), genetic.GetChromozonID() + "", new Vector2(x, y + 32), Color.Black);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), ((int) (genetic.GetLastFitness()  * 1000)) / 1000.0 + "", new Vector2(x, y + 62), Color.Black);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), TimeSpan.FromMilliseconds(genetic.GetTime()).Minutes + ":" + TimeSpan.FromMilliseconds(genetic.GetTime()).Seconds, new Vector2(x, y + 92), Color.Black);
+            x = 13;
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), genetic.GetGenerationNumber() + "", new Vector2(x, y), Color.White);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), genetic.GetChromozonID() + "", new Vector2(x, y + 30), Color.White);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), ((int)(genetic.GetLastFitness() * 1000)) / 1000.0 + "", new Vector2(x, y + 60), Color.White);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), TimeSpan.FromMilliseconds(genetic.GetTime()).Minutes + ":" + TimeSpan.FromMilliseconds(genetic.GetTime()).Seconds, new Vector2(x, y + 90), Color.White);
+            
+            spriteBatch.End();
+#endif
         }
 
         public double GetRandomNumber()
@@ -978,9 +1006,9 @@ namespace Expanze
             gameCount = 0;
 #if GENETIC
             fitness = 0.0;
-            geneticPopulation = 30;
+            geneticPopulation = 100;
             geneticFitnessRound = 1;
-            genetic = new Genetic(geneticPopulation, 0.25, 0.05, 2, 2000, 10, 1.5);
+            genetic = new Genetic(geneticPopulation, 0.30, 0.05, 1, 2000, 10, 2.0);
 #endif
         }
     }

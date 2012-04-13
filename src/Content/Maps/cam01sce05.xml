@@ -3,16 +3,17 @@
   <settings>
     <name>5. yey map</name>
     <players>
+	  <player>
+        <name>The One</name>
+        <color>Red</color>
+        <AI>AI Gen</AI>
+        <order>0</order>
+		<personality>906; 32; 30; 38;;684; 10;;423; 40; 49; 11;;726;  7; 21; 28; 44;;243; 10;;717; 10;  5; 33; 28; 24;;641; 31; 19;  6; 17; 27;;453; 54;;392; 23;;579; 46;;277; 28;;</personality>
+      </player>
       <player>
         <name>Tony Blair</name>
         <color>Blue</color>
         <AI>Human</AI>
-        <order>0</order>
-      </player>
-      <player>
-        <name>The One</name>
-        <color>Red</color>
-        <AI>AI Gen</AI>
         <order>1</order>
       </player>
     </players>
@@ -38,8 +39,8 @@
         <FortSteal>0</FortSteal>
 	</points>
 	<ban>
-		<Fort>0</Fort>
-        <Monastery>0</Monastery>
+		<Fort>1</Fort>
+        <Monastery>1</Monastery>
         <Market>0</Market>
 		<FortCapture>0</FortCapture>
         <FortSteal>0</FortSteal>
@@ -63,7 +64,7 @@
     </row>
     <row>
       <hexa type="water" />
-      <hexa type="mountains" productivity="16" />
+      <hexa type="forest" productivity="24" />
 	  <hexa type="mountains" productivity="16" />
       <hexa type="desert" productivity="0" />
       <hexa type="cornfield" productivity="16" />
@@ -73,7 +74,7 @@
 	  <hexa type="space" />
 	  <hexa type="water" />
       <hexa type="cornfield" productivity="16" />
-      <hexa type="mountains" productivity="16" />
+      <hexa type="mountains" productivity="8" />
       <hexa type="cornfield" productivity="16" />
       <hexa type="water" />
     </row>
@@ -81,9 +82,9 @@
 	  <hexa type="space" />
       <hexa type="water" />
       <hexa type="stone" productivity="16" />
-      <hexa type="stone" productivity="16" />
+      <hexa type="pasture" productivity="16" />
 	  <hexa type="forest" productivity="20" />
-      <hexa type="cornfield" productivity="16" />
+      <hexa type="mountains" productivity="16" />
       <hexa type="water" />
     </row>
 	<row>
@@ -91,7 +92,7 @@
 	  <hexa type="space" />
       <hexa type="water" />
 	  <hexa type="water" />
-      <hexa type="pasture" productivity="16" />
+      <hexa type="stone" productivity="20" />
       <hexa type="water" />
       <hexa type="water" />
     </row>

@@ -46,14 +46,37 @@ namespace AIGen
             int max = 0;
             bestKind = SourceKind.Count;
 
+
+            bool hasOnlyFirstLicence = false;
+            for (int loop1 = 0; loop1 < 5; loop1++)
+            {
+                if (me.GetMarketLicence((SourceKind)loop1) == LicenceKind.FirstLicence)
+                {
+                    hasOnlyFirstLicence = true;
+                    break;
+                }
+            }
+
             for (int loop1 = 0; loop1 < 5; loop1++)
             {
                 if (source[loop1] > max &&
                     me.GetMarketLicence((SourceKind)loop1) != LicenceKind.SecondLicence)
                 {
+                    // nemohu vybrat druhou licenci, kdyz ji nemohu na mape koupit
                     if (me.GetMarketLicence((SourceKind)loop1) == LicenceKind.FirstLicence &&
                         map.CanBuyLicence((SourceKind)loop1) == MarketError.BanSecondLicence)
                         continue;
+
+                    // pokupuji prvni licenci, pokud je vitezstvi za licence levelu 2
+                    if (me.GetMarketLicence((SourceKind)loop1) == LicenceKind.NoLicence &&
+                        hasOnlyFirstLicence &&
+                        map.GetActionPoints(PlayerPoints.LicenceLvl2) > map.GetActionPoints(PlayerPoints.LicenceLvl1))
+                    {
+                        int debug = 0;
+                        debug++;
+                        continue;
+                    }
+
                     max = source[loop1];
                     bestKind = (SourceKind)loop1;
                 }

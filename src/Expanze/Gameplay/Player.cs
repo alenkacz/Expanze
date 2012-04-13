@@ -39,15 +39,17 @@ namespace Expanze
 
         IComponentAI componentAI;   // is null if player is NOT controled by computer but is controled by human
         int[][] personality;    // only for Gen AI
+        bool gen;
 
         private Statistic statistic;
 
-        public Player(String name, Color color, IComponentAI componentAI, int orderID) : this(name, color, componentAI, orderID, null)
+        public Player(String name, Color color, IComponentAI componentAI, int orderID) : this(name, color, componentAI, orderID, null, false)
         {
         }
-        public Player(String name, Color color, IComponentAI componentAI, int orderID, int[][] personality)
+        public Player(String name, Color color, IComponentAI componentAI, int orderID, int[][] personality, bool gen)
         {
             this.orderID = orderID;
+            this.gen = gen;
             points = 0;
             prevSource = new SourceAll(0);
             source = new SourceAll(0);
@@ -353,6 +355,11 @@ namespace Expanze
         internal int[][] GetPersonality()
         {
             return personality;
+        }
+
+        internal bool GetGen()
+        {
+            return gen;
         }
     }
 }

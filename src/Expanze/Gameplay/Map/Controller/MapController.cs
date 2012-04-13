@@ -792,6 +792,7 @@ namespace Expanze.Gameplay.Map
             {
                 TownModel town = (TownModel)itown;
                 town.SetPathNode(0, null, null);
+                LogDebug(openList);
                 openList.Enqueue(town);
             }
             List<IRoad> buildedRoads = player.GetRoad();
@@ -808,13 +809,19 @@ namespace Expanze.Gameplay.Map
                         (!town.GetIsBuild() || town.GetIOwner() == player))
                     {
                         town.SetPathNode(0, null, null);
+                        LogDebug(openList);
                         openList.Enqueue(town);
                     }
                 }
             }
-            
+
+            int debug = 0;
             while (openList.Count > 0)
             {
+                debug++;
+                if (debug > 200)
+                    debug = 201;
+
                 TownModel ancestor = openList.Dequeue();
                 int dst = ancestor.GetPathNode().GetDistance();
 
@@ -836,6 +843,7 @@ namespace Expanze.Gameplay.Map
                                 if (!openList.Contains(town) && town.GetPathNode().GetDistance() == PathNode.INFINITY)
                                 {
                                     town.SetPathNode(dst + 1, ancestor, road);
+                                    LogDebug(openList);
                                     openList.Enqueue(town);
                                 }
                             }
@@ -846,6 +854,13 @@ namespace Expanze.Gameplay.Map
 
             PathNode.SetIsValid(true);
             PathNode.SetPlayerReference(player);
+        }
+
+        private static void LogDebug(Queue<TownModel> openList)
+        {
+            Logger.Inst().Log("enque.txt", openList.ToString());
+            Logger.Inst().Log("enque.txt", openList.Count + "");
+            Logger.Inst().Log("enque.txt", openList.ToArray().ToString());
         }
 
         public int GetDistanceToRoad(IRoad road, IPlayer player)
