@@ -3,24 +3,22 @@
   <settings>
     <name>5. yey map</name>
     <players>
-	  <player>
-        <name>The One</name>
-        <color>Red</color>
-        <AI>AI Gen</AI>
-        <order>0</order>
-		<personality>906; 32; 30; 38;;684; 10;;423; 40; 49; 11;;726;  7; 21; 28; 44;;243; 10;;717; 10;  5; 33; 28; 24;;641; 31; 19;  6; 17; 27;;453; 54;;392; 23;;579; 46;;277; 28;;</personality>
-      </player>
       <player>
         <name>Tony Blair</name>
         <color>Blue</color>
         <AI>Human</AI>
-        <order>1</order>
+      </player>
+      <player>
+        <name>The One</name>
+        <color>Red</color>
+        <AI>AI Gen</AI>
+        <personality>193; 36; 61;  3;;671; 65;;127; 77; 22;  1;;130;  4; 13; 55; 28;;156; 30;;367;  6; 25;  5; 38; 26;;427;  1; 40; 23;  1; 35;;247;  4;;384; 75;;227; 37;;584; 51;;397; 31; 17; 52;;814; 43;;158; 36; 46; 18;;866; 49;  8; 37;  6;; 22; 64;;531; 20;  2;  5; 39; 34;;255;  8;  5; 34; 30; 23;; 45; 41;;530; 91;;651; 90;;956;  0;;</personality>
       </player>
     </players>
 	<points>
-		<WinPoints>3</WinPoints>
+		<WinPoints>25</WinPoints>
         <Town>0</Town>
-        <Road>0</Road>
+        <Road>1</Road>
         <Fort>0</Fort>
         <Monastery>0</Monastery>
         <Market>0</Market>
@@ -39,8 +37,8 @@
         <FortSteal>0</FortSteal>
 	</points>
 	<ban>
-		<Fort>1</Fort>
-        <Monastery>1</Monastery>
+		<Fort>0</Fort>
+        <Monastery>0</Monastery>
         <Market>0</Market>
 		<FortCapture>0</FortCapture>
         <FortSteal>0</FortSteal>

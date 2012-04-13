@@ -27,9 +27,11 @@ namespace Expanze.Utils.Genetic
         double shareSigma;
         double shareAlfa;
         double scaleSigma;
+        double extinction;
+        bool newBorn;
         Random rnd;
 
-        public Genetic(int populationSize, double probCrossOver, double probMutability, int elitism, double shareSigma, double shareAlfa, double scaleSigma)
+        public Genetic(int populationSize, double probCrossOver, double probMutability, int elitism, double shareSigma, double shareAlfa, double scaleSigma, double extinction, bool newBorn)
         {
             rnd = new Random();
             this.shareSigma = shareSigma;
@@ -39,6 +41,8 @@ namespace Expanze.Utils.Genetic
             this.probCrossOver = probCrossOver;
             this.probMutability = probMutability;
             this.populationSize = populationSize;
+            this.extinction = extinction;
+            this.newBorn = newBorn;
             generationNumber = 0;
 
             population = new Chromozone[populationSize];
@@ -149,10 +153,13 @@ namespace Expanze.Utils.Genetic
 
         private void NewPopulation()
         {
-            Log();
             List<Chromozone> newPopulation = new List<Chromozone>();
 
             Array.Sort(population);
+            Log();
+            if (generationNumber % 10 == 0)
+                PrintAllChromozones();
+
             if (population[0].GetFitness() > fitnessBestOne)
             {
                 fitnessBestOne = population[0].GetFitness();
@@ -164,8 +171,9 @@ namespace Expanze.Utils.Genetic
                 newPopulation.Add(new Chromozone(population[loop1].GetGenes()));
             }
 
-            KillTheWorsts(0.01);
-            AddFreshOnes(newPopulation);
+            KillTheWorsts(extinction);
+            if(newBorn || population.Length < 2)
+                AddFreshOnes(newPopulation);
             ScaleFactor();
             ShareFactor();
 
@@ -216,6 +224,7 @@ namespace Expanze.Utils.Genetic
 
             Chromozone best = null;
             double maxFitness = -0.1;
+            double minFitness = population[0].GetFitness();
             string msg = "";
             foreach (Chromozone ch in population)
             {
@@ -226,9 +235,12 @@ namespace Expanze.Utils.Genetic
                     best = ch;
                     maxFitness = ch.GetFitness();
                 }
+
+                if (ch.GetFitness() < minFitness)
+                    minFitness = ch.GetFitness();
             }
 
-            msg = "Fitness;" + String.Format("{0:0.00}", sum / populationSize) + msg;
+            msg = "Fitness;" + String.Format("{0:0.00}", sum / populationSize) + ";" + String.Format("{0:0.00}", maxFitness) + ";" + String.Format("{0:0.00}", minFitness) + msg;
             Logger.Inst().Log("fitness.txt", msg);
 
             best.Log();          

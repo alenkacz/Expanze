@@ -10,9 +10,16 @@ namespace AIGen
     class ThinkGoal : CompositeGoal
     {
         LinkedList<MainGoal> mainGoals;
+        int sumSources;
+        int level;              // which array of koef should player use
+        int[][] coeficients;
 
         public ThinkGoal(IMapController map, int[][] koef, int depth) : base(map, depth, "Think")
         {
+            sumSources = 0;
+            level = 0;
+            coeficients = koef;
+
             if (koef == null)
             {
                 koef = new int[11][];
@@ -39,41 +46,82 @@ namespace AIGen
                 koef[8] = new int[] {1, 200};
                 koef[9] = new int[] {2, 300};
                 koef[10] = new int[] {3, 100};
+
+                coeficients = koef;
             }
 
+            AddMainGoals();
+        }
+
+        private void AddMainGoals()
+        {
+            int offset = 0;
+            if (coeficients.Length == 11)
+                offset = 0;
+            else if(coeficients.Length == 22 && level == 1)
+                offset = 11;
+
             mainGoals = new LinkedList<MainGoal>();
-            mainGoals.AddLast(new MainGoal(new BuildTown(map, koef[0][1], koef[0][2], koef[0][3], depth + 1), koef[0][0]));
-            mainGoals.AddLast(new MainGoal(new BuildRoad(map, koef[1][1], depth + 1), koef[1][0]));
-            mainGoals.AddLast(new MainGoal(new BuildSourceBuilding(map, koef[2][1], koef[2][2], koef[2][3], depth + 1), koef[2][0]));
+            mainGoals.AddLast(new MainGoal(new BuildTown(map, coeficients[offset + 0][1], coeficients[offset + 0][2], coeficients[offset + 0][3], depth + 1), coeficients[offset + 0][0]));
+            mainGoals.AddLast(new MainGoal(new BuildRoad(map, coeficients[offset + 1][1], depth + 1), coeficients[offset + 1][0]));
+            mainGoals.AddLast(new MainGoal(new BuildSourceBuilding(map, coeficients[offset + 2][1], coeficients[offset + 2][2], coeficients[offset + 2][3], depth + 1), coeficients[offset + 2][0]));
 
             if (!map.IsBanAction(PlayerAction.BuildFort))
             {
-                mainGoals.AddLast(new MainGoal(new BuildFort(map, koef[3][1], koef[3][2], koef[3][3], koef[3][4], depth + 1), koef[3][0]));
+                mainGoals.AddLast(new MainGoal(new BuildFort(map, coeficients[offset + 3][1], coeficients[offset + 3][2], coeficients[offset + 3][3], coeficients[offset + 3][4], depth + 1), coeficients[offset + 3][0]));
                 if (!map.IsBanAction(PlayerAction.FortParade))
-                    mainGoals.AddLast(new MainGoal(new FortShowParade(map, koef[4][1], depth + 1), koef[4][0]));
+                    mainGoals.AddLast(new MainGoal(new FortShowParade(map, coeficients[offset + 4][1], depth + 1), coeficients[offset + 4][0]));
                 if (!map.IsBanAction(PlayerAction.FortStealSources))
-                    mainGoals.AddLast(new MainGoal(new FortStealSources(map, koef[9][1], depth + 1), koef[9][0]));
+                    mainGoals.AddLast(new MainGoal(new FortStealSources(map, coeficients[offset + 9][1], depth + 1), coeficients[offset + 9][0]));
                 if (!map.IsBanAction(PlayerAction.FortCaptureHexa))
-                    mainGoals.AddLast(new MainGoal(new FortCaptureHexa(map, koef[10][1], depth + 1), koef[10][0]));
+                    mainGoals.AddLast(new MainGoal(new FortCaptureHexa(map, coeficients[offset + 10][1], depth + 1), coeficients[offset + 10][0]));
             }
             if (!map.IsBanAction(PlayerAction.BuildMarket))
             {
-                mainGoals.AddLast(new MainGoal(new BuildMarket(map, koef[5][1], koef[5][2], koef[5][3], koef[5][4], koef[5][5], depth + 1), koef[5][0]));
-                mainGoals.AddLast(new MainGoal(new BuyLicence(map, koef[8][1], depth + 1), koef[8][0]));
+                mainGoals.AddLast(new MainGoal(new BuildMarket(map, coeficients[offset + 5][1], coeficients[offset + 5][2], coeficients[offset + 5][3], coeficients[offset + 5][4], coeficients[offset + 5][5], depth + 1), coeficients[offset + 5][0]));
+                mainGoals.AddLast(new MainGoal(new BuyLicence(map, coeficients[offset + 8][1], depth + 1), coeficients[offset + 8][0]));
             }
             if (!map.IsBanAction(PlayerAction.BuildMonastery))
             {
-                mainGoals.AddLast(new MainGoal(new BuildMonastery(map, koef[6][1], koef[6][2], koef[6][3], koef[6][4], koef[6][5], depth + 1), koef[6][0]));
-                mainGoals.AddLast(new MainGoal(new InventUpgrade(map, koef[7][1], depth + 1), koef[7][0]));
+                mainGoals.AddLast(new MainGoal(new BuildMonastery(map, coeficients[offset + 6][1], coeficients[offset + 6][2], coeficients[offset + 6][3], coeficients[offset + 6][4], coeficients[offset + 6][5], depth + 1), coeficients[offset + 6][0]));
+                mainGoals.AddLast(new MainGoal(new InventUpgrade(map, coeficients[offset + 7][1], depth + 1), coeficients[offset + 7][0]));
             }
-
-            Init();
         }
 
         int count;
         public override void Init()
         {
             count = 0;
+
+            if (level == 0)
+            {
+                if (sumSources == 0)
+                {
+                    int hexaNumber = map.GetMaxHexaID();
+                    for (int loop1 = 1; loop1 <= hexaNumber; loop1++)
+                    {
+                        sumSources += map.GetIHexaByID(loop1).GetStartSource();
+                    }
+
+                    sumSources *= 3;
+                }
+
+                int meSources = map.GetPlayerMe().GetCollectSourcesNormal().GetAsArray().Sum();
+
+                if (meSources > sumSources / 2 / (map.GetPlayerOthers().Count + 1) ||
+                    meSources > 150)
+                {
+                    UpgradeMe();
+                }
+            }
+        }
+
+        private void UpgradeMe()
+        {
+            level++;
+
+            mainGoals.Clear();
+            AddMainGoals();
         }
 
         public override GoalState Process()

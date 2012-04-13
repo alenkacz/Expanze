@@ -62,6 +62,8 @@ namespace Expanze
         private Genetic genetic;
         private double fitness;
         private int[][] chromozone;
+        bool lastWinner;
+        int lastTurnNumber;
 
         private int geneticPopulation;
         private int geneticFitnessRound;
@@ -336,18 +338,21 @@ namespace Expanze
                             break;
 
                         case "personality" :
-                            playerPersonality = new int[11][];
-                            playerPersonality[0] = new int[4];
-                            playerPersonality[1] = new int[2];
-                            playerPersonality[2] = new int[4];
-                            playerPersonality[3] = new int[5];
-                            playerPersonality[4] = new int[2];
-                            playerPersonality[5] = new int[6];
-                            playerPersonality[6] = new int[6];
-                            playerPersonality[7] = new int[2];
-                            playerPersonality[8] = new int[2];
-                            playerPersonality[9] = new int[2];
-                            playerPersonality[10] = new int[2];
+                            playerPersonality = new int[22][];
+                            for (int loop1 = 0; loop1 < 2; loop1++)
+                            {
+                                playerPersonality[0 + loop1 * 11] = new int[4];
+                                playerPersonality[1 + loop1 * 11] = new int[2];
+                                playerPersonality[2 + loop1 * 11] = new int[4];
+                                playerPersonality[3 + loop1 * 11] = new int[5];
+                                playerPersonality[4 + loop1 * 11] = new int[2];
+                                playerPersonality[5 + loop1 * 11] = new int[6];
+                                playerPersonality[6 + loop1 * 11] = new int[6];
+                                playerPersonality[7 + loop1 * 11] = new int[2];
+                                playerPersonality[8 + loop1 * 11] = new int[2];
+                                playerPersonality[9 + loop1 * 11] = new int[2];
+                                playerPersonality[10 + loop1 * 11] = new int[2];
+                            }
                             
                             String [] koef = info.InnerText.Split(";".ToCharArray());
                             int koefID = 0;
@@ -753,13 +758,19 @@ namespace Expanze
 
                         double add;
                         int genID = 0;
+
+                        lastTurnNumber = turnNumber;
+                        lastWinner = false;
                         if (players[winnerID].GetGen())
                         {
                             genID = winnerID;
                             add = (2 * players[winnerID].GetPoints() - players[looserID].GetPoints()) * 10;
 
                             if (turnNumber < Settings.maxTurn)
-                                fitness += 30.0 + add;
+                            {
+                                fitness += (20.0 - turnNumber / 4.0) + add;
+                                lastWinner = true;
+                            }
                         }
                         else if (players[looserID].GetGen())
                         {
@@ -1000,15 +1011,17 @@ namespace Expanze
             spriteBatch.Begin();
             int x = 15;
             int y = 200;
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), ((lastWinner) ? "Winner" : "Looser") + "  " + lastTurnNumber, new Vector2(x, y - 30), Color.Black);
             spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), genetic.GetGenerationNumber() + "", new Vector2(x, y + 2), Color.Black);
             spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), genetic.GetChromozonID() + "", new Vector2(x, y + 32), Color.Black);
             spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), ((int) (genetic.GetLastFitness()  * 1000)) / 1000.0 + "", new Vector2(x, y + 62), Color.Black);
-            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), TimeSpan.FromMilliseconds(genetic.GetTime()).Minutes + ":" + TimeSpan.FromMilliseconds(genetic.GetTime()).Seconds, new Vector2(x, y + 92), Color.Black);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), TimeSpan.FromMilliseconds(genetic.GetTime()).Hours + ":" + TimeSpan.FromMilliseconds(genetic.GetTime()).Minutes + ":" + TimeSpan.FromMilliseconds(genetic.GetTime()).Seconds, new Vector2(x, y + 92), Color.Black);
             x = 13;
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), ((lastWinner) ? "Winner" : "Looser") + "  " + lastTurnNumber, new Vector2(x, y - 30), Color.White);
             spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), genetic.GetGenerationNumber() + "", new Vector2(x, y), Color.White);
             spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), genetic.GetChromozonID() + "", new Vector2(x, y + 30), Color.White);
             spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), ((int)(genetic.GetLastFitness() * 1000)) / 1000.0 + "", new Vector2(x, y + 60), Color.White);
-            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), TimeSpan.FromMilliseconds(genetic.GetTime()).Minutes + ":" + TimeSpan.FromMilliseconds(genetic.GetTime()).Seconds, new Vector2(x, y + 90), Color.White);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), TimeSpan.FromMilliseconds(genetic.GetTime()).Hours + ":" + TimeSpan.FromMilliseconds(genetic.GetTime()).Minutes + ":" + TimeSpan.FromMilliseconds(genetic.GetTime()).Seconds, new Vector2(x, y + 90), Color.White);
             
             spriteBatch.End();
 #endif
@@ -1056,10 +1069,12 @@ namespace Expanze
         {
             gameCount = 0;
 #if GENETIC
+            lastWinner = false;
+            lastTurnNumber = 0;
             fitness = 0.0;
-            geneticPopulation = 100;
+            geneticPopulation = 40;
             geneticFitnessRound = 1;
-            genetic = new Genetic(geneticPopulation, 0.30, 0.05, 1, 2000, 10, 2.0);
+            genetic = new Genetic(geneticPopulation, 0.20, 0.02, 3, 200, 10, 4.0, 0.15, false);
 #endif
         }
     }

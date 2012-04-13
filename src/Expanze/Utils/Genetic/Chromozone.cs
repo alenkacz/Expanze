@@ -16,18 +16,21 @@ namespace Expanze.Utils.Genetic
         {
             this.rnd = rnd;
 
-            genes = new int[11][];
-            genes[0] = new int[4];
-            genes[1] = new int[2];
-            genes[2] = new int[4];
-            genes[3] = new int[5];
-            genes[4] = new int[2];
-            genes[5] = new int[6];
-            genes[6] = new int[6];
-            genes[7] = new int[2];
-            genes[8] = new int[2];
-            genes[9] = new int[2];
-            genes[10] = new int[2];
+            genes = new int[22][];
+            for (int loop1 = 0; loop1 < 2; loop1++)
+            {
+                genes[0 + loop1 * 11] = new int[4];
+                genes[1 + loop1 * 11] = new int[2];
+                genes[2 + loop1 * 11] = new int[4];
+                genes[3 + loop1 * 11] = new int[5];
+                genes[4 + loop1 * 11] = new int[2];
+                genes[5 + loop1 * 11] = new int[6];
+                genes[6 + loop1 * 11] = new int[6];
+                genes[7 + loop1 * 11] = new int[2];
+                genes[8 + loop1 * 11] = new int[2];
+                genes[9 + loop1 * 11] = new int[2];
+                genes[10 + loop1 * 11] = new int[2];
+            }
 
             for (int loop1 = 0; loop1 < genes.Length; loop1++)
                 GenerateNewBigGen(loop1);

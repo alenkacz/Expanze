@@ -13,6 +13,8 @@ namespace AIGen
         IMapController mapController;
         ThinkGoal thinkGoal;
 
+        int sumSources;
+
         public String GetAIName()
         {
             return "AI Gen";
