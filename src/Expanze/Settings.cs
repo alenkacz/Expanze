@@ -83,11 +83,11 @@ namespace Expanze
         public static bool banMonastery = false;
         public static bool banFort = false;
         public static bool banMarket = false;
-        public static bool banSecondLicence = true;
-        public static bool banSecondUpgrade = true;
-        public static bool banFortParade = true;
-        public static bool banFortCaptureHexa = true;
-        public static bool banFortStealSources = true;
+        public static bool banSecondLicence = false;
+        public static bool banSecondUpgrade = false;
+        public static bool banFortParade = false;
+        public static bool banFortCaptureHexa = false;
+        public static bool banFortStealSources = false;
 
         public static Vector2 activeResolution = new Vector2(800,600);
 

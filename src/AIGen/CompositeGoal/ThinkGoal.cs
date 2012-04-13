@@ -47,19 +47,25 @@ namespace AIGen
             mainGoals.AddLast(new MainGoal(new BuildSourceBuilding(map, koef[2][1], koef[2][2], koef[2][3], depth + 1), koef[2][0]));
 
             if (!map.IsBanAction(PlayerAction.BuildFort))
+            {
                 mainGoals.AddLast(new MainGoal(new BuildFort(map, koef[3][1], koef[3][2], koef[3][3], koef[3][4], depth + 1), koef[3][0]));
-            if (!map.IsBanAction(PlayerAction.FortParade))
-                mainGoals.AddLast(new MainGoal(new FortShowParade(map, koef[4][1], depth + 1), koef[4][0]));
+                if (!map.IsBanAction(PlayerAction.FortParade))
+                    mainGoals.AddLast(new MainGoal(new FortShowParade(map, koef[4][1], depth + 1), koef[4][0]));
+                if (!map.IsBanAction(PlayerAction.FortStealSources))
+                    mainGoals.AddLast(new MainGoal(new FortStealSources(map, koef[9][1], depth + 1), koef[9][0]));
+                if (!map.IsBanAction(PlayerAction.FortCaptureHexa))
+                    mainGoals.AddLast(new MainGoal(new FortCaptureHexa(map, koef[10][1], depth + 1), koef[10][0]));
+            }
             if (!map.IsBanAction(PlayerAction.BuildMarket))
+            {
                 mainGoals.AddLast(new MainGoal(new BuildMarket(map, koef[5][1], koef[5][2], koef[5][3], koef[5][4], koef[5][5], depth + 1), koef[5][0]));
+                mainGoals.AddLast(new MainGoal(new BuyLicence(map, koef[8][1], depth + 1), koef[8][0]));
+            }
             if (!map.IsBanAction(PlayerAction.BuildMonastery))
+            {
                 mainGoals.AddLast(new MainGoal(new BuildMonastery(map, koef[6][1], koef[6][2], koef[6][3], koef[6][4], koef[6][5], depth + 1), koef[6][0]));
-            mainGoals.AddLast(new MainGoal(new InventUpgrade(map, koef[7][1], depth + 1), koef[7][0]));
-            mainGoals.AddLast(new MainGoal(new BuyLicence(map, koef[8][1], depth + 1), koef[8][0]));
-            if (!map.IsBanAction(PlayerAction.FortStealSources))
-                mainGoals.AddLast(new MainGoal(new FortStealSources(map, koef[9][1], depth + 1), koef[9][0]));
-            if (!map.IsBanAction(PlayerAction.FortCaptureHexa))
-                mainGoals.AddLast(new MainGoal(new FortCaptureHexa(map, koef[10][1], depth + 1), koef[10][0]));
+                mainGoals.AddLast(new MainGoal(new InventUpgrade(map, koef[7][1], depth + 1), koef[7][0]));
+            }
 
             Init();
         }

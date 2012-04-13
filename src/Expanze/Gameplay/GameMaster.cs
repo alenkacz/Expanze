@@ -215,12 +215,58 @@ namespace Expanze
             gameSettings = new GameSettings(points,mapType,mapSize,mapWealth);
         }
 
-        private void PrepareCampaignPlayers()
+
+        private void PrepareCampaignSetup(XmlDocument xDoc)
+        {
+            XmlNodeList points = xDoc.GetElementsByTagName("points")[0].ChildNodes;
+            foreach (XmlNode goal in points)
+            {
+                int value = Convert.ToInt32(goal.InnerText);
+                switch (goal.Name)
+                {
+                    case "WinPoints": GameMaster.Inst().GetGameSettings().SetPoints(value); break;
+                    case "Town": Settings.pointsTown = value; break;
+                    case "Road": Settings.pointsRoad = value; break;
+                    case "Fort": Settings.pointsFort = value; break;
+                    case "Monastery": Settings.pointsMonastery = value; break;
+                    case "Market": Settings.pointsMarket = value; break;
+                    case "Medal": Settings.pointsMedal = value; break;
+                    case "FortParade": Settings.pointsFortParade = value; break;
+                    case "FortSteal": Settings.pointsFortSteal = value; break;
+                    case "FortCapture": Settings.pointsFortCapture = value; break;
+                    case "Mine": Settings.pointsMine = value; break;
+                    case "Quarry": Settings.pointsQuarry = value; break;
+                    case "Stepherd": Settings.pointsStepherd = value; break;
+                    case "Saw": Settings.pointsSaw = value; break;
+                    case "Mill": Settings.pointsMill = value; break;
+                    case "UpgradeLvl1": Settings.pointsUpgradeLvl1 = value; break;
+                    case "UpgradeLvl2": Settings.pointsUpgradeLvl2 = value; break;
+                    case "MarketLvl1": Settings.pointsMarketLvl1 = value; break;
+                    case "MarketLvl2": Settings.pointsMarketLvl2 = value; break;
+                }
+            }
+
+            XmlNodeList ban = xDoc.GetElementsByTagName("ban")[0].ChildNodes;
+            foreach (XmlNode action in ban)
+            {
+                bool value = (Convert.ToInt32(action.InnerText) == 0) ? false : true;
+                switch (action.Name)
+                {
+                    case "Fort": Settings.banFort = value; break;
+                    case "Monastery": Settings.banMonastery = value; break;
+                    case "Market": Settings.banMarket = value; break;
+                    case "FortParade": Settings.banFortParade = value; break;
+                    case "FortSteal": Settings.banFortStealSources = value; break;
+                    case "FortCapture": Settings.banFortCaptureHexa = value; break;
+                    case "UpgradeLvl2": Settings.banSecondUpgrade = value; break;
+                    case "MarketLvl2": Settings.banSecondLicence = value; break;
+                }
+            }
+        }
+
+        private void PrepareCampaignPlayers(XmlDocument xDoc)
         {
             players.Clear();
-
-            XmlDocument xDoc = new XmlDocument();
-            xDoc.Load("Content/Maps/" + mapSource);
 
             XmlNodeList playersNodes = xDoc.GetElementsByTagName("players")[0].ChildNodes;
 
@@ -326,7 +372,12 @@ namespace Expanze
         internal void PrepareCampaignMap(string mapName)
         {
             mapSource = mapName;
-            PrepareCampaignPlayers();
+
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load("Content/Maps/" + mapSource);
+
+            PrepareCampaignPlayers(xDoc);
+            PrepareCampaignSetup(xDoc);
         }
 
         public void PrepareQuickGame()
