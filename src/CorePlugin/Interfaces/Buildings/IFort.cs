@@ -92,7 +92,8 @@ namespace CorePlugin
         /// Target hexa doesnt exist.
         /// </summary>
         InvalidHexaID,
-        Ban
+        Ban,
+        Desert
     }
 
     public interface IFort

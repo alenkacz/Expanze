@@ -45,6 +45,7 @@ namespace AIGen
                 return 0.0f;
 
             IHexa hexa;
+            IHexa hexa1Neighbour;
             IHexa hexaNeighbour;
             double tempDesirability;
             double bestDesirability = 0.0;
@@ -58,26 +59,36 @@ namespace AIGen
 
                 for (int loop1 = 0; loop1 < 6; loop1++)
                 {
-                    hexaNeighbour = hexa.GetIHexaNeighbour((RoadPos)loop1);
-
-                    if (hexaNeighbour == null)
+                    hexa1Neighbour = hexa.GetIHexaNeighbour((RoadPos)loop1);
+                    if (hexa1Neighbour == null)
                         continue;
 
-                    int count = 0;
-                    foreach (int i in bestHexaIDs)
+                    for (int loop2 = 0; loop2 < 6; loop2++)
                     {
-                        if (i == hexaNeighbour.GetID())
-                            count++;
-                    }
+                        hexaNeighbour = hexa1Neighbour.GetIHexaNeighbour((RoadPos) loop2);
 
-                    if(count > 1) // dont fight about hexa
-                        continue;
+                        if (hexaNeighbour == null || hexaNeighbour.GetKind() == HexaKind.Desert || hexaNeighbour.GetKind() == HexaKind.Water || hexaNeighbour.GetKind() == HexaKind.Null)
+                            continue;
 
-                    tempDesirability = GetDesirablity(me, hexaNeighbour);
-                    if (tempDesirability > bestDesirability)
-                    {
-                        bestDesirability = tempDesirability;
-                        bestHexa = hexa.GetIHexaNeighbour((RoadPos)loop1);
+                        if (map.CanCaptureHexa(hexaNeighbour) == CaptureHexaError.TooFarFromFort)
+                            continue;
+
+                        int count = 0;
+                        foreach (int i in bestHexaIDs)
+                        {
+                            if (i == hexaNeighbour.GetID())
+                                count++;
+                        }
+
+                        if (count > 1) // dont fight about hexa
+                            continue;
+
+                        tempDesirability = GetDesirablity(me, hexaNeighbour);
+                        if (tempDesirability > bestDesirability)
+                        {
+                            bestDesirability = tempDesirability;
+                            bestHexa = hexaNeighbour;
+                        }
                     }
                 }
             }
@@ -109,6 +120,13 @@ namespace AIGen
                 else
                     enemySum += hexa.GetNormalProductivity(player);
             }
+
+            if (hexa.GetKind() == HexaKind.Mountains || hexa.GetKind() == HexaKind.Stone)
+                enemySum = (int)(enemySum * 1.05);
+            else if (hexa.GetKind() == HexaKind.Forest)
+                enemySum = (int)(enemySum * 0.8);
+            else if (hexa.GetKind() == HexaKind.Desert)
+                return 0.0;
 
             if (hexa.GetCaptured() && hexa.GetCapturedIPlayer() != attacker)
             {

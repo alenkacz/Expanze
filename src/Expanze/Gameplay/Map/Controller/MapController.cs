@@ -486,6 +486,14 @@ namespace Expanze.Gameplay.Map
 
         public CaptureHexaError CanCaptureHexa(int hexaID, IFort fort)
         {
+            HexaModel hexa = map.GetHexaByID(hexaID);
+            HexaModel.SetHexaFort(fort);
+            if (!hexa.IsInFortRadius())
+            {
+                SetLastError(Strings.ERROR_TOO_FAR_FROM_FORT);
+                return CaptureHexaError.TooFarFromFort;
+            }
+
             if (Settings.banFortCaptureHexa)
             {
                 SetLastError(Strings.ERROR_BAN_FORT_CAPTURE_HEXA);
@@ -498,20 +506,13 @@ namespace Expanze.Gameplay.Map
                 return CaptureHexaError.NoSources;
             }
 
-            HexaModel.SetHexaFort(fort);
-
-            HexaModel hexa = map.GetHexaByID(hexaID);
+            if (hexa.GetKind() == HexaKind.Desert || hexa.GetKind() == HexaKind.Water || hexa.GetKind() == HexaKind.Null)
+                return CaptureHexaError.Desert;
 
             if (hexa == null)
             {
                 SetLastError(Strings.ERROR_INVALID_HEXA_ID);
                 return CaptureHexaError.InvalidHexaID;
-            }
-
-            if (!hexa.IsInFortRadius())
-            {
-                SetLastError(Strings.ERROR_TOO_FAR_FROM_FORT);
-                return CaptureHexaError.TooFarFromFort;
             }
 
             return CaptureHexaError.OK;

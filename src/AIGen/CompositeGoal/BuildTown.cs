@@ -288,9 +288,12 @@ namespace AIGen
                 if (hexa.GetKind() == HexaKind.Forest)
                 {
                     fitness *= 0.6;
-                } else
+                }
+                else
                     fitness *= 0.75;
             }
+            else
+                fitness *= 1.2;
 
             /*
              * Better than water

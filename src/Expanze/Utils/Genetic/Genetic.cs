@@ -157,7 +157,7 @@ namespace Expanze.Utils.Genetic
 
             Array.Sort(population);
             Log();
-            if (generationNumber % 10 == 0)
+            if (generationNumber % 3 == 0)
                 PrintAllChromozones();
 
             if (population[0].GetFitness() > fitnessBestOne)
@@ -199,7 +199,7 @@ namespace Expanze.Utils.Genetic
                 
                 sons = CrossOver(dad, mum);
 
-                for (int loop1 = 0; loop1 < 2; loop1++)
+                for (int loop1 = 0; loop1 < sons.Length; loop1++)
                 {
                     sons[loop1] = Mutation(sons[loop1]);
                     newPopulation.Add(new Chromozone(sons[loop1]));
@@ -252,16 +252,14 @@ namespace Expanze.Utils.Genetic
             {
                 if (rnd.NextDouble() < probMutability)
                 {
-                    for (int loop2 = 0; loop2 < entity[loop1].Length; loop2++)
+                    if (rnd.NextDouble() < 0.5)
                     {
-                        int gene;// = entity[loop1][loop2];
-                        if (loop2 == 0)
-                            gene = rnd.Next(MAX_MAIN_COEF) + 1;
-                        else
-                            gene = rnd.Next(SUM_COEF) + 1;
-                        
-                        entity[loop1][loop2] = gene;
-                    }
+                        entity[loop1][0] = rnd.Next(MAX_MAIN_COEF);
+                    } else
+                        for (int loop2 = 1; loop2 < entity[loop1].Length; loop2++)
+                        {
+                            entity[loop1][loop2] = rnd.Next(SUM_COEF) + 1;
+                        }
                 }
             }
 
@@ -307,29 +305,59 @@ namespace Expanze.Utils.Genetic
         private int[][][] CrossOver(int[][] dad, int[][] mum)
         {
             int[][][] sons = new int[2][][];
-            for (int loop1 = 0; loop1 < sons.Length; loop1++)
-            {
-                sons[loop1] = new int[dad.Length][];
-                for (int loop2 = 0; loop2 < sons[loop1].Length; loop2++)
-                {
-                    sons[loop1][loop2] = new int[dad[loop2].Length];
 
-                    if (rnd.NextDouble() < probCrossOver)
+            if (rnd.NextDouble() < probCrossOver)
+            {
+                for (int loop1 = 0; loop1 < sons.Length; loop1++)
+                {
+                    sons[loop1] = new int[dad.Length][];
+                    for (int loop2 = 0; loop2 < sons[loop1].Length; loop2++)
                     {
-                        sons[loop1][loop2][0] = CrossoverGenes(dad[loop2][0], mum[loop2][0], MAX_MAIN_COEF);
-                        for (int loop3 = 1; loop3 < sons[loop1][loop2].Length; loop3++)
-                        {
-                            sons[loop1][loop2][loop3] = CrossoverGenes(dad[loop2][loop3], mum[loop2][loop3], SUM_COEF);
-                        }
-                    }
-                    else
-                    {
-                        for (int loop3 = 0; loop3 < sons[loop1][loop2].Length; loop3++)
-                        {
-                            sons[loop1][loop2][loop3] = (loop1 == 0) ? dad[loop2][loop3] : mum[loop2][loop3];
-                        }
+                        sons[loop1][loop2] = new int[dad[loop2].Length];
                     }
                 }
+                
+                int id1 = rnd.Next(dad.Length / 2 - 1) + 1;
+                int id2 = rnd.Next(dad.Length / 2 - 1) + dad.Length / 2;
+
+                for (int loop1 = 0; loop1 < dad.Length; loop1++)
+                {
+                    if (loop1 < id1 || loop1 >= id2)
+                    {
+                        sons[0][loop1] = dad[loop1];
+                        sons[1][loop1] = mum[loop1];
+                    } else {
+                        sons[1][loop1] = dad[loop1];
+                        sons[0][loop1] = mum[loop1];
+                    }
+                }
+
+                    /*
+                    for (int loop2 = 0; loop2 < sons[loop1].Length; loop2++)
+                    {
+                        if (rnd.NextDouble() < 0.2)
+                        {
+                            sons[loop1][loop2][0] = CrossoverGenes(dad[loop2][0], mum[loop2][0], MAX_MAIN_COEF);
+                            for (int loop3 = 1; loop3 < sons[loop1][loop2].Length; loop3++)
+                            {
+                                sons[loop1][loop2][loop3] = CrossoverGenes(dad[loop2][loop3], mum[loop2][loop3], SUM_COEF);
+                            }
+                        }
+                        else
+                        {
+                            for (int loop3 = 0; loop3 < sons[loop1][loop2].Length; loop3++)
+                            {
+                                sons[loop1][loop2][loop3] = (loop1 == 0) ? dad[loop2][loop3] : mum[loop2][loop3];
+                            }
+                        }
+                          
+                    } 
+                }*/
+            }
+            else
+            {
+                sons[0] = mum;
+                sons[1] = dad;
             }
 
             return sons;

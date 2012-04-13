@@ -76,6 +76,7 @@ namespace AIGen
         {
             IHexa hexa = town.GetIHexa(pos);
 
+            double kindCoef = 1.0;
             int points = 0;
             switch (hexa.GetKind())
             {
@@ -83,25 +84,30 @@ namespace AIGen
                 case HexaKind.Water :
                     return 0.0f;
                 case HexaKind.Cornfield :
+                    kindCoef = 0.9;
                     points = map.GetActionPoints(PlayerPoints.Mill);
                     break;
                 case HexaKind.Forest:
+                    kindCoef = 0.8;
                     points = map.GetActionPoints(PlayerPoints.Saw);
                     break;
                 case HexaKind.Mountains:
+                    kindCoef = 1.2;
                     points = map.GetActionPoints(PlayerPoints.Mine);
                     break;
                 case HexaKind.Pasture:
+                    kindCoef = 0.9;
                     points = map.GetActionPoints(PlayerPoints.Stepherd);
                     break;
                 case HexaKind.Stone:
+                    kindCoef = 1.2;
                     points = map.GetActionPoints(PlayerPoints.Quarry);
                     break;
             }
 
             int startSource = hexa.GetStartSource();
 
-            double desirability = (startSource / 24.0) * kBuildingItself + Desirability.GetHasSources(hexa.GetSourceBuildingCost()) * kHasSources +
+            double desirability = (startSource / 24.0 * kindCoef) * kBuildingItself + Desirability.GetHasSources(hexa.GetSourceBuildingCost()) * kHasSources +
                 ((points > 0) ? 1.0 : 0.0) * kPoints;
             return desirability;
         }

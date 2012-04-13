@@ -150,25 +150,20 @@ namespace AIGen
                     desirabilityCoef = mainGoal.desirabilityCoef;
 
                     tempDesirability = goal.GetDesirability();
-                    tempDesirability *= desirabilityCoef / 1000.0f;
+                    tempDesirability *= desirabilityCoef;
                     if (tempDesirability > bestDesirability)
                     {
                         bestGoal = goal;
                         bestDesirability = tempDesirability;
 
                         // fitness more than 1.0 has only goal BuildTown in first two stages of the game
-                        if (bestDesirability > 1.1)
+                        if (bestDesirability > 100000.0)
                             break;
                     }
                 }
                 if (bestGoal != null &&
-                    bestDesirability > 0.005)
+                    bestDesirability > 0.00001)
                 {
-                    if (count > 40)
-                    {
-                        count = 1000;
-                        return GoalState.Failed;
-                    }
                     Log("");
                     Log("New Plan");
                     Log("  Fitness > " + bestDesirability);

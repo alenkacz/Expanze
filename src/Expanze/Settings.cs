@@ -59,7 +59,7 @@ namespace Expanze
 
         public static double captureFreeChance = 0.25;
         // goals
-        public static int maxTurn = 60;
+        public static int maxTurn = 50;
         public static int[] winPoints = {10, 15, 20};
         public static int pointsTown = 0; /// points for new town
         public static int pointsRoad = 1; /// points for new road

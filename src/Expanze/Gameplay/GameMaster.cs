@@ -1072,9 +1072,9 @@ namespace Expanze
             lastWinner = false;
             lastTurnNumber = 0;
             fitness = 0.0;
-            geneticPopulation = 40;
+            geneticPopulation = 100;
             geneticFitnessRound = 1;
-            genetic = new Genetic(geneticPopulation, 0.20, 0.02, 3, 200, 10, 4.0, 0.15, false);
+            genetic = new Genetic(geneticPopulation, 0.85, 0.1, 3, 1600, 2, 4.0, 0.1, false);
 #endif
         }
     }
