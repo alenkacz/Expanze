@@ -38,8 +38,8 @@
 	</points>
 	<ban>
 		<Fort>1</Fort>
-        <Monastery>0</Monastery>
-        <Market>0</Market>
+        <Monastery>1</Monastery>
+        <Market>1</Market>
 		<FortCapture>1</FortCapture>
         <FortSteal>1</FortSteal>
 		<FortParade>1</FortParade>

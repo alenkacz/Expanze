@@ -1016,12 +1016,15 @@ namespace Expanze
             spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), genetic.GetChromozonID() + "", new Vector2(x, y + 32), Color.Black);
             spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), ((int) (genetic.GetLastFitness()  * 1000)) / 1000.0 + "", new Vector2(x, y + 62), Color.Black);
             spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), TimeSpan.FromMilliseconds(genetic.GetTime()).Hours + ":" + TimeSpan.FromMilliseconds(genetic.GetTime()).Minutes + ":" + TimeSpan.FromMilliseconds(genetic.GetTime()).Seconds, new Vector2(x, y + 92), Color.Black);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), ((int)(genetic.GetExtinction() * 1000)) / 1000.0 + "", new Vector2(x, y + 122), Color.Black);
+            
             x = 13;
             spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), ((lastWinner) ? "Winner" : "Looser") + "  " + lastTurnNumber, new Vector2(x, y - 30), Color.White);
             spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), genetic.GetGenerationNumber() + "", new Vector2(x, y), Color.White);
             spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), genetic.GetChromozonID() + "", new Vector2(x, y + 30), Color.White);
             spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), ((int)(genetic.GetLastFitness() * 1000)) / 1000.0 + "", new Vector2(x, y + 60), Color.White);
             spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), TimeSpan.FromMilliseconds(genetic.GetTime()).Hours + ":" + TimeSpan.FromMilliseconds(genetic.GetTime()).Minutes + ":" + TimeSpan.FromMilliseconds(genetic.GetTime()).Seconds, new Vector2(x, y + 90), Color.White);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), ((int)(genetic.GetExtinction() * 1000)) / 1000.0 + "", new Vector2(x, y + 122), Color.White);
             
             spriteBatch.End();
 #endif
@@ -1069,12 +1072,46 @@ namespace Expanze
         {
             gameCount = 0;
 #if GENETIC
+            bool[] bans = new bool[22];
+            for (int loop1 = 0; loop1 < 2; loop1++)
+            {
+                if (Settings.banFort)
+                {
+                    bans[11 * loop1 + 3] = true;
+                    bans[11 * loop1 + 4] = true;
+                    bans[11 * loop1 + 9] = true;
+                    bans[11 * loop1 + 10] = true;
+                }
+                if (Settings.banMarket)
+                {
+                    bans[11 * loop1 + 5] = true;
+                    bans[11 * loop1 + 8] = true;
+                }
+                if (Settings.banMonastery)
+                {
+                    bans[11 * loop1 + 6] = true;
+                    bans[11 * loop1 + 7] = true;
+                }
+                if (Settings.banFortCaptureHexa)
+                {
+                    bans[11 * loop1 + 10] = true;
+                }
+                if (Settings.banFortParade)
+                {
+                    bans[11 * loop1 + 4] = true;
+                }
+                if (Settings.banFortStealSources)
+                {
+                    bans[11 * loop1 + 9] = true;
+                }
+            }
+
             lastWinner = false;
             lastTurnNumber = 0;
             fitness = 0.0;
-            geneticPopulation = 100;
+            geneticPopulation = 50;
             geneticFitnessRound = 1;
-            genetic = new Genetic(geneticPopulation, 0.85, 0.1, 3, 1600, 2, 4.0, 0.1, false);
+            genetic = new Genetic(geneticPopulation, 0.8, 0.01, 3, 200, 2, 2.0, false, bans);
 #endif
         }
     }

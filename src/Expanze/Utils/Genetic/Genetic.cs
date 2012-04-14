@@ -30,8 +30,10 @@ namespace Expanze.Utils.Genetic
         double extinction;
         bool newBorn;
         Random rnd;
+        bool[] zeros;
+        int zerosSum;
 
-        public Genetic(int populationSize, double probCrossOver, double probMutability, int elitism, double shareSigma, double shareAlfa, double scaleSigma, double extinction, bool newBorn)
+        public Genetic(int populationSize, double probCrossOver, double probMutability, int elitism, double shareSigma, double shareAlfa, double scaleSigma, bool newBorn, bool [] zeros)
         {
             rnd = new Random();
             this.shareSigma = shareSigma;
@@ -41,15 +43,21 @@ namespace Expanze.Utils.Genetic
             this.probCrossOver = probCrossOver;
             this.probMutability = probMutability;
             this.populationSize = populationSize;
-            this.extinction = extinction;
+            this.extinction = 0.0;
             this.newBorn = newBorn;
+            this.zeros = zeros;
             generationNumber = 0;
+
+            zerosSum = 0;
+            for (int loop1 = 0; loop1 < zeros.Length; loop1++)
+                if (zeros[loop1])
+                    zerosSum++;
 
             population = new Chromozone[populationSize];
             for (int loop1 = 0; loop1 < populationSize; loop1++)
-                population[loop1] = new Chromozone(rnd);
+                population[loop1] = new Chromozone(rnd, zeros);
 
-            theBestOne = new Chromozone(rnd);
+            theBestOne = new Chromozone(rnd, zeros);
             fitnessBestOne = 0.0;
 
             activeChromozomeID = 0;
@@ -166,9 +174,13 @@ namespace Expanze.Utils.Genetic
                 theBestOne = population[0];
             }
 
+            // At least the worst one wont produce itself
+            if (population[population.Length - 1].GetFitness() > extinction)
+                extinction = population[population.Length - 1].GetFitness() + 0.0001;
+
             for (int loop1 = 0; loop1 < elitism; loop1++)
             {
-                newPopulation.Add(new Chromozone(population[loop1].GetGenes()));
+                newPopulation.Add(new Chromozone(population[loop1].GetGenes(), zeros));
             }
 
             KillTheWorsts(extinction);
@@ -194,19 +206,38 @@ namespace Expanze.Utils.Genetic
 
             while(newPopulation.Count < populationSize)
             {
-                int[][] dad = Selection();
-                int[][] mum = Selection();
+                int[][] dad = Chromozone.CloneArray2D(Selection());
+                int[][] mum = Chromozone.CloneArray2D(Selection());
                 
                 sons = CrossOver(dad, mum);
 
                 for (int loop1 = 0; loop1 < sons.Length; loop1++)
                 {
                     sons[loop1] = Mutation(sons[loop1]);
-                    newPopulation.Add(new Chromozone(sons[loop1]));
+                    newPopulation.Add(new Chromozone(sons[loop1], zeros));
                 }
             }
 
             population = newPopulation.ToArray();
+            DifferPopulation();
+        }
+
+        private void DifferPopulation()
+        {
+            double tempMutability = probMutability;
+            probMutability = 0.1;
+            for (int loop1 = 0; loop1 < population.Length; loop1++)
+            {
+                for (int loop2 = 0; loop2 < population.Length; loop2++)
+                {
+                    if (loop1 != loop2 && population[loop1].DistanceTo(population[loop2]) == 0)
+                    {
+                        population[loop1] = new Chromozone(Mutation(population[loop1].GetGenes()), zeros);
+                        loop2 = 0;
+                    }
+                }
+            }
+            probMutability = tempMutability;
         }
 
         private void AddFreshOnes(List<Chromozone> newPopulation)
@@ -214,7 +245,7 @@ namespace Expanze.Utils.Genetic
             int newOnes = 0;
             while (newPopulation.Count < populationSize && newOnes++ <= populationSize - population.Length)
             {
-                newPopulation.Add(new Chromozone(rnd));
+                newPopulation.Add(new Chromozone(rnd, zeros));
             }
         }
 
@@ -250,6 +281,9 @@ namespace Expanze.Utils.Genetic
         {
             for (int loop1 = 0; loop1 < entity.Length; loop1++)
             {
+                if (entity[loop1][1] == 0)
+                    continue;
+
                 if (rnd.NextDouble() < probMutability)
                 {
                     if (rnd.NextDouble() < 0.5)
@@ -317,12 +351,13 @@ namespace Expanze.Utils.Genetic
                     }
                 }
                 
-                int id1 = rnd.Next(dad.Length / 2 - 1) + 1;
-                int id2 = rnd.Next(dad.Length / 2 - 1) + dad.Length / 2;
+                int id1 = rnd.Next(zerosSum / 2 - 1) + 1;
+                int id2 = rnd.Next(zerosSum / 2 - 1) + zerosSum / 2;
 
+                int id = 0;
                 for (int loop1 = 0; loop1 < dad.Length; loop1++)
                 {
-                    if (loop1 < id1 || loop1 >= id2)
+                    if (id < id1 || id >= id2)
                     {
                         sons[0][loop1] = dad[loop1];
                         sons[1][loop1] = mum[loop1];
@@ -330,6 +365,9 @@ namespace Expanze.Utils.Genetic
                         sons[1][loop1] = dad[loop1];
                         sons[0][loop1] = mum[loop1];
                     }
+
+                    if (dad[loop1][1] != 0)
+                        id++;
                 }
 
                     /*
@@ -416,6 +454,11 @@ namespace Expanze.Utils.Genetic
         public long GetTime()
         {
             return stopwatch.ElapsedMilliseconds;
+        }
+
+        public double GetExtinction()
+        {
+            return extinction;
         }
     }
 }

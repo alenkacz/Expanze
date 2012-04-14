@@ -12,7 +12,7 @@ namespace Expanze.Utils.Genetic
         double probability;
         Random rnd;
 
-        public Chromozone(Random rnd)
+        public Chromozone(Random rnd, bool [] zeros)
         {
             this.rnd = rnd;
 
@@ -35,6 +35,7 @@ namespace Expanze.Utils.Genetic
             for (int loop1 = 0; loop1 < genes.Length; loop1++)
                 GenerateNewBigGen(loop1);
 
+            ZeroIt(zeros);
             ScaleIt();
         }
 
@@ -49,14 +50,50 @@ namespace Expanze.Utils.Genetic
             } 
         }
 
-        internal Chromozone(int [][] genes)
+        internal Chromozone(int [][] genes, bool [] zeros)
         {
             rnd = new Random();
-            this.genes = genes;
+            this.genes = CloneArray2D(genes);
+            ZeroIt(zeros);
             ScaleIt();
         }
 
-        internal int[][] GetGenes() { return genes; }
+        private void ZeroIt(bool[] zeros)
+        {
+            for (int loop1 = 0; loop1 < zeros.Length; loop1++)
+            {
+                if (zeros[loop1])
+                {
+                    for (int loop2 = 0; loop2 < genes[loop1].Length; loop2++)
+                    {
+                        genes[loop1][loop2] = 0;
+                    }
+                }
+            }
+        }
+
+        internal static int[][] CloneArray2D(int[][] input)
+        {
+            int[][] output;
+
+            output = new int[input.Length][];
+
+            for (int loop1 = 0; loop1 < input.Length; loop1++)
+            {
+                output[loop1] = new int[input[loop1].Length];
+                for (int loop2 = 0; loop2 < input[loop1].Length; loop2++)
+                {
+                    output[loop1][loop2] = input[loop1][loop2];
+                }
+            }
+
+            return output;
+        }
+
+        internal int[][] GetGenes() { 
+            
+            return genes; 
+        }
 
         internal void SetFitness(double fitness)
         {
@@ -84,6 +121,9 @@ namespace Expanze.Utils.Genetic
         {
             for (int loop1 = 0; loop1 < genes.Length; loop1++)
             {
+                if (genes[loop1][1] == 0)
+                    continue;
+
                 if(genes[loop1].Length > 2) // main goal coeficient and two params in one
                 {
                     double oldSum = 0;
