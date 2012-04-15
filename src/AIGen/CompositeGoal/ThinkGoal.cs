@@ -62,9 +62,11 @@ namespace AIGen
                 offset = 11;
 
             mainGoals = new LinkedList<MainGoal>();
-            mainGoals.AddLast(new MainGoal(new BuildTown(map, coeficients[offset + 0][1], coeficients[offset + 0][2], coeficients[offset + 0][3], depth + 1), coeficients[offset + 0][0]));
+
+            BuildSourceBuilding buildSourceBuilding = new BuildSourceBuilding(map, coeficients[offset + 2][1], coeficients[offset + 2][2], coeficients[offset + 2][3], depth + 1);
+            mainGoals.AddLast(new MainGoal(new BuildTown(map, coeficients[offset + 0][1], coeficients[offset + 0][2], coeficients[offset + 0][3], depth + 1, buildSourceBuilding), coeficients[offset + 0][0]));
             mainGoals.AddLast(new MainGoal(new BuildRoad(map, coeficients[offset + 1][1], depth + 1), coeficients[offset + 1][0]));
-            mainGoals.AddLast(new MainGoal(new BuildSourceBuilding(map, coeficients[offset + 2][1], coeficients[offset + 2][2], coeficients[offset + 2][3], depth + 1), coeficients[offset + 2][0]));
+            mainGoals.AddLast(new MainGoal(buildSourceBuilding, coeficients[offset + 2][0]));
 
             if (!map.IsBanAction(PlayerAction.BuildFort))
             {

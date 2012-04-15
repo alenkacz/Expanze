@@ -175,8 +175,15 @@ namespace Expanze.Utils.Genetic
             }
 
             // At least the worst one wont produce itself
-            if (population[population.Length - 1].GetFitness() > extinction)
-                extinction = population[population.Length - 1].GetFitness() + 0.0001;
+            for (int loop1 = population.Length - 1; loop1 >= population.Length / 3; loop1--)
+            {
+                if (population[loop1].GetFitness() > extinction &&
+                    population[loop1].GetFitness() != population[population.Length / 3 - 1].GetFitness())
+                {
+                    extinction = population[loop1].GetFitness();
+                    break;
+                }
+            }
 
             for (int loop1 = 0; loop1 < elitism; loop1++)
             {
@@ -271,7 +278,7 @@ namespace Expanze.Utils.Genetic
                     minFitness = ch.GetFitness();
             }
 
-            msg = "Fitness;" + String.Format("{0:0.00}", sum / populationSize) + ";" + String.Format("{0:0.00}", maxFitness) + ";" + String.Format("{0:0.00}", minFitness) + msg;
+            msg = "Fitness;" + String.Format("{0:0.00}", sum / population.Length) + ";" + String.Format("{0:0.00}", maxFitness) + ";" + String.Format("{0:0.00}", minFitness) + msg;
             Logger.Inst().Log("fitness.txt", msg);
 
             best.Log();          
@@ -286,14 +293,25 @@ namespace Expanze.Utils.Genetic
 
                 if (rnd.NextDouble() < probMutability)
                 {
-                    if (rnd.NextDouble() < 0.5)
+                    double probKind = rnd.NextDouble();
+
+                    if (rnd.NextDouble() < 0.33)
                     {
                         entity[loop1][0] = rnd.Next(MAX_MAIN_COEF);
-                    } else
+                    }
+                    else if (rnd.NextDouble() < 0.66)
+                    {
                         for (int loop2 = 1; loop2 < entity[loop1].Length; loop2++)
                         {
                             entity[loop1][loop2] = rnd.Next(SUM_COEF) + 1;
                         }
+                    }
+                    else
+                    {
+                        int[] tempMaxGene = entity[loop1 % 11];
+                        entity[loop1 % 11] = entity[loop1 % 11 + 11];
+                        entity[loop1 % 11 + 11] = tempMaxGene;
+                    }
                 }
             }
 
@@ -351,8 +369,8 @@ namespace Expanze.Utils.Genetic
                     }
                 }
                 
-                int id1 = rnd.Next(zerosSum / 2 - 1) + 1;
-                int id2 = rnd.Next(zerosSum / 2 - 1) + zerosSum / 2;
+                int id1 = rnd.Next((dad.Length - zerosSum) / 2 - 1) + 1;
+                int id2 = rnd.Next((dad.Length - zerosSum) / 2 - 1) + zerosSum / 2;
 
                 int id = 0;
                 for (int loop1 = 0; loop1 < dad.Length; loop1++)

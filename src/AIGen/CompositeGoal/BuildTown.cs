@@ -25,8 +25,9 @@ namespace AIGen
         double kNearestTown;
         double kTownItself;
         double kPoints;
+        BuildSourceBuilding buildingGoal;
 
-        public BuildTown(IMapController map, double kNearestTown, double kTownItself, double kPoints, int depth)
+        public BuildTown(IMapController map, double kNearestTown, double kTownItself, double kPoints, int depth, BuildSourceBuilding buildingGoal)
             : base(map, depth, "Build Town")
         {
             lastBestTown = null;
@@ -35,6 +36,7 @@ namespace AIGen
             this.kNearestTown = kNearestTown / sum;
             this.kTownItself = kTownItself / sum;
             this.kPoints = kPoints / sum;
+            this.buildingGoal = buildingGoal;
         }
 
         public override void Init()
@@ -275,13 +277,17 @@ namespace AIGen
             if (hexa == null || hexa.GetKind() == HexaKind.Water)
                 return 0.0f;
 
+            return buildingGoal.GetDesirability(hexa);
+        }
+        /*private double GetFitness(IHexa hexa)
+        {
+            if (hexa == null || hexa.GetKind() == HexaKind.Water)
+                return 0.0f;
+
             double fitness;
 
             fitness = hexa.GetStartSource() / 24.0;
 
-            /*
-             * Ore and stone is more useful than other sources 
-             */
             if (hexa.GetKind() != HexaKind.Mountains &&
                hexa.GetKind() != HexaKind.Stone)
             {
@@ -295,15 +301,11 @@ namespace AIGen
             else
                 fitness *= 1.2;
 
-            /*
-             * Better than water
-             */
-
             if (hexa.GetKind() == HexaKind.Desert)
                 fitness = 0.15;
 
             return fitness;
-        }
+        }*/
 
         private double GetDesirability(ITown town)
         {

@@ -7,13 +7,11 @@
         <name>Tony Blair</name>
         <color>Blue</color>
         <AI>Human</AI>
-        <order>0</order>
       </player>
       <player>
         <name>The One</name>
         <color>Red</color>
         <AI>AI Gen</AI>
-        <order>1</order>
       </player>
     </players>
 	<points>

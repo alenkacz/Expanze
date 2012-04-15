@@ -72,10 +72,13 @@ namespace AIGen
             return bestFitness;
         }
 
-        private double GetDesirability(ITown town, byte pos)
+        public double GetDesirability(ITown town, byte pos)
         {
-            IHexa hexa = town.GetIHexa(pos);
+            return GetDesirability(town.GetIHexa(pos));
+        }
 
+        public double GetDesirability(IHexa hexa)
+        {
             double kindCoef = 1.0;
             int points = 0;
             switch (hexa.GetKind())

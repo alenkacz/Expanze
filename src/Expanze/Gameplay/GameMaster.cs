@@ -764,24 +764,25 @@ namespace Expanze
                         if (players[winnerID].GetGen())
                         {
                             genID = winnerID;
-                            add = (2 * players[winnerID].GetPoints() - players[looserID].GetPoints()) * 10;
+                            add = (players[looserID].GetPoints() - players[winnerID].GetPoints() / 3.0) / GetGameSettings().GetPoints() * 100 / (turnNumber / 4.0);
 
                             if (turnNumber < Settings.maxTurn)
                             {
-                                fitness += (20.0 - turnNumber / 4.0) + add;
+                                fitness += (30.0 - turnNumber / 4.0) + add;
                                 lastWinner = true;
                             }
                         }
                         else if (players[looserID].GetGen())
                         {
                             genID = looserID;
-                            add = (2 * players[looserID].GetPoints() -  players[winnerID].GetPoints()) * 10;
+                            add = (players[looserID].GetPoints() - players[winnerID].GetPoints() / 3.0) / GetGameSettings().GetPoints()  * 100 / (turnNumber / 4.0);
                             if(add > 0.0)
                                 fitness += add;
                         }
-                        fitness += (double) players[genID].GetTown().Count * 5.0 / turnNumber;
-                        fitness += (double) players[genID].GetRoad().Count * 1.0 / turnNumber;
-                        fitness += (double) players[genID].GetCollectSourcesNormal().GetAsArray().Sum() / 40.0 / turnNumber;
+                        fitness += (double) players[genID].GetSource().GetAsArray().Sum() / 30.0 / turnNumber;
+                        fitness += (double) players[genID].GetTown().Count * 10.0 / turnNumber;
+                        fitness += (double) players[genID].GetRoad().Count * 5.0 / turnNumber;
+                        fitness += (double) players[genID].GetCollectSourcesNormal().GetAsArray().Sum() / 20.0 / turnNumber;
                     }
 
                     if (gameCount % geneticFitnessRound == 0)
@@ -789,7 +790,7 @@ namespace Expanze
                         //fitness -= 8;
                         if (fitness < 0.0)
                             fitness = 0.0;
-                        fitness /= 10.0f;
+                        
                         genetic.SetFitness(fitness);
                         fitness = 0;
                     }

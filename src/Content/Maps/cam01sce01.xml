@@ -7,18 +7,15 @@
 			<name>Tony Blair</name>
 			<color>Blue</color>
 			<AI>Human</AI>
-			<order>0</order>
 		</player>
 		<player>
 			<name>The One</name>
 			<color>Red</color>
 			<AI>AI Gen</AI>
-			<order>1</order>
-      <personality>624;298;728;554;; 74;608;;956;608;699;432;;598;281;429;952;565;; 34;809;; 66;166; 79;723; 53;370;; 44;157; 33;630;680;141;;682;512;;394;769;;698;592;;163;134;;</personality>
 		</player>
 	</players>
 	<points>
-		<WinPoints>6</WinPoints>
+		<WinPoints>7</WinPoints>
         <Town>1</Town>
         <Road>0</Road>
         <Fort>0</Fort>
