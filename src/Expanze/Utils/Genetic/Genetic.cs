@@ -369,13 +369,13 @@ namespace Expanze.Utils.Genetic
                     }
                 }
                 
-                int id1 = rnd.Next((dad.Length - zerosSum) / 2 - 1) + 1;
-                int id2 = rnd.Next((dad.Length - zerosSum) / 2 - 1) + zerosSum / 2;
+                //int id1 = rnd.Next((dad.Length - zerosSum) / 2 - 1) + 1;
+                //int id2 = rnd.Next((dad.Length - zerosSum) / 2 - 1) + zerosSum / 2;
 
                 int id = 0;
                 for (int loop1 = 0; loop1 < dad.Length; loop1++)
                 {
-                    if (id < id1 || id >= id2)
+                    if (rnd.NextDouble() < 0.5)
                     {
                         sons[0][loop1] = dad[loop1];
                         sons[1][loop1] = mum[loop1];

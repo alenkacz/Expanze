@@ -83,7 +83,10 @@ namespace AIGen
             double hasSomeoneFort = (Desirability.HasSomeoneBuilding(Building.Fort)) ? 0.0 : 1.0;
             double desirability = (bestDesirability * kBestHexa + hasMoneyDesirability * kHasMoney + points * kPoints + hasSomeoneFort * kHasOtherFort) * hasFortDesirability;
 
-            return desirability;
+            double desirabilityWinningBonus = 0.0;
+            if (map.GetPlayerMe().GetPoints() + map.GetActionPoints(PlayerPoints.Fort) >= map.GetGameSettings().GetWinningPoints())
+                desirabilityWinningBonus = ThinkGoal.ONE_POINT_REMAIN_FITNESS;
+            return desirability + desirabilityWinningBonus;
         }
 
         private double GetDesirability(ITown town, byte pos)

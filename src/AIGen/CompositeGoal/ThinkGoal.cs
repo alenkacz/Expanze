@@ -14,6 +14,9 @@ namespace AIGen
         int level;              // which array of koef should player use
         int[][] coeficients;
 
+        public const double ONE_POINT_REMAIN_FITNESS = 1000.0f;
+        public const double CANT_BE_BETTER_FITNESS = 100000000.0f;
+
         public ThinkGoal(IMapController map, int[][] koef, int depth) : base(map, depth, "Think")
         {
             sumSources = 0;
@@ -158,8 +161,8 @@ namespace AIGen
                         bestGoal = goal;
                         bestDesirability = tempDesirability;
 
-                        // fitness more than 1.0 has only goal BuildTown in first two stages of the game
-                        if (bestDesirability > 100000.0)
+                        // fitness more than CANT_BE_BETTER_FITNESS has only goal BuildTown in first two stages of the game
+                        if (bestDesirability >= CANT_BE_BETTER_FITNESS)
                             break;
                     }
                 }

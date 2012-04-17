@@ -110,6 +110,9 @@ namespace AIGen
 
             int startSource = hexa.GetStartSource();
 
+            if (map.GetPlayerMe().GetPoints() + points >= map.GetGameSettings().GetWinningPoints())
+                return ThinkGoal.ONE_POINT_REMAIN_FITNESS;
+
             double desirability = (startSource / 24.0 * kindCoef) * kBuildingItself + Desirability.GetHasSources(hexa.GetSourceBuildingCost()) * kHasSources +
                 ((points > 0) ? 1.0 : 0.0) * kPoints;
             return desirability;

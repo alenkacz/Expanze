@@ -10,11 +10,13 @@ namespace AIGen
     {
         public ITown town;
         public bool me;
+        public int distance;
 
-        public TownPlayer(ITown town, bool me)
+        public TownPlayer(ITown town, bool me, int distance)
         {
             this.town = town;
             this.me = me;
+            this.distance = distance;
         }
     }
 
@@ -58,25 +60,21 @@ namespace AIGen
                     {
                         List<IRoad> path = map.GetRoadsToTown(lastBestTown, map.GetPlayerMe());
 
-                        for(int loop1 = 0; loop1 < path.Count - 1; loop1++)
-                        {
-                            AddSubgoal(new RaiseSources(map, map.GetPrice(PriceKind.BRoad), depth + 1));
-                            AddSubgoal(new BuildRoadAtom(map, path[loop1], depth + 1));
-                        }
+                        
 
                         List<ISourceAll> sourceList = new List<ISourceAll>();
                         sourceList.Add(map.GetPrice(PriceKind.BTown));
 
-                        if (path.Count > 0)
+                        for (int loop1 = 0; loop1 < path.Count; loop1++)
                         {
                             sourceList.Add(map.GetPrice(PriceKind.BRoad));
                         }
 
                         AddSubgoal(new RaiseSources(map, sourceList, depth + 1));
 
-                        if (path.Count > 0)
+                        for (int loop1 = 0; loop1 < path.Count; loop1++)
                         {
-                            AddSubgoal(new BuildRoadAtom(map, path[path.Count - 1], depth + 1));
+                            AddSubgoal(new BuildRoadAtom(map, path[loop1], depth + 1));
                         }
 
                         AddSubgoal(new BuildTownAtom(map, lastBestTown, depth + 1));
@@ -106,15 +104,8 @@ namespace AIGen
             double tempDesirability;
             ITown bestTown = null;
             double bestDesirability = 0.0;
-            int count = 0;
-            int maxCount = 0;
-
-            switch (map.GetGameSettings().GetMapSize())
-            {
-                case MapSize.SMALL: maxCount = 20; break;
-                case MapSize.MEDIUM: maxCount = 30; break;
-                case MapSize.BIG: maxCount = 40; break;
-            }
+            double count = 0;
+            double maxCount = 0;
 
             for (int loop1 = 1; loop1 < townMaxID; loop1++)
             {
@@ -141,9 +132,7 @@ namespace AIGen
                     */
                 }
 
-                int points = map.GetActionPoints(PlayerPoints.Town);
-                tempDesirability = tempDesirability * kTownItself + (count / (double) maxCount) * kNearestTown +
-                    ((points > 0) ? 1.0f : 0.0f) * kPoints;
+                tempDesirability = tempDesirability * kTownItself + (count / (double) maxCount) * kNearestTown;
 
                 if (tempDesirability > bestDesirability)
                 {
@@ -155,7 +144,7 @@ namespace AIGen
             lastBestTown = bestTown;
         }
 
-        private int CountNearestTowns(ITown futureTown)
+        private double CountNearestTowns(ITown futureTown)
         {
             Queue<TownPlayer> openList = new Queue<TownPlayer>();
 
@@ -163,21 +152,21 @@ namespace AIGen
             {
                 foreach (ITown town in player.GetTown())
                 {
-                    openList.Enqueue(new TownPlayer(town, false));
+                    openList.Enqueue(new TownPlayer(town, false, 0));
                 }
             }
 
             foreach (ITown town in map.GetPlayerMe().GetTown())
             {
-                openList.Enqueue(new TownPlayer(town, false));
+                openList.Enqueue(new TownPlayer(town, false, 0));
             }
-            openList.Enqueue(new TownPlayer(futureTown, true));
+            openList.Enqueue(new TownPlayer(futureTown, true, 0));
 
             TownPlayer peekTown;
             ITown neighbour;
             List<ITown> closeList = new List<ITown>();
 
-            int count = 0;
+            double count = 0.0;
 
             while (openList.Count > 0)
             {
@@ -198,7 +187,10 @@ namespace AIGen
                     }
 
                     if (!isNeighbour)
-                        count++;
+                    {
+                        double townDesirability = GetDesirability(peekTown.town) / (peekTown.distance + 1);
+                        count += townDesirability;
+                    }
                 }
 
                 /*
@@ -224,13 +216,13 @@ namespace AIGen
 
                         if (!isInOpenList)
                         {
-                            openList.Enqueue(new TownPlayer(neighbour, peekTown.me));
+                            openList.Enqueue(new TownPlayer(neighbour, peekTown.me, peekTown.distance + 1));
                         }
                     }
                 }
             }
 
-            return count - 1; // minus future town
+            return count;
         }
 
         public override double GetDesirability()
@@ -245,6 +237,17 @@ namespace AIGen
             else
             {
                 int maxTownID = map.GetMaxTownID();
+                double count = 0;
+                double maxCount = 0;
+
+                for (int loop1 = 1; loop1 < maxTownID; loop1++)
+                {
+                    tempTown = map.GetITownByID(loop1);
+                    count = CountNearestTowns(tempTown);
+                    if (count > maxCount)
+                        maxCount = count;
+                }
+
                 for (int loop1 = 1; loop1 < maxTownID; loop1++)
                 {
                     tempTown = map.GetITownByID(loop1);
@@ -257,6 +260,12 @@ namespace AIGen
                     int dst = map.GetDistanceToTown(tempTown, map.GetPlayerMe());
                     if (dst > 20)
                         continue;
+
+                    count = CountNearestTowns(tempTown);
+
+                    int points = map.GetActionPoints(PlayerPoints.Town);
+                    tempDesirability = tempDesirability * kTownItself + (count / (double)maxCount) * kNearestTown +
+                        ((points > 0) ? 1.0f : 0.0f) * kPoints;
 
                     double coef = (dst <= 2) ? 1 - (dst * 0.1) : 1 - (dst * 0.15);
                     tempDesirability = tempDesirability * coef;
@@ -335,15 +344,21 @@ namespace AIGen
                     !haveKind[normal.KindToInt(tempHexa.GetSourceKind())])
                 {
                     haveKind[normal.KindToInt(tempHexa.GetSourceKind())] = true;
-                    multiplier = 3.5;
+                    multiplier = 2.5;
                 }
                 else
                     multiplier = 1.0;
 
-                fitness += GetFitness(tempHexa) * multiplier / 9.0;
+                double fitnessHexa = GetFitness(tempHexa);
+                if (fitnessHexa >= ThinkGoal.ONE_POINT_REMAIN_FITNESS - 1.0f)
+                    fitnessHexa /= 90.0; // dont build town if you can build building for points
+                fitness += fitnessHexa * multiplier / 9.0;
             }
 
-            return fitness;
+            double desirabilityWinningBonus = 0.0;
+            if (map.GetPlayerMe().GetPoints() + map.GetActionPoints(PlayerPoints.Town) >= map.GetGameSettings().GetWinningPoints())
+                desirabilityWinningBonus = ThinkGoal.ONE_POINT_REMAIN_FITNESS;
+            return fitness + desirabilityWinningBonus;
         }
     }
 }

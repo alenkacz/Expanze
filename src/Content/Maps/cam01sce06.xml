@@ -12,7 +12,7 @@
         <name>The One</name>
         <color>Red</color>
         <AI>AI Gen</AI>
-        <personality>803;  1; 43; 56;;674; 66;;495; 23; 68;  9;;  0;  0;  0;  0;  0;;  0;  0;;294; 19; 32; 23;  7; 19;;439; 12; 34;  3; 21; 30;; 68; 64;;625; 57;;  0;  0;;  0;  0;;857; 17; 42; 41;;501; 21;;261; 26; 43; 31;;  0;  0;  0;  0;  0;;  0;  0;;645; 22;  1; 20;  4; 53;;292; 10; 26; 33; 28;  3;;515; 18;;719; 15;;  0;  0;;  0;  0;;</personality>
+        <personality>74; 23; 49; 28;;924; 43;;270; 27; 65;  8;;  0;  0;  0;  0;  0;;  0;  0;;133; 19; 35; 24; 17;  5;;234; 18; 20; 35; 20;  7;; 33; 99;;921; 70;;  0;  0;;  0;  0;;660; 70;  8; 22;;733; 70;;500; 43;  9; 48;;  0;  0;  0;  0;  0;;  0;  0;;850; 32;  7; 36;  8; 17;;752;  1; 17; 50;  6; 26;;615; 31;;147; 31;;  0;  0;;  0;  0;;</personality>
       </player>
     </players>
 	<points>
@@ -62,7 +62,7 @@
     </row>
     <row>
       <hexa type="water" />
-      <hexa type="forest" productivity="24" />
+      <hexa type="cornfield" productivity="20" />
 	  <hexa type="mountains" productivity="16" />
       <hexa type="water" />
       <hexa type="cornfield" productivity="16" />
@@ -73,7 +73,7 @@
 	  <hexa type="water" />
       <hexa type="water" />
       <hexa type="mountains" productivity="16" />
-      <hexa type="cornfield" productivity="8" />
+      <hexa type="forest" productivity="16" />
 	  <hexa type="mountains" productivity="12" />
       <hexa type="water" />
     </row>
@@ -83,14 +83,14 @@
       <hexa type="stone" productivity="16" />
       <hexa type="stone" productivity="20" />
 	  <hexa type="water" />
-      <hexa type="cornfield" productivity="16" />
+      <hexa type="cornfield" productivity="20" />
       <hexa type="water" />
     </row>
 	<row>
 	  <hexa type="space" />
 	  <hexa type="space" />
       <hexa type="water" />
-	  <hexa type="cornfield" productivity="12" />
+	  <hexa type="cornfield" productivity="16" />
       <hexa type="pasture" productivity="16" />
       <hexa type="water" />
       <hexa type="water" />

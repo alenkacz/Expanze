@@ -1110,7 +1110,7 @@ namespace Expanze
             lastWinner = false;
             lastTurnNumber = 0;
             fitness = 0.0;
-            geneticPopulation = 50;
+            geneticPopulation = 150;
             geneticFitnessRound = 1;
             genetic = new Genetic(geneticPopulation, 0.8, 0.01, 3, 200, 2, 2.0, false, bans);
 #endif

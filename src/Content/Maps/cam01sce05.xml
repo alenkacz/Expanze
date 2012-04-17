@@ -71,9 +71,9 @@
     <row>
 	  <hexa type="space" />
 	  <hexa type="water" />
-      <hexa type="cornfield" productivity="16" />
+      <hexa type="cornfield" productivity="20" />
       <hexa type="mountains" productivity="8" />
-      <hexa type="cornfield" productivity="16" />
+      <hexa type="cornfield" productivity="24" />
       <hexa type="water" />
     </row>
     <row>
