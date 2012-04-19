@@ -12,11 +12,11 @@
           <id>8</id>
         </towns>
         <source>
-          <ore>6100</ore>
-          <meat>7200</meat>
-          <stone>2299</stone>
-          <wood>9250</wood>
-          <corn>5302</corn>
+          <ore>100</ore>
+          <meat>200</meat>
+          <stone>200</stone>
+          <wood>100</wood>
+          <corn>100</corn>
         </source>
       </player>
       <player>
@@ -35,11 +35,11 @@
           <id>19</id>
         </roads>
         <source>
-          <ore>3100</ore>
-          <meat>3200</meat>
-          <stone>4299</stone>
-          <wood>5250</wood>
-          <corn>1302</corn>
+          <ore>150</ore>
+          <meat>150</meat>
+          <stone>150</stone>
+          <wood>150</wood>
+          <corn>150</corn>
         </source>
       </player>
     </players>

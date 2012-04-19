@@ -148,15 +148,19 @@ namespace Expanze
             winnerNew = false;
 
             hasAIThreadStarted = false;
-            //state = EGameState.StateFirstTown;
-            state = EGameState.StateGame;
+
+            if(players[0].GetBuildingCount(Building.Town) == 0)
+                state = EGameState.StateFirstTown;
+            else
+                state = EGameState.StateGame;
+
             fortState = EFortState.Normal;
 
             randomNumber = new System.Random();
 
             hasBuiltTown = false;
 
-            turnNumber = 0;
+            turnNumber = 1;
 
             PromptWindow.Inst().Deactive();
             Message.Inst().ClearMessages();
@@ -1191,7 +1195,7 @@ namespace Expanze
             lastTurnNumber = 0;
             fitness = 0.0;
             geneticPopulation = 40;
-            geneticFitnessRound = 1;
+            geneticFitnessRound = 3;
             genetic = new Genetic(geneticPopulation, 0.8, 0.01, 3, 200, 2, 2.0, false, bans);
 #endif
         }

@@ -46,9 +46,6 @@ namespace AIGen
         {
             List<ITown> towns = map.GetPlayerMe().GetTown();
 
-            if (map.GetTurnNumber() < 4)
-                return 0.0f;
-
             double bestDesirability = 0.0;
             double tempFitness;
             lastBestTown = null;
