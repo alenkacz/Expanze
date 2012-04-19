@@ -141,5 +141,9 @@ namespace Expanze
         {
             Strings.MENU_HOT_SEAT_NO_AI
         };
+
+        // help vars
+        public static int activeTown = 0;
+        public static int activeRoad = 0;
     }
 }

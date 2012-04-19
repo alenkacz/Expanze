@@ -148,8 +148,8 @@ namespace Expanze
             winnerNew = false;
 
             hasAIThreadStarted = false;
-            state = EGameState.StateFirstTown;
-            //state = EGameState.StateGame;
+            //state = EGameState.StateFirstTown;
+            state = EGameState.StateGame;
             fortState = EFortState.Normal;
 
             randomNumber = new System.Random();
@@ -428,6 +428,33 @@ namespace Expanze
                                 map.GetMapController().BuildRoad(ID);
                             }
 
+                            break;
+
+                        case "source":
+                            //activePlayer.AddSources(new SourceAll(0), TransactionState.TransactionStart);
+                            foreach (XmlNode kind in info.ChildNodes)
+                            {
+                                int amount = Convert.ToInt16(kind.InnerText);
+                                switch (kind.Name)
+                                {
+                                    case "wood" :
+                                        activePlayer.AddSources(new SourceAll(0, 0, 0, amount, 0), TransactionState.TransactionMiddle);
+                                        break;
+                                    case "ore":
+                                        activePlayer.AddSources(new SourceAll(0, 0, 0, 0, amount), TransactionState.TransactionMiddle);
+                                        break;
+                                    case "corn":
+                                        activePlayer.AddSources(new SourceAll(amount, 0, 0, 0, 0), TransactionState.TransactionMiddle);
+                                        break;
+                                    case "stone":
+                                        activePlayer.AddSources(new SourceAll(0, 0, amount, 0, 0), TransactionState.TransactionMiddle);
+                                        break;
+                                    case "meat":
+                                        activePlayer.AddSources(new SourceAll(0, amount, 0, 0, 0), TransactionState.TransactionMiddle);
+                                        break;
+                                }
+                            }
+                            //activePlayer.AddSources(new SourceAll(0), TransactionState.TransactionEnd);
                             break;
                     }
                 }
@@ -1056,9 +1083,12 @@ namespace Expanze
 
         public void DrawGeneticInfo()
         {
-#if GENETIC
             SpriteBatch spriteBatch = GameState.spriteBatch;
             spriteBatch.Begin();
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), Settings.activeRoad + " R", new Vector2(50, 50), Color.Black);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), Settings.activeTown + " T", new Vector2(50, 80), Color.Black);
+#if GENETIC
+            
             int x = 15;
             int y = 200;
             spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), ((lastWinner) ? "Winner" : "Looser") + "  " + lastTurnNumber, new Vector2(x, y - 30), Color.Black);
@@ -1076,8 +1106,9 @@ namespace Expanze
             spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), TimeSpan.FromMilliseconds(genetic.GetTime()).Hours + ":" + TimeSpan.FromMilliseconds(genetic.GetTime()).Minutes + ":" + TimeSpan.FromMilliseconds(genetic.GetTime()).Seconds, new Vector2(x, y + 90), Color.White);
             spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), ((int)(genetic.GetExtinction() * 1000)) / 1000.0 + "", new Vector2(x, y + 122), Color.White);
             
-            spriteBatch.End();
+            
 #endif
+            spriteBatch.End();
         }
 
         public double GetRandomNumber()

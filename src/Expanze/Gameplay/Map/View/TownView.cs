@@ -220,6 +220,9 @@ namespace Expanze.Gameplay.Map
         {
             Map.SetPickVariables(c == pickTownColor, pickVars);
 
+            if (pickVars.pickActive)
+                Settings.activeTown = townID;
+
             // create new town?
             GameMaster gm = GameMaster.Inst();
             if (pickVars.pickNewPress)

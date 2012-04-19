@@ -11,6 +11,13 @@
           <id>22</id>
           <id>8</id>
         </towns>
+        <source>
+          <ore>6100</ore>
+          <meat>7200</meat>
+          <stone>2299</stone>
+          <wood>9250</wood>
+          <corn>5302</corn>
+        </source>
       </player>
       <player>
         <name>The One</name>
@@ -27,6 +34,13 @@
           <id>18</id>
           <id>19</id>
         </roads>
+        <source>
+          <ore>3100</ore>
+          <meat>3200</meat>
+          <stone>4299</stone>
+          <wood>5250</wood>
+          <corn>1302</corn>
+        </source>
       </player>
     </players>
 	<points>

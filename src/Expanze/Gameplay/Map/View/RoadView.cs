@@ -176,6 +176,9 @@ namespace Expanze.Gameplay.Map.View
         public void HandlePickableAreas(Color c)
         {
             Map.SetPickVariables(c == pickRoadColor, pickVars);
+            
+            if(pickVars.pickActive)
+                Settings.activeRoad = roadID;
 
             if (pickVars.pickNewPress)
             {
