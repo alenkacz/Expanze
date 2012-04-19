@@ -345,7 +345,11 @@ namespace Expanze.Gameplay.Map
 
         public void AddToViewQueue(ItemQueue item)
         {
-            viewQueue.Add(item);
+            AddToViewQueue(item, false);
+        }
+        public void AddToViewQueue(ItemQueue item, bool forceIt)
+        {
+            viewQueue.Add(item, forceIt);
         }
 
         public bool getIsViewQueueClear()

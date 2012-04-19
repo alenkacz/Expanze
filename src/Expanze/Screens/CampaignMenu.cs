@@ -69,7 +69,7 @@ namespace Expanze
             MenuEntry menu = (MenuEntry)sender;
             string src;
             mapnamesource.TryGetValue(menu.Text, out src);
-            GameMaster.Inst().PrepareCampaignMap(src);
+            GameMaster.Inst().SetMapSource(src);// PrepareCampaignMap(src);
 
             // now is used for AI
             GameLoadScreen.Load(ScreenManager, true, e.PlayerIndex,

@@ -7,12 +7,26 @@
         <name>Tony Blair</name>
         <color>Blue</color>
         <AI>Human</AI>
+        <towns>
+          <id>22</id>
+          <id>8</id>
+        </towns>
       </player>
       <player>
         <name>The One</name>
         <color>Red</color>
         <AI>AI Gen</AI>
         <personality>83;  3; 58; 39;;948; 91;;206; 28; 31; 41;;730;  8; 41; 44;  7;;223; 22;;333; 30; 41;  1; 16; 12;;174;  7; 22; 10; 37; 24;; 47; 94;;625; 73;;148; 65;;947; 22;;562; 14; 12; 74;;429; 51;;994; 22; 42; 36;;127;  5; 24; 25; 46;;764; 65;;294;  9; 16; 20;  9; 46;;925;  9; 34; 22; 32;  3;;228; 35;;778;  4;;449;  6;;100; 18;;</personality>
+        <towns>
+          <id>15</id>
+          <id>42</id>
+        </towns>
+        <roads>
+          <id>16</id>
+          <id>17</id>
+          <id>18</id>
+          <id>19</id>
+        </roads>
       </player>
     </players>
 	<points>

@@ -178,7 +178,8 @@ namespace Expanze.Gameplay.Map
                 ItemQueue item = new RoadItemQueue(mapView, roadID);
                 mapView.AddToViewQueue(item);
 
-                gm.GetActivePlayer().PayForSomething(Settings.costRoad);
+                if(gm.GetState() != EGameState.BeforeGame)
+                    gm.GetActivePlayer().PayForSomething(Settings.costRoad);
 
                 return road;
             }
@@ -286,12 +287,15 @@ namespace Expanze.Gameplay.Map
             GameMaster gm = GameMaster.Inst();
             TownBuildError error = town.CanBuildTown();
             if (error == TownBuildError.OK)
-            {
+            {   
                 PathNode.SetIsValid(false);
                 town.BuildTown(gm.GetActivePlayer());
 
                 ItemQueue item = new TownItemQueue(mapView, townID);
                 mapView.AddToViewQueue(item);
+
+                if (gm.GetState() == EGameState.BeforeGame)
+                    return town;
 
                 if (gm.GetState() != EGameState.StateGame)
                 {

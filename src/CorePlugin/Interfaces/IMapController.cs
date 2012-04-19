@@ -10,7 +10,7 @@ namespace CorePlugin
                             MCorn1, MMeat1, MStone1, MWood1, MOre1, MCorn2, MMeat2, MStone2, MWood2, MOre2,
                             AParade, AStealSources, ACaptureHexa,
                             Medal}
-    public enum EGameState { StateFirstTown, StateSecondTown, StateGame }
+    public enum EGameState { StateFirstTown, StateSecondTown, StateGame, BeforeGame }
     public enum UpgradeKind { NoUpgrade, FirstUpgrade, SecondUpgrade }
     public enum LicenceKind { NoLicence, FirstLicence, SecondLicence }
     public enum SourceBuildingKind { Mill, Stepherd, Quarry, Saw, Mine, Count} // have to be in this order

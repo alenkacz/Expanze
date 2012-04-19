@@ -94,9 +94,8 @@ namespace Expanze
                 winnerNew = true;
         }
 
-        public bool StartGame(Map map)
+        public bool StartGame()
         {
-            this.map = map;
             gameCount++;
 
             playerCount = players.Count;
@@ -136,6 +135,9 @@ namespace Expanze
                     AI.InitAIComponent(map.GetMapController(), setArray);
                 }
             }
+
+            state = EGameState.BeforeGame;
+            PrepareCampaignMap();
             
             activePlayerIndex = 0;
             activePlayer = players.ElementAt(activePlayerIndex);
@@ -147,6 +149,7 @@ namespace Expanze
 
             hasAIThreadStarted = false;
             state = EGameState.StateFirstTown;
+            //state = EGameState.StateGame;
             fortState = EFortState.Normal;
 
             randomNumber = new System.Random();
@@ -279,7 +282,7 @@ namespace Expanze
             int[][] playerPersonality;
             bool playerGen;
 
-            foreach (XmlNode player in playersNodes)
+            foreach (XmlNode playerNode in playersNodes)
             {
                 playerName = "";
                 playerColor = Color.Black;
@@ -288,7 +291,7 @@ namespace Expanze
                 playerPersonality = null;
                 playerGen = false;
 
-                foreach (XmlNode info in player.ChildNodes)
+                foreach (XmlNode info in playerNode.ChildNodes)
                 {
                     switch (info.Name)
                     {
@@ -370,19 +373,65 @@ namespace Expanze
                             break;
                     }
                 }
-                players.Add(new Player(playerName, playerColor, playerAI, playerOrder, playerPersonality, playerGen));
+                Player player = new Player(playerName, playerColor, playerAI, playerOrder, playerPersonality, playerGen);
+                players.Add(player);
             }
         }
 
-        internal void PrepareCampaignMap(string mapName)
+        internal void PrepareCampaignScenario()
         {
-            mapSource = mapName;
+            if (mapSource == null)  // neni kampan
+                return;
 
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load("Content/Maps/" + mapSource);
 
+            //state = EGameState.BeforeStart;
             PrepareCampaignPlayers(xDoc);
             PrepareCampaignSetup(xDoc);
+        }
+
+        internal void PrepareCampaignMap()
+        {
+            if (mapSource == null)  // neni kampan
+                return;
+
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load("Content/Maps/" + mapSource);
+
+            XmlNodeList playersNodes = xDoc.GetElementsByTagName("players")[0].ChildNodes;
+
+            for(int loop1 = 0; loop1 < playersNodes.Count; loop1++)
+            {
+                XmlNode playerNode = playersNodes[loop1];
+                activePlayer = players[loop1];
+
+                for (int loop2 = 0; loop2 < playerNode.ChildNodes.Count; loop2++)
+                {
+                    XmlNode info = playerNode.ChildNodes[loop2];
+                    
+                    switch (info.Name)
+                    {
+                        case "towns":
+                            foreach (XmlNode townID in info.ChildNodes)
+                            {
+                                int ID = Convert.ToInt16(townID.InnerText);
+                                map.GetMapController().BuildTown(ID);
+                            }
+
+                            break;
+
+                        case "roads":
+                            foreach (XmlNode roadID in info.ChildNodes)
+                            {
+                                int ID = Convert.ToInt16(roadID.InnerText);
+                                map.GetMapController().BuildRoad(ID);
+                            }
+
+                            break;
+                    }
+                }
+            }
         }
 
         public void PrepareQuickGame()
@@ -1058,7 +1107,7 @@ namespace Expanze
             }
 #endif
 
-            StartGame(map);
+            StartGame();
         }
 
 #if GENETIC
@@ -1110,10 +1159,15 @@ namespace Expanze
             lastWinner = false;
             lastTurnNumber = 0;
             fitness = 0.0;
-            geneticPopulation = 150;
+            geneticPopulation = 40;
             geneticFitnessRound = 1;
             genetic = new Genetic(geneticPopulation, 0.8, 0.01, 3, 200, 2, 2.0, false, bans);
 #endif
+        }
+
+        internal void SetMap(Map map)
+        {
+            this.map = map;
         }
     }
 }

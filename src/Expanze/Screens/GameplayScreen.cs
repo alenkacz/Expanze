@@ -86,9 +86,19 @@ namespace Expanze
             gameComponents.Add(PromptWindow.Inst());
             gameComponents.Add(Message.Inst());
 
-            //gamelogic
-            gMaster.StartGame(map);
-            
+            //gamelogi
+
+            foreach (GameComponent gameComponent in gameComponents)
+            {
+                gameComponent.Initialize();
+                gameComponent.LoadContent();
+            }
+
+            gMaster.SetMap(map);
+            gMaster.PrepareCampaignScenario();
+            gMaster.StartGame();
+            GameMaster.Inst().StartTurn();
+
             ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), new Rectangle(Settings.scaleW((int)(Settings.maximumResolution.X - 80)), Settings.scaleH((int)(Settings.maximumResolution.Y - 80)), Settings.scaleW(60), Settings.scaleH(60)), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(147), Settings.scaleH(141), "nextTurn");
             changeTurnButton.Actions += ChangeTurnButtonAction;
             guiComponents.Add(changeTurnButton);
@@ -103,12 +113,6 @@ namespace Expanze
             ButtonComponent newMsg = new ButtonComponent(ScreenManager.Game, Settings.scaleW(30), (int)(Settings.maximumResolution.Y - 176), new Rectangle(Settings.scaleW(30), Settings.scaleH((int)(Settings.maximumResolution.Y - 176)), Settings.scaleW(70), Settings.scaleH(70)), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(151), Settings.scaleH(156), "newmessage");
             newMsg.Actions += MarketButtonAction;
             guiComponents.Add(newMsg);
-
-            foreach (GameComponent gameComponent in gameComponents)
-            {
-                gameComponent.Initialize();
-                gameComponent.LoadContent();
-            }
 
             foreach (GuiComponent guiComponent in guiComponents)
             {

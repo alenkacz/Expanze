@@ -173,7 +173,6 @@ namespace Expanze.Gameplay.Map
             float aspectRatio = game.GraphicsDevice.Viewport.Width / (float)game.GraphicsDevice.Viewport.Height;
             GameState.projection = Matrix.CreatePerspectiveFieldOfView((float)MathHelper.ToRadians(90), aspectRatio, 0.01f, 100.0f);
 
-            GameMaster.Inst().StartTurn();
             mapController.Init();
         }
 

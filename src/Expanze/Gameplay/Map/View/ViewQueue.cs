@@ -61,13 +61,17 @@ namespace Expanze.Gameplay.Map
             queue.Clear();
         }
 
+        public void Add(ItemQueue item)
+        {
+            Add(item, false);
+        }
         /// <summary>
         /// Adds one item to queue
         /// </summary>
         /// <param name="item">Item added to queue</param>
-        public void Add(ItemQueue item)
+        public void Add(ItemQueue item, bool forceIt)
         {
-            if (ENQUEUE_TIME == 0)
+            if (ENQUEUE_TIME == 0 || forceIt)
             {
                 item.Execute();
             } else
