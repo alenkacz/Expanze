@@ -9,9 +9,14 @@ namespace Expanze.Utils.Genetic
     {
         int[][] genes;
         double fitness;
-        double probability;
+        double probability; // is set before selection by roulete wheel
         Random rnd;
 
+        /// <summary>
+        /// One chromozome in population
+        /// </summary>
+        /// <param name="rnd">Random number generator</param>
+        /// <param name="zeros">For inactive genes</param>
         public Chromozone(Random rnd, bool [] zeros)
         {
             this.rnd = rnd;
@@ -58,6 +63,10 @@ namespace Expanze.Utils.Genetic
             ScaleIt();
         }
 
+        /// <summary>
+        /// Change all inactive genes to zero
+        /// </summary>
+        /// <param name="zeros">Which ones are inactive?</param>
         private void ZeroIt(bool[] zeros)
         {
             for (int loop1 = 0; loop1 < zeros.Length; loop1++)
@@ -72,6 +81,11 @@ namespace Expanze.Utils.Genetic
             }
         }
 
+        /// <summary>
+        /// Deep cloning of 2D array
+        /// </summary>
+        /// <param name="input">Input array</param>
+        /// <returns>Cloned array</returns>
         internal static int[][] CloneArray2D(int[][] input)
         {
             int[][] output;
@@ -117,6 +131,9 @@ namespace Expanze.Utils.Genetic
             return fitness;
         }
 
+        /// <summary>
+        /// Scales small coeficients to have sum SUM_COEF (100%)
+        /// </summary>
         private void ScaleIt()
         {
             for (int loop1 = 0; loop1 < genes.Length; loop1++)
@@ -175,6 +192,11 @@ namespace Expanze.Utils.Genetic
             Logger.Inst().Log(src, msg);
         }
 
+        /// <summary>
+        /// Returns weighted manhatton distance between two chromozomes
+        /// </summary>
+        /// <param name="b">Second chromozome</param>
+        /// <returns>Distance</returns>
         internal double DistanceTo(Chromozone b)
         {
             double chromDistance = 0.0;

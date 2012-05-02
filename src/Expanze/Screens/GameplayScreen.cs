@@ -96,6 +96,9 @@ namespace Expanze
 
             gMaster.SetMap(map);
             gMaster.PrepareCampaignScenario();
+            #if GENETIC
+            GameMaster.Inst().ResetGenetic();
+#endif
             gMaster.StartGame();
             GameMaster.Inst().StartTurn();
 
@@ -241,10 +244,6 @@ namespace Expanze
             Thread loadingThread = new Thread(loadingThreadStart);
             loadingThread.Start();
 
-#if GENETIC
-            GameMaster.Inst().ResetGenetic();
-#endif
-
             while (!isGameLoaded)
             {
                 Thread.Sleep(100);
@@ -365,7 +364,7 @@ namespace Expanze
                 {
 
 #if GENETIC || LOG_A_LOT_OF_GAMES
-                    if (gameCount <= 10000)
+                    if (gameCount <= 1000000)
                     {
 #if LOG_A_LOT_OF_GAMES
                         LogWinner();

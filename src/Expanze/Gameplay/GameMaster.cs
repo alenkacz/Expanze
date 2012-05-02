@@ -62,6 +62,7 @@ namespace Expanze
         private Genetic genetic;
         private double fitness;
         private int[][] chromozone;
+        private int[][][] bosses;
         bool lastWinner;
         int lastTurnNumber;
 
@@ -123,11 +124,17 @@ namespace Expanze
                     {
                         chromozone = genetic.GetChromozone();
                         setArray = chromozone;
+
+                        // uncomment next line for finding your fitness
+                        //players[loop1] = new Player(players[loop1].GetName(), players[loop1].GetColor(), null, loop1, setArray, players[loop1].GetGen());
                     }
 
                     if (!players[loop1].GetGen())
                     {
-                        setArray = genetic.GetBestOnePersonality();
+                        if (bosses == null)
+                            setArray = genetic.GetBestOnePersonality(); // reference AI is the best AI in all population
+                        else
+                            setArray = bosses[(gameCount - 1) % geneticFitnessRound]; // reference AI is contant
                     }
                     // GENETICS 
 #endif
@@ -345,35 +352,7 @@ namespace Expanze
                             break;
 
                         case "personality" :
-                            playerPersonality = new int[22][];
-                            for (int loop1 = 0; loop1 < 2; loop1++)
-                            {
-                                playerPersonality[0 + loop1 * 11] = new int[4];
-                                playerPersonality[1 + loop1 * 11] = new int[2];
-                                playerPersonality[2 + loop1 * 11] = new int[4];
-                                playerPersonality[3 + loop1 * 11] = new int[5];
-                                playerPersonality[4 + loop1 * 11] = new int[2];
-                                playerPersonality[5 + loop1 * 11] = new int[6];
-                                playerPersonality[6 + loop1 * 11] = new int[6];
-                                playerPersonality[7 + loop1 * 11] = new int[2];
-                                playerPersonality[8 + loop1 * 11] = new int[2];
-                                playerPersonality[9 + loop1 * 11] = new int[2];
-                                playerPersonality[10 + loop1 * 11] = new int[2];
-                            }
-                            
-                            String [] koef = info.InnerText.Split(";".ToCharArray());
-                            int koefID = 0;
-                            for (int loop1 = 0; loop1 < playerPersonality.Length; loop1++)
-                            {
-                                for (int loop2 = 0; loop2 < playerPersonality[loop1].Length; loop2++)
-                                {
-                                    while (koefID < koef.Length - 1 && koef[koefID] == "")
-                                        koefID++;
-
-                                    playerPersonality[loop1][loop2] = Convert.ToInt32(koef[koefID++]);
-                                }
-                            }
-
+                            playerPersonality = Genetic.ParsePersonality(info.InnerText);
                             break;
                     }
                 }
@@ -381,6 +360,8 @@ namespace Expanze
                 players.Add(player);
             }
         }
+
+      
 
         internal void PrepareCampaignScenario()
         {
@@ -836,38 +817,56 @@ namespace Expanze
                         int winnerID = (players[0].GetPoints() > players[1].GetPoints()) ? 0 : 1;
                         int looserID = (winnerID == 0) ? 1 : 0;
 
-                        double add;
                         int genID = 0;
 
                         lastTurnNumber = turnNumber;
                         lastWinner = false;
+
+                        double fitnessX = 0.0;
+                        double fitnessY = 0.0;
+                        double fitnessZ = 0.0;
+
                         if (players[winnerID].GetGen())
                         {
                             genID = winnerID;
-                            add = (players[looserID].GetPoints() - players[winnerID].GetPoints() / 3.0) / GetGameSettings().GetPoints() * 100 / (turnNumber / 4.0);
+                            fitnessX = ((double) players[winnerID].GetPoints()) / GetGameSettings().GetPoints() * 50.0;
 
                             if (turnNumber < Settings.maxTurn)
                             {
-                                fitness += (30.0 - turnNumber / 4.0) + add;
+                                fitnessY += (players[winnerID].GetPoints() - players[looserID].GetPoints()) * 2.0 + 5;
+                                fitnessZ += (((double) turnNumber) / Settings.maxTurn) * 5.0;
                                 lastWinner = true;
                             }
                         }
                         else if (players[looserID].GetGen())
                         {
                             genID = looserID;
-                            add = (players[looserID].GetPoints() - players[winnerID].GetPoints() / 3.0) / GetGameSettings().GetPoints()  * 100 / (turnNumber / 4.0);
-                            if(add > 0.0)
-                                fitness += add;
+                            fitnessX = ((double) players[looserID].GetPoints()) / GetGameSettings().GetPoints()  * 50.0;
                         }
-                        fitness += (double) players[genID].GetSource().GetAsArray().Sum() / 30.0 / turnNumber;
-                        fitness += (double) players[genID].GetTown().Count * 10.0 / turnNumber;
-                        fitness += (double) players[genID].GetRoad().Count * 5.0 / turnNumber;
-                        fitness += (double) players[genID].GetCollectSourcesNormal().GetAsArray().Sum() / 20.0 / turnNumber;
+
+                        double fitnessA = (double) players[genID].GetSumSpentSources().GetAsArray().Sum() / 300.0 / turnNumber;
+                        double fitnessB = (double) players[genID].GetTown().Count * 10.0 / turnNumber;
+                        double fitnessC = (double) players[genID].GetRoad().Count * 5.0 / turnNumber;
+                        double fitnessE = (double) players[genID].GetFort().Count * 3.0 / turnNumber;
+                        double fitnessF = (double) players[genID].GetMonastery().Count * 3.0 / turnNumber;
+                        double fitnessG = (double) players[genID].GetMarket().Count * 3.0 / turnNumber;
+                        double fitnessD = (double) players[genID].GetCollectSourcesNormal().GetAsArray().Sum() / 20.0 / turnNumber;
+                        fitness += fitnessA;
+                        fitness += fitnessB;
+                        fitness += fitnessC;
+                        fitness += fitnessD;
+                        fitness += fitnessE;
+                        fitness += fitnessF;
+                        fitness += fitnessG;
+                        fitness += fitnessX;
+                        fitness += fitnessY;
+                        fitness += fitnessZ;
+                        //if (fitness > 75.0)
+                        //    Logger.Inst().Log("Great.txt", fitness + ";" + fitnessA + ";" + fitnessB + ";" + fitnessC + ";" + fitnessD + ";" + fitnessE + ";" + fitnessF + ";" + fitnessG + ";" + fitnessX + ";" + fitnessY + ";" + fitnessZ + ";");
                     }
 
                     if (gameCount % geneticFitnessRound == 0)
                     {
-                        //fitness -= 8;
                         if (fitness < 0.0)
                             fitness = 0.0;
                         
@@ -1194,9 +1193,16 @@ namespace Expanze
             lastWinner = false;
             lastTurnNumber = 0;
             fitness = 0.0;
-            geneticPopulation = 40;
-            geneticFitnessRound = 3;
-            genetic = new Genetic(geneticPopulation, 0.8, 0.01, 3, 200, 2, 2.0, false, bans);
+            geneticPopulation = 6;
+            geneticFitnessRound = 1;
+            bosses = null;
+            bosses = new int[1][][];
+            bosses[0] = Genetic.ParsePersonality("346;  5; 88;  7;;397; 66;;609; 51; 21; 28;;105; 32; 18; 39; 11;;603; 65;;231; 43; 13; 10; 12; 22;; 67;  7; 46; 28; 15;  4;;338; 87;;535; 46;; 11; 73;;355; 85;;292;  1; 60; 39;;971;  7;;167; 64; 18; 18;;225; 18; 22; 32; 28;;179; 20;;656; 24; 28; 20; 10; 18;;977; 36;  6; 12; 27; 19;;340; 29;;546; 61;;337; 82;; 43; 27;;");
+            
+            if (bosses != null)
+                geneticFitnessRound = bosses.Length;
+
+            genetic = new Genetic(geneticPopulation, 0.95, 0.1, 1, 20000, 20, 1.8, false, bans);
 #endif
         }
 
