@@ -1193,7 +1193,7 @@ namespace Expanze
             lastWinner = false;
             lastTurnNumber = 0;
             fitness = 0.0;
-            geneticPopulation = 6;
+            geneticPopulation = 10;
             geneticFitnessRound = 1;
             bosses = null;
             bosses = new int[1][][];
