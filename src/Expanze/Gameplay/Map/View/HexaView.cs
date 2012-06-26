@@ -299,6 +299,7 @@ namespace Expanze
         {
 
             Model m = GameResources.Inst().GetHexaModel(kind);
+            Texture2D texture = GameResources.Inst().GetHexaTexture(kind);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 
@@ -312,6 +313,8 @@ namespace Expanze
             {
                 foreach (BasicEffect effect in mesh.Effects)
                 {
+                    if(kind == HexaKind.Forest)
+                        effect.Texture = texture;
                     effect.LightingEnabled = true;
                     effect.AmbientLightColor = GameState.MaterialAmbientColor;
                     effect.DirectionalLight0.Direction = GameState.LightDirection;

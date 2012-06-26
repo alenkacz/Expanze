@@ -179,9 +179,9 @@ namespace Expanze.Gameplay.Map
                 n = 1;
             }
 
-            Model m = GameResources.Inst().GetHexaModel(HexaKind.Water + n);
+            Texture2D t = GameResources.Inst().GetHexaTexture(HexaKind.Water + n);
 
-            return new WaterView(hexaMapModel[i][j], m, rotation, i, j);
+            return new WaterView(hexaMapModel[i][j], t, rotation, i, j);
         }
 
         public void Update(GameTime gameTime)

@@ -11,31 +11,36 @@ namespace Expanze.Gameplay.Map
 {
     class WaterView : HexaView
     {
-        Model waterModel;
+        Texture2D waterTexture;
         Matrix rotation;
 
-        public WaterView(HexaModel model, Model waterModel, Matrix rotation, int x, int y)
+        public WaterView(HexaModel model, Texture2D waterTexture, Matrix rotation, int x, int y)
             : base(model, x, y)
         {
-            this.waterModel = waterModel;
+            this.waterTexture = waterTexture;
             this.rotation = rotation;
         }
 
         public override void Draw(GameTime gameTime)
         {
-            Model m = waterModel;
+            Model m = GameResources.Inst().GetHexaModel(CorePlugin.HexaKind.Water);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 
             GameState.game.GraphicsDevice.RasterizerState = GameState.rasterizerState;
+            GameState.game.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+            GameState.game.GraphicsDevice.DepthStencilState = DepthStencilState.None;
 
             //rotation = (hexaID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaID % 6));
             Matrix tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
 
-            foreach (ModelMesh mesh in m.Meshes)
+            for(int loop1 = 0; loop1 < m.Meshes.Count; loop1++)
             {
+                ModelMesh mesh = m.Meshes[loop1];
+                
                 foreach (BasicEffect effect in mesh.Effects)
                 {
+                    effect.Texture = waterTexture;
                     effect.LightingEnabled = true;
                     effect.AmbientLightColor = GameState.MaterialAmbientColor;
                     effect.DirectionalLight0.Direction = GameState.LightDirection;
@@ -49,6 +54,9 @@ namespace Expanze.Gameplay.Map
                 }
                 mesh.Draw();
             }
+
+            GameState.game.GraphicsDevice.BlendState = BlendState.Opaque;
+            GameState.game.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
         }
 
         public override void DrawBuildings(GameTime gameTime)
