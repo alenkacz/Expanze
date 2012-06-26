@@ -451,7 +451,7 @@ namespace Expanze
             if (InputManager.Inst().GetGameAction("gamemessage", "cheatsources").IsPressed())
                 GameMaster.Inst().GetActivePlayer().PayForSomething(new SourceAll(-1000));
             if (InputManager.Inst().GetGameAction("gamemessage", "cheatpoints").IsPressed())
-                GameMaster.Inst().GetActivePlayer().AddPoints(10);
+                GameMaster.Inst().GetActivePlayer().AddPoints(PlayerPoints.Town);
 
 #if GENETIC
             if (InputManager.Inst().GetGameAction("gamemessage", "printgenetic").IsPressed())
@@ -466,7 +466,7 @@ namespace Expanze
 
             Array.Sort(players, delegate(Player p1, Player p2)
             {
-                return p1.GetPoints().CompareTo(p2.GetPoints()); // (user1.Age - user2.Age)
+                return p1.GetPointSum().CompareTo(p2.GetPointSum()); // (user1.Age - user2.Age)
             });
             Array.Reverse(players);
 
@@ -507,7 +507,7 @@ namespace Expanze
                 }
             }
 
-            Logger.Inst().Log(playersACR.ToUpper() + gs.GetMapSizeXML() + gs.GetMapTypeXML() + gs.GetMapWealthXML() + gs.GetPoints() + ".csv", message);
+            Logger.Inst().Log(playersACR.ToUpper() + gs.GetMapSizeXML() + gs.GetMapTypeXML() + gs.GetMapWealthXML() + ".csv", message);
         }
 
         int frames = 0;

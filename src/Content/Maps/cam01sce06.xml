@@ -16,7 +16,6 @@
       </player>
     </players>
 	<points>
-		<WinPoints>5</WinPoints>
         <Town>0</Town>
         <Road>0</Road>
         <Fort>0</Fort>
@@ -28,7 +27,7 @@
         <MarketLvl1>0</MarketLvl1>
         <UpgradeLvl2>0</UpgradeLvl2>
         <MarketLvl2>0</MarketLvl2>
-        <Mill>1</Mill>
+        <Mill>5</Mill>
         <Stepherd>0</Stepherd>
         <Saw>0</Saw>
         <Quarry>0</Quarry>

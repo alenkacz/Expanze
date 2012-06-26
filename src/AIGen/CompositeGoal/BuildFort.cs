@@ -81,8 +81,8 @@ namespace AIGen
             double desirability = (bestDesirability * kBestHexa + hasMoneyDesirability * kHasMoney + points * kPoints + hasSomeoneFort * kHasOtherFort) * hasFortDesirability;
 
             double desirabilityWinningBonus = 0.0;
-            if (map.GetPlayerMe().GetPoints() + map.GetActionPoints(PlayerPoints.Fort) >= map.GetGameSettings().GetWinningPoints())
-                desirabilityWinningBonus = ThinkGoal.ONE_POINT_REMAIN_FITNESS;
+            //if (map.GetPlayerMe().GetPoints()[(int) PlayerPoints.Fort] < map.GetActionPoints(PlayerPoints.Fort))
+            //    desirabilityWinningBonus = ThinkGoal.ONE_POINT_REMAIN_FITNESS;
             return desirability + desirabilityWinningBonus;
         }
 

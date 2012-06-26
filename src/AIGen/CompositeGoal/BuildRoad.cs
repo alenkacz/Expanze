@@ -86,8 +86,8 @@ namespace AIGen
                 return 0.0f;
 
             double desirabilityWinningBonus = 0.0;
-            if (map.GetPlayerMe().GetPoints() + map.GetActionPoints(PlayerPoints.Road) >= map.GetGameSettings().GetWinningPoints())
-                desirabilityWinningBonus = ThinkGoal.ONE_POINT_REMAIN_FITNESS;
+            //if (map.GetPlayerMe().GetPoints()[(int) PlayerPoints.Road] < map.GetActionPoints(PlayerPoints.Road))
+            //    desirabilityWinningBonus = ThinkGoal.ONE_POINT_REMAIN_FITNESS;
             return kPoints * points + kCantBuildTown * cantBuildTown + desirabilityWinningBonus;
         }
     }

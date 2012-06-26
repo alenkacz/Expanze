@@ -208,12 +208,12 @@ namespace Expanze
             {
                 if (medailOwner[(int)medal] != null)
                 {
-                    medailOwner[(int)medal].AddPoints(-pointsForMedal);
+                    medailOwner[(int)medal].RemovePoints(PlayerPoints.Medal);
                     medailOwner[(int)medal].GetStatistic().AddStat(Statistic.Kind.Medals, -1, turnNumber);
                 }
                 medailOwner[(int)medal] = player;
                 medailOwner[(int)medal].GetStatistic().AddStat(Statistic.Kind.Medals, 1, turnNumber);
-                player.AddPoints(pointsForMedal);
+                player.AddPoints(PlayerPoints.Medal);
                 Message.Inst().Show(GetMedalTitle(medal),GetMedalDescription(medal),GetMedaileIcon(medal));
             }
         }
@@ -240,7 +240,7 @@ namespace Expanze
                 int value = Convert.ToInt32(goal.InnerText);
                 switch (goal.Name)
                 {
-                    case "WinPoints": GameMaster.Inst().GetGameSettings().SetPoints(value); break;
+                    case "WinPoint": /* ignore it */ break;
                     case "Town": Settings.pointsTown = value; break;
                     case "Road": Settings.pointsRoad = value; break;
                     case "Fort": Settings.pointsFort = value; break;
@@ -773,7 +773,7 @@ namespace Expanze
         {
             if (!winnerNew)
             {
-                int points;
+                int[] points;
                 int maxPoints = -1;
                 Player bestPlayer = null;
 
@@ -781,13 +781,30 @@ namespace Expanze
                 foreach (Player player in players)
                 {
                     points = player.GetPoints();
-                    if (points >= GetGameSettings().GetPoints())
+                    if (points[(int) PlayerPoints.Fort] >= Settings.pointsFort &&
+                        points[(int) PlayerPoints.FortCaptureHexa] >= Settings.pointsFortCapture &&
+                        points[(int) PlayerPoints.FortParade] >= Settings.pointsFortParade &&
+                        points[(int) PlayerPoints.FortStealSources] >= Settings.pointsFortSteal &&
+                        points[(int) PlayerPoints.LicenceLvl1] >= Settings.pointsMarketLvl1 &&
+                        points[(int) PlayerPoints.LicenceLvl2] >= Settings.pointsMarketLvl2 &&
+                        points[(int) PlayerPoints.Market] >= Settings.pointsMarket &&
+                        points[(int) PlayerPoints.Medal] >= Settings.pointsMedal &&
+                        points[(int) PlayerPoints.Mill] >= Settings.pointsMill &&
+                        points[(int) PlayerPoints.Mine] >= Settings.pointsMine &&
+                        points[(int) PlayerPoints.Monastery] >= Settings.pointsMonastery &&
+                        points[(int) PlayerPoints.Quarry] >= Settings.pointsQuarry &&
+                        points[(int) PlayerPoints.Road] >= Settings.pointsRoad &&
+                        points[(int) PlayerPoints.Saw] >= Settings.pointsSaw &&
+                        points[(int) PlayerPoints.Stepherd] >= Settings.pointsStepherd &&
+                        points[(int) PlayerPoints.Town] >= Settings.pointsTown &&
+                        points[(int) PlayerPoints.UpgradeLvl1] >= Settings.pointsUpgradeLvl1 &&
+                        points[(int) PlayerPoints.UpgradeLvl2] >= Settings.pointsUpgradeLvl2)
                     {
                         winnerNew = true;
 
-                        if (points > maxPoints)
+                        if (player.GetPointSum() > maxPoints)
                         {
-                            maxPoints = points;
+                            maxPoints = player.GetPointSum();
                             bestPlayer = player;
                         }
                     }
@@ -810,11 +827,11 @@ namespace Expanze
                 {
                     if (playerCount == 1)
                     {
-                        fitness += players[0].GetPoints() * 5 + 30 - turnNumber + players[0].GetCollectSourcesLastTurn().GetAsArray().Sum() / 100.0f;
+                        fitness += players[0].GetPointSum() * 5 + 30 - turnNumber + players[0].GetCollectSourcesLastTurn().GetAsArray().Sum() / 100.0f;
                     }
                     else
                     {
-                        int winnerID = (players[0].GetPoints() > players[1].GetPoints()) ? 0 : 1;
+                        int winnerID = (players[0].GetPointSum() > players[1].GetPointSum()) ? 0 : 1;
                         int looserID = (winnerID == 0) ? 1 : 0;
 
                         int genID = 0;
@@ -829,11 +846,11 @@ namespace Expanze
                         if (players[winnerID].GetGen())
                         {
                             genID = winnerID;
-                            fitnessX = ((double) players[winnerID].GetPoints()) / GetGameSettings().GetPoints() * 50.0;
+                            fitnessX = ((double) players[winnerID].GetPointSum()) / 10/* TODO GetGameSettings().GetPoints()*/ * 50.0;
 
                             if (turnNumber < Settings.maxTurn)
                             {
-                                fitnessY += (players[winnerID].GetPoints() - players[looserID].GetPoints()) * 2.0 + 5;
+                                fitnessY += (players[winnerID].GetPointSum() - players[looserID].GetPointSum()) * 2.0 + 5;
                                 fitnessZ += (((double) turnNumber) / Settings.maxTurn) * 5.0;
                                 lastWinner = true;
                             }
@@ -841,7 +858,7 @@ namespace Expanze
                         else if (players[looserID].GetGen())
                         {
                             genID = looserID;
-                            fitnessX = ((double) players[looserID].GetPoints()) / GetGameSettings().GetPoints()  * 50.0;
+                            fitnessX = ((double) players[looserID].GetPointSum()) / 10 /* TODO GetGameSettings().GetPoints() */ * 50.0;
                         }
 
                         double fitnessA = (double) players[genID].GetSumSpentSources().GetAsArray().Sum() / 300.0 / turnNumber;

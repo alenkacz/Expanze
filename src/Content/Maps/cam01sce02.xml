@@ -15,9 +15,8 @@
       </player>
     </players>
 	<points>
-		<WinPoints>8</WinPoints>
         <Town>0</Town>
-        <Road>1</Road>
+        <Road>8</Road>
         <Fort>0</Fort>
         <Monastery>0</Monastery>
         <Market>0</Market>

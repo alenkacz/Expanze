@@ -356,8 +356,9 @@ namespace AIGen
             }
 
             double desirabilityWinningBonus = 0.0;
-            if (map.GetPlayerMe().GetPoints() + map.GetActionPoints(PlayerPoints.Town) >= map.GetGameSettings().GetWinningPoints())
-                desirabilityWinningBonus = ThinkGoal.ONE_POINT_REMAIN_FITNESS;
+
+            //if (map.GetPlayerMe().GetPoints()[(int) PlayerPoints.Town] < map.GetActionPoints(PlayerPoints.Town))
+            //    desirabilityWinningBonus = ThinkGoal.ONE_POINT_REMAIN_FITNESS;
             return fitness + desirabilityWinningBonus;
         }
     }

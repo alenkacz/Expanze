@@ -81,6 +81,7 @@ namespace AIGen
         {
             double kindCoef = 1.0;
             int points = 0;
+            int myPoints = 0;
             switch (hexa.GetKind())
             {
                 case HexaKind.Desert :
@@ -89,29 +90,34 @@ namespace AIGen
                 case HexaKind.Cornfield :
                     kindCoef = 0.9;
                     points = map.GetActionPoints(PlayerPoints.Mill);
+                    myPoints = map.GetPlayerMe().GetPoints()[(int)PlayerPoints.Mill];
                     break;
                 case HexaKind.Forest:
                     kindCoef = 0.8;
                     points = map.GetActionPoints(PlayerPoints.Saw);
+                    myPoints = map.GetPlayerMe().GetPoints()[(int)PlayerPoints.Saw];
                     break;
                 case HexaKind.Mountains:
                     kindCoef = 1.2;
                     points = map.GetActionPoints(PlayerPoints.Mine);
+                    myPoints = map.GetPlayerMe().GetPoints()[(int)PlayerPoints.Mine];
                     break;
                 case HexaKind.Pasture:
                     kindCoef = 0.9;
                     points = map.GetActionPoints(PlayerPoints.Stepherd);
+                    myPoints = map.GetPlayerMe().GetPoints()[(int)PlayerPoints.Stepherd];
                     break;
                 case HexaKind.Stone:
                     kindCoef = 1.2;
                     points = map.GetActionPoints(PlayerPoints.Quarry);
+                    myPoints = map.GetPlayerMe().GetPoints()[(int)PlayerPoints.Quarry];
                     break;
             }
 
             int startSource = hexa.GetStartSource();
 
-            if (map.GetPlayerMe().GetPoints() + points >= map.GetGameSettings().GetWinningPoints())
-                return ThinkGoal.ONE_POINT_REMAIN_FITNESS;
+            //if (myPoints < points)
+            //    return ThinkGoal.ONE_POINT_REMAIN_FITNESS;
 
             double desirability = (startSource / 24.0 * kindCoef) * kBuildingItself + Desirability.GetHasSources(hexa.GetSourceBuildingCost()) * kHasSources +
                 ((points > 0) ? 1.0 : 0.0) * kPoints;

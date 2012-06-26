@@ -17,7 +17,7 @@ namespace CorePlugin
         List<ITown> GetTown();
         List<IRoad> GetRoad();
 
-        int GetPoints();
+        int[] GetPoints();
         ISourceAll GetSource();
         ISourceAll GetCollectSourcesNormal();
         int GetBuildingCount(Building building);

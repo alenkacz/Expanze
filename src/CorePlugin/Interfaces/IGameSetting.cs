@@ -14,6 +14,5 @@ namespace CorePlugin
         MapSize GetMapSize();
         MapType GetMapType();
         MapWealth GetMapWealth();
-        int GetWinningPoints();
     }
 }

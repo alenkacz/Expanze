@@ -180,7 +180,7 @@ namespace Expanze
         public void BuildTown(Player player)
         {
             playerOwner = player;
-            player.AddPoints(Settings.pointsTown);
+            player.AddPoints(PlayerPoints.Town);
             player.AddBuilding(Building.Town);
             player.AddTown(this);
             isBuild = true;
@@ -377,21 +377,21 @@ namespace Expanze
                     MarketModel marketModel = new MarketModel(playerOwner, townID, hexaNeighbour[pos].GetID());
                     building[pos] = marketModel;
                     playerOwner.AddBuilding(Building.Market);
-                    playerOwner.AddPoints(Settings.pointsMarket);
+                    playerOwner.AddPoints(PlayerPoints.Market);
                     playerOwner.AddMarket(marketModel);
                     break;
                 case BuildingKind.MonasteryBuilding :
                     MonasteryModel monasteryModel = new MonasteryModel(playerOwner, townID, hexaNeighbour[pos].GetID());
                     building[pos] = monasteryModel;
                     playerOwner.AddBuilding(Building.Monastery);
-                    playerOwner.AddPoints(Settings.pointsMonastery);
+                    playerOwner.AddPoints(PlayerPoints.Monastery);
                     playerOwner.AddMonastery(monasteryModel);
                     break;
                 case BuildingKind.FortBuilding :
                     FortModel fortModel = new FortModel(playerOwner, townID, hexaNeighbour[pos].GetID());
                     building[pos] = fortModel;
                     playerOwner.AddBuilding(Building.Fort);
-                    playerOwner.AddPoints(Settings.pointsFort);
+                    playerOwner.AddPoints(PlayerPoints.Fort);
                     playerOwner.AddFort(fortModel);
                     break;
             }

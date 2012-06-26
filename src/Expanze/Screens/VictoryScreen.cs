@@ -216,7 +216,7 @@ namespace Expanze
 
                 Array.Sort(players, delegate(Player p1, Player p2)
                 {
-                    return p1.GetPoints().CompareTo(p2.GetPoints()); // (user1.Age - user2.Age)
+                    return p1.GetPointSum().CompareTo(p2.GetPointSum()); // (user1.Age - user2.Age)
                 });
                 Array.Reverse(players);
 
@@ -226,7 +226,7 @@ namespace Expanze
                     spriteBatch.DrawString(font, player.GetName(), new Vector2(startX + 140, startY), color);
                     if(player.GetIsAI())
                         spriteBatch.DrawString(font, player.GetComponentAI().GetAIName(), new Vector2(startX + 450, startY), color);
-                    spriteBatch.DrawString(font, player.GetPoints() + "", new Vector2(startX + 80, startY), color);
+                    spriteBatch.DrawString(font, player.GetPointSum() + "", new Vector2(startX + 80, startY), color);
                     startY += 50;
                 }
                 spriteBatch.End();

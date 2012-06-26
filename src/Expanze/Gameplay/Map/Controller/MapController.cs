@@ -531,7 +531,7 @@ namespace Expanze.Gameplay.Map
                 hexa.Capture(player);
                 player.PayForSomething(Settings.costFortCapture);
                 player.AddFortAction();
-                player.AddPoints(Settings.pointsFortCapture);
+                player.AddPoints(PlayerPoints.FortCaptureHexa);
                 return true;
             }
             return false;
@@ -620,7 +620,7 @@ namespace Expanze.Gameplay.Map
                 activePlayer.AddSources(-Settings.costFortSources, TransactionState.TransactionStart);
                 activePlayer.AddSources(source / 2, TransactionState.TransactionEnd);
                 activePlayer.AddFortAction();
-                activePlayer.AddPoints(Settings.pointsFortSteal);
+                activePlayer.AddPoints(PlayerPoints.FortStealSources);
                 if (activePlayer.GetIsAI())
                 {
                     Message.Inst().Show("Někdo krade!", activePlayer.GetName() + " se vloupal do skladišť " + player.GetName() + " a odnesl si lup polovinu jeho zásob.", GameResources.Inst().GetHudTexture(HUDTexture.IconFortSources));
@@ -659,7 +659,7 @@ namespace Expanze.Gameplay.Map
             if (CanShowParade() == ParadeError.OK)
             {
                 Player activePlayer = gm.GetActivePlayer();
-                activePlayer.AddPoints(Settings.pointsFortParade);
+                activePlayer.AddPoints(PlayerPoints.FortParade);
                 activePlayer.AddFortAction();
                 activePlayer.PayForSomething(GetPrice(PriceKind.AParade));
                 if (gm.GetActivePlayer().GetIsAI())

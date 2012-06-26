@@ -9,16 +9,12 @@ namespace Expanze
 {
     class GameSettings : IGameSetting
     {
-
-        int points = 0;
         MapType mapType;
         MapSize mapSize;
         MapWealth mapWealth;
 
         public GameSettings(int points, string mapType, string mapSize, string mapWealth) 
         {
-            this.points = points;
-
             if (mapType == Strings.GAME_SETTINGS_MAP_TYPE_LOWLAND)
                 this.mapType = MapType.LOWLAND;
             else if (mapType == Strings.GAME_SETTINGS_MAP_TYPE_NORMAL)
@@ -39,11 +35,6 @@ namespace Expanze
                 this.mapWealth = MapWealth.MEDIUM;
             else
                 this.mapWealth = MapWealth.HIGH;
-        }
-
-        public int GetPoints()
-        {
-            return points;
         }
 
         public string GetMapSizeXML() 
@@ -97,16 +88,8 @@ namespace Expanze
             return mapWealth;
         }
 
-        public int GetWinningPoints()
-        {
-            return points;
-        }
 
         #endregion
 
-        internal void SetPoints(int points)
-        {
-            this.points = points;
-        }
     }
 }

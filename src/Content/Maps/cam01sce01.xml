@@ -15,15 +15,14 @@
 		</player>
 	</players>
 	<points>
-		<WinPoints>7</WinPoints>
-        <Town>1</Town>
-        <Road>0</Road>
-        <Fort>0</Fort>
-        <Monastery>0</Monastery>
-        <Market>0</Market>
+        <Town>7</Town>
+        <Road>5</Road>
+        <Fort>1</Fort>
+        <Monastery>1</Monastery>
+        <Market>1</Market>
         <Medal>0</Medal>
         <FortParade>0</FortParade>
-        <UpgradeLvl1>0</UpgradeLvl1>
+        <UpgradeLvl1>2</UpgradeLvl1>
         <MarketLvl1>0</MarketLvl1>
         <UpgradeLvl2>0</UpgradeLvl2>
         <MarketLvl2>0</MarketLvl2>
@@ -36,9 +35,9 @@
         <FortSteal>0</FortSteal>
 	</points>
 	<ban>
-		<Fort>1</Fort>
+		<Fort>0</Fort>
         <Monastery>0</Monastery>
-        <Market>1</Market>
+        <Market>0</Market>
 		<FortCapture>0</FortCapture>
         <FortSteal>0</FortSteal>
 		<FortParade>0</FortParade>
