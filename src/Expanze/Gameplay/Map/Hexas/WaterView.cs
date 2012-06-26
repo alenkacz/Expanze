@@ -28,9 +28,9 @@ namespace Expanze.Gameplay.Map
             m.CopyAbsoluteBoneTransformsTo(transforms);
 
             GameState.game.GraphicsDevice.RasterizerState = GameState.rasterizerState;
-            GameState.game.GraphicsDevice.BlendState = BlendState.AlphaBlend;
-            GameState.game.GraphicsDevice.DepthStencilState = DepthStencilState.None;
-
+            //GameState.game.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+            //GameState.game.GraphicsDevice.DepthStencilState = DepthStencilState.None;
+            
             //rotation = (hexaID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaID % 6));
             Matrix tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
 
@@ -55,8 +55,8 @@ namespace Expanze.Gameplay.Map
                 mesh.Draw();
             }
 
-            GameState.game.GraphicsDevice.BlendState = BlendState.Opaque;
-            GameState.game.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            //GameState.game.GraphicsDevice.BlendState = BlendState.Opaque;
+            //GameState.game.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
         }
 
         public override void DrawBuildings(GameTime gameTime)

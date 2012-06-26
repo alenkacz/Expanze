@@ -51,6 +51,9 @@ namespace Expanze.Gameplay.Map
                             case HexaKind.Water:
                                 hexaMapView[i][j] = getWaterView(i, j);
                                 break;
+                            case HexaKind.Forest:
+                                hexaMapView[i][j] = new ForestView(hexaMapModel[i][j], i, j);
+                                break;
                             default:
                                 hexaMapView[i][j] = new HexaView(hexaMapModel[i][j], i, j);
                                 break;
