@@ -299,7 +299,7 @@ namespace Expanze
         {
 
             Model m = GameResources.Inst().GetHexaModel(kind);
-            Texture2D texture = GameResources.Inst().GetHexaTexture(kind);
+
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 
@@ -313,8 +313,6 @@ namespace Expanze
             {
                 foreach (BasicEffect effect in mesh.Effects)
                 {
-                    if(kind == HexaKind.Forest)
-                        effect.Texture = texture;
                     effect.LightingEnabled = true;
                     effect.AmbientLightColor = GameState.MaterialAmbientColor;
                     effect.DirectionalLight0.Direction = GameState.LightDirection;
@@ -379,14 +377,14 @@ namespace Expanze
                         break;
                     case BuildingKind.FortBuilding :
                         m = GameResources.Inst().GetBuildingModel(BuildingModel.Fort);
-                        tempMatrix = Matrix.CreateScale(0.0003f) * rotation;
+                        tempMatrix = Matrix.CreateScale(0.00031f) * rotation;
                         break;
                     case BuildingKind.MarketBuilding:
                         m = GameResources.Inst().GetBuildingModel(BuildingModel.Market);
                         break;
                     case BuildingKind.MonasteryBuilding:
                         m = GameResources.Inst().GetBuildingModel(BuildingModel.Monastery);
-                        tempMatrix = Matrix.CreateScale(0.005f) * rotation;
+                        tempMatrix = Matrix.CreateScale(0.0052f) * rotation;
                         break;
                     default :
                         m = null;

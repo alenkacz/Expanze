@@ -68,64 +68,9 @@ namespace Expanze.Gameplay.Map
                 }
         }
 
-
         public override void DrawBuildings(GameTime gameTime)
         {
-            GameResources gr = GameResources.Inst();
-            Model m;
-
-            for (int loop1 = 0; loop1 < 6; loop1++)
-            {
-                int tempPos = (loop1 + hexaID) % 6;
-                switch (model.getTown((CorePlugin.TownPos)loop1).GetBuildingKind(model.GetID()))
-                {
-                    case BuildingKind.SourceBuilding:
-                        m = gr.GetBuildingModel(BuildingModel.Saw);
-                        break;
-                    case BuildingKind.NoBuilding:
-                        m = null;
-                        break;
-                    case BuildingKind.FortBuilding:
-                        m = gr.GetBuildingModel(BuildingModel.Fort);
-                        break;
-                    case BuildingKind.MarketBuilding:
-                        m = gr.GetBuildingModel(BuildingModel.Market);
-                        break;
-                    case BuildingKind.MonasteryBuilding:
-                        m = gr.GetBuildingModel(BuildingModel.Monastery);
-                        break;
-                    default:
-                        m = null;
-                        break;
-                }
-
-                if (m != null)
-                {
-                    Matrix rotation = (loop1 == 4) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * -(loop1 - 4));
-                    Matrix tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
-                    Matrix[] transforms = new Matrix[m.Bones.Count];
-                    m.CopyAbsoluteBoneTransformsTo(transforms);
-
-                    foreach (ModelMesh mesh in m.Meshes)
-                    {
-                        foreach (BasicEffect effect in mesh.Effects)
-                        {
-                            effect.LightingEnabled = true;
-                            effect.AmbientLightColor = GameState.MaterialAmbientColor;
-                            effect.DirectionalLight0.Direction = GameState.LightDirection;
-                            effect.DirectionalLight0.DiffuseColor = GameState.LightDiffusionColor;
-                            effect.DirectionalLight0.SpecularColor = GameState.LightSpecularColor;
-                            effect.DirectionalLight0.Enabled = true;
-                            effect.World = transforms[mesh.ParentBone.Index] * tempMatrix * world;
-                            effect.View = GameState.view;
-                            effect.Projection = GameState.projection;
-                        }
-                        mesh.Draw();
-                    }
-                }
-
-
-            }
+            base.DrawBuildings(gameTime);
 
             DrawTrees(gameTime);
         }

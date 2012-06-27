@@ -13,7 +13,7 @@ namespace Expanze
         public static Vector2 maximumResolution = new Vector2(1440,900);
 
         /// indexed by enum Types
-        public static String[] hexaSrcPath = new String[] { "Models/yellowhex", "Models/greenhex", "Models/greyhex", "Models/simplehex", "Models/redhex", "Models/orangehex", "Models/simplehex" };
+        public static String[] hexaSrcPath = new String[] { "Models/yellowhex", "Models/greenhex", "Models/greyhex", "Models/brownhex", "Models/redhex", "Models/orangehex", "Models/simplehex" };
 
         /// resources which get player on start
         public static SourceAll startResources = new SourceAll(100);

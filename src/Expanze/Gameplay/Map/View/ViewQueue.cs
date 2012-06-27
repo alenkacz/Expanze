@@ -89,7 +89,7 @@ namespace Expanze.Gameplay.Map
 
             lastEnque -= gameTime.ElapsedGameTime.Milliseconds;
 
-            if (queue.Count > 0 && lastEnque <= 0 && !Message.Inst().GetIsActive())
+            if (queue.Count > 0 && lastEnque <= 0)
             {
                 ItemQueue item = queue.Dequeue();
                 item.Execute();

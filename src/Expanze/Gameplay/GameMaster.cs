@@ -1105,8 +1105,8 @@ namespace Expanze
         {
             SpriteBatch spriteBatch = GameState.spriteBatch;
             spriteBatch.Begin();
-            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), Settings.activeRoad + " R", new Vector2(50, 50), Color.Black);
-            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), Settings.activeTown + " T", new Vector2(50, 80), Color.Black);
+            //spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), Settings.activeRoad + " R", new Vector2(50, 50), Color.Black);
+            //spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), Settings.activeTown + " T", new Vector2(50, 80), Color.Black);
 #if GENETIC
             
             int x = 15;
