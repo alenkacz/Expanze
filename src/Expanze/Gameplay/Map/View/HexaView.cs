@@ -379,12 +379,14 @@ namespace Expanze
                         break;
                     case BuildingKind.FortBuilding :
                         m = GameResources.Inst().GetBuildingModel(BuildingModel.Fort);
+                        tempMatrix = Matrix.CreateScale(0.0003f) * rotation;
                         break;
                     case BuildingKind.MarketBuilding:
                         m = GameResources.Inst().GetBuildingModel(BuildingModel.Market);
                         break;
                     case BuildingKind.MonasteryBuilding:
                         m = GameResources.Inst().GetBuildingModel(BuildingModel.Monastery);
+                        tempMatrix = Matrix.CreateScale(0.005f) * rotation;
                         break;
                     default :
                         m = null;
