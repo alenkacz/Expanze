@@ -369,6 +369,12 @@ namespace Expanze
                             case HexaKind.Forest :
                                 m = GameResources.Inst().GetBuildingModel(BuildingModel.Saw);
                                 break;
+                            case HexaKind.Stone :
+                                int tempPos = (loop1 + hexaID) % 6;
+                                m = GameResources.Inst().GetStoneSourceBuildingModel(tempPos);
+                                rotation = (hexaID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaID % 6));
+                                tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
+                                break;
                             default :
                                 m = GameResources.Inst().GetBuildingModel(BuildingModel.PastureHouse);
                                 //roofID = 0;
