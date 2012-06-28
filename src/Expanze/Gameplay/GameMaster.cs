@@ -916,6 +916,10 @@ namespace Expanze
         }
 
         public int GetTurnNumber() { return turnNumber; }
+        public int GetTurnsLeft()
+        {
+            return Settings.maxTurn - turnNumber + 1;
+        }
 
         public bool GetPaused()
         {

@@ -20,6 +20,7 @@ namespace Expanze
         SpriteFont font = Settings.Game.Content.Load<SpriteFont>("playername");
         //SpriteBatch spriteBatch;
 
+        Vector2 positionTurn;
         Vector2 positionLeft;
         Vector2 positionRight;
         Vector2 positionMiddle;
@@ -30,25 +31,27 @@ namespace Expanze
 
         int widthMiddle;
         //int widthScore = 100;
+        const int turnWidth = 40;
         const int medalWidth = 51;
         const int space = 30;
         const int rightSize = 79;
         const int leftSize = 11;
         const int middleSize = 6;
-
+        const int border = 8;
         //protected Boolean pick;
 
         public TopPlayerScoreComponent() 
         {
             widthMiddle = roundMiddleWidth(getPlayerNameWidth() + 2*space);
 
-            positionLeft = new Vector2((int)Settings.maximumResolution.X - (rightSize + leftSize + widthMiddle), 0);
-            positionRight = new Vector2((int)Settings.maximumResolution.X - rightSize, 0);
-            positionMiddle = new Vector2((int)Settings.maximumResolution.X - (rightSize + widthMiddle), 0);
+            positionTurn = new Vector2((int)Settings.maximumResolution.X / 2 - turnWidth / 2, border);
+            positionLeft = new Vector2((int)Settings.maximumResolution.X - (rightSize + leftSize + widthMiddle) - border, border);
+            positionRight = new Vector2((int)Settings.maximumResolution.X - rightSize - border, border);
+            positionMiddle = new Vector2((int)Settings.maximumResolution.X - (rightSize + widthMiddle) - border, border);
 
-            positionName = new Vector2((int)Settings.maximumResolution.X - (rightSize - space + widthMiddle), 0);
+            positionName = new Vector2((int)Settings.maximumResolution.X - (rightSize - space + widthMiddle) - border, border);
             
-            positionColor = new Vector2((int)Settings.maximumResolution.X - (rightSize - space), 6);
+            positionColor = new Vector2((int)Settings.maximumResolution.X - (rightSize - space) - border, 6 + border);
         }
 
         public override void LoadContent()
@@ -123,7 +126,17 @@ namespace Expanze
                 posMiddleDraw.X += middleSize;
             }
 
+            spriteBatch.Draw(textureLeft, new Vector2(positionTurn.X, positionTurn.Y), c);
+            //positionTurn.X += textureLeft.Width +50;
+            int number = 2;
+            spriteBatch.Draw(textureRight, new Vector2(positionTurn.X + textureLeft.Width + (number - 2) * textureMiddle.Width, positionTurn.Y), c);
 
+            for (int loop1 = 0; loop1 < number; loop1++)
+            {
+                spriteBatch.Draw(textureMiddle, new Vector2(positionTurn.X + textureLeft.Width + loop1 * textureMiddle.Width, positionTurn.Y), c);
+            }
+
+            
             Player player = gMaster.GetTargetPlayer();
             DrawAllPoints();
 
@@ -132,15 +145,28 @@ namespace Expanze
             // draw player color
             spriteBatch.Draw(textureColor, positionColor, (pick) ? c : player.GetColor());
 
+            int turnsLeft = gMaster.GetTurnsLeft();
+            if (!pick && turnsLeft <= 10)
+            {
+                if (turnsLeft <= 5)
+                    c = Color.Red;
+                else
+                    c = Color.Yellow;
+            }
+            
+            int tempWidth = (int)font.MeasureString(" " + turnsLeft).X;
+            spriteBatch.DrawString(font, " " + turnsLeft, new Vector2(positionTurn.X + 38 - tempWidth / 2, border), c);
+
+
             spriteBatch.End();
         }
 
         private void DrawPoints(Texture2D medal, int myPoints, int goalPoints, int pointKind)
         {
-            positionTotalPoints = new Vector2((int)Settings.maximumResolution.X - (rightSize + 2 * space), 65 + pointKind * 65);
+            positionTotalPoints = new Vector2((int)Settings.maximumResolution.X - (rightSize + 2 * space), 65 + border + pointKind * 65);
             positionScore = new Vector2(positionTotalPoints.X - 20, positionTotalPoints.Y);
             //draw medal
-            spriteBatch.Draw(medal, new Vector2(positionScore.X - textureMedal.Width - space, positionScore.Y + 5 - textureMedal.Height / 2), Color.White);
+            spriteBatch.Draw(medal, new Vector2(positionScore.X - textureMedal.Width - space, positionScore.Y + 5 + border - textureMedal.Height / 2), Color.White);
             spriteBatch.DrawString(font, myPoints.ToString(), positionScore, Color.White);
             spriteBatch.DrawString(font, " / " + goalPoints, positionTotalPoints, Color.White);
         }

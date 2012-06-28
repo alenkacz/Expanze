@@ -102,7 +102,7 @@ namespace AIHard
             double hasFortDesirability = (map.GetPlayerMe().GetBuildingCount(Building.Fort) > 0) ? kHasFort : 1.0;
 
             double hasMoneyDesirability = Desirability.GetHasSources(PriceKind.BFort);
-            double pointsToWinDesirability = (map.GetPlayerMe().GetPoints() / (double)map.GetGameSettings().GetWinningPoints());
+            double pointsToWinDesirability = 0.0;// (map.GetPlayerMe().GetPoints() / (double)map.GetGameSettings().GetWinningPoints());
             double hasSomeoneFort = (Desirability.HasSomeoneBuilding(Building.Fort)) ? 0.0 : 1.0;
             double desirability = (bestDesirability * kBestHexa + hasMoneyDesirability * kHasMoney + pointsToWinDesirability * kPointsToWin + hasSomeoneFort * kHasOtherFort) * hasFortDesirability;
 
