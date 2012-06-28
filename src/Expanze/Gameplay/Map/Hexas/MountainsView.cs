@@ -32,7 +32,7 @@ namespace Expanze.Gameplay.Map
                 }
                 else
                 {
-                    if (tempPos == 5 || (tempPos == 4 && BuildingKind.NoBuilding == model.getTown((CorePlugin.TownPos)(((int) CorePlugin.TownPos.BottomLeft + hexaID) % 6)).GetBuildingKind(model.GetID())))
+                    if (tempPos == 5 || (tempPos == 4 && BuildingKind.NoBuilding != model.getTown((CorePlugin.TownPos)5).GetBuildingKind(model.GetID())))
                         continue;
                     m = GameResources.Inst().GetMountainsCover(tempPos);
                 }

@@ -137,7 +137,7 @@ namespace Expanze
 
         private void DrawPoints(Texture2D medal, int myPoints, int goalPoints, int pointKind)
         {
-            positionTotalPoints = new Vector2((int)Settings.maximumResolution.X - (rightSize + 2 * space), 60 + pointKind * 65);
+            positionTotalPoints = new Vector2((int)Settings.maximumResolution.X - (rightSize + 2 * space), 65 + pointKind * 65);
             positionScore = new Vector2(positionTotalPoints.X - 20, positionTotalPoints.Y);
             //draw medal
             spriteBatch.Draw(medal, new Vector2(positionScore.X - textureMedal.Width - space, positionScore.Y + 5 - textureMedal.Height / 2), Color.White);

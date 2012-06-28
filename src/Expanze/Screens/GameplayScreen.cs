@@ -604,6 +604,8 @@ namespace Expanze
                 spriteBatch.Begin();
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), showFrames + " ", new Vector2(12, 12), Color.Black);
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), showFrames + " ", new Vector2(10, 10), Color.White);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Turn " + GameMaster.Inst().GetTurnNumber(), new Vector2(12, 62), Color.White);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Game " + gameCount, new Vector2(12, 102), Color.White);
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Turn " + GameMaster.Inst().GetTurnNumber(), new Vector2(10, 60), Color.White);
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Game " + gameCount, new Vector2(10, 100), Color.White);
                 spriteBatch.End();
