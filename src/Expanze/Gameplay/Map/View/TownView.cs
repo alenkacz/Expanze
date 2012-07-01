@@ -60,6 +60,7 @@ namespace Expanze.Gameplay.Map
         private static int pickTownID;
         private int townID;
         private bool isBuildView;       // Could be diffrent from model Town isBuild, first is in model true but it is not draw, it waits
+        private int townRotation;
 
         private Color pickTownColor;
         private PickVariables pickVars;
@@ -75,6 +76,7 @@ namespace Expanze.Gameplay.Map
         {
             this.model = model;
             this.townID = model.GetTownID();
+            townRotation = GameMaster.Inst().GetRandomInt(6);
             this.pickTownColor = new Color(0.0f, 0.0f, 1.0f - townID / 256.0f);
             this.world = world;
             buildingIsBuild = new bool[3];
@@ -109,7 +111,7 @@ namespace Expanze.Gameplay.Map
                 m.CopyAbsoluteBoneTransformsTo(transforms);
 
                 Matrix rotation;
-                rotation = (townID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (townID % 6));
+                rotation = (townRotation == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (townRotation));
                 Matrix mWorld = rotation * Matrix.CreateTranslation(new Vector3(0.0f, 0.01f, 0.0f)) * Matrix.CreateScale(0.00032f) * world;
 
                 int a = 0;

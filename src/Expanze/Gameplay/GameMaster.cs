@@ -1140,6 +1140,11 @@ namespace Expanze
             return randomNumber.NextDouble();
         }
 
+        public int GetRandomInt(int bound)
+        {
+            return randomNumber.Next(bound);
+        }
+
         internal void RestartGame()
         {
 #if CHANGE_MAP_EVERY_TURN

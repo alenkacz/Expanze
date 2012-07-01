@@ -19,13 +19,13 @@ namespace Expanze.Gameplay.Map
         {
 
             Matrix rotation;
-            rotation = (hexaID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaID % 6));
+            rotation = (hexaRotation == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaRotation));
             Matrix tempMatrix = Matrix.CreateScale(0.00028f) *rotation;
 
             for (int loop1 = 0; loop1 < 6; loop1++)
             {
                 Model m;
-                int tempPos = (loop1 + hexaID) % 6;
+                int tempPos = (loop1 + hexaRotation) % 6;
                 if (BuildingKind.NoBuilding != model.getTown((CorePlugin.TownPos)loop1).GetBuildingKind(model.GetID()))
                 {
                     m = GameResources.Inst().GetMountainsSourceBuildingModel(tempPos);

@@ -72,6 +72,7 @@ namespace Expanze
         private static int              activeHexaID;     // focused hexa with keys
         private static bool             activeHexaEnter;  // press someone enter when was activeHexaID != -1?
         protected int                   hexaID;           // from counter, useable for picking
+        protected int                   hexaRotation;
         Color                           pickHexaColor;    // color o hexa in render texture
         protected PickVariables         pickVars;
         protected Matrix                world;            // wordl position of Hex
@@ -91,6 +92,7 @@ namespace Expanze
             this.model = model;
             this.hexaID = model.GetID();
             this.kind = model.GetKind();
+            hexaRotation = GameMaster.Inst().GetRandomInt(6);
 
             if (kind != HexaKind.Water)
             {
@@ -306,7 +308,7 @@ namespace Expanze
             GameState.game.GraphicsDevice.RasterizerState = GameState.rasterizerState;
 
             Matrix rotation;
-            rotation = (hexaID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaID % 6));
+            rotation = (hexaRotation == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * hexaRotation);
             Matrix tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
 
             foreach (ModelMesh mesh in m.Meshes)

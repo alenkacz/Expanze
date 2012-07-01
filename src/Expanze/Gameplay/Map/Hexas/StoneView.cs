@@ -23,7 +23,7 @@ namespace Expanze.Gameplay.Map
             Model m;
 
             Matrix rotation;
-            rotation = (hexaID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaID % 6));
+            rotation = (hexaRotation == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * hexaRotation);
             Matrix tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
             Matrix rotationMatrix = Matrix.Identity;
             for (int loop1 = 0; loop1 < 6; loop1++)

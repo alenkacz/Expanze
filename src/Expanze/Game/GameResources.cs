@@ -239,8 +239,9 @@ namespace Expanze
                 hexaModel[(int)HexaKind.Desert] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Desert]);
                 hexaModel[(int)HexaKind.Forest] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Forest]);
 
-                trees = new Model[1];
+                trees = new Model[2];
                 trees[0] = content.Load<Model>("Models/tree1");
+                trees[1] = content.Load<Model>("Models/sheep");
 
                 hexaModel[(int)HexaKind.Mountains] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Mountains]);
                 hexaModel[(int)HexaKind.Pasture] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Pasture]);
