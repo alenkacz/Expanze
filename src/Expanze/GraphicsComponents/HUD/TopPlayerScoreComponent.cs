@@ -33,7 +33,7 @@ namespace Expanze
         //int widthScore = 100;
         const int turnWidth = 40;
         const int medalWidth = 51;
-        const int space = 30;
+        const int space = 34;
         const int rightSize = 79;
         const int leftSize = 11;
         const int middleSize = 6;
@@ -161,14 +161,23 @@ namespace Expanze
             spriteBatch.End();
         }
 
-        private void DrawPoints(Texture2D medal, int myPoints, int goalPoints, int pointKind)
+        private int DrawPoints(Texture2D medal, int myPoints, int goalPoints, int pointKind)
         {
-            positionTotalPoints = new Vector2((int)Settings.maximumResolution.X - (rightSize + 2 * space), 65 + border + pointKind * 65);
-            positionScore = new Vector2(positionTotalPoints.X - 20, positionTotalPoints.Y);
-            //draw medal
-            spriteBatch.Draw(medal, new Vector2(positionScore.X - textureMedal.Width - space, positionScore.Y + 5 + border - textureMedal.Height / 2), Color.White);
-            spriteBatch.DrawString(font, myPoints.ToString(), positionScore, Color.White);
-            spriteBatch.DrawString(font, " / " + goalPoints, positionTotalPoints, Color.White);
+            if (goalPoints - myPoints > 0)
+            {
+                positionTotalPoints = new Vector2((int)Settings.maximumResolution.X - (rightSize + 2 * space) + 60, 65 + border + pointKind * 65);
+                positionScore = new Vector2(positionTotalPoints.X - 20, positionTotalPoints.Y);
+                //draw medal
+                spriteBatch.Draw(medal, new Vector2(positionScore.X - textureMedal.Width - space + 40, positionScore.Y + 5 + border - textureMedal.Height / 2), Color.White);
+                String pointString = (goalPoints - myPoints) + "";
+                float pointWidth = font.MeasureString(pointString).X;
+                positionScore = new Vector2(positionTotalPoints.X + 55 - pointWidth, positionTotalPoints.Y - 5);
+                spriteBatch.DrawString(font, pointString, positionScore, Color.Black);
+                positionScore = new Vector2(positionTotalPoints.X + 58 - pointWidth, positionTotalPoints.Y - 2);
+                spriteBatch.DrawString(font, pointString, positionScore, Color.White);
+                return pointKind + 1;
+            } else
+                return pointKind;
         }
 
         private Texture2D DrawAllPoints()
@@ -176,29 +185,34 @@ namespace Expanze
             int pointKind = 0;
             Player player = GameMaster.Inst().GetTargetPlayer();
             if (Settings.pointsMedal > 0)
-                DrawPoints(textureMedal, player.GetPoints(PlayerPoints.Medal), Settings.pointsMedal, pointKind++);
+                pointKind = DrawPoints(textureMedal, player.GetPoints(PlayerPoints.Medal), Settings.pointsMedal, pointKind);
 
             if (Settings.pointsTown > 0)
-                DrawPoints(GameMaster.Inst().GetMedaileIcon(Building.Town), player.GetPoints(PlayerPoints.Town), Settings.pointsTown, pointKind++);
+                pointKind = DrawPoints(GameMaster.Inst().GetMedaileIcon(Building.Town), player.GetPoints(PlayerPoints.Town), Settings.pointsTown, pointKind);
 
             if (Settings.pointsRoad > 0)
-                DrawPoints(GameMaster.Inst().GetMedaileIcon(Building.Road), player.GetPoints(PlayerPoints.Road), Settings.pointsRoad, pointKind++);
+                pointKind = DrawPoints(GameMaster.Inst().GetMedaileIcon(Building.Road), player.GetPoints(PlayerPoints.Road), Settings.pointsRoad, pointKind);
 
-            if (Settings.pointsMill > 0) DrawPoints(GameMaster.Inst().GetMedaileIcon(Building.Mill), player.GetPoints(PlayerPoints.Mill), Settings.pointsMill, pointKind++);
-            if (Settings.pointsMine > 0) DrawPoints(GameMaster.Inst().GetMedaileIcon(Building.Mine), player.GetPoints(PlayerPoints.Mine), Settings.pointsMine, pointKind++);
-            if (Settings.pointsQuarry > 0) DrawPoints(GameMaster.Inst().GetMedaileIcon(Building.Quarry), player.GetPoints(PlayerPoints.Quarry), Settings.pointsQuarry, pointKind++);
-            if (Settings.pointsSaw > 0) DrawPoints(GameMaster.Inst().GetMedaileIcon(Building.Saw), player.GetPoints(PlayerPoints.Saw), Settings.pointsSaw, pointKind++);
-            if (Settings.pointsStepherd > 0) DrawPoints(GameMaster.Inst().GetMedaileIcon(Building.Stepherd), player.GetPoints(PlayerPoints.Stepherd), Settings.pointsStepherd, pointKind++);
-            if (Settings.pointsFort > 0) DrawPoints(GameMaster.Inst().GetMedaileIcon(Building.Fort), player.GetPoints(PlayerPoints.Fort), Settings.pointsFort, pointKind++);
-            if (Settings.pointsMarket > 0) DrawPoints(GameMaster.Inst().GetMedaileIcon(Building.Market), player.GetPoints(PlayerPoints.Market), Settings.pointsMarket, pointKind++);
-            if (Settings.pointsMonastery > 0) DrawPoints(GameMaster.Inst().GetMedaileIcon(Building.Monastery), player.GetPoints(PlayerPoints.Monastery), Settings.pointsMonastery, pointKind++);
-            if (Settings.pointsFortParade > 0) DrawPoints(GameResources.Inst().GetHudTexture(HUDTexture.IconFortParade), player.GetPoints(PlayerPoints.FortParade), Settings.pointsFortParade, pointKind++);
-            if (Settings.pointsFortCapture > 0) DrawPoints(GameResources.Inst().GetHudTexture(HUDTexture.IconFortCapture), player.GetPoints(PlayerPoints.FortCaptureHexa), Settings.pointsFortCapture, pointKind++);
-            if (Settings.pointsFortSteal > 0) DrawPoints(GameResources.Inst().GetHudTexture(HUDTexture.IconFortSources), player.GetPoints(PlayerPoints.FortStealSources), Settings.pointsFortSteal, pointKind++);
-            if (Settings.pointsMarketLvl1 > 0) DrawPoints(GameResources.Inst().GetHudTexture(HUDTexture.IconOre1), player.GetPoints(PlayerPoints.LicenceLvl1), Settings.pointsMarketLvl1, pointKind++);
-            if (Settings.pointsUpgradeLvl1 > 0) DrawPoints(GameResources.Inst().GetHudTexture(HUDTexture.IconQuarry1), player.GetPoints(PlayerPoints.UpgradeLvl1), Settings.pointsUpgradeLvl1, pointKind++);
-            if (Settings.pointsMarketLvl2 > 0) DrawPoints(GameResources.Inst().GetHudTexture(HUDTexture.IconOre2), player.GetPoints(PlayerPoints.LicenceLvl2), Settings.pointsMarketLvl2, pointKind++);
-            if (Settings.pointsUpgradeLvl2 > 0) DrawPoints(GameResources.Inst().GetHudTexture(HUDTexture.IconQuarry2), player.GetPoints(PlayerPoints.UpgradeLvl2), Settings.pointsUpgradeLvl2, pointKind++);
+            if (Settings.pointsMill > 0) pointKind = DrawPoints(GameMaster.Inst().GetMedaileIcon(Building.Mill), player.GetPoints(PlayerPoints.Mill), Settings.pointsMill, pointKind);
+            if (Settings.pointsMine > 0) pointKind = DrawPoints(GameMaster.Inst().GetMedaileIcon(Building.Mine), player.GetPoints(PlayerPoints.Mine), Settings.pointsMine, pointKind);
+            if (Settings.pointsQuarry > 0) pointKind = DrawPoints(GameMaster.Inst().GetMedaileIcon(Building.Quarry), player.GetPoints(PlayerPoints.Quarry), Settings.pointsQuarry, pointKind);
+            if (Settings.pointsSaw > 0) pointKind = DrawPoints(GameMaster.Inst().GetMedaileIcon(Building.Saw), player.GetPoints(PlayerPoints.Saw), Settings.pointsSaw, pointKind);
+            if (Settings.pointsStepherd > 0) pointKind = DrawPoints(GameMaster.Inst().GetMedaileIcon(Building.Stepherd), player.GetPoints(PlayerPoints.Stepherd), Settings.pointsStepherd, pointKind);
+            if (Settings.pointsFort > 0) pointKind = DrawPoints(GameMaster.Inst().GetMedaileIcon(Building.Fort), player.GetPoints(PlayerPoints.Fort), Settings.pointsFort, pointKind);
+            if (Settings.pointsMarket > 0) pointKind = DrawPoints(GameMaster.Inst().GetMedaileIcon(Building.Market), player.GetPoints(PlayerPoints.Market), Settings.pointsMarket, pointKind);
+            if (Settings.pointsMonastery > 0) pointKind = DrawPoints(GameMaster.Inst().GetMedaileIcon(Building.Monastery), player.GetPoints(PlayerPoints.Monastery), Settings.pointsMonastery, pointKind);
+            if (Settings.pointsFortParade > 0) pointKind = DrawPoints(GameResources.Inst().GetHudTexture(HUDTexture.IconFortParade), player.GetPoints(PlayerPoints.FortParade), Settings.pointsFortParade, pointKind);
+            if (Settings.pointsFortCapture > 0) pointKind = DrawPoints(GameResources.Inst().GetHudTexture(HUDTexture.IconFortCapture), player.GetPoints(PlayerPoints.FortCaptureHexa), Settings.pointsFortCapture, pointKind);
+            if (Settings.pointsFortSteal > 0) pointKind = DrawPoints(GameResources.Inst().GetHudTexture(HUDTexture.IconFortSources), player.GetPoints(PlayerPoints.FortStealSources), Settings.pointsFortSteal, pointKind);
+            if (Settings.pointsMarketLvl1 > 0) pointKind = DrawPoints(GameResources.Inst().GetHudTexture(HUDTexture.IconOre1), player.GetPoints(PlayerPoints.LicenceLvl1), Settings.pointsMarketLvl1, pointKind);
+            if (Settings.pointsUpgradeLvl1 > 0) pointKind = DrawPoints(GameResources.Inst().GetHudTexture(HUDTexture.IconQuarry1), player.GetPoints(PlayerPoints.UpgradeLvl1), Settings.pointsUpgradeLvl1, pointKind);
+            if (Settings.pointsMarketLvl2 > 0) pointKind = DrawPoints(GameResources.Inst().GetHudTexture(HUDTexture.IconOre2), player.GetPoints(PlayerPoints.LicenceLvl2), Settings.pointsMarketLvl2, pointKind);
+            if (Settings.pointsUpgradeLvl2 > 0) pointKind = DrawPoints(GameResources.Inst().GetHudTexture(HUDTexture.IconQuarry2), player.GetPoints(PlayerPoints.UpgradeLvl2), Settings.pointsUpgradeLvl2, pointKind);
+            if (Settings.pointsCorn > 0) pointKind = DrawPoints(GameResources.Inst().GetHudTexture(HUDTexture.SmallCorn), player.GetCollectSourcesNormal().GetCorn(), Settings.pointsCorn, pointKind);
+            if (Settings.pointsMeat > 0) pointKind = DrawPoints(GameResources.Inst().GetHudTexture(HUDTexture.SmallMeat), player.GetCollectSourcesNormal().GetMeat(), Settings.pointsMeat, pointKind);
+            if (Settings.pointsStone > 0) pointKind = DrawPoints(GameResources.Inst().GetHudTexture(HUDTexture.SmallStone), player.GetCollectSourcesNormal().GetStone(), Settings.pointsStone, pointKind);
+            if (Settings.pointsWood > 0) pointKind = DrawPoints(GameResources.Inst().GetHudTexture(HUDTexture.SmallWood), player.GetCollectSourcesNormal().GetWood(), Settings.pointsWood, pointKind);
+            if (Settings.pointsOre > 0) pointKind = DrawPoints(GameResources.Inst().GetHudTexture(HUDTexture.SmallOre), player.GetCollectSourcesNormal().GetOre(), Settings.pointsOre, pointKind);
 
             return textureMedal;
         }

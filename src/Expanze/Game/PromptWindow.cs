@@ -158,7 +158,7 @@ namespace Expanze
                     }
                 }
 
-                if (mod == Mod.Buyer && InputManager.Inst().GetGameAction("gamewindow", "changesources").IsPressed())
+                if (mod == Mod.Buyer && InputManager.Inst().GetGameAction("gamewindow", "changesources").IsPressed() && MarketComponent.Inst().IsOpen)
                 {
                     GameMaster.Inst().ChangeSourcesFor((SourceAll) itemList[activeItem].getCost());
                 }

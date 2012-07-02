@@ -56,6 +56,7 @@ namespace Expanze
             transactionSource = new SourceAll(0);
             sumSpentSources = new SourceAll(0);
 
+            ClearCollectSources();
             collectSourcesNormal = new SourceAll(0);
 
             buildingCount = new int[(int) Building.Count];
@@ -367,9 +368,39 @@ namespace Expanze
         {
             statistic.AddStat(Statistic.Kind.Upgrades, 1, GameMaster.Inst().GetTurnNumber());
             if (upgradeKind == UpgradeKind.FirstUpgrade)
+            {
                 AddPoints(PlayerPoints.UpgradeLvl1);
+                switch (upgradeNumber)
+                {
+                    case 0:
+                        AddCollectSources(new SourceAll(collectSourcesNormal.GetCorn() / 2, 0, 0, 0, 0), new SourceAll(0)); break;
+                    case 1:
+                        AddCollectSources(new SourceAll(0, collectSourcesNormal.GetMeat() / 2, 0, 0, 0), new SourceAll(0)); break;
+                    case 2:
+                        AddCollectSources(new SourceAll(0, 0, collectSourcesNormal.GetStone() / 2, 0, 0), new SourceAll(0)); break;
+                    case 3:
+                        AddCollectSources(new SourceAll(0, 0, 0, collectSourcesNormal.GetWood() / 2, 0), new SourceAll(0)); break;
+                    case 4:
+                        AddCollectSources(new SourceAll(0, 0, 0, 0, collectSourcesNormal.GetOre() / 2), new SourceAll(0)); break;
+                }
+            }
             else
+            {
                 AddPoints(PlayerPoints.UpgradeLvl2);
+                switch (upgradeNumber)
+                {
+                    case 0:
+                        AddCollectSources(new SourceAll(collectSourcesNormal.GetCorn() / 3, 0, 0, 0, 0), new SourceAll(0)); break;
+                    case 1:
+                        AddCollectSources(new SourceAll(0, collectSourcesNormal.GetMeat() / 3, 0, 0, 0), new SourceAll(0)); break;
+                    case 2:
+                        AddCollectSources(new SourceAll(0, 0, collectSourcesNormal.GetStone() / 3, 0, 0), new SourceAll(0)); break;
+                    case 3:
+                        AddCollectSources(new SourceAll(0, 0, 0, collectSourcesNormal.GetWood() / 3, 0), new SourceAll(0)); break;
+                    case 4:
+                        AddCollectSources(new SourceAll(0, 0, 0, 0, collectSourcesNormal.GetOre() / 3), new SourceAll(0)); break;
+                }
+            }
             upgradeMonastery[upgradeNumber] = upgradeKind;
         }
 

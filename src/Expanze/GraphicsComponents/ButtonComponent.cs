@@ -30,6 +30,15 @@ namespace Expanze
         //button still pressed
         protected bool pressed = false;
 
+        private bool disabled;
+        public bool Disabled
+        {
+            set
+            {
+                disabled = value;
+            }
+        }
+
         /// <summary>
         /// Event raised when the menu entry is selected.
         /// </summary>
@@ -106,6 +115,9 @@ namespace Expanze
 
         public override void Update(GameTime gameTime)
         {
+            if (disabled)
+                return;
+
             base.Update(gameTime);
 
             mouseState = Mouse.GetState();
@@ -199,6 +211,9 @@ namespace Expanze
 
         public override void Draw(GameTime gameTime)
         {
+            if (disabled)
+                return;
+
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
 
             Color c;

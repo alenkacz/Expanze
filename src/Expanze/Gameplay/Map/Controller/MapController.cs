@@ -189,6 +189,10 @@ namespace Expanze.Gameplay.Map
 
         public BuildingBuildError CanBuildBuildingInTown(int townID, int hexaID, BuildingKind kind)
         {
+            GameMaster gm = GameMaster.Inst();
+            if (gm.GetState() == EGameState.BeforeGame)
+                return BuildingBuildError.OK;
+
             if (kind == BuildingKind.FortBuilding && Settings.banFort)
             {
                 SetLastError(Strings.ERROR_BAN_FORT);
@@ -207,7 +211,7 @@ namespace Expanze.Gameplay.Map
                 return BuildingBuildError.Ban;
             }
 
-            GameMaster gm = GameMaster.Inst();
+            
             TownModel town = map.GetTownByID(townID);
             if (town == null)
             {
@@ -257,9 +261,12 @@ namespace Expanze.Gameplay.Map
             if (error == BuildingBuildError.OK)
             {
                 ItemQueue item = new BuildingItemQueue(mapView, townID, buildingPos);
-                mapView.AddToViewQueue(item);
+                mapView.AddToViewQueue(item, gm.GetState() == EGameState.BeforeGame);
+                if (gm.GetState() != EGameState.BeforeGame)
+                {
+                    gm.GetActivePlayer().PayForSomething(town.GetBuildingCost(buildingPos, kind));
+                }
 
-                gm.GetActivePlayer().PayForSomething(town.GetBuildingCost(buildingPos, kind));
                 town.BuildBuilding(buildingPos, kind);
                 return true;
             }

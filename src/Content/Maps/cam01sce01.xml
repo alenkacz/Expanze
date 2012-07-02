@@ -7,34 +7,45 @@
 			<name>Tony Blair</name>
 			<color>Blue</color>
 			<AI>Human</AI>
-		</player>
-		<player>
-			<name>The One</name>
-			<color>Red</color>
-			<AI>AI Gen</AI>
+      <towns>
+        <town id="15">
+          <monastery>0</monastery>
+          <fort>1</fort>
+          <market>2</market>
+        </town>
+        <town id="10">
+          <source-building>0</source-building>
+          <source-building>1</source-building>
+        </town>
+      </towns>
+      <roads>
+        <id>17</id>
+        <id>19</id>
+      </roads>
+      <source>
+        <ore>150</ore>
+        <meat>100</meat>
+        <stone>100</stone>
+        <wood>200</wood>
+        <corn>200</corn>
+      </source>
 		</player>
 	</players>
 	<points>
-        <Town>7</Town>
+        <Town>2</Town>
         <Road>5</Road>
         <Fort>1</Fort>
         <Monastery>1</Monastery>
         <Market>1</Market>
-        <Medal>0</Medal>
-        <FortParade>0</FortParade>
-        <UpgradeLvl1>2</UpgradeLvl1>
-        <MarketLvl1>0</MarketLvl1>
-        <UpgradeLvl2>0</UpgradeLvl2>
-        <MarketLvl2>0</MarketLvl2>
-        <Mill>0</Mill>
-        <Stepherd>0</Stepherd>
-        <Saw>0</Saw>
-        <Quarry>0</Quarry>
-        <Mine>0</Mine>
-        <FortCapture>0</FortCapture>
-        <FortSteal>0</FortSteal>
+        <Stone>100</Stone>
+        <Meat>100</Meat>
+        <Ore>50</Ore>
+        <Wood>88</Wood>
+        <Corn>60</Corn>
 	</points>
+  
 	<ban>
+    <ChangeSources>1</ChangeSources>
 		<Fort>0</Fort>
         <Monastery>0</Monastery>
         <Market>0</Market>

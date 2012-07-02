@@ -136,9 +136,9 @@ namespace Expanze
                 {
                     SourceBuildingModel tempBuilding = (SourceBuildingModel) building[loop1];
                     float multiply = (tempBuilding.GetUpgrade() == UpgradeKind.SecondUpgrade) ? 2.0f : (tempBuilding.GetUpgrade() == UpgradeKind.FirstUpgrade) ? 1.5f : 1.0f;
-                    
-                    amountNormal = hexaNeighbour[loop1].GetCurrentSource();
-                    amountNow = (int)(amountNormal * multiply);
+
+                    amountNormal = (int) (hexaNeighbour[loop1].GetStartSource() * multiply);
+                    amountNow = (int)(hexaNeighbour[loop1].GetCurrentSource() * multiply);
                     
                     if (player == hexaNeighbour[loop1].GetCapturedPlayer() ||
                         (player == playerOwner && !hexaNeighbour[loop1].GetCaptured()))

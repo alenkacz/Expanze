@@ -79,7 +79,14 @@ namespace Expanze
         public static int pointsMine = 0;
         public static int pointsFortCapture = 0;
         public static int pointsFortSteal = 0;
+        public static int pointsOre = 0;
+        public static int pointsCorn = 0;
+        public static int pointsMeat = 0;
+        public static int pointsStone = 0;
+        public static int pointsWood = 0;
 
+        public static bool banRandomEvents = false;
+        public static bool banChangeSources = false;
         public static bool banMonastery = false;
         public static bool banFort = false;
         public static bool banMarket = false;

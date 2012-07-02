@@ -39,6 +39,16 @@ namespace Expanze
         Vector2 toIconPosition;
         Vector2 fromIconPosition;
 
+        public bool IsOpen
+        {
+            get
+            {
+                return GameMaster.Inst().GetState() == EGameState.StateGame &&
+                       !GameMaster.Inst().GetActivePlayer().GetIsAI() &&
+                       !Settings.banChangeSources;
+            }
+        }
+
         #endregion
 
         #region Initialization

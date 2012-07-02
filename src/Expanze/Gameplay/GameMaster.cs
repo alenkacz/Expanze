@@ -1,6 +1,6 @@
 ﻿//#define CHANGE_FIRST_2_PLAYERS
 //#define CHANGE_MAP_EVERY_TURN
-//#define TURN_ON_RANDOM_EVENTS
+#define TURN_ON_RANDOM_EVENTS
 
 using System;
 using System.Collections.Generic;
@@ -234,6 +234,7 @@ namespace Expanze
 
         private void PrepareCampaignSetup(XmlDocument xDoc)
         {
+            SetDefaultSettings();
             XmlNodeList points = xDoc.GetElementsByTagName("points")[0].ChildNodes;
             foreach (XmlNode goal in points)
             {
@@ -259,6 +260,11 @@ namespace Expanze
                     case "UpgradeLvl2": Settings.pointsUpgradeLvl2 = value; break;
                     case "MarketLvl1": Settings.pointsMarketLvl1 = value; break;
                     case "MarketLvl2": Settings.pointsMarketLvl2 = value; break;
+                    case "Stone": Settings.pointsStone = value; break;
+                    case "Wood": Settings.pointsWood = value; break;
+                    case "Meat": Settings.pointsMeat = value; break;
+                    case "Corn": Settings.pointsCorn = value; break;
+                    case "Ore": Settings.pointsOre = value; break;
                 }
             }
 
@@ -268,6 +274,8 @@ namespace Expanze
                 bool value = (Convert.ToInt32(action.InnerText) == 0) ? false : true;
                 switch (action.Name)
                 {
+                    case "RandomEvents": Settings.banRandomEvents = value; break;
+                    case "ChangeSources": Settings.banChangeSources = value; break;
                     case "Fort": Settings.banFort = value; break;
                     case "Monastery": Settings.banMonastery = value; break;
                     case "Market": Settings.banMarket = value; break;
@@ -278,6 +286,44 @@ namespace Expanze
                     case "MarketLvl2": Settings.banSecondLicence = value; break;
                 }
             }
+        }
+
+        private void SetDefaultSettings()
+        {
+            Settings.banFort = false;
+            Settings.banFortCaptureHexa = false;
+            Settings.banFortParade = false;
+            Settings.banFortStealSources = false;
+            Settings.banChangeSources = false;
+            Settings.banMarket = false;
+            Settings.banMonastery = false;
+            Settings.banSecondLicence = false;
+            Settings.banSecondUpgrade = false;
+            Settings.banRandomEvents = false;
+
+            Settings.pointsFort = 0;
+            Settings.pointsFortCapture = 0;
+            Settings.pointsFortParade = 0;
+            Settings.pointsFortSteal = 0;
+            Settings.pointsMarket = 0;
+            Settings.pointsMarketLvl1 = 0;
+            Settings.pointsMarketLvl2 = 0;
+            Settings.pointsMedal = 0;
+            Settings.pointsMill = 0;
+            Settings.pointsMine = 0;
+            Settings.pointsMonastery = 0;
+            Settings.pointsQuarry = 0;
+            Settings.pointsRoad = 0;
+            Settings.pointsSaw = 0;
+            Settings.pointsStepherd = 0;
+            Settings.pointsTown = 5;
+            Settings.pointsUpgradeLvl1 = 0;
+            Settings.pointsUpgradeLvl2 = 0;
+            Settings.pointsWood = 0;
+            Settings.pointsStone = 0;
+            Settings.pointsOre = 0;
+            Settings.pointsMeat = 0;
+            Settings.pointsCorn = 0;
         }
 
         private void PrepareCampaignPlayers(XmlDocument xDoc)
@@ -398,10 +444,31 @@ namespace Expanze
                     switch (info.Name)
                     {
                         case "towns":
-                            foreach (XmlNode townID in info.ChildNodes)
+                            foreach (XmlNode townNode in info.ChildNodes)
                             {
-                                int ID = Convert.ToInt16(townID.InnerText);
+                                int ID = Convert.ToInt16(townNode.Attributes[0].Value);
                                 map.GetMapController().BuildTown(ID);
+
+                                foreach (XmlNode buildingNode in townNode.ChildNodes)
+                                {
+                                    int pos = Convert.ToInt16(buildingNode.InnerText);
+                                    switch (buildingNode.Name)
+                                    {
+                                        case "source-building" :
+                                            map.GetTownByID(ID).BuildSourceBuilding((byte) pos);
+                                            break;
+                                        case "fort":
+                                            map.GetTownByID(ID).BuildFort((byte)pos);
+                                            break;
+                                        case "market":
+                                            map.GetTownByID(ID).BuildMarket((byte)pos);
+                                            break;
+                                        case "monastery":
+                                            map.GetTownByID(ID).BuildMonastery((byte)pos);
+                                            break;
+                                    }
+                                    
+                                }
                             }
 
                             break;
@@ -493,6 +560,7 @@ namespace Expanze
         public void ResetGameSettings()
         {
             gameSettings = null;
+            SetDefaultSettings();
         }
 
         public void DeleteAllPlayers()
@@ -681,7 +749,8 @@ namespace Expanze
             {
                 GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
 #if TURN_ON_RANDOM_EVENTS
-                RandomEvents();
+                if(!Settings.banRandomEvents)
+                    RandomEvents();
 #endif
                 GameState.map.getSources(activePlayer);
                 GameState.map.FreeCapturedHexa(activePlayer);
@@ -694,7 +763,7 @@ namespace Expanze
 
         private void RandomEvents()
         {
-            if (randomNumber.Next() % 10 == 2)
+            if (randomNumber.Next() % 5 == 2)
             {       
                 GameState.map.ApplyEvent(RndEvent.getRandomEvent(randomNumber));
             }
@@ -798,7 +867,12 @@ namespace Expanze
                         points[(int) PlayerPoints.Stepherd] >= Settings.pointsStepherd &&
                         points[(int) PlayerPoints.Town] >= Settings.pointsTown &&
                         points[(int) PlayerPoints.UpgradeLvl1] >= Settings.pointsUpgradeLvl1 &&
-                        points[(int) PlayerPoints.UpgradeLvl2] >= Settings.pointsUpgradeLvl2)
+                        points[(int) PlayerPoints.UpgradeLvl2] >= Settings.pointsUpgradeLvl2 &&
+                        player.GetCollectSourcesNormal().GetCorn() >= Settings.pointsCorn &&
+                        player.GetCollectSourcesNormal().GetMeat() >= Settings.pointsMeat &&
+                        player.GetCollectSourcesNormal().GetOre() >= Settings.pointsOre &&
+                        player.GetCollectSourcesNormal().GetStone() >= Settings.pointsStone &&
+                        player.GetCollectSourcesNormal().GetWood() >= Settings.pointsWood)
                     {
                         winnerNew = true;
 
@@ -810,10 +884,10 @@ namespace Expanze
                     }
                 }
 
-                if (winnerNew && turnNumber < Settings.maxTurn)
+                if (winnerNew)
                 {
                     Message.Inst().Show(Strings.MESSAGE_TITLE_END_GAME, bestPlayer.GetName() + Strings.MESSAGE_DESCRIPTION_END_GAME_WIN, GameResources.Inst().GetHudTexture(HUDTexture.IconFortParade));  
-                }
+                } else
 
                 if (turnNumber == Settings.maxTurn)
                 {
@@ -1109,8 +1183,6 @@ namespace Expanze
         {
             SpriteBatch spriteBatch = GameState.spriteBatch;
             spriteBatch.Begin();
-            //spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), Settings.activeRoad + " R", new Vector2(50, 50), Color.Black);
-            //spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), Settings.activeTown + " T", new Vector2(50, 80), Color.Black);
 #if GENETIC
             
             int x = 15;

@@ -44,6 +44,7 @@ namespace Expanze
         
         List<GameComponent> gameComponents = new List<GameComponent>();
         List<GuiComponent> guiComponents = new List<GuiComponent>();
+        ButtonComponent marketButton;
 
         bool isAI;
         bool isGameLoaded;
@@ -113,9 +114,10 @@ namespace Expanze
             TopPlayerScoreComponent topPlayer = new TopPlayerScoreComponent();
             guiComponents.Add(topPlayer);
             MarketComponent marketHud = MarketComponent.Inst();
-            ButtonComponent newMsg = new ButtonComponent(ScreenManager.Game, Settings.scaleW(30), (int)(Settings.maximumResolution.Y - 176), new Rectangle(Settings.scaleW(30), Settings.scaleH((int)(Settings.maximumResolution.Y - 176)), Settings.scaleW(70), Settings.scaleH(70)), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(151), Settings.scaleH(156), "newmessage");
-            newMsg.Actions += MarketButtonAction;
-            guiComponents.Add(newMsg);
+            marketButton = new ButtonComponent(ScreenManager.Game, Settings.scaleW(30), (int)(Settings.maximumResolution.Y - 176), new Rectangle(Settings.scaleW(30), Settings.scaleH((int)(Settings.maximumResolution.Y - 176)), Settings.scaleW(70), Settings.scaleH(70)), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(151), Settings.scaleH(156), "newmessage");
+            marketButton.Actions += MarketButtonAction;
+            
+            guiComponents.Add(marketButton);
 
             foreach (GuiComponent guiComponent in guiComponents)
             {
@@ -309,8 +311,7 @@ namespace Expanze
         void MarketWindowOpenClose()
         {
             // market can not be opened during first phase of the game - building first towns
-            if (GameMaster.Inst().GetState() == EGameState.StateGame &&
-                !GameMaster.Inst().GetActivePlayer().GetIsAI())
+            if (MarketComponent.Inst().IsOpen)
             {
                 MarketComponent.Inst().SetIsActive(!MarketComponent.Inst().getIsActive());
             }
@@ -353,6 +354,7 @@ namespace Expanze
                 gMaster.Update(gameTime);
                 InputManager.Inst().Update();
 
+                marketButton.Disabled = !MarketComponent.Inst().IsOpen;
                 foreach (GuiComponent guiComponent in guiComponents)
                 {
                     guiComponent.Update(gameTime);
@@ -608,6 +610,13 @@ namespace Expanze
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Game " + gameCount, new Vector2(12, 102), Color.Black);
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Turn " + GameMaster.Inst().GetTurnNumber(), new Vector2(10, 60), Color.White);
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Game " + gameCount, new Vector2(10, 100), Color.White);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeRoad + " road", new Vector2(12, 142), Color.Black);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeRoad + " road", new Vector2(10, 140), Color.White);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeTown + " town", new Vector2(12, 182), Color.Black);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeTown + " town", new Vector2(10, 180), Color.White);
+                //spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig),  + " R", new Vector2(50, 50), Color.Black);
+                //spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), Settings.activeTown + " T", new Vector2(50, 80), Color.Black);
+
                 spriteBatch.End();
             }
 
