@@ -173,7 +173,7 @@ namespace Expanze
                 float pointWidth = font.MeasureString(pointString).X;
                 positionScore = new Vector2(positionTotalPoints.X + 55 - pointWidth, positionTotalPoints.Y - 8);
                 spriteBatch.DrawString(font, pointString, positionScore, Color.Black);
-                positionScore = new Vector2(positionTotalPoints.X + 58 - pointWidth, positionTotalPoints.Y - 5);
+                positionScore = new Vector2(positionTotalPoints.X + 58 - pointWidth, positionTotalPoints.Y - 6);
                 spriteBatch.DrawString(font, pointString, positionScore, Color.White);
                 return pointKind + 1;
             } else

@@ -273,6 +273,7 @@ namespace Expanze
                     case "Meat": Settings.pointsMeat = value; break;
                     case "Corn": Settings.pointsCorn = value; break;
                     case "Ore": Settings.pointsOre = value; break;
+                    case "turnLimit": Settings.maxTurn = value; break;
                     case "road" :
                         Settings.goalRoad.Add(value);
                         map.GetRoadByID(value).GoalRoad = true;
@@ -350,6 +351,8 @@ namespace Expanze
             Settings.goalTown = new List<int>();
             Settings.goalRoadID = 0;
             Settings.goalTownID = 0;
+
+            Settings.maxTurn = 50;
         }
 
         private void PrepareCampaignPlayers(XmlDocument xDoc)
@@ -775,7 +778,7 @@ namespace Expanze
             {
                 GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
 #if TURN_ON_RANDOM_EVENTS
-                if(!Settings.banRandomEvents)
+                if(!Settings.banRandomEvents && turnNumber > 2)
                     RandomEvents();
 #endif
                 GameState.map.getSources(activePlayer);

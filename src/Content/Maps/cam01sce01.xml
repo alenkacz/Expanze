@@ -8,59 +8,59 @@
 			<color>Blue</color>
 			<AI>Human</AI>
       <towns>
-        <town id="15">
-          <monastery>0</monastery>
-          <fort>1</fort>
-          <market>2</market>
+        <town id="6">
+          <source-building>0</source-building>
+          <source-building>1</source-building>
+          <source-building>2</source-building>
         </town>
         <town id="10">
-          <source-building>0</source-building>
+          <source-building>2</source-building>
           <source-building>1</source-building>
         </town>
       </towns>
       <roads>
-        <id>17</id>
-        <id>19</id>
+        <id>10</id>
+        <id>11</id>
       </roads>
       <source>
-        <ore>150</ore>
-        <meat>100</meat>
-        <stone>100</stone>
-        <wood>200</wood>
-        <corn>200</corn>
+        <ore>84</ore>
+        <meat>84</meat>
+        <stone>84</stone>
+        <wood>80</wood>
+        <corn>84</corn>
       </source>
 		</player>
 	</players>
 	<points>
-        <Town>2</Town>
-        <Road>5</Road>
-        <Fort>1</Fort>
-        <Monastery>1</Monastery>
-        <Market>1</Market>
-        <Stone>50</Stone>
-        <Meat>50</Meat>
-        <Ore>50</Ore>
-        <Wood>88</Wood>
-        <Corn>60</Corn>
+        <Town>0</Town>
+        <Road>0</Road>
+        <Fort>0</Fort>
+        <FortParade>0</FortParade>
+        <Monastery>0</Monastery>
+        <Market>0</Market>
+        <Stone>80</Stone>
+        <Meat>80</Meat>
+        <Ore>80</Ore>
+        <Wood>84</Wood>
+        <Corn>80</Corn>
 
-        <roadID>1</roadID>
         <townID>1</townID>
-        <road>30</road>
-        <road>40</road>
-        <town>30</town>
-        <town>40</town>
+        <town>44</town>
+        <town>43</town>
+
+        <turnLimit>32</turnLimit>
 	</points>
   
 	<ban>
-    <ChangeSources>0</ChangeSources>
-		<Fort>0</Fort>
+    <ChangeSources>1</ChangeSources>
+		<Fort>1</Fort>
         <Monastery>0</Monastery>
-        <Market>0</Market>
+        <Market>1</Market>
 		<FortCapture>0</FortCapture>
         <FortSteal>0</FortSteal>
 		<FortParade>0</FortParade>
 		<UpgradeLvl2>0</UpgradeLvl2>
-        <MarketLvl2>0</MarketLvl2>
+        <MarketLvl2>1</MarketLvl2>
 	</ban>
   </settings>
   <map-definition>
