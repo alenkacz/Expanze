@@ -32,6 +32,7 @@ namespace Expanze
         int topMargin = 40;
         Rectangle range;
 
+        ButtonComponent change_button;
         SourceKind toSelectKind = SourceKind.Null;
         SourceKind fromSelectKind = SourceKind.Null;
 
@@ -99,7 +100,7 @@ namespace Expanze
 
             fillMarketKindTextures();
 
-            ButtonComponent change_button = new ButtonComponent(Settings.Game, range.Left + 180, (int)(range.Bottom-80), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(104), Settings.scaleH(45), "HUD/OKPromt");
+            change_button = new ButtonComponent(Settings.Game, range.Left + 180, (int)(range.Bottom-80), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(104), Settings.scaleH(45), "HUD/OKPromt");
             change_button.Actions += ChangeButtonAction;
             this.content.Add(change_button);
 
@@ -331,6 +332,12 @@ namespace Expanze
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             base.Update(gameTime);
+
+            if (fromSelectKind == SourceKind.Null ||
+               toSelectKind == SourceKind.Null)
+                change_button.Disabled = true;
+            else
+                change_button.Disabled = false;
 
             foreach (GuiComponent g in content)
             {

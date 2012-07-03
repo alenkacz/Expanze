@@ -37,15 +37,22 @@
         <Fort>1</Fort>
         <Monastery>1</Monastery>
         <Market>1</Market>
-        <Stone>100</Stone>
-        <Meat>100</Meat>
+        <Stone>50</Stone>
+        <Meat>50</Meat>
         <Ore>50</Ore>
         <Wood>88</Wood>
         <Corn>60</Corn>
+
+        <roadID>1</roadID>
+        <townID>1</townID>
+        <road>30</road>
+        <road>40</road>
+        <town>30</town>
+        <town>40</town>
 	</points>
   
 	<ban>
-    <ChangeSources>1</ChangeSources>
+    <ChangeSources>0</ChangeSources>
 		<Fort>0</Fort>
         <Monastery>0</Monastery>
         <Market>0</Market>

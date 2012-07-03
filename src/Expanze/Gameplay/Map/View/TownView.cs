@@ -104,7 +104,7 @@ namespace Expanze.Gameplay.Map
 
         public void Draw(GameTime gameTime)
         {
-            if (pickVars.pickActive || isBuildView)
+            if (pickVars.pickActive || isBuildView || model.GoalTown)
             {
                 Model m = GameResources.Inst().GetTownModel();
                 Matrix[] transforms = new Matrix[m.Bones.Count];
@@ -145,7 +145,13 @@ namespace Expanze.Gameplay.Map
                             effect.AmbientLightColor = color * 0.3f;
                             //effect.DiffuseColor = new Vector3(0.64f, 0.64f, 0.64f);
                         }
-                        
+
+                        effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
+                        if (model.GoalTown && !isBuildView && !pickVars.pickActive)
+                        {
+                            effect.EmissiveColor = new Vector3(0.8f, 0.8f, 0.8f);
+                        }
+
                         if (pickVars.pickActive && !isBuildView)
                         {
                             if (model.CanBuildTown() != TownBuildError.OK &&
@@ -159,8 +165,8 @@ namespace Expanze.Gameplay.Map
                                 if (a != 0)
                                     effect.EmissiveColor = new Vector3(0, 0.5f, 0);
                             }
-                        } else
-                            effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
+                        }
+                            
 
                         effect.World = transforms[mesh.ParentBone.Index] * mWorld;
                         effect.View = GameState.view;

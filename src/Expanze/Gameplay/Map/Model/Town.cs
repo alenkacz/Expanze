@@ -23,7 +23,7 @@ namespace Expanze
         private int townID;             /// unique ID of town place, from 1 to counter
         public static int counter = 0;  /// how many town places are on the map
         private PathNode pathNode;      /// node used for finding path to town
-
+        private bool goalTown;          /// in campaign, is it goal to build it?
         public int GetTownID() { return townID; }
         public bool GetIsBuild() { return isBuild; }
         public Player GetOwner() { return playerOwner; }
@@ -452,6 +452,17 @@ namespace Expanze
         internal void SetPathNode(int distance, TownModel ancestorTown, IRoad ancestorRoad)
         {
             pathNode.Set(distance, ancestorTown, ancestorRoad);
+        }
+
+        public bool GoalTown {
+            get
+            {
+                return goalTown;
+            }
+            set
+            {
+                goalTown = value;
+            }
         }
     }
 }

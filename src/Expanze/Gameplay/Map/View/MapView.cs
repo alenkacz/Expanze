@@ -57,7 +57,6 @@ namespace Expanze.Gameplay.Map
                             case HexaKind.Pasture:
                                 hexaMapView[i][j] = new PastureView(hexaMapModel[i][j], i, j);
                                 break;
-                                break;
 
                             default:
                                 hexaMapView[i][j] = new HexaView(hexaMapModel[i][j], i, j);

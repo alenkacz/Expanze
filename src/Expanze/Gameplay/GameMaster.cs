@@ -99,6 +99,8 @@ namespace Expanze
         {
             gameCount++;
 
+            PrepareCampaignScenario();
+
             playerCount = players.Count;
 
             medailOwner = new Player[(int) Building.Count];
@@ -164,21 +166,27 @@ namespace Expanze
             fortState = EFortState.Normal;
 
             randomNumber = new System.Random();
-
             hasBuiltTown = false;
-
             turnNumber = 1;
+
+            if (playerCount == 1)
+            {
+                Settings.banFortStealSources = true;
+                Settings.banFortCaptureHexa = true;
+            }
 
             PromptWindow.Inst().Deactive();
             Message.Inst().ClearMessages();
             MarketComponent.Inst().SetIsActive(false);
             PathNode.SetIsValid(false);
 
+            StartTurn();
             return true;
         }
 
         public void PlayerWantMedail(Player player, Building medal)
         {
+            /* no medals
             int minCount = 10;
             int pointsForMedal = Settings.pointsMedal;
             if (pointsForMedal == 0)
@@ -215,7 +223,7 @@ namespace Expanze
                 medailOwner[(int)medal].GetStatistic().AddStat(Statistic.Kind.Medals, 1, turnNumber);
                 player.AddPoints(PlayerPoints.Medal);
                 Message.Inst().Show(GetMedalTitle(medal),GetMedalDescription(medal),GetMedaileIcon(medal));
-            }
+            }*/
         }
 
         public void SetMapSource(string source)
@@ -265,6 +273,20 @@ namespace Expanze
                     case "Meat": Settings.pointsMeat = value; break;
                     case "Corn": Settings.pointsCorn = value; break;
                     case "Ore": Settings.pointsOre = value; break;
+                    case "road" :
+                        Settings.goalRoad.Add(value);
+                        map.GetRoadByID(value).GoalRoad = true;
+                        break;
+                    case "town":
+                        Settings.goalTown.Add(value);
+                        map.GetTownByID(value).GoalTown = true;
+                        break;
+                    case "roadID":
+                        Settings.goalRoadID = value;
+                        break;
+                    case "townID":
+                        Settings.goalTownID = value;
+                        break;
                 }
             }
 
@@ -324,6 +346,10 @@ namespace Expanze
             Settings.pointsOre = 0;
             Settings.pointsMeat = 0;
             Settings.pointsCorn = 0;
+            Settings.goalRoad = new List<int>();
+            Settings.goalTown = new List<int>();
+            Settings.goalRoadID = 0;
+            Settings.goalTownID = 0;
         }
 
         private void PrepareCampaignPlayers(XmlDocument xDoc)
@@ -857,7 +883,8 @@ namespace Expanze
                         points[(int) PlayerPoints.LicenceLvl1] >= Settings.pointsMarketLvl1 &&
                         points[(int) PlayerPoints.LicenceLvl2] >= Settings.pointsMarketLvl2 &&
                         points[(int) PlayerPoints.Market] >= Settings.pointsMarket &&
-                        points[(int) PlayerPoints.Medal] >= Settings.pointsMedal &&
+                        points[(int) PlayerPoints.RoadID] >= Settings.goalRoadID &&
+                        points[(int) PlayerPoints.TownID] >= Settings.goalTownID &&
                         points[(int) PlayerPoints.Mill] >= Settings.pointsMill &&
                         points[(int) PlayerPoints.Mine] >= Settings.pointsMine &&
                         points[(int) PlayerPoints.Monastery] >= Settings.pointsMonastery &&

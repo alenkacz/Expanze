@@ -28,6 +28,8 @@ namespace Expanze
         Texture2D gradientTexture;
         Vector2 yesPosition;
         Vector2 noPosition;
+        bool yesActive;
+        bool noActive;
 
         #endregion
 
@@ -47,7 +49,10 @@ namespace Expanze
         /// </summary>
         public MessageBoxScreen(string message)
             : this(message, true)
-        { }
+        {
+            yesActive = false;
+            noActive = false;
+        }
 
 
         /// <summary>
@@ -90,6 +95,17 @@ namespace Expanze
         /// </summary>
         public override void HandleInput(InputState input)
         {
+            if (input.IsMenuMouseHover(new Rectangle((int)yesPosition.X, (int)yesPosition.Y, 200, 100)))
+                yesActive = true;
+            else
+                yesActive = false;
+
+            if (input.IsMenuMouseHover(new Rectangle((int)noPosition.X, (int)noPosition.Y, 200, 100)))
+                noActive = true;
+            else
+                noActive = false;
+
+
             if(input.IsMenuMouseClicked(new Rectangle((int)noPosition.X,(int)noPosition.Y, 200,100)))
             {
                 if( Cancelled != null )
@@ -177,8 +193,8 @@ namespace Expanze
             // Draw the message box text.
             spriteBatch.DrawString(font, message, textPosition, color);
 
-            spriteBatch.DrawString(font, Strings.MENU_COMMON_YES, yesPosition, color);
-            spriteBatch.DrawString(font, Strings.MENU_COMMON_NO, noPosition, color);
+            spriteBatch.DrawString(font, Strings.MENU_COMMON_YES, yesPosition, (yesActive) ? Color.Yellow : color);
+            spriteBatch.DrawString(font, Strings.MENU_COMMON_NO, noPosition, (noActive) ? Color.Yellow : color);
 
             spriteBatch.End();
         }

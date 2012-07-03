@@ -96,12 +96,11 @@ namespace Expanze
             }
 
             gMaster.SetMap(map);
-            gMaster.PrepareCampaignScenario();
+            //gMaster.PrepareCampaignScenario();
             #if GENETIC
             GameMaster.Inst().ResetGenetic();
 #endif
             gMaster.StartGame();
-            GameMaster.Inst().StartTurn();
 
             ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), new Rectangle(Settings.scaleW((int)(Settings.maximumResolution.X - 80)), Settings.scaleH((int)(Settings.maximumResolution.Y - 80)), Settings.scaleW(60), Settings.scaleH(60)), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(147), Settings.scaleH(141), "nextTurn");
             changeTurnButton.Actions += ChangeTurnButtonAction;
@@ -604,16 +603,16 @@ namespace Expanze
                 GameState.debugInfo)
             {
                 spriteBatch.Begin();
-                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), showFrames + " ", new Vector2(12, 12), Color.Black);
-                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), showFrames + " ", new Vector2(10, 10), Color.White);
-                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Turn " + GameMaster.Inst().GetTurnNumber(), new Vector2(12, 62), Color.Black);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), showFrames + " ", new Vector2(12, 62), Color.Black);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), showFrames + " ", new Vector2(10, 60), Color.White);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Turn " + GameMaster.Inst().GetTurnNumber(), new Vector2(12,82), Color.Black);
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Game " + gameCount, new Vector2(12, 102), Color.Black);
-                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Turn " + GameMaster.Inst().GetTurnNumber(), new Vector2(10, 60), Color.White);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Turn " + GameMaster.Inst().GetTurnNumber(), new Vector2(10, 80), Color.White);
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Game " + gameCount, new Vector2(10, 100), Color.White);
-                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeRoad + " road", new Vector2(12, 142), Color.Black);
-                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeRoad + " road", new Vector2(10, 140), Color.White);
-                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeTown + " town", new Vector2(12, 182), Color.Black);
-                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeTown + " town", new Vector2(10, 180), Color.White);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeRoad + " road", new Vector2(12, 122), Color.Black);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeRoad + " road", new Vector2(10, 120), Color.White);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeTown + " town", new Vector2(12, 142), Color.Black);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeTown + " town", new Vector2(10, 140), Color.White);
                 //spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig),  + " R", new Vector2(50, 50), Color.Black);
                 //spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), Settings.activeTown + " T", new Vector2(50, 80), Color.Black);
 

@@ -81,7 +81,8 @@ namespace Expanze.Gameplay.Map.View
         public void Draw(GameTime gameTime)
         {
             GameMaster gm = GameMaster.Inst();
-            if ((pickVars.pickActive && gm.GetState() == EGameState.StateGame) || isBuildView)
+            if ((pickVars.pickActive && gm.GetState() == EGameState.StateGame) || isBuildView ||
+                model.GoalRoad)
             {
                 Model m = GameResources.Inst().GetRoadModel();
                 Matrix[] transforms = new Matrix[m.Bones.Count];
@@ -124,7 +125,12 @@ namespace Expanze.Gameplay.Map.View
                             effect.AmbientLightColor = new Vector3(0.7f, 0.7f, 0.7f);*/
                         }
 
+                        effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
                         // if player wants to build new Road, can he? Show it in red/green color
+                        if (model.GoalRoad && !isBuildView && !(pickVars.pickActive && gm.GetState() == EGameState.StateGame))
+                        {
+                            effect.EmissiveColor = new Vector3(0.5f, 0.5f, 0.5f);
+                        }
 
                         if (pickVars.pickActive && !isBuildView)
                         {
@@ -137,8 +143,6 @@ namespace Expanze.Gameplay.Map.View
                                 if (!(a % 5 == 1 || a % 5 == 2 || a % 5 == 3 || a == 4 || a == 5 || a == 15 || a == 14))
                                     effect.EmissiveColor = new Vector3(0, 0.5f, 0);
                         }
-                        else
-                            effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
 
                         effect.World = transforms[mesh.ParentBone.Index] * mWorld;
                         effect.View = GameState.view;

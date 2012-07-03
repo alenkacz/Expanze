@@ -1182,7 +1182,8 @@ namespace Expanze.Gameplay.Map
                 case PlayerPoints.LicenceLvl1: return Settings.pointsMarketLvl1;
                 case PlayerPoints.LicenceLvl2: return Settings.pointsMarketLvl2;
                 case PlayerPoints.Market: return Settings.pointsMarket;
-                case PlayerPoints.Medal: return Settings.pointsMedal;
+                case PlayerPoints.RoadID: return Settings.goalRoadID;
+                case PlayerPoints.TownID: return Settings.goalTownID;
                 case PlayerPoints.Mill: return Settings.pointsMill;
                 case PlayerPoints.Mine: return Settings.pointsMine;
                 case PlayerPoints.Monastery: return Settings.pointsMonastery;

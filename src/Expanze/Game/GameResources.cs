@@ -31,6 +31,7 @@ namespace Expanze
         IconMedalFort, IconMedalMonastery, IconMedalMarket,
         IconMedalTown, IconMedalRoad,
         IconMedalMill, IconMedalStepherd, IconMedalQuarry, IconMedalSaw, IconMedalMine,
+        IconMedalRoadID, IconMedalTownID,
 
         PlayerColor,
         BackgroundWater, BackgroundPromptWindow, BackgroundMessageWindow, BackgroundVictoryScreen,
@@ -233,6 +234,8 @@ namespace Expanze
                 hud[(int)HUDTexture.IconMedalQuarry] = content.Load<Texture2D>("HUD/medals/medal_quarry");
                 hud[(int)HUDTexture.IconMedalSaw] = content.Load<Texture2D>("HUD/medals/medal_saw");
                 hud[(int)HUDTexture.IconMedalMine] = content.Load<Texture2D>("HUD/medals/medal_mine");
+                hud[(int)HUDTexture.IconMedalRoadID] = content.Load<Texture2D>("HUD/medals/medal_road_id");
+                hud[(int)HUDTexture.IconMedalTownID] = content.Load<Texture2D>("HUD/medals/medal_town_id");
 
                 hexaModel = new Model[N_MODEL];
                 hexaModel[(int)HexaKind.Cornfield] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Cornfield]);

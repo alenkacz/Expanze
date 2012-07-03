@@ -133,10 +133,29 @@ namespace Expanze
             road.Add(t);
             AddPoints(PlayerPoints.Road);
             AddBuilding(Building.Road);
+
+            foreach (int id in Settings.goalRoad)
+            {
+                if (id == t.GetRoadID())
+                {
+                    AddPoints(PlayerPoints.RoadID);
+                    break;
+                }
+            }
         }
 
         public List<IRoad> GetRoad() { return road; }
-        public void AddTown(ITown t) { town.Add(t); }
+        public void AddTown(ITown t) { 
+            town.Add(t);
+            foreach (int id in Settings.goalTown)
+            {
+                if (id == t.GetTownID())
+                {
+                    AddPoints(PlayerPoints.TownID);
+                    break;
+                }
+            }
+        }
         public List<ITown> GetTown() { return town; }
 
         public void AddMarket(IMarket m)
@@ -177,7 +196,8 @@ namespace Expanze
                 case PlayerPoints.LicenceLvl1: areTherePoints = Settings.pointsMarketLvl1 > 0 && Settings.pointsMarketLvl1 > points[(int)which]; break;
                 case PlayerPoints.LicenceLvl2: areTherePoints = Settings.pointsMarketLvl2 > 0 && Settings.pointsMarketLvl2 > points[(int)which]; break;
                 case PlayerPoints.Market: areTherePoints = Settings.pointsMarket > 0 && Settings.pointsMarket > points[(int)which]; break;
-                case PlayerPoints.Medal: areTherePoints = Settings.pointsMedal > 0 && Settings.pointsMedal > points[(int)which]; break;
+                case PlayerPoints.RoadID: areTherePoints = Settings.goalRoadID > 0 && Settings.goalRoadID > points[(int)which]; break;
+                case PlayerPoints.TownID: areTherePoints = Settings.goalTownID > 0 && Settings.goalTownID > points[(int)which]; break;
                 case PlayerPoints.Mill: areTherePoints = Settings.pointsMill > 0 && Settings.pointsMill > points[(int)which]; break;
                 case PlayerPoints.Mine: areTherePoints = Settings.pointsMine > 0 && Settings.pointsMine > points[(int)which]; break;
                 case PlayerPoints.Monastery: areTherePoints = Settings.pointsMonastery > 0 && Settings.pointsMonastery > points[(int)which]; break;

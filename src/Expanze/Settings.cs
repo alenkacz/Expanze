@@ -84,6 +84,10 @@ namespace Expanze
         public static int pointsMeat = 0;
         public static int pointsStone = 0;
         public static int pointsWood = 0;
+        public static List<int> goalRoad;
+        public static List<int> goalTown;
+        public static int goalRoadID = 0;
+        public static int goalTownID = 0;
 
         public static bool banRandomEvents = false;
         public static bool banChangeSources = false;
