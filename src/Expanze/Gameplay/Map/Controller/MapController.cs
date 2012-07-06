@@ -547,7 +547,7 @@ namespace Expanze.Gameplay.Map
 
         public DestroyHexaError CanDestroyHexa(int hexaID, IFort fort)
         {
-            if (!Settings.costFortDestroyHexa.HasPlayerSources(gm.GetActivePlayer()))
+            if (!Settings.costFortCrusade.HasPlayerSources(gm.GetActivePlayer()))
             {
                 SetLastError(Strings.ERROR_NO_SOURCES);
                 return DestroyHexaError.NoSources;
@@ -571,6 +571,12 @@ namespace Expanze.Gameplay.Map
                 SetLastError(Strings.ERROR_TOO_FAR_FROM_FORT);
                 return DestroyHexaError.TooFarFromFort;
             }
+            /*
+            if (hexa.GetDestroyed())
+            {
+                SetLastError(Strings.ERROR_INVALID_HEXA_ID);
+                return DestroyHexaError.IsDestroyed;
+            }*/
 
             return DestroyHexaError.OK;
         }
@@ -581,7 +587,29 @@ namespace Expanze.Gameplay.Map
             {
                 HexaModel hexa = map.GetHexaByID(hexaID);
                 hexa.Destroy();
-                gm.GetActivePlayer().PayForSomething(Settings.costFortDestroyHexa);
+                
+
+                SourceAll source = new SourceAll(0);
+                int amount = gm.GetRandomInt(70) + ((hexa.GetDestroyed()) ? 0 : 70);
+                switch(hexa.GetKind())
+                {
+                    case HexaKind.Cornfield :
+                        source = new SourceAll(amount, 0, 0, 0, 0);
+                        break;
+                    case HexaKind.Pasture :
+                        source = new SourceAll(0, amount, 0, 0, 0);
+                        break;
+                    case HexaKind.Stone :
+                        source = new SourceAll(0, 0, amount, 0, 0);
+                        break;
+                    case HexaKind.Forest :
+                        source = new SourceAll(0, 0, 0, amount, 0);
+                        break;
+                    case HexaKind.Mountains :
+                        source = new SourceAll(0, 0, 0, 0, amount);
+                        break;
+                }
+                gm.GetActivePlayer().PayForSomething(Settings.costFortCrusade - source);
                 gm.GetActivePlayer().AddFortAction();
                 return true;
             }

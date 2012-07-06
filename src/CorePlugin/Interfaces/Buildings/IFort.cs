@@ -49,7 +49,9 @@ namespace CorePlugin
         /// <summary>
         /// Target hexa doesnt exist.
         /// </summary>
-        InvalidHexaID
+        InvalidHexaID,
+
+        IsDestroyed
     }
 
     public enum ParadeError

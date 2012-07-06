@@ -242,11 +242,12 @@ namespace Expanze
                 }
                 else
                 {
-                    if (!IsInFortRadius())
+                    if (!IsInFortRadius())// || (GameMaster.Inst().GetFortState() == EFortState.DestroyingHexa && model.GetDestroyed()))
                         drawNumber = false;
                 }
 
-                if (GameMaster.Inst().GetFortState() != EFortState.Normal)
+                if (GameMaster.Inst().GetFortState() != EFortState.Normal)// &&
+                    //(GameMaster.Inst().GetFortState() != EFortState.DestroyingHexa || !model.GetDestroyed()))
                 {
                     HUDTexture textPassive = HUDTexture.DestroyPassive, textActive = HUDTexture.DestroyActive;
                     if (IsInFortRadius())
@@ -561,7 +562,7 @@ namespace Expanze
                     break;
 
                 case EFortState.DestroyingHexa:
-                    if (IsInFortRadius())
+                    if (IsInFortRadius())// && !model.GetDestroyed())
                     {
                         GameState.map.GetMapController().DestroyHexa(hexaID, null);
                         GameMaster.Inst().SetFortState(EFortState.Normal);

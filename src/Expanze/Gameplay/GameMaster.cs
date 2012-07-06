@@ -174,6 +174,10 @@ namespace Expanze
                 Settings.banFortStealSources = true;
                 Settings.banFortCaptureHexa = true;
             }
+            if (Settings.pointsFortParade == 0)
+                Settings.banFortParade = true;
+            if (Settings.banChangeSources)
+                Settings.banMarket = true;
 
             PromptWindow.Inst().Deactive();
             Message.Inst().ClearMessages();

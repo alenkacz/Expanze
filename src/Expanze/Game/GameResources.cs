@@ -25,7 +25,7 @@ namespace Expanze
         IconStepherd, IconStepherd1, IconStepherd2, IconStepherdActive,
         IconCorn1, IconCorn2, IconMeat1, IconMeat2, IconStone1, IconStone2, IconWood1, IconWood2,
         IconOre1, IconOre2, 
-        IconFortParade, IconFortCapture, IconFortSources, IconFortHexa,
+        IconFortParade, IconFortCapture, IconFortSources, IconFortCrusade,
 
         // icon medal fort have to be first //
         IconMedalFort, IconMedalMonastery, IconMedalMarket,
@@ -220,7 +220,7 @@ namespace Expanze
                 hud[(int)HUDTexture.IconWood2] = content.Load<Texture2D>("HUD/ic_wood2");
                 hud[(int)HUDTexture.IconOre2] = content.Load<Texture2D>("HUD/ic_ore2");
                 hud[(int)HUDTexture.IconFortCapture] = content.Load<Texture2D>("HUD/ic_fort_capture");
-                hud[(int)HUDTexture.IconFortHexa] = content.Load<Texture2D>("HUD/ic_fort_hexa");
+                hud[(int)HUDTexture.IconFortCrusade] = content.Load<Texture2D>("HUD/ic_fort_hexa");
                 hud[(int)HUDTexture.IconFortParade] = content.Load<Texture2D>("HUD/ic_fort_parade");
                 hud[(int)HUDTexture.IconFortSources] = content.Load<Texture2D>("HUD/ic_fort_sources");
 

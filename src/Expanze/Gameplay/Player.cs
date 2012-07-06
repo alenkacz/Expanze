@@ -334,7 +334,12 @@ namespace Expanze
                     break;
             }
         }
-        
+
+        public void AddSources(SourceAll amount)
+        {
+            source = source + amount;
+        }
+
         /// <summary>
         /// Remembers state of material from previous round, active when active player is changed
         /// </summary>

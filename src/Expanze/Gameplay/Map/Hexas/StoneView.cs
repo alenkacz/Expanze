@@ -31,12 +31,12 @@ namespace Expanze.Gameplay.Map
                 int tempPos = (loop1 + hexaRotation) % 6;
                 switch(model.getTown((CorePlugin.TownPos)loop1).GetBuildingKind(model.GetID()))
                 {
-                    case BuildingKind.NoBuilding:
+                    case BuildingKind.SourceBuilding:
+                        m = null;
+                        break;
+                    default :                    
                         m = gr.GetStoneCover(tempPos);
                         rotationMatrix = Matrix.Identity;
-                        break;
-                    default :
-                        m = null;
                         break;
                 }
 

@@ -191,14 +191,14 @@ namespace Expanze
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_ORE_2 = "S touto listinou můžeš měnit 2 rudy za jednu jinou surovinu.";
 
         public static string PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_CAPTURE = "Obsadit pole";
-        public static string PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_DESTROY_HEXA = "Poničit pole";
+        public static string PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_CRUSADE = "Válečná výprava";
         public static string PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_SOURCES = "Ukrást suroviny";
         public static string PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE = "Armádní přehlídka";
 
         public static string PROMPT_DESCTIPTION_MESSAGE_FORT_ACTION_PARADE = "Předvedl jsi majestátnou přehlídku, těžce se bude překonávat. O krok blíž k vítěství.";
 
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_CAPTURE = "Všechny těžební budovy na poli budou dávat suroviny pouze tobě. Při pokusu obsadit stejné pole 2x, bude pole uvolněno.";
-        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_DESTROY_HEXA = "Poničí tebou vybrané pole. (obilné pole, hory, les, pastvinu, či lom) Pole bude vynášet polovinu oproti běžnému stavu.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_CRUSADE = "Tvoji vojáci vyplení dané pole a přinesou z něj kořist. Sníží výnosy pole na polovinu na několik kol.";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES = "Vyšle vojsko, které získá polovinu veškerých zásob soupeře a o ně tě obohatí.";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_PARADE = "Armádní přehlídka ti přinese slávu a přiblíží tě k vítězství.";
 
