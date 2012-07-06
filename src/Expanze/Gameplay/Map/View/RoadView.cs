@@ -88,7 +88,7 @@ namespace Expanze.Gameplay.Map.View
                 Matrix[] transforms = new Matrix[m.Bones.Count];
                 m.CopyAbsoluteBoneTransformsTo(transforms);
 
-                Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.01f, 0.0f)) * Matrix.CreateScale(0.019f) * world;
+                Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.01f, 0.0f)) * Matrix.CreateScale(0.08f) * world;
 
                 int a = 0;
 
@@ -107,24 +107,6 @@ namespace Expanze.Gameplay.Map.View
                         effect.DirectionalLight0.SpecularColor = GameState.LightSpecularColor;
                         effect.DirectionalLight0.Enabled = true;
 
-                        // is it model part which is for flags? They have to be in player colors
-                        if (a % 5 == 1 || a % 5 == 2 || a % 5 == 3 || a == 4 || a == 5 || a == 15 || a == 14)
-                        {
-                            effect.EmissiveColor = color * 0.5f;
-                            effect.DiffuseColor = color * 0.9f;
-                            effect.AmbientLightColor = color / 3.0f;
-                        }
-                        else
-                        {
-                            /*
-                            effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
-                            if (a == 20)
-                                effect.DiffuseColor = new Vector3(1.0f, 1.0f, 1.0f);
-                            else
-                                effect.DiffuseColor = new Vector3(0.0f, 0.0f, 0.0f);
-                            effect.AmbientLightColor = new Vector3(0.7f, 0.7f, 0.7f);*/
-                        }
-
                         effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
                         // if player wants to build new Road, can he? Show it in red/green color
                         if (model.GoalRoad && !isBuildView && !(pickVars.pickActive && gm.GetState() == EGameState.StateGame))
@@ -136,12 +118,18 @@ namespace Expanze.Gameplay.Map.View
                         {
                             if (model.CanBuildRoad() != RoadBuildError.OK)
                             {
-                                if (!(a % 5 == 1 || a % 5 == 2 || a % 5 == 3 || a == 4 || a == 5 || a == 15 || a == 14))
-                                    effect.EmissiveColor = new Vector3(0.5f, 0.0f, 0);
+                                effect.EmissiveColor = new Vector3(0.5f, 0.0f, 0);
                             }
                             else
-                                if (!(a % 5 == 1 || a % 5 == 2 || a % 5 == 3 || a == 4 || a == 5 || a == 15 || a == 14))
-                                    effect.EmissiveColor = new Vector3(0, 0.5f, 0);
+                                effect.EmissiveColor = new Vector3(0, 0.5f, 0);
+                        }
+
+                        // is it model part which is for flags? They have to be in player colors
+                        if (a == 3)
+                        {
+                            effect.EmissiveColor = color * 0.5f;
+                            effect.DiffuseColor = color * 0.9f;
+                            effect.AmbientLightColor = color / 3.0f;
                         }
 
                         effect.World = transforms[mesh.ParentBone.Index] * mWorld;

@@ -186,7 +186,7 @@ namespace Expanze.Gameplay.Map
                 n = 1;
             }
 
-            Texture2D t = GameResources.Inst().GetHexaTexture(HexaKind.Water + n);
+            Texture2D t = GameResources.Inst().GetHexaTexture(n);
 
             return new WaterView(hexaMapModel[i][j], t, rotation, i, j);
         }

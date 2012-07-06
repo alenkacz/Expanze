@@ -81,7 +81,7 @@ namespace Expanze
         Model[] mountainsMineModel;
         Model[] stoneCoverModel;
         Model[] stoneQuarryModel;
-        Model[] trees;
+        Model[] specialModels;
 
         Texture2D[] hud;
         Texture2D[] hexaTexture;
@@ -108,7 +108,7 @@ namespace Expanze
             return hexaModel[(int)type];
         }
 
-        public Texture2D GetHexaTexture(HexaKind type)
+        public Texture2D GetHexaTexture(int type)
         {
             return hexaTexture[(int)type];
         }
@@ -128,7 +128,7 @@ namespace Expanze
         public Model GetBuildingModel(BuildingModel id) { return buildingModel[(int) id]; }
         public Model GetTownModel() { return townModel; }
         public Model GetRoadModel() { return roadModel; }
-        public Model GetTreeModel(int id) { return trees[id]; }
+        public Model GetTreeModel(int id) { return specialModels[id]; }
 
         public Model GetShape(int shapeID)
         {
@@ -242,25 +242,19 @@ namespace Expanze
                 hexaModel[(int)HexaKind.Desert] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Desert]);
                 hexaModel[(int)HexaKind.Forest] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Forest]);
 
-                trees = new Model[2];
-                trees[0] = content.Load<Model>("Models/tree1");
-                trees[1] = content.Load<Model>("Models/sheep");
+                specialModels = new Model[2];
+                specialModels[0] = content.Load<Model>("Models/tree1");
+                specialModels[1] = content.Load<Model>("Models/sheep");
 
                 hexaModel[(int)HexaKind.Mountains] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Mountains]);
                 hexaModel[(int)HexaKind.Pasture] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Pasture]);
                 hexaModel[(int)HexaKind.Stone] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Stone]);
                 hexaModel[(int)HexaKind.Water] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Water]);
 
-                hexaTexture = new Texture2D[N_MODEL];
-                hexaTexture[(int)HexaKind.Cornfield] = content.Load<Texture2D>("Models/pole");
-                hexaTexture[(int)HexaKind.Desert] = content.Load<Texture2D>("Models/poust_Hexa");
-                hexaTexture[(int)HexaKind.Forest] = content.Load<Texture2D>("Models/les");
-                hexaTexture[(int)HexaKind.Mountains] = content.Load<Texture2D>("Models/dul_na_rudu_Hexa_dul");
-                hexaTexture[(int)HexaKind.Pasture] = content.Load<Texture2D>("Models/pastvina");
-                hexaTexture[(int)HexaKind.Stone] = content.Load<Texture2D>("Models/lom");
-                hexaTexture[(int)HexaKind.Water] = content.Load<Texture2D>("Models/hexa_voda3");
-                hexaTexture[(int)HexaKind.Water + 1] = content.Load<Texture2D>("Models/hexa_voda2");
-                hexaTexture[(int)HexaKind.Water + 2] = content.Load<Texture2D>("Models/hexa_voda1");
+                hexaTexture = new Texture2D[3];
+                hexaTexture[0] = content.Load<Texture2D>("Models/hexa_voda3");
+                hexaTexture[1] = content.Load<Texture2D>("Models/hexa_voda2");
+                hexaTexture[2] = content.Load<Texture2D>("Models/hexa_voda1");
 
                 shapeModel = new Model[N_SHAPE_MODEL];
 
@@ -305,7 +299,7 @@ namespace Expanze
                 buildingModel[(int)BuildingModel.Monastery] = content.Load<Model>("Models/monastery");
 
                 townModel = content.Load<Model>("Models/town");
-                roadModel = content.Load<Model>("Models/road");
+                roadModel = content.Load<Model>("Models/roadwithflag");
 
                 LoadFonts();
             }
