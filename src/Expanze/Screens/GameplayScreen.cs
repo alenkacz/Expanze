@@ -295,6 +295,7 @@ namespace Expanze
         {
             if (GameMaster.Inst().CanNextTurn())
             {
+                TriggerManager.Inst().TurnTrigger(TriggerType.NextTurn);
                 GameMaster.Inst().NextTurn();
             }
         }
@@ -304,6 +305,7 @@ namespace Expanze
         /// </summary>
         void MarketButtonAction(object sender, PlayerIndexEventArgs e)
         {
+            TriggerManager.Inst().TurnTrigger(TriggerType.MarketOpen);
             MarketWindowOpenClose();
         }
 

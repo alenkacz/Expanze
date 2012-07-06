@@ -30,8 +30,8 @@ namespace Expanze
         public static SourceAll costMarket = new SourceAll(30, 100, 0, 0, 0);
         public static SourceAll costMonastery = new SourceAll(60, 0, 50, 20, 0);
         // costs of actions
-        public static SourceAll costFortParade = new SourceAll(50, 50, 50, 50, 50);
-        public static SourceAll costFortCrusade = new SourceAll(80, 50, 0, 0, 80);
+        public static SourceAll costFortParade = new SourceAll(50, 50, 50, 80, 0);
+        public static SourceAll costFortCrusade = new SourceAll(80, 0, 0, 80, 80);
         public static SourceAll costFortSources = new SourceAll(80, 50, 50, 80, 0);
         public static SourceAll costFortCapture = new SourceAll(80, 80, 0, 50, 50);
         // costs of market upgrades

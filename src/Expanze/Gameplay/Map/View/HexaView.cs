@@ -239,6 +239,21 @@ namespace Expanze
                             break;
                         }
                     }
+
+                    if (drawNumber && pickVars.pickActive)
+                    {
+                        HUDTexture texture = HUDTexture.HUDCount;
+                        switch (kind)
+                        {
+                            case HexaKind.Cornfield: texture = HUDTexture.SmallCorn; break;
+                            case HexaKind.Forest: texture = HUDTexture.SmallWood; break;
+                            case HexaKind.Mountains: texture = HUDTexture.SmallOre; break;
+                            case HexaKind.Pasture: texture = HUDTexture.SmallMeat; break;
+                            case HexaKind.Stone: texture = HUDTexture.SmallStone; break;
+                        }
+                        if(texture != HUDTexture.HUDCount) 
+                          DrawHexaIcon(spriteBatch, posHexaIcon, texture, texture);
+                    }
                 }
                 else
                 {
