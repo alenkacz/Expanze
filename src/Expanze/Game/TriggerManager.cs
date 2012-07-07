@@ -13,9 +13,12 @@ namespace Expanze
         MarketFirstRow,
         MarketSecondRow,
         MarketChangeSources,
-        TownBuild, 
+        TownBuild,
         RoadBuild,
         TownChoose,
+        TownUnchoose,
+        HexaBuild,
+        BuildingBuild,
         Count
     }
 

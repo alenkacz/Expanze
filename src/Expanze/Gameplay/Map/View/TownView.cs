@@ -248,12 +248,13 @@ namespace Expanze.Gameplay.Map
                 {
                     if (pickTownID == townID)
                     {
+                        TriggerManager.Inst().TurnTrigger(TriggerType.TownUnchoose, townID);
                         gm.SetTargetPlayer(gm.GetActivePlayer());
                         SetPickTownID(-1);
                     }
                     else
                     {
-                        TriggerManager.Inst().TurnTrigger(TriggerType.TownChoose);
+                        TriggerManager.Inst().TurnTrigger(TriggerType.TownChoose, townID);
                         gm.SetTargetPlayer(model.GetOwner());
                         SetPickTownID(townID);
                     }

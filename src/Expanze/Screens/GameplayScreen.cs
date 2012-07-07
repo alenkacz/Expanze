@@ -617,6 +617,9 @@ namespace Expanze
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeRoad + " road", new Vector2(10, 120), Color.White);
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeTown + " town", new Vector2(12, 142), Color.Black);
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeTown + " town", new Vector2(10, 140), Color.White);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeHexa + " hexa", new Vector2(12, 162), Color.Black);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeHexa + " hexa", new Vector2(10, 160), Color.White);
+                
                 //spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig),  + " R", new Vector2(50, 50), Color.Black);
                 //spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), Settings.activeTown + " T", new Vector2(50, 80), Color.Black);
 

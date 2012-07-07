@@ -75,8 +75,18 @@ namespace Expanze
         protected int                   hexaRotation;
         Color                           pickHexaColor;    // color o hexa in render texture
         protected PickVariables         pickVars;
-        protected Matrix                world;            // wordl position of Hex
+        protected Matrix world;            // wordl position of Hex
+
+        public Matrix World
+        {
+            get { return world; }
+        }
         protected HexaModel model;                        // reference to model
+
+        public int HexaID
+        {
+            get { return model.GetID(); }
+        }
         protected RoadView[] roadView;
         protected TownView[] townView;
         protected HexaKind kind;
@@ -504,6 +514,7 @@ namespace Expanze
                             switch (townView[loop1].getTownModel().GetBuildingKind(hexaID))
                             {
                                 case BuildingKind.NoBuilding:
+                                    TriggerManager.Inst().TurnTrigger(TriggerType.HexaBuild, hexaID);
                                     if (townView[loop1].getTownModel().GetOwner() == GameMaster.Inst().GetActivePlayer())
                                     {
                                         String titleWindow = "";
@@ -599,6 +610,9 @@ namespace Expanze
             // Water is not pickable
             if (kind == HexaKind.Water)
                 return;
+
+            if (pickVars.pickActive)
+                Settings.activeHexa = hexaID;
 
             for (int loop1 = 0; loop1 < roadView.Length; loop1++)
                 if (model.GetRoadOwner(loop1))

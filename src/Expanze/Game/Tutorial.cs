@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Expanze.Utils;
 using Expanze.Gameplay.Map;
 using Expanze.Gameplay.Map.View;
+using CorePlugin;
 
 namespace Expanze
 {
@@ -153,11 +154,25 @@ namespace Expanze
             tutorialList.Enqueue(item);
 
             pairList = new List<TutorialPair>();
-            pairList.Add(new TutorialPair("Postav žlutou cestu", mapView.GetRoadViewByID(15).World));
-            triggerConstraint1 = 15;
-            triggerNextItem = TriggerType.RoadBuild;
+            pairList.Add(new TutorialPair("Postav klášter", mapView.GetHexaViewByID(2).World));
+            triggerConstraint1 = 2;
+            triggerNextItem = TriggerType.HexaBuild;
             item = new TutorialItem(pairList, triggerNextItem, triggerConstraint1);
             tutorialList.Enqueue(item);
+
+            pairList = new List<TutorialPair>();
+            pairList.Add(new TutorialPair("Postav klášter", new Vector2(300, 300)));
+            triggerConstraint1 = (int)BuildingKind.MonasteryBuilding;
+            triggerNextItem = TriggerType.BuildingBuild;
+            item = new TutorialItem(pairList, triggerNextItem, triggerConstraint1);
+            tutorialList.Enqueue(item);
+
+            pairList = new List<TutorialPair>();
+            pairList.Add(new TutorialPair("Klikni znovu", mapView.GetTownViewByID(10).getWorld()));
+            triggerConstraint1 = 10;
+            triggerNextItem = TriggerType.TownUnchoose;
+            item = new TutorialItem(pairList, triggerNextItem, triggerConstraint1);
+            tutorialList.Enqueue(item); 
 
             pairList = new List<TutorialPair>();
             pairList.Add(new TutorialPair("Postav žluté město", mapView.GetTownViewByID(14).getWorld()));
@@ -221,6 +236,7 @@ namespace Expanze
                 {
                     case TriggerType.TownBuild:
                     case TriggerType.TownChoose:
+                    case TriggerType.TownUnchoose:
                         TownView.TutorialID = -1;
                         break;
                     case TriggerType.RoadBuild:
@@ -244,6 +260,7 @@ namespace Expanze
                             TownView.TutorialID = activeItem.TriggerContraint1;
                         break;
                     case TriggerType.TownChoose:
+                    case TriggerType.TownUnchoose:
                         TownView.TutorialID = activeItem.TriggerContraint1;
                         break;
 

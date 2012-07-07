@@ -168,5 +168,6 @@ namespace Expanze
         // help vars
         public static int activeTown = 0;
         public static int activeRoad = 0;
+        public static int activeHexa = 0;
     }
 }

@@ -396,6 +396,18 @@ namespace Expanze.Gameplay.Map
             return null;
         }
 
+        public HexaView GetHexaViewByID(int hexaID)
+        {
+            for (int i = 0; i < hexaMapView.Length; i++)
+                for (int j = 0; j < hexaMapView[i].Length; j++)
+                {
+                    if (hexaMapView[i][j].HexaID == hexaID)
+                        return hexaMapView[i][j];
+                }
+
+            return null;
+        }
+
         public RoadView GetRoadViewByID(int roadID)
         {
             RoadView road = null;

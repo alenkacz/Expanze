@@ -269,6 +269,8 @@ namespace Expanze.Gameplay.Map
                 }
 
                 town.BuildBuilding(buildingPos, kind);
+
+                TriggerManager.Inst().TurnTrigger(TriggerType.BuildingBuild, (int) kind);
                 return true;
             }
 
