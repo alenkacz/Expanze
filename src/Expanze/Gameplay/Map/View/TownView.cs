@@ -67,6 +67,8 @@ namespace Expanze.Gameplay.Map
         private TownModel model;
         private Matrix world;
 
+        private static int tutorialID;
+
         private bool[] buildingIsBuild; /// is building on 1-3 position build?
                                         /// 
         public static void SetPickTownID(int id) { pickTownID = id; HexaView.SetActiveHexaID(-1); }
@@ -85,6 +87,7 @@ namespace Expanze.Gameplay.Map
             pickVars = new PickVariables(pickTownColor);
         }
 
+        public Matrix getWorld() { return world; }
         public int getTownID() { return townID; }
         public TownModel getTownModel() { return model; }
         public Boolean getIsMarked() { return pickTownID == townID; }
@@ -104,7 +107,7 @@ namespace Expanze.Gameplay.Map
 
         public void Draw(GameTime gameTime)
         {
-            if (pickVars.pickActive || isBuildView || model.GoalTown)
+            if (pickVars.pickActive || isBuildView || model.GoalTown || townID == tutorialID)
             {
                 Model m = GameResources.Inst().GetTownModel();
                 Matrix[] transforms = new Matrix[m.Bones.Count];
@@ -147,6 +150,11 @@ namespace Expanze.Gameplay.Map
                         }
 
                         effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
+                        if (townID == tutorialID)
+                        {
+                            effect.EmissiveColor = new Vector3(0.7f, 0.7f, 0.0f);
+                        }
+
                         if (model.GoalTown && !isBuildView && !pickVars.pickActive)
                         {
                             effect.EmissiveColor = new Vector3(0.8f, 0.8f, 0.8f);
@@ -245,6 +253,7 @@ namespace Expanze.Gameplay.Map
                     }
                     else
                     {
+                        TriggerManager.Inst().TurnTrigger(TriggerType.TownChoose);
                         gm.SetTargetPlayer(model.GetOwner());
                         SetPickTownID(townID);
                     }
@@ -272,6 +281,17 @@ namespace Expanze.Gameplay.Map
         public static void ResetTownView()
         {
             SetPickTownID(-1);
+        }
+
+        public static int TutorialID {
+            get
+            {
+                return tutorialID;
+            }
+            set
+            {
+                tutorialID = value;
+            }
         }
     }
 }

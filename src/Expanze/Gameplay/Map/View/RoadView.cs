@@ -62,8 +62,27 @@ namespace Expanze.Gameplay.Map.View
         private Color pickRoadColor;
         private PickVariables pickVars;
         private Matrix world;
+
+        public Matrix World
+        {
+            get { return world; }
+            set { world = value; }
+        }
         private int roadID;
         private RoadModel model;
+
+        internal RoadModel Model
+        {
+            get { return model; }
+        }
+
+        private static int tutorialID;
+
+        public static int TutorialID
+        {
+            get { return RoadView.tutorialID; }
+            set { RoadView.tutorialID = value; }
+        }
 
         public RoadView(RoadModel model, Matrix world)
         {
@@ -82,7 +101,7 @@ namespace Expanze.Gameplay.Map.View
         {
             GameMaster gm = GameMaster.Inst();
             if ((pickVars.pickActive && gm.GetState() == EGameState.StateGame) || isBuildView ||
-                model.GoalRoad)
+                model.GoalRoad || tutorialID == roadID)
             {
                 Model m = GameResources.Inst().GetRoadModel();
                 Matrix[] transforms = new Matrix[m.Bones.Count];
@@ -108,10 +127,14 @@ namespace Expanze.Gameplay.Map.View
                         effect.DirectionalLight0.Enabled = true;
 
                         effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
+                        if (tutorialID == roadID)
+                        {
+                            effect.EmissiveColor = new Vector3(0.5f, 0.5f, 0.0f);
+                        }
                         // if player wants to build new Road, can he? Show it in red/green color
                         if (model.GoalRoad && !isBuildView && !(pickVars.pickActive && gm.GetState() == EGameState.StateGame))
                         {
-                            effect.EmissiveColor = new Vector3(0.5f, 0.5f, 0.5f);
+                            effect.EmissiveColor = new Vector3(0.7f, 0.7f, 0.7f);
                         }
 
                         if (pickVars.pickActive && !isBuildView)

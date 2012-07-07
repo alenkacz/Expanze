@@ -146,6 +146,11 @@ namespace Expanze
             return (int)(h * spriteScale.M22);
         }
 
+        public static int UnScaleH(float h)
+        {
+            return (int)(h / spriteScale.M22);
+        }
+
         //position of player name on the gamescreen
         public static Vector2 playerNamePosition = new Vector2(Settings.maximumResolution.X - scaleW(500), scaleH(15));
         public static Vector2 playerColorPosition = new Vector2(Settings.maximumResolution.X - scaleW(200), scaleH(28));

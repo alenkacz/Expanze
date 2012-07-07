@@ -5,6 +5,8 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Expanze.Utils;
+using Expanze.Gameplay.Map;
+using Expanze.Gameplay.Map.View;
 
 namespace Expanze
 {
@@ -16,19 +18,20 @@ namespace Expanze
     {
         PositionKind kind;
         String text;
-        Vector3 position;
+        Vector2 position;
+        Matrix matrix;
 
         public TutorialPair(String text, Vector2 position)
         {
             this.text = text;
             kind = PositionKind.POS_2D;
-            this.position = new Vector3(position.X, position.Y, 0f);
+            this.position = position;
         }
-        public TutorialPair(String text, Vector3 position)
+        public TutorialPair(String text, Matrix matrix)
         {
             this.text = text;
             kind = PositionKind.POS_3D;
-            this.position = position;
+            this.matrix = matrix;
         }
 
         public PositionKind Kind
@@ -41,9 +44,14 @@ namespace Expanze
             get { return text; }
         }
 
-        public Vector3 Position
+        public Vector2 Position
         {
             get { return position; }
+        }
+
+        public Matrix World
+        {
+            get { return matrix; }
         }
     }
 
@@ -76,6 +84,7 @@ namespace Expanze
         Queue<TutorialItem> tutorialList;
         TutorialItem activeItem;
         SpriteFont font;
+        MapView mapView;
 
         private static Tutorial tutorial;
         public static Tutorial Inst()
@@ -99,6 +108,7 @@ namespace Expanze
             item = new TutorialItem(pairList, triggerNextItem, triggerConstraint1);
             tutorialList.Enqueue(item);
 
+            /*
             pairList = new List<TutorialPair>();
             pairList.Add(new TutorialPair("Otevři market", new Vector2(300, 50)));
             triggerConstraint1 = 0;
@@ -133,6 +143,28 @@ namespace Expanze
             triggerNextItem = TriggerType.MarketClose;
             item = new TutorialItem(pairList, triggerNextItem, triggerConstraint1);
             tutorialList.Enqueue(item);
+             */
+
+            pairList = new List<TutorialPair>();
+            pairList.Add(new TutorialPair("Vyber žluté město", mapView.GetTownViewByID(10).getWorld()));
+            triggerConstraint1 = 10;
+            triggerNextItem = TriggerType.TownChoose;
+            item = new TutorialItem(pairList, triggerNextItem, triggerConstraint1);
+            tutorialList.Enqueue(item);
+
+            pairList = new List<TutorialPair>();
+            pairList.Add(new TutorialPair("Postav žlutou cestu", mapView.GetRoadViewByID(15).World));
+            triggerConstraint1 = 15;
+            triggerNextItem = TriggerType.RoadBuild;
+            item = new TutorialItem(pairList, triggerNextItem, triggerConstraint1);
+            tutorialList.Enqueue(item);
+
+            pairList = new List<TutorialPair>();
+            pairList.Add(new TutorialPair("Postav žluté město", mapView.GetTownViewByID(14).getWorld()));
+            triggerConstraint1 = 14;
+            triggerNextItem = TriggerType.TownBuild;
+            item = new TutorialItem(pairList, triggerNextItem, triggerConstraint1);
+            tutorialList.Enqueue(item);
         }
         private Tutorial()
         {
@@ -143,6 +175,7 @@ namespace Expanze
         public override void Initialize()
         {
             base.Initialize();
+            mapView = GameMaster.Inst().GetMap().GetMapView();
             tutorialList.Clear();
             LoadFromXML();
             TurnOn();
@@ -162,10 +195,17 @@ namespace Expanze
                     }
                     else
                     {
-
+                        BoundingFrustum frustum = new BoundingFrustum(GameState.view * GameState.projection);
+                        ContainmentType containmentType = frustum.Contains(Vector3.Transform(new Vector3(0.0f, 0.0f, 0.0f), pair.World));
+                        if (containmentType != ContainmentType.Disjoint)
+                        {
+                            Vector3 point3D = GameState.game.GraphicsDevice.Viewport.Project(new Vector3(0.0f, 0.0f, 0.0f), GameState.projection, GameState.view, pair.World);
+                            TextWrapping.DrawStringOnScreen(pair.Text, font, Settings.colorMainText, Settings.UnScaleW(point3D.X), Settings.UnScaleH(point3D.Y), spriteBatch, 50f);
+                        }
                     }
                 }
                 spriteBatch.End();
+
             }
         }
 
@@ -173,13 +213,49 @@ namespace Expanze
 
         public void TurnOn()
         {
+            if (activeItem != null)
+            {
+                TriggerManager.Inst().Dettach(this, activeItem.NextItem);
+
+                switch (activeItem.NextItem)
+                {
+                    case TriggerType.TownBuild:
+                    case TriggerType.TownChoose:
+                        TownView.TutorialID = -1;
+                        break;
+                    case TriggerType.RoadBuild:
+                        RoadView.TutorialID = -1;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
             if (tutorialList.Count > 0)
             {
-                if(activeItem != null)
-                    TriggerManager.Inst().Dettach(this, activeItem.NextItem);
-
                 activeItem = tutorialList.Dequeue();
                 TriggerManager.Inst().Attach(this, activeItem.NextItem);
+                switch (activeItem.NextItem)
+                {
+                    case TriggerType.TownBuild :
+                        if (mapView.GetTownViewByID(activeItem.TriggerContraint1).getTownModel().GetIsBuild())
+                            TurnOn();
+                        else
+                            TownView.TutorialID = activeItem.TriggerContraint1;
+                        break;
+                    case TriggerType.TownChoose:
+                        TownView.TutorialID = activeItem.TriggerContraint1;
+                        break;
+
+                    case TriggerType.RoadBuild :
+                        if (mapView.GetRoadViewByID(activeItem.TriggerContraint1).Model.GetIsBuild())
+                            TurnOn();
+                        else
+                            RoadView.TutorialID = activeItem.TriggerContraint1;
+                        break;
+                    default :
+                        break;
+                }
             }
             else
             {

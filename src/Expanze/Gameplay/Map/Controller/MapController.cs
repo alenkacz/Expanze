@@ -181,6 +181,7 @@ namespace Expanze.Gameplay.Map
                 if(gm.GetState() != EGameState.BeforeGame)
                     gm.GetActivePlayer().PayForSomething(Settings.costRoad);
 
+                TriggerManager.Inst().TurnTrigger(TriggerType.RoadBuild, roadID);
                 return road;
             }
 
@@ -342,6 +343,7 @@ namespace Expanze.Gameplay.Map
                 else
                     gm.GetActivePlayer().PayForSomething(GetPrice(PriceKind.BTown));
 
+                TriggerManager.Inst().TurnTrigger(TriggerType.TownBuild, townID);
                 return town;
             }
 

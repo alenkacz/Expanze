@@ -1342,5 +1342,10 @@ namespace Expanze
         {
             this.map = map;
         }
+
+        internal Map GetMap()
+        {
+            return map;
+        }
     }
 }
