@@ -238,7 +238,7 @@ namespace Expanze
                 }
 
                 toSelectKind = btn.getType();
-                TriggerManager.Inst().TurnTrigger(TriggerType.MarketFirstRow, (int)toSelectKind);
+                TriggerManager.Inst().TurnTrigger(TriggerType.MarketSecondRow, (int)toSelectKind);
                 marketSlider.setToType(toSelectKind);
             }
             else
@@ -250,7 +250,7 @@ namespace Expanze
                 }
 
                 fromSelectKind = btn.getType();
-                TriggerManager.Inst().TurnTrigger(TriggerType.MarketSecondRow, (int)fromSelectKind);
+                TriggerManager.Inst().TurnTrigger(TriggerType.MarketFirstRow, (int)fromSelectKind);
                 marketSlider.setFromType(fromSelectKind);
                 marketSlider.MoveSliderToStart();
             }
@@ -316,7 +316,7 @@ namespace Expanze
             int convertedFrom = marketSlider.getConvertedFrom();
             int convertedTo = marketSlider.getConvertedTo();
 
-            TriggerManager.Inst().TurnTrigger(TriggerType.MarketChangeSources, (int)toSelectKind);
+            TriggerManager.Inst().TurnTrigger(TriggerType.MarketChangeSources);
 
             GameMaster.Inst().DoMaterialConversion(fromSelectKind, toSelectKind, GameMaster.Inst().GetActivePlayer(), actualFrom - convertedFrom, convertedTo - actualTo);
             wasActive = false;
@@ -327,6 +327,7 @@ namespace Expanze
         /// </summary>
         void CloseButtonAction(object sender, PlayerIndexEventArgs e)
         {
+            TriggerManager.Inst().TurnTrigger(TriggerType.MarketClose);
             SetIsActive(false);
         }
 

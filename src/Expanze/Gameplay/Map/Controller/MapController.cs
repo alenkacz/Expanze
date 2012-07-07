@@ -586,11 +586,11 @@ namespace Expanze.Gameplay.Map
             if (CanDestroyHexa(hexaID, fort) == DestroyHexaError.OK)
             {
                 HexaModel hexa = map.GetHexaByID(hexaID);
-                hexa.Destroy();
-                
-
+               
                 SourceAll source = new SourceAll(0);
                 int amount = gm.GetRandomInt(70) + ((hexa.GetDestroyed()) ? 0 : 70);
+                hexa.Destroy();
+                
                 switch(hexa.GetKind())
                 {
                     case HexaKind.Cornfield :

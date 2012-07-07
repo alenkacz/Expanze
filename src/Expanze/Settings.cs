@@ -101,6 +101,12 @@ namespace Expanze
         public static bool banFortCaptureHexa = false;
         public static bool banFortStealSources = false;
 
+        public static Color colorHoverItem = Color.BurlyWood;
+        public static Color colorHovorCorner = Color.AntiqueWhite;
+        public static Color colorPassiveItem = Color.White;
+        public static Color colorDisableItem = Color.LightSlateGray;
+        public static Color colorMainText = Color.AntiqueWhite;
+
         public static Vector2 activeResolution = new Vector2(800,600);
 
         public static float getScale()

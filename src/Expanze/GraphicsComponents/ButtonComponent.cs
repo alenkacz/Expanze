@@ -29,8 +29,12 @@ namespace Expanze
 
         //button still pressed
         protected bool pressed = false;
+        protected bool hover = false;
+        protected Color colorHover;
 
         private bool disabled;
+        private bool visible;
+
         public bool Disabled
         {
             set
@@ -53,6 +57,14 @@ namespace Expanze
                 Actions(this, new PlayerIndexEventArgs(playerIndex));
         }
 
+        public ButtonComponent(Game game, int x, int y, Rectangle clickablePosition, SpriteFont font, int width, int height, String texture, Color colorHover)
+            : base(game, x, y, font, width, height, texture)
+        {
+            this.sourceKind = SourceKind.Null;
+            this.init(clickablePosition, x, y, width, height);
+            spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
+            this.colorHover = colorHover;
+        }
 
         public ButtonComponent(Game game, int x, int y, Rectangle clickablePosition, SpriteFont font, int width, int height, String texture)
             : base(game, x, y, font, width, height, texture)
@@ -60,6 +72,7 @@ namespace Expanze
             this.sourceKind = SourceKind.Null;
             this.init(clickablePosition, x, y, width, height);
             spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
+            colorHover = Settings.colorHoverItem;
         }
 
         public ButtonComponent(Game game, int x, int y, Rectangle clickablePosition, SpriteFont font, int width, int height, String texture, SourceKind type)
@@ -68,6 +81,7 @@ namespace Expanze
             this.sourceKind = type;
             this.init(clickablePosition, x, y, width, height);
             spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
+            colorHover = Settings.colorHoverItem;
         }
 
         public ButtonComponent(Game game, int x, int y, Rectangle clickablePosition, SpriteFont font, int width, int height, String texture, String nonactiveTexture, SourceKind type)
@@ -77,6 +91,7 @@ namespace Expanze
             this.init(clickablePosition, x, y, width, height);
             this.nonactiveTexture = myGame.Content.Load<Texture2D>(nonactiveTexture);
             spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
+            colorHover = Settings.colorHoverItem;
         }
 
         public ButtonComponent(Game game, int x, int y, SpriteFont font, int width, int height, String texture, List<String> texts)
@@ -85,10 +100,13 @@ namespace Expanze
             switchTexts = texts;
             this.init(new Rectangle(), x, y, width, height);
             spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
+            colorHover = Settings.colorHoverItem;
         }
 
         private void init(Rectangle clickablePosition, int x, int y, int width, int height)
         {
+            visible = true;
+
             //clickablePos = new Rectangle(Settings.scaleW(clickablePosition.Left), Settings.scaleH(clickablePosition.Top), Settings.scaleW(clickablePosition.Right - clickablePosition.Left), Settings.scaleH(clickablePosition.Bottom - clickablePosition.Top));
             if (clickablePos.Top == clickablePos.Bottom && clickablePos.Bottom == 0)
             {
@@ -124,6 +142,12 @@ namespace Expanze
 
             mousex = mouseState.X;
             mousey = mouseState.Y;
+
+            hover = false;
+            if ((mousex > clickablePos.Left && mousex < (clickablePos.Right)) && (mousey < (clickablePos.Bottom) && mousey > clickablePos.Top && previouslyNotPressed))//identify mouse over x y posotions for the button
+            {
+                hover = true;
+            }
 
             if (ButtonState.Pressed == mouseState.LeftButton && !pressed && lastMouseState != null &&
                 lastMouseState.LeftButton == ButtonState.Released)
@@ -211,13 +235,16 @@ namespace Expanze
 
         public override void Draw(GameTime gameTime)
         {
-            if (disabled)
+            if (!visible)
                 return;
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
 
             Color c;
-            c = (pick) ? Color.Black : Color.White;
+            c = (pick) ? Color.Black : ((hover && !disabled) ? colorHover: Settings.colorPassiveItem);
+
+            if (disabled && !pick)
+                c = Settings.colorDisableItem;
 
             if (myButton != null)
             {
@@ -250,6 +277,18 @@ namespace Expanze
             }
 
             spriteBatch.End();
+        }
+
+        public bool Visible {
+            get
+            {
+                return visible;
+            }
+
+            set
+            {
+                visible = value;
+            }
         }
     }
 }

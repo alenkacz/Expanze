@@ -9,20 +9,46 @@ namespace Expanze
     {
         NextTurn,
         MarketOpen,
+        MarketClose,
         MarketFirstRow,
         MarketSecondRow,
         MarketChangeSources,
         Count
     }
 
+    public class TriggerPair
+    {
+        TriggerType type;
+        Trigger observer;
+
+        public TriggerPair(TriggerType type, Trigger observer)
+        {
+            this.type = type;
+            this.observer = observer;
+        }
+
+        public TriggerType Type
+        {
+            get { return type; }
+        }
+
+        public Trigger Observer
+        {
+            get { return observer; }
+        }
+    }
+
     public class TriggerManager
     {
         private static TriggerManager triggerManager;
         private List<Trigger>[] observers;
+        private List<TriggerPair> dettachList;
 
         private TriggerManager()
         {
             observers = new List<Trigger>[(int) TriggerType.Count];
+            dettachList = new List<TriggerPair>();
+
             for(int loop1 = 0; loop1 < observers.Length; loop1++)
                 observers[loop1] = new List<Trigger>();
         }
@@ -42,6 +68,7 @@ namespace Expanze
                 if(observer.Restriction1() == restriction1)
                     observer.TurnOn();
             }
+            Dettach();
         }
 
         public void TurnTrigger(TriggerType type)
@@ -50,6 +77,7 @@ namespace Expanze
             {
                 observer.TurnOn();
             }
+            Dettach();
         }
 
         public void Attach(Trigger observer, TriggerType type)
@@ -57,9 +85,19 @@ namespace Expanze
             observers[(int)type].Add(observer);
         }
 
+        private void Dettach()
+        {
+            foreach (TriggerPair pair in dettachList)
+            {
+                observers[(int) pair.Type].Remove(pair.Observer);
+            }
+
+            dettachList.Clear();
+        }
+
         public void Dettach(Trigger observer, TriggerType type)
         {
-            observers[(int)type].Remove(observer);
+            dettachList.Add(new TriggerPair(type, observer));
         }
     }
 }

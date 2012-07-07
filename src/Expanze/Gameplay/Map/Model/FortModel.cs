@@ -19,9 +19,9 @@ namespace Expanze.Gameplay
 
         }
 
-        public override void DrawIcon(Microsoft.Xna.Framework.Vector2 iconPosition)
+        public override void DrawIcon(Microsoft.Xna.Framework.Vector2 iconPosition, bool isMouseOver)
         {
-            base.DrawIcon(iconPosition);
+            base.DrawIcon(iconPosition, isMouseOver);
             Texture2D playerIcon = GameResources.Inst().GetHudTexture(HUDTexture.PlayerColor);
             GameState.spriteBatch.Draw(playerIcon, new Vector2(iconPosition.X + getIcon().Width - playerIcon.Width - 5, iconPosition.Y + getIcon().Height - playerIcon.Height - 5), player.GetColor());
         }

@@ -102,10 +102,10 @@ namespace Expanze
 #endif
             gMaster.StartGame();
 
-            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), new Rectangle(Settings.scaleW((int)(Settings.maximumResolution.X - 80)), Settings.scaleH((int)(Settings.maximumResolution.Y - 80)), Settings.scaleW(60), Settings.scaleH(60)), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(147), Settings.scaleH(141), "nextTurn");
+            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), new Rectangle(Settings.scaleW((int)(Settings.maximumResolution.X - 80)), Settings.scaleH((int)(Settings.maximumResolution.Y - 80)), Settings.scaleW(60), Settings.scaleH(60)), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(147), Settings.scaleH(141), "nextTurn", Settings.colorHovorCorner);
             changeTurnButton.Actions += ChangeTurnButtonAction;
             guiComponents.Add(changeTurnButton);
-            ButtonComponent menuHUDButton = new ButtonComponent(ScreenManager.Game, Settings.scaleW(20), Settings.scaleH(20), new Rectangle(Settings.scaleW(10), Settings.scaleH(10), Settings.scaleW(20), Settings.scaleH(20)), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(80), Settings.scaleH(80), "menu_button");
+            ButtonComponent menuHUDButton = new ButtonComponent(ScreenManager.Game, Settings.scaleW(20), Settings.scaleH(20), new Rectangle(Settings.scaleW(10), Settings.scaleH(10), Settings.scaleW(20), Settings.scaleH(20)), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(80), Settings.scaleH(80), "menu_button", Settings.colorHovorCorner);
             menuHUDButton.Actions += MenuButtonAction;
             guiComponents.Add(menuHUDButton);
             MaterialsHUDComponent materialsHUDComp = new MaterialsHUDComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width / 4, ScreenManager.Game.GraphicsDevice.Viewport.Height - 78, GameResources.Inst().GetFont(EFont.MedievalBig), 757, 148, "suroviny_hud");
@@ -113,7 +113,7 @@ namespace Expanze
             TopPlayerScoreComponent topPlayer = new TopPlayerScoreComponent();
             guiComponents.Add(topPlayer);
             MarketComponent marketHud = MarketComponent.Inst();
-            marketButton = new ButtonComponent(ScreenManager.Game, Settings.scaleW(30), (int)(Settings.maximumResolution.Y - 176), new Rectangle(Settings.scaleW(30), Settings.scaleH((int)(Settings.maximumResolution.Y - 176)), Settings.scaleW(70), Settings.scaleH(70)), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(151), Settings.scaleH(156), "newmessage");
+            marketButton = new ButtonComponent(ScreenManager.Game, Settings.scaleW(30), (int)(Settings.maximumResolution.Y - 176), new Rectangle(Settings.scaleW(30), Settings.scaleH((int)(Settings.maximumResolution.Y - 176)), Settings.scaleW(70), Settings.scaleH(70)), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(151), Settings.scaleH(156), "newmessage", Settings.colorHovorCorner);
             marketButton.Actions += MarketButtonAction;
             
             guiComponents.Add(marketButton);
@@ -126,6 +126,7 @@ namespace Expanze
 
             MarketComponent.Inst().Initialize();
             MarketComponent.Inst().LoadContent();
+            Tutorial.Inst().Initialize();
 
             InputManager im = InputManager.Inst();
             String stateGame = "game";
@@ -356,6 +357,7 @@ namespace Expanze
                 InputManager.Inst().Update();
 
                 marketButton.Disabled = !MarketComponent.Inst().IsOpen;
+                marketButton.Visible = !Settings.banChangeSources;
                 foreach (GuiComponent guiComponent in guiComponents)
                 {
                     guiComponent.Update(gameTime);
@@ -621,6 +623,7 @@ namespace Expanze
                 spriteBatch.End();
             }
 
+            Tutorial.Inst().Draw(gameTime);
             GameMaster.Inst().DrawGeneticInfo();
 
             // If the game is transitioning on or off, fade it out to black.
