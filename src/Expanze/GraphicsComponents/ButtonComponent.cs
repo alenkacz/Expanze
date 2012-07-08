@@ -37,8 +37,13 @@ namespace Expanze
 
         public bool Disabled
         {
+            get
+            {
+                return disabled;
+            }
             set
             {
+                previouslyNotPressed = false;
                 disabled = value;
             }
         }

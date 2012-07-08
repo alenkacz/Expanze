@@ -375,7 +375,6 @@ namespace Expanze
             else
             {
                 activeItem = null;
-                Message.Inst().Show("Konec tutoriálu", "Teď už víš vše, abys dokázal vyhrát na této mapě. Hodně štěstí Ti přeji.", GameResources.Inst().GetHudTexture(HUDTexture.HammersPassive));
             }
         }
 

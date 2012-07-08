@@ -15,7 +15,7 @@ namespace CorePlugin
     public enum LicenceKind { NoLicence, FirstLicence, SecondLicence }
     public enum SourceBuildingKind { Mill, Stepherd, Quarry, Saw, Mine, Count} // have to be in this order
     public enum PlayerAction { BuildMonastery, BuildMarket, BuildFort, BuySecondLicence, InventSecondUpgrade, FortParade, FortCaptureHexa, FortStealSources }
-    public enum PlayerPoints { Town, Road, Market, Fort, Monastery, Quarry, Mine, Stepherd, Mill, Saw, FortParade, FortStealSources, FortCaptureHexa, UpgradeLvl1, UpgradeLvl2, LicenceLvl1, LicenceLvl2, RoadID, TownID, Count}
+    public enum PlayerPoints { Town, Road, Market, Fort, Monastery, Quarry, Mine, Stepherd, Mill, Saw, FortParade, FortStealSources, FortCaptureHexa, UpgradeLvl1, UpgradeLvl2, LicenceLvl1, LicenceLvl2, RoadID, TownID, Corn, Meat, Stone, Wood, Ore, Count}
 
     public interface IMapController
     {

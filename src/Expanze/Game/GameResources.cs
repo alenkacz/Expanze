@@ -59,7 +59,8 @@ namespace Expanze
         MaterialsNewFont,
         MedievalSmall,
         MedievalMedium,
-        MedievalBig
+        MedievalBig,
+        MenuFont
     }
 
     class GameResources
@@ -85,7 +86,7 @@ namespace Expanze
 
         Texture2D[] hud;
         Texture2D[] hexaTexture;
-        private const int N_FONT = 7;
+        private const int N_FONT = 8;
         SpriteFont[] font;
 
         public static GameResources Inst()
@@ -322,6 +323,7 @@ namespace Expanze
             font[(int)EFont.MedievalSmall] = content.Load<SpriteFont>("Fonts/medievalSmall");
             font[(int)EFont.MedievalMedium] = content.Load<SpriteFont>("Fonts/medievalMedium");
             font[(int)EFont.PlayerNameFont] = content.Load<SpriteFont>("playername");
+            font[(int)EFont.MenuFont] = content.Load<SpriteFont>("menufont");
         }
     }
 }

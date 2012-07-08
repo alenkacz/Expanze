@@ -106,6 +106,7 @@ namespace Expanze
         public static Color colorPassiveItem = Color.White;
         public static Color colorDisableItem = Color.LightSlateGray;
         public static Color colorMainText = Color.AntiqueWhite;
+        public static Color colorMenuText = Color.BurlyWood;
 
         public static Vector2 activeResolution = new Vector2(800,600);
 
