@@ -401,7 +401,7 @@ namespace Expanze.Gameplay.Map
             for (int i = 0; i < hexaMapView.Length; i++)
                 for (int j = 0; j < hexaMapView[i].Length; j++)
                 {
-                    if (hexaMapView[i][j].HexaID == hexaID)
+                    if (hexaMapView[i][j] != null && hexaMapView[i][j].HexaID == hexaID)
                         return hexaMapView[i][j];
                 }
 

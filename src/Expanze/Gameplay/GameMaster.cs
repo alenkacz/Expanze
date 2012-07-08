@@ -40,6 +40,7 @@ namespace Expanze
         private bool paused;
         // used for open paused menu
         private bool pausedNew;
+        private bool tutorial;
 
         private bool winnerNew;
 
@@ -98,7 +99,7 @@ namespace Expanze
         public bool StartGame()
         {
             gameCount++;
-
+            tutorial = false;
             PrepareCampaignScenario();
 
             playerCount = players.Count;
@@ -184,6 +185,8 @@ namespace Expanze
             MarketComponent.Inst().SetIsActive(false);
             PathNode.SetIsValid(false);
 
+            if(tutorial)
+                Tutorial.Inst().TurnOn();
             StartTurn();
             return true;
         }
@@ -247,6 +250,13 @@ namespace Expanze
         private void PrepareCampaignSetup(XmlDocument xDoc)
         {
             SetDefaultSettings();
+            XmlNodeList nameNode = xDoc.GetElementsByTagName("tutorial");
+            if (nameNode.Count > 0)
+            {
+                Tutorial.Inst().Initialize(nameNode[0].InnerText + ".xml");
+                tutorial = true;
+            }
+
             XmlNodeList points = xDoc.GetElementsByTagName("points")[0].ChildNodes;
             foreach (XmlNode goal in points)
             {
@@ -1211,6 +1221,8 @@ namespace Expanze
             }
 
             spriteBatch.End();
+
+            Tutorial.Inst().Draw(Layer.Layer1);
         }
 
         public void DrawGeneticInfo()

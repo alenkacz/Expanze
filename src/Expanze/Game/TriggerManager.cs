@@ -19,6 +19,7 @@ namespace Expanze
         TownUnchoose,
         HexaBuild,
         BuildingBuild,
+        MessageClose,
         Count
     }
 
@@ -49,11 +50,15 @@ namespace Expanze
         private static TriggerManager triggerManager;
         private List<Trigger>[] observers;
         private List<TriggerPair> dettachList;
+        private List<TriggerPair> attachList;
+        bool inForEach;
 
         private TriggerManager()
         {
             observers = new List<Trigger>[(int) TriggerType.Count];
             dettachList = new List<TriggerPair>();
+            attachList = new List<TriggerPair>();
+            inForEach = false;
 
             for(int loop1 = 0; loop1 < observers.Length; loop1++)
                 observers[loop1] = new List<Trigger>();
@@ -69,26 +74,44 @@ namespace Expanze
 
         public void TurnTrigger(TriggerType type, int restriction1)
         {
+            inForEach = true;
             foreach (Trigger observer in observers[(int)type])
             {
                 if(observer.Restriction1() == restriction1)
                     observer.TurnOn();
             }
+            inForEach = false;
             Dettach();
+            Attach();
         }
 
         public void TurnTrigger(TriggerType type)
         {
+            inForEach = true;
             foreach (Trigger observer in observers[(int)type])
             {
                 observer.TurnOn();
             }
+            inForEach = false;
             Dettach();
+            Attach();
         }
 
         public void Attach(Trigger observer, TriggerType type)
         {
-            observers[(int)type].Add(observer);
+            attachList.Add(new TriggerPair(type, observer));
+            if (!inForEach)
+                Attach();
+        }
+
+        public void Attach()
+        {
+            foreach (TriggerPair pair in attachList)
+            {
+                observers[(int)pair.Type].Add(pair.Observer);
+            }
+
+            attachList.Clear();
         }
 
         private void Dettach()
@@ -104,6 +127,8 @@ namespace Expanze
         public void Dettach(Trigger observer, TriggerType type)
         {
             dettachList.Add(new TriggerPair(type, observer));
+            if (!inForEach)
+                Dettach();
         }
     }
 }

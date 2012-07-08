@@ -71,6 +71,7 @@ namespace Expanze
         {
             if (queue.Count == 0)
             {
+                TriggerManager.Inst().TurnTrigger(TriggerType.MessageClose);
                 messageActive = null;
             }
             else
@@ -79,7 +80,9 @@ namespace Expanze
             timeActive = ACTIVE_LIMIT;
 
             if (!GetIsActive())
+            {
                 InputManager.Inst().ClearActiveState("gamemessage");
+            }
         }
 
         public override void Update(GameTime gameTime)

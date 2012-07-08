@@ -126,7 +126,12 @@ namespace Expanze
 
             MarketComponent.Inst().Initialize();
             MarketComponent.Inst().LoadContent();
-            Tutorial.Inst().Initialize();
+            /*
+            if(Settings.tutorial != null)
+                Tutorial.Inst().Initialize(Settings.tutorial);
+            else
+                Tutorial.Inst().TurnOff();
+             */
 
             InputManager im = InputManager.Inst();
             String stateGame = "game";
@@ -626,7 +631,7 @@ namespace Expanze
                 spriteBatch.End();
             }
 
-            Tutorial.Inst().Draw(gameTime);
+            Tutorial.Inst().Draw(Layer.Layer3);
             GameMaster.Inst().DrawGeneticInfo();
 
             // If the game is transitioning on or off, fade it out to black.

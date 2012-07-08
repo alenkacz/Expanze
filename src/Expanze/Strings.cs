@@ -309,9 +309,9 @@ namespace Expanze
         public static string MESSAGE_DESCRIPTION_MARKET_CHANGE_SOURCES = "Tohle za tamto, jiné za támhle to a můžeš směle nakupovat";
 
         public static string MESSAGE_TITLE_END_GAME = "Konec hry";
-        public static string MESSAGE_DESCRIPTION_END_GAME_WIN = " nejrychleji expandoval a ostatní ho uznali za nejvhodnějšího vládce ostrova.";
-        public static string MESSAGE_DESCRIPTION_END_GAME_LOOSE1 = "Nikdo nevyhrál, všichni prohráli. Nikomu nestačilo ";
-        public static string MESSAGE_DESCRIPTION_END_GAME_LOOSE2 = " kol k zisku dostatečného počtu bodů.";
+        public static string MESSAGE_DESCRIPTION_END_GAME_WIN = ", hráč, který včas splnil všechny úkoly.";
+        public static string MESSAGE_DESCRIPTION_END_GAME_LOOSE1 = "Prohra, hořká prohra. Nestačilo ti ";
+        public static string MESSAGE_DESCRIPTION_END_GAME_LOOSE2 = " kol ke splnění všech úkolů.";
 
         public static string ERROR_NO_SOURCES = "No sources";
         public static string ERROR_NOT_ENOUGHT_FROM_SOURCE = "Not enought from source";

@@ -191,7 +191,7 @@ namespace Expanze
                 SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
                 SpriteFont font;
 
-                String message = "Vítìzství! A prohra jiného v " + GameMaster.Inst().GetTurnNumber() +". kole.";
+                String message = "Statistiky po " + GameMaster.Inst().GetTurnNumber() +". kole.";
 
                 // Center the text in the viewport.
                 font = GameResources.Inst().GetFont(EFont.MedievalBig);
