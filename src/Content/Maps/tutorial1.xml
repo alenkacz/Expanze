@@ -40,6 +40,17 @@
     <pairs>
       <pair>
         <text>Postav žlutě zvýrazněné město</text>
+        <position>
+          <x>0</x>
+          <y>0</y>
+        </position>
+      </pair>
+      <pair>
+        <text>(potřebuješ k tomu celkem 30 kamenní)</text>
+        <position>
+          <x>0</x>
+          <y>30</y>
+        </position>
       </pair>
     </pairs>
     <constraint1>27</constraint1>

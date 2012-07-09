@@ -256,6 +256,11 @@ namespace Expanze
                 Tutorial.Inst().Initialize(nameNode[0].InnerText + ".xml");
                 tutorial = true;
             }
+            else
+            {
+                tutorial = false;
+                Tutorial.Inst().ClearAll();
+            }
 
             XmlNodeList points = xDoc.GetElementsByTagName("points")[0].ChildNodes;
             foreach (XmlNode goal in points)

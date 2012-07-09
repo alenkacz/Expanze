@@ -106,6 +106,14 @@ namespace Expanze
                 tutorial = new Tutorial();
             return tutorial;
         }
+
+        public void ClearAll()
+        {
+            tutorialList.Clear();
+            ClearActiveItem();
+            activeItem = null;
+        }
+
         private void LoadFromXML()
         {
             List<TutorialPair> pairList;
@@ -224,23 +232,28 @@ namespace Expanze
                     case "MessageClose" : tutorialList.Enqueue(new TutorialItem(pairList, TriggerType.MessageClose)); break;
                     case "NextTurn" : tutorialList.Enqueue(new TutorialItem(pairList, TriggerType.NextTurn)); break;
                     case "RoadBuild" : 
-                        pairList[0].World = mapView.GetRoadViewByID(constraint1).World;
+                        for(int loop1 = 0; loop1 < pairList.Count; loop1++)
+                            pairList[loop1].World = mapView.GetRoadViewByID(constraint1).World;
                         tutorialList.Enqueue(new TutorialItem(pairList, TriggerType.RoadBuild, constraint1));
                         break;
                     case "TownBuild":
-                        pairList[0].World = mapView.GetTownViewByID(constraint1).getWorld();
+                        for (int loop1 = 0; loop1 < pairList.Count; loop1++)
+                            pairList[loop1].World = mapView.GetTownViewByID(constraint1).getWorld();
                         tutorialList.Enqueue(new TutorialItem(pairList, TriggerType.TownBuild, constraint1));
                         break;
                     case "TownChoose":
-                        pairList[0].World = mapView.GetTownViewByID(constraint1).getWorld();
+                        for (int loop1 = 0; loop1 < pairList.Count; loop1++)
+                            pairList[loop1].World = mapView.GetTownViewByID(constraint1).getWorld();
                         tutorialList.Enqueue(new TutorialItem(pairList, TriggerType.TownChoose, constraint1));
                         break;
                     case "TownUnchoose":
-                        pairList[0].World = mapView.GetTownViewByID(constraint1).getWorld();
+                        for(int loop1 = 0; loop1 < pairList.Count; loop1++)
+                            pairList[loop1].World = mapView.GetTownViewByID(constraint1).getWorld();
                         tutorialList.Enqueue(new TutorialItem(pairList, TriggerType.TownUnchoose, constraint1));
                         break;
                     case "HexaBuild" :
-                        pairList[0].World = mapView.GetHexaViewByID(constraint1).World;
+                        for (int loop1 = 0; loop1 < pairList.Count; loop1++)
+                            pairList[loop1].World = mapView.GetHexaViewByID(constraint1).World;
                         tutorialList.Enqueue(new TutorialItem(pairList, TriggerType.HexaBuild, constraint1));
                         break;
                     case "BuildingBuild" :
@@ -307,7 +320,7 @@ namespace Expanze
                                 if (containmentType != ContainmentType.Disjoint)
                                 {
                                     Vector3 point3D = GameState.game.GraphicsDevice.Viewport.Project(new Vector3(0.0f, 0.0f, 0.0f), GameState.projection, GameState.view, pair.World);
-                                    TextWrapping.DrawStringOnScreen(pair.Text, font, Settings.colorMainText, Settings.UnScaleW(point3D.X), Settings.UnScaleH(point3D.Y), spriteBatch, 50f);
+                                    TextWrapping.DrawStringOnScreen(pair.Text, font, Settings.colorMainText, Settings.UnScaleW(point3D.X) + pair.Position.X, Settings.UnScaleH(point3D.Y) + pair.Position.Y, spriteBatch, 50f);
                                 }
                             }
                         }
@@ -321,24 +334,7 @@ namespace Expanze
 
         public void TurnOn()
         {
-            if (activeItem != null)
-            {
-                TriggerManager.Inst().Dettach(this, activeItem.NextItem);
-
-                switch (activeItem.NextItem)
-                {
-                    case TriggerType.TownBuild:
-                    case TriggerType.TownChoose:
-                    case TriggerType.TownUnchoose:
-                        TownView.TutorialID = -1;
-                        break;
-                    case TriggerType.RoadBuild:
-                        RoadView.TutorialID = -1;
-                        break;
-                    default:
-                        break;
-                }
-            }
+            ClearActiveItem();
 
             if (tutorialList.Count > 0)
             {
@@ -375,6 +371,28 @@ namespace Expanze
             else
             {
                 activeItem = null;
+            }
+        }
+
+        private void ClearActiveItem()
+        {
+            if (activeItem != null)
+            {
+                TriggerManager.Inst().Dettach(this, activeItem.NextItem);
+
+                switch (activeItem.NextItem)
+                {
+                    case TriggerType.TownBuild:
+                    case TriggerType.TownChoose:
+                    case TriggerType.TownUnchoose:
+                        TownView.TutorialID = -1;
+                        break;
+                    case TriggerType.RoadBuild:
+                        RoadView.TutorialID = -1;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
