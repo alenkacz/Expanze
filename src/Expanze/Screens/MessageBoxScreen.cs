@@ -162,13 +162,14 @@ namespace Expanze
             SpriteFont font = ScreenManager.Font;
 
             // Darken down any other screens that were drawn beneath the popup.
-            ScreenManager.FadeBackBufferToBlack(TransitionAlpha * 2 / 3);
+            ScreenManager.FadeBackBufferToBlack(TransitionAlpha * 9 / 10);
 
             // Center the message text in the viewport.
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
             Vector2 viewportSize = new Vector2(viewport.Width, viewport.Height);
             Vector2 textSize = font.MeasureString(message);
             Vector2 textPosition = (Settings.maximumResolution - textSize) / 2;
+            textPosition.Y -= 40;
 
             // The background includes a border somewhat larger than the text itself.
             const int hPad = 32;
@@ -179,8 +180,8 @@ namespace Expanze
                                                           1000,
                                                           180);
 
-            yesPosition = new Vector2(textPosition.X + 300, textPosition.Y + 80);
-            noPosition = new Vector2(textPosition.X + 600, textPosition.Y + 80);
+            yesPosition = new Vector2(570, textPosition.Y + 80);
+            noPosition = new Vector2(870, textPosition.Y + 80);
 
             // Fade the popup alpha during transitions.
             Color color = Color.BurlyWood * TransitionAlpha;
@@ -188,7 +189,7 @@ namespace Expanze
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Settings.spriteScale);
 
             // Draw the background rectangle.
-            spriteBatch.Draw(gradientTexture, backgroundRectangle, color);
+            //spriteBatch.Draw(gradientTexture, backgroundRectangle, color);
 
             // Draw the message box text.
             spriteBatch.DrawString(font, message, textPosition, color);

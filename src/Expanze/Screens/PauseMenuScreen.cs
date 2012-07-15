@@ -43,7 +43,9 @@ namespace Expanze
             // Add entries to the menu.
             MenuEntries.Add(resumeGameMenuEntry);
             MenuEntries.Add(restartGameMenuEntry);
-            MenuEntries.Add(quitGameMenuEntry);         
+            MenuEntries.Add(quitGameMenuEntry);   
+      
+
         }
 
 
@@ -92,6 +94,12 @@ namespace Expanze
         {
             LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(),
                                                            new MainMenuScreen());
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            ScreenManager.FadeBackBufferToBlack(0.7f);
+            base.Draw(gameTime);
         }
 
 
