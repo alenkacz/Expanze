@@ -80,7 +80,11 @@ namespace Expanze.Gameplay.Map
             this.townID = model.GetTownID();
             townRotation = GameMaster.Inst().GetRandomInt(6);
             this.pickTownColor = new Color(0.0f, 0.0f, 1.0f - townID / 256.0f);
-            this.world = world;
+
+            Matrix rotation;
+            rotation = (townRotation == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (townRotation));
+            this.world = rotation * Matrix.CreateTranslation(new Vector3(0.0f, 0.01f, 0.0f)) * Matrix.CreateScale(0.00032f) * world;
+
             buildingIsBuild = new bool[3];
             for (int loop1 = 0; loop1 < buildingIsBuild.Length; loop1++)
                 buildingIsBuild[loop1] = false;
@@ -113,10 +117,6 @@ namespace Expanze.Gameplay.Map
                 Matrix[] transforms = new Matrix[m.Bones.Count];
                 m.CopyAbsoluteBoneTransformsTo(transforms);
 
-                Matrix rotation;
-                rotation = (townRotation == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (townRotation));
-                Matrix mWorld = rotation * Matrix.CreateTranslation(new Vector3(0.0f, 0.01f, 0.0f)) * Matrix.CreateScale(0.00032f) * world;
-
                 int a = 0;
 
                 Player player = model.GetOwner();
@@ -129,6 +129,7 @@ namespace Expanze.Gameplay.Map
                 {
                     foreach (BasicEffect effect in mesh.Effects)
                     {
+                        effect.Alpha = 1.0f;
                         effect.LightingEnabled = true;
                         effect.DirectionalLight0.Direction = GameState.LightDirection;
                         effect.DirectionalLight0.DiffuseColor = GameState.LightDiffusionColor;
@@ -176,7 +177,7 @@ namespace Expanze.Gameplay.Map
                         }
                             
 
-                        effect.World = transforms[mesh.ParentBone.Index] * mWorld;
+                        effect.World = transforms[mesh.ParentBone.Index] * world;
                         effect.View = GameState.view;
                         effect.Projection = GameState.projection;
                     }
@@ -194,13 +195,13 @@ namespace Expanze.Gameplay.Map
                 if (pickTownID == townID || (pickVars.pickActive && isBuildView))
                 {
                     m = GameResources.Inst().GetShape(GameResources.SHAPE_SPHERE);
-                    mWorld = Matrix.CreateScale(0.0001f) * Matrix.CreateTranslation(new Vector3(0.0f, 0.15f, 0.0f)) * world;
+
                     foreach (ModelMesh mesh in m.Meshes)
                     {
                         foreach (BasicEffect effect in mesh.Effects)
                         {
                             effect.EnableDefaultLighting();
-                            effect.World = transforms[mesh.ParentBone.Index] * mWorld;
+                            effect.World = transforms[mesh.ParentBone.Index] * world;
                             effect.View = GameState.view;
                             effect.Projection = GameState.projection;
                         }
@@ -216,15 +217,13 @@ namespace Expanze.Gameplay.Map
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 
-            Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.04f, 0.0f)) * Matrix.CreateScale(0.22f) * world;
-
             foreach (ModelMesh mesh in m.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
                 {
                     effect.LightingEnabled = true;
                     effect.AmbientLightColor = pickTownColor.ToVector3();
-                    effect.World = transforms[mesh.ParentBone.Index] * mWorld;
+                    effect.World = transforms[mesh.ParentBone.Index] * world;
                     effect.View = GameState.view;
                     effect.Projection = GameState.projection;
                 }
@@ -292,6 +291,15 @@ namespace Expanze.Gameplay.Map
             set
             {
                 tutorialID = value;
+            }
+        }
+
+        internal void DrawShadow(MapView mapView, Matrix shadow)
+        {
+            if (isBuildView)
+            {
+                Model m = GameResources.Inst().GetTownModel();
+                mapView.DrawShadow(m, world, shadow);
             }
         }
     }

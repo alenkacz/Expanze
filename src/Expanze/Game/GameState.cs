@@ -22,8 +22,10 @@ namespace Expanze
         public static Matrix projection;
         public static Vector3 MaterialAmbientColor;
         public static Vector3 LightDirection;
+        public static Vector3 ShadowDirection;
         public static Vector3 LightDiffusionColor;
         public static Vector3 LightSpecularColor;
+        public static float SunHeight;
 
         public static MouseState CurrentMouseState;
         public static MouseState LastMouseState;

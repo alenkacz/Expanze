@@ -265,7 +265,62 @@ namespace Expanze.Gameplay.Map
                     }
                 }
             }
+
+            GameState.game.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+
+            // Draw on screen if 0 is the stencil buffer value   
+            
+            GameState.game.GraphicsDevice.ReferenceStencil = 0;
+            DepthStencilState depthStencilState = new DepthStencilState();
+            depthStencilState.ReferenceStencil = 0;
+            depthStencilState.StencilEnable = true;
+            depthStencilState.StencilFunction = CompareFunction.Equal;
+            depthStencilState.StencilPass = StencilOperation.Increment;
+            GameState.game.GraphicsDevice.DepthStencilState = depthStencilState;
+        
+            GameState.game.GraphicsDevice.Clear(ClearOptions.Stencil, Color.Black, 0, 0);
+
+            Vector3 planeNormal = new Vector3(0, -1, 0);
+            planeNormal.Normalize();
+            Vector3 light = GameState.ShadowDirection;
+            light.Normalize();
+            Matrix shadow = Matrix.CreateShadow(light, new Plane(planeNormal, 0.001f)) * Matrix.CreateTranslation(GameState.ShadowDirection.X / 150.0f, 0, GameState.ShadowDirection.Y / 150.0f);
+
+            for (int i = 0; i < hexaMapView.Length; i++)
+            {
+                for (int j = 0; j < hexaMapView[i].Length; j++)
+                {
+                    if (hexaMapView[i][j] != null)
+                    {
+                        if (hexaMapView[i][j].IsOnScreen())
+                            hexaMapView[i][j].DrawShadow(this, shadow);
+                    }
+                }
+            }
+            GameState.game.GraphicsDevice.DepthStencilState = DepthStencilState.None;
+            GameState.game.GraphicsDevice.BlendState = BlendState.Opaque;
             //DrawWater();
+        }
+
+        public void DrawShadow(Model m, Matrix world, Matrix shadow)
+        {
+            Matrix[] transforms = new Matrix[m.Bones.Count];
+            m.CopyAbsoluteBoneTransformsTo(transforms);
+
+            foreach (ModelMesh mesh in m.Meshes)
+            {
+                foreach (BasicEffect effect in mesh.Effects)
+                {
+                    effect.Alpha = 0.1f + (1.0f - GameState.SunHeight) / 2.0f;
+                    effect.LightingEnabled = true;
+                    effect.AmbientLightColor = Vector3.Zero;
+                    effect.DirectionalLight0.Enabled = false;
+                    effect.World = transforms[mesh.ParentBone.Index] * world * shadow;
+                    effect.View = GameState.view;
+                    effect.Projection = GameState.projection;
+                }
+                mesh.Draw();
+            }
         }
 
         private void DrawWater()

@@ -167,7 +167,7 @@ namespace Expanze.Gameplay.Map
             target = new Vector3(0.0f, 0.0f, 0.0f);
             up = new Vector3(0.1f, 0.8f, 0.0f);
             eye = new Vector3(0.4f, 1.5f, 0.0f);
-            GameState.MaterialAmbientColor = new Vector3(0.2f, 0.2f, 0.2f);
+            GameState.MaterialAmbientColor = new Vector3(0.1f, 0.1f, 0.1f);
             GameState.LightDirection = new Vector3(-1.0f, -0.5f, 0.0f);
             GameState.view = Matrix.CreateLookAt(eye, target, up);
             float aspectRatio = game.GraphicsDevice.Viewport.Width / (float)game.GraphicsDevice.Viewport.Height;
@@ -299,12 +299,19 @@ namespace Expanze.Gameplay.Map
         float lightAngle = 0;
         public void ChangeLight(GameTime gameTime)
         {
-            lightAngle += gameTime.ElapsedGameTime.Milliseconds / 30.0f;
+            lightAngle += gameTime.ElapsedGameTime.Milliseconds / 50.0f;
             if (lightAngle > 360.0f)
                 lightAngle -= 360.0f;
-            GameState.LightDirection = new Vector3(-1.0f, -0.5f, (float) Math.Cos(MathHelper.ToRadians(lightAngle)));
+
+            float tempAngle = lightAngle;
+            if (tempAngle > 180.0f)
+                tempAngle -= 180.0f;
+            GameState.SunHeight = (1.0f - Math.Abs(tempAngle - 90) / 90.0f);
+            GameState.LightDirection = new Vector3(-1.0f, -0.49f - GameState.SunHeight / 5.0f, (float)Math.Cos(MathHelper.ToRadians(lightAngle)) * 1.4f);
+            GameState.ShadowDirection = new Vector3(-1.0f, -0.9f - GameState.SunHeight / 2.0f, GameState.LightDirection.Z);
+            GameState.ShadowDirection.Normalize();
             float tempF = (float) Math.Abs(Math.Cos(MathHelper.ToRadians(lightAngle))) / 4.0f;
-            GameState.LightDiffusionColor = new Vector3(1.0f, 1.0f - tempF, 1.0f - tempF);
+            GameState.LightDiffusionColor = new Vector3(0.99f, 0.99f - tempF, 0.99f - tempF);
             GameState.LightSpecularColor = new Vector3(0.4f, 0.2f, 0.2f);
         }
 

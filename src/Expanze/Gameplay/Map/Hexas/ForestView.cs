@@ -61,6 +61,7 @@ namespace Expanze.Gameplay.Map
                 {
                     foreach (BasicEffect effect in mesh.Effects)
                     {
+                        effect.Alpha = 1.0f;
                         effect.LightingEnabled = true;
                         effect.AmbientLightColor = colorT[loop1];
                         // GameState.MaterialAmbientColor;
@@ -74,6 +75,21 @@ namespace Expanze.Gameplay.Map
                     }
                     mesh.Draw();
                 }
+            }
+        }
+
+        public override void DrawShadow(MapView mapView, Matrix shadow)
+        {
+            base.DrawShadow(mapView, shadow);
+
+            Model m = GameResources.Inst().GetTreeModel(0);
+
+            for (int loop1 = 0; loop1 < translateM.Length; loop1++)
+            {
+                if (model.getTown((CorePlugin.TownPos)(loop1 / 8)).GetBuildingKind(model.GetID()) != BuildingKind.NoBuilding)
+                    continue;
+
+                mapView.DrawShadow(m, objectMatrix[loop1] * world, shadow);
             }
         }
 

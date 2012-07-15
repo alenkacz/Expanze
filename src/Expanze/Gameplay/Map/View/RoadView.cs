@@ -89,7 +89,7 @@ namespace Expanze.Gameplay.Map.View
             this.model = model;
             this.roadID = model.GetRoadID();
             this.pickRoadColor = new Color(0.0f, 1.0f - roadID / 256.0f, 0.0f);
-            this.world = world;
+            this.world = Matrix.CreateTranslation(new Vector3(0.0f, 0.012f, 0.0f)) * Matrix.CreateScale(0.1f) * world;
             pickVars = new PickVariables(pickRoadColor);
             isBuildView = false;
         }
@@ -107,8 +107,6 @@ namespace Expanze.Gameplay.Map.View
                 Matrix[] transforms = new Matrix[m.Bones.Count];
                 m.CopyAbsoluteBoneTransformsTo(transforms);
 
-                Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.01f, 0.0f)) * Matrix.CreateScale(0.08f) * world;
-
                 int a = 0;
 
                 Player player = model.GetOwner();
@@ -120,6 +118,7 @@ namespace Expanze.Gameplay.Map.View
                 {
                     foreach (BasicEffect effect in mesh.Effects)
                     {
+                        effect.Alpha = 1.0f;
                         effect.LightingEnabled = true;
                         effect.DirectionalLight0.Direction = GameState.LightDirection;
                         effect.DirectionalLight0.DiffuseColor = GameState.LightDiffusionColor;
@@ -155,7 +154,7 @@ namespace Expanze.Gameplay.Map.View
                             effect.AmbientLightColor = color / 3.0f;
                         }
 
-                        effect.World = transforms[mesh.ParentBone.Index] * mWorld;
+                        effect.World = transforms[mesh.ParentBone.Index] * world;
                         effect.View = GameState.view;
                         effect.Projection = GameState.projection;
                     }
@@ -171,8 +170,6 @@ namespace Expanze.Gameplay.Map.View
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 
-            Matrix mWorld = Matrix.CreateTranslation(new Vector3(0.0f, 0.03f, 0.0f)) * Matrix.CreateScale(0.25f) * world;
-
             foreach (ModelMesh mesh in m.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
@@ -180,7 +177,7 @@ namespace Expanze.Gameplay.Map.View
                     effect.LightingEnabled = true;
                     effect.DiffuseColor = new Vector3(0.0f, 0.0f, 0.0f);
                     effect.EmissiveColor = pickRoadColor.ToVector3();
-                    effect.World = transforms[mesh.ParentBone.Index] * mWorld;
+                    effect.World = transforms[mesh.ParentBone.Index] * world;
                     effect.View = GameState.view;
                     effect.Projection = GameState.projection;
                 }
@@ -208,6 +205,15 @@ namespace Expanze.Gameplay.Map.View
                                                 Settings.costRoad, true,
                                                 GameResources.Inst().GetHudTexture(HUDTexture.IconRoad)));             
                 }
+            }
+        }
+
+        internal void DrawShadow(MapView mapView, Matrix shadow)
+        {
+            if (isBuildView)
+            {
+                Model m = GameResources.Inst().GetRoadModel();
+                mapView.DrawShadow(m, world, shadow);
             }
         }
     }

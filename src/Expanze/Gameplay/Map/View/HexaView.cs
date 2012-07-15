@@ -323,6 +323,37 @@ namespace Expanze
             }
         }
 
+        public virtual void DrawShadow(MapView mapView, Matrix shadow)
+        {
+            Model m;
+            Matrix tempMatrix;
+
+            for (int loop1 = 0; loop1 < 6; loop1++)
+            {
+                if (townView == null || !townView[loop1].getBuildingIsBuild(model.GetID()))
+                {
+                    continue;
+                }
+
+                m = GetBuildingModel((TownPos)loop1, out tempMatrix);
+
+                if (m == null)
+                    continue;
+
+                mapView.DrawShadow(m, tempMatrix * world, shadow);
+            }
+            
+            if(roadView != null)
+                for (int loop1 = 0; loop1 < roadView.Length; loop1++)
+                    if (model.GetRoadOwner(loop1))
+                        roadView[loop1].DrawShadow(mapView, shadow);
+
+            if(townView != null)
+                for (int loop1 = 0; loop1 < roadView.Length; loop1++)
+                    if (model.GetTownOwner(loop1))
+                        townView[loop1].DrawShadow(mapView, shadow);
+        }
+
         public virtual void Draw(GameTime gameTime)
         {
 
@@ -341,12 +372,13 @@ namespace Expanze
             {
                 foreach (BasicEffect effect in mesh.Effects)
                 {
+                    effect.Alpha = 1.0f;
                     effect.LightingEnabled = true;
                     effect.AmbientLightColor = GameState.MaterialAmbientColor;
                     effect.DirectionalLight0.Direction = GameState.LightDirection;
                     effect.DirectionalLight0.DiffuseColor = GameState.LightDiffusionColor;
                     effect.DirectionalLight0.SpecularColor = GameState.LightSpecularColor;
-                    effect.DirectionalLight0.Enabled = true;
+                    effect.DirectionalLight0.Enabled =  true;
                     effect.World = transforms[mesh.ParentBone.Index] * tempMatrix * world;
                     effect.View = GameState.view;
                     effect.Projection = GameState.projection;
@@ -366,6 +398,60 @@ namespace Expanze
                     townView[loop1].Draw(gameTime);
         }
 
+        private Model GetBuildingModel(TownPos townPos, out Matrix tempMatrix)
+        {
+            Model m;
+            Matrix rotation;
+
+            int intPos = (int)townPos;
+            rotation = (intPos == 4) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * -(intPos - 4));
+            tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
+
+            switch (model.getTown(townPos).GetBuildingKind(model.GetID()))
+            {
+                case BuildingKind.NoBuilding:
+                    m = null;
+                    break;
+                case BuildingKind.SourceBuilding:
+                    switch (kind)
+                    {
+                        case HexaKind.Cornfield:
+                            m = GameResources.Inst().GetBuildingModel(BuildingModel.Mill);
+                            break;
+                        case HexaKind.Forest:
+                            m = GameResources.Inst().GetBuildingModel(BuildingModel.Saw);
+                            break;
+                        case HexaKind.Stone:
+                            int tempPos = (intPos + hexaID) % 6;
+                            m = GameResources.Inst().GetStoneSourceBuildingModel(tempPos);
+                            rotation = (hexaID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaID % 6));
+                            tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
+                            break;
+                        default:
+                            m = GameResources.Inst().GetBuildingModel(BuildingModel.PastureHouse);
+                            //roofID = 0;
+                            break;
+                    }
+                    break;
+                case BuildingKind.FortBuilding:
+                    m = GameResources.Inst().GetBuildingModel(BuildingModel.Fort);
+                    tempMatrix = Matrix.CreateScale(0.00031f) * rotation;
+                    break;
+                case BuildingKind.MarketBuilding:
+                    m = GameResources.Inst().GetBuildingModel(BuildingModel.Market);
+                    break;
+                case BuildingKind.MonasteryBuilding:
+                    m = GameResources.Inst().GetBuildingModel(BuildingModel.Monastery);
+                    tempMatrix = Matrix.CreateScale(0.0052f) * rotation;
+                    break;
+                default:
+                    m = null;
+                    break;
+            }
+
+            return m;
+        }
+
         public virtual void DrawBuildings(GameTime gameTime)
         {
             for (int loop1 = 0; loop1 < 6; loop1++)
@@ -375,55 +461,10 @@ namespace Expanze
                     continue;
                 }
 
+                //int roofID = -1;
+                Matrix tempMatrix;
                 Model m;
-                Matrix rotation;
-
-                rotation = (loop1 == 4) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * -(loop1 - 4));
-                //rotation = Matrix.Identity;
-                Matrix tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
-
-                int roofID = -1;
-                switch(model.getTown((CorePlugin.TownPos)loop1).GetBuildingKind(model.GetID()))
-                {
-                    case BuildingKind.NoBuilding :
-                        m = null;
-                        break;
-                    case BuildingKind.SourceBuilding :
-                        switch (kind)
-                        {
-                            case HexaKind.Cornfield :
-                                m = GameResources.Inst().GetBuildingModel(BuildingModel.Mill);
-                                break;
-                            case HexaKind.Forest :
-                                m = GameResources.Inst().GetBuildingModel(BuildingModel.Saw);
-                                break;
-                            case HexaKind.Stone :
-                                int tempPos = (loop1 + hexaID) % 6;
-                                m = GameResources.Inst().GetStoneSourceBuildingModel(tempPos);
-                                rotation = (hexaID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaID % 6));
-                                tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
-                                break;
-                            default :
-                                m = GameResources.Inst().GetBuildingModel(BuildingModel.PastureHouse);
-                                //roofID = 0;
-                                break;
-                        }
-                        break;
-                    case BuildingKind.FortBuilding :
-                        m = GameResources.Inst().GetBuildingModel(BuildingModel.Fort);
-                        tempMatrix = Matrix.CreateScale(0.00031f) * rotation;
-                        break;
-                    case BuildingKind.MarketBuilding:
-                        m = GameResources.Inst().GetBuildingModel(BuildingModel.Market);
-                        break;
-                    case BuildingKind.MonasteryBuilding:
-                        m = GameResources.Inst().GetBuildingModel(BuildingModel.Monastery);
-                        tempMatrix = Matrix.CreateScale(0.0052f) * rotation;
-                        break;
-                    default :
-                        m = null;
-                        break;
-                }
+                m = GetBuildingModel((TownPos)loop1, out tempMatrix);
                 
                 if(m == null)
                     continue;
@@ -436,14 +477,16 @@ namespace Expanze
                 {
                     foreach (BasicEffect effect in mesh.Effects)
                     {
+                        /*
                         if (a == roofID)
                         {
                             Vector3 color = model.getTown((CorePlugin.TownPos)loop1).GetOwner().GetColor().ToVector3();
                             effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
                             effect.DiffuseColor = color * 0.6f;
                             effect.AmbientLightColor = color * 0.3f;
-                        }
+                        }*/
 
+                        effect.Alpha = 1.0f;
                         effect.LightingEnabled = true;
                         effect.AmbientLightColor = GameState.MaterialAmbientColor;
                         effect.DirectionalLight0.Direction = GameState.LightDirection;
