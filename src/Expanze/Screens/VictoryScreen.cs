@@ -311,9 +311,11 @@ namespace Expanze
                     case PlayerPoints.Ore: points = player.GetCollectSourcesNormal().GetOre(); break;
                     default: points = player.GetPoints()[(int)pointKind]; break;
                 }
-                if (points < 0)
-                    points = 0;
-                spriteBatch.DrawString(font, "" + (goal - points), new Vector2(x + 20, y + 50 * count + 12), Settings.colorMenuText);
+
+                int showPoints = (goal - points);
+                if (showPoints < 0)
+                    showPoints = 0;
+                spriteBatch.DrawString(font, "" + showPoints, new Vector2(x + 20, y + 50 * count + 12), Settings.colorMenuText);
                 count++;
             }
 
