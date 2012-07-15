@@ -62,6 +62,7 @@ namespace Expanze.Gameplay.Map.View
         private Color pickRoadColor;
         private PickVariables pickVars;
         private Matrix world;
+        private Matrix worldShape;
 
         public Matrix World
         {
@@ -90,6 +91,7 @@ namespace Expanze.Gameplay.Map.View
             this.roadID = model.GetRoadID();
             this.pickRoadColor = new Color(0.0f, 1.0f - roadID / 256.0f, 0.0f);
             this.world = Matrix.CreateTranslation(new Vector3(0.0f, 0.012f, 0.0f)) * Matrix.CreateScale(0.1f) * world;
+            worldShape = Matrix.CreateTranslation(new Vector3(0.0f, 0.03f, 0.0f)) * Matrix.CreateScale(0.25f) * world;
             pickVars = new PickVariables(pickRoadColor);
             isBuildView = false;
         }
@@ -177,7 +179,7 @@ namespace Expanze.Gameplay.Map.View
                     effect.LightingEnabled = true;
                     effect.DiffuseColor = new Vector3(0.0f, 0.0f, 0.0f);
                     effect.EmissiveColor = pickRoadColor.ToVector3();
-                    effect.World = transforms[mesh.ParentBone.Index] * world;
+                    effect.World = transforms[mesh.ParentBone.Index] * worldShape;
                     effect.View = GameState.view;
                     effect.Projection = GameState.projection;
                 }

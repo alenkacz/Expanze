@@ -76,6 +76,7 @@ namespace Expanze
         Color                           pickHexaColor;    // color o hexa in render texture
         protected PickVariables         pickVars;
         protected Matrix world;            // wordl position of Hex
+        protected Matrix worldM;
 
         public Matrix World
         {
@@ -118,6 +119,10 @@ namespace Expanze
         public void SetWorld(Matrix m)
         {
             world = m;
+            Matrix rotation;
+            rotation = (hexaRotation == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * hexaRotation);
+            Matrix tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
+            worldM = tempMatrix * world;
         }
 
         public void CreateRoadView(RoadPos pos, Matrix relative)
@@ -340,7 +345,18 @@ namespace Expanze
                 if (m == null)
                     continue;
 
-                mapView.DrawShadow(m, tempMatrix * world, shadow);
+                int banID = -1;
+                if (model.getTown((TownPos)loop1).GetBuildingKind(model.GetID()) == BuildingKind.SourceBuilding)
+                {
+                    if(model.GetKind() == HexaKind.Stone)
+                        banID = 1;
+                    else if (model.GetKind() == HexaKind.Mountains)
+                    {
+                        continue;
+                    }
+                }
+
+                mapView.DrawShadow(m, tempMatrix * world, shadow, banID);
             }
             
             if(roadView != null)
@@ -364,10 +380,6 @@ namespace Expanze
 
             GameState.game.GraphicsDevice.RasterizerState = GameState.rasterizerState;
 
-            Matrix rotation;
-            rotation = (hexaRotation == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * hexaRotation);
-            Matrix tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
-
             foreach (ModelMesh mesh in m.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
@@ -379,7 +391,7 @@ namespace Expanze
                     effect.DirectionalLight0.DiffuseColor = GameState.LightDiffusionColor;
                     effect.DirectionalLight0.SpecularColor = GameState.LightSpecularColor;
                     effect.DirectionalLight0.Enabled =  true;
-                    effect.World = transforms[mesh.ParentBone.Index] * tempMatrix * world;
+                    effect.World = transforms[mesh.ParentBone.Index] * worldM;
                     effect.View = GameState.view;
                     effect.Projection = GameState.projection;
                 }
@@ -422,9 +434,9 @@ namespace Expanze
                             m = GameResources.Inst().GetBuildingModel(BuildingModel.Saw);
                             break;
                         case HexaKind.Stone:
-                            int tempPos = (intPos + hexaID) % 6;
+                            int tempPos = (intPos + hexaRotation) % 6;
                             m = GameResources.Inst().GetStoneSourceBuildingModel(tempPos);
-                            rotation = (hexaID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaID % 6));
+                            rotation = (hexaRotation % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaRotation % 6));
                             tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
                             break;
                         default:

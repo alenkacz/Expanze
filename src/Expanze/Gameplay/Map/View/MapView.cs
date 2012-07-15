@@ -57,6 +57,9 @@ namespace Expanze.Gameplay.Map
                             case HexaKind.Pasture:
                                 hexaMapView[i][j] = new PastureView(hexaMapModel[i][j], i, j);
                                 break;
+                            case HexaKind.Desert:
+                                hexaMapView[i][j] = new DesertView(hexaMapModel[i][j], i, j);
+                                break;
 
                             default:
                                 hexaMapView[i][j] = new HexaView(hexaMapModel[i][j], i, j);
@@ -302,16 +305,20 @@ namespace Expanze.Gameplay.Map
             //DrawWater();
         }
 
-        public void DrawShadow(Model m, Matrix world, Matrix shadow)
+        public void DrawShadow(Model m, Matrix world, Matrix shadow, int banID)
         {
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 
+            int meshNumber = 0;
             foreach (ModelMesh mesh in m.Meshes)
             {
+                if (meshNumber++ == banID)
+                    continue;
+
                 foreach (BasicEffect effect in mesh.Effects)
                 {
-                    effect.Alpha = 0.1f + (1.0f - GameState.SunHeight) / 2.0f;
+                    effect.Alpha = 0.15f + (1.0f - GameState.SunHeight) / 2.0f;
                     effect.LightingEnabled = true;
                     effect.AmbientLightColor = Vector3.Zero;
                     effect.DirectionalLight0.Enabled = false;
@@ -321,6 +328,11 @@ namespace Expanze.Gameplay.Map
                 }
                 mesh.Draw();
             }
+        }
+
+        public void DrawShadow(Model m, Matrix world, Matrix shadow)
+        {
+            DrawShadow(m, world, shadow, -1);
         }
 
         private void DrawWater()

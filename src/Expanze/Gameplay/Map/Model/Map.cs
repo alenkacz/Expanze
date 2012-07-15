@@ -299,7 +299,7 @@ namespace Expanze.Gameplay.Map
         float lightAngle = 0;
         public void ChangeLight(GameTime gameTime)
         {
-            lightAngle += gameTime.ElapsedGameTime.Milliseconds / 50.0f;
+            lightAngle += gameTime.ElapsedGameTime.Milliseconds / 450.0f;
             if (lightAngle > 360.0f)
                 lightAngle -= 360.0f;
 

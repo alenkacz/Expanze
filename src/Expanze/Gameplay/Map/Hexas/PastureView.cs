@@ -42,6 +42,7 @@ namespace Expanze.Gameplay.Map
         Matrix[] scaleM;
         Matrix[] objectMatrix;
         Vector3[] colorT;
+        int stepherds = 0;
 
         public void DrawSheeps(GameTime gameTime)
         {
@@ -50,7 +51,7 @@ namespace Expanze.Gameplay.Map
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 
-            int stepherds = 0;
+            stepherds = 0;
             for (int loop1 = 0; loop1 < 6; loop1++)
             {
                 if (model.getTown((TownPos)loop1).GetBuildingKind(model.GetID()) == BuildingKind.SourceBuilding)
@@ -70,6 +71,7 @@ namespace Expanze.Gameplay.Map
                     {
                         foreach (BasicEffect effect in mesh.Effects)
                         {
+                            effect.Alpha = 1.0f;
                             effect.LightingEnabled = true;
                             effect.AmbientLightColor = colorT[loop1];
                             // GameState.MaterialAmbientColor;
@@ -87,11 +89,57 @@ namespace Expanze.Gameplay.Map
             }
         }
 
+        public override void DrawShadow(MapView mapView, Matrix shadow)
+        {
+            base.DrawShadow(mapView, shadow);
+
+            Model m = GameResources.Inst().GetTreeModel(5);
+            mapView.DrawShadow(m, worldM, shadow);
+
+            if (stepherds == 0)
+                return;
+
+            m = GameResources.Inst().GetTreeModel(1);
+            for (int loop1 = 0; loop1 < translateM.Length; loop1++)
+            {
+                if (loop1 % 3 == 0 && stepherds >= 1 ||
+                   loop1 % 3 == 1 && stepherds >= 3 ||
+                   loop1 % 3 == 2 && stepherds >= 2)
+                {
+                    mapView.DrawShadow(m, objectMatrix[loop1] * world, shadow);
+                }
+            }
+        }
+
+
         public override void DrawBuildings(GameTime gameTime)
         {
             base.DrawBuildings(gameTime);
 
             DrawSheeps(gameTime);
+
+            Model m = GameResources.Inst().GetTreeModel(5);
+            Matrix[] transforms = new Matrix[m.Bones.Count];
+            m.CopyAbsoluteBoneTransformsTo(transforms);
+
+            foreach (ModelMesh mesh in m.Meshes)
+            {
+                foreach (BasicEffect effect in mesh.Effects)
+                {
+                    effect.Alpha = 1.0f;
+                    effect.LightingEnabled = true;
+                    effect.AmbientLightColor = GameState.MaterialAmbientColor;
+                    effect.DirectionalLight0.Direction = GameState.LightDirection;
+                    effect.DirectionalLight0.DiffuseColor = GameState.LightDiffusionColor;
+                    effect.DirectionalLight0.SpecularColor = GameState.LightSpecularColor;
+                    effect.DirectionalLight0.Enabled = true;
+                    effect.World = transforms[mesh.ParentBone.Index] * worldM;
+                    effect.View = GameState.view;
+                    effect.Projection = GameState.projection;
+                }
+                mesh.Draw();
+            }
+
         }
     }
 }

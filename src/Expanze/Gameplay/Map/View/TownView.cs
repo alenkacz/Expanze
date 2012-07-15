@@ -66,6 +66,8 @@ namespace Expanze.Gameplay.Map
         private PickVariables pickVars;
         private TownModel model;
         private Matrix world;
+        private Matrix worldShape;
+        private Matrix worldSphere;
 
         private static int tutorialID;
 
@@ -84,6 +86,8 @@ namespace Expanze.Gameplay.Map
             Matrix rotation;
             rotation = (townRotation == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (townRotation));
             this.world = rotation * Matrix.CreateTranslation(new Vector3(0.0f, 0.01f, 0.0f)) * Matrix.CreateScale(0.00032f) * world;
+            this.worldShape = Matrix.CreateTranslation(new Vector3(0.0f, 0.04f, 0.0f)) * Matrix.CreateScale(0.22f) * world;
+            this.worldSphere = Matrix.CreateScale(0.0001f) * Matrix.CreateTranslation(new Vector3(0.0f, 0.15f, 0.0f)) * world;
 
             buildingIsBuild = new bool[3];
             for (int loop1 = 0; loop1 < buildingIsBuild.Length; loop1++)
@@ -201,7 +205,7 @@ namespace Expanze.Gameplay.Map
                         foreach (BasicEffect effect in mesh.Effects)
                         {
                             effect.EnableDefaultLighting();
-                            effect.World = transforms[mesh.ParentBone.Index] * world;
+                            effect.World = transforms[mesh.ParentBone.Index] * worldSphere;
                             effect.View = GameState.view;
                             effect.Projection = GameState.projection;
                         }
@@ -223,7 +227,7 @@ namespace Expanze.Gameplay.Map
                 {
                     effect.LightingEnabled = true;
                     effect.AmbientLightColor = pickTownColor.ToVector3();
-                    effect.World = transforms[mesh.ParentBone.Index] * world;
+                    effect.World = transforms[mesh.ParentBone.Index] * worldShape;
                     effect.View = GameState.view;
                     effect.Projection = GameState.projection;
                 }

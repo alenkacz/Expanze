@@ -1,4 +1,4 @@
-
+﻿
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +8,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Expanze.Gameplay.Map
 {
-    class CornfieldView : HexaView
+    class DesertView : HexaView
     {
-        public CornfieldView(HexaModel model, int x, int y) : base(model, x, y)
+        public DesertView(HexaModel model, int x, int y)
+            : base(model, x, y)
         {
         }
 
@@ -19,9 +20,7 @@ namespace Expanze.Gameplay.Map
             base.DrawShadow(mapView, shadow);
 
             Model m;
-            m = GameResources.Inst().GetTreeModel(3);
-            mapView.DrawShadow(m, worldM, shadow);
-            m = GameResources.Inst().GetTreeModel(4);
+            m = GameResources.Inst().GetTreeModel(2);
             mapView.DrawShadow(m, worldM, shadow);
         }
 
@@ -29,9 +28,8 @@ namespace Expanze.Gameplay.Map
         {
             base.DrawBuildings(gameTime);
 
-            Model[] models = new Model[2];
-            models[0] = GameResources.Inst().GetTreeModel(3);
-            models[1] = GameResources.Inst().GetTreeModel(4);
+            Model[] models = new Model[1];
+            models[0] = GameResources.Inst().GetTreeModel(2);
 
             foreach (Model m in models)
             {
