@@ -46,9 +46,13 @@ namespace AIEasy
 
             List<ITreeNode> specialBuildingBuildList;
             specialBuildingBuildList = new List<ITreeNode>();
-            specialBuildingBuildList.Add(MakeBuildMarketTree());
-            specialBuildingBuildList.Add(MakeBuildMonasteryTree());
-            specialBuildingBuildList.Add(MakeBuildFortTree());
+
+            if (map.CanBuildBuildingInTown(0, 0, BuildingKind.MarketBuilding) != BuildingBuildError.Ban)
+                specialBuildingBuildList.Add(MakeBuildMarketTree());
+            if (map.CanBuildBuildingInTown(0, 0, BuildingKind.MonasteryBuilding) != BuildingBuildError.Ban)
+                specialBuildingBuildList.Add(MakeBuildMonasteryTree());
+            if (map.CanBuildBuildingInTown(0, 0, BuildingKind.FortBuilding) != BuildingBuildError.Ban)
+                specialBuildingBuildList.Add(MakeBuildFortTree());
 
             RandomNodeMultiple specialBuildingBuild = new RandomNodeMultiple(specialBuildingBuildList, EA, this);
             DecisionBinaryNode isThatHexaMountain = new DecisionBinaryNode(EA, specialBuildingBuild, () => { return activeState.activeTown.GetIHexa(activeState.activeTownPos).GetKind() == HexaKind.Mountains; });
@@ -203,7 +207,7 @@ namespace AIEasy
 
             DecisionBinaryNode hasSourcesLess16 = new DecisionBinaryNode(canHaveSourcesForFort, EA, () => activeState.activeTown.GetIHexa(activeState.activeTownPos).GetStartSource() <= 16);
 
-            DecisionBinaryNode hasPointsMore18 = new DecisionBinaryNode(hasSourcesLess16, EA, () => { return map.GetPlayerMe().GetPoints() >= 18; });
+            DecisionBinaryNode hasPointsMore18 = new DecisionBinaryNode(hasSourcesLess16, EA, () => { return true; });
             
             return hasPointsMore18;
         }

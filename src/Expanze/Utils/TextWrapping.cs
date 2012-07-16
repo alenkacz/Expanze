@@ -15,6 +15,20 @@ namespace Expanze.Utils
             GameState.spriteBatch.DrawString(font, text, new Vector2(x + ((width - textWidth) / 2), y), color);
         }
 
+        public static void DrawStringOnScreen(String text, SpriteFont font, Color color, float x, float y, SpriteBatch spriteBatch, float border)
+        {
+            Vector2 size = font.MeasureString(text);
+
+            if (x + size.X + border > Settings.maximumResolution.X)
+                x = Settings.maximumResolution.X - size.X - border;
+
+            if (y + size.Y + border > Settings.maximumResolution.Y)
+                y = Settings.maximumResolution.Y - size.Y - border;
+
+            spriteBatch.DrawString(font, text, new Vector2(x - 3, y - 2), Color.Black);
+            spriteBatch.DrawString(font, text, new Vector2(x, y), color);
+        }
+
         public static void DrawStringIntoRectangle(String text, SpriteFont font, Color color, float x, float y, float width)
         {
             String textCopy = text;

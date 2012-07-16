@@ -111,27 +111,27 @@ namespace Expanze.Gameplay
             win.Show(mod, Strings.PROMPT_TITLE_WANT_TO_BUILD_MARKET, true);
             if(owner.GetMarketLicence(SourceKind.Corn) == LicenceKind.NoLicence)
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, this, Strings.PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_CORN_1, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_CORN_1, Settings.costMarketCorn1, true, res.GetHudTexture(HUDTexture.IconCorn1)));
-            else if (owner.GetMarketLicence(SourceKind.Corn) == LicenceKind.FirstLicence)
+            else if (owner.GetMarketLicence(SourceKind.Corn) == LicenceKind.FirstLicence && !Settings.banSecondLicence)
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 0, this, Strings.PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_CORN_2, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_CORN_2, Settings.costMarketCorn2, true, res.GetHudTexture(HUDTexture.IconCorn2)));
 
             if (owner.GetMarketLicence(SourceKind.Meat) == LicenceKind.NoLicence)
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 1, this, Strings.PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_MEAT_1, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_MEAT_1, Settings.costMarketMeat1, true, res.GetHudTexture(HUDTexture.IconMeat1)));
-            else if (owner.GetMarketLicence(SourceKind.Meat) == LicenceKind.FirstLicence)
+            else if (owner.GetMarketLicence(SourceKind.Meat) == LicenceKind.FirstLicence && !Settings.banSecondUpgrade)
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 1, this, Strings.PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_MEAT_2, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_MEAT_2, Settings.costMarketMeat2, true, res.GetHudTexture(HUDTexture.IconMeat2)));
 
             if (owner.GetMarketLicence(SourceKind.Stone) == LicenceKind.NoLicence)
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 2, this, Strings.PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_STONE_1, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_STONE_1, Settings.costMarketStone1, true, res.GetHudTexture(HUDTexture.IconStone1)));
-            else if (owner.GetMarketLicence(SourceKind.Stone) == LicenceKind.FirstLicence)
+            else if (owner.GetMarketLicence(SourceKind.Stone) == LicenceKind.FirstLicence && !Settings.banSecondUpgrade)
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 2, this, Strings.PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_STONE_2, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_STONE_2, Settings.costMarketStone2, true, res.GetHudTexture(HUDTexture.IconStone2)));
 
             if (owner.GetMarketLicence(SourceKind.Wood) == LicenceKind.NoLicence)
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 3, this, Strings.PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_WOOD_1, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_WOOD_1, Settings.costMarketWood1, true, res.GetHudTexture(HUDTexture.IconWood1)));
-            else if (owner.GetMarketLicence(SourceKind.Wood) == LicenceKind.FirstLicence)
+            else if (owner.GetMarketLicence(SourceKind.Wood) == LicenceKind.FirstLicence && !Settings.banSecondUpgrade)
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 3, this, Strings.PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_WOOD_2, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_WOOD_2, Settings.costMarketWood2, true, res.GetHudTexture(HUDTexture.IconWood2)));
 
             if (owner.GetMarketLicence(SourceKind.Ore) == LicenceKind.NoLicence)
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 4, this, Strings.PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_ORE_1, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_ORE_1, Settings.costMarketOre1, true, res.GetHudTexture(HUDTexture.IconOre1)));
-            else if (owner.GetMarketLicence(SourceKind.Ore) == LicenceKind.FirstLicence)
+            else if (owner.GetMarketLicence(SourceKind.Ore) == LicenceKind.FirstLicence && !Settings.banSecondUpgrade)
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 4, this, Strings.PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_ORE_2, Strings.PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_ORE_2, Settings.costMarketOre2, true, res.GetHudTexture(HUDTexture.IconOre2)));
 
             if (win.GetItemCount() == 0)
@@ -198,6 +198,10 @@ namespace Expanze.Gameplay
                 case LicenceKind.FirstLicence: upgradeKind = UpgradeKind.SecondUpgrade; break;
                 default: upgradeKind = UpgradeKind.NoUpgrade; break;
             }
+
+            if (upgradeKind == UpgradeKind.SecondUpgrade &&
+               Settings.banSecondLicence)
+                return MarketError.BanSecondLicence;
 
             BuyingUpgradeError error = GameState.map.GetMapController().CanBuyUpgradeInSpecialBuilding(townID, hexaID, upgradeKind, (int)source);
 

@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<tutorial>
+  <tutorialItem>
+    <trigger>MessageClose</trigger>
+    <pairs>
+      <pair><text>Vítej v Expanzi!</text></pair>
+      <pair><text>Tvým úkolem na této mapě je postavit dalších 7 cest. 2 už máš, tedy jich potřebuješ celkem 9.</text></pair>
+      <pair><text>Pokrok hrou znázorňuje symbol cesty v pravém horním rohu.</text></pair>
+      <pair><text>Číslo nahoře uprostřed udává, kolik kol ti zbývá do konce splnění úkolu. Nestihneš-li to, prohráváš.</text></pair>
+      <pair><text>Ale neboj se. Na této mapě ti poradím, jak vše včas stihnout.</text></pair>    
+      <pair><text>Máš málo surovin. Klikni na další kolo, nějaké suroviny získáš.</text></pair>    
+    </pairs>
+  </tutorialItem>
+  
+  <tutorialItem>
+    <trigger>NextTurn</trigger>
+    <pairs>
+      <pair>
+        <text>Tlačítko pro další kolo</text>
+        <position>
+          <x>1300</x>
+          <y>800</y>
+        </position>
+      </pair>
+    </pairs>
+  </tutorialItem>
+
+  <tutorialItem>
+    <trigger>RoadBuild</trigger>
+    <pairs>
+      <pair>
+        <text>Postav žlutě zvýrazněnou cestu</text>
+      </pair>
+    </pairs>
+    <constraint1>34</constraint1>
+  </tutorialItem>
+
+  <tutorialItem>
+    <trigger>TownBuild</trigger>
+    <pairs>
+      <pair>
+        <text>Postav žlutě zvýrazněné město</text>
+        <position>
+          <x>0</x>
+          <y>0</y>
+        </position>
+      </pair>
+      <pair>
+        <text>(potřebuješ k tomu celkem 30 rudy)</text>
+        <position>
+          <x>0</x>
+          <y>30</y>
+        </position>
+      </pair>
+    </pairs>
+    <constraint1>27</constraint1>
+  </tutorialItem>
+
+  <tutorialItem>
+    <trigger>TownChoose</trigger>
+    <pairs>
+      <pair>
+        <text>Označ město</text>
+      </pair>
+    </pairs>
+    <constraint1>27</constraint1>
+  </tutorialItem>
+
+  <tutorialItem>
+    <trigger>HexaBuild</trigger>
+    <pairs>
+      <pair>
+        <text>Zde postav lom na kamenní</text>
+      </pair>
+    </pairs>
+    <constraint1>10</constraint1>
+  </tutorialItem>
+
+  <tutorialItem>
+    <trigger>BuildingBuild</trigger>
+    <pairs>
+      <pair>
+        <text></text>
+      </pair>
+    </pairs>
+    <constraint1>1</constraint1>
+  </tutorialItem>
+  
+  <tutorialItem>
+    <trigger>MessageClose</trigger>
+    <pairs>
+      <pair><text>Konec tutoriálu</text></pair>
+      <pair><text>Teď už víš vše, abys dokázal vyhrát na této mapě. Hodně štěstí Ti přeji.</text></pair>
+    </pairs>
+  </tutorialItem>
+</tutorial>

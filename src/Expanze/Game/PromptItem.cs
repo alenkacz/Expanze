@@ -38,9 +38,9 @@ namespace Expanze
             this.showZeroSources = showZeroSources;
         }
 
-        public virtual void DrawIcon(Vector2 iconPosition)
+        public virtual void DrawIcon(Vector2 iconPosition, bool isMouseOver)
         {
-            GameState.spriteBatch.Draw(getIcon(), iconPosition, Color.White);
+            GameState.spriteBatch.Draw(getIcon(), iconPosition, (isMouseOver) ? Settings.colorHoverItem : Settings.colorPassiveItem);
         }
 
         public virtual void Execute() // what should be done if someone click on "buy/ok" button

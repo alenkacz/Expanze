@@ -144,7 +144,7 @@ namespace Expanze
 #endif
 
             // Draw the selected entry in yellow, otherwise white.
-            Color color = isSelected ? Color.Yellow : Color.White;
+            Color color = isSelected ? Color.Yellow : Color.BurlyWood;
 
 
             float scale = 1;

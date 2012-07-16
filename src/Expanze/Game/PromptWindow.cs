@@ -36,6 +36,9 @@ namespace Expanze
         Mod mod;
         bool showIcons;
         int activeItem;
+        int hoverItem;
+        bool hoverYes;
+        bool hoverNo;
         String title;
         List<PromptItem> itemList;
         List<PickVariables> itemPick;
@@ -108,6 +111,9 @@ namespace Expanze
 
             active = true;
             activeItem = 0;
+            hoverItem = -1;
+            hoverNo = false;
+            hoverYes = false;
 
             InputManager.Inst().SetActiveState("gamewindow");
         }
@@ -146,6 +152,10 @@ namespace Expanze
         {
             if (active)
             {
+                hoverItem = -1;
+                hoverYes = false;
+                hoverNo = false;
+
                 Map.SetPickVariables(c == noPick.pickColor, noPick);
                 Map.SetPickVariables(c == yesPick.pickColor, yesPick);
 
@@ -156,9 +166,12 @@ namespace Expanze
                     {
                         activeItem = loop1;
                     }
+
+                    if (itemPick[loop1].pickActive)
+                        hoverItem = loop1;
                 }
 
-                if (mod == Mod.Buyer && InputManager.Inst().GetGameAction("gamewindow", "changesources").IsPressed())
+                if (mod == Mod.Buyer && InputManager.Inst().GetGameAction("gamewindow", "changesources").IsPressed() && MarketComponent.Inst().IsOpen)
                 {
                     GameMaster.Inst().ChangeSourcesFor((SourceAll) itemList[activeItem].getCost());
                 }
@@ -188,6 +201,12 @@ namespace Expanze
                     if (activeItem >= itemList.Count)
                         activeItem = itemList.Count - 1;
                 }
+
+                if (yesPick.pickActive)
+                    hoverYes = true;
+                else if (noPick.pickActive)
+                    hoverNo = true;
+
 
                 if (yesPick.pickNewPress || InputManager.Inst().GetGameAction("gamewindow", "confirm").IsPressed())
                 {
@@ -231,13 +250,13 @@ namespace Expanze
                     if (drawingPickableAreas)
                         spriteBatch.Draw(pickTextOK, yesPos, yesPick.pickColor);
                     else
-                        spriteBatch.Draw(yes, yesPos, Color.White);
+                        spriteBatch.Draw(yes, yesPos, hoverYes ? Settings.colorHoverItem : Settings.colorPassiveItem);
                 }
 
                 if (drawingPickableAreas)
                     spriteBatch.Draw(pickTextOK, noPos, noPick.pickColor);
                 else
-                    spriteBatch.Draw(no, noPos, Color.White);
+                    spriteBatch.Draw(no, noPos, hoverNo ? Settings.colorHoverItem : Settings.colorPassiveItem);
 
                 if (!drawingPickableAreas)
                 {
@@ -294,7 +313,7 @@ namespace Expanze
                     spriteBatch.Draw(pickTextIcon, iconPosition, itemPick[loop1].pickColor);
                 else
                 {
-                    itemList[loop1].DrawIcon(iconPosition);
+                    itemList[loop1].DrawIcon(iconPosition, hoverItem == loop1 && activeItem != loop1);
                     if (activeItem == loop1 && itemList.Count > 1)
                     {
                         spriteBatch.Draw(GameResources.Inst().GetHudTexture(HUDTexture.IconActive), iconPosition, Color.White);

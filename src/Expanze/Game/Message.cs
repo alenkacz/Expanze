@@ -28,6 +28,7 @@ namespace Expanze
         private MessageItem messageActive;  /// message on the screen
         private Queue<MessageItem> queue;
 
+        private bool hover;
         private bool disabled; /// Can be popup messages?
         private int timeActive;
         private const int ACTIVE_LIMIT = 3200;
@@ -70,6 +71,7 @@ namespace Expanze
         {
             if (queue.Count == 0)
             {
+                TriggerManager.Inst().TurnTrigger(TriggerType.MessageClose);
                 messageActive = null;
             }
             else
@@ -78,7 +80,9 @@ namespace Expanze
             timeActive = ACTIVE_LIMIT;
 
             if (!GetIsActive())
+            {
                 InputManager.Inst().ClearActiveState("gamemessage");
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -143,6 +147,10 @@ namespace Expanze
         {
             Map.SetPickVariables(c == noPick.pickColor, noPick);
 
+            hover = false;
+            if (noPick.pickActive)
+                hover = true;
+
             if ((noPick.pickNewPress || InputManager.Inst().GetGameAction("gamemessage", "close").IsPressed()) &&
                  ACTIVE_LIMIT - timeActive > 200)
             {
@@ -180,7 +188,7 @@ namespace Expanze
                     return;
                 }
                 else
-                    spriteBatch.Draw(no, noPos, Color.White);
+                    spriteBatch.Draw(no, noPos, ((hover && !disabled) ? Settings.colorHoverItem : Settings.colorPassiveItem));
 
                 TextWrapping.DrawStringCentered(messageActive.getTitle(), GameResources.Inst().GetFont(EFont.MedievalBig), Color.LightBlue, bgPos.X, bgPos.Y + 10, background.Width);
                 TextWrapping.DrawStringIntoRectangle(messageActive.getDescription(),

@@ -44,6 +44,7 @@ namespace Expanze
         
         List<GameComponent> gameComponents = new List<GameComponent>();
         List<GuiComponent> guiComponents = new List<GuiComponent>();
+        ButtonComponent marketButton;
 
         bool isAI;
         bool isGameLoaded;
@@ -85,14 +86,26 @@ namespace Expanze
             gameComponents.Add(map);
             gameComponents.Add(PromptWindow.Inst());
             gameComponents.Add(Message.Inst());
-            
-            //gamelogic
-            gMaster.StartGame(map);
 
-            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), new Rectangle(Settings.scaleW((int)(Settings.maximumResolution.X - 80)), Settings.scaleH((int)(Settings.maximumResolution.Y - 80)), Settings.scaleW(60), Settings.scaleH(60)), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(147), Settings.scaleH(141), "nextTurn");
+            //gamelogi
+
+            foreach (GameComponent gameComponent in gameComponents)
+            {
+                gameComponent.Initialize();
+                gameComponent.LoadContent();
+            }
+
+            gMaster.SetMap(map);
+            //gMaster.PrepareCampaignScenario();
+            #if GENETIC
+            GameMaster.Inst().ResetGenetic();
+#endif
+            gMaster.StartGame();
+
+            ButtonComponent changeTurnButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 167), (int)(Settings.maximumResolution.Y - 161), new Rectangle(Settings.scaleW((int)(Settings.maximumResolution.X - 80)), Settings.scaleH((int)(Settings.maximumResolution.Y - 80)), Settings.scaleW(60), Settings.scaleH(60)), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(147), Settings.scaleH(141), "nextTurn", Settings.colorHovorCorner);
             changeTurnButton.Actions += ChangeTurnButtonAction;
             guiComponents.Add(changeTurnButton);
-            ButtonComponent menuHUDButton = new ButtonComponent(ScreenManager.Game, Settings.scaleW(20), Settings.scaleH(20), new Rectangle(Settings.scaleW(20), Settings.scaleH(20), Settings.scaleW(80), Settings.scaleH(80)), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(222), Settings.scaleH(225), "menu_button");
+            ButtonComponent menuHUDButton = new ButtonComponent(ScreenManager.Game, Settings.scaleW(20), Settings.scaleH(20), new Rectangle(Settings.scaleW(10), Settings.scaleH(10), Settings.scaleW(20), Settings.scaleH(20)), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(80), Settings.scaleH(80), "menu_button", Settings.colorHovorCorner);
             menuHUDButton.Actions += MenuButtonAction;
             guiComponents.Add(menuHUDButton);
             MaterialsHUDComponent materialsHUDComp = new MaterialsHUDComponent(ScreenManager.Game, ScreenManager.Game.GraphicsDevice.Viewport.Width / 4, ScreenManager.Game.GraphicsDevice.Viewport.Height - 78, GameResources.Inst().GetFont(EFont.MedievalBig), 757, 148, "suroviny_hud");
@@ -100,15 +113,10 @@ namespace Expanze
             TopPlayerScoreComponent topPlayer = new TopPlayerScoreComponent();
             guiComponents.Add(topPlayer);
             MarketComponent marketHud = MarketComponent.Inst();
-            ButtonComponent newMsg = new ButtonComponent(ScreenManager.Game, Settings.scaleW(30), (int)(Settings.maximumResolution.Y - 176), new Rectangle(Settings.scaleW(30), Settings.scaleH((int)(Settings.maximumResolution.Y - 176)), Settings.scaleW(70), Settings.scaleH(70)), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(151), Settings.scaleH(156), "newmessage");
-            newMsg.Actions += MarketButtonAction;
-            guiComponents.Add(newMsg);
-
-            foreach (GameComponent gameComponent in gameComponents)
-            {
-                gameComponent.Initialize();
-                gameComponent.LoadContent();
-            }
+            marketButton = new ButtonComponent(ScreenManager.Game, Settings.scaleW(30), (int)(Settings.maximumResolution.Y - 176), new Rectangle(Settings.scaleW(30), Settings.scaleH((int)(Settings.maximumResolution.Y - 176)), Settings.scaleW(70), Settings.scaleH(70)), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(151), Settings.scaleH(156), "newmessage", Settings.colorHovorCorner);
+            marketButton.Actions += MarketButtonAction;
+            
+            guiComponents.Add(marketButton);
 
             foreach (GuiComponent guiComponent in guiComponents)
             {
@@ -118,6 +126,12 @@ namespace Expanze
 
             MarketComponent.Inst().Initialize();
             MarketComponent.Inst().LoadContent();
+            /*
+            if(Settings.tutorial != null)
+                Tutorial.Inst().Initialize(Settings.tutorial);
+            else
+                Tutorial.Inst().TurnOff();
+             */
 
             InputManager im = InputManager.Inst();
             String stateGame = "game";
@@ -287,6 +301,7 @@ namespace Expanze
         {
             if (GameMaster.Inst().CanNextTurn())
             {
+                TriggerManager.Inst().TurnTrigger(TriggerType.NextTurn);
                 GameMaster.Inst().NextTurn();
             }
         }
@@ -296,14 +311,14 @@ namespace Expanze
         /// </summary>
         void MarketButtonAction(object sender, PlayerIndexEventArgs e)
         {
+            TriggerManager.Inst().TurnTrigger(TriggerType.MarketOpen);
             MarketWindowOpenClose();
         }
 
         void MarketWindowOpenClose()
         {
             // market can not be opened during first phase of the game - building first towns
-            if (GameMaster.Inst().GetState() == EGameState.StateGame &&
-                !GameMaster.Inst().GetActivePlayer().GetIsAI())
+            if (MarketComponent.Inst().IsOpen)
             {
                 MarketComponent.Inst().SetIsActive(!MarketComponent.Inst().getIsActive());
             }
@@ -346,6 +361,8 @@ namespace Expanze
                 gMaster.Update(gameTime);
                 InputManager.Inst().Update();
 
+                marketButton.Disabled = !MarketComponent.Inst().IsOpen;
+                marketButton.Visible = !Settings.banChangeSources;
                 foreach (GuiComponent guiComponent in guiComponents)
                 {
                     guiComponent.Update(gameTime);
@@ -357,7 +374,7 @@ namespace Expanze
                 {
 
 #if GENETIC || LOG_A_LOT_OF_GAMES
-                    if (gameCount <= 2000)
+                    if (gameCount <= 1000000)
                     {
 #if LOG_A_LOT_OF_GAMES
                         LogWinner();
@@ -444,7 +461,7 @@ namespace Expanze
             if (InputManager.Inst().GetGameAction("gamemessage", "cheatsources").IsPressed())
                 GameMaster.Inst().GetActivePlayer().PayForSomething(new SourceAll(-1000));
             if (InputManager.Inst().GetGameAction("gamemessage", "cheatpoints").IsPressed())
-                GameMaster.Inst().GetActivePlayer().AddPoints(10);
+                GameMaster.Inst().GetActivePlayer().AddPoints(PlayerPoints.Town);
 
 #if GENETIC
             if (InputManager.Inst().GetGameAction("gamemessage", "printgenetic").IsPressed())
@@ -459,7 +476,7 @@ namespace Expanze
 
             Array.Sort(players, delegate(Player p1, Player p2)
             {
-                return p1.GetPoints().CompareTo(p2.GetPoints()); // (user1.Age - user2.Age)
+                return p1.GetPointSum().CompareTo(p2.GetPointSum()); // (user1.Age - user2.Age)
             });
             Array.Reverse(players);
 
@@ -500,7 +517,7 @@ namespace Expanze
                 }
             }
 
-            Logger.Inst().Log(playersACR.ToUpper() + gs.GetMapSizeXML() + gs.GetMapTypeXML() + gs.GetMapWealthXML() + gs.GetPoints() + ".csv", message);
+            Logger.Inst().Log(playersACR.ToUpper() + gs.GetMapSizeXML() + gs.GetMapTypeXML() + gs.GetMapWealthXML() + ".csv", message);
         }
 
         int frames = 0;
@@ -595,13 +612,27 @@ namespace Expanze
                 GameState.debugInfo)
             {
                 spriteBatch.Begin();
-                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), showFrames + " ", new Vector2(12, 12), Color.Black);
-                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), showFrames + " ", new Vector2(10, 10), Color.White);
-                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Turn " + GameMaster.Inst().GetTurnNumber(), new Vector2(10, 60), Color.White);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), showFrames + " ", new Vector2(12, 62), Color.Black);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), showFrames + " ", new Vector2(10, 60), Color.White);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Turn " + GameMaster.Inst().GetTurnNumber(), new Vector2(12,82), Color.Black);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Game " + gameCount, new Vector2(12, 102), Color.Black);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Turn " + GameMaster.Inst().GetTurnNumber(), new Vector2(10, 80), Color.White);
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), "Game " + gameCount, new Vector2(10, 100), Color.White);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeRoad + " road", new Vector2(12, 122), Color.Black);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeRoad + " road", new Vector2(10, 120), Color.White);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeTown + " town", new Vector2(12, 142), Color.Black);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeTown + " town", new Vector2(10, 140), Color.White);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeHexa + " hexa", new Vector2(12, 162), Color.Black);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeHexa + " hexa", new Vector2(10, 160), Color.White);
+                
+                //spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig),  + " R", new Vector2(50, 50), Color.Black);
+                //spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), Settings.activeTown + " T", new Vector2(50, 80), Color.Black);
+
                 spriteBatch.End();
             }
 
+            Tutorial.Inst().Draw(Layer.Layer3);
+            GameMaster.Inst().DrawGeneticInfo();
 
             // If the game is transitioning on or off, fade it out to black.
             if (TransitionPosition > 0 || pauseAlpha > 0)

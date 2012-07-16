@@ -32,12 +32,23 @@ namespace Expanze
         int topMargin = 40;
         Rectangle range;
 
+        ButtonComponent change_button;
         SourceKind toSelectKind = SourceKind.Null;
         SourceKind fromSelectKind = SourceKind.Null;
 
         Dictionary<SourceKind,Texture2D> marketKindsTextures = new Dictionary<SourceKind,Texture2D>();
         Vector2 toIconPosition;
         Vector2 fromIconPosition;
+
+        public bool IsOpen
+        {
+            get
+            {
+                return GameMaster.Inst().GetState() == EGameState.StateGame &&
+                       !GameMaster.Inst().GetActivePlayer().GetIsAI() &&
+                       !Settings.banChangeSources;
+            }
+        }
 
         #endregion
 
@@ -89,7 +100,7 @@ namespace Expanze
 
             fillMarketKindTextures();
 
-            ButtonComponent change_button = new ButtonComponent(Settings.Game, range.Left + 180, (int)(range.Bottom-80), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(104), Settings.scaleH(45), "HUD/OKPromt");
+            change_button = new ButtonComponent(Settings.Game, range.Left + 180, (int)(range.Bottom-80), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(104), Settings.scaleH(45), "HUD/OKPromt");
             change_button.Actions += ChangeButtonAction;
             this.content.Add(change_button);
 
@@ -227,6 +238,7 @@ namespace Expanze
                 }
 
                 toSelectKind = btn.getType();
+                TriggerManager.Inst().TurnTrigger(TriggerType.MarketSecondRow, (int)toSelectKind);
                 marketSlider.setToType(toSelectKind);
             }
             else
@@ -238,6 +250,7 @@ namespace Expanze
                 }
 
                 fromSelectKind = btn.getType();
+                TriggerManager.Inst().TurnTrigger(TriggerType.MarketFirstRow, (int)fromSelectKind);
                 marketSlider.setFromType(fromSelectKind);
                 marketSlider.MoveSliderToStart();
             }
@@ -303,6 +316,8 @@ namespace Expanze
             int convertedFrom = marketSlider.getConvertedFrom();
             int convertedTo = marketSlider.getConvertedTo();
 
+            TriggerManager.Inst().TurnTrigger(TriggerType.MarketChangeSources);
+
             GameMaster.Inst().DoMaterialConversion(fromSelectKind, toSelectKind, GameMaster.Inst().GetActivePlayer(), actualFrom - convertedFrom, convertedTo - actualTo);
             wasActive = false;
         }
@@ -312,6 +327,7 @@ namespace Expanze
         /// </summary>
         void CloseButtonAction(object sender, PlayerIndexEventArgs e)
         {
+            TriggerManager.Inst().TurnTrigger(TriggerType.MarketClose);
             SetIsActive(false);
         }
 
@@ -321,6 +337,12 @@ namespace Expanze
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             base.Update(gameTime);
+
+            if (fromSelectKind == SourceKind.Null ||
+               toSelectKind == SourceKind.Null)
+                change_button.Disabled = true;
+            else
+                change_button.Disabled = false;
 
             foreach (GuiComponent g in content)
             {

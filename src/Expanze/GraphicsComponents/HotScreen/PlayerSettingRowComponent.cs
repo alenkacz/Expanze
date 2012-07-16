@@ -150,7 +150,7 @@ namespace Expanze
 
             Color c;
             if (active)
-                c = Color.White;
+                c = Color.BurlyWood;
             else
                 c = Color.Gray;
 

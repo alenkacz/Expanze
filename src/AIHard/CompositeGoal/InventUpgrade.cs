@@ -47,6 +47,10 @@ namespace AIHard
                 if (source[loop1] > max &&
                     me.GetMonasteryUpgrade((SourceBuildingKind)loop1) != UpgradeKind.SecondUpgrade)
                 {
+                    if (me.GetMonasteryUpgrade((SourceBuildingKind)loop1) == UpgradeKind.FirstUpgrade &&
+                        map.IsBanAction(PlayerAction.InventSecondUpgrade))
+                        continue;
+
                     max = source[loop1];
                     bestKind = (SourceBuildingKind)loop1;
                 }

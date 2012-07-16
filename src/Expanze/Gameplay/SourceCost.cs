@@ -162,6 +162,9 @@ namespace Expanze
 
         public Boolean HasPlayerSources(IPlayer player)
         {
+            if (player == null)
+                return false;
+
             ISourceAll sourcePlayer = player.GetSource();
 
             return sourcePlayer.GetCorn() >= corn &&

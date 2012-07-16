@@ -176,21 +176,32 @@ namespace Expanze
             // the movement slow down as it nears the end).
             float transitionOffset = (float)Math.Pow(TransitionPosition, 2);
 
-            float height = 0;
+            int col = (menuEntries.Count > 6) ? ( (menuEntries.Count > 10) ? 3 : 2) : 1;
+            int entryCol = (menuEntries.Count + 1) / col;
+            float height = menuEntries[1].GetHeight(this) * entryCol;
+
+            /*
             foreach (MenuEntry menuEntry in menuEntries)
             {
                 height += menuEntry.GetHeight(this);
-            }
+            }*/
 
-            Vector2 position = new Vector2(0f, (Settings.maximumResolution.Y - height) / 2.0f + 50.0f);
-
+            Vector2 positionTop = new Vector2(0f, (Settings.maximumResolution.Y - height) / 2.0f + ((menuEntries.Count >=6) ? 70.0f : 70.0f));
+            Vector2 position = positionTop;
             // update each menu entry's location in turn
+
             for (int i = 0; i < menuEntries.Count; i++)
             {
                 MenuEntry menuEntry = menuEntries[i];
+                if (i % entryCol == 0)
+                {
+                    position.Y = positionTop.Y;
+                }
                 
                 // each entry is to be centered horizontally
-                position.X = Settings.maximumResolution.X / 2 - menuEntry.GetWidth(this) / 2;
+                float border = 70.0f;
+                float colWidth = (Settings.maximumResolution.X - 2*border) / col;
+                position.X = border + colWidth / 2 - menuEntry.GetWidth(this) / 2 + i / entryCol * colWidth;
 
                 if (ScreenState == ScreenState.TransitionOn)
                     position.X -= transitionOffset * 256;

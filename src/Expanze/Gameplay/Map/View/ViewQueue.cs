@@ -33,10 +33,10 @@ namespace Expanze.Gameplay.Map
         Queue<ItemQueue> queue; /// queue of player actions
         MapView mapView; /// reference to map
 
-#if GENETIC
+#if  GENETIC
         private int ENQUEUE_TIME = 0; /// Delay time between two actions
 #else
-        private int ENQUEUE_TIME = 1000; /// Delay time between two actions
+        private int ENQUEUE_TIME = 30; /// Delay time between two actions
 #endif
         private int lastEnque;  /// how much time last to new enque from queue
 
@@ -53,16 +53,25 @@ namespace Expanze.Gameplay.Map
         /// </summary>
         public void Clear()
         {
+#if  GENETIC
+
+#else
+            lastEnque = 2 * ENQUEUE_TIME;
+#endif
             queue.Clear();
         }
 
+        public void Add(ItemQueue item)
+        {
+            Add(item, false);
+        }
         /// <summary>
         /// Adds one item to queue
         /// </summary>
         /// <param name="item">Item added to queue</param>
-        public void Add(ItemQueue item)
+        public void Add(ItemQueue item, bool forceIt)
         {
-            if (ENQUEUE_TIME == 0)
+            if (ENQUEUE_TIME == 0 || forceIt)
             {
                 item.Execute();
             } else
@@ -80,7 +89,7 @@ namespace Expanze.Gameplay.Map
 
             lastEnque -= gameTime.ElapsedGameTime.Milliseconds;
 
-            if (queue.Count > 0 && lastEnque <= 0 && !Message.Inst().GetIsActive())
+            if (queue.Count > 0 && lastEnque <= 0)
             {
                 ItemQueue item = queue.Dequeue();
                 item.Execute();

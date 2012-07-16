@@ -1,11 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <map>
   <settings>
+    <name>5. yey map</name>
+    <players>
+      <player>
+        <name>Xi Nao</name>
+        <color>Blue</color>
+        <AI>Human</AI>
+      </player>
+      <player>
+        <name>The One</name>
+        <color>Red</color>
+        <AI>AI Gen</AI>
+        <personality>758; 23; 20; 57;;354; 75;;900; 38; 52; 10;;693; 13; 35; 38; 14;;264; 57;;851; 27; 10; 22;  9; 32;;570; 26; 21; 10;  6; 37;;913; 85;;499; 44;;151; 53;;737; 11;;  5; 15; 23; 62;;813; 81;;682; 41;  6; 53;;805;  1;  8; 45; 46;; 59;  2;;484; 19; 10; 24;  1; 46;;270; 25; 11; 10; 10; 44;;390; 94;;960; 66;;409; 29;;540; 87;;</personality>
+      </player>
+    </players>
 	<points>
-		<WinPoints>3</WinPoints>
         <Town>0</Town>
-        <Road>0</Road>
-        <Fort>1</Fort>
+        <Road>20</Road>
+        <Fort>0</Fort>
         <Monastery>0</Monastery>
         <Market>0</Market>
         <Medal>0</Medal>
@@ -22,6 +35,16 @@
         <FortCapture>0</FortCapture>
         <FortSteal>0</FortSteal>
 	</points>
+	<ban>
+		<Fort>1</Fort>
+        <Monastery>0</Monastery>
+        <Market>0</Market>
+		<FortCapture>1</FortCapture>
+        <FortSteal>1</FortSteal>
+		<FortParade>1</FortParade>
+		<UpgradeLvl2>1</UpgradeLvl2>
+        <MarketLvl2>1</MarketLvl2>
+	</ban>
   </settings>
   <map-definition>
     <row>
@@ -38,7 +61,7 @@
     </row>
     <row>
       <hexa type="water" />
-      <hexa type="mountains" productivity="16" />
+      <hexa type="forest" productivity="24" />
 	  <hexa type="mountains" productivity="16" />
       <hexa type="desert" productivity="0" />
       <hexa type="cornfield" productivity="16" />
@@ -47,18 +70,18 @@
     <row>
 	  <hexa type="space" />
 	  <hexa type="water" />
-      <hexa type="cornfield" productivity="16" />
-      <hexa type="mountains" productivity="16" />
-      <hexa type="cornfield" productivity="16" />
+      <hexa type="cornfield" productivity="20" />
+      <hexa type="mountains" productivity="8" />
+      <hexa type="cornfield" productivity="24" />
       <hexa type="water" />
     </row>
     <row>
 	  <hexa type="space" />
       <hexa type="water" />
       <hexa type="stone" productivity="16" />
-      <hexa type="stone" productivity="16" />
+      <hexa type="pasture" productivity="16" />
 	  <hexa type="forest" productivity="20" />
-      <hexa type="cornfield" productivity="16" />
+      <hexa type="mountains" productivity="16" />
       <hexa type="water" />
     </row>
 	<row>
@@ -66,7 +89,7 @@
 	  <hexa type="space" />
       <hexa type="water" />
 	  <hexa type="water" />
-      <hexa type="pasture" productivity="16" />
+      <hexa type="stone" productivity="20" />
       <hexa type="water" />
       <hexa type="water" />
     </row>

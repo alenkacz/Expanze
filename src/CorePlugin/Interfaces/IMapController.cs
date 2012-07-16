@@ -10,13 +10,18 @@ namespace CorePlugin
                             MCorn1, MMeat1, MStone1, MWood1, MOre1, MCorn2, MMeat2, MStone2, MWood2, MOre2,
                             AParade, AStealSources, ACaptureHexa,
                             Medal}
-    public enum EGameState { StateFirstTown, StateSecondTown, StateGame }
+    public enum EGameState { StateFirstTown, StateSecondTown, StateGame, BeforeGame }
     public enum UpgradeKind { NoUpgrade, FirstUpgrade, SecondUpgrade }
     public enum LicenceKind { NoLicence, FirstLicence, SecondLicence }
     public enum SourceBuildingKind { Mill, Stepherd, Quarry, Saw, Mine, Count} // have to be in this order
+    public enum PlayerAction { BuildMonastery, BuildMarket, BuildFort, BuySecondLicence, InventSecondUpgrade, FortParade, FortCaptureHexa, FortStealSources }
+    public enum PlayerPoints { Town, Road, Market, Fort, Monastery, Quarry, Mine, Stepherd, Mill, Saw, FortParade, FortStealSources, FortCaptureHexa, UpgradeLvl1, UpgradeLvl2, LicenceLvl1, LicenceLvl2, RoadID, TownID, Corn, Meat, Stone, Wood, Ore, Count}
 
     public interface IMapController
     {
+        bool IsBanAction(PlayerAction action);
+        int GetActionPoints(PlayerPoints action);
+
         /// <summary>
         /// If it is possible, it builds town on town place with townID.
         /// </summary>
@@ -160,6 +165,7 @@ namespace CorePlugin
 
         int GetDistance(ITown a, ITown b);
         int GetDistanceToTown(ITown town, IPlayer player);
+        int GetDistanceToRoad(IRoad road, IPlayer player);
         List<IRoad> GetRoadsToTown(ITown town, IPlayer player);
 
         /// <summary>

@@ -62,7 +62,8 @@ namespace Expanze
             windowWidth = screenManager.GraphicsDevice.Viewport.Width;
             windowHeight = screenManager.GraphicsDevice.Viewport.Height;
             columnNumber = GameMaster.Inst().GetTurnNumber();
-            SetRowNumber();
+            if (SetRowNumber())
+                ToNextGraph();
 
             toMenuButton = new ButtonComponent(screenManager.Game, 60, (int)(Settings.maximumResolution.Y - 200), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(79), Settings.scaleH(66), "HUD/hotseat_back");
             toMenuButton.Actions += ToMenu;
@@ -137,7 +138,8 @@ namespace Expanze
         private void ToNextGraph()
         {
             graphKind = (++graphKind) % (int)Statistic.Kind.Count;
-            SetRowNumber();
+            if (SetRowNumber())
+                ToNextGraph();
         }
 
         /// <summary>
@@ -299,11 +301,12 @@ namespace Expanze
         }
         #endregion
 
-        private void SetRowNumber()
+        private bool SetRowNumber()
         {
             int k = this.graphKind;
             int sum;
             int[][] statistic;
+            bool isZero = true;
 
             rowNumber = 2;
             foreach (Player player in GameMaster.Inst().GetPlayers())
@@ -316,6 +319,9 @@ namespace Expanze
                     {
                         if (statistic[k][loop1] > rowNumber)
                             rowNumber = statistic[k][loop1];
+
+                        if (statistic[k][loop1] > 0)
+                            isZero = false;
                     }
                     else
                     {
@@ -323,9 +329,14 @@ namespace Expanze
 
                         if (sum > rowNumber)
                             rowNumber = sum;
+
+                        if (sum > 0)
+                            isZero = false;
                     }
                 }
             }
+
+            return isZero;
         }
     }
 }

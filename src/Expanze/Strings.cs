@@ -14,6 +14,7 @@ namespace Expanze
         public static string MENU_COMMON_YES = "Ano";
         public static string MENU_COMMON_NO = "Ne";
 
+        public static string MENU_MAIN_CAMPAIGN = "Kampaň";
         public static string MENU_MAIN_HOT_SEAT = "Hot seat";
         public static string MENU_MAIN_QUICK_GAME = "Rychlá hra";
         public static string MENU_MAIN_OPTION = "Nastavení";
@@ -112,17 +113,67 @@ namespace Expanze
         public static string HEXA_NAME_CORNFIELD = "Obilné pole";
         public static string HEXA_NAME_DESERT = "Poušť";
 
+        public static string GOAL_CORN_PART1 = "Zvyš výnosy o";
+        public static string GOAL_CORN_PART2 = "jednotek obilí za kolo";
+        public static string GOAL_MEAT_PART1 = "Zvyš výnosy o";
+        public static string GOAL_MEAT_PART2 = "ovcí za kolo";
+        public static string GOAL_STONE_PART1 = "Zlepši těžbu kamene o";
+        public static string GOAL_STONE_PART2 = "";
+        public static string GOAL_WOOD_PART1 = "Zlepši o";
+        public static string GOAL_WOOD_PART2 = "těžbu dřeva";
+        public static string GOAL_ORE_PART1 = "Zlepši výnosy z dolů o";
+        public static string GOAL_ORE_PART2 = "rudy za kolo";
+        public static string GOAL_TOWNID_PART1 = "Zbývá ti postavit";
+        public static string GOAL_TOWNID_PART2 = "ze šedivých měst";
+        public static string GOAL_ROADID_PART1 = "Zbývá ti postavit";
+        public static string GOAL_ROADID_PART2 = "ze šedivých cest";
+        public static string GOAL_TOWN_PART1 = "Založ ještě";
+        public static string GOAL_TOWN_PART2 = "krát město";
+        public static string GOAL_ROAD_PART1 = "Postav ještě";
+        public static string GOAL_ROAD_PART2 = "cest";
+        public static string GOAL_MONASTERY_PART1 = "Postav ještě";
+        public static string GOAL_MONASTERY_PART2 = "krát kláštěr";
+        public static string GOAL_FORT_PART1 = "Postav ještě";
+        public static string GOAL_FORT_PART2 = "krát pevnost";
+        public static string GOAL_MARKET_PART1 = "Zbývá ti postavit";
+        public static string GOAL_MARKET_PART2 = "krát tržiště";
+        public static string GOAL_STEPHERD_PART1 = "Zbývá ti postavit";
+        public static string GOAL_STEPHERD_PART2 = "krát pastevce";
+        public static string GOAL_MINE_PART1 = "Zbývá ti vyhloubit";
+        public static string GOAL_MINE_PART2 = "krát důl na rudu";
+        public static string GOAL_SAW_PART1 = "Postav ještě";
+        public static string GOAL_SAW_PART2 = "krát pilu";
+        public static string GOAL_MILL_PART1 = "Zbývá ti postavit";
+        public static string GOAL_MILL_PART2 = "krát mlýn";
+        public static string GOAL_QUARRY_PART1 = "Vyhlub navíc";
+        public static string GOAL_QUARRY_PART2 = "krát lom na kamenní";
+        public static string GOAL_UPGRADE1_PART1 = "Učenci musí vynaleznout";
+        public static string GOAL_UPGRADE1_PART2 = "krát nové vylepšení prvního stupně";
+        public static string GOAL_UPGRADE2_PART1 = "Vzdělanci musí vynalzenout";
+        public static string GOAL_UPGRADE2_PART2 = "krát vylepšení druhého stupně";
+        public static string GOAL_LICENCE1_PART1 = "Musíš koupit";
+        public static string GOAL_LICENCE1_PART2 = "krát první licenci";
+        public static string GOAL_LICENCE2_PART1 = "Musíš koupit";
+        public static string GOAL_LICENCE2_PART2 = "krát druhou licenci";
+        public static string GOAL_FORT_PARADE_PART1 = "Zbývá ti zorganizovat";
+        public static string GOAL_FORT_PARADE_PART2 = "krát vojenskou přehlídku";
+        public static string GOAL_FORT_CRUSADE_PART1 = "Zbývá ti vyslat";
+        public static string GOAL_FORT_CRUSADE_PART2 = "krát vojenskou výpravu";
+        public static string GOAL_FORT_STEAL_PART1 = "Musíš ještě okrást";
+        public static string GOAL_FORT_STEAL_PART2 = "soupeře";
+        public static string GOAL_FORT_CAPTURE_PART1 = "Zbývá ti obsadit";
+        public static string GOAL_FORT_CAPTURE_PART2 = "krát pole";
 
         public static string ALERT_TITLE_NOT_TOWN_OWNER = "To není tvé město.";
         public static string ALERT_TITLE_BUILDING_IS_BUILD = "Už tu stojí budova.";
 
         public static string PROMT_TITLE_WANT_TO_BUILD_TOWN = "Město";
-        public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_TOWN = "U města můžeš stavět chatrč pastevce, lom, důl, mlýn, pilu, či pevnost, tržiště, klášter.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_TOWN = "U města můžeš postavit spoustu užitečných budov.";
         public static string PROMT_TITLE_WANT_TO_BUILD_ROAD = "Cesta";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_ROAD = "Umožní rozšířit tvé území, stavět nová města na konci cest.";
 
         public static string PROMT_TITLE_WANT_TO_BUILD_MINE = "Důl na rudu";
-        public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_MINE = "Horníci budou pro tebe těžit z dolu rudu. Po vynalezení pokroku z Kláštera lze důl vylepšit, aby těžba byla ještě vyšší.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_MINE = "Horníci budou pro tebe těžit z dolu rudu.";
         public static string PROMPT_TITLE_WANT_TO_UPGRADE_1_MINE = "Vozíky na rudu";
         public static string PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_MINE = "Pořídíš-li horníkům nové vozíky, budou pracovat o 50% lépe.";
         public static string PROMPT_TITLE_WANT_TO_UPGRADE_2_MINE = "Nové helmy";
@@ -190,16 +241,16 @@ namespace Expanze
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_ORE_2 = "S touto listinou můžeš měnit 2 rudy za jednu jinou surovinu.";
 
         public static string PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_CAPTURE = "Obsadit pole";
-        public static string PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_DESTROY_HEXA = "Poničit pole";
+        public static string PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_CRUSADE = "Válečná výprava";
         public static string PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_SOURCES = "Ukrást suroviny";
         public static string PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE = "Armádní přehlídka";
 
-        public static string PROMPT_DESCTIPTION_MESSAGE_FORT_ACTION_PARADE = "Předvedl jsi majestátnou přehlídku, těžce se bude překonávat. Získal jsi 3 body.";
+        public static string PROMPT_DESCTIPTION_MESSAGE_FORT_ACTION_PARADE = "Předvedl jsi majestátnou přehlídku, těžce se bude překonávat. O krok blíž k vítěství.";
 
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_CAPTURE = "Všechny těžební budovy na poli budou dávat suroviny pouze tobě. Při pokusu obsadit stejné pole 2x, bude pole uvolněno.";
-        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_DESTROY_HEXA = "Poničí tebou vybrané pole. (obilné pole, hory, les, pastvinu, či lom) Pole bude vynášet polovinu oproti běžnému stavu.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_CRUSADE = "Tvoji vojáci vyplení dané pole a přinesou z něj kořist. Sníží výnosy pole na polovinu na několik kol.";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES = "Vyšle vojsko, které získá polovinu veškerých zásob soupeře a o ně tě obohatí.";
-        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_PARADE = "Armádní přehlídka ti přinese slávu a zisk 3 bodů.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_PARADE = "Armádní přehlídka ti přinese slávu a přiblíží tě k vítězství.";
 
         public static string PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES_CHOISING_PLAYER = "Chceš aby tento hráč přišel o své suroviny? Zvědové zjistili, že má tolik surovin :";
     
@@ -258,9 +309,9 @@ namespace Expanze
         public static string MESSAGE_DESCRIPTION_MARKET_CHANGE_SOURCES = "Tohle za tamto, jiné za támhle to a můžeš směle nakupovat";
 
         public static string MESSAGE_TITLE_END_GAME = "Konec hry";
-        public static string MESSAGE_DESCRIPTION_END_GAME_WIN = " nejrychleji expandoval a ostatní ho uznali za nejvhodnějšího vládce ostrova.";
-        public static string MESSAGE_DESCRIPTION_END_GAME_LOOSE1 = "Nikdo nevyhrál, všichni prohráli. Nikomu nestačilo ";
-        public static string MESSAGE_DESCRIPTION_END_GAME_LOOSE2 = " kol k zisku dostatečného počtu bodů.";
+        public static string MESSAGE_DESCRIPTION_END_GAME_WIN = ", hráč, který včas splnil všechny úkoly.";
+        public static string MESSAGE_DESCRIPTION_END_GAME_LOOSE1 = "Prohra, hořká prohra. Nestačilo ti ";
+        public static string MESSAGE_DESCRIPTION_END_GAME_LOOSE2 = " kol ke splnění všech úkolů.";
 
         public static string ERROR_NO_SOURCES = "No sources";
         public static string ERROR_NOT_ENOUGHT_FROM_SOURCE = "Not enought from source";
@@ -272,12 +323,20 @@ namespace Expanze
         public static string ERROR_INVALID_HEXA_ID = "Invalid hexa ID";
         public static string ERROR_NO_SOURCE_BUILDING_FOR_DESERT = "No source building for desert";
         public static string ERROR_NO_SPECIAL_BUIDLING_FOR_MOUNTAINS = "No special building for mountains";
+        public static string ERROR_BAN_SECOND_UPGRADE = "In this scenario you cant buy second upgrades";
         public static string ERROR_HAVE_SECOND_UPGRADE = "You already have second upgrade for this source kind";
+        public static string ERROR_BAN_SECOND_LICENCE = "In this scenario you cant buy second licence";
         public static string ERROR_HAVE_SECOND_LICENCE = "You already have second licence for this source kind";
         public static string ERROR_MAX_UPGRADES = "You dont have free slot for upgrade";
         public static string ERROR_MAX_LICENCES = "You dont have free slot for licence";
         public static string ERROR_TOO_FAR_FROM_FORT = "Hexa is too far from any fort";
         public static string ERROR_NO_FORT = "You dont have fort";
+        public static string ERROR_BAN_FORT_CAPTURE_HEXA = "In this scenario you cant capture hexa.";
+        public static string ERROR_BAN_FORT_STEAL_SOURCES = "In this scenario you cant steal sources.";
+        public static string ERROR_BAN_FORT_SHOW_PARADE = "In this scenario you cant show parade.";
+        public static string ERROR_BAN_MARKET = "In this scenario you cant built market.";
+        public static string ERROR_BAN_MONASTERY = "In this scenario you cant built monastery.";
+        public static string ERROR_BAN_FORT = "In this scenario you cant built fort.";
         public static string ERROR_ALREADY_BUILD = "It has been already built";
         public static string ERROR_NO_OWNER = "You are not owner of this";
         public static string ERROR_OTHER_TOWN_IS_TOO_CLOSE = "Other town is too close";

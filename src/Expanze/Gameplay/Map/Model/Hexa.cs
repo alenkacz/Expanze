@@ -81,6 +81,7 @@ namespace Expanze
         public static IFort GetHexaFort() { return hexaFort; }
         public static void SetHexaFort(IFort fort) { hexaFort = fort; }
         public bool GetCaptured() { return captureIs; }
+        public bool GetDestroyed() { return hexaDestroy; }
         public Player GetCapturedPlayer() { return capturePlayer; }
         public IPlayer GetCapturedIPlayer() { return capturePlayer; }
 

@@ -50,6 +50,7 @@ namespace Expanze
             Settings.Game = this;
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 600;
+            graphics.PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8;
             graphics.ApplyChanges();
 
             // Create the screen manager component.

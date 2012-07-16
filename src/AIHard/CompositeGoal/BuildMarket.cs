@@ -70,6 +70,9 @@ namespace AIHard
         {
             List<ITown> towns = map.GetPlayerMe().GetTown();
 
+            if(map.IsBanAction(PlayerAction.BuildMarket))
+                return 0.0f;
+
             if (map.GetTurnNumber() < 3)
                 return 0.0f;
 

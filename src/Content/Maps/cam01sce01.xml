@@ -1,11 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <map>
   <settings>
+    <name>První kroky</name>
+    <tutorial>tutorial1</tutorial>
+    <players>
+      <player>
+        <name>Victoria Murden</name>
+        <color>Red</color>
+        <AI>Human</AI>
+        <towns>
+          <town id="6">
+            <source-building>0</source-building>
+            <source-building>1</source-building>
+            <source-building>2</source-building>
+          </town>
+          <town id="23">
+            <source-building>2</source-building>
+            <source-building>1</source-building>
+            <source-building>0</source-building>
+          </town>
+        </towns>
+        <roads>
+          <id>29</id>
+          <id>30</id>
+        </roads>
+        <source>
+          <ore>28</ore>
+          <meat>50</meat>
+          <stone>80</stone>
+          <wood>0</wood>
+          <corn>40</corn>
+        </source>
+      </player>
+    </players>
 	<points>
-		<WinPoints>3</WinPoints>
         <Town>0</Town>
-        <Road>0</Road>
-        <Fort>1</Fort>
+        <Road>9</Road>
+        <Fort>0</Fort>
         <Monastery>0</Monastery>
         <Market>0</Market>
         <Medal>0</Medal>
@@ -21,7 +52,20 @@
         <Mine>0</Mine>
         <FortCapture>0</FortCapture>
         <FortSteal>0</FortSteal>
+        <turnLimit>20</turnLimit>
 	</points>
+	<ban>
+    <RandomEvents>1</RandomEvents>
+    <ChangeSources>1</ChangeSources>
+		<Fort>1</Fort>
+        <Monastery>1</Monastery>
+        <Market>1</Market>
+		<FortCapture>1</FortCapture>
+        <FortSteal>1</FortSteal>
+		<FortParade>1</FortParade>
+		<UpgradeLvl2>1</UpgradeLvl2>
+        <MarketLvl2>1</MarketLvl2>
+	</ban>
   </settings>
   <map-definition>
     <row>
@@ -29,50 +73,43 @@
       <hexa type="water" />
       <hexa type="water" />
 	  <hexa type="water" />
+	  <hexa type="water" />
+	  <hexa type="water" />
     </row>
 	<row>
       <hexa type="water" />
       <hexa type="pasture" productivity="16" />
       <hexa type="forest" productivity="20" />
-      <hexa type="stone" productivity="16" />
-      <hexa type="water" />
-    </row>
-    <row>
 	  <hexa type="water" />
-      <hexa type="water" />
-      <hexa type="cornfield" productivity="16" />
-      <hexa type="mountains" productivity="16" />
-      <hexa type="water" />
-	  <hexa type="water" />
-    </row>
-    <row>
-      <hexa type="water" />
-      <hexa type="mountains" productivity="16" />
-      <hexa type="forest" productivity="24" />
-      <hexa type="forest" productivity="24" />
-      <hexa type="cornfield" productivity="16" />
-      <hexa type="water" />
-    </row>
-    <row>
-      <hexa type="space" />
-      <hexa type="water" />
       <hexa type="stone" productivity="16" />
-      <hexa type="forest" productivity="16" />
-      <hexa type="pasture" productivity="16" />
+	  <hexa type="stone" productivity="16" />
       <hexa type="water" />
     </row>
     <row>
-      <hexa type="space" />
-      <hexa type="space" />
-      <hexa type="water" />
-      <hexa type="stone" productivity="16" />
-      <hexa type="desert" productivity="0" />
-      <hexa type="water" />
-    </row>
-    <row>
-      <hexa type="space" />
-      <hexa type="space" />
 	  <hexa type="space" />
+      <hexa type="water" />
+      <hexa type="cornfield" productivity="16" />
+      <hexa type="mountains" productivity="20" />
+	  <hexa type="mountains" productivity="20" />
+      <hexa type="water" />
+	  <hexa type="water" />
+    </row>
+    <row>
+	  <hexa type="space" />
+      <hexa type="water" />
+      <hexa type="pasture" productivity="16" />
+      <hexa type="forest" productivity="20" />
+	  <hexa type="water" />
+      <hexa type="stone" productivity="16" />
+	  <hexa type="stone" productivity="16" />
+      <hexa type="water" />
+    </row>
+    <row>
+      <hexa type="space" />
+      <hexa type="space" />
+	  <hexa type="water" />
+	  <hexa type="water" />
+	  <hexa type="water" />
       <hexa type="water" />
       <hexa type="water" />
       <hexa type="water" />

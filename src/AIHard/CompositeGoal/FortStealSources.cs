@@ -49,6 +49,9 @@ namespace AIHard
 
         public double GetDesirability(IPlayer player)
         {
+            if(map.IsBanAction(PlayerAction.FortStealSources))
+                return 0.0f;
+
             if (map.GetPlayerMe().GetBuildingCount(Building.Fort) == 0)
                 return 0.0;
 

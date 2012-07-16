@@ -1,11 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <map>
   <settings>
+    <name>Hexagon</name>
+    <players>
+      <player>
+        <name>Tony Blair</name>
+        <color>Blue</color>
+        <AI>Human</AI>
+      </player>
+      <player>
+        <name>The One</name>
+        <color>Red</color>
+        <AI>AI Gen</AI>
+        <personality>619; 14; 68; 18;;235; 46;;839; 26; 30; 44;;146; 28; 43;  6; 23;;265; 22;; 77;  8; 28;  8; 20; 36;; 94; 30; 19; 16; 22; 13;;  8; 76;;369; 68;;857; 30;; 47; 16;;438; 35; 15; 50;;537; 67;;961; 22; 31; 47;;806; 35; 33;  6; 26;;168; 86;;824; 22;  4; 50; 23;  1;;984; 35; 17; 26; 19;  3;;599; 71;;620; 99;;519; 23;;618; 57;;</personality>
+      </player>
+    </players>
 	<points>
-		<WinPoints>3</WinPoints>
         <Town>0</Town>
         <Road>0</Road>
-        <Fort>1</Fort>
+        <Fort>0</Fort>
         <Monastery>0</Monastery>
         <Market>0</Market>
         <Medal>0</Medal>
@@ -14,14 +27,24 @@
         <MarketLvl1>0</MarketLvl1>
         <UpgradeLvl2>0</UpgradeLvl2>
         <MarketLvl2>0</MarketLvl2>
-        <Mill>0</Mill>
+        <Mill>5</Mill>
         <Stepherd>0</Stepherd>
         <Saw>0</Saw>
         <Quarry>0</Quarry>
         <Mine>0</Mine>
-        <FortCapture>0</FortCapture>
+        <FortCapture>1</FortCapture>
         <FortSteal>0</FortSteal>
 	</points>
+	<ban>
+		<Fort>0</Fort>
+        <Monastery>0</Monastery>
+        <Market>0</Market>
+		<FortCapture>0</FortCapture>
+        <FortSteal>0</FortSteal>
+		<FortParade>0</FortParade>
+		<UpgradeLvl2>0</UpgradeLvl2>
+        <MarketLvl2>0</MarketLvl2>
+	</ban>
   </settings>
   <map-definition>
     <row>

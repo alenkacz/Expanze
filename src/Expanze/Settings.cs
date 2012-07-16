@@ -13,7 +13,7 @@ namespace Expanze
         public static Vector2 maximumResolution = new Vector2(1440,900);
 
         /// indexed by enum Types
-        public static String[] hexaSrcPath = new String[] { "Models/yellowhex", "Models/greenhex", "Models/greyhex", "Models/brownhex", "Models/redhex", "Models/orangehex", "Models/bluehex" };
+        public static String[] hexaSrcPath = new String[] { "Models/yellowhex", "Models/greenhex", "Models/greyhex", "Models/brownhex", "Models/redhex", "Models/orangehex", "Models/simplehex" };
 
         /// resources which get player on start
         public static SourceAll startResources = new SourceAll(100);
@@ -30,8 +30,8 @@ namespace Expanze
         public static SourceAll costMarket = new SourceAll(30, 100, 0, 0, 0);
         public static SourceAll costMonastery = new SourceAll(60, 0, 50, 20, 0);
         // costs of actions
-        public static SourceAll costFortParade = new SourceAll(50, 50, 50, 50, 50);
-        public static SourceAll costFortDestroyHexa = new SourceAll(80, 50, 0, 0, 80);
+        public static SourceAll costFortParade = new SourceAll(50, 50, 50, 80, 0);
+        public static SourceAll costFortCrusade = new SourceAll(80, 0, 0, 80, 80);
         public static SourceAll costFortSources = new SourceAll(80, 50, 50, 80, 0);
         public static SourceAll costFortCapture = new SourceAll(80, 80, 0, 50, 50);
         // costs of market upgrades
@@ -59,15 +59,15 @@ namespace Expanze
 
         public static double captureFreeChance = 0.25;
         // goals
-        public static int maxTurn = 100;
-        public static int[] winPoints = {3, 25, 30};
+        public static int maxTurn = 50;
+        public static int[] winPoints = {10, 15, 20};
         public static int pointsTown = 0; /// points for new town
-        public static int pointsRoad = 0; /// points for new road
+        public static int pointsRoad = 1; /// points for new road
         public static int pointsFort = 0; /// points for new fort
         public static int pointsMonastery = 0; /// points for new monastery
         public static int pointsMarket = 0;    /// points for new market
         public static int pointsMedal = 0;     /// points for medal
-        public static int pointsFortParade = 1; /// points for parade from fort
+        public static int pointsFortParade = 0; /// points for parade from fort
         public static int pointsUpgradeLvl1 = 0;
         public static int pointsMarketLvl1 = 0;
         public static int pointsUpgradeLvl2 = 0;
@@ -79,6 +79,34 @@ namespace Expanze
         public static int pointsMine = 0;
         public static int pointsFortCapture = 0;
         public static int pointsFortSteal = 0;
+        public static int pointsOre = 0;
+        public static int pointsCorn = 0;
+        public static int pointsMeat = 0;
+        public static int pointsStone = 0;
+        public static int pointsWood = 0;
+        public static List<int> goalRoad;
+        public static List<int> goalTown;
+        public static int goalRoadID = 0;
+        public static int goalTownID = 0;
+
+        public static bool banRandomEvents = false;
+        public static bool banChangeSources = false;
+        public static bool banMonastery = false;
+        public static bool banFort = false;
+        public static bool banMarket = false;
+        public static bool banSecondLicence = false;
+        public static bool banSecondUpgrade = false;
+        public static bool banFortCrusade = false;
+        public static bool banFortParade = false;
+        public static bool banFortCaptureHexa = false;
+        public static bool banFortStealSources = false;
+
+        public static Color colorHoverItem = Color.BurlyWood;
+        public static Color colorHovorCorner = Color.AntiqueWhite;
+        public static Color colorPassiveItem = Color.White;
+        public static Color colorDisableItem = Color.LightSlateGray;
+        public static Color colorMainText = Color.AntiqueWhite;
+        public static Color colorMenuText = Color.BurlyWood;
 
         public static Vector2 activeResolution = new Vector2(800,600);
 
@@ -119,6 +147,11 @@ namespace Expanze
             return (int)(h * spriteScale.M22);
         }
 
+        public static int UnScaleH(float h)
+        {
+            return (int)(h / spriteScale.M22);
+        }
+
         //position of player name on the gamescreen
         public static Vector2 playerNamePosition = new Vector2(Settings.maximumResolution.X - scaleW(500), scaleH(15));
         public static Vector2 playerColorPosition = new Vector2(Settings.maximumResolution.X - scaleW(200), scaleH(28));
@@ -132,5 +165,10 @@ namespace Expanze
         {
             Strings.MENU_HOT_SEAT_NO_AI
         };
+
+        // help vars
+        public static int activeTown = 0;
+        public static int activeRoad = 0;
+        public static int activeHexa = 0;
     }
 }

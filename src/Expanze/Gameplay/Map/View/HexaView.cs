@@ -72,10 +72,22 @@ namespace Expanze
         private static int              activeHexaID;     // focused hexa with keys
         private static bool             activeHexaEnter;  // press someone enter when was activeHexaID != -1?
         protected int                   hexaID;           // from counter, useable for picking
+        protected int                   hexaRotation;
         Color                           pickHexaColor;    // color o hexa in render texture
         protected PickVariables         pickVars;
-        protected Matrix                world;            // wordl position of Hex
+        protected Matrix world;            // wordl position of Hex
+        protected Matrix worldM;
+
+        public Matrix World
+        {
+            get { return world; }
+        }
         protected HexaModel model;                        // reference to model
+
+        public int HexaID
+        {
+            get { return model.GetID(); }
+        }
         protected RoadView[] roadView;
         protected TownView[] townView;
         protected HexaKind kind;
@@ -91,6 +103,7 @@ namespace Expanze
             this.model = model;
             this.hexaID = model.GetID();
             this.kind = model.GetKind();
+            hexaRotation = GameMaster.Inst().GetRandomInt(6);
 
             if (kind != HexaKind.Water)
             {
@@ -106,6 +119,10 @@ namespace Expanze
         public void SetWorld(Matrix m)
         {
             world = m;
+            Matrix rotation;
+            rotation = (hexaRotation == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * hexaRotation);
+            Matrix tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
+            worldM = tempMatrix * world;
         }
 
         public void CreateRoadView(RoadPos pos, Matrix relative)
@@ -237,14 +254,30 @@ namespace Expanze
                             break;
                         }
                     }
+
+                    if (drawNumber && pickVars.pickActive)
+                    {
+                        HUDTexture texture = HUDTexture.HUDCount;
+                        switch (kind)
+                        {
+                            case HexaKind.Cornfield: texture = HUDTexture.SmallCorn; break;
+                            case HexaKind.Forest: texture = HUDTexture.SmallWood; break;
+                            case HexaKind.Mountains: texture = HUDTexture.SmallOre; break;
+                            case HexaKind.Pasture: texture = HUDTexture.SmallMeat; break;
+                            case HexaKind.Stone: texture = HUDTexture.SmallStone; break;
+                        }
+                        if(texture != HUDTexture.HUDCount) 
+                          DrawHexaIcon(spriteBatch, posHexaIcon, texture, texture);
+                    }
                 }
                 else
                 {
-                    if (!IsInFortRadius())
+                    if (!IsInFortRadius())// || (GameMaster.Inst().GetFortState() == EFortState.DestroyingHexa && model.GetDestroyed()))
                         drawNumber = false;
                 }
 
-                if (GameMaster.Inst().GetFortState() != EFortState.Normal)
+                if (GameMaster.Inst().GetFortState() != EFortState.Normal)// &&
+                    //(GameMaster.Inst().GetFortState() != EFortState.DestroyingHexa || !model.GetDestroyed()))
                 {
                     HUDTexture textPassive = HUDTexture.DestroyPassive, textActive = HUDTexture.DestroyActive;
                     if (IsInFortRadius())
@@ -295,30 +328,70 @@ namespace Expanze
             }
         }
 
+        public virtual void DrawShadow(MapView mapView, Matrix shadow)
+        {
+            Model m;
+            Matrix tempMatrix;
+
+            for (int loop1 = 0; loop1 < 6; loop1++)
+            {
+                if (townView == null || !townView[loop1].getBuildingIsBuild(model.GetID()))
+                {
+                    continue;
+                }
+
+                m = GetBuildingModel((TownPos)loop1, out tempMatrix);
+
+                if (m == null)
+                    continue;
+
+                int banID = -1;
+                if (model.getTown((TownPos)loop1).GetBuildingKind(model.GetID()) == BuildingKind.SourceBuilding)
+                {
+                    if(model.GetKind() == HexaKind.Stone)
+                        banID = 1;
+                    else if (model.GetKind() == HexaKind.Mountains)
+                    {
+                        //continue;
+                    }
+                }
+
+                mapView.DrawShadow(m, tempMatrix * world, shadow, banID);
+            }
+            
+            if(roadView != null)
+                for (int loop1 = 0; loop1 < roadView.Length; loop1++)
+                    if (model.GetRoadOwner(loop1))
+                        roadView[loop1].DrawShadow(mapView, shadow);
+
+            if(townView != null)
+                for (int loop1 = 0; loop1 < roadView.Length; loop1++)
+                    if (model.GetTownOwner(loop1))
+                        townView[loop1].DrawShadow(mapView, shadow);
+        }
+
         public virtual void Draw(GameTime gameTime)
         {
 
             Model m = GameResources.Inst().GetHexaModel(kind);
+
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 
             GameState.game.GraphicsDevice.RasterizerState = GameState.rasterizerState;
 
-            Matrix rotation;
-            rotation = (hexaID % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaID % 6));
-            Matrix tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
-
             foreach (ModelMesh mesh in m.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
                 {
+                    effect.Alpha = 1.0f;
                     effect.LightingEnabled = true;
                     effect.AmbientLightColor = GameState.MaterialAmbientColor;
                     effect.DirectionalLight0.Direction = GameState.LightDirection;
                     effect.DirectionalLight0.DiffuseColor = GameState.LightDiffusionColor;
                     effect.DirectionalLight0.SpecularColor = GameState.LightSpecularColor;
-                    effect.DirectionalLight0.Enabled = true;
-                    effect.World = transforms[mesh.ParentBone.Index] * tempMatrix * world;
+                    effect.DirectionalLight0.Enabled =  true;
+                    effect.World = transforms[mesh.ParentBone.Index] * worldM;
                     effect.View = GameState.view;
                     effect.Projection = GameState.projection;
                 }
@@ -337,6 +410,60 @@ namespace Expanze
                     townView[loop1].Draw(gameTime);
         }
 
+        private Model GetBuildingModel(TownPos townPos, out Matrix tempMatrix)
+        {
+            Model m;
+            Matrix rotation;
+
+            int intPos = (int)townPos;
+            rotation = (intPos == 4) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * -(intPos - 4));
+            tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
+
+            switch (model.getTown(townPos).GetBuildingKind(model.GetID()))
+            {
+                case BuildingKind.NoBuilding:
+                    m = null;
+                    break;
+                case BuildingKind.SourceBuilding:
+                    switch (kind)
+                    {
+                        case HexaKind.Cornfield:
+                            m = GameResources.Inst().GetBuildingModel(BuildingModel.Mill);
+                            break;
+                        case HexaKind.Forest:
+                            m = GameResources.Inst().GetBuildingModel(BuildingModel.Saw);
+                            break;
+                        case HexaKind.Stone:
+                            int tempPos = (intPos + hexaRotation) % 6;
+                            m = GameResources.Inst().GetStoneSourceBuildingModel(tempPos);
+                            rotation = (hexaRotation % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaRotation % 6));
+                            tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
+                            break;
+                        default:
+                            m = GameResources.Inst().GetBuildingModel(BuildingModel.PastureHouse);
+                            //roofID = 0;
+                            break;
+                    }
+                    break;
+                case BuildingKind.FortBuilding:
+                    m = GameResources.Inst().GetBuildingModel(BuildingModel.Fort);
+                    tempMatrix = Matrix.CreateScale(0.00031f) * rotation;
+                    break;
+                case BuildingKind.MarketBuilding:
+                    m = GameResources.Inst().GetBuildingModel(BuildingModel.Market);
+                    break;
+                case BuildingKind.MonasteryBuilding:
+                    m = GameResources.Inst().GetBuildingModel(BuildingModel.Monastery);
+                    tempMatrix = Matrix.CreateScale(0.0052f) * rotation;
+                    break;
+                default:
+                    m = null;
+                    break;
+            }
+
+            return m;
+        }
+
         public virtual void DrawBuildings(GameTime gameTime)
         {
             for (int loop1 = 0; loop1 < 6; loop1++)
@@ -346,47 +473,10 @@ namespace Expanze
                     continue;
                 }
 
+                //int roofID = -1;
+                Matrix tempMatrix;
                 Model m;
-                Matrix rotation;
-
-                rotation = (loop1 == 4) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * -(loop1 - 4));
-                //rotation = Matrix.Identity;
-                Matrix tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
-
-                int roofID = -1;
-                switch(model.getTown((CorePlugin.TownPos)loop1).GetBuildingKind(model.GetID()))
-                {
-                    case BuildingKind.NoBuilding :
-                        m = null;
-                        break;
-                    case BuildingKind.SourceBuilding :
-                        switch (kind)
-                        {
-                            case HexaKind.Cornfield :
-                                m = GameResources.Inst().GetBuildingModel(BuildingModel.Mill);
-                                break;
-                            case HexaKind.Forest :
-                                m = GameResources.Inst().GetBuildingModel(BuildingModel.Saw);
-                                break;
-                            default :
-                                m = GameResources.Inst().GetBuildingModel(BuildingModel.PastureHouse);
-                                //roofID = 0;
-                                break;
-                        }
-                        break;
-                    case BuildingKind.FortBuilding :
-                        m = GameResources.Inst().GetBuildingModel(BuildingModel.Fort);
-                        break;
-                    case BuildingKind.MarketBuilding:
-                        m = GameResources.Inst().GetBuildingModel(BuildingModel.Market);
-                        break;
-                    case BuildingKind.MonasteryBuilding:
-                        m = GameResources.Inst().GetBuildingModel(BuildingModel.Monastery);
-                        break;
-                    default :
-                        m = null;
-                        break;
-                }
+                m = GetBuildingModel((TownPos)loop1, out tempMatrix);
                 
                 if(m == null)
                     continue;
@@ -399,14 +489,16 @@ namespace Expanze
                 {
                     foreach (BasicEffect effect in mesh.Effects)
                     {
+                        /*
                         if (a == roofID)
                         {
                             Vector3 color = model.getTown((CorePlugin.TownPos)loop1).GetOwner().GetColor().ToVector3();
                             effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
                             effect.DiffuseColor = color * 0.6f;
                             effect.AmbientLightColor = color * 0.3f;
-                        }
+                        }*/
 
+                        effect.Alpha = 1.0f;
                         effect.LightingEnabled = true;
                         effect.AmbientLightColor = GameState.MaterialAmbientColor;
                         effect.DirectionalLight0.Direction = GameState.LightDirection;
@@ -477,6 +569,7 @@ namespace Expanze
                             switch (townView[loop1].getTownModel().GetBuildingKind(hexaID))
                             {
                                 case BuildingKind.NoBuilding:
+                                    TriggerManager.Inst().TurnTrigger(TriggerType.HexaBuild, hexaID);
                                     if (townView[loop1].getTownModel().GetOwner() == GameMaster.Inst().GetActivePlayer())
                                     {
                                         String titleWindow = "";
@@ -530,9 +623,12 @@ namespace Expanze
 
                                         if (kind != HexaKind.Mountains)
                                         {
-                                            PromptWindow.Inst().AddPromptItem(MonasteryModel.GetPromptItemBuildMonastery(townID, hexaID));
-                                            PromptWindow.Inst().AddPromptItem(MarketModel.GetPromptItemBuildMarket(townID, hexaID));
-                                            PromptWindow.Inst().AddPromptItem(FortModel.GetPromptItemBuildFort(townID, hexaID));
+                                            if(!Settings.banMonastery)
+                                                PromptWindow.Inst().AddPromptItem(MonasteryModel.GetPromptItemBuildMonastery(townID, hexaID));
+                                            if (!Settings.banMarket)
+                                                PromptWindow.Inst().AddPromptItem(MarketModel.GetPromptItemBuildMarket(townID, hexaID));
+                                            if (!Settings.banFort)
+                                                PromptWindow.Inst().AddPromptItem(FortModel.GetPromptItemBuildFort(townID, hexaID));
                                         }
                                     }
                                     break;
@@ -547,7 +643,7 @@ namespace Expanze
                     break;
 
                 case EFortState.DestroyingHexa:
-                    if (IsInFortRadius())
+                    if (IsInFortRadius())// && !model.GetDestroyed())
                     {
                         GameState.map.GetMapController().DestroyHexa(hexaID, null);
                         GameMaster.Inst().SetFortState(EFortState.Normal);
@@ -569,6 +665,9 @@ namespace Expanze
             // Water is not pickable
             if (kind == HexaKind.Water)
                 return;
+
+            if (pickVars.pickActive)
+                Settings.activeHexa = hexaID;
 
             for (int loop1 = 0; loop1 < roadView.Length; loop1++)
                 if (model.GetRoadOwner(loop1))

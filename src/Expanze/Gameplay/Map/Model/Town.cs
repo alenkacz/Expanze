@@ -23,7 +23,7 @@ namespace Expanze
         private int townID;             /// unique ID of town place, from 1 to counter
         public static int counter = 0;  /// how many town places are on the map
         private PathNode pathNode;      /// node used for finding path to town
-
+        private bool goalTown;          /// in campaign, is it goal to build it?
         public int GetTownID() { return townID; }
         public bool GetIsBuild() { return isBuild; }
         public Player GetOwner() { return playerOwner; }
@@ -136,9 +136,9 @@ namespace Expanze
                 {
                     SourceBuildingModel tempBuilding = (SourceBuildingModel) building[loop1];
                     float multiply = (tempBuilding.GetUpgrade() == UpgradeKind.SecondUpgrade) ? 2.0f : (tempBuilding.GetUpgrade() == UpgradeKind.FirstUpgrade) ? 1.5f : 1.0f;
-                    
-                    amountNormal = hexaNeighbour[loop1].GetCurrentSource();
-                    amountNow = (int)(amountNormal * multiply);
+
+                    amountNormal = (int) (hexaNeighbour[loop1].GetStartSource() * multiply);
+                    amountNow = (int)(hexaNeighbour[loop1].GetCurrentSource() * multiply);
                     
                     if (player == hexaNeighbour[loop1].GetCapturedPlayer() ||
                         (player == playerOwner && !hexaNeighbour[loop1].GetCaptured()))
@@ -180,7 +180,7 @@ namespace Expanze
         public void BuildTown(Player player)
         {
             playerOwner = player;
-            player.AddPoints(Settings.pointsTown);
+            player.AddPoints(PlayerPoints.Town);
             player.AddBuilding(Building.Town);
             player.AddTown(this);
             isBuild = true;
@@ -377,21 +377,21 @@ namespace Expanze
                     MarketModel marketModel = new MarketModel(playerOwner, townID, hexaNeighbour[pos].GetID());
                     building[pos] = marketModel;
                     playerOwner.AddBuilding(Building.Market);
-                    playerOwner.AddPoints(Settings.pointsMarket);
+                    playerOwner.AddPoints(PlayerPoints.Market);
                     playerOwner.AddMarket(marketModel);
                     break;
                 case BuildingKind.MonasteryBuilding :
                     MonasteryModel monasteryModel = new MonasteryModel(playerOwner, townID, hexaNeighbour[pos].GetID());
                     building[pos] = monasteryModel;
                     playerOwner.AddBuilding(Building.Monastery);
-                    playerOwner.AddPoints(Settings.pointsMonastery);
+                    playerOwner.AddPoints(PlayerPoints.Monastery);
                     playerOwner.AddMonastery(monasteryModel);
                     break;
                 case BuildingKind.FortBuilding :
                     FortModel fortModel = new FortModel(playerOwner, townID, hexaNeighbour[pos].GetID());
                     building[pos] = fortModel;
                     playerOwner.AddBuilding(Building.Fort);
-                    playerOwner.AddPoints(Settings.pointsFort);
+                    playerOwner.AddPoints(PlayerPoints.Fort);
                     playerOwner.AddFort(fortModel);
                     break;
             }
@@ -452,6 +452,17 @@ namespace Expanze
         internal void SetPathNode(int distance, TownModel ancestorTown, IRoad ancestorRoad)
         {
             pathNode.Set(distance, ancestorTown, ancestorRoad);
+        }
+
+        public bool GoalTown {
+            get
+            {
+                return goalTown;
+            }
+            set
+            {
+                goalTown = value;
+            }
         }
     }
 }

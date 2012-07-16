@@ -27,7 +27,9 @@ namespace CorePlugin
         /// You are trying to buy second upgrade for the second time.
         /// You already have second upgrade.
         /// </summary>
-        HaveSecondUpgrade };
+        HaveSecondUpgrade,
+    
+        BanSecondUpgrade};
 
     public interface IMonastery
     {

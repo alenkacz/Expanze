@@ -49,7 +49,7 @@ namespace Expanze.Gameplay.Map
 
         public IRoad GetIRoadByID(int roadID)
         {
-            if (roadID < 1 || roadID >= roadByID.Length)
+            if (roadID < 1 || roadID > roadByID.Length)
                 return null;
             if (roadByID[roadID - 1] == null)
                 roadByID[roadID - 1] = map.GetRoadByID(roadID);
@@ -178,8 +178,10 @@ namespace Expanze.Gameplay.Map
                 ItemQueue item = new RoadItemQueue(mapView, roadID);
                 mapView.AddToViewQueue(item);
 
-                gm.GetActivePlayer().PayForSomething(Settings.costRoad);
+                if(gm.GetState() != EGameState.BeforeGame)
+                    gm.GetActivePlayer().PayForSomething(Settings.costRoad);
 
+                TriggerManager.Inst().TurnTrigger(TriggerType.RoadBuild, roadID);
                 return road;
             }
 
@@ -189,6 +191,28 @@ namespace Expanze.Gameplay.Map
         public BuildingBuildError CanBuildBuildingInTown(int townID, int hexaID, BuildingKind kind)
         {
             GameMaster gm = GameMaster.Inst();
+            if (gm.GetState() == EGameState.BeforeGame)
+                return BuildingBuildError.OK;
+
+            if (kind == BuildingKind.FortBuilding && Settings.banFort)
+            {
+                SetLastError(Strings.ERROR_BAN_FORT);
+                return BuildingBuildError.Ban;
+            }
+
+            if (kind == BuildingKind.MarketBuilding && Settings.banMarket)
+            {
+                SetLastError(Strings.ERROR_BAN_MARKET);
+                return BuildingBuildError.Ban;
+            }
+
+            if (kind == BuildingKind.MonasteryBuilding && Settings.banMonastery)
+            {
+                SetLastError(Strings.ERROR_BAN_MONASTERY);
+                return BuildingBuildError.Ban;
+            }
+
+            
             TownModel town = map.GetTownByID(townID);
             if (town == null)
             {
@@ -238,10 +262,15 @@ namespace Expanze.Gameplay.Map
             if (error == BuildingBuildError.OK)
             {
                 ItemQueue item = new BuildingItemQueue(mapView, townID, buildingPos);
-                mapView.AddToViewQueue(item);
+                mapView.AddToViewQueue(item, gm.GetState() == EGameState.BeforeGame);
+                if (gm.GetState() != EGameState.BeforeGame)
+                {
+                    gm.GetActivePlayer().PayForSomething(town.GetBuildingCost(buildingPos, kind));
+                }
 
-                gm.GetActivePlayer().PayForSomething(town.GetBuildingCost(buildingPos, kind));
                 town.BuildBuilding(buildingPos, kind);
+
+                TriggerManager.Inst().TurnTrigger(TriggerType.BuildingBuild, (int) kind);
                 return true;
             }
 
@@ -268,12 +297,15 @@ namespace Expanze.Gameplay.Map
             GameMaster gm = GameMaster.Inst();
             TownBuildError error = town.CanBuildTown();
             if (error == TownBuildError.OK)
-            {
+            {   
                 PathNode.SetIsValid(false);
                 town.BuildTown(gm.GetActivePlayer());
 
                 ItemQueue item = new TownItemQueue(mapView, townID);
                 mapView.AddToViewQueue(item);
+
+                if (gm.GetState() == EGameState.BeforeGame)
+                    return town;
 
                 if (gm.GetState() != EGameState.StateGame)
                 {
@@ -313,6 +345,7 @@ namespace Expanze.Gameplay.Map
                 else
                     gm.GetActivePlayer().PayForSomething(GetPrice(PriceKind.BTown));
 
+                TriggerManager.Inst().TurnTrigger(TriggerType.TownBuild, townID);
                 return town;
             }
 
@@ -328,6 +361,8 @@ namespace Expanze.Gameplay.Map
             {
                 switch (m.CanInventUpgrade(building))
                 {
+                    case MonasteryError.BanSecondUpgrade:
+                        return false;
                     case MonasteryError.HaveSecondUpgrade:
                         return false;
                     case MonasteryError.NoSources:
@@ -357,6 +392,9 @@ namespace Expanze.Gameplay.Map
                     case MonasteryError.NoSources:
                         SetLastError(Strings.ERROR_NO_SOURCES);
                         return MonasteryError.NoSources;
+                    case MonasteryError.BanSecondUpgrade:
+                        SetLastError(Strings.ERROR_BAN_SECOND_UPGRADE);
+                        return MonasteryError.BanSecondUpgrade;
                     case MonasteryError.OK:
                         return MonasteryError.OK;
                     case MonasteryError.MaxUpgrades:          // May be free slot in another monastery
@@ -378,6 +416,7 @@ namespace Expanze.Gameplay.Map
                 switch (m.CanBuyLicence(source))
                 {
                     case MarketError.HaveSecondLicence:
+                    case MarketError.BanSecondLicence:
                         return false;
                     case MarketError.NoSources:
                         return false;
@@ -400,6 +439,9 @@ namespace Expanze.Gameplay.Map
             {
                 switch (m.CanBuyLicence(source))
                 {
+                    case MarketError.BanSecondLicence :
+                        SetLastError(Strings.ERROR_BAN_SECOND_LICENCE);
+                        return MarketError.BanSecondLicence;
                     case MarketError.HaveSecondLicence :
                         SetLastError(Strings.ERROR_HAVE_SECOND_LICENCE);
                         return MarketError.HaveSecondLicence;
@@ -436,6 +478,11 @@ namespace Expanze.Gameplay.Map
 
         public CaptureHexaError CanCaptureHexa(IHexa hexa)
         {
+            if (Settings.banFortCaptureHexa)
+                return CaptureHexaError.Ban;
+            if (hexa == null)
+                return CaptureHexaError.InvalidHexaID;
+
             List<IFort> forts = GetPlayerMe().GetFort();
             CaptureHexaError error;
 
@@ -454,26 +501,33 @@ namespace Expanze.Gameplay.Map
 
         public CaptureHexaError CanCaptureHexa(int hexaID, IFort fort)
         {
+            HexaModel hexa = map.GetHexaByID(hexaID);
+            HexaModel.SetHexaFort(fort);
+            if (!hexa.IsInFortRadius())
+            {
+                SetLastError(Strings.ERROR_TOO_FAR_FROM_FORT);
+                return CaptureHexaError.TooFarFromFort;
+            }
+
+            if (Settings.banFortCaptureHexa)
+            {
+                SetLastError(Strings.ERROR_BAN_FORT_CAPTURE_HEXA);
+                return CaptureHexaError.Ban;
+            }
+
             if (!Settings.costFortCapture.HasPlayerSources(gm.GetActivePlayer()))
             {
                 SetLastError(Strings.ERROR_NO_SOURCES);
                 return CaptureHexaError.NoSources;
             }
 
-            HexaModel.SetHexaFort(fort);
-
-            HexaModel hexa = map.GetHexaByID(hexaID);
+            if (hexa.GetKind() == HexaKind.Desert || hexa.GetKind() == HexaKind.Water || hexa.GetKind() == HexaKind.Null)
+                return CaptureHexaError.Desert;
 
             if (hexa == null)
             {
                 SetLastError(Strings.ERROR_INVALID_HEXA_ID);
                 return CaptureHexaError.InvalidHexaID;
-            }
-
-            if (!hexa.IsInFortRadius())
-            {
-                SetLastError(Strings.ERROR_TOO_FAR_FROM_FORT);
-                return CaptureHexaError.TooFarFromFort;
             }
 
             return CaptureHexaError.OK;
@@ -488,7 +542,7 @@ namespace Expanze.Gameplay.Map
                 hexa.Capture(player);
                 player.PayForSomething(Settings.costFortCapture);
                 player.AddFortAction();
-                player.AddPoints(Settings.pointsFortCapture);
+                player.AddPoints(PlayerPoints.FortCaptureHexa);
                 return true;
             }
             return false;
@@ -497,7 +551,7 @@ namespace Expanze.Gameplay.Map
 
         public DestroyHexaError CanDestroyHexa(int hexaID, IFort fort)
         {
-            if (!Settings.costFortDestroyHexa.HasPlayerSources(gm.GetActivePlayer()))
+            if (!Settings.costFortCrusade.HasPlayerSources(gm.GetActivePlayer()))
             {
                 SetLastError(Strings.ERROR_NO_SOURCES);
                 return DestroyHexaError.NoSources;
@@ -521,6 +575,12 @@ namespace Expanze.Gameplay.Map
                 SetLastError(Strings.ERROR_TOO_FAR_FROM_FORT);
                 return DestroyHexaError.TooFarFromFort;
             }
+            /*
+            if (hexa.GetDestroyed())
+            {
+                SetLastError(Strings.ERROR_INVALID_HEXA_ID);
+                return DestroyHexaError.IsDestroyed;
+            }*/
 
             return DestroyHexaError.OK;
         }
@@ -530,8 +590,30 @@ namespace Expanze.Gameplay.Map
             if (CanDestroyHexa(hexaID, fort) == DestroyHexaError.OK)
             {
                 HexaModel hexa = map.GetHexaByID(hexaID);
+               
+                SourceAll source = new SourceAll(0);
+                int amount = gm.GetRandomInt(70) + ((hexa.GetDestroyed()) ? 0 : 70);
                 hexa.Destroy();
-                gm.GetActivePlayer().PayForSomething(Settings.costFortDestroyHexa);
+                
+                switch(hexa.GetKind())
+                {
+                    case HexaKind.Cornfield :
+                        source = new SourceAll(amount, 0, 0, 0, 0);
+                        break;
+                    case HexaKind.Pasture :
+                        source = new SourceAll(0, amount, 0, 0, 0);
+                        break;
+                    case HexaKind.Stone :
+                        source = new SourceAll(0, 0, amount, 0, 0);
+                        break;
+                    case HexaKind.Forest :
+                        source = new SourceAll(0, 0, 0, amount, 0);
+                        break;
+                    case HexaKind.Mountains :
+                        source = new SourceAll(0, 0, 0, 0, amount);
+                        break;
+                }
+                gm.GetActivePlayer().PayForSomething(Settings.costFortCrusade - source);
                 gm.GetActivePlayer().AddFortAction();
                 return true;
             }
@@ -540,6 +622,12 @@ namespace Expanze.Gameplay.Map
 
         public DestroySourcesError CanStealSources(String playerName)
         {
+            if (Settings.banFortStealSources)
+            {
+                SetLastError(Strings.ERROR_BAN_FORT_STEAL_SOURCES);
+                return DestroySourcesError.Ban;
+            }
+
             Player player = gm.GetPlayer(playerName);
             if (player == null)
                 return DestroySourcesError.NoPlayerWithName;
@@ -571,7 +659,7 @@ namespace Expanze.Gameplay.Map
                 activePlayer.AddSources(-Settings.costFortSources, TransactionState.TransactionStart);
                 activePlayer.AddSources(source / 2, TransactionState.TransactionEnd);
                 activePlayer.AddFortAction();
-                activePlayer.AddPoints(Settings.pointsFortSteal);
+                activePlayer.AddPoints(PlayerPoints.FortStealSources);
                 if (activePlayer.GetIsAI())
                 {
                     Message.Inst().Show("Někdo krade!", activePlayer.GetName() + " se vloupal do skladišť " + player.GetName() + " a odnesl si lup polovinu jeho zásob.", GameResources.Inst().GetHudTexture(HUDTexture.IconFortSources));
@@ -583,6 +671,12 @@ namespace Expanze.Gameplay.Map
 
         public ParadeError CanShowParade()
         {
+            if (Settings.banFortParade)
+            {
+                SetLastError(Strings.ERROR_BAN_FORT_SHOW_PARADE);
+                return ParadeError.Ban;
+            }
+
             Player activePlayer = gm.GetActivePlayer();
 
             if (!GetPrice(PriceKind.AParade).HasPlayerSources(activePlayer))
@@ -604,7 +698,7 @@ namespace Expanze.Gameplay.Map
             if (CanShowParade() == ParadeError.OK)
             {
                 Player activePlayer = gm.GetActivePlayer();
-                activePlayer.AddPoints(Settings.pointsFortParade);
+                activePlayer.AddPoints(PlayerPoints.FortParade);
                 activePlayer.AddFortAction();
                 activePlayer.PayForSomething(GetPrice(PriceKind.AParade));
                 if (gm.GetActivePlayer().GetIsAI())
@@ -729,6 +823,12 @@ namespace Expanze.Gameplay.Map
                 town.ClearNodePath();
             }
 
+            for (int loop1 = 1; loop1 <= GetMaxRoadID(); loop1++)
+            {
+                RoadModel road = (RoadModel) GetIRoadByID(loop1);
+                road.ClearNodePath();
+            }
+
             Queue<TownModel> openList = new Queue<TownModel>();
             List<ITown> buildedTowns = player.GetTown();
 
@@ -742,6 +842,9 @@ namespace Expanze.Gameplay.Map
             foreach (IRoad road in buildedRoads)
             {
                 TownModel town;
+                RoadModel roadM = (RoadModel) road;
+                roadM.SetPathNode(0, null, null);
+
                 foreach(ITown itown in road.GetITown())
                 {
                     town = (TownModel)itown;
@@ -753,9 +856,10 @@ namespace Expanze.Gameplay.Map
                     }
                 }
             }
-            
+
             while (openList.Count > 0)
             {
+
                 TownModel ancestor = openList.Dequeue();
                 int dst = ancestor.GetPathNode().GetDistance();
 
@@ -765,6 +869,8 @@ namespace Expanze.Gameplay.Map
                     if (road != null &&
                         !road.GetIsBuild())
                     {
+                        RoadModel roadM = (RoadModel)road;
+                        roadM.SetPathNode(dst + 1, ancestor, ancestor.GetPathNode().GetAncestorRoad());
                         foreach (ITown itown in road.GetITown())
                         {
                             if (itown != null && 
@@ -772,7 +878,7 @@ namespace Expanze.Gameplay.Map
                                 itown.GetIOwner() == null)
                             {
                                 TownModel town = (TownModel)itown;
-                                if (town.GetPathNode().GetDistance() == PathNode.INFINITY)
+                                if (!openList.Contains(town) && town.GetPathNode().GetDistance() == PathNode.INFINITY)
                                 {
                                     town.SetPathNode(dst + 1, ancestor, road);
                                     openList.Enqueue(town);
@@ -785,6 +891,14 @@ namespace Expanze.Gameplay.Map
 
             PathNode.SetIsValid(true);
             PathNode.SetPlayerReference(player);
+        }
+
+        public int GetDistanceToRoad(IRoad road, IPlayer player)
+        {
+            FindWaysToAllTowns(player);
+
+            RoadModel roadModel = (RoadModel)road;
+            return roadModel.GetPathNode().GetDistance();
         }
 
         public int GetDistanceToTown(ITown town, IPlayer player)
@@ -1072,6 +1186,48 @@ namespace Expanze.Gameplay.Map
                 return new SourceAll(0);
 
             return GetPrice(GetPriceForMonasteryUpgrade(upgradeKind, buildingKind));
+        }
+
+        public bool IsBanAction(PlayerAction action)
+        {
+            switch (action)
+            {
+                case PlayerAction.BuildFort: return Settings.banFort;
+                case PlayerAction.BuildMarket: return Settings.banMarket;
+                case PlayerAction.BuildMonastery: return Settings.banMonastery;
+                case PlayerAction.BuySecondLicence: return Settings.banSecondLicence;
+                case PlayerAction.InventSecondUpgrade: return Settings.banSecondUpgrade;
+                case PlayerAction.FortCaptureHexa: return Settings.banFortCaptureHexa;
+                case PlayerAction.FortStealSources: return Settings.banFortStealSources;
+                case PlayerAction.FortParade: return Settings.banFortParade;
+            }
+            return false;
+        }
+        public int GetActionPoints(PlayerPoints action)
+        {
+            switch (action)
+            {
+                case PlayerPoints.Fort: return Settings.pointsFort;
+                case PlayerPoints.FortCaptureHexa: return Settings.pointsFortCapture;
+                case PlayerPoints.FortParade: return Settings.pointsFortParade;
+                case PlayerPoints.FortStealSources: return Settings.pointsFortSteal;
+                case PlayerPoints.LicenceLvl1: return Settings.pointsMarketLvl1;
+                case PlayerPoints.LicenceLvl2: return Settings.pointsMarketLvl2;
+                case PlayerPoints.Market: return Settings.pointsMarket;
+                case PlayerPoints.RoadID: return Settings.goalRoadID;
+                case PlayerPoints.TownID: return Settings.goalTownID;
+                case PlayerPoints.Mill: return Settings.pointsMill;
+                case PlayerPoints.Mine: return Settings.pointsMine;
+                case PlayerPoints.Monastery: return Settings.pointsMonastery;
+                case PlayerPoints.Quarry: return Settings.pointsQuarry;
+                case PlayerPoints.Road: return Settings.pointsRoad;
+                case PlayerPoints.Saw: return Settings.pointsSaw;
+                case PlayerPoints.Stepherd: return Settings.pointsStepherd;
+                case PlayerPoints.Town: return Settings.pointsTown;
+                case PlayerPoints.UpgradeLvl1: return Settings.pointsUpgradeLvl1;
+                case PlayerPoints.UpgradeLvl2: return Settings.pointsUpgradeLvl2;
+            }
+            return 0;
         }
 
         #endregion

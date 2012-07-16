@@ -167,13 +167,12 @@ namespace Expanze.Gameplay.Map
             target = new Vector3(0.0f, 0.0f, 0.0f);
             up = new Vector3(0.1f, 0.8f, 0.0f);
             eye = new Vector3(0.4f, 1.5f, 0.0f);
-            GameState.MaterialAmbientColor = new Vector3(0.2f, 0.2f, 0.2f);
+            GameState.MaterialAmbientColor = new Vector3(0.1f, 0.1f, 0.1f);
             GameState.LightDirection = new Vector3(-1.0f, -0.5f, 0.0f);
             GameState.view = Matrix.CreateLookAt(eye, target, up);
             float aspectRatio = game.GraphicsDevice.Viewport.Width / (float)game.GraphicsDevice.Viewport.Height;
             GameState.projection = Matrix.CreatePerspectiveFieldOfView((float)MathHelper.ToRadians(90), aspectRatio, 0.01f, 100.0f);
 
-            GameMaster.Inst().StartTurn();
             mapController.Init();
         }
 
@@ -184,7 +183,10 @@ namespace Expanze.Gameplay.Map
             if(parser == null || newMap)
               parser = new MapParser();
             GameSettings gs = GameMaster.Inst().GetGameSettings();
-            return parser.getMap(gs.GetMapSizeXML(), gs.GetMapTypeXML(), gs.GetMapWealthXML());
+            if (GameMaster.Inst().GetMapSource() == null)
+                return parser.getMap(gs.GetMapSizeXML(), gs.GetMapTypeXML(), gs.GetMapWealthXML());
+            else
+                return parser.parseCampaignMap(GameMaster.Inst().GetMapSource());
         }
 
         public override void LoadContent()
@@ -250,25 +252,28 @@ namespace Expanze.Gameplay.Map
                 }
             }
 
-            if (eye.X > 5.4f)
+            float yMax = 2.4f;
+            float yMin = 0.2f;
+
+            if (eye.X > 1.1f + (yMax - eye.Y))
             {
-                target.X = 5.0f;
-                eye.X = 5.4f;
+                target.X = 0.7f + (yMax - eye.Y);
+                eye.X = 1.1f + (yMax - eye.Y);
             }
-            if (eye.X < -5.0f)
+            if (eye.X < -1.1f - (yMax - eye.Y))
             {
-                target.X = -5.4f;
-                eye.X = -5.0f;
+                target.X = -1.5f - (yMax - eye.Y);
+                eye.X = -1.1f - (yMax - eye.Y);
             }
-            if (eye.Z > 2.5)
+            if (eye.Z > 0.5 + (yMax - eye.Y))
             {
-                eye.Z = 2.5f;
-                target.Z = 2.5f;
+                eye.Z = 0.5f + (yMax - eye.Y);
+                target.Z = 0.5f + (yMax - eye.Y);
             }
-            if (eye.Z < -2.5)
+            if (eye.Z < -0.5 - (yMax - eye.Y))
             {
-                eye.Z = -2.5f;
-                target.Z = -2.5f;
+                eye.Z = -0.5f - (yMax - eye.Y);
+                target.Z = -0.5f - (yMax - eye.Y);
             }
             //target = new Vector3(0.0f, 0.0f, 0.0f);
             //eye = new Vector3(0.4f, 1.5f, 0.0f);
@@ -288,8 +293,8 @@ namespace Expanze.Gameplay.Map
 
             if (eye.Y < 0.2f)
                 eye.Y = 0.2f;
-            if (eye.Y > 2.8f)
-                eye.Y = 2.8f;
+            if (eye.Y > 2.4f)
+                eye.Y = 2.4f;
 
             GameState.view = Matrix.CreateLookAt(eye, target, up);
         }
@@ -297,12 +302,19 @@ namespace Expanze.Gameplay.Map
         float lightAngle = 0;
         public void ChangeLight(GameTime gameTime)
         {
-            lightAngle += gameTime.ElapsedGameTime.Milliseconds / 30.0f;
+            lightAngle += gameTime.ElapsedGameTime.Milliseconds / 450.0f;
             if (lightAngle > 360.0f)
                 lightAngle -= 360.0f;
-            GameState.LightDirection = new Vector3(-1.0f, -0.5f, (float) Math.Cos(MathHelper.ToRadians(lightAngle)));
+
+            float tempAngle = lightAngle;
+            if (tempAngle > 180.0f)
+                tempAngle -= 180.0f;
+            GameState.SunHeight = (1.0f - Math.Abs(tempAngle - 90) / 90.0f);
+            GameState.LightDirection = new Vector3(-1.0f, -0.49f - GameState.SunHeight / 5.0f, (float)Math.Cos(MathHelper.ToRadians(lightAngle)) * 1.4f);
+            GameState.ShadowDirection = new Vector3(-1.0f, -0.9f - GameState.SunHeight / 2.0f, GameState.LightDirection.Z);
+            GameState.ShadowDirection.Normalize();
             float tempF = (float) Math.Abs(Math.Cos(MathHelper.ToRadians(lightAngle))) / 4.0f;
-            GameState.LightDiffusionColor = new Vector3(1.0f, 1.0f - tempF, 1.0f - tempF);
+            GameState.LightDiffusionColor = new Vector3(0.99f, 0.99f - tempF, 0.99f - tempF);
             GameState.LightSpecularColor = new Vector3(0.4f, 0.2f, 0.2f);
         }
 
@@ -346,11 +358,7 @@ namespace Expanze.Gameplay.Map
         public override void Draw2D()
         {
             mapView.Draw2D();
-#if GENETIC
-            return;
-#else
             GameMaster.Inst().Draw2D();
-#endif
         }
 
         public override void Draw(GameTime gameTime)
@@ -403,6 +411,9 @@ namespace Expanze.Gameplay.Map
         public TownModel GetTownByID(int townID)
         {
             TownModel town = null;
+            if (hexaMapModel == null)
+                return null;
+
             for (int i = 0; i < hexaMapModel.Length; i++)
                 for (int j = 0; j < hexaMapModel[i].Length; j++)
                     if (hexaMapModel[i][j] != null)

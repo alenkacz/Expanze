@@ -19,7 +19,7 @@ namespace AIHacker
             return "AI - Hacker";
         }
 
-        public void InitAIComponent(IMapController mapController, double[] koef)
+        public void InitAIComponent(IMapController mapController, int[][] koef)
         {
             this.mapController = mapController;
         }

@@ -5,26 +5,29 @@ using System.Text;
 
 namespace CorePlugin
 {
-    public enum DestroySourcesError { 
+    public enum DestroySourcesError
+    {
         /// <summary>
         /// There is no error.
         /// </summary>
-        OK, 
-        
+        OK,
+
         /// <summary>
         /// Without fort you cant destroy sources.
         /// </summary>
-        NoFort, 
-        
+        NoFort,
+
         /// <summary>
         /// Player with that name doesn't exist.
         /// </summary>
-        NoPlayerWithName, 
-        
+        NoPlayerWithName,
+
         /// <summary>
         /// You have not enough sources for buying this action.
         /// </summary>
-        NoSources }
+        NoSources,
+        Ban
+    }
 
     public enum DestroyHexaError
     {
@@ -46,7 +49,9 @@ namespace CorePlugin
         /// <summary>
         /// Target hexa doesnt exist.
         /// </summary>
-        InvalidHexaID
+        InvalidHexaID,
+
+        IsDestroyed
     }
 
     public enum ParadeError
@@ -64,29 +69,34 @@ namespace CorePlugin
         /// <summary>
         /// You have no fort
         /// </summary>
-        NoFort
+        NoFort,
+        Ban
     }
 
-    public enum CaptureHexaError {
+    public enum CaptureHexaError
+    {
         /// <summary>
         /// There is no error.
         /// </summary>
-        OK, 
+        OK,
 
         /// <summary>
         /// You have not enough sources.
         /// </summary>
-        NoSources, 
-        
+        NoSources,
+
         /// <summary>
         /// There is not your fort in neighbourghood of target hexa.
         /// </summary>
-        TooFarFromFort, 
-        
+        TooFarFromFort,
+
         /// <summary>
         /// Target hexa doesnt exist.
         /// </summary>
-        InvalidHexaID }
+        InvalidHexaID,
+        Ban,
+        Desert
+    }
 
     public interface IFort
     {

@@ -25,12 +25,13 @@ namespace Expanze
         IconStepherd, IconStepherd1, IconStepherd2, IconStepherdActive,
         IconCorn1, IconCorn2, IconMeat1, IconMeat2, IconStone1, IconStone2, IconWood1, IconWood2,
         IconOre1, IconOre2, 
-        IconFortParade, IconFortCapture, IconFortSources, IconFortHexa,
+        IconFortParade, IconFortCapture, IconFortSources, IconFortCrusade,
 
         // icon medal fort have to be first //
         IconMedalFort, IconMedalMonastery, IconMedalMarket,
         IconMedalTown, IconMedalRoad,
         IconMedalMill, IconMedalStepherd, IconMedalQuarry, IconMedalSaw, IconMedalMine,
+        IconMedalRoadID, IconMedalTownID,
 
         PlayerColor,
         BackgroundWater, BackgroundPromptWindow, BackgroundMessageWindow, BackgroundVictoryScreen,
@@ -58,7 +59,8 @@ namespace Expanze
         MaterialsNewFont,
         MedievalSmall,
         MedievalMedium,
-        MedievalBig
+        MedievalBig,
+        MenuFont
     }
 
     class GameResources
@@ -80,8 +82,11 @@ namespace Expanze
         Model[] mountainsMineModel;
         Model[] stoneCoverModel;
         Model[] stoneQuarryModel;
+        Model[] hexaSpecialModel;
+
         Texture2D[] hud;
-        private const int N_FONT = 7;
+        Texture2D[] hexaTexture;
+        private const int N_FONT = 8;
         SpriteFont[] font;
 
         public static GameResources Inst()
@@ -104,6 +109,11 @@ namespace Expanze
             return hexaModel[(int)type];
         }
 
+        public Texture2D GetHexaTexture(int type)
+        {
+            return hexaTexture[(int)type];
+        }
+
         public SpriteFont GetFont(EFont fontName)
         {
             if (font == null)
@@ -119,6 +129,7 @@ namespace Expanze
         public Model GetBuildingModel(BuildingModel id) { return buildingModel[(int) id]; }
         public Model GetTownModel() { return townModel; }
         public Model GetRoadModel() { return roadModel; }
+        public Model GetTreeModel(int id) { return hexaSpecialModel[id]; }
 
         public Model GetShape(int shapeID)
         {
@@ -210,7 +221,7 @@ namespace Expanze
                 hud[(int)HUDTexture.IconWood2] = content.Load<Texture2D>("HUD/ic_wood2");
                 hud[(int)HUDTexture.IconOre2] = content.Load<Texture2D>("HUD/ic_ore2");
                 hud[(int)HUDTexture.IconFortCapture] = content.Load<Texture2D>("HUD/ic_fort_capture");
-                hud[(int)HUDTexture.IconFortHexa] = content.Load<Texture2D>("HUD/ic_fort_hexa");
+                hud[(int)HUDTexture.IconFortCrusade] = content.Load<Texture2D>("HUD/ic_fort_hexa");
                 hud[(int)HUDTexture.IconFortParade] = content.Load<Texture2D>("HUD/ic_fort_parade");
                 hud[(int)HUDTexture.IconFortSources] = content.Load<Texture2D>("HUD/ic_fort_sources");
 
@@ -224,17 +235,31 @@ namespace Expanze
                 hud[(int)HUDTexture.IconMedalQuarry] = content.Load<Texture2D>("HUD/medals/medal_quarry");
                 hud[(int)HUDTexture.IconMedalSaw] = content.Load<Texture2D>("HUD/medals/medal_saw");
                 hud[(int)HUDTexture.IconMedalMine] = content.Load<Texture2D>("HUD/medals/medal_mine");
+                hud[(int)HUDTexture.IconMedalRoadID] = content.Load<Texture2D>("HUD/medals/medal_road_id");
+                hud[(int)HUDTexture.IconMedalTownID] = content.Load<Texture2D>("HUD/medals/medal_town_id");
 
                 hexaModel = new Model[N_MODEL];
                 hexaModel[(int)HexaKind.Cornfield] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Cornfield]);
                 hexaModel[(int)HexaKind.Desert] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Desert]);
                 hexaModel[(int)HexaKind.Forest] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Forest]);
+
+                hexaSpecialModel = new Model[6];
+                hexaSpecialModel[0] = content.Load<Model>("Models/tree1");
+                hexaSpecialModel[1] = content.Load<Model>("Models/sheep");
+                hexaSpecialModel[2] = content.Load<Model>("Models/cactusstone");
+                hexaSpecialModel[3] = content.Load<Model>("Models/corncylinders");
+                hexaSpecialModel[4] = content.Load<Model>("Models/cornfield");
+                hexaSpecialModel[5] = content.Load<Model>("Models/fence");
+
                 hexaModel[(int)HexaKind.Mountains] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Mountains]);
                 hexaModel[(int)HexaKind.Pasture] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Pasture]);
                 hexaModel[(int)HexaKind.Stone] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Stone]);
                 hexaModel[(int)HexaKind.Water] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Water]);
-                hexaModel[(int)HexaKind.Water + 1] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Water] + "2");
-                hexaModel[(int)HexaKind.Water + 2] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Water] + "3");
+
+                hexaTexture = new Texture2D[3];
+                hexaTexture[0] = content.Load<Texture2D>("Models/hexa_voda3");
+                hexaTexture[1] = content.Load<Texture2D>("Models/hexa_voda2");
+                hexaTexture[2] = content.Load<Texture2D>("Models/hexa_voda1");
 
                 shapeModel = new Model[N_SHAPE_MODEL];
 
@@ -279,13 +304,13 @@ namespace Expanze
                 buildingModel[(int)BuildingModel.Monastery] = content.Load<Model>("Models/monastery");
 
                 townModel = content.Load<Model>("Models/town");
-                roadModel = content.Load<Model>("Models/road");
+                roadModel = content.Load<Model>("Models/roadwithflag");
 
                 LoadFonts();
             }
             catch (Exception e)
             {
-                Logger.Inst().Log("Exception", e.Message + "***" + e.Source + "***" + e.StackTrace);
+                Logger.Inst().Log("Exception.txt", e.Message + "***" + e.Source + "***" + e.StackTrace);
             }
         }
 
@@ -302,6 +327,7 @@ namespace Expanze
             font[(int)EFont.MedievalSmall] = content.Load<SpriteFont>("Fonts/medievalSmall");
             font[(int)EFont.MedievalMedium] = content.Load<SpriteFont>("Fonts/medievalMedium");
             font[(int)EFont.PlayerNameFont] = content.Load<SpriteFont>("playername");
+            font[(int)EFont.MenuFont] = content.Load<SpriteFont>("menufont");
         }
     }
 }

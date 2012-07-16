@@ -1,27 +1,67 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <map>
   <settings>
+    <name>Boot</name>
+	<players>
+		<player>
+			<name>Tony Blair</name>
+			<color>Blue</color>
+			<AI>Human</AI>
+      <towns>
+        <town id="6">
+          <source-building>0</source-building>
+          <source-building>1</source-building>
+          <source-building>2</source-building>
+        </town>
+        <town id="10">
+          <source-building>2</source-building>
+          <source-building>1</source-building>
+        </town>
+      </towns>
+      <roads>
+        <id>10</id>
+        <id>11</id>
+      </roads>
+      <source>
+        <ore>84</ore>
+        <meat>84</meat>
+        <stone>84</stone>
+        <wood>80</wood>
+        <corn>84</corn>
+      </source>
+		</player>
+	</players>
 	<points>
-		<WinPoints>3</WinPoints>
         <Town>0</Town>
         <Road>0</Road>
-        <Fort>1</Fort>
+        <Fort>0</Fort>
+        <FortParade>0</FortParade>
         <Monastery>0</Monastery>
         <Market>0</Market>
-        <Medal>0</Medal>
-        <FortParade>0</FortParade>
-        <UpgradeLvl1>0</UpgradeLvl1>
-        <MarketLvl1>0</MarketLvl1>
-        <UpgradeLvl2>0</UpgradeLvl2>
-        <MarketLvl2>0</MarketLvl2>
-        <Mill>0</Mill>
-        <Stepherd>0</Stepherd>
-        <Saw>0</Saw>
-        <Quarry>0</Quarry>
-        <Mine>0</Mine>
-        <FortCapture>0</FortCapture>
-        <FortSteal>0</FortSteal>
+        <Stone>80</Stone>
+        <Meat>80</Meat>
+        <Ore>80</Ore>
+        <Wood>84</Wood>
+        <Corn>80</Corn>
+
+        <townID>1</townID>
+        <town>44</town>
+        <town>43</town>
+
+        <turnLimit>32</turnLimit>
 	</points>
+  
+	<ban>
+    <ChangeSources>1</ChangeSources>
+		<Fort>1</Fort>
+    <Monastery>0</Monastery>
+    <Market>1</Market>
+		<FortCapture>0</FortCapture>
+    <FortSteal>0</FortSteal>
+		<FortParade>0</FortParade>
+		<UpgradeLvl2>0</UpgradeLvl2>
+    <MarketLvl2>1</MarketLvl2>
+	</ban>
   </settings>
   <map-definition>
     <row>
@@ -29,43 +69,50 @@
       <hexa type="water" />
       <hexa type="water" />
 	  <hexa type="water" />
-	  <hexa type="water" />
-	  <hexa type="water" />
     </row>
 	<row>
       <hexa type="water" />
       <hexa type="pasture" productivity="16" />
       <hexa type="forest" productivity="20" />
-	  <hexa type="water" />
       <hexa type="stone" productivity="16" />
-	  <hexa type="stone" productivity="16" />
       <hexa type="water" />
     </row>
     <row>
-	  <hexa type="space" />
+	  <hexa type="water" />
       <hexa type="water" />
       <hexa type="cornfield" productivity="16" />
       <hexa type="mountains" productivity="16" />
-	  <hexa type="mountains" productivity="16" />
       <hexa type="water" />
 	  <hexa type="water" />
     </row>
     <row>
-	  <hexa type="space" />
       <hexa type="water" />
-      <hexa type="pasture" productivity="16" />
-      <hexa type="forest" productivity="20" />
-	  <hexa type="water" />
+      <hexa type="mountains" productivity="16" />
+      <hexa type="forest" productivity="24" />
+      <hexa type="forest" productivity="24" />
+      <hexa type="cornfield" productivity="16" />
+      <hexa type="water" />
+    </row>
+    <row>
+      <hexa type="space" />
+      <hexa type="water" />
       <hexa type="stone" productivity="16" />
-	  <hexa type="stone" productivity="16" />
+      <hexa type="forest" productivity="16" />
+      <hexa type="pasture" productivity="16" />
       <hexa type="water" />
     </row>
     <row>
       <hexa type="space" />
       <hexa type="space" />
-	  <hexa type="water" />
-	  <hexa type="water" />
-	  <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="stone" productivity="16" />
+      <hexa type="desert" productivity="0" />
+      <hexa type="water" />
+    </row>
+    <row>
+      <hexa type="space" />
+      <hexa type="space" />
+	  <hexa type="space" />
       <hexa type="water" />
       <hexa type="water" />
       <hexa type="water" />

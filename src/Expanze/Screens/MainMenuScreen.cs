@@ -29,6 +29,7 @@ namespace Expanze
             // Create our menu entries.
             MenuEntry hotseatMenuEntry = new MenuEntry(Strings.MENU_MAIN_HOT_SEAT);
             MenuEntry quickMenuEntry = new MenuEntry(Strings.MENU_MAIN_QUICK_GAME);
+            MenuEntry campaignMenuEntry = new MenuEntry(Strings.MENU_MAIN_CAMPAIGN);
             MenuEntry settingsMenuEntry = new MenuEntry(Strings.MENU_MAIN_OPTION);
             MenuEntry creatorsMenuEntry = new MenuEntry(Strings.MENU_MAIN_CREATORS);
             MenuEntry exitMenuEntry = new MenuEntry(Strings.MENU_MAIN_EXIT);
@@ -36,13 +37,15 @@ namespace Expanze
             // Hook up menu event handlers.
             hotseatMenuEntry.Selected += HotseatMenuEntrySelected;
             quickMenuEntry.Selected += QuickMenuEntrySelected;
+            campaignMenuEntry.Selected += CampaignMenuEntrySelected;
             settingsMenuEntry.Selected += SettingsMenuEntrySelected;
             creatorsMenuEntry.Selected += CreatorsMenuEntrySelected;
             exitMenuEntry.Selected += OnCancel;
 
             // Add entries to the menu.
-            MenuEntries.Add(quickMenuEntry);
-            MenuEntries.Add(hotseatMenuEntry);
+            //MenuEntries.Add(quickMenuEntry);
+            MenuEntries.Add(campaignMenuEntry);
+            //MenuEntries.Add(hotseatMenuEntry);
             MenuEntries.Add(settingsMenuEntry);
             MenuEntries.Add(creatorsMenuEntry);
             MenuEntries.Add(exitMenuEntry);
@@ -77,6 +80,14 @@ namespace Expanze
             // now is used for AI
             GameLoadScreen.Load(ScreenManager, true, e.PlayerIndex,
                                new GameplayScreen(false));
+        }
+
+        /// <summary>
+        /// Event handler for when the Play Game menu entry is selected.
+        /// </summary>
+        void CampaignMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        {
+            ScreenManager.AddScreen(new CampaignMenuScreen(), e.PlayerIndex);
         }
 
 
