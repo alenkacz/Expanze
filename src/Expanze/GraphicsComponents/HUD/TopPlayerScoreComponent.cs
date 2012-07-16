@@ -178,14 +178,14 @@ namespace Expanze
 
                 int x = (int) (positionScore.X - textureMedal.Width - space + 65);
                 int y = (int) (positionScore.Y + 10 + border - textureMedal.Height / 2);
-                spriteBatch.Draw(medal, new Vector2(x, y), Color.White);
+                spriteBatch.Draw(medal, new Vector2(x, y), (pick) ? Color.Black : Color.White);
 
                 String pointString = (goalPoints - myPoints) + "";
                 float pointWidth = font.MeasureString(pointString).X;
                 positionScore = new Vector2(positionTotalPoints.X + 55 - pointWidth, positionTotalPoints.Y - 8);
                 spriteBatch.DrawString(font, pointString, positionScore, Color.Black);
                 positionScore = new Vector2(positionTotalPoints.X + 58 - pointWidth, positionTotalPoints.Y - 6);
-                spriteBatch.DrawString(font, pointString, positionScore, Settings.colorMainText);
+                spriteBatch.DrawString(font, pointString, positionScore, (pick) ? Color.Black : Settings.colorMainText);
 
                 Rectangle rect = new Rectangle(Settings.scaleW(x), Settings.scaleH(y), Settings.scaleW(medal.Width + 100), Settings.scaleH(goalHeight));
                 if (rect.Contains(mouse.X, mouse.Y))
