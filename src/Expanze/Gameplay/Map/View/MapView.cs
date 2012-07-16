@@ -240,6 +240,7 @@ namespace Expanze.Gameplay.Map
             {
                 foreach (BasicEffect effect in mesh.Effects)
                 {
+                    effect.Texture = GameResources.Inst().GetHexaTexture(0);
                     effect.LightingEnabled = true;
                     effect.AmbientLightColor = GameState.MaterialAmbientColor;
                     effect.DirectionalLight0.Direction = GameState.LightDirection;
@@ -287,7 +288,7 @@ namespace Expanze.Gameplay.Map
             planeNormal.Normalize();
             Vector3 light = GameState.ShadowDirection;
             light.Normalize();
-            Matrix shadow = Matrix.CreateShadow(light, new Plane(planeNormal, 0.001f)) * Matrix.CreateTranslation(GameState.ShadowDirection.X / 150.0f, 0, GameState.ShadowDirection.Y / 150.0f);
+            Matrix shadow = Matrix.CreateShadow(light, new Plane(planeNormal, 0.001f));// *Matrix.CreateTranslation(GameState.ShadowDirection.X / 150.0f, 0, GameState.ShadowDirection.Y / 150.0f);
 
             for (int i = 0; i < hexaMapView.Length; i++)
             {
@@ -300,9 +301,10 @@ namespace Expanze.Gameplay.Map
                     }
                 }
             }
-            GameState.game.GraphicsDevice.DepthStencilState = DepthStencilState.None;
+            GameState.game.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             GameState.game.GraphicsDevice.BlendState = BlendState.Opaque;
-            //DrawWater();
+            
+            DrawWater();
         }
 
         public void DrawShadow(Model m, Matrix world, Matrix shadow, int banID)
@@ -318,7 +320,7 @@ namespace Expanze.Gameplay.Map
 
                 foreach (BasicEffect effect in mesh.Effects)
                 {
-                    effect.Alpha = 0.15f + (1.0f - GameState.SunHeight) / 2.0f;
+                    effect.Alpha = 0.25f + (1.0f - GameState.SunHeight) / 2.5f;
                     effect.LightingEnabled = true;
                     effect.AmbientLightColor = Vector3.Zero;
                     effect.DirectionalLight0.Enabled = false;
@@ -342,11 +344,15 @@ namespace Expanze.Gameplay.Map
             float dy = 0.512f;
             HexaView tempView;
 
+            //int maxRowWidth = 0;
             int rowWidth = 0;
-            const int hexaBorder = 14;
+            const int hexaBorder = 7;
 
             for (int i = 0; i < hexaMapView.Length; i++)
             {
+                //if (hexaMapView[i].Length > maxRowWidth)
+                //    maxRowWidth = hexaMapView[i].Length;
+
                 rowWidth = hexaMapView[i].Length;
                 for (int j = 0; j < hexaMapView[i].Length; j++)
                 {
@@ -372,8 +378,8 @@ namespace Expanze.Gameplay.Map
 
             mWorld = hexaMapView[0][0].GetWorldMatrix() * Matrix.CreateTranslation(new Vector3(-dy, 0.0f, dx / 2.0f - hexaBorder * dx));
 
-            int maxRowWidth = hexaBorder * 2 + 3;
-            for (int loop1 = 0; loop1 < maxRowWidth; loop1++)
+            int maxRowWidth = hexaBorder * 2 + rowWidth;
+            for (int loop1 = 0; loop1 < hexaBorder; loop1++)
             {
                 for (int loop2 = 0; loop2 < maxRowWidth; loop2++)
                 {
@@ -384,7 +390,7 @@ namespace Expanze.Gameplay.Map
             }
 
             mWorld = hexaMapView[hexaMapView.Length - 1][hexaMapView[hexaMapView.Length - 1].Length - rowWidth].GetWorldMatrix() * Matrix.CreateTranslation(new Vector3(dy, 0.0f, dx / 2.0f - hexaBorder * dx));
-            for (int loop1 = 0; loop1 < maxRowWidth; loop1++)
+            for (int loop1 = 0; loop1 < 3; loop1++)
             {
                 for (int loop2 = 0; loop2 < maxRowWidth; loop2++)
                 {

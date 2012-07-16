@@ -352,7 +352,7 @@ namespace Expanze
                         banID = 1;
                     else if (model.GetKind() == HexaKind.Mountains)
                     {
-                        continue;
+                        //continue;
                     }
                 }
 

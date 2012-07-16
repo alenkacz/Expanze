@@ -252,25 +252,28 @@ namespace Expanze.Gameplay.Map
                 }
             }
 
-            if (eye.X > 5.4f)
+            float yMax = 2.4f;
+            float yMin = 0.2f;
+
+            if (eye.X > 1.1f + (yMax - eye.Y))
             {
-                target.X = 5.0f;
-                eye.X = 5.4f;
+                target.X = 0.7f + (yMax - eye.Y);
+                eye.X = 1.1f + (yMax - eye.Y);
             }
-            if (eye.X < -5.0f)
+            if (eye.X < -1.1f - (yMax - eye.Y))
             {
-                target.X = -5.4f;
-                eye.X = -5.0f;
+                target.X = -1.5f - (yMax - eye.Y);
+                eye.X = -1.1f - (yMax - eye.Y);
             }
-            if (eye.Z > 2.5)
+            if (eye.Z > 0.5 + (yMax - eye.Y))
             {
-                eye.Z = 2.5f;
-                target.Z = 2.5f;
+                eye.Z = 0.5f + (yMax - eye.Y);
+                target.Z = 0.5f + (yMax - eye.Y);
             }
-            if (eye.Z < -2.5)
+            if (eye.Z < -0.5 - (yMax - eye.Y))
             {
-                eye.Z = -2.5f;
-                target.Z = -2.5f;
+                eye.Z = -0.5f - (yMax - eye.Y);
+                target.Z = -0.5f - (yMax - eye.Y);
             }
             //target = new Vector3(0.0f, 0.0f, 0.0f);
             //eye = new Vector3(0.4f, 1.5f, 0.0f);
@@ -290,8 +293,8 @@ namespace Expanze.Gameplay.Map
 
             if (eye.Y < 0.2f)
                 eye.Y = 0.2f;
-            if (eye.Y > 2.8f)
-                eye.Y = 2.8f;
+            if (eye.Y > 2.4f)
+                eye.Y = 2.4f;
 
             GameState.view = Matrix.CreateLookAt(eye, target, up);
         }
