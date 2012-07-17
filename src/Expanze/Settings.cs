@@ -170,5 +170,6 @@ namespace Expanze
         public static int activeTown = 0;
         public static int activeRoad = 0;
         public static int activeHexa = 0;
+        public static string playerName = "Victoria Murden";
     }
 }

@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<tutorial>
+  <tutorialItem>
+    <trigger>MessageClose</trigger>
+    <pairs>
+      <pair><text>První soupeř</text></pair>
+      <pair><text>Tento ostrov si vybral další kolonizátor, tajemný Xi Nao.</text></pair>
+      <pair><text>Kdo první dokáže postavit 9 měst a tím určit, kdo ovládne ostrov?</text></pair>
+      <pair><text>Zdarma postav kdekoliv své první město. Vybírej pečlivě.</text></pair>   
+    </pairs>
+  </tutorialItem>
+
+  <tutorialItem>
+    <trigger>TownBuild</trigger>
+    <pairs>
+    </pairs>
+  </tutorialItem>
+  
+  <tutorialItem>
+    <trigger>MessageClose</trigger>
+    <pairs>
+      <pair><text>První soupeř</text></pair>
+      <pair><text>Xi Nao si nyní zvolí počáteční pozice pro svá první dvě města.</text></pair> 
+      <pair><text>Po něm si vyber místo pro založení svého druhého města.</text></pair>   
+    </pairs>
+  </tutorialItem>
+
+  <tutorialItem>
+    <trigger>TownBuild</trigger>
+    <pairs>
+    </pairs>
+  </tutorialItem>
+
+  <tutorialItem>
+    <trigger>TownBuild</trigger>
+    <pairs>
+    </pairs>
+  </tutorialItem>
+
+  <tutorialItem>
+    <trigger>TownBuild</trigger>
+    <pairs>
+    </pairs>
+  </tutorialItem>
+
+  <tutorialItem>
+    <trigger>NextTurn</trigger>
+    <pairs>
+    </pairs>
+  </tutorialItem>
+
+  <tutorialItem>
+    <trigger>NextTurn</trigger>
+    <pairs>
+    </pairs>
+  </tutorialItem>
+
+  <tutorialItem>
+    <trigger>MessageClose</trigger>
+    <pairs>
+      <pair><text>Klášter</text></pair>
+      <pair><text>Expanzi po ostrově může urychlit postavení kláštera.</text></pair> 
+      <pair><text>V klášteře můžou učenci vynaleznout různá vylepšení.</text></pair>   
+      <pair><text>Každé vylepšení urychlí těžbu surovin o 50% oproti původní hodnotě.</text></pair>   
+      <pair><text>Stejně jako u tržiště, omezení max 3 vylepšení na klášter.</text></pair>   
+    </pairs>
+  </tutorialItem>
+</tutorial>

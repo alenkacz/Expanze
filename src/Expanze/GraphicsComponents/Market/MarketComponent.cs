@@ -340,9 +340,9 @@ namespace Expanze
 
             if (fromSelectKind == SourceKind.Null ||
                toSelectKind == SourceKind.Null)
-                change_button.Disabled = true;
+                change_button.DisabledOnly = true;
             else
-                change_button.Disabled = false;
+                change_button.DisabledOnly = false;
 
             foreach (GuiComponent g in content)
             {

@@ -148,9 +148,9 @@ namespace Expanze
         public static string GOAL_QUARRY_PART1 = "Vyhlub navíc";
         public static string GOAL_QUARRY_PART2 = "krát lom na kamenní";
         public static string GOAL_UPGRADE1_PART1 = "Učenci musí vynaleznout";
-        public static string GOAL_UPGRADE1_PART2 = "krát nové vylepšení prvního stupně";
-        public static string GOAL_UPGRADE2_PART1 = "Vzdělanci musí vynalzenout";
-        public static string GOAL_UPGRADE2_PART2 = "krát vylepšení druhého stupně";
+        public static string GOAL_UPGRADE1_PART2 = "nové vylepšení prvního stupně";
+        public static string GOAL_UPGRADE2_PART1 = "Vzdělanci musí vynaleznout";
+        public static string GOAL_UPGRADE2_PART2 = "vylepšení druhého stupně";
         public static string GOAL_LICENCE1_PART1 = "Musíš koupit";
         public static string GOAL_LICENCE1_PART2 = "krát první licenci";
         public static string GOAL_LICENCE2_PART1 = "Musíš koupit";
@@ -211,7 +211,7 @@ namespace Expanze
         public static string PROMPT_TITLE_WANT_TO_BUILD_FORT = "Pevnost";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_FORT = "Z pevnosti můžeš poslat vojsko ukrást suroviny protihráči, nebo získat body za vojenskou přehlídku.";
         public static string PROMPT_TITLE_WANT_TO_BUILD_MARKET = "Tržiště";
-        public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_MARKET = "Na tržišti si můžeš koupit lepší směnný kurz pro výměnu surovin. Chceš-li měnit tři ku jedné, či dva ku jedné, tržiště je jasná volba.";
+        public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_MARKET = "Na tržišti si můžeš koupit lepší směnný kurz pro výměnu surovin. Chceš-li měnit alespoň tři ku jedné, tržiště je jasná volba.";
         public static string PROMPT_TITLE_WANT_TO_BUILD_MONASTERY = "Klášter";
         public static string PROMPT_DESCRIPTION_WANT_TO_BUILD_MONASTERY = "Mniši můžou vynaleznout lepší nástroje pro horníky, dřevorubce, zvýšit úrodnost obilných polí, urychlit práci pastevce.";
 

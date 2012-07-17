@@ -312,10 +312,13 @@ namespace Expanze
                     default: points = player.GetPoints()[(int)pointKind]; break;
                 }
 
-                int showPoints = (goal - points);
-                if (showPoints < 0)
-                    showPoints = 0;
-                spriteBatch.DrawString(font, "" + showPoints, new Vector2(x + 20, y + 50 * count + 12), Settings.colorMenuText);
+                int showPoints = points;
+                if (showPoints > goal)
+                    showPoints = goal;
+
+                String pointsString = "" + showPoints;
+
+                spriteBatch.DrawString(font, pointsString, new Vector2(x + 25 - font.MeasureString(pointsString).X / 2, y + 50 * count + 12), Settings.colorMenuText);
                 count++;
             }
 

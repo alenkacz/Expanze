@@ -48,6 +48,9 @@ namespace AIGen
 
         public override double GetDesirability()
         {
+            if (map.GetPlayerMe().GetCollectSourcesNormal().GetAsArray().Sum() < 70)
+                return 0.0;
+
             List<ITown> towns = map.GetPlayerMe().GetTown();
 
             double bestDesirability = 0.0;

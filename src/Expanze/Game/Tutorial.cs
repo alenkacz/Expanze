@@ -231,6 +231,12 @@ namespace Expanze
                 {
                     case "MessageClose" : tutorialList.Enqueue(new TutorialItem(pairList, TriggerType.MessageClose)); break;
                     case "NextTurn" : tutorialList.Enqueue(new TutorialItem(pairList, TriggerType.NextTurn)); break;
+                    case "MarketOpen": tutorialList.Enqueue(new TutorialItem(pairList, TriggerType.MarketOpen)); break;
+                    case "MarketClose": tutorialList.Enqueue(new TutorialItem(pairList, TriggerType.MessageClose)); break;
+                    case "MarketFirstRow": tutorialList.Enqueue(new TutorialItem(pairList, TriggerType.MarketFirstRow, constraint1)); break;
+                    case "MarketSecondRow": tutorialList.Enqueue(new TutorialItem(pairList, TriggerType.MarketSecondRow, constraint1)); break;
+                    case "MarketChangeSources": tutorialList.Enqueue(new TutorialItem(pairList, TriggerType.MarketChangeSources)); break;
+                    
                     case "RoadBuild" : 
                         for(int loop1 = 0; loop1 < pairList.Count; loop1++)
                             pairList[loop1].World = mapView.GetRoadViewByID(constraint1).World;
@@ -348,10 +354,13 @@ namespace Expanze
                         break;
 
                     case TriggerType.TownBuild :
-                        if (mapView.GetTownViewByID(activeItem.TriggerContraint1).getTownModel().GetIsBuild())
-                            TurnOn();
-                        else
-                            TownView.TutorialID = activeItem.TriggerContraint1;
+                        if (activeItem.TriggerContraint1 >= 0)
+                        {
+                            if (mapView.GetTownViewByID(activeItem.TriggerContraint1).getTownModel().GetIsBuild())
+                                TurnOn();
+                            else
+                                TownView.TutorialID = activeItem.TriggerContraint1;
+                        }
                         break;
                     case TriggerType.TownChoose:
                     case TriggerType.TownUnchoose:

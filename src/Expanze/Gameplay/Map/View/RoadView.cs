@@ -149,7 +149,7 @@ namespace Expanze.Gameplay.Map.View
                         }
 
                         // is it model part which is for flags? They have to be in player colors
-                        if (a == 3)
+                        if (a == 2 || a == 3)
                         {
                             effect.EmissiveColor = color * 0.5f;
                             effect.DiffuseColor = color * 0.9f;

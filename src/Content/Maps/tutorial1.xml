@@ -90,7 +90,7 @@
     <trigger>MessageClose</trigger>
     <pairs>
       <pair><text>Konec tutoriálu</text></pair>
-      <pair><text>Teď už víš vše, abys dokázal vyhrát na této mapě. Hodně štěstí Ti přeji.</text></pair>
+      <pair><text>Teď už víš vše, abys dokázal vyhrát na této mapě. Přeji Ti hodně štěstí.</text></pair>
     </pairs>
   </tutorialItem>
 </tutorial>

@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<tutorial>
+  <tutorialItem>
+    <trigger>MessageClose</trigger>
+    <pairs>
+      <pair><text>Tržiště otevřena</text></pair>
+      <pair><text>Netěžíš žádné dřevo a ani v nejbližší době nebudeš. Musíš se k němu dostat.</text></pair>
+      <pair><text>Zvítězíš, když začneš těžit alespoň 100 kusů dřeva za kolo.</text></pair>
+      <pair><text>Do té doby budeš muset využívat tržnici. Vyměň 8 kusů obilí za 2 kusy dřeva.</text></pair>
+      <pair><text>Až budeš mít potřebné suroviny, postav lom na volném místě u města u vody.</text></pair>    
+    </pairs>
+  </tutorialItem>
+  
+  <tutorialItem>
+    <trigger>MarketOpen</trigger>
+    <pairs>
+      <pair>
+        <text>Tlačítko pro nakupování na tržišti</text>
+        <position>
+          <x>100</x>
+          <y>800</y>
+        </position>
+      </pair>
+    </pairs>
+  </tutorialItem>
+
+  <tutorialItem>
+    <trigger>MarketFirstRow</trigger>
+    <pairs>
+      <pair>
+        <text>Vyber obilí</text>
+        <position>
+          <x>480</x>
+          <y>375</y>
+        </position>
+      </pair>
+    </pairs>
+    <constraint1>0</constraint1>
+  </tutorialItem>
+
+  <tutorialItem>
+    <trigger>MarketSecondRow</trigger>
+    <pairs>
+      <pair>
+        <text>Zvol dřevo</text>
+        <position>
+          <x>710</x>
+          <y>490</y>
+        </position>
+      </pair>
+    </pairs>
+    <constraint1>3</constraint1>
+  </tutorialItem>
+
+  <tutorialItem>
+    <trigger>MarketChangeSources</trigger>
+    <pairs>
+      <pair>
+        <text>Posuvníkem táhni mírně vpravo a potvrď tlačítko OK</text>
+        <position>
+          <x>345</x>
+          <y>540</y>
+        </position>
+      </pair>
+      <pair>
+        <text>Místo myši můžeš využít šipky vpravo</text>
+        <position>
+          <x>345</x>
+          <y>570</y>
+        </position>
+      </pair>
+    </pairs>
+  </tutorialItem>
+
+  <tutorialItem>
+    <trigger>HexaBuild</trigger>
+    <pairs>
+      <pair>
+        <text>Zde postav lom na kamenní</text>
+        <position>
+          <x>-30</x>
+          <y>-40</y>
+        </position>
+      </pair>
+    </pairs>
+    <constraint1>1</constraint1>
+  </tutorialItem>
+
+  <tutorialItem>
+    <trigger>BuildingBuild</trigger>
+    <pairs>
+      <pair>
+        <text></text>
+      </pair>
+    </pairs>
+    <constraint1>1</constraint1>
+  </tutorialItem>
+  
+  <tutorialItem>
+    <trigger>MessageClose</trigger>
+    <pairs>
+      <pair><text>Speciální budova</text></pair>
+      <pair><text>Měnit 4 kusy jedné suroviny za 1 kus jiné suroviny je značně nevýhodné.</text></pair>
+      <pair><text>Lepší směnný kurz můžeš získat zakoupením licence v nové budově.</text></pair>
+      <pair><text>Novou speciální budovu tržiště můžeš postavit všude kromě hor.</text></pair>
+      <pair><text>V každém tržišti můžeš koupit až tři licence, pak musíš postavit tržiště další.</text></pair>
+      <pair><text>Přeji Ti hodně štěstí při objevování ostrova.</text></pair>
+    </pairs>
+  </tutorialItem>
+</tutorial>

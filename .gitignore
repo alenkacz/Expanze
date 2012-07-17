@@ -18,6 +18,7 @@ src/AIHard/obj
 src/AIGen/bin
 src/AIGen/obj
 src/Content/obj
+publish
 *.user
 *.zip
 *.cachefile

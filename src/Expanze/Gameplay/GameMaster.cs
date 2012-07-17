@@ -450,6 +450,8 @@ namespace Expanze
                             break;
                     }
                 }
+                if (playerAI == null)
+                    playerName = Settings.playerName;
                 Player player = new Player(playerName, playerColor, playerAI, playerOrder, playerPersonality, playerGen);
                 players.Add(player);
             }

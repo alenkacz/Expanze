@@ -35,6 +35,18 @@ namespace Expanze
         private bool disabled;
         private bool visible;
 
+        public bool DisabledOnly
+        {
+            get
+            {
+                return disabled;
+            }
+            set
+            {
+                disabled = value;
+            }
+        }
+
         public bool Disabled
         {
             get
@@ -272,7 +284,7 @@ namespace Expanze
 
                 if (picked)
                 {
-                    spriteBatch.Draw(pickedTexture, spritePosition, c);
+                    spriteBatch.Draw(pickedTexture, spritePosition - new Vector2(15, 25), c);
                 }
             }
 

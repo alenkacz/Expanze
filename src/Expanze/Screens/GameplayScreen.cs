@@ -361,7 +361,7 @@ namespace Expanze
                 gMaster.Update(gameTime);
                 InputManager.Inst().Update();
 
-                marketButton.Disabled = !MarketComponent.Inst().IsOpen;
+                marketButton.DisabledOnly = !MarketComponent.Inst().IsOpen;
                 marketButton.Visible = !Settings.banChangeSources;
                 foreach (GuiComponent guiComponent in guiComponents)
                 {
@@ -624,6 +624,10 @@ namespace Expanze
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeTown + " town", new Vector2(10, 140), Color.White);
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeHexa + " hexa", new Vector2(12, 162), Color.Black);
                 spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), Settings.activeHexa + " hexa", new Vector2(10, 160), Color.White);
+
+                String mousePos = "[" + Settings.UnScaleW(Mouse.GetState().X) + "; " + Settings.UnScaleH(Mouse.GetState().Y) + "]";
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), mousePos, new Vector2(12, 182), Color.Black);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.GameFont), mousePos, new Vector2(10, 180), Color.White);
                 
                 //spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig),  + " R", new Vector2(50, 50), Color.Black);
                 //spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBig), Settings.activeTown + " T", new Vector2(50, 80), Color.Black);

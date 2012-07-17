@@ -77,7 +77,7 @@ namespace Expanze
             inForEach = true;
             foreach (Trigger observer in observers[(int)type])
             {
-                if(observer.Restriction1() == restriction1)
+                if(observer.Restriction1() == restriction1 || observer.Restriction1() < 0)
                     observer.TurnOn();
             }
             inForEach = false;

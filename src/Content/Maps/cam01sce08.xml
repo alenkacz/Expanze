@@ -8,8 +8,16 @@
         <color>Blue</color>
         <AI>AI Gen</AI>
         <towns>
-          <id>14</id>
-          <id>10</id>
+          <town id="10">
+            <source-building>0</source-building>
+            <source-building>1</source-building>
+            <source-building>2</source-building>
+          </town>
+          <town id="14">
+            <source-building>2</source-building>
+            <source-building>1</source-building>
+            <source-building>0</source-building>
+          </town>
         </towns>
         <roads>
           <id>9</id>
@@ -30,8 +38,16 @@
         <color>Red</color>
         <AI>Human</AI>
         <towns>
-          <id>22</id>
-          <id>45</id>
+          <town id="22">
+            <source-building>0</source-building>
+            <source-building>1</source-building>
+            <source-building>2</source-building>
+          </town>
+          <town id="45">
+            <source-building>2</source-building>
+            <source-building>1</source-building>
+            <source-building>0</source-building>
+          </town>
         </towns>
         <roads>
           <id>50</id>
@@ -79,8 +95,8 @@
   </settings>
   <map-definition>
     <row>
-      <hexa type="space" />
-      <hexa type="space" />
+      <hexa type="water" />
+      <hexa type="water" />
       <hexa type="water" />
       <hexa type="water" />
       <hexa type="water" />

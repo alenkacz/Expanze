@@ -378,7 +378,7 @@ namespace Expanze.Gameplay.Map
 
             mWorld = hexaMapView[0][0].GetWorldMatrix() * Matrix.CreateTranslation(new Vector3(-dy, 0.0f, dx / 2.0f - hexaBorder * dx));
 
-            int maxRowWidth = hexaBorder * 2 + rowWidth;
+            int maxRowWidth = hexaBorder * 2 + rowWidth + 2;
             for (int loop1 = 0; loop1 < hexaBorder; loop1++)
             {
                 for (int loop2 = 0; loop2 < maxRowWidth; loop2++)
@@ -388,6 +388,7 @@ namespace Expanze.Gameplay.Map
                 }
                 mWorld = mWorld * Matrix.CreateTranslation(new Vector3(-dy, 0.0f, -dx / 2.0f - dx * (maxRowWidth - ((loop1 % 2 == 0) ? 1 : 0))));
             }
+            maxRowWidth -= 2;
 
             mWorld = hexaMapView[hexaMapView.Length - 1][hexaMapView[hexaMapView.Length - 1].Length - rowWidth].GetWorldMatrix() * Matrix.CreateTranslation(new Vector3(dy, 0.0f, dx / 2.0f - hexaBorder * dx));
             for (int loop1 = 0; loop1 < 3; loop1++)
