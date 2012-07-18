@@ -8,7 +8,7 @@ using CorePlugin.Attributes;
 namespace AIGen
 {
     [PluginAttributeAI("Goal driven AI")]
-    class AIGen : IComponentAI
+    public class AIGen : IComponentAI
     {
         IMapController mapController;
         ThinkGoal thinkGoal;

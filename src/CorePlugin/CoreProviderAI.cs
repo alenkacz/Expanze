@@ -13,6 +13,7 @@ using System.Text;
 using System.Reflection;
 using System.IO;
 using CorePlugin.Attributes;
+using AIGen;
 
 namespace CorePlugin
 {
@@ -39,23 +40,24 @@ namespace CorePlugin
             else
                 m_ai.Clear();
 
-            //m_ai.Add(new CalculatorHost()); // load the default
+            m_ai.Add(new AIGen.AIGen()); // load the default
 
+            /*
             List<Assembly> plugInAssemblies = LoadPlugInAssemblies();
             List<IComponentAI> plugIns = GetPlugIns(plugInAssemblies);
 
             foreach (IComponentAI pluginAI in plugIns)
             {
                 m_ai.Add(pluginAI);
-            }
+            }*/
         }
 
         private static List<Assembly> LoadPlugInAssemblies()
         {
-            DirectoryInfo dInfo = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, "Plugins"));
-            FileInfo[] files = dInfo.GetFiles("*.dll");
-
             List<Assembly> plugInAssemblyList = new List<Assembly>();
+
+            DirectoryInfo dInfo = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, "Content\\Plugins"));
+            FileInfo[] files = dInfo.GetFiles("*.dll");
 
             if (null != files)
             {
