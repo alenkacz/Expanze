@@ -116,6 +116,9 @@ namespace Expanze.Gameplay.Map
         {
             base.DrawBuildings(gameTime);
 
+            if (Settings.graphics == GraphicsQuality.LOW_GRAPHICS)
+                return;
+
             DrawSheeps(gameTime);
 
             Model m = GameResources.Inst().GetTreeModel(5);

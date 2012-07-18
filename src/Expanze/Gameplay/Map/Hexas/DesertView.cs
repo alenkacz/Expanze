@@ -28,6 +28,9 @@ namespace Expanze.Gameplay.Map
         {
             base.DrawBuildings(gameTime);
 
+            if (Settings.graphics == GraphicsQuality.LOW_GRAPHICS)
+                return;
+
             Model[] models = new Model[1];
             models[0] = GameResources.Inst().GetTreeModel(2);
 

@@ -270,6 +270,9 @@ namespace Expanze.Gameplay.Map
                 }
             }
 
+            if (Settings.graphics != GraphicsQuality.HIGH_GRAPHICS)
+                return;
+
             GameState.game.GraphicsDevice.BlendState = BlendState.AlphaBlend;
 
             // Draw on screen if 0 is the stencil buffer value   

@@ -23,6 +23,27 @@ namespace Expanze.Gameplay.Map
 
         public override void Draw(GameTime gameTime)
         {
+            if (Settings.graphics == GraphicsQuality.LOW_GRAPHICS)
+            {
+                bool hasNoWaterNeighbour = false;
+                for(int loop1 = 0; loop1 < 6; loop1++)
+                {
+                    HexaModel hexaModel = model.GetHexaNeighbour(loop1);
+                    if(hexaModel != null)
+                    {
+                        CorePlugin.HexaKind kind = hexaModel.GetKind();
+                        if (kind != CorePlugin.HexaKind.Water && kind != CorePlugin.HexaKind.Null && kind != CorePlugin.HexaKind.Nothing)
+                        {
+                            hasNoWaterNeighbour = true;
+                            break;
+                        }
+                    }
+                }
+
+                if(!hasNoWaterNeighbour)
+                    return;
+            }
+
             Model m = GameResources.Inst().GetHexaModel(CorePlugin.HexaKind.Water);
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);

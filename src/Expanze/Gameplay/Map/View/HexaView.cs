@@ -425,24 +425,31 @@ namespace Expanze
                     m = null;
                     break;
                 case BuildingKind.SourceBuilding:
-                    switch (kind)
+                    if (Settings.graphics == GraphicsQuality.LOW_GRAPHICS)
                     {
-                        case HexaKind.Cornfield:
-                            m = GameResources.Inst().GetBuildingModel(BuildingModel.Mill);
-                            break;
-                        case HexaKind.Forest:
-                            m = GameResources.Inst().GetBuildingModel(BuildingModel.Saw);
-                            break;
-                        case HexaKind.Stone:
-                            int tempPos = (intPos + hexaRotation) % 6;
-                            m = GameResources.Inst().GetStoneSourceBuildingModel(tempPos);
-                            rotation = (hexaRotation % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaRotation % 6));
-                            tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
-                            break;
-                        default:
-                            m = GameResources.Inst().GetBuildingModel(BuildingModel.PastureHouse);
-                            //roofID = 0;
-                            break;
+                        m = GameResources.Inst().GetBuildingModel(BuildingModel.SourceBuilding);
+                    }
+                    else
+                    {
+                        switch (kind)
+                        {
+                            case HexaKind.Cornfield:
+                                m = GameResources.Inst().GetBuildingModel(BuildingModel.Mill);
+                                break;
+                            case HexaKind.Forest:
+                                m = GameResources.Inst().GetBuildingModel(BuildingModel.Saw);
+                                break;
+                            case HexaKind.Stone:
+                                int tempPos = (intPos + hexaRotation) % 6;
+                                m = GameResources.Inst().GetStoneSourceBuildingModel(tempPos);
+                                rotation = (hexaRotation % 6 == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaRotation % 6));
+                                tempMatrix = Matrix.CreateScale(0.00028f) * rotation;
+                                break;
+                            default:
+                                m = GameResources.Inst().GetBuildingModel(BuildingModel.PastureHouse);
+                                //roofID = 0;
+                                break;
+                        }
                     }
                     break;
                 case BuildingKind.FortBuilding:

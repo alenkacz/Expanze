@@ -19,6 +19,12 @@ namespace Expanze.Gameplay.Map
         public override void DrawBuildings(GameTime gameTime)
         {
             base.DrawBuildings(gameTime);
+
+            if (Settings.graphics == GraphicsQuality.LOW_GRAPHICS)
+            {
+                return;
+            }
+
             GameResources gr = GameResources.Inst();
             Model m;
 

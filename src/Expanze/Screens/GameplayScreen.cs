@@ -157,9 +157,12 @@ namespace Expanze
                 GameAction switchWireModel = new GameAction("switchwiremodel", GameAction.ActionKind.OnlyInitialPress);
                 GameAction showPickingTexture = new GameAction("showpickingtexture", GameAction.ActionKind.OnlyInitialPress);
                 GameAction debugInfo = new GameAction("debuginfo", GameAction.ActionKind.OnlyInitialPress);
+
+                GameAction changeGraphicsQuality = new GameAction("graphicsquality", GameAction.ActionKind.OnlyInitialPress);
                 im.MapToKey(stateGame, debugInfo, Keys.A);
                 im.MapToKey(stateGame, switchWireModel, Keys.W);
                 im.MapToKey(stateGame, showPickingTexture, Keys.Q);
+                im.MapToKey(stateGame, changeGraphicsQuality, Keys.G);
 
                 im.MapToKey(stateGame, enablemessages, Keys.P);
                 im.MapToKey(stateGame, selectTown, Keys.T);
@@ -443,6 +446,16 @@ namespace Expanze
                 rasterizerState.FillMode = (GameState.wireModel) ? FillMode.WireFrame : FillMode.Solid;
                 GameState.rasterizerState = rasterizerState;
             }
+            if (InputManager.Inst().GetGameAction("game", "graphicsquality").IsPressed())
+            {
+                switch (Settings.graphics)
+                {
+                    case GraphicsQuality.HIGH_GRAPHICS: Settings.graphics = GraphicsQuality.LOW_GRAPHICS; break;
+                    case GraphicsQuality.MEDIUM_GRAPHICS: Settings.graphics = GraphicsQuality.HIGH_GRAPHICS; break;
+                    case GraphicsQuality.LOW_GRAPHICS: Settings.graphics = GraphicsQuality.MEDIUM_GRAPHICS; break;
+                }
+            }
+
             if (InputManager.Inst().GetGameAction("game", "debuginfo").IsPressed())
             {
                 GameState.debugInfo = !GameState.debugInfo;

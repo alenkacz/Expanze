@@ -47,8 +47,8 @@ namespace Expanze
 
     public enum BuildingModel
     {
-        PastureHouse, Saw, Mill, Fort, Market, Monastery, 
-        CountModel
+        PastureHouse, Saw, Mill, Fort, Market, Monastery, SourceBuilding,
+        CountModel  
     }
 
     public enum EFont
@@ -71,6 +71,7 @@ namespace Expanze
 
         public const int N_MODEL = 9;
         Model[] hexaModel;
+        Model[] hexaModelLow;
         public const int SHAPE_RECTANGLE = 0;
         public const int SHAPE_CIRCLE = 1;
         public const int SHAPE_SPHERE = 2;
@@ -106,6 +107,9 @@ namespace Expanze
 
         public Model GetHexaModel(HexaKind type)
         {
+            if (Settings.graphics == GraphicsQuality.LOW_GRAPHICS)
+                return hexaModelLow[(int)type];
+
             return hexaModel[(int)type];
         }
 
@@ -256,6 +260,17 @@ namespace Expanze
                 hexaModel[(int)HexaKind.Stone] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Stone]);
                 hexaModel[(int)HexaKind.Water] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Water]);
 
+                hexaModelLow = new Model[N_MODEL];
+                hexaModelLow[(int)HexaKind.Cornfield] = hexaModel[(int)HexaKind.Cornfield];
+                hexaModelLow[(int)HexaKind.Desert] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Desert] + "low");
+                hexaModelLow[(int)HexaKind.Forest] = hexaModel[(int)HexaKind.Forest];
+                hexaModelLow[(int)HexaKind.Mountains] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Mountains] + "low");
+                hexaModelLow[(int)HexaKind.Pasture] = hexaModel[(int)HexaKind.Pasture];
+                hexaModelLow[(int)HexaKind.Stone] = content.Load<Model>(Settings.hexaSrcPath[(int)HexaKind.Stone] + "low");
+                hexaModelLow[(int)HexaKind.Water] = hexaModel[(int)HexaKind.Water];
+
+
+
                 hexaTexture = new Texture2D[3];
                 hexaTexture[0] = content.Load<Texture2D>("Models/hexa_voda3");
                 hexaTexture[1] = content.Load<Texture2D>("Models/hexa_voda2");
@@ -302,6 +317,7 @@ namespace Expanze
                 buildingModel[(int)BuildingModel.Fort] = content.Load<Model>("Models/fort");
                 buildingModel[(int)BuildingModel.Market] = content.Load<Model>("Models/market");
                 buildingModel[(int)BuildingModel.Monastery] = content.Load<Model>("Models/monastery");
+                buildingModel[(int)BuildingModel.SourceBuilding] = content.Load<Model>("Models/sourcebuilding");
 
                 townModel = content.Load<Model>("Models/town");
                 roadModel = content.Load<Model>("Models/roadwithflag");

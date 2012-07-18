@@ -52,6 +52,12 @@ namespace Expanze.Gameplay.Map
 
         public override void DrawBuildings(GameTime gameTime)
         {
+            if (Settings.graphics == GraphicsQuality.LOW_GRAPHICS)
+            {
+                base.DrawBuildings(gameTime);
+                return;
+            }
+
             Matrix rotation;
             rotation = (hexaRotation == 0) ? Matrix.Identity : Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (hexaRotation));
             mineMatrix = Matrix.CreateScale(0.00028f) * rotation * world;

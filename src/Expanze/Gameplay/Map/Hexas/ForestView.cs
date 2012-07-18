@@ -97,6 +97,9 @@ namespace Expanze.Gameplay.Map
         {
             base.DrawBuildings(gameTime);
 
+            if (Settings.graphics == GraphicsQuality.LOW_GRAPHICS)
+                return;
+
             DrawTrees(gameTime);
         }
     }

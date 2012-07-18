@@ -7,6 +7,12 @@ using CorePlugin;
 
 namespace Expanze
 {
+    public enum GraphicsQuality {
+        LOW_GRAPHICS,
+        MEDIUM_GRAPHICS,
+        HIGH_GRAPHICS
+    }
+
     static class Settings
     {
         public static Vector2[] allResolutions = { new Vector2(800, 600), new Vector2(1024, 768), new Vector2(1280, 800), new Vector2(1366, 768) };
@@ -101,6 +107,7 @@ namespace Expanze
         public static bool banFortCaptureHexa = false;
         public static bool banFortStealSources = false;
 
+        public static GraphicsQuality graphics = GraphicsQuality.HIGH_GRAPHICS;
         public static Color colorHoverItem = Color.BurlyWood;
         public static Color colorHovorCorner = Color.AntiqueWhite;
         public static Color colorPassiveItem = Color.White;
