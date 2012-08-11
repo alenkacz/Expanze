@@ -64,7 +64,7 @@ namespace Expanze
             spritePosition.Y = 755;
             spritePosition.X = 350;
 
-            Player act = GameMaster.Inst().GetTargetPlayer();
+            Player act = GameMaster.Inst().LastHumanPlayer;
 
             spriteBatch.Draw(myButton, spritePosition, c);
             if (pick)

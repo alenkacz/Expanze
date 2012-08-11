@@ -8,7 +8,7 @@ namespace Expanze
 {
     class CornfieldHexa : HexaModel
     {
-        public CornfieldHexa(int value) : base(value, HexaKind.Cornfield, SourceKind.Corn, SourceBuildingKind.Mill, Settings.costMill)
+        public CornfieldHexa(int value, bool secretKind, bool secretProductivity) : base(value, HexaKind.Cornfield, secretKind, secretProductivity, SourceKind.Corn, SourceBuildingKind.Mill, Settings.costMill)
         {
         }
     }

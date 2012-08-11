@@ -8,7 +8,7 @@ namespace Expanze
 {
     class DesertHexa : HexaModel
     {
-        public DesertHexa() : base(0, HexaKind.Desert, SourceKind.Null, SourceBuildingKind.Count, new SourceAll(0))
+        public DesertHexa(bool secretKind, bool secretProductivity) : base(0, HexaKind.Desert, secretKind, secretProductivity, SourceKind.Null, SourceBuildingKind.Count, new SourceAll(0))
         {
         }
     }

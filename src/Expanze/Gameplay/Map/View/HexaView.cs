@@ -155,6 +155,9 @@ namespace Expanze
 
         private void DrawHexaIcon(SpriteBatch spriteBatch, Vector2 pos, Texture2D passive, Texture2D active)
         {
+            if (!GameMaster.Inst().LastHumanPlayer.GetIsDiscovered(hexaID) && model.SecretKind)
+                return;
+
             Texture2D text = passive;
             spriteBatch.Draw(text, new Vector2(pos.X - (text.Width >> 1), pos.Y - (text.Height >> 1)), Color.White);
             if (!pickVars.pickActive && activeHexaID != hexaID)
@@ -163,6 +166,36 @@ namespace Expanze
                 spriteBatch.Draw(text, new Vector2(pos.X - (text.Width >> 1), pos.Y - (text.Height >> 1)), Color.White);
             }
         }
+
+        public void DrawSecret()
+        {
+            Model m = GameResources.Inst().GetHexaModel(HexaKind.Desert);
+            Matrix[] transforms = new Matrix[m.Bones.Count];
+            m.CopyAbsoluteBoneTransformsTo(transforms);
+
+            GameState.game.GraphicsDevice.RasterizerState = GameState.rasterizerState;
+
+            for (int loop1 = 0; loop1 < m.Meshes.Count; loop1++)
+            {
+                ModelMesh mesh = m.Meshes[loop1];
+
+                foreach (BasicEffect effect in mesh.Effects)
+                {
+                    effect.LightingEnabled = true;
+                    effect.AmbientLightColor = GameState.SecretAmbientColor;
+                    effect.DirectionalLight0.Direction = GameState.LightDirection;
+                    effect.DirectionalLight0.DiffuseColor = GameState.LightDiffusionColor - new Vector3(0.5f);
+                    effect.DirectionalLight0.SpecularColor = GameState.SecretAmbientColor;
+                    effect.DirectionalLight0.Enabled = true;
+
+                    effect.World = transforms[mesh.ParentBone.Index] * worldM;
+                    effect.View = GameState.view;
+                    effect.Projection = GameState.projection;
+                }
+                mesh.Draw();
+            }
+        }
+
         private void DrawHexaIcon(SpriteBatch spriteBatch, Vector2 pos, HUDTexture passive, HUDTexture active)
         {
             DrawHexaIcon(spriteBatch, pos, GameResources.Inst().GetHudTexture(passive), GameResources.Inst().GetHudTexture(active));
@@ -176,10 +209,14 @@ namespace Expanze
             return;
              */
 
-            if (model.GetCurrentSource() == 0) // desert
+            if (model.GetCurrentSource() == 0 &&
+                (!model.SecretKind || GameMaster.Inst().LastHumanPlayer.GetIsDiscovered(hexaID))) // desert
                 return;
 
-            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), model.GetCurrentSource() + "", new Vector2(pos.X + 1, pos.Y + 1), Color.Black);
+            string textNumber = (model.SecretProductivity && !GameMaster.Inst().LastHumanPlayer.GetIsDiscovered(hexaID)) ? " ?" :
+                ((model.SecretKind && !GameMaster.Inst().LastHumanPlayer.GetIsDiscovered(hexaID)) ? model.GetStartSource() + "" : model.GetCurrentSource() + "");
+
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), textNumber, new Vector2(pos.X + 1, pos.Y + 1), Color.Black);
 
             Color numberColor;
             if (pickVars.pickActive)
@@ -190,7 +227,7 @@ namespace Expanze
             if (hexaID == activeHexaID)
                 numberColor = Color.IndianRed;
 
-            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), model.GetCurrentSource() + "", pos, numberColor);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), textNumber, pos, numberColor);
         }
 
         public void Draw2D()
@@ -330,6 +367,21 @@ namespace Expanze
 
         public virtual void DrawShadow(MapView mapView, Matrix shadow)
         {
+            if (roadView != null)
+                for (int loop1 = 0; loop1 < roadView.Length; loop1++)
+                    if (model.GetRoadOwner(loop1))
+                        roadView[loop1].DrawShadow(mapView, shadow);
+
+            if (townView != null)
+                for (int loop1 = 0; loop1 < roadView.Length; loop1++)
+                    if (model.GetTownOwner(loop1))
+                        townView[loop1].DrawShadow(mapView, shadow);
+
+            if (model.SecretKind && !GameMaster.Inst().LastHumanPlayer.GetIsDiscovered(hexaID))
+            {
+                return;
+            }
+
             Model m;
             Matrix tempMatrix;
 
@@ -358,20 +410,26 @@ namespace Expanze
 
                 mapView.DrawShadow(m, tempMatrix * world, shadow, banID);
             }
-            
-            if(roadView != null)
-                for (int loop1 = 0; loop1 < roadView.Length; loop1++)
-                    if (model.GetRoadOwner(loop1))
-                        roadView[loop1].DrawShadow(mapView, shadow);
-
-            if(townView != null)
-                for (int loop1 = 0; loop1 < roadView.Length; loop1++)
-                    if (model.GetTownOwner(loop1))
-                        townView[loop1].DrawShadow(mapView, shadow);
         }
 
         public virtual void Draw(GameTime gameTime)
         {
+            for (int loop1 = 0; loop1 < roadView.Length; loop1++)
+                if (model.GetRoadOwner(loop1))
+                    roadView[loop1].Draw(gameTime);
+
+
+            for (int loop1 = 0; loop1 < roadView.Length; loop1++)
+                if (model.GetTownOwner(loop1))
+                    townView[loop1].Draw(gameTime);
+
+            if (model.SecretKind && !GameMaster.Inst().LastHumanPlayer.GetIsDiscovered(hexaID))
+            {
+                DrawSecret();
+                return;
+            }
+
+            DrawBuildings(gameTime);
 
             Model m = GameResources.Inst().GetHexaModel(kind);
 
@@ -397,17 +455,6 @@ namespace Expanze
                 }
                 mesh.Draw();
             }
-
-            DrawBuildings(gameTime);
-
-            for (int loop1 = 0; loop1 < roadView.Length; loop1++)
-                if (model.GetRoadOwner(loop1))
-                    roadView[loop1].Draw(gameTime);
-
-
-            for (int loop1 = 0; loop1 < roadView.Length; loop1++)
-                if (model.GetTownOwner(loop1))
-                    townView[loop1].Draw(gameTime);
         }
 
         private Model GetBuildingModel(TownPos townPos, out Matrix tempMatrix)
@@ -473,6 +520,9 @@ namespace Expanze
 
         public virtual void DrawBuildings(GameTime gameTime)
         {
+            if (!GameMaster.Inst().LastHumanPlayer.GetIsDiscovered(hexaID) && model.SecretKind)
+                return;
+
             for (int loop1 = 0; loop1 < 6; loop1++)
             {
                 if (!townView[loop1].getBuildingIsBuild(model.GetID()))

@@ -71,7 +71,7 @@ namespace Expanze.Gameplay.Map
         /// <param name="item">Item added to queue</param>
         public void Add(ItemQueue item, bool forceIt)
         {
-            if (ENQUEUE_TIME == 0 || forceIt)
+            if (ENQUEUE_TIME == 0 || forceIt || GameMaster.Inst().GetState() == CorePlugin.EGameState.BeforeGame)
             {
                 item.Execute();
             } else

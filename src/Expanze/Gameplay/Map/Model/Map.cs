@@ -167,6 +167,7 @@ namespace Expanze.Gameplay.Map
             target = new Vector3(0.0f, 0.0f, 0.0f);
             up = new Vector3(0.1f, 0.8f, 0.0f);
             eye = new Vector3(0.4f, 1.5f, 0.0f);
+            GameState.SecretAmbientColor = new Vector3(0.0f, 0.0f, 0.0f);
             GameState.MaterialAmbientColor = new Vector3(0.1f, 0.1f, 0.1f);
             GameState.LightDirection = new Vector3(-1.0f, -0.5f, 0.0f);
             GameState.view = Matrix.CreateLookAt(eye, target, up);

@@ -28,8 +28,11 @@ namespace Expanze
 
         int[] buildingCount;
 
+        int maxSource;
         LicenceKind[] licenceMarket;
         UpgradeKind[] upgradeMonastery;
+
+        bool[] discoveredHexa;
 
         List<IMonastery> monastery;
         List<IMarket> market;
@@ -76,6 +79,7 @@ namespace Expanze
             {
                 upgradeMonastery[loop1] = UpgradeKind.NoUpgrade;
             }
+            maxSource = 500;
 
             this.color = color;
             this.name = name;
@@ -129,17 +133,26 @@ namespace Expanze
             }
         }
 
-        public void AddRoad(IRoad t) { 
-            road.Add(t);
+        public void AddRoad(IRoad r) { 
+            road.Add(r);
             AddPoints(PlayerPoints.Road);
             AddBuilding(Building.Road);
 
             foreach (int id in Settings.goalRoad)
             {
-                if (id == t.GetRoadID())
+                if (id == r.GetRoadID())
                 {
                     AddPoints(PlayerPoints.RoadID);
                     break;
+                }
+            }
+
+            foreach (ITown t in r.GetITown())
+            {
+                for(byte loop1 = 0; loop1 <= 2; loop1++)
+                {
+                    if(t.GetIHexa(loop1).GetKind() != HexaKind.Water)
+                        discoveredHexa[t.GetIHexa(loop1).GetID() - 1] = true;
                 }
             }
         }
@@ -328,8 +341,28 @@ namespace Expanze
                     break;
                 case TransactionState.TransactionEnd :
                     transactionSource = transactionSource + amount;
-                    source = source + transactionSource;               
-                    ChangeSources(transactionSource.GetWood(), transactionSource.GetStone(), transactionSource.GetCorn(), transactionSource.GetMeat(), transactionSource.GetOre());
+                    int changeCorn;
+                    if (source.GetCorn() + transactionSource.GetCorn() > maxSource)
+                        changeCorn = maxSource - source.GetCorn();
+                    else changeCorn = transactionSource.GetCorn();
+                    int changeMeat;
+                    if (source.GetMeat() + transactionSource.GetMeat() > maxSource)
+                        changeMeat = maxSource - source.GetMeat();
+                    else changeMeat = transactionSource.GetMeat();
+                    int changeStone;
+                    if (source.GetStone() + transactionSource.GetStone() > maxSource)
+                        changeStone = maxSource - source.GetStone();
+                    else changeStone = transactionSource.GetStone();
+                    int changeWood;
+                    if (source.GetWood() + transactionSource.GetWood() > maxSource)
+                        changeWood = maxSource - source.GetWood();
+                    else changeWood = transactionSource.GetWood();
+                    int changeOre;
+                    if (source.GetOre() + transactionSource.GetOre() > maxSource)
+                        changeOre = maxSource - source.GetOre();
+                    else changeOre = transactionSource.GetOre();
+                    source = source + new SourceAll(changeCorn, changeMeat, changeStone, changeWood, changeOre);               
+                    ChangeSources(changeWood, changeStone, changeCorn, changeMeat, changeOre);
                     transactionSource = new SourceAll(0);
                     break;
             }
@@ -458,6 +491,16 @@ namespace Expanze
         internal bool GetGen()
         {
             return gen;
+        }
+
+        internal void InitNewGame()
+        {
+            discoveredHexa = new bool[HexaModel.GetHexaCount()];
+        }
+
+        internal bool GetIsDiscovered(int hexaID)
+        {
+            return discoveredHexa[hexaID - 1];
         }
     }
 }

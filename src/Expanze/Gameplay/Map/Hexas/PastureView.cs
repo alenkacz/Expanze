@@ -93,6 +93,11 @@ namespace Expanze.Gameplay.Map
         {
             base.DrawShadow(mapView, shadow);
 
+            if (model.SecretKind && !GameMaster.Inst().LastHumanPlayer.GetIsDiscovered(hexaID))
+            {
+                return;
+            }
+
             Model m = GameResources.Inst().GetTreeModel(5);
             mapView.DrawShadow(m, worldM, shadow);
 

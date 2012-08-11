@@ -35,6 +35,20 @@ namespace Expanze
         private static IFort hexaFort;     /// from which hexa are soldiers send to capturing/destroying hexas?
         SourceAll sourceBuildingCost;      /// source cost of building according hexa kind
 
+        private bool secretKind;
+
+        public bool SecretKind
+        {
+            get { return secretKind; }
+            set { secretKind = value; }
+        }
+        private bool secretProductivity;
+
+        public bool SecretProductivity
+        {
+            get { return secretProductivity; }
+            set { secretProductivity = value; }
+        }
         private HexaKind kind;
         private SourceKind sourceKind;
         private SourceBuildingKind buildingKind;
@@ -47,9 +61,9 @@ namespace Expanze
 
 
 
-        public HexaModel() : this(0, HexaKind.Water, SourceKind.Null, SourceBuildingKind.Count, new SourceAll(0)) { }
+        public HexaModel() : this(0, HexaKind.Water, false, false, SourceKind.Null, SourceBuildingKind.Count, new SourceAll(0)) { }
 
-        public HexaModel(int value, HexaKind kind, SourceKind sourceKind, SourceBuildingKind buildingKind,SourceAll sourceBuildingCost)
+        public HexaModel(int value, HexaKind kind, bool secretKind, bool secretProductivity, SourceKind sourceKind, SourceBuildingKind buildingKind,SourceAll sourceBuildingCost)
         {
             if (kind == HexaKind.Water)
             {
@@ -62,6 +76,8 @@ namespace Expanze
             this.kind = kind;
             this.sourceKind = sourceKind;
             this.buildingKind = buildingKind;
+            this.secretKind = secretKind;
+            this.secretProductivity = secretProductivity;
 
             this.startSource = value;
             this.towns = new TownModel[(int) TownPos.Count];

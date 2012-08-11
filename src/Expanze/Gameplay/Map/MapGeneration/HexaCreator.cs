@@ -11,24 +11,24 @@ namespace Expanze
     /// </summary>
     class HexaCreator
     {
-        public static HexaModel create(HexaKind type, int number)
+        public static HexaModel create(HexaKind type, int number, bool secretKind, bool secretProductivity)
         {
             switch (type)
             {
                 case HexaKind.Cornfield:
-                    return new CornfieldHexa(number);
+                    return new CornfieldHexa(number, secretKind, secretProductivity);
                 case HexaKind.Desert:
-                    return new DesertHexa();
+                    return new DesertHexa(secretKind, secretProductivity);
                 case HexaKind.Forest:
-                    return new ForestHexa(number);
+                    return new ForestHexa(number, secretKind, secretProductivity);
                 case HexaKind.Mountains:
-                    return new MountainsHexa(number);
+                    return new MountainsHexa(number, secretKind, secretProductivity);
                 case HexaKind.Pasture:
-                    return new PastureHexa(number);
+                    return new PastureHexa(number, secretKind, secretProductivity);
                 case HexaKind.Stone:
-                    return new StoneHexa(number);
+                    return new StoneHexa(number, secretKind, secretProductivity);
                 case HexaKind.Water:
-                    return new WaterHexa();
+                    return new WaterHexa(secretKind, secretProductivity);
                 case HexaKind.Nothing:
                     return null;
                 default:

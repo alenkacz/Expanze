@@ -10,7 +10,7 @@ namespace Expanze
     class MapParser
     {
         XmlDocument xDoc;
-        System.Random generator = new System.Random();
+        System.Random random = new System.Random();
 
         Dictionary<int,int> lowProductivityList;
         Dictionary<int, int> mediumProductivityList;
@@ -69,19 +69,63 @@ namespace Expanze
                 {
                     HexaKind type = HexaKind.Nothing;
                     int hexanum = 0;
+                    bool secretProductivity = false;
+                    bool secretKind = false;
+
                     foreach (XmlAttribute attribute in hexas[loop1].Attributes)
                     {
-                        if (attribute.Name == "type")
-                            type = decideType(attribute.Value);
-                        if (attribute.Name == "productivity")
-                            hexanum = Convert.ToInt32(attribute.Value);
+                        switch(attribute.Name)
+                        {
+                            case "type" :
+                                type = decideType(attribute.Value);
+                                break;
+                            case "productivity" :
+                                hexanum = decideProductivity(attribute.Value);
+                                break;
+                            case "secretKind" :
+                                secretKind = (attribute.Value == "yes") ? true : false;
+                                break;
+
+                            case "secretProductivity":
+                                secretProductivity = (attribute.Value == "yes") ? true : false;
+                                break;
+                        }
                     }
 
-                    map[i][loop1] = HexaCreator.create(type, hexanum);
+                    map[i][loop1] = HexaCreator.create(type, hexanum, secretKind, secretProductivity);
                 }
 
             }           
             return map;
+        }
+
+        private int decideProductivity(string productivity)
+        {
+            double rndNumber = random.NextDouble();
+            if (productivity == "+")
+            {
+                if (rndNumber < 0.25) return  16;
+                if (rndNumber < 0.75) return  20;
+                return 24;
+            }
+            else if (productivity == "-")
+            {
+                if (rndNumber < 0.25) return 8;
+                if (rndNumber < 0.75) return 12;
+                return 16;
+            }
+            else if (productivity == "?")
+            {
+                if (rndNumber < 1.0 / 5.0) return 8;
+                if (rndNumber < 2.0 / 5.0) return 12;
+                if (rndNumber < 3.0 / 5.0) return 16;
+                if (rndNumber < 4.0 / 5.0) return 20;
+                return 24;
+            }
+            else
+            {
+                return Convert.ToInt32(productivity);
+            }
         }
 
         public HexaModel[][] parse(string mapSize, string mapType, string mapWealth)
@@ -95,7 +139,7 @@ namespace Expanze
             //TODO user number parameter
             xDoc.Load("Content/Maps/" + mapSize + ".xml");
 
-            decideProductivity(mapWealth);
+            decideProductivityList(mapWealth);
             decideMapType(mapType);
 
             XmlNodeList productivities = xDoc.GetElementsByTagName("productivity");
@@ -169,7 +213,7 @@ namespace Expanze
                     }
 
 
-                    map[i][j] = HexaCreator.create(type, hexanum);
+                    map[i][j] = HexaCreator.create(type, hexanum, false, false);
                 }
                 
             }
@@ -177,7 +221,7 @@ namespace Expanze
             return map;
         }
 
-        private void decideProductivity(string s) {
+        private void decideProductivityList(string s) {
 
             if (s == "low")
             {
@@ -301,8 +345,8 @@ namespace Expanze
 
             for (int loop1 = 0; loop1 < rndIndex.Length * 3; loop1++)
             {
-                id1 = generator.Next() % rndIndex.Length;
-                id2 = generator.Next() % rndIndex.Length;
+                id1 = random.Next() % rndIndex.Length;
+                id2 = random.Next() % rndIndex.Length;
 
                 int temp = rndIndex[id1];
                 rndIndex[id1] = rndIndex[id2];
@@ -462,6 +506,7 @@ namespace Expanze
         /// <returns></returns>
         private HexaKind decideType(String type)
         {
+            double rndNumber = random.NextDouble();
             switch (type)
             {
                 case "cornfield":
@@ -471,6 +516,7 @@ namespace Expanze
                 case "desert":
                     return HexaKind.Desert;
                 case "mountains":
+                case "mountain" :
                     return HexaKind.Mountains;
                 case "pasture":
                     return HexaKind.Pasture;
@@ -478,6 +524,20 @@ namespace Expanze
                     return HexaKind.Stone;
                 case "water":
                     return HexaKind.Water;
+                case "2" :
+                    return (rndNumber < 0.5 ? HexaKind.Stone : HexaKind.Mountains);
+                case "3" :
+                    if (rndNumber < 1.0 / 3.0) return HexaKind.Forest;
+                    if (rndNumber < 2.0 / 3.0) return HexaKind.Cornfield;
+                    return HexaKind.Pasture;
+                case "?":
+                    if (rndNumber < 1.0 / 6.0) return HexaKind.Forest;
+                    if (rndNumber < 2.0 / 6.0) return HexaKind.Cornfield;
+                    if (rndNumber < 3.0 / 6.0) return HexaKind.Pasture;
+                    if (rndNumber < 4.0 / 6.0) return HexaKind.Stone;
+                    if (rndNumber < 5.0 / 6.0) return HexaKind.Mountains;
+                    return HexaKind.Desert;
+
                 case "nothing" :
                 case "space":
                     return HexaKind.Nothing;

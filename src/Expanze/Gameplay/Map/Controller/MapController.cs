@@ -1094,7 +1094,6 @@ namespace Expanze.Gameplay.Map
             hexaByID = new IHexa[HexaModel.GetHexaCount()];
             for (int loop1 = 0; loop1 < hexaByID.Length; loop1++)
                 hexaByID[loop1] = null;
-
         }
 
         public void Log(string srcFile, string msg)

@@ -30,6 +30,12 @@ namespace Expanze
 
         private Player activePlayer;
         private Player targetPlayer;
+        private Player lastHumanPlayer;
+
+        internal Player LastHumanPlayer
+        {
+            get { return lastHumanPlayer; }
+        }
 
         private int activePlayerIndex;
         private EGameState state;
@@ -112,6 +118,8 @@ namespace Expanze
 
             IComponentAI AI;
             int[][] setArray;
+
+            lastHumanPlayer = players[0];
             for(int loop1 = 0; loop1 < players.Count; loop1++)
             {
                 setArray = players[loop1].GetPersonality();
@@ -143,6 +151,10 @@ namespace Expanze
 #endif
 
                     AI.InitAIComponent(map.GetMapController(), setArray);
+                }
+                else
+                {
+                    lastHumanPlayer = players[loop1];
                 }
             }
 
@@ -187,7 +199,7 @@ namespace Expanze
 
             if(tutorial)
                 Tutorial.Inst().TurnOn();
-            StartTurn();
+            StartTurn(false);
             return true;
         }
 
@@ -476,6 +488,8 @@ namespace Expanze
         {
             if (mapSource == null)  // neni kampan
                 return;
+
+            InitPlayers();
 
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load("Content/Maps/" + mapSource);
@@ -789,7 +803,7 @@ namespace Expanze
         public void SetHasBuiltTown(bool hasBuiltTown) { this.hasBuiltTown = hasBuiltTown; }
         public void SetFortState(EFortState state) { fortState = state; }
 
-        public bool StartTurn()
+        public bool StartTurn(bool collectSources)
         {
             if (state == EGameState.StateFirstTown)
             {
@@ -802,7 +816,9 @@ namespace Expanze
                 if(!Settings.banRandomEvents && turnNumber > 2)
                     RandomEvents();
 #endif
-                GameState.map.getSources(activePlayer);
+                if(collectSources)
+                    GameState.map.getSources(activePlayer);
+
                 GameState.map.FreeCapturedHexa(activePlayer);
             }
 
@@ -879,7 +895,7 @@ namespace Expanze
             targetPlayer = activePlayer;
             hasBuiltTown = false;
 
-            status &= StartTurn();
+            status &= StartTurn(true);
 
             map.NextTurn();
             TownView.ResetTownView();
@@ -1147,6 +1163,8 @@ namespace Expanze
             }
 
             activePlayer = players[activePlayerIndex];
+            if (!activePlayer.GetIsAI())
+                lastHumanPlayer = activePlayer;
 
             if (state == EGameState.StateGame && activePlayerIndex == 0)
                 turnNumber++;
@@ -1365,6 +1383,14 @@ namespace Expanze
         internal Map GetMap()
         {
             return map;
+        }
+
+        internal void InitPlayers()
+        {
+            foreach (Player player in players)
+            {
+                player.InitNewGame();
+            }
         }
     }
 }
