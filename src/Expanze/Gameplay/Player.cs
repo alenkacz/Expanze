@@ -168,6 +168,12 @@ namespace Expanze
                     break;
                 }
             }
+
+            for (byte loop1 = 0; loop1 <= 2; loop1++)
+            {
+                if (t.GetIHexa(loop1).GetKind() != HexaKind.Water)
+                    discoveredHexa[t.GetIHexa(loop1).GetID() - 1] = true;
+            }
         }
         public List<ITown> GetTown() { return town; }
 

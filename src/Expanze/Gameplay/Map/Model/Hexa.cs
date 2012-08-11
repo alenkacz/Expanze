@@ -606,6 +606,8 @@ namespace Expanze
             if (hexaFort.GetHexaID() == hexaID)
                 return true;
 
+            if (secretKind && !GameMaster.Inst().LastHumanPlayer.GetIsDiscovered(hexaID))
+                return false;
 
             for (int loop1 = 0; loop1 < 6; loop1++)
             {

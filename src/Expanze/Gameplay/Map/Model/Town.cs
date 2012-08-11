@@ -319,6 +319,12 @@ namespace Expanze
                         hasActivePlayerRoadNeighbour = true;
                 }
 
+                foreach (HexaModel hexa in hexaNeighbour)
+                {
+                    if (hexa.GetCapturedPlayer() != null && hexa.GetCapturedPlayer() == activePlayer)
+                        hasActivePlayerRoadNeighbour = true;
+                }
+
                 if (!hasActivePlayerRoadNeighbour)
                 {
                     GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_PLAYER_ROAD);

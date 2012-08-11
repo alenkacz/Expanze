@@ -185,7 +185,6 @@ namespace Expanze
             if (playerCount == 1)
             {
                 Settings.banFortStealSources = true;
-                Settings.banFortCaptureHexa = true;
             }
             if (Settings.pointsFortParade == 0)
                 Settings.banFortParade = true;
