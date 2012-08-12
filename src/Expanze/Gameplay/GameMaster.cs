@@ -198,7 +198,7 @@ namespace Expanze
 
             if(tutorial)
                 Tutorial.Inst().TurnOn();
-            StartTurn(false);
+            StartTurn(true);
             return true;
         }
 

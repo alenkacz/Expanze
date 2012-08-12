@@ -905,6 +905,12 @@ namespace Expanze.Gameplay.Map
         {
             FindWaysToAllTowns(player);
 
+            for (byte loop1 = 0; loop1 <= 2; loop1++)
+            {
+                if (town.GetIHexa(loop1).GetCapturedIPlayer() == player)
+                    return 0;
+            }
+
             TownModel townModel = (TownModel)town;
             return townModel.GetPathNode().GetDistance();
         }
@@ -914,6 +920,12 @@ namespace Expanze.Gameplay.Map
             FindWaysToAllTowns(player);
 
             List<IRoad> roadWay = new List<IRoad>();
+            for (byte loop1 = 0; loop1 <= 2; loop1++)
+            {
+                if (town.GetIHexa(loop1).GetCapturedIPlayer() == player)
+                    return roadWay;
+            }
+
 
             TownModel townModel = (TownModel)town;
 

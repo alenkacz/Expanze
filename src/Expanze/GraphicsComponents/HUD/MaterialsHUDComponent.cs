@@ -30,7 +30,7 @@ namespace Expanze
         {
             base.Update(gameTime);
 
-            Player act = GameMaster.Inst().GetTargetPlayer();
+            Player act = GameMaster.Inst().LastHumanPlayer;
 
             if (act.HasMaterialChanged())
             {
