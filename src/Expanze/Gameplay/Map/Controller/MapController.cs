@@ -521,7 +521,7 @@ namespace Expanze.Gameplay.Map
                 return CaptureHexaError.NoSources;
             }
 
-            if (hexa.GetKind() == HexaKind.Desert || hexa.GetKind() == HexaKind.Water || hexa.GetKind() == HexaKind.Null)
+            if (hexa.GetKind() == HexaKind.Water || hexa.GetKind() == HexaKind.Null)
                 return CaptureHexaError.Desert;
 
             if (hexa == null)
@@ -548,6 +548,20 @@ namespace Expanze.Gameplay.Map
             return false;
         }
 
+
+        public bool IsInFortRadius(IHexa hexa, IPlayer player)
+        {
+            List<IFort> forts = player.GetFort();
+
+            foreach (IFort fort in forts)
+            {
+                HexaModel.SetHexaFort(fort);
+                HexaModel model = (HexaModel)hexa;
+                if (model.IsInFortRadius())
+                    return true;
+            }
+            return false;
+        }
 
         public DestroyHexaError CanDestroyHexa(int hexaID, IFort fort)
         {

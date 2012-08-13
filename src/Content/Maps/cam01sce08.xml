@@ -5,9 +5,9 @@
     <players>
       <player>
         <name>Alessandro Malas</name>
-        <color>Yellow</color>
+        <color>Green</color>
         <AI>AI Gen</AI>
-        <personality>346;  5; 88;  7;;397; 66;;609; 51; 21; 28;;105; 32; 18; 39; 11;;603; 65;;231; 43; 13; 10; 12; 22;; 67;  7; 46; 28; 15;  4;;338; 87;;535; 46;; 11; 73;;355; 85;;292;  1; 60; 39;;971;  7;;167; 64; 18; 18;;225; 18; 22; 32; 28;;179; 20;;656; 24; 28; 20; 10; 18;;977; 36;  6; 12; 27; 19;;340; 29;;546; 61;;337; 82;; 43; 27;;</personality>
+        <personality>100;30;70;0;50;10;20000;100;0;0;500;10;0;90;5;0;0;0;0;0;0;0;0;50;100;0;0;0;0;1000;0;0;0;0;0;400;0;1000;30;70;0;50;10;1000;100;0;0;5000;10;0;90;0;0;0;0;0;0;0;0;0;50;100;0;0;0;0;1000;0;0;0;1;0;400;0</personality>
         <towns>
           <town id="10">
             <source-building>0</source-building>
@@ -32,7 +32,7 @@
         <name>Alex Humboldt</name>
         <color>Orange</color>
         <AI>AI Gen</AI>
-        <personality>1000;30;70;0;50;10;250;100;0;0;500;30;20;0;50;0;0;0;0;0;0;0;0;50;100;0;0;0;0;1000;0;0;0;0;0;400;0;1000;30;70;0;50;10;50;100;0;0;500;30;20;0;50;0;0;0;0;0;0;0;0;50;100;0;0;0;0;1000;0;0;0;0;0;400;0</personality>
+        <personality>100;30;70;0;50;10;20000;100;0;0;500;10;0;90;5;0;0;0;0;0;0;0;0;50;100;0;0;0;0;1000;0;0;0;0;0;400;0;1000;30;70;0;50;10;1000;100;0;0;5000;10;0;90;0;0;0;0;0;0;0;0;0;50;100;0;0;0;0;1000;0;0;0;1;0;400;0</personality>
         <towns>
           <town id="15">
             <source-building>0</source-building>
@@ -81,7 +81,7 @@
         <name>Mungo Park</name>
         <color>Purple</color>
         <AI>AI Gen</AI>
-        <personality>1000;30;70;0;50;10;250;100;0;0;500;30;20;0;50;0;0;0;0;0;0;0;0;50;100;0;0;0;0;1000;0;0;0;0;0;400;0;1000;30;70;0;50;10;50;100;0;0;500;30;20;0;50;0;0;0;0;0;0;0;0;50;100;0;0;0;0;1000;0;0;0;0;0;400;0</personality>
+        <personality>100;30;70;0;50;10;20000;100;0;0;500;10;0;90;5;0;0;0;0;0;0;0;0;50;100;0;0;0;0;1000;0;0;0;0;0;400;0;1000;30;70;0;50;10;1000;100;0;0;5000;10;0;90;0;0;0;0;0;0;0;0;0;50;100;0;0;0;0;1000;0;0;0;1;0;400;0</personality>
         <towns>
           <town id="90">
             <source-building>0</source-building>
@@ -122,7 +122,7 @@
         <Mine>0</Mine>
         <FortCapture>0</FortCapture>
         <FortSteal>0</FortSteal>
-        <turnLimit>100</turnLimit>
+        <turnLimit>50</turnLimit>
 	</points>
 	<ban>
 		<Fort>0</Fort>
@@ -166,18 +166,18 @@
 	<row>
       <hexa type="water" />
       <hexa type="2" productivity="-" secretProductivity="yes" />
-      <hexa type="desert" />
+      <hexa type="3" productivity="+" secretProductivity="yes" />
       <hexa type="3" productivity="+" secretProductivity="yes" />
       <hexa type="water" />
-      <hexa type="2" productivity="-" secretProductivity="yes" />
       <hexa type="desert" />
+      <hexa type="2" productivity="-" secretProductivity="yes" />
       <hexa type="water" />
     </row>
     <row>
       <hexa type="space" />
       <hexa type="water" />
       <hexa type="3" productivity="+" secretProductivity="yes" />
-      <hexa type="3" productivity="+" secretProductivity="yes" />
+      <hexa type="desert" />
       <hexa type="water" />
       <hexa type="water" />
       <hexa type="water" />

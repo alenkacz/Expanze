@@ -23,6 +23,7 @@ namespace AIGen
     class BuildTown : CompositeGoal
     {
         ITown lastBestTown;
+        IHexa lastBestCapture;
 
         double kNearestTown;
         double kTownItself;
@@ -60,23 +61,33 @@ namespace AIGen
                     {
                         List<IRoad> path = map.GetRoadsToTown(lastBestTown, map.GetPlayerMe());
 
-                        
-
                         List<ISourceAll> sourceList = new List<ISourceAll>();
-                        sourceList.Add(map.GetPrice(PriceKind.BTown));
 
-                        for (int loop1 = 0; loop1 < path.Count; loop1++)
+                        if (lastBestCapture == null)
                         {
-                            sourceList.Add(map.GetPrice(PriceKind.BRoad));
+                            sourceList.Add(map.GetPrice(PriceKind.BTown));
+                            for (int loop1 = 0; loop1 < path.Count; loop1++)
+                            {
+                                sourceList.Add(map.GetPrice(PriceKind.BRoad));
+                            }
+                        }
+                        else
+                        {
+                            sourceList.Add(map.GetPrice(PriceKind.ACaptureHexa));
+                            sourceList.Add(map.GetPrice(PriceKind.BTown));
                         }
 
                         AddSubgoal(new RaiseSources(map, sourceList, depth + 1));
 
-                        for (int loop1 = 0; loop1 < path.Count; loop1++)
+                        if (lastBestCapture == null)
                         {
-                            AddSubgoal(new BuildRoadAtom(map, path[loop1], depth + 1));
+                            for (int loop1 = 0; loop1 < path.Count; loop1++)
+                            {
+                                AddSubgoal(new BuildRoadAtom(map, path[loop1], depth + 1));
+                            }
+                        } else {
+                            AddSubgoal(new FortCaptureHexaAtom(map, lastBestCapture, depth + 1));
                         }
-
                         AddSubgoal(new BuildTownAtom(map, lastBestTown, depth + 1));
 
                         lastBestTown = null;
@@ -229,8 +240,11 @@ namespace AIGen
         {
             double bestFitness = 0.0f;
             double tempDesirability;
+            IHexa tempCapture;
+
             ITown tempTown;
             lastBestTown = null;
+            lastBestCapture = null;
 
             if (map.GetState() != EGameState.StateGame)
                 return Double.MaxValue;
@@ -252,14 +266,28 @@ namespace AIGen
                 {
                     tempTown = map.GetITownByID(loop1);
                     tempDesirability = GetDesirability(tempTown);
+                    tempCapture = null;
 
                     /// it is not possible to build town on that place
                     if (tempDesirability < 0.01)
                         continue;
 
                     int dst = map.GetDistanceToTown(tempTown, map.GetPlayerMe());
-                    if (dst > 20)
-                        continue;
+
+                    for (byte loop2 = 0; loop2 <= 2; loop2++)
+                    {
+                        CaptureHexaError error = map.CanCaptureHexa(tempTown.GetIHexa(loop2));
+                        if (error == CaptureHexaError.OK || error == CaptureHexaError.NoSources)
+                        {
+                            tempCapture = tempTown.GetIHexa(loop2);
+                            break;
+                        }
+                    }
+
+                    if (dst > 20 && tempCapture == null)
+                    {
+                            continue;
+                    }
 
                     count = CountNearestTowns(tempTown);
 
@@ -267,13 +295,21 @@ namespace AIGen
                     tempDesirability = tempDesirability * kTownItself + (count / (double)maxCount) * kNearestTown +
                         ((points > 0) ? 1.0f : 0.0f) * kPoints;
 
-                    double coef = (dst <= 2) ? 1 - (dst * 0.1) : 1 - (dst * 0.15);
+                    double coef;
+                    coef = (dst <= 2) ? 1 - (dst * 0.1) : 1 - (dst * 0.15);
+
+                    if (tempCapture != null && coef < 0.5)
+                        coef = 0.95;
+                    else
+                        tempCapture = null;
+
                     tempDesirability = tempDesirability * coef;
 
                     if (tempDesirability > bestFitness)
                     {
                         bestFitness = tempDesirability;
                         lastBestTown = tempTown;
+                        lastBestCapture = tempCapture;
                     }
                 }
             }
@@ -316,7 +352,7 @@ namespace AIGen
             return fitness;
         }*/
 
-        private double GetDesirability(ITown town)
+        public double GetDesirability(ITown town)
         {
             if (town == null)
                 return 0.0;

@@ -168,6 +168,8 @@ namespace CorePlugin
         int GetDistanceToRoad(IRoad road, IPlayer player);
         List<IRoad> GetRoadsToTown(ITown town, IPlayer player);
 
+        bool IsInFortRadius(IHexa hexa, IPlayer player);
+
         /// <summary>
         /// Min ID is 1 (not 0!)
         /// </summary>

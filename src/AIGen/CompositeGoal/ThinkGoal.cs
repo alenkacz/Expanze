@@ -67,13 +67,14 @@ namespace AIGen
             mainGoals = new LinkedList<MainGoal>();
 
             BuildSourceBuilding buildSourceBuilding = new BuildSourceBuilding(map, coeficients[offset + 2][1], coeficients[offset + 2][2], coeficients[offset + 2][3], depth + 1);
-            mainGoals.AddLast(new MainGoal(new BuildTown(map, coeficients[offset + 0][1], coeficients[offset + 0][2], coeficients[offset + 0][3], depth + 1, buildSourceBuilding), coeficients[offset + 0][0]));
+            BuildTown buildTown = new BuildTown(map, coeficients[offset + 0][1], coeficients[offset + 0][2], coeficients[offset + 0][3], depth + 1, buildSourceBuilding);
+            mainGoals.AddLast(new MainGoal(buildTown, coeficients[offset + 0][0]));
             mainGoals.AddLast(new MainGoal(new BuildRoad(map, coeficients[offset + 1][1], depth + 1), coeficients[offset + 1][0]));
             mainGoals.AddLast(new MainGoal(buildSourceBuilding, coeficients[offset + 2][0]));
 
             if (!map.IsBanAction(PlayerAction.BuildFort))
             {
-                mainGoals.AddLast(new MainGoal(new BuildFort(map, coeficients[offset + 3][1], coeficients[offset + 3][2], coeficients[offset + 3][3], coeficients[offset + 3][4], depth + 1), coeficients[offset + 3][0]));
+                mainGoals.AddLast(new MainGoal(new BuildFort(map, coeficients[offset + 3][1], coeficients[offset + 3][2], coeficients[offset + 3][3], coeficients[offset + 3][4], depth + 1, buildTown), coeficients[offset + 3][0]));
                 if (!map.IsBanAction(PlayerAction.FortParade))
                     mainGoals.AddLast(new MainGoal(new FortShowParade(map, coeficients[offset + 4][1], depth + 1), coeficients[offset + 4][0]));
                 if (!map.IsBanAction(PlayerAction.FortStealSources))

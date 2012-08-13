@@ -600,8 +600,8 @@ namespace Expanze
         public bool IsInFortRadius()
         {
             /// You cant destroy or capture desert
-            if (kind == HexaKind.Desert)
-                return false;
+            //if (kind == HexaKind.Desert)
+            //    return false;
 
             if (hexaFort.GetHexaID() == hexaID)
                 return true;
@@ -611,6 +611,9 @@ namespace Expanze
 
             for (int loop1 = 0; loop1 < 6; loop1++)
             {
+                if (hexaNeighbours[loop1] == null)
+                    continue;
+
                 if (hexaNeighbours[loop1].GetID() == hexaFort.GetHexaID())
                 {
                     return true;
