@@ -115,17 +115,17 @@ namespace Expanze
 
                 if (isBuild)
                 {
-                    GameState.map.GetMapController().SetLastError(Strings.ERROR_ALREADY_BUILD);
+                    GameState.map.GetMapController().SetLastError(Strings.Inst().GetString(TextEnum.ERROR_ALREADY_BUILD));
                     return RoadBuildError.AlreadyBuild;
                 }
                 if (!IsActivePlayersRoadOnEndOfRoad(activePlayer) && !IsActivePlayersTownOnEndOfRoad(activePlayer))
                 {
-                    GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_PLAYER_ROAD_OR_TOWN);
+                    GameState.map.GetMapController().SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_PLAYER_ROAD_OR_TOWN));
                     return RoadBuildError.NoPlayerRoadOrTown;
                 }
                 if (!Settings.costRoad.HasPlayerSources(activePlayer))
                 {
-                    GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_SOURCES);
+                    GameState.map.GetMapController().SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_SOURCES));
                     return RoadBuildError.NoSources;
                 }
                 return RoadBuildError.OK;

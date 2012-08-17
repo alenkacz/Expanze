@@ -9,6 +9,7 @@
 
 #region Using Statements
 using Microsoft.Xna.Framework;
+using System.Xml;
 #endregion
 
 namespace Expanze
@@ -24,13 +25,18 @@ namespace Expanze
 
         MenuEntry resolutionMenuEntry;
         MenuEntry fullscreenMenuEntry;
-
+        MenuEntry languageMenuEntry;
+        MenuEntry apply;
+        MenuEntry back;
 
         static string[] resolution = new string[Settings.allResolutions.Length];
-        static string[] fullscreen = {Strings.MENU_COMMON_NO, Strings.MENU_COMMON_YES};
+        static string[] fullscreen = {Strings.Inst().GetString(TextEnum.MENU_COMMON_NO), Strings.Inst().GetString(TextEnum.MENU_COMMON_YES)};
+        string[] languages;
+        string[] languageCodes;
 
         static int currentResolution = 0;
         static bool isFullscreen = false;
+        static int activeLanguage = 0;
 
         #endregion
 
@@ -69,21 +75,37 @@ namespace Expanze
             // Create our menu entries.
             resolutionMenuEntry = new MenuEntry(string.Empty);
             fullscreenMenuEntry = new MenuEntry(string.Empty);
+            languageMenuEntry = new MenuEntry(string.Empty);
+            apply = new MenuEntry(Strings.Inst().GetString(TextEnum.MENU_OPTION_ACTIVATE_CHANGES));
+            back = new MenuEntry(Strings.Inst().GetString(TextEnum.MENU_COMMON_BACK));
+
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load("Content/Maps/texts.xml");
+            XmlNodeList languageList = xDoc.GetElementsByTagName("language");
+            languages = new string[languageList.Count];
+            languageCodes = new string[languageList.Count];
+            for(int loop1 = 0; loop1 < languageList.Count; loop1++)
+            {
+                languages[loop1] = languageList[loop1].FirstChild.InnerText;
+                languageCodes[loop1] = languageList[loop1].LastChild.InnerText;
+
+                if (languageCodes[loop1] == Strings.Inst().Language)
+                    activeLanguage = loop1;
+            }
 
             SetMenuEntryText();
-
-            MenuEntry apply = new MenuEntry(Strings.MENU_OPTION_ACTIVATE_CHANGES);
-            MenuEntry back = new MenuEntry(Strings.MENU_COMMON_BACK);
 
             // Hook up menu event handlers.
             resolutionMenuEntry.Selected += ResolutionMenuEntrySelected;
             fullscreenMenuEntry.Selected += FullscreenMenuEntrySelected;
+            languageMenuEntry.Selected += LanguageMenuEntrySelected;
             apply.Selected += ApplyChangesSelected;
             back.Selected += OnCancel;
             
             // Add entries to the menu.
             MenuEntries.Add(resolutionMenuEntry);
             MenuEntries.Add(fullscreenMenuEntry);
+            MenuEntries.Add(languageMenuEntry);
             MenuEntries.Add(apply);
             MenuEntries.Add(back);
 
@@ -98,8 +120,13 @@ namespace Expanze
         /// </summary>
         void SetMenuEntryText()
         {
-            resolutionMenuEntry.Text = Strings.MENU_OPTION_RESOLUTION + ": " + resolution[currentResolution];
-            fullscreenMenuEntry.Text = Strings.MENU_OPTION_FULLSCREEN + ": " + fullscreen[(isFullscreen) ? 1 : 0];
+            resolutionMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_OPTION_RESOLUTION) + ": " + resolution[currentResolution];
+            fullscreen[0] = Strings.Inst().GetString(TextEnum.MENU_COMMON_NO);
+            fullscreen[1] = Strings.Inst().GetString(TextEnum.MENU_COMMON_YES);
+            fullscreenMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_OPTION_FULLSCREEN) + ": " + fullscreen[(isFullscreen) ? 1 : 0];
+            languageMenuEntry.Text = Strings.Inst().LanguageName;
+            apply.Text = Strings.Inst().GetString(TextEnum.MENU_OPTION_ACTIVATE_CHANGES);
+            back.Text = Strings.Inst().GetString(TextEnum.MENU_COMMON_BACK);
         }
 
 
@@ -166,6 +193,18 @@ namespace Expanze
         void FullscreenMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
             isFullscreen = !isFullscreen;
+            SetMenuEntryText();
+        }
+
+        void LanguageMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        {
+            activeLanguage++;
+            if (activeLanguage >= languages.Length)
+                activeLanguage = 0;
+
+            Strings.Inst().Language = languageCodes[activeLanguage];
+            Strings.Inst().LanguageName = languages[activeLanguage];
+            Strings.Inst().LoadTexts(languageCodes[activeLanguage]);
             SetMenuEntryText();
         }
 

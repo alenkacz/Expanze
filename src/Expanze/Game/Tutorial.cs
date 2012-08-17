@@ -283,7 +283,19 @@ namespace Expanze
 
             foreach (XmlNode pairNode in item)
             {
-                String text = pairNode.FirstChild.InnerText;
+                String text = "";
+                foreach (XmlNode language in pairNode.FirstChild.ChildNodes)
+                {
+                    if (language.LocalName == Strings.Inst().Language)
+                    {
+                        text = language.InnerText;
+                        break;
+                    }
+                    else if (language.LocalName == Strings.Inst().DefaultLanguage)
+                    {
+                        text = language.InnerText;
+                    }
+                }
                 Vector2 position;
                 if (pairNode.ChildNodes.Count == 2)
                 {

@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <map>
   <settings>
-    <name>Rybí ostrov</name>
+    <name>
+      <cz>Rybí ostrov</cz>
+      <eng>Fish island</eng>
+    </name>
     <players>
       <player>
         <name>You</name>

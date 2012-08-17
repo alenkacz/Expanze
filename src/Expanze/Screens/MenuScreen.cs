@@ -176,7 +176,7 @@ namespace Expanze
             // the movement slow down as it nears the end).
             float transitionOffset = (float)Math.Pow(TransitionPosition, 2);
 
-            int col = (menuEntries.Count > 6) ? ( (menuEntries.Count > 10) ? 3 : 2) : 1;
+            int col = (menuEntries.Count > 10) ? ( (menuEntries.Count > 15) ? 3 : 2) : 1;
             int entryCol = (menuEntries.Count + 1) / col;
             float height = menuEntries[1].GetHeight(this) * entryCol;
 
@@ -199,7 +199,7 @@ namespace Expanze
                 }
                 
                 // each entry is to be centered horizontally
-                float border = 70.0f;
+                float border = 130.0f;
                 float colWidth = (Settings.maximumResolution.X - 2*border) / col;
                 position.X = border + colWidth / 2 - menuEntry.GetWidth(this) / 2 + i / entryCol * colWidth;
 

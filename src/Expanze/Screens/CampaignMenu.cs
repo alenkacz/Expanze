@@ -46,10 +46,16 @@ namespace Expanze
                     {
                         xDoc.Load(subFile.FullName);
                         XmlNodeList nameNode = xDoc.GetElementsByTagName("name");
-                        mapnamesource.Add(nameNode[0].InnerText, name);
-                        levelMenuItem = new MenuEntry(nameNode[0].InnerText);
-                        levelMenuItem.Selected += CampaignLevelSelected;
-                        MenuEntries.Add(levelMenuItem);
+                        foreach (XmlNode language in nameNode[0].ChildNodes)
+                        {
+                            if (language.LocalName == Strings.Inst().Language)
+                            {
+                                mapnamesource.Add(language.InnerText, name);
+                                levelMenuItem = new MenuEntry(language.InnerText, GameResources.Inst().GetFont(EFont.MedievalBigest));
+                                levelMenuItem.Selected += CampaignLevelSelected;
+                                MenuEntries.Add(levelMenuItem);
+                            }
+                        }
                     }
                 }
             }

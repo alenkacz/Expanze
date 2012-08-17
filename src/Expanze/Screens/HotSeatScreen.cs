@@ -90,7 +90,7 @@ namespace Expanze
              * Loading AI 
              */
             List<String> AIname = new List<String>();
-            AIname.Add(Strings.MENU_HOT_SEAT_NO_AI);
+            AIname.Add(Strings.Inst().GetString(TextEnum.MENU_HOT_SEAT_NO_AI));
             foreach (IComponentAI AI in CoreProviderAI.AI)
             {
                 AIname.Add(AI.GetAIName());
@@ -105,7 +105,7 @@ namespace Expanze
             {
                 int playerNameID = GetRandomPlayerID();
                 
-                PlayerSettingRowComponent pSwitch = new PlayerSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameResources.Inst().GetFont(EFont.PlayerNameFont), 200, 200, c, Strings.MENU_HOT_SEAT_NAMES[playerNameID],
+                PlayerSettingRowComponent pSwitch = new PlayerSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameResources.Inst().GetFont(EFont.PlayerNameFont), 200, 200, c, Strings.Inst().PlayerNames[playerNameID],
                                                                                   (counter == 0 || counter ==2) ? 1 : 0);
                 playersSettings.Add(pSwitch);
                 colorPosition.Y += playerSpace;
@@ -122,10 +122,10 @@ namespace Expanze
             //margin betweent sections
             colorPosition.Y += 80;
 
-            points = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.MENU_HOT_SEAT_POINTS, new List<String>() { Settings.winPoints[0].ToString(), Settings.winPoints[1].ToString(), Settings.winPoints[2].ToString() });
-            mapType = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 50, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.MENU_HOT_SEAT_MAP_TYPE, new List<String>() { Strings.GAME_SETTINGS_MAP_TYPE_LOWLAND, Strings.GAME_SETTINGS_MAP_TYPE_NORMAL, Strings.GAME_SETTINGS_MAP_TYPE_WASTELAND });
-            mapSize = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 100, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.MENU_HOT_SEAT_MAP_SIZE, new List<String>() { Strings.GAME_SETTINGS_MAP_SIZE_SMALL, Strings.GAME_SETTINGS_MAP_SIZE_MEDIUM, Strings.GAME_SETTINGS_MAP_SIZE_BIG });
-            wealth = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 150, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.MENU_HOT_SEAT_MAP_WEALTH, new List<String>() { Strings.GAME_SETTINGS_MAP_WEALTH_LOW, Strings.GAME_SETTINGS_MAP_WEALTH_MEDIUM, Strings.GAME_SETTINGS_MAP_WEALTH_HIGH });
+            points = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.Inst().GetString(TextEnum.MENU_HOT_SEAT_POINTS), new List<String>() { Settings.winPoints[0].ToString(), Settings.winPoints[1].ToString(), Settings.winPoints[2].ToString() });
+            mapType = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 50, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.Inst().GetString(TextEnum.MENU_HOT_SEAT_MAP_TYPE), new List<String>() { Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_TYPE_LOWLAND), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_TYPE_NORMAL), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_TYPE_WASTELAND) });
+            mapSize = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 100, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.Inst().GetString(TextEnum.MENU_HOT_SEAT_MAP_SIZE), new List<String>() { Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SIZE_SMALL), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SIZE_MEDIUM), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SIZE_BIG) });
+            wealth = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 150, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.Inst().GetString(TextEnum.MENU_HOT_SEAT_MAP_WEALTH), new List<String>() { Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_WEALTH_LOW), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_WEALTH_MEDIUM), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_WEALTH_HIGH) });
 
             guiComponents.Add(points);
             guiComponents.Add(mapType);
@@ -163,7 +163,7 @@ namespace Expanze
 
         private int GetRandomPlayerID()
         {
-            int nameCount = Strings.MENU_HOT_SEAT_NAMES.Length;
+            int nameCount = Strings.Inst().PlayerNames.Length;
             int nameID = -1;
             bool uniqueID;
             do
@@ -172,7 +172,7 @@ namespace Expanze
                 uniqueID = true;
                 foreach (PlayerSettingRowComponent player in playersSettings)
                 {
-                    if (0 == player.GetName().CompareTo(Strings.MENU_HOT_SEAT_NAMES[nameID]))
+                    if (0 == player.GetName().CompareTo(Strings.Inst().PlayerNames[nameID]))
                     {
                         uniqueID = false;
                         continue;
@@ -232,14 +232,14 @@ namespace Expanze
                 default: 
                     break;
                 case 3 :
-                    if (mapSize.getSelectedSettings() == Strings.GAME_SETTINGS_MAP_SIZE_SMALL)
+                    if (mapSize.getSelectedSettings() == Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SIZE_SMALL))
                         points.SetActiveRadio(false, 2);
                     break;
                 case 4 :
                     mapSize.SetActiveRadio(false, 0);
                     mapSize.SetActiveRadio(true, 1);
                     mapSize.SetActiveRadio(true, 2);
-                    if (mapSize.getSelectedSettings() == Strings.GAME_SETTINGS_MAP_SIZE_MEDIUM)
+                    if (mapSize.getSelectedSettings() == Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SIZE_MEDIUM))
                         points.SetActiveRadio(false, 2);
                     break;
                 case 5:

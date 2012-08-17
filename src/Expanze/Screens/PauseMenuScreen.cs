@@ -29,9 +29,9 @@ namespace Expanze
             : base("Paused")
         {
             // Create our menu entries.
-            MenuEntry resumeGameMenuEntry = new MenuEntry(Strings.MENU_PAUSE_GAME_ITEM_RESUME);
-            MenuEntry restartGameMenuEntry = new MenuEntry(Strings.MENU_PAUSE_GAME_ITEM_RESTART);
-            MenuEntry quitGameMenuEntry = new MenuEntry(Strings.MENU_PAUSE_GAME_ITEM_QUIT_GAME);
+            MenuEntry resumeGameMenuEntry = new MenuEntry(Strings.Inst().GetString(TextEnum.MENU_PAUSE_GAME_ITEM_RESUME));
+            MenuEntry restartGameMenuEntry = new MenuEntry(Strings.Inst().GetString(TextEnum.MENU_PAUSE_GAME_ITEM_RESTART));
+            MenuEntry quitGameMenuEntry = new MenuEntry(Strings.Inst().GetString(TextEnum.MENU_PAUSE_GAME_ITEM_QUIT_GAME));
             
             // Hook up menu event handlers.
             resumeGameMenuEntry.Selected += OnCancel;
@@ -75,7 +75,7 @@ namespace Expanze
         /// </summary>
         void QuitGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            string message = Strings.MENU_PAUSE_GAME_ARE_YOU_SURE;
+            string message = Strings.Inst().GetString(TextEnum.MENU_PAUSE_GAME_ARE_YOU_SURE);
 
             MessageBoxScreen confirmQuitMessageBox = new MessageBoxScreen(message);
 

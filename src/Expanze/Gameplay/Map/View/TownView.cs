@@ -29,9 +29,9 @@ namespace Expanze.Gameplay.Map
             TownBuildError error = town.CanBuildTown();
             switch (error)
             {
-                case TownBuildError.AlreadyBuild: return Strings.ALERT_TITLE_TOWN_IS_BUILD;
-                case TownBuildError.NoPlayerRoad: return Strings.ALERT_TITLE_NO_ROAD_IS_CLOSE;
-                case TownBuildError.OtherTownIsClose: return Strings.ALERT_TITLE_OTHER_TOWN_IS_CLOSE;
+                case TownBuildError.AlreadyBuild: return Strings.Inst().GetString(TextEnum.ALERT_TITLE_TOWN_IS_BUILD);
+                case TownBuildError.NoPlayerRoad: return Strings.Inst().GetString(TextEnum.ALERT_TITLE_NO_ROAD_IS_CLOSE);
+                case TownBuildError.OtherTownIsClose: return Strings.Inst().GetString(TextEnum.ALERT_TITLE_OTHER_TOWN_IS_CLOSE);
                 case TownBuildError.NoSources: return "";
             }
             return base.TryExecute();
@@ -266,11 +266,11 @@ namespace Expanze.Gameplay.Map
                 {
                         if (GameMaster.Inst().GetState() == EGameState.StateGame)
                         {
-                            PromptWindow.Inst().Show(PromptWindow.Mod.Buyer, Strings.HEXA_TRI, true);
+                            PromptWindow.Inst().Show(PromptWindow.Mod.Buyer, Strings.Inst().GetString(TextEnum.HEXA_TRI), true);
                             PromptWindow.Inst().AddPromptItem(
                                 new TownPromptItem(townID,
-                                                    Strings.PROMT_TITLE_WANT_TO_BUILD_TOWN,
-                                                    Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_TOWN,
+                                                    Strings.Inst().GetString(TextEnum.PROMT_TITLE_WANT_TO_BUILD_TOWN),
+                                                    Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_BUILD_TOWN),
                                                     Settings.costTown, true, 
                                                     GameResources.Inst().GetHudTexture(HUDTexture.IconTown)));
                         }

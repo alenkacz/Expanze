@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <map>
   <settings>
-    <name>Učni a kupci</name>
+    <name>
+      <cz>Učni a kupci</cz>
+      <eng>Apprentices and merchants</eng>
+    </name>
     <players>
       <player>
         <name>You</name>

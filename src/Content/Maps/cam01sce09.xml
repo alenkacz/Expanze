@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <map>
   <settings>
-    <name>Boj o moc</name>
+    <name>
+      <cz>Boj o moc</cz>
+      <eng>Fight about power</eng>
+    </name>
     <players>
       <player>
         <name>Carl Linnaeus</name>

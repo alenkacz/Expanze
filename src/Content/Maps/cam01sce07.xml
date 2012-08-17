@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <map>
   <settings>
-    <name>Tři ostrůvky</name>
+    <name>
+      <cz>Tři ostrůvky</cz>
+      <eng>Three isles</eng>
+    </name>
     <players>
       <player>
         <name>You</name>

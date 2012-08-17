@@ -181,11 +181,11 @@ namespace Expanze
                     int amount = GameMaster.Inst().CanChangeSourcesFor((SourceAll)itemList[activeItem].getCost());
 
                     if (amount < 0)
-                        Message.Inst().Show(Strings.MESSAGE_TITLE_MARKET_NOT_SOURCES, Strings.MESSAGE_DESCRIPTION_MARKET_NOT_SOURCES, GameResources.Inst().GetHudTexture(HUDTexture.IconMarket));
+                        Message.Inst().Show(Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_MARKET_NOT_SOURCES), Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_MARKET_NOT_SOURCES), GameResources.Inst().GetHudTexture(HUDTexture.IconMarket));
                     else if(itemList[activeItem].getCost().HasPlayerSources(GameMaster.Inst().GetActivePlayer()))
-                        Message.Inst().Show(Strings.MESSAGE_TITLE_MARKET_BUY_IT, Strings.MESSAGE_DESCRIPTION_MARKET_BUY_IT, GameResources.Inst().GetHudTexture(HUDTexture.IconMarket));
+                        Message.Inst().Show(Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_MARKET_BUY_IT), Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_MARKET_BUY_IT), GameResources.Inst().GetHudTexture(HUDTexture.IconMarket));
                     else
-                        Message.Inst().Show(Strings.MESSAGE_TITLE_MARKET_CHANGE_SOURCES, Strings.MESSAGE_DESCRIPTION_MARKET_CHANGE_SOURCES, GameResources.Inst().GetHudTexture(HUDTexture.IconMarket));
+                        Message.Inst().Show(Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_MARKET_CHANGE_SOURCES), Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_MARKET_CHANGE_SOURCES), GameResources.Inst().GetHudTexture(HUDTexture.IconMarket));
                 }
 
                 if (InputManager.Inst().GetGameAction("gamewindow", "left").IsPressed())
@@ -276,7 +276,7 @@ namespace Expanze
 
                 String error = itemList[activeItem].TryExecute();
                 if (mod == Mod.Viewer)
-                    error = Strings.ALERT_TITLE_THIS_IS_NOT_YOURS;
+                    error = Strings.Inst().GetString(TextEnum.ALERT_TITLE_THIS_IS_NOT_YOURS);
                 int errorY = 265;
                 if (itemList[activeItem].getCost().Equals(new SourceAll(0)))
                     errorY = 300;

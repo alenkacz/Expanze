@@ -25,28 +25,28 @@ namespace Expanze.Gameplay
                 switch (hexaKind)
                 {
                     case HexaKind.Cornfield :
-                        title = Strings.MESSAGE_TITLE_MIRACLE;
-                        description = Strings.MESSAGE_DESCRIPTION_MIRACLE_CORNFIELD;
+                        title = Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_MIRACLE);
+                        description = Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_MIRACLE_CORNFIELD);
                         icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMill);
                         break;
                     case HexaKind.Pasture :
-                        title = Strings.MESSAGE_TITLE_MIRACLE;
-                        description = Strings.MESSAGE_DESCRIPTION_MIRACLE_PASTURE;
+                        title = Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_MIRACLE);
+                        description = Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_MIRACLE_PASTURE);
                         icon = GameResources.Inst().GetHudTexture(HUDTexture.IconStepherd);
                         break;
                     case HexaKind.Stone :
-                        title = Strings.MESSAGE_TITLE_MIRACLE;
-                        description = Strings.MESSAGE_DESCRIPTION_MIRACLE_STONE;
+                        title = Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_MIRACLE);
+                        description = Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_MIRACLE_STONE);
                         icon = GameResources.Inst().GetHudTexture(HUDTexture.IconQuarry);
                         break;
                     case HexaKind.Forest :
-                        title = Strings.MESSAGE_TITLE_MIRACLE;
-                        description = Strings.MESSAGE_DESCRIPTION_MIRACLE_FOREST;
+                        title = Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_MIRACLE);
+                        description = Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_MIRACLE_FOREST);
                         icon = GameResources.Inst().GetHudTexture(HUDTexture.IconSaw);
                         break;
                     case HexaKind.Mountains :
-                        title = Strings.MESSAGE_TITLE_MIRACLE;
-                        description = Strings.MESSAGE_DESCRIPTION_MIRACLE_MOUNTAINS;
+                        title = Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_MIRACLE);
+                        description = Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_MIRACLE_MOUNTAINS);
                         icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMine);
                         break;
                 }
@@ -56,28 +56,28 @@ namespace Expanze.Gameplay
                 switch (hexaKind)
                 {
                     case HexaKind.Cornfield:
-                        title = Strings.MESSAGE_TITLE_DISASTER;
-                        description = Strings.MESSAGE_DESCRIPTION_DISASTER_CORNFIELD;
+                        title = Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_DISASTER);
+                        description = Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_DISASTER_CORNFIELD);
                         icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMill);
                         break;
                     case HexaKind.Pasture:
-                        title = Strings.MESSAGE_TITLE_DISASTER;
-                        description = Strings.MESSAGE_DESCRIPTION_DISASTER_PASTURE;
+                        title = Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_DISASTER);
+                        description = Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_DISASTER_PASTURE);
                         icon = GameResources.Inst().GetHudTexture(HUDTexture.IconStepherd);
                         break;
                     case HexaKind.Stone:
-                        title = Strings.MESSAGE_TITLE_DISASTER;
-                        description = Strings.MESSAGE_DESCRIPTION_DISASTER_STONE;
+                        title = Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_DISASTER);
+                        description = Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_DISASTER_STONE);
                         icon = GameResources.Inst().GetHudTexture(HUDTexture.IconQuarry);
                         break;
                     case HexaKind.Forest:
-                        title = Strings.MESSAGE_TITLE_DISASTER;
-                        description = Strings.MESSAGE_DESCRIPTION_DISASTER_FOREST;
+                        title = Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_DISASTER);
+                        description = Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_DISASTER_FOREST);
                         icon = GameResources.Inst().GetHudTexture(HUDTexture.IconSaw);
                         break;
                     case HexaKind.Mountains:
-                        title = Strings.MESSAGE_TITLE_DISASTER;
-                        description = Strings.MESSAGE_DESCRIPTION_DISASTER_MOUNTAINS;
+                        title = Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_DISASTER);
+                        description = Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_DISASTER_MOUNTAINS);
                         icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMine);
                         break;
                 }

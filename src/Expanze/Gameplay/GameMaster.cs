@@ -587,7 +587,7 @@ namespace Expanze
                 break;
             }
 
-            int nameCount = Strings.MENU_HOT_SEAT_NAMES.Length;
+            int nameCount = Strings.Inst().PlayerNames.Length;
 
             int firstPlayerNameID = randomNumber.Next() % nameCount;
             int secondPlayerNameID;
@@ -600,11 +600,11 @@ namespace Expanze
             if (componentAI != null)
             {
                 IComponentAI componentAICopy = componentAI.Clone();
-                this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[secondPlayerNameID], Color.Blue, componentAICopy, 0));
+                this.players.Add(new Player(Strings.Inst().PlayerNames[secondPlayerNameID], Color.Blue, componentAICopy, 0));
             } else
-                this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[secondPlayerNameID], Color.Blue, null, 0));
+                this.players.Add(new Player(Strings.Inst().PlayerNames[secondPlayerNameID], Color.Blue, null, 0));
 
-            this.players.Add(new Player(Strings.MENU_HOT_SEAT_NAMES[firstPlayerNameID], Color.Red, null, 1));
+            this.players.Add(new Player(Strings.Inst().PlayerNames[firstPlayerNameID], Color.Red, null, 1));
         }
 
         public GameSettings GetGameSettings()
@@ -615,7 +615,7 @@ namespace Expanze
             }
             else
             {
-                gameSettings = new GameSettings(Settings.winPoints[0], Strings.GAME_SETTINGS_MAP_TYPE_NORMAL, Strings.GAME_SETTINGS_MAP_SIZE_SMALL, Strings.GAME_SETTINGS_MAP_WEALTH_MEDIUM);
+                gameSettings = new GameSettings(Settings.winPoints[0], Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_TYPE_NORMAL), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SIZE_SMALL), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_WEALTH_MEDIUM));
                 return gameSettings;
             }
         }
@@ -812,7 +812,7 @@ namespace Expanze
             {
                 GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
 #if TURN_ON_RANDOM_EVENTS
-                if(!Settings.banRandomEvents && turnNumber > 2)
+                if(activePlayerIndex == 0 && !Settings.banRandomEvents && turnNumber > 2)
                     RandomEvents();
 #endif
                 if(collectSources)
@@ -838,13 +838,13 @@ namespace Expanze
         {
             if (state != EGameState.StateGame)
             {
-                Message.Inst().Show(Strings.GAME_ALERT_TITLE_NEXT_TURN_BAD_STATE, Strings.GAME_ALERT_DESCRIPTION_NEXT_TURN_BAD_STATE, GameResources.Inst().GetHudTexture(HUDTexture.IconTown));
+                Message.Inst().Show(Strings.Inst().GetString(TextEnum.GAME_ALERT_TITLE_NEXT_TURN_BAD_STATE), Strings.Inst().GetString(TextEnum.GAME_ALERT_DESCRIPTION_NEXT_TURN_BAD_STATE), GameResources.Inst().GetHudTexture(HUDTexture.IconTown));
                 return false;
             }
             
             if(activePlayer.GetIsAI())
             {
-                Message.Inst().Show(Strings.GAME_ALERT_TITLE_AI_IS_THINKING, Strings.GAME_ALERT_DESCRIPTION_AI_IS_THINKING, GameResources.Inst().GetHudTexture(HUDTexture.HammersPassive));
+                Message.Inst().Show(Strings.Inst().GetString(TextEnum.GAME_ALERT_TITLE_AI_IS_THINKING), Strings.Inst().GetString(TextEnum.GAME_ALERT_DESCRIPTION_AI_IS_THINKING), GameResources.Inst().GetHudTexture(HUDTexture.HammersPassive));
                 return false;
             }
 
@@ -952,13 +952,13 @@ namespace Expanze
 
                 if (winnerNew)
                 {
-                    Message.Inst().Show(Strings.MESSAGE_TITLE_END_GAME, bestPlayer.GetName() + Strings.MESSAGE_DESCRIPTION_END_GAME_WIN, GameResources.Inst().GetHudTexture(HUDTexture.IconFortParade));  
+                    Message.Inst().Show(Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_END_GAME), bestPlayer.GetName() + Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_END_GAME_WIN), GameResources.Inst().GetHudTexture(HUDTexture.IconFortParade));  
                 } else
 
                 if (turnNumber == Settings.maxTurn)
                 {
                     winnerNew = true;
-                    Message.Inst().Show(Strings.MESSAGE_TITLE_END_GAME, Strings.MESSAGE_DESCRIPTION_END_GAME_LOOSE1 + Settings.maxTurn + Strings.MESSAGE_DESCRIPTION_END_GAME_LOOSE2, GameResources.Inst().GetHudTexture(HUDTexture.HammersPassive));
+                    Message.Inst().Show(Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_END_GAME), Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_END_GAME_LOOSE1) + Settings.maxTurn + Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_END_GAME_LOOSE2), GameResources.Inst().GetHudTexture(HUDTexture.HammersPassive));
                 }
 
                 // GENETICS
@@ -1041,7 +1041,7 @@ namespace Expanze
         {
             state = EGameState.StateGame;
 
-            Message.Inst().Show(Strings.GAME_ALERT_TITLE_GAME_STARTED, Strings.GAME_ALERT_DESCRIPTION_GAME_STARTED, GameResources.Inst().GetHudTexture(HUDTexture.IconRoad));
+            Message.Inst().Show(Strings.Inst().GetString(TextEnum.GAME_ALERT_TITLE_GAME_STARTED), Strings.Inst().GetString(TextEnum.GAME_ALERT_DESCRIPTION_GAME_STARTED), GameResources.Inst().GetHudTexture(HUDTexture.IconRoad));
             foreach (Player player in players)
             {
                 player.AddSources(Settings.startResources, TransactionState.TransactionStart);
@@ -1178,16 +1178,16 @@ namespace Expanze
         {
             switch (building)
             {
-                case Building.Town: return Strings.MESSAGE_TITLE_MEDAL_TOWN;
-                case Building.Road: return Strings.MESSAGE_TITLE_MEDAL_ROAD;
-                case Building.Market: return Strings.MESSAGE_TITLE_MEDAL_MARKET;
-                case Building.Monastery: return Strings.MESSAGE_TITLE_MEDAL_MONASTERY;
-                case Building.Fort: return Strings.MESSAGE_TITLE_MEDAL_FORT;
-                case Building.Saw: return Strings.MESSAGE_TITLE_MEDAL_SAW;
-                case Building.Mill: return Strings.MESSAGE_TITLE_MEDAL_MILL;
-                case Building.Quarry: return Strings.MESSAGE_TITLE_MEDAL_QUARRY;
-                case Building.Stepherd: return Strings.MESSAGE_TITLE_MEDAL_STEPHERD;
-                case Building.Mine: return Strings.MESSAGE_TITLE_MEDAL_MINE;
+                case Building.Town: return Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_MEDAL_TOWN);
+                case Building.Road: return Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_MEDAL_ROAD);
+                case Building.Market: return Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_MEDAL_MARKET);
+                case Building.Monastery: return Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_MEDAL_MONASTERY);
+                case Building.Fort: return Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_MEDAL_FORT);
+                case Building.Saw: return Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_MEDAL_SAW);
+                case Building.Mill: return Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_MEDAL_MILL);
+                case Building.Quarry: return Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_MEDAL_QUARRY);
+                case Building.Stepherd: return Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_MEDAL_STEPHERD);
+                case Building.Mine: return Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_MEDAL_MINE);
             }
             return null;
         }
@@ -1196,16 +1196,16 @@ namespace Expanze
         {
             switch (building)
             {
-                case Building.Town: return Strings.MESSAGE_DESCRIPTION_MEDAL_TOWN;
-                case Building.Road: return Strings.MESSAGE_DESCRIPTION_MEDAL_ROAD;
-                case Building.Market: return Strings.MESSAGE_DESCRIPTION_MEDAL_MARKET;
-                case Building.Monastery: return Strings.MESSAGE_DESCRIPTION_MEDAL_MONASTERY;
-                case Building.Fort: return Strings.MESSAGE_DESCRIPTION_MEDAL_FORT;
-                case Building.Saw: return Strings.MESSAGE_DESCRIPTION_MEDAL_SAW;
-                case Building.Mill: return Strings.MESSAGE_DESCRIPTION_MEDAL_MILL;
-                case Building.Quarry: return Strings.MESSAGE_DESCRIPTION_MEDAL_QUARRY;
-                case Building.Stepherd: return Strings.MESSAGE_DESCRIPTION_MEDAL_STEPHERD;
-                case Building.Mine: return Strings.MESSAGE_DESCRIPTION_MEDAL_MINE;
+                case Building.Town: return Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_MEDAL_TOWN);
+                case Building.Road: return Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_MEDAL_ROAD);
+                case Building.Market: return Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_MEDAL_MARKET);
+                case Building.Monastery: return Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_MEDAL_MONASTERY);
+                case Building.Fort: return Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_MEDAL_FORT);
+                case Building.Saw: return Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_MEDAL_SAW);
+                case Building.Mill: return Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_MEDAL_MILL);
+                case Building.Quarry: return Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_MEDAL_QUARRY);
+                case Building.Stepherd: return Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_MEDAL_STEPHERD);
+                case Building.Mine: return Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_MEDAL_MINE);
             }
             return null;
         }

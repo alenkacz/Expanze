@@ -636,32 +636,32 @@ namespace Expanze
                                         switch (kind)
                                         {
                                             case HexaKind.Mountains:
-                                                titleWindow = Strings.HEXA_NAME_MOUNTAINS;
-                                                titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_MINE;
-                                                descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_MINE;
+                                                titleWindow = Strings.Inst().GetString(TextEnum.HEXA_NAME_MOUNTAINS);
+                                                titleBuilding = Strings.Inst().GetString(TextEnum.PROMT_TITLE_WANT_TO_BUILD_MINE);
+                                                descriptionBuilding = Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_BUILD_MINE);
                                                 icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMine); break;
                                             case HexaKind.Forest:
-                                                titleWindow = Strings.HEXA_NAME_FOREST;
-                                                titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_SAW;
-                                                descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_SAW;
+                                                titleWindow = Strings.Inst().GetString(TextEnum.HEXA_NAME_FOREST);
+                                                titleBuilding = Strings.Inst().GetString(TextEnum.PROMT_TITLE_WANT_TO_BUILD_SAW);
+                                                descriptionBuilding = Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_BUILD_SAW);
                                                 icon = GameResources.Inst().GetHudTexture(HUDTexture.IconSaw); break;
                                             case HexaKind.Cornfield:
-                                                titleWindow = Strings.HEXA_NAME_CORNFIELD;
-                                                titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_MILL;
-                                                descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_MILL;
+                                                titleWindow = Strings.Inst().GetString(TextEnum.HEXA_NAME_CORNFIELD);
+                                                titleBuilding = Strings.Inst().GetString(TextEnum.PROMT_TITLE_WANT_TO_BUILD_MILL);
+                                                descriptionBuilding = Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_BUILD_MILL);
                                                 icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMill); break;
                                             case HexaKind.Pasture:
-                                                titleWindow = Strings.HEXA_NAME_PASTURE;
-                                                titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_STEPHERD;
-                                                descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_STEPHERD;
+                                                titleWindow = Strings.Inst().GetString(TextEnum.HEXA_NAME_PASTURE);
+                                                titleBuilding = Strings.Inst().GetString(TextEnum.PROMT_TITLE_WANT_TO_BUILD_STEPHERD);
+                                                descriptionBuilding = Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_BUILD_STEPHERD);
                                                 icon = GameResources.Inst().GetHudTexture(HUDTexture.IconStepherd); break;
                                             case HexaKind.Stone:
-                                                titleWindow = Strings.HEXA_NAME_STONE;
-                                                titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_QUARRY;
-                                                descriptionBuilding = Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_QUARRY;
+                                                titleWindow = Strings.Inst().GetString(TextEnum.HEXA_NAME_STONE);
+                                                titleBuilding = Strings.Inst().GetString(TextEnum.PROMT_TITLE_WANT_TO_BUILD_QUARRY);
+                                                descriptionBuilding = Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_BUILD_QUARRY);
                                                 icon = GameResources.Inst().GetHudTexture(HUDTexture.IconQuarry); break;
                                             case HexaKind.Desert:
-                                                titleWindow = Strings.HEXA_NAME_DESERT;
+                                                titleWindow = Strings.Inst().GetString(TextEnum.HEXA_NAME_DESERT);
                                                 break;
                                         }
 

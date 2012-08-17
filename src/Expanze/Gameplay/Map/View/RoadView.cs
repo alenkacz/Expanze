@@ -30,8 +30,8 @@ namespace Expanze.Gameplay.Map.View
             RoadBuildError error = road.CanBuildRoad();
             switch (error)
             {
-                case RoadBuildError.AlreadyBuild: return Strings.ALERT_TITLE_ROAD_IS_BUILD;
-                case RoadBuildError.NoPlayerRoadOrTown: return Strings.ALERT_TITLE_NO_ROAD_OR_TOWN_IS_CLOSE;
+                case RoadBuildError.AlreadyBuild: return Strings.Inst().GetString(TextEnum.ALERT_TITLE_ROAD_IS_BUILD);
+                case RoadBuildError.NoPlayerRoadOrTown: return Strings.Inst().GetString(TextEnum.ALERT_TITLE_NO_ROAD_OR_TOWN_IS_CLOSE);
                 case RoadBuildError.NoSources: return "";
             }
             return base.TryExecute();
@@ -199,11 +199,11 @@ namespace Expanze.Gameplay.Map.View
                 pickVars.pickNewPress = false;
                 if (GameMaster.Inst().GetState() == EGameState.StateGame)
                 {
-                    PromptWindow.Inst().Show(PromptWindow.Mod.Buyer, Strings.HEXA_DUO, true);
+                    PromptWindow.Inst().Show(PromptWindow.Mod.Buyer, Strings.Inst().GetString(TextEnum.HEXA_DUO), true);
                     PromptWindow.Inst().AddPromptItem(
                             new RoadPromptItem(roadID,
-                                                Strings.PROMT_TITLE_WANT_TO_BUILD_ROAD,
-                                                Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_ROAD,
+                                                Strings.Inst().GetString(TextEnum.PROMT_TITLE_WANT_TO_BUILD_ROAD),
+                                                Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_BUILD_ROAD),
                                                 Settings.costRoad, true,
                                                 GameResources.Inst().GetHudTexture(HUDTexture.IconRoad)));             
                 }

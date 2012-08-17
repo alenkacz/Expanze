@@ -256,11 +256,16 @@ namespace Expanze.Gameplay.Map
             float yMax = 2.4f;
             float yMin = 0.2f;
 
-            if (eye.X > 0.7f + (yMax - eye.Y) / 2)
+
+            // dolu mapa
+            float eyeBonus = hexaMapModel.Length * 0.04f;
+            if (eye.X > 0.6f + (yMax - eye.Y) / 2 + eyeBonus)
             {
-                target.X = 0.3f + (yMax - eye.Y) / 2;
-                eye.X = 0.7f + (yMax - eye.Y) / 2;
+                target.X = 0.3f + (yMax - eye.Y) / 2 + eyeBonus;
+                eye.X = 0.5999f + (yMax - eye.Y) / 2 + eyeBonus;
             }
+
+            // nahoru
             if (eye.X < -1.1f - (yMax - eye.Y))
             {
                 target.X = -1.5f - (yMax - eye.Y);

@@ -201,7 +201,7 @@ namespace Expanze
             SpriteFont fontBig;
             SpriteFont fontSmall;
 
-            String message = "Graf";
+            String message = Strings.Inst().GetString(TextEnum.MENU_VICTORY_SCREEN_GRAPH);
 
             // Center the text in the viewport.
             fontBig = GameResources.Inst().GetFont(EFont.MedievalBig);

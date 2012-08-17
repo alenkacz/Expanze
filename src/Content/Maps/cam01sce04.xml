@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <map>
   <settings>
-    <name>Pouštní město</name>
+    <name>
+      <cz>Pouštní město</cz>
+      <eng>Desert town</eng>
+    </name>
 	<players>
 		<player>
 			<name>Tony Blair</name>

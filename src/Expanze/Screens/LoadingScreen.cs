@@ -140,7 +140,7 @@ namespace Expanze
                 SpriteFont font = ScreenManager.Font;
 
                 loadingTime += gameTime.ElapsedGameTime.Milliseconds;
-                string message = Strings.MENU_LOADING_LOADING;
+                string message = Strings.Inst().GetString(TextEnum.MENU_LOADING_LOADING);
                 /*
                 long tempTime = loadingTime % 400;
                 if(tempTime < 100)

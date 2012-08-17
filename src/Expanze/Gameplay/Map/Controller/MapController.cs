@@ -102,7 +102,7 @@ namespace Expanze.Gameplay.Map
             int rate = gm.GetActivePlayer().GetConversionRate(fromSource);
             if (fromAmount > gm.GetActivePlayer().GetSource().Get(fromSource))
             {
-                SetLastError(Strings.ERROR_NOT_ENOUGHT_FROM_SOURCE);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NOT_ENOUGHT_FROM_SOURCE));
                 return ChangingSourcesError.NotEnoughFromSource;
             }
 
@@ -117,13 +117,13 @@ namespace Expanze.Gameplay.Map
             TownModel town = map.GetTownByID(townID);
             if (town == null)
             {
-                SetLastError(Strings.ERROR_THERE_IS_NO_TOWN);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_THERE_IS_NO_TOWN));
                 return BuyingUpgradeError.ThereIsNoTown;
             }
             SpecialBuilding building = town.GetSpecialBuilding(hexaID);
             if (building == null)
             {
-                SetLastError(Strings.ERROR_THERE_IS_NO_BUILDING);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_THERE_IS_NO_BUILDING));
                 return BuyingUpgradeError.ThereIsNoBuilding;
             }
 
@@ -156,7 +156,7 @@ namespace Expanze.Gameplay.Map
             RoadModel road = map.GetRoadByID(roadID);
             if (road == null)
             {
-                SetLastError(Strings.ERROR_INVALID_ROAD_ID);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_INVALID_ROAD_ID));
                 return RoadBuildError.InvalidRoadID;
             }
             return road.CanBuildRoad();
@@ -196,19 +196,19 @@ namespace Expanze.Gameplay.Map
 
             if (kind == BuildingKind.FortBuilding && Settings.banFort)
             {
-                SetLastError(Strings.ERROR_BAN_FORT);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_BAN_FORT));
                 return BuildingBuildError.Ban;
             }
 
             if (kind == BuildingKind.MarketBuilding && Settings.banMarket)
             {
-                SetLastError(Strings.ERROR_BAN_MARKET);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_BAN_MARKET));
                 return BuildingBuildError.Ban;
             }
 
             if (kind == BuildingKind.MonasteryBuilding && Settings.banMonastery)
             {
-                SetLastError(Strings.ERROR_BAN_MONASTERY);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_BAN_MONASTERY));
                 return BuildingBuildError.Ban;
             }
 
@@ -216,31 +216,31 @@ namespace Expanze.Gameplay.Map
             TownModel town = map.GetTownByID(townID);
             if (town == null)
             {
-                SetLastError(Strings.ERROR_INVALID_TOWN_ID);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_INVALID_TOWN_ID));
                 return BuildingBuildError.InvalidTownID;
             }
 
             int buildingPos = town.FindBuildingByHexaID(hexaID);
             if (buildingPos == -1)
             {
-                SetLastError(Strings.ERROR_INVALID_HEXA_ID);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_INVALID_HEXA_ID));
                 return BuildingBuildError.TownHasNoHexaWithThatHexaID;
             }
 
             HexaModel hexa = town.GetHexa(buildingPos);
             if (hexa.GetKind() == HexaKind.Desert && kind == BuildingKind.SourceBuilding)
             {
-                SetLastError(Strings.ERROR_NO_SOURCE_BUILDING_FOR_DESERT);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_SOURCE_BUILDING_FOR_DESERT));
                 return BuildingBuildError.NoSourceBuildingForDesert;
             }
             if (hexa.GetKind() == HexaKind.Water)
             {
-                SetLastError(Strings.ERROR_NO_BUILDING_FOR_WATER);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_BUILDING_FOR_WATER));
                 return BuildingBuildError.NoBuildingForWater;
             }
             if (hexa.GetKind() == HexaKind.Mountains && kind != BuildingKind.SourceBuilding)
             {
-                SetLastError(Strings.ERROR_NO_SPECIAL_BUIDLING_FOR_MOUNTAINS);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_SPECIAL_BUIDLING_FOR_MOUNTAINS));
                 return BuildingBuildError.NoSpecialBuildingForMountains;
             }
 
@@ -282,7 +282,7 @@ namespace Expanze.Gameplay.Map
             TownModel town = map.GetTownByID(townID);
             if (town == null)
             {
-                SetLastError(Strings.ERROR_INVALID_TOWN_ID);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_INVALID_TOWN_ID));
                 return TownBuildError.InvalidTownID;
             }
             return town.CanBuildTown();
@@ -387,13 +387,13 @@ namespace Expanze.Gameplay.Map
                 switch (m.CanInventUpgrade(building))
                 {
                     case MonasteryError.HaveSecondUpgrade:
-                        SetLastError(Strings.ERROR_HAVE_SECOND_UPGRADE);
+                        SetLastError(Strings.Inst().GetString(TextEnum.ERROR_HAVE_SECOND_UPGRADE));
                         return MonasteryError.HaveSecondUpgrade;
                     case MonasteryError.NoSources:
-                        SetLastError(Strings.ERROR_NO_SOURCES);
+                        SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_SOURCES));
                         return MonasteryError.NoSources;
                     case MonasteryError.BanSecondUpgrade:
-                        SetLastError(Strings.ERROR_BAN_SECOND_UPGRADE);
+                        SetLastError(Strings.Inst().GetString(TextEnum.ERROR_BAN_SECOND_UPGRADE));
                         return MonasteryError.BanSecondUpgrade;
                     case MonasteryError.OK:
                         return MonasteryError.OK;
@@ -402,7 +402,7 @@ namespace Expanze.Gameplay.Map
                 }
             }
 
-            SetLastError(Strings.ERROR_MAX_UPGRADES);
+            SetLastError(Strings.Inst().GetString(TextEnum.ERROR_MAX_UPGRADES));
             return MonasteryError.MaxUpgrades;
         }
 
@@ -440,13 +440,13 @@ namespace Expanze.Gameplay.Map
                 switch (m.CanBuyLicence(source))
                 {
                     case MarketError.BanSecondLicence :
-                        SetLastError(Strings.ERROR_BAN_SECOND_LICENCE);
+                        SetLastError(Strings.Inst().GetString(TextEnum.ERROR_BAN_SECOND_LICENCE));
                         return MarketError.BanSecondLicence;
                     case MarketError.HaveSecondLicence :
-                        SetLastError(Strings.ERROR_HAVE_SECOND_LICENCE);
+                        SetLastError(Strings.Inst().GetString(TextEnum.ERROR_HAVE_SECOND_LICENCE));
                         return MarketError.HaveSecondLicence;
                     case MarketError.NoSources :
-                        SetLastError(Strings.ERROR_NO_SOURCES);
+                        SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_SOURCES));
                         return MarketError.NoSources;
                     case MarketError.OK :
                         return MarketError.OK;
@@ -455,7 +455,7 @@ namespace Expanze.Gameplay.Map
                 }
             }
 
-            SetLastError(Strings.ERROR_MAX_LICENCES);
+            SetLastError(Strings.Inst().GetString(TextEnum.ERROR_MAX_LICENCES));
             return MarketError.MaxLicences;
         }
 
@@ -505,19 +505,19 @@ namespace Expanze.Gameplay.Map
             HexaModel.SetHexaFort(fort);
             if (!hexa.IsInFortRadius())
             {
-                SetLastError(Strings.ERROR_TOO_FAR_FROM_FORT);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_TOO_FAR_FROM_FORT));
                 return CaptureHexaError.TooFarFromFort;
             }
 
             if (Settings.banFortCaptureHexa)
             {
-                SetLastError(Strings.ERROR_BAN_FORT_CAPTURE_HEXA);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_BAN_FORT_CAPTURE_HEXA));
                 return CaptureHexaError.Ban;
             }
 
             if (!Settings.costFortCapture.HasPlayerSources(gm.GetActivePlayer()))
             {
-                SetLastError(Strings.ERROR_NO_SOURCES);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_SOURCES));
                 return CaptureHexaError.NoSources;
             }
 
@@ -526,7 +526,7 @@ namespace Expanze.Gameplay.Map
 
             if (hexa == null)
             {
-                SetLastError(Strings.ERROR_INVALID_HEXA_ID);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_INVALID_HEXA_ID));
                 return CaptureHexaError.InvalidHexaID;
             }
 
@@ -567,7 +567,7 @@ namespace Expanze.Gameplay.Map
         {
             if (!Settings.costFortCrusade.HasPlayerSources(gm.GetActivePlayer()))
             {
-                SetLastError(Strings.ERROR_NO_SOURCES);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_SOURCES));
                 return DestroyHexaError.NoSources;
             }
 
@@ -580,19 +580,19 @@ namespace Expanze.Gameplay.Map
 
             if (hexa == null)
             {
-                SetLastError(Strings.ERROR_INVALID_HEXA_ID);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_INVALID_HEXA_ID));
                 return DestroyHexaError.InvalidHexaID;
             }
 
             if (!hexa.IsInFortRadius())
             {
-                SetLastError(Strings.ERROR_TOO_FAR_FROM_FORT);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_TOO_FAR_FROM_FORT));
                 return DestroyHexaError.TooFarFromFort;
             }
             /*
             if (hexa.GetDestroyed())
             {
-                SetLastError(Strings.ERROR_INVALID_HEXA_ID);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_INVALID_HEXA_ID));
                 return DestroyHexaError.IsDestroyed;
             }*/
 
@@ -638,7 +638,7 @@ namespace Expanze.Gameplay.Map
         {
             if (Settings.banFortStealSources)
             {
-                SetLastError(Strings.ERROR_BAN_FORT_STEAL_SOURCES);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_BAN_FORT_STEAL_SOURCES));
                 return DestroySourcesError.Ban;
             }
 
@@ -649,12 +649,12 @@ namespace Expanze.Gameplay.Map
             Player activePlayer = gm.GetActivePlayer();
             if (activePlayer.GetBuildingCount(Building.Fort) == 0)
             {
-                SetLastError(Strings.ERROR_NO_FORT);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_FORT));
                 return DestroySourcesError.NoFort;
             }
             if (!Settings.costFortSources.HasPlayerSources(activePlayer))
             {
-                SetLastError(Strings.ERROR_NO_SOURCES);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_SOURCES));
                 return DestroySourcesError.NoSources;
             }
 
@@ -687,7 +687,7 @@ namespace Expanze.Gameplay.Map
         {
             if (Settings.banFortParade)
             {
-                SetLastError(Strings.ERROR_BAN_FORT_SHOW_PARADE);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_BAN_FORT_SHOW_PARADE));
                 return ParadeError.Ban;
             }
 
@@ -695,12 +695,12 @@ namespace Expanze.Gameplay.Map
 
             if (!GetPrice(PriceKind.AParade).HasPlayerSources(activePlayer))
             {
-                SetLastError(Strings.ERROR_NO_SOURCES);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_SOURCES));
                 return ParadeError.NoSources;
             }
             if (activePlayer.GetBuildingCount(Building.Fort) == 0)
             {
-                SetLastError(Strings.ERROR_NO_FORT);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_FORT));
                 return ParadeError.NoFort;
             }
 
@@ -717,7 +717,7 @@ namespace Expanze.Gameplay.Map
                 activePlayer.PayForSomething(GetPrice(PriceKind.AParade));
                 if (gm.GetActivePlayer().GetIsAI())
                 {
-                    Message.Inst().Show(Strings.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE, Strings.PROMPT_DESCTIPTION_MESSAGE_FORT_ACTION_PARADE, GameResources.Inst().GetHudTexture(HUDTexture.IconFortParade));
+                    Message.Inst().Show(Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE), Strings.Inst().GetString(TextEnum.PROMPT_DESCTIPTION_MESSAGE_FORT_ACTION_PARADE), GameResources.Inst().GetHudTexture(HUDTexture.IconFortParade));
                 }
                 return true;
             }
@@ -741,7 +741,7 @@ namespace Expanze.Gameplay.Map
         {
             if (CanChangeSourcesFor(source) < 0)
             {
-                SetLastError(Strings.ERROR_NOT_ENOUGHT_FROM_SOURCE);
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NOT_ENOUGHT_FROM_SOURCE));
                 return false;
             }
 

@@ -421,7 +421,7 @@ namespace Expanze
             {
                 GameMaster.Inst().AddToPlayerCount(-1);
                 points = new int[(int) PlayerPoints.Count];
-                Message.Inst().Show(Strings.GAME_ALERT_TITLE_AI_EXCEPTION, GetName() + " " + Strings.GAME_ALERT_DESCRIPTION_AI_EXCEPTION, GameResources.Inst().GetHudTexture(HUDTexture.IconTown));
+                Message.Inst().Show(Strings.Inst().GetString(TextEnum.GAME_ALERT_TITLE_AI_EXCEPTION), GetName() + " " + Strings.Inst().GetString(TextEnum.GAME_ALERT_DESCRIPTION_AI_EXCEPTION), GameResources.Inst().GetHudTexture(HUDTexture.IconTown));
             }
 
             this.active = active; 

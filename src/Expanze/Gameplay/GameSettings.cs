@@ -15,23 +15,23 @@ namespace Expanze
 
         public GameSettings(int points, string mapType, string mapSize, string mapWealth) 
         {
-            if (mapType == Strings.GAME_SETTINGS_MAP_TYPE_LOWLAND)
+            if (mapType == Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_TYPE_LOWLAND))
                 this.mapType = MapType.LOWLAND;
-            else if (mapType == Strings.GAME_SETTINGS_MAP_TYPE_NORMAL)
+            else if (mapType == Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_TYPE_NORMAL))
                 this.mapType = MapType.NORMAL;
             else
                 this.mapType = MapType.WASTELAND;
 
-            if (mapSize == Strings.GAME_SETTINGS_MAP_SIZE_SMALL)
+            if (mapSize == Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SIZE_SMALL))
                 this.mapSize = MapSize.SMALL;
-            else if (mapSize == Strings.GAME_SETTINGS_MAP_SIZE_MEDIUM)
+            else if (mapSize == Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SIZE_MEDIUM))
                 this.mapSize = MapSize.MEDIUM;
             else
                 this.mapSize = MapSize.BIG;
 
-            if (mapWealth == Strings.GAME_SETTINGS_MAP_WEALTH_LOW)
+            if (mapWealth == Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_WEALTH_LOW))
                 this.mapWealth = MapWealth.LOW;
-            else if (mapWealth == Strings.GAME_SETTINGS_MAP_WEALTH_MEDIUM)
+            else if (mapWealth == Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_WEALTH_MEDIUM))
                 this.mapWealth = MapWealth.MEDIUM;
             else
                 this.mapWealth = MapWealth.HIGH;

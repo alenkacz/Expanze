@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <map>
   <settings>
-    <name>První kroky</name>
+    <name>
+      <cz>První kroky</cz>
+      <eng>First steps</eng>
+    </name>
     <tutorial>tutorial1</tutorial>
     <players>
       <player>

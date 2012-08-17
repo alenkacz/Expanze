@@ -31,17 +31,17 @@ namespace Expanze.Gameplay
         {
             switch (kind)
             {
-                case Kind.Points: return Strings.MENU_GRAPH_POINTS;
-                case Kind.Towns: return Strings.MENU_GRAPH_TOWNS;
-                case Kind.Roads: return Strings.MENU_GRAPH_ROADS;
-                case Kind.Medals: return Strings.MENU_GRAPH_MEDALS;
-                case Kind.Monastery: return Strings.MENU_GRAPH_MONASTERY;
-                case Kind.Fort: return Strings.MENU_GRAPH_FORT;
-                case Kind.Market: return Strings.MENU_GRAPH_MARKET;
-                case Kind.Actions: return Strings.MENU_GRAPH_ACTION;
-                case Kind.Licences: return Strings.MENU_GRAPH_LICENCE;
-                case Kind.Upgrades: return Strings.MENU_GRAPH_UPGRADE;
-                case Kind.SumSources: return Strings.MENU_GRAPH_SUMSOURCES;
+                case Kind.Points: return Strings.Inst().GetString(TextEnum.MENU_GRAPH_POINTS);
+                case Kind.Towns: return Strings.Inst().GetString(TextEnum.MENU_GRAPH_TOWNS);
+                case Kind.Roads: return Strings.Inst().GetString(TextEnum.MENU_GRAPH_ROADS);
+                case Kind.Medals: return Strings.Inst().GetString(TextEnum.MENU_GRAPH_MEDALS);
+                case Kind.Monastery: return Strings.Inst().GetString(TextEnum.MENU_GRAPH_MONASTERY);
+                case Kind.Fort: return Strings.Inst().GetString(TextEnum.MENU_GRAPH_FORT);
+                case Kind.Market: return Strings.Inst().GetString(TextEnum.MENU_GRAPH_MARKET);
+                case Kind.Actions: return Strings.Inst().GetString(TextEnum.MENU_GRAPH_ACTION);
+                case Kind.Licences: return Strings.Inst().GetString(TextEnum.MENU_GRAPH_LICENCE);
+                case Kind.Upgrades: return Strings.Inst().GetString(TextEnum.MENU_GRAPH_UPGRADE);
+                case Kind.SumSources: return Strings.Inst().GetString(TextEnum.MENU_GRAPH_SUMSOURCES);
 
                 default: throw new Exception("Statistic kind doesnt exist.");
             }

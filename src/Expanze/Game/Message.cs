@@ -102,7 +102,7 @@ namespace Expanze
             if (InputManager.Inst().GetGameAction("game", "enablemessages").IsPressed())
             {
                 disabled = false;
-                Show(Strings.MESSAGE_TITLE_MESSAGE_ON, Strings.MESSAGE_DESCRIPTION_MESSAGE_ON, null);
+                Show(Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_MESSAGE_ON), Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_MESSAGE_ON), null);
             } else
             if (InputManager.Inst().GetGameAction("gamemessage", "disablemessages").IsPressed())
             {

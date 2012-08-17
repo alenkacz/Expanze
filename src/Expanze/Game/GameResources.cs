@@ -60,6 +60,7 @@ namespace Expanze
         MedievalSmall,
         MedievalMedium,
         MedievalBig,
+        MedievalBigest,
         MenuFont
     }
 
@@ -87,7 +88,7 @@ namespace Expanze
 
         Texture2D[] hud;
         Texture2D[] hexaTexture;
-        private const int N_FONT = 8;
+        private const int N_FONT = 9;
         SpriteFont[] font;
 
         public static GameResources Inst()
@@ -143,15 +144,15 @@ namespace Expanze
         public String GetProgress()
         {
             if (hexaModel == null)
-                return Strings.MENU_GAME_LOADING_HUD;
+                return Strings.Inst().GetString(TextEnum.MENU_GAME_LOADING_HUD);
             if (shapeModel == null)
-                return Strings.MENU_GAME_LOADING_HEXAS;
+                return Strings.Inst().GetString(TextEnum.MENU_GAME_LOADING_HEXAS);
             if (buildingModel == null)
-                return Strings.MENU_GAME_LOADING_BUILDINGS;
+                return Strings.Inst().GetString(TextEnum.MENU_GAME_LOADING_BUILDINGS);
             else if (townModel == null)
-                return Strings.MENU_GAME_LOADING_SPECIAL_BUILDINGS;
+                return Strings.Inst().GetString(TextEnum.MENU_GAME_LOADING_SPECIAL_BUILDINGS);
             else
-                return Strings.MENU_GAME_LOADING_MAP;
+                return Strings.Inst().GetString(TextEnum.MENU_GAME_LOADING_MAP);
 
         }
 
@@ -340,6 +341,7 @@ namespace Expanze
             font[(int)EFont.HudMaterialsFont] = content.Load<SpriteFont>("hudMaterialsFont");
             font[(int)EFont.MaterialsNewFont] = content.Load<SpriteFont>("materialsNewFont");
             font[(int)EFont.MedievalBig] = content.Load<SpriteFont>("Fonts/medievalBig");
+            font[(int)EFont.MedievalBigest] = content.Load<SpriteFont>("Fonts/medievalBigest");
             font[(int)EFont.MedievalSmall] = content.Load<SpriteFont>("Fonts/medievalSmall");
             font[(int)EFont.MedievalMedium] = content.Load<SpriteFont>("Fonts/medievalMedium");
             font[(int)EFont.PlayerNameFont] = content.Load<SpriteFont>("playername");

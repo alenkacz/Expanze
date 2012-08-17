@@ -3,20 +3,53 @@
   <tutorialItem>
     <trigger>MessageClose</trigger>
     <pairs>
-      <pair><text>Vítej v Expanzi!</text></pair>
-      <pair><text>Tvým úkolem na této mapě je postavit dalších 7 cest. 2 už máš, tedy jich potřebuješ celkem 9.</text></pair>
-      <pair><text>Pokrok hrou znázorňuje symbol cesty v pravém horním rohu.</text></pair>
-      <pair><text>Číslo nahoře uprostřed udává, kolik kol ti zbývá do konce splnění úkolu. Nestihneš-li to, prohráváš.</text></pair>
-      <pair><text>Ale neboj se. Na této mapě ti poradím, jak vše včas stihnout.</text></pair>    
-      <pair><text>Máš málo surovin. Klikni na další kolo, nějaké suroviny získáš.</text></pair>    
+      <pair>
+        <text>
+          <cz>Vítej v Expanzi!</cz>
+          <eng>Welcome in Expanze</eng>
+        </text>
+      </pair>
+      <pair>
+        <text>
+          <cz>Tvým úkolem na této mapě je postavit dalších 7 cest. 2 už máš, tedy jich potřebuješ celkem 9.</cz>
+          <eng>Your goal on this map is to build 7 more roads. You have 2 roads. You need 9 roads.</eng>
+        </text>
+      </pair>
+      <pair>
+        <text>
+          <cz>Pokrok hrou znázorňuje symbol cesty v pravém horním rohu.</cz>
+          <eng>Game progress is shown by road symbor in top right corner.</eng>
+        </text>
+      </pair>
+      <pair>
+        <text>
+          <cz>Číslo nahoře uprostřed udává, kolik kol ti zbývá do konce splnění úkolu. Nestihneš-li to, prohráváš.</cz>
+          <eng>The number in the middle top is saying how many turns left to the end of game.</eng>
+        </text>
+      </pair>
+      <pair>
+        <text>
+          <cz>Ale neboj se. Na této mapě ti poradím, jak vše včas stihnout.</cz>
+          <eng>Don't worry. On this map I will help you how to make it in time.</eng>
+        </text>
+      </pair>
+      <pair>
+        <text>
+          <cz>Máš málo surovin. Klikni na další kolo, nějaké suroviny získáš.</cz>
+          <eng>You haven't enough sources. Click for the next turn. You'll get sources.</eng>
+        </text>
+      </pair>
     </pairs>
   </tutorialItem>
-  
+
   <tutorialItem>
     <trigger>NextTurn</trigger>
     <pairs>
       <pair>
-        <text>Tlačítko pro další kolo</text>
+        <text>
+          <cz>Tlačítko pro další kolo</cz>
+          <eng>Button for next turn</eng>
+        </text>
         <position>
           <x>1300</x>
           <y>800</y>
@@ -29,7 +62,10 @@
     <trigger>RoadBuild</trigger>
     <pairs>
       <pair>
-        <text>Postav žlutě zvýrazněnou cestu</text>
+        <text>
+          <cz>Postav žlutě zvýrazněnou cestu</cz>
+          <eng>Build yellow road.</eng>
+        </text>
       </pair>
     </pairs>
     <constraint1>34</constraint1>
@@ -39,14 +75,20 @@
     <trigger>TownBuild</trigger>
     <pairs>
       <pair>
-        <text>Postav žlutě zvýrazněné město</text>
+        <text>
+          <cz>Postav žlutě zvýrazněné město</cz>
+          <eng>Build yellow town.</eng>
+        </text>
         <position>
           <x>0</x>
           <y>0</y>
         </position>
       </pair>
       <pair>
-        <text>(potřebuješ k tomu celkem 30 rudy)</text>
+        <text>
+          <cz>(potřebuješ k tomu celkem 30 rudy)</cz>
+          <eng>(you need 30 pieces of ore)</eng>
+        </text>
         <position>
           <x>0</x>
           <y>30</y>
@@ -60,7 +102,10 @@
     <trigger>TownChoose</trigger>
     <pairs>
       <pair>
-        <text>Označ město</text>
+        <text>
+          <cz>Označ město</cz>
+          <eng>Mark town</eng>
+        </text>
       </pair>
     </pairs>
     <constraint1>27</constraint1>
@@ -70,7 +115,10 @@
     <trigger>HexaBuild</trigger>
     <pairs>
       <pair>
-        <text>Zde postav lom na kamenní</text>
+        <text>
+          <cz>Zde postav lom na kamenní</cz>
+          <eng>Build stone quarry here</eng>
+        </text>
       </pair>
     </pairs>
     <constraint1>10</constraint1>
@@ -80,17 +128,30 @@
     <trigger>BuildingBuild</trigger>
     <pairs>
       <pair>
-        <text></text>
+        <text>
+          <cz></cz>
+          <eng></eng>
+        </text>
       </pair>
     </pairs>
     <constraint1>1</constraint1>
   </tutorialItem>
-  
+
   <tutorialItem>
     <trigger>MessageClose</trigger>
     <pairs>
-      <pair><text>Konec tutoriálu</text></pair>
-      <pair><text>Teď už víš vše, abys dokázal vyhrát na této mapě. Přeji Ti hodně štěstí.</text></pair>
+      <pair>
+        <text>
+          <cz>Konec tutoriálu</cz>
+          <eng>Tutorial end</eng>
+        </text>
+      </pair>
+      <pair>
+        <text>
+          <cz>Teď už víš vše, abys dokázal vyhrát na této mapě. Přeji Ti hodně štěstí.</cz>
+          <eng>You know now everything to win on this map. Good luck!</eng>
+        </text>
+      </pair>
     </pairs>
   </tutorialItem>
 </tutorial>

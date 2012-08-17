@@ -257,19 +257,19 @@ namespace Expanze
             {
                 if (buildingKind[pos] != BuildingKind.NoBuilding)
                 {
-                    GameState.map.GetMapController().SetLastError(Strings.ERROR_ALREADY_BUILD);
+                    GameState.map.GetMapController().SetLastError(Strings.Inst().GetString(TextEnum.ERROR_ALREADY_BUILD));
                     return BuildingBuildError.AlreadyBuild;
                 }
 
                 if (gm.GetActivePlayer() != playerOwner)
                 {
-                    GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_OWNER);
+                    GameState.map.GetMapController().SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_OWNER));
                     return BuildingBuildError.NotOwner;
                 }
 
                 if (!cost.HasPlayerSources(gm.GetActivePlayer()))
                 {
-                    GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_SOURCES);
+                    GameState.map.GetMapController().SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_SOURCES));
                     return BuildingBuildError.NoSources;
                 }
 
@@ -304,12 +304,12 @@ namespace Expanze
 
                 if (isBuild)
                 {
-                    GameState.map.GetMapController().SetLastError(Strings.ERROR_ALREADY_BUILD);
+                    GameState.map.GetMapController().SetLastError(Strings.Inst().GetString(TextEnum.ERROR_ALREADY_BUILD));
                     return TownBuildError.AlreadyBuild;
                 }
                 if (HasTownBuildNeighbour())
                 {
-                    GameState.map.GetMapController().SetLastError(Strings.ERROR_OTHER_TOWN_IS_TOO_CLOSE);
+                    GameState.map.GetMapController().SetLastError(Strings.Inst().GetString(TextEnum.ERROR_OTHER_TOWN_IS_TOO_CLOSE));
                     return TownBuildError.OtherTownIsClose;
                 }
 
@@ -327,13 +327,13 @@ namespace Expanze
 
                 if (!hasActivePlayerRoadNeighbour)
                 {
-                    GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_PLAYER_ROAD);
+                    GameState.map.GetMapController().SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_PLAYER_ROAD));
                     return TownBuildError.NoPlayerRoad;
                 }
 
                 if (!Settings.costTown.HasPlayerSources(activePlayer))
                 {
-                    GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_SOURCES);
+                    GameState.map.GetMapController().SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_SOURCES));
                     return TownBuildError.NoSources;
                 }
 
@@ -343,17 +343,17 @@ namespace Expanze
             {
                 if (gm.GetHasBuiltTown())
                 {
-                    GameState.map.GetMapController().SetLastError(Strings.ERROR_YOU_HAVE_BUILT_TOWN_THIS_TURN);
+                    GameState.map.GetMapController().SetLastError(Strings.Inst().GetString(TextEnum.ERROR_YOU_HAVE_BUILT_TOWN_THIS_TURN));
                     return TownBuildError.YouHaveBuiltTownThisTurn;
                 }
                 if (isBuild)
                 {
-                    GameState.map.GetMapController().SetLastError(Strings.ERROR_ALREADY_BUILD);
+                    GameState.map.GetMapController().SetLastError(Strings.Inst().GetString(TextEnum.ERROR_ALREADY_BUILD));
                     return TownBuildError.AlreadyBuild;
                 }
                 if (HasTownBuildNeighbour())
                 {
-                    GameState.map.GetMapController().SetLastError(Strings.ERROR_OTHER_TOWN_IS_TOO_CLOSE);
+                    GameState.map.GetMapController().SetLastError(Strings.Inst().GetString(TextEnum.ERROR_OTHER_TOWN_IS_TOO_CLOSE));
                     return TownBuildError.OtherTownIsClose;
                 }
 

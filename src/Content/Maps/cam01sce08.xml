@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <map>
   <settings>
-    <name>Posvátná hora</name>
+    <name>
+      <cz>Posvátná hora</cz>
+      <eng>Sacred mountain</eng>
+    </name>
     <players>
       <player>
         <name>Alessandro Malas</name>

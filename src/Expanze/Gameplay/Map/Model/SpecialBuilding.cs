@@ -44,9 +44,9 @@ namespace Expanze.Gameplay
             switch (error)
             {
                 case BuyingUpgradeError.NoSources: return "";
-                case BuyingUpgradeError.MaxUpgrades: return Strings.ALERT_TITLE_MAX_UPGRADES;
-                case BuyingUpgradeError.NoUpgrade: return Strings.ALERT_TITLE_NO_UPGRADE;
-                case BuyingUpgradeError.YouAlreadyHaveSecondUpgrade: return ""; // Strings.ALERT_TITLE_ALREADY_HAVE_SECOND_UPGRADE;
+                case BuyingUpgradeError.MaxUpgrades: return Strings.Inst().GetString(TextEnum.ALERT_TITLE_MAX_UPGRADES);
+                case BuyingUpgradeError.NoUpgrade: return Strings.Inst().GetString(TextEnum.ALERT_TITLE_NO_UPGRADE);
+                case BuyingUpgradeError.YouAlreadyHaveSecondUpgrade: return ""; // Strings.Inst().GetString(TextEnum.ALERT_TITLE_ALREADY_HAVE_SECOND_UPGRADE);
             }
 
             return base.TryExecute();
@@ -85,13 +85,13 @@ namespace Expanze.Gameplay
 
             if (upgradeCount == upgradeMax)
             {
-                GameState.map.GetMapController().SetLastError(Strings.ERROR_MAX_UPGRADES);
+                GameState.map.GetMapController().SetLastError(Strings.Inst().GetString(TextEnum.ERROR_MAX_UPGRADES));
                 return BuyingUpgradeError.MaxUpgrades;
             }
 
             if (!GetUpgradeCost(upgradeKind, upgradeNumber).HasPlayerSources(activePlayer))
             {
-                GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_SOURCES);
+                GameState.map.GetMapController().SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_SOURCES));
                 return BuyingUpgradeError.NoSources;
             }
 

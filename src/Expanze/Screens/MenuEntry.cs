@@ -44,6 +44,8 @@ namespace Expanze
         /// </summary>
         Vector2 position;
 
+        SpriteFont font;
+
         #endregion
 
         #region Properties
@@ -101,6 +103,16 @@ namespace Expanze
         public MenuEntry(string text)
         {
             this.text = text;
+            font = null;
+        }
+
+        /// <summary>
+        /// Constructs a new menu entry with the specified text.
+        /// </summary>
+        public MenuEntry(string text, SpriteFont font)
+        {
+            this.text = text;
+            this.font = font;
         }
 
 
@@ -155,7 +167,9 @@ namespace Expanze
             // Draw text, centered on the middle of each line.
             ScreenManager screenManager = screen.ScreenManager;
             SpriteBatch spriteBatch = screenManager.SpriteBatch;
-            SpriteFont font = screenManager.Font;
+
+            if(font == null)
+                font = screenManager.Font;
 
             Vector2 origin = new Vector2(0, font.LineSpacing / 2);
 
@@ -169,7 +183,9 @@ namespace Expanze
         /// </summary>
         public virtual int GetHeight(MenuScreen screen)
         {
-            return screen.ScreenManager.Font.LineSpacing;
+            if (font == null)
+                font = screen.ScreenManager.Font;
+            return font.LineSpacing;
         }
 
 
@@ -178,7 +194,10 @@ namespace Expanze
         /// </summary>
         public virtual int GetWidth(MenuScreen screen)
         {
-            return (int)screen.ScreenManager.Font.MeasureString(Text).X;
+            if (font == null)
+                font = screen.ScreenManager.Font;
+
+            return (int) font.MeasureString(Text).X;
         }
 
         public virtual Rectangle GetRange(MenuScreen screen)

@@ -100,36 +100,36 @@ namespace Expanze.Gameplay
         {
             PromptWindow win = PromptWindow.Inst();
             GameResources res = GameResources.Inst();
-            win.Show(mod, Strings.PROMPT_TITLE_WANT_TO_BUILD_MONASTERY, true);
+            win.Show(mod, Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_BUILD_MONASTERY), true);
             
             if(owner.GetMonasteryUpgrade(SourceBuildingKind.Mill) == UpgradeKind.NoUpgrade)
-                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, this, Strings.PROMPT_TITLE_WANT_TO_UPGRADE_1_MILL, Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_MILL, Settings.costMonasteryCorn1, true, res.GetHudTexture(HUDTexture.IconMill1)));
+                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, this, Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_1_MILL), Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_MILL), Settings.costMonasteryCorn1, true, res.GetHudTexture(HUDTexture.IconMill1)));
             else if (owner.GetMonasteryUpgrade(SourceBuildingKind.Mill) == UpgradeKind.FirstUpgrade && !Settings.banSecondUpgrade)
-                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 0, this, Strings.PROMPT_TITLE_WANT_TO_UPGRADE_2_MILL, Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_MILL, Settings.costMonasteryCorn2, true, res.GetHudTexture(HUDTexture.IconMill2)));
+                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 0, this, Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_2_MILL), Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_MILL), Settings.costMonasteryCorn2, true, res.GetHudTexture(HUDTexture.IconMill2)));
 
             if (owner.GetMonasteryUpgrade(SourceBuildingKind.Stepherd) == UpgradeKind.NoUpgrade)
-                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 1, this, Strings.PROMPT_TITLE_WANT_TO_UPGRADE_1_STEPHERD, Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_STEPHERD, Settings.costMonasteryMeat1, true, res.GetHudTexture(HUDTexture.IconStepherd1)));
+                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 1, this, Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_1_STEPHERD), Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_STEPHERD), Settings.costMonasteryMeat1, true, res.GetHudTexture(HUDTexture.IconStepherd1)));
             else if (owner.GetMonasteryUpgrade(SourceBuildingKind.Stepherd) == UpgradeKind.FirstUpgrade && !Settings.banSecondUpgrade)
-                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 1, this, Strings.PROMPT_TITLE_WANT_TO_UPGRADE_2_STEPHERD, Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_STEPHERD, Settings.costMonasteryMeat2, true, res.GetHudTexture(HUDTexture.IconStepherd2)));
+                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 1, this, Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_2_STEPHERD), Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_STEPHERD), Settings.costMonasteryMeat2, true, res.GetHudTexture(HUDTexture.IconStepherd2)));
             
             if (owner.GetMonasteryUpgrade(SourceBuildingKind.Quarry) == UpgradeKind.NoUpgrade)
-                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 2, this, Strings.PROMPT_TITLE_WANT_TO_UPGRADE_1_QUARRY, Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_QUARRY, Settings.costMonasteryStone1, true, res.GetHudTexture(HUDTexture.IconQuarry1)));
+                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 2, this, Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_1_QUARRY), Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_QUARRY), Settings.costMonasteryStone1, true, res.GetHudTexture(HUDTexture.IconQuarry1)));
             else if (owner.GetMonasteryUpgrade(SourceBuildingKind.Quarry) == UpgradeKind.FirstUpgrade && !Settings.banSecondUpgrade)
-                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 2, this, Strings.PROMPT_TITLE_WANT_TO_UPGRADE_2_QUARRY, Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_QUARRY, Settings.costMonasteryStone2, true, res.GetHudTexture(HUDTexture.IconQuarry2)));
+                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 2, this, Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_2_QUARRY), Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_QUARRY), Settings.costMonasteryStone2, true, res.GetHudTexture(HUDTexture.IconQuarry2)));
             
             if (owner.GetMonasteryUpgrade(SourceBuildingKind.Saw) == UpgradeKind.NoUpgrade)
-                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 3, this, Strings.PROMPT_TITLE_WANT_TO_UPGRADE_1_SAW, Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_SAW, Settings.costMonasteryWood1, true, res.GetHudTexture(HUDTexture.IconSaw1)));
+                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 3, this, Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_1_SAW), Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_SAW), Settings.costMonasteryWood1, true, res.GetHudTexture(HUDTexture.IconSaw1)));
             else if (owner.GetMonasteryUpgrade(SourceBuildingKind.Saw) == UpgradeKind.FirstUpgrade && !Settings.banSecondUpgrade)
-                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 3, this, Strings.PROMPT_TITLE_WANT_TO_UPGRADE_2_SAW, Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_SAW, Settings.costMonasteryWood2, true, res.GetHudTexture(HUDTexture.IconSaw2)));
+                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 3, this, Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_2_SAW), Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_SAW), Settings.costMonasteryWood2, true, res.GetHudTexture(HUDTexture.IconSaw2)));
 
             if (owner.GetMonasteryUpgrade(SourceBuildingKind.Mine) == UpgradeKind.NoUpgrade)
-                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 4, this, Strings.PROMPT_TITLE_WANT_TO_UPGRADE_1_MINE, Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_MINE, Settings.costMonasteryOre1, true, res.GetHudTexture(HUDTexture.IconMine1)));
+                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 4, this, Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_1_MINE), Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_MINE), Settings.costMonasteryOre1, true, res.GetHudTexture(HUDTexture.IconMine1)));
             else if (owner.GetMonasteryUpgrade(SourceBuildingKind.Mine) == UpgradeKind.FirstUpgrade && !Settings.banSecondUpgrade)
-                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 4, this, Strings.PROMPT_TITLE_WANT_TO_UPGRADE_2_MINE, Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_MINE, Settings.costMonasteryOre2, true, res.GetHudTexture(HUDTexture.IconMine2)));
+                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 4, this, Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_2_MINE), Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_MINE), Settings.costMonasteryOre2, true, res.GetHudTexture(HUDTexture.IconMine2)));
 
             if (win.GetItemCount() == 0)
             {
-                win.AddPromptItem(new PromptItem(Strings.PROMPT_TITLE_WANT_TO_BUILD_MONASTERY, Strings.PROMPT_DESCRIPTION_ALL_UPGRADES_INVENTED, new SourceAll(0), false, false, GameResources.Inst().GetHudTexture(HUDTexture.IconMonastery)));
+                win.AddPromptItem(new PromptItem(Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_BUILD_MONASTERY), Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_ALL_UPGRADES_INVENTED), new SourceAll(0), false, false, GameResources.Inst().GetHudTexture(HUDTexture.IconMonastery)));
             }
         }
 
@@ -164,7 +164,7 @@ namespace Expanze.Gameplay
 
         public static BuildingPromptItem GetPromptItemBuildMonastery(int townID, int hexaID)
         {
-            return new BuildingPromptItem(townID, hexaID, BuildingKind.MonasteryBuilding, Strings.PROMPT_TITLE_WANT_TO_BUILD_MONASTERY, Strings.PROMPT_DESCRIPTION_WANT_TO_BUILD_MONASTERY, Settings.costMonastery, true, GameResources.Inst().GetHudTexture(HUDTexture.IconMonastery));
+            return new BuildingPromptItem(townID, hexaID, BuildingKind.MonasteryBuilding, Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_BUILD_MONASTERY), Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_BUILD_MONASTERY), Settings.costMonastery, true, GameResources.Inst().GetHudTexture(HUDTexture.IconMonastery));
         }
 
         public bool InventUpgrade(SourceBuildingKind source)
@@ -199,13 +199,13 @@ namespace Expanze.Gameplay
             switch (error)
             {
                 case BuyingUpgradeError.YouAlreadyHaveSecondUpgrade:
-                    GameState.map.GetMapController().SetLastError(Strings.ERROR_HAVE_SECOND_UPGRADE);
+                    GameState.map.GetMapController().SetLastError(Strings.Inst().GetString(TextEnum.ERROR_HAVE_SECOND_UPGRADE));
                     return MonasteryError.HaveSecondUpgrade;
                 case BuyingUpgradeError.NoSources:
-                    GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_SOURCES);
+                    GameState.map.GetMapController().SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_SOURCES));
                     return MonasteryError.NoSources;
                 case BuyingUpgradeError.MaxUpgrades:
-                    GameState.map.GetMapController().SetLastError(Strings.ERROR_MAX_UPGRADES);
+                    GameState.map.GetMapController().SetLastError(Strings.Inst().GetString(TextEnum.ERROR_MAX_UPGRADES));
                     return MonasteryError.MaxUpgrades;
                 case BuyingUpgradeError.OK: return MonasteryError.OK;
             }

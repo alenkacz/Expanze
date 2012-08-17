@@ -3,10 +3,30 @@
   <tutorialItem>
     <trigger>MessageClose</trigger>
     <pairs>
-      <pair><text>První soupeř</text></pair>
-      <pair><text>Tento ostrov si vybral další kolonizátor, tajemný Xi Nao.</text></pair>
-      <pair><text>Kdo první dokáže postavit 9 měst a tím určit, kdo ovládne ostrov?</text></pair>
-      <pair><text>Zdarma postav kdekoliv své první město. Vybírej pečlivě.</text></pair>   
+      <pair>
+        <text>
+          <cz>První soupeř</cz>
+          <eng>Your first oponent</eng>
+        </text>
+      </pair>
+      <pair>
+        <text>
+          <cz>Tento ostrov si vybral další kolonizátor, tajemný Xi Nao.</cz>
+          <eng>You aren't the only one who want to rule this island.</eng>
+        </text>
+      </pair>
+      <pair>
+        <text>
+          <cz>Kdo první dokáže postavit 9 měst a tím určit, kdo ovládne ostrov?</cz>
+          <eng>Who will build 9 towns before the other?</eng>
+        </text>
+      </pair>
+      <pair>
+        <text>
+          <cz>Zdarma postav kdekoliv své první město. Vybírej pečlivě.</cz>
+          <eng>You can build your first town everywhere for free. Choose wisely.</eng>
+        </text>
+      </pair>
     </pairs>
   </tutorialItem>
 
@@ -15,13 +35,28 @@
     <pairs>
     </pairs>
   </tutorialItem>
-  
+
   <tutorialItem>
     <trigger>MessageClose</trigger>
     <pairs>
-      <pair><text>První soupeř</text></pair>
-      <pair><text>Xi Nao si nyní zvolí počáteční pozice pro svá první dvě města.</text></pair> 
-      <pair><text>Po něm si vyber místo pro založení svého druhého města.</text></pair>   
+      <pair>
+        <text>
+          <cz>První soupeř</cz>
+          <eng></eng>
+        </text>
+      </pair>
+      <pair>
+        <text>
+          <cz>Xi Nao si nyní zvolí počáteční pozice pro svá první dvě města.</cz>
+          <eng>Xi Nao chooses start position of his first two towns.</eng>
+        </text>
+      </pair>
+      <pair>
+        <text>
+          <cz>Po něm si vyber místo pro založení svého druhého města.</cz>
+          <eng>After him you can build your second town.</eng>
+        </text>
+      </pair>
     </pairs>
   </tutorialItem>
 
@@ -58,11 +93,36 @@
   <tutorialItem>
     <trigger>MessageClose</trigger>
     <pairs>
-      <pair><text>Klášter</text></pair>
-      <pair><text>Expanzi po ostrově může urychlit postavení kláštera.</text></pair> 
-      <pair><text>V klášteře můžou učenci vynaleznout různá vylepšení.</text></pair>   
-      <pair><text>Každé vylepšení urychlí těžbu surovin o 50% oproti původní hodnotě.</text></pair>   
-      <pair><text>Stejně jako u tržiště, omezení max 3 vylepšení na klášter.</text></pair>   
+      <pair>
+        <text>
+          <cz>Klášter</cz>
+          <eng>Monastery</eng>
+        </text>
+      </pair>
+      <pair>
+        <text>
+          <cz>Expanzi po ostrově může urychlit postavení kláštera.</cz>
+          <eng>You can use new special building, monastery.</eng>
+        </text>
+      </pair>
+      <pair>
+        <text>
+          <cz>V klášteře můžou učenci vynaleznout různá vylepšení.</cz>
+          <eng>Apprentices can invent new upgrades for source buildings.</eng>
+        </text>
+      </pair>
+      <pair>
+        <text>
+          <cz>Každé vylepšení urychlí těžbu surovin o 50% oproti původní hodnotě.</cz>
+          <eng>Each upgrade can raise getting one source by 50%.</eng>
+        </text>
+      </pair>
+      <pair>
+        <text>
+          <cz>Stejně jako u tržiště, omezení max 3 vylepšení na klášter.</cz>
+          <eng>There is limit 3 upgrades on one monastery. Same as by markets.</eng>
+        </text>
+      </pair>
     </pairs>
   </tutorialItem>
 </tutorial>

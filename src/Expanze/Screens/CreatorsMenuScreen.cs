@@ -35,7 +35,7 @@ namespace Expanze
         /// Constructor.
         /// </summary>
         public CreatorsMenuScreen()
-            : base(Strings.MENU_OPTION_TITLE)
+            : base(Strings.Inst().GetString(TextEnum.MENU_OPTION_TITLE))
         {
             // Create our menu entries.
             alenaMenuEntry = new MenuEntry(string.Empty);
@@ -44,7 +44,7 @@ namespace Expanze
 
             SetMenuEntryText();
 
-            MenuEntry back = new MenuEntry(Strings.MENU_COMMON_BACK);
+            MenuEntry back = new MenuEntry(Strings.Inst().GetString(TextEnum.MENU_COMMON_BACK));
 
             // Hook up menu event handlers.
             back.Selected += OnCancel;
@@ -62,9 +62,9 @@ namespace Expanze
         /// </summary>
         void SetMenuEntryText()
         {
-            lukasMenuEntry.Text = Strings.MENU_CREATORS_LUKAS;
-            alenaMenuEntry.Text = Strings.MENU_CREATORS_ALENA;
-            pavlaMenuEntry.Text = Strings.MENU_CREATORS_PAVLA;
+            lukasMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_CREATORS_LUKAS);
+            alenaMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_CREATORS_ALENA);
+            pavlaMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_CREATORS_PAVLA);
         }
 
 

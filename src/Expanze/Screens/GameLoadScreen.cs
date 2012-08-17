@@ -131,7 +131,7 @@ namespace Expanze
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
             Vector2 viewportSize = new Vector2(viewport.Width, viewport.Height);
 
-            String message1 = Strings.MENU_GAME_LOADING_TITLE;
+            String message1 = Strings.Inst().GetString(TextEnum.MENU_GAME_LOADING_TITLE);
             Vector2 textSize1 = font.MeasureString(message1);
             Vector2 textPosition1 = (viewportSize - textSize1) / 2;
             textPosition1.Y -= textSize1.Y / 2.0f;

@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <map>
   <settings>
-    <name>Neznámý kolonizátor</name>
+    <name>
+      <cz>Neznámý kolonizátor</cz>
+      <eng>Foreign colonizator</eng>
+    </name>
     <tutorial>tutorial3</tutorial>
     <players>
       <player>

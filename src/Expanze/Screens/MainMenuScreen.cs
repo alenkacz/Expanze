@@ -20,6 +20,13 @@ namespace Expanze
     {
         #region Initialization
 
+        MenuEntry hotseatMenuEntry;
+        MenuEntry quickMenuEntry;
+        MenuEntry campaignMenuEntry;
+        MenuEntry settingsMenuEntry;
+        MenuEntry creatorsMenuEntry;
+        MenuEntry exitMenuEntry;
+
         /// <summary>
         /// Constructor fills in the menu contents.
         /// </summary>
@@ -27,12 +34,12 @@ namespace Expanze
             : base("Main Menu")
         {
             // Create our menu entries.
-            MenuEntry hotseatMenuEntry = new MenuEntry(Strings.MENU_MAIN_HOT_SEAT);
-            MenuEntry quickMenuEntry = new MenuEntry(Strings.MENU_MAIN_QUICK_GAME);
-            MenuEntry campaignMenuEntry = new MenuEntry(Strings.MENU_MAIN_CAMPAIGN);
-            MenuEntry settingsMenuEntry = new MenuEntry(Strings.MENU_MAIN_OPTION);
-            MenuEntry creatorsMenuEntry = new MenuEntry(Strings.MENU_MAIN_CREATORS);
-            MenuEntry exitMenuEntry = new MenuEntry(Strings.MENU_MAIN_EXIT);
+            hotseatMenuEntry = new MenuEntry(Strings.Inst().GetString(TextEnum.MENU_MAIN_HOT_SEAT));
+            quickMenuEntry = new MenuEntry(Strings.Inst().GetString(TextEnum.MENU_MAIN_QUICK_GAME));
+            campaignMenuEntry = new MenuEntry(Strings.Inst().GetString(TextEnum.MENU_MAIN_CAMPAIGN));
+            settingsMenuEntry = new MenuEntry(Strings.Inst().GetString(TextEnum.MENU_MAIN_OPTION));
+            creatorsMenuEntry = new MenuEntry(Strings.Inst().GetString(TextEnum.MENU_MAIN_CREATORS));
+            exitMenuEntry = new MenuEntry(Strings.Inst().GetString(TextEnum.MENU_MAIN_EXIT));
 
             // Hook up menu event handlers.
             hotseatMenuEntry.Selected += HotseatMenuEntrySelected;
@@ -113,7 +120,7 @@ namespace Expanze
         /// </summary>
         protected override void OnCancel(PlayerIndex playerIndex)
         {
-            string message = Strings.MENU_COMMON_ARE_YOU_SURE;
+            string message = Strings.Inst().GetString(TextEnum.MENU_COMMON_ARE_YOU_SURE);
 
             MessageBoxScreen confirmExitMessageBox = new MessageBoxScreen(message);
 
@@ -132,7 +139,17 @@ namespace Expanze
             ScreenManager.Game.Exit();
         }
 
+        public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
+        {
+            base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
 
+            hotseatMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_MAIN_HOT_SEAT);
+            quickMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_MAIN_QUICK_GAME);
+            campaignMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_MAIN_CAMPAIGN);
+            settingsMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_MAIN_OPTION);
+            creatorsMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_MAIN_CREATORS);
+            exitMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_MAIN_EXIT);
+        }
         #endregion
     }
 }

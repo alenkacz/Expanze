@@ -37,7 +37,7 @@ namespace AIGen
 
         protected void Log(string msg)
         {
-            //map.Log("goalHiearchy", msg);
+            map.Log("goalHiearchy" + map.GetPlayerMe().GetName(), msg);
         }
 
         public virtual bool IsStillActual()

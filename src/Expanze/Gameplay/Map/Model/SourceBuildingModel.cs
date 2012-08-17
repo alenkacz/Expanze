@@ -70,11 +70,11 @@ namespace Expanze.Gameplay
             {
                 case HexaKind.Mountains:
                     buildingKind = SourceBuildingKind.Mine;
-                    titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_MINE;
-                    upgrade1Title = Strings.PROMPT_TITLE_WANT_TO_UPGRADE_1_MINE;
-                    upgrade2Title = Strings.PROMPT_TITLE_WANT_TO_UPGRADE_2_MINE;
-                    upgrade1Description = Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_MINE;
-                    upgrade2Description = Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_MINE;
+                    titleBuilding = Strings.Inst().GetString(TextEnum.PROMT_TITLE_WANT_TO_BUILD_MINE);
+                    upgrade1Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_1_MINE);
+                    upgrade2Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_2_MINE);
+                    upgrade1Description = Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_MINE);
+                    upgrade2Description = Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_MINE);
                     upgrade0iconActive = GameResources.Inst().GetHudTexture(HUDTexture.IconMineActive);
                     upgrade0icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMine);
                     upgrade1icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMine1);
@@ -82,11 +82,11 @@ namespace Expanze.Gameplay
                     break;
                 case HexaKind.Forest:
                     buildingKind = SourceBuildingKind.Saw;
-                    titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_SAW;
-                    upgrade1Title = Strings.PROMPT_TITLE_WANT_TO_UPGRADE_1_SAW;
-                    upgrade2Title = Strings.PROMPT_TITLE_WANT_TO_UPGRADE_2_SAW;
-                    upgrade1Description = Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_SAW;
-                    upgrade2Description = Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_SAW;
+                    titleBuilding = Strings.Inst().GetString(TextEnum.PROMT_TITLE_WANT_TO_BUILD_SAW);
+                    upgrade1Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_1_SAW);
+                    upgrade2Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_2_SAW);
+                    upgrade1Description = Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_SAW);
+                    upgrade2Description = Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_SAW);
                     upgrade0iconActive = GameResources.Inst().GetHudTexture(HUDTexture.IconSawActive);
                     upgrade0icon = GameResources.Inst().GetHudTexture(HUDTexture.IconSaw);
                     upgrade1icon = GameResources.Inst().GetHudTexture(HUDTexture.IconSaw1);
@@ -94,11 +94,11 @@ namespace Expanze.Gameplay
                     break;
                 case HexaKind.Cornfield:
                     buildingKind = SourceBuildingKind.Mill;
-                    titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_MILL;
-                    upgrade1Title = Strings.PROMPT_TITLE_WANT_TO_UPGRADE_1_MILL;
-                    upgrade2Title = Strings.PROMPT_TITLE_WANT_TO_UPGRADE_2_MILL;
-                    upgrade1Description = Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_MILL;
-                    upgrade2Description = Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_MILL;
+                    titleBuilding = Strings.Inst().GetString(TextEnum.PROMT_TITLE_WANT_TO_BUILD_MILL);
+                    upgrade1Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_1_MILL);
+                    upgrade2Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_2_MILL);
+                    upgrade1Description = Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_MILL);
+                    upgrade2Description = Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_MILL);
                     upgrade0iconActive = GameResources.Inst().GetHudTexture(HUDTexture.IconMillActive);
                     upgrade0icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMill);
                     upgrade1icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMill1);
@@ -106,11 +106,11 @@ namespace Expanze.Gameplay
                     break;
                 case HexaKind.Pasture:
                     buildingKind = SourceBuildingKind.Stepherd;
-                    titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_STEPHERD;
-                    upgrade1Title = Strings.PROMPT_TITLE_WANT_TO_UPGRADE_1_STEPHERD;
-                    upgrade2Title = Strings.PROMPT_TITLE_WANT_TO_UPGRADE_2_STEPHERD;
-                    upgrade1Description = Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_STEPHERD;
-                    upgrade2Description = Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_STEPHERD;
+                    titleBuilding = Strings.Inst().GetString(TextEnum.PROMT_TITLE_WANT_TO_BUILD_STEPHERD);
+                    upgrade1Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_1_STEPHERD);
+                    upgrade2Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_2_STEPHERD);
+                    upgrade1Description = Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_STEPHERD);
+                    upgrade2Description = Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_STEPHERD);
                     upgrade0iconActive = GameResources.Inst().GetHudTexture(HUDTexture.IconStepherdActive);
                     upgrade0icon = GameResources.Inst().GetHudTexture(HUDTexture.IconStepherd);
                     upgrade1icon = GameResources.Inst().GetHudTexture(HUDTexture.IconStepherd1);
@@ -118,11 +118,11 @@ namespace Expanze.Gameplay
                     break;
                 case HexaKind.Stone:
                     buildingKind = SourceBuildingKind.Quarry;
-                    titleBuilding = Strings.PROMT_TITLE_WANT_TO_BUILD_QUARRY;
-                    upgrade1Title = Strings.PROMPT_TITLE_WANT_TO_UPGRADE_1_QUARRY;
-                    upgrade2Title = Strings.PROMPT_TITLE_WANT_TO_UPGRADE_2_QUARRY;
-                    upgrade1Description = Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_QUARRY;
-                    upgrade2Description = Strings.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_QUARRY;
+                    titleBuilding = Strings.Inst().GetString(TextEnum.PROMT_TITLE_WANT_TO_BUILD_QUARRY);
+                    upgrade1Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_1_QUARRY);
+                    upgrade2Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_2_QUARRY);
+                    upgrade1Description = Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_QUARRY);
+                    upgrade2Description = Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_QUARRY);
                     upgrade0iconActive = GameResources.Inst().GetHudTexture(HUDTexture.IconQuarryActive);
                     upgrade0icon = GameResources.Inst().GetHudTexture(HUDTexture.IconQuarry);
                     upgrade1icon = GameResources.Inst().GetHudTexture(HUDTexture.IconQuarry1);
@@ -167,9 +167,9 @@ namespace Expanze.Gameplay
                 win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 0, this, upgrade2Title, upgrade2Description, upgrade2cost, true, upgrade2icon));
             else
             {
-                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 0, this, titleBuilding, Strings.PROMPT_DESCRIPTION_ALL_UPGRADES_USED, new SourceAll(0), true, upgrade2icon));
+                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 0, this, titleBuilding, Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_ALL_UPGRADES_USED), new SourceAll(0), true, upgrade2icon));
            
-                //win.AddPromptItem(new PromptItem(titleBuilding, Strings.PROMPT_DESCRIPTION_ALL_UPGRADES_USED, new SourceAll(0), false, false, upgrade2icon));
+                //win.AddPromptItem(new PromptItem(titleBuilding, Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_ALL_UPGRADES_USED), new SourceAll(0), false, false, upgrade2icon));
             }
         }
 
@@ -189,19 +189,19 @@ namespace Expanze.Gameplay
             {
                 if (upgrade == UpgradeKind.NoUpgrade)
                 {
-                    GameState.map.GetMapController().SetLastError(Strings.YOU_DONT_HAVE_FIRST_UPGRADE);
+                    GameState.map.GetMapController().SetLastError(Strings.Inst().GetString(TextEnum.YOU_DONT_HAVE_FIRST_UPGRADE));
                     return BuyingUpgradeError.YouDontHaveFirstUpgrade;
                 }
                 if (upgrade == UpgradeKind.SecondUpgrade)
                 {
-                    GameState.map.GetMapController().SetLastError(Strings.ERROR_HAVE_SECOND_UPGRADE);
+                    GameState.map.GetMapController().SetLastError(Strings.Inst().GetString(TextEnum.ERROR_HAVE_SECOND_UPGRADE));
                     return BuyingUpgradeError.YouAlreadyHaveSecondUpgrade;
                 }
             }
 
             if (!GetUpgradeCost(upgradeKind, upgradeNumber).HasPlayerSources(activePlayer))
             {
-                GameState.map.GetMapController().SetLastError(Strings.ERROR_NO_SOURCES);
+                GameState.map.GetMapController().SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_SOURCES));
                 return BuyingUpgradeError.NoSources;
             }
 

@@ -327,7 +327,7 @@ namespace Expanze
             }
             else
             {
-                Message.Inst().Show(Strings.GAME_ALERT_TITLE_MARKET_BAD_TURN, Strings.GAME_ALERT_DESCRIPTION_MARKET_BAD_TURN, GameResources.Inst().GetHudTexture(HUDTexture.IconMarket));
+                Message.Inst().Show(Strings.Inst().GetString(TextEnum.GAME_ALERT_TITLE_MARKET_BAD_TURN), Strings.Inst().GetString(TextEnum.GAME_ALERT_DESCRIPTION_MARKET_BAD_TURN), GameResources.Inst().GetHudTexture(HUDTexture.IconMarket));
             }
         }
 
