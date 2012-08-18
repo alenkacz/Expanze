@@ -346,6 +346,17 @@ namespace Expanze
         MENU_VICTORY_SCREEN_GRAPH,
         MENU_VICTORY_SCREEN_STATISTIC_AFTER,
         MENU_VICTORY_SCREEN_TURN,
+
+        TIP_GAME_1,
+        TIP_GAME_2,
+        TIP_GAME_3,
+        TIP_GAME_4,
+        TIP_GAME_5,
+        TIP_GAME_6,
+        TIP_GAME_7,
+        TIP_GAME_8,
+        TIP_GAME_9,
+        TIP_GAME_10,
         COUNT
     }
 

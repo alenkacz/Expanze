@@ -205,13 +205,13 @@ namespace Expanze
             {
                 GameAction close = new GameAction("close", GameAction.ActionKind.OnlyInitialPress);
                 GameAction cheatsources = new GameAction("cheatsources", GameAction.ActionKind.OnlyInitialPress);
-                GameAction cheatpoints = new GameAction("cheatpoints", GameAction.ActionKind.OnlyInitialPress);
+                //GameAction cheatpoints = new GameAction("cheatpoints", GameAction.ActionKind.OnlyInitialPress);
                 GameAction disablemessages = new GameAction("disablemessages", GameAction.ActionKind.OnlyInitialPress);
                 im.MapToKey(stateMessage, disablemessages, Keys.P);
                 im.MapToKey(stateMessage, close, Keys.Escape);
                 im.MapToKey(stateMessage, close, Keys.Enter);
                 im.MapToKey(stateMessage, cheatsources, Keys.F11);
-                im.MapToKey(stateMessage, cheatpoints, Keys.F12);
+                //im.MapToKey(stateMessage, cheatpoints, Keys.F12);
 
 #if GENETIC
                 GameAction printAllChromozones = new GameAction("printgenetic", GameAction.ActionKind.OnlyInitialPress);
@@ -473,8 +473,8 @@ namespace Expanze
 
             if (InputManager.Inst().GetGameAction("gamemessage", "cheatsources").IsPressed())
                 GameMaster.Inst().GetActivePlayer().PayForSomething(new SourceAll(-1000));
-            if (InputManager.Inst().GetGameAction("gamemessage", "cheatpoints").IsPressed())
-                GameMaster.Inst().GetActivePlayer().AddPoints(PlayerPoints.Town);
+            //if (InputManager.Inst().GetGameAction("gamemessage", "cheatpoints").IsPressed())
+            //    GameMaster.Inst().GetActivePlayer().AddPoints(PlayerPoints.Town);
 
 #if GENETIC
             if (InputManager.Inst().GetGameAction("gamemessage", "printgenetic").IsPressed())

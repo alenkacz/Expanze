@@ -34,9 +34,9 @@ namespace Expanze
         IconMedalRoadID, IconMedalTownID,
 
         PlayerColor,
-        BackgroundWater, BackgroundPromptWindow, BackgroundMessageWindow, BackgroundVictoryScreen,
+        BackgroundWater, BackgroundPromptWindow, BackgroundMessageWindow,
 
-        ButtonYes, ButtonNo,
+        ButtonYes, ButtonYesMarket, ButtonNo,
 
         SmallCorn, SmallMeat, SmallStone, SmallWood, SmallOre,
 
@@ -167,9 +167,9 @@ namespace Expanze
                 hud[(int)HUDTexture.BackgroundWater] = content.Load<Texture2D>("Models/hexa_voda3");
                 hud[(int)HUDTexture.BackgroundMessageWindow] = content.Load<Texture2D>("HUD/messageBG");
                 hud[(int)HUDTexture.BackgroundPromptWindow] = content.Load<Texture2D>("HUD/WindowPromt");
-                hud[(int)HUDTexture.BackgroundVictoryScreen] = content.Load<Texture2D>("HUD/final_screen");
                 hud[(int)HUDTexture.ButtonNo] = content.Load<Texture2D>("HUD/NOPromt");
                 hud[(int)HUDTexture.ButtonYes] = content.Load<Texture2D>("HUD/OKPromt");
+                hud[(int)HUDTexture.ButtonYesMarket] = content.Load<Texture2D>("HUD/OKMarketPromt");
                 hud[(int)HUDTexture.SmallCorn] = content.Load<Texture2D>("HUD/scorn");
                 hud[(int)HUDTexture.SmallMeat] = content.Load<Texture2D>("HUD/smeat");
                 hud[(int)HUDTexture.SmallStone] = content.Load<Texture2D>("HUD/sstone");

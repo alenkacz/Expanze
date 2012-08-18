@@ -22,6 +22,7 @@ namespace Expanze
         private Texture2D background;
         private Texture2D no;
         private Texture2D yes;
+        private Texture2D yesMarket;
         private Texture2D pickTextOK;
         private Texture2D pickTextIcon;
 
@@ -38,6 +39,7 @@ namespace Expanze
         int activeItem;
         int hoverItem;
         bool hoverYes;
+        bool isYesMarket;
         bool hoverNo;
         String title;
         List<PromptItem> itemList;
@@ -60,6 +62,7 @@ namespace Expanze
             spriteBatch = GameState.spriteBatch;
             bgPos = new Vector2(0, 0);
             active = false;
+            isYesMarket = false;
 
             noPick = new PickVariables(Color.Bisque);
             yesPick = new PickVariables(Color.Aquamarine);
@@ -125,6 +128,7 @@ namespace Expanze
             background = GameResources.Inst().GetHudTexture(HUDTexture.BackgroundPromptWindow);
             no = GameResources.Inst().GetHudTexture(HUDTexture.ButtonNo);
             yes = GameResources.Inst().GetHudTexture(HUDTexture.ButtonYes);
+            yesMarket = GameResources.Inst().GetHudTexture(HUDTexture.ButtonYesMarket);
             pickTextOK = GameResources.Inst().GetHudTexture(HUDTexture.PickWindowPrompt);
             pickTextIcon = GameResources.Inst().GetHudTexture(HUDTexture.PickWindowIcon);
             textureSource = new Texture2D[5];
@@ -211,9 +215,16 @@ namespace Expanze
                 if (yesPick.pickNewPress || InputManager.Inst().GetGameAction("gamewindow", "confirm").IsPressed())
                 {
                     yesPick.pickNewPress = false;
-                    Deactive();
 
-                    itemList[activeItem].Execute();
+                    if (isYesMarket)
+                    {
+                        GameMaster.Inst().ChangeSourcesFor((SourceAll)itemList[activeItem].getCost());
+                    }
+                    else
+                    {
+                        Deactive();
+                        itemList[activeItem].Execute();
+                    }
                 }
                 else if (noPick.pickNewPress || InputManager.Inst().GetGameAction("gamewindow", "close").IsPressed())
                 {
@@ -245,12 +256,19 @@ namespace Expanze
             
                 spriteBatch.Draw(background, bgPos, color);
 
-                if (itemList[activeItem].TryExecute() == null && mod == Mod.Buyer) // it means that it is ok
+                string error = itemList[activeItem].TryExecute();
+                int amount = GameMaster.Inst().CanChangeSourcesFor((SourceAll)itemList[activeItem].getCost());
+                if ((error == null ||
+                    (error == "" && !Settings.banChangeSources && amount >= 0))
+                    && mod == Mod.Buyer) // it means that it is ok
                 {
                     if (drawingPickableAreas)
                         spriteBatch.Draw(pickTextOK, yesPos, yesPick.pickColor);
                     else
-                        spriteBatch.Draw(yes, yesPos, hoverYes ? Settings.colorHoverItem : Settings.colorPassiveItem);
+                    {
+                        isYesMarket = (amount == 0) ? false : true;
+                        spriteBatch.Draw((isYesMarket) ? yesMarket : yes, yesPos, hoverYes ? Settings.colorHoverItem : Settings.colorPassiveItem);
+                    }
                 }
 
                 if (drawingPickableAreas)
@@ -274,7 +292,7 @@ namespace Expanze
                         GameResources.Inst().GetFont(EFont.MedievalSmall), Color.LightSteelBlue, bgPos.X + 20, bgPos.Y + 195, background.Width - 40);
                 }
 
-                String error = itemList[activeItem].TryExecute();
+                //String error = itemList[activeItem].TryExecute();
                 if (mod == Mod.Viewer)
                     error = Strings.Inst().GetString(TextEnum.ALERT_TITLE_THIS_IS_NOT_YOURS);
                 int errorY = 265;

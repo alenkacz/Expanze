@@ -1026,19 +1026,19 @@
   </text>
   <text id="MESSAGE_TITLE_MARKET_CHANGE_SOURCES">
     <cz>Navštiv tržnici</cz>
-    <eng></eng>
+    <eng>Go to market</eng>
   </text>
   <text id="MESSAGE_DESCRIPTION_MARKET_NOT_SOURCES">
     <cz>Můžeš měnit jak chceš, ale tohle kolo si to nekoupíš, nemáš na to.</cz>
-    <eng></eng>
+    <eng>You cant change sources to pay for it this turn.</eng>
   </text>
   <text id="MESSAGE_DESCRIPTION_MARKET_BUY_IT">
     <cz>Žádné suroviny ti nechybí. Nechápu, že to nevidíš.</cz>
-    <eng></eng>
+    <eng>You have enough sources. You should see it.</eng>
   </text>
   <text id="MESSAGE_DESCRIPTION_MARKET_CHANGE_SOURCES">
     <cz>Tohle za tamto, jiné za támhle to a můžeš směle nakupovat</cz>
-    <eng></eng>
+    <eng>You can change sources to get it this turn</eng>
   </text>
 
   <text id="MESSAGE_TITLE_END_GAME">
@@ -1193,5 +1193,45 @@
   <text id="MENU_VICTORY_SCREEN_TURN">
     <cz>. kole</cz>
     <eng>. turn</eng>
+  </text>
+  <text id="TIP_GAME_1">
+    <cz>Používej klávesovou zkratku TAB pro nové kole</cz>
+    <eng>You can use TAB shortcut for new turn</eng>
+  </text>
+  <text id="TIP_GAME_2">
+    <cz>Suroviny si nejsou rovné. Nejvíc využiješ rudy a kamenní.</cz>
+    <eng>Sources aren't same. Most useful are ore and stone.</eng>
+  </text>
+  <text id="TIP_GAME_3">
+    <cz>Stav města na kraji tebou obsazené hexy.</cz>
+    <eng>Build town on captured hex's corners.</eng>
+  </text>
+  <text id="TIP_GAME_4">
+    <cz>Přepínej mezi městy pomocí klávesy T</cz>
+    <eng>Switch between towns with key T</eng>
+  </text>
+  <text id="TIP_GAME_5">
+    <cz>Nastav si kvalitu grafiky pomocí klávesy G</cz>
+    <eng>Change graphics quality with G key</eng>
+  </text>
+  <text id="TIP_GAME_6">
+    <cz>Hru můžeš vztát stisknutí F12. Osatní hráči mohou hrát dál.</cz>
+    <eng>You can give up game pressing F12. Other players will continue playing.</eng>
+  </text>
+  <text id="TIP_GAME_7">
+    <cz>Okno s měněním surovin se zobrazí stisknutím klávesy M.</cz>
+    <eng>Market window will be shown after pressing M.</eng>
+  </text>
+  <text id="TIP_GAME_8">
+    <cz>Pomocí šipek a page down/up nastav pozici kamery.</cz>
+    <eng>You can change camera position with arrow keys and PgUp, PgDn.</eng>
+  </text>
+  <text id="TIP_GAME_9">
+    <cz>Objevíš jediný cheat ve hře?</cz>
+    <eng>Will you find only one cheat in the game?</eng>
+  </text>
+  <text id="TIP_GAME_10">
+    <cz></cz>
+    <eng></eng>
   </text>
 </texts>

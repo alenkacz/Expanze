@@ -54,7 +54,7 @@ namespace Expanze
             this.loadingIsSlow = loadingIsSlow;
             this.screensToLoad = screensToLoad;
             loadingTime = 0;
-
+            
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
         }
 
@@ -138,7 +138,7 @@ namespace Expanze
             {
                 SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
                 SpriteFont font = ScreenManager.Font;
-
+               
                 loadingTime += gameTime.ElapsedGameTime.Milliseconds;
                 string message = Strings.Inst().GetString(TextEnum.MENU_LOADING_LOADING);
                 /*
