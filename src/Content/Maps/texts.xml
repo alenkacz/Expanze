@@ -837,12 +837,12 @@
     <eng>Steal sources</eng>
   </text>
   <text id="PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE">
-    <cz>Armádní přehlídka</cz>
-    <eng>Show parade</eng>
+    <cz>Armádní výcvik</cz>
+    <eng>Military training</eng>
   </text>
 
   <text id="PROMPT_DESCTIPTION_MESSAGE_FORT_ACTION_PARADE">
-    <cz>Předvedl jsi majestátnou přehlídku, těžce se bude překonávat. O krok blíž k vítěství.</cz>
+    <cz>qqq</cz>
     <eng></eng>
   </text>
 
@@ -855,12 +855,12 @@
     <eng>Soldiers will get a lot of sources from target hex. Hex will be damage for several turns.</eng>
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES">
-    <cz>Vyšle vojsko, které získá polovinu veškerých zásob soupeře a o ně tě obohatí.</cz>
-    <eng>Soldiers will steal half of oponent sources.</eng>
+    <cz>Vyšle vojsko, které získá část zásob soupeře.</cz>
+    <eng>Soldiers will steal part of oponent sources.</eng>
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_PARADE">
-    <cz>Armádní přehlídka ti přinese slávu a přiblíží tě k vítězství.</cz>
-    <eng></eng>
+    <cz>Vojenský výcvik zvýší účinnost ostatních vojenských akcí.</cz>
+    <eng>Military training raise impact of your military actions.</eng>
   </text>
 
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES_CHOISING_PLAYER">

@@ -61,7 +61,10 @@ namespace AIGen
             {
                 for (byte loop1 = 0; loop1 < 3; loop1++)
                 {
-                    if (town.GetBuildingKind(loop1) != BuildingKind.NoBuilding)
+                    if (town.GetBuildingKind(loop1) != BuildingKind.NoBuilding ||
+                        town.GetIHexa(loop1).GetKind() == HexaKind.Mountains ||
+                        town.GetIHexa(loop1).GetKind() == HexaKind.Water ||
+                        town.GetIHexa(loop1).GetKind() == HexaKind.Null)
                         continue;
 
                     tempFitness = GetDesirability(town, loop1) * kBestHexa + GetCaptureAndBuildTownDesirability(town, loop1) * kCapture;
@@ -98,7 +101,12 @@ namespace AIGen
             IHexa hexa = town.GetIHexa(pos);
 
             if (map.IsBanAction(PlayerAction.FortCaptureHexa))
+            {
+                if (hexa.GetKind() == HexaKind.Mountains)
+                    return 0.0;
+
                 return 1.0;
+            }
 
             double desirability = 0.0;
             for(int loop1 = 0; loop1 < 6; loop1++)

@@ -22,6 +22,7 @@ namespace Expanze
 
         private bool captureIs;       /// has been hexa captured from fort?
         private Player capturePlayer; /// who has captured hexa
+        private int captureTurn;      /// how many turns it will be at least captured
 
         /// destroying was in the game
         private bool hexaDestroy;      /// was hexa destroyed from fort
@@ -628,9 +629,14 @@ namespace Expanze
 
         public void Capture(Player player)
         {
+            captureIs = true;
+            capturePlayer = player;
+            captureTurn = player.MilitaryTrainings / 2 + 2;
+            /*
             if (!captureIs)
             {
                 capturePlayer = player;
+                captureTurn = player.MilitaryTrainings / 2 + 1;
             }
             else
             {
@@ -638,6 +644,7 @@ namespace Expanze
             }
 
             captureIs = !captureIs;
+             */
         }
 
         public void Destroy()
@@ -667,11 +674,17 @@ namespace Expanze
 
         internal void SetFree()
         {
-            if (captureIs)
+            if (captureIs && captureTurn <= 0)
             {
-                capturePlayer = null;
-                captureIs = false;
+                double chanceToStayCaptured = 0.2 + capturePlayer.MilitaryTrainings * 0.04;
+                if (GameMaster.Inst().GetRandomNumber() > chanceToStayCaptured)
+                {
+                    capturePlayer = null;
+                    captureIs = false;
+                }
             }
+
+            captureTurn--;
         }
     }
 }

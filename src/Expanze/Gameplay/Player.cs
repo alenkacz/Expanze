@@ -31,6 +31,7 @@ namespace Expanze
         int maxSource;
         LicenceKind[] licenceMarket;
         UpgradeKind[] upgradeMonastery;
+        int militaryTrainings;
 
         bool[] discoveredHexa;
 
@@ -80,6 +81,7 @@ namespace Expanze
                 upgradeMonastery[loop1] = UpgradeKind.NoUpgrade;
             }
             maxSource = 500;
+            militaryTrainings = 0;
 
             this.color = color;
             this.name = name;
@@ -210,7 +212,10 @@ namespace Expanze
             {
                 case PlayerPoints.Fort: areTherePoints = Settings.pointsFort > 0 && Settings.pointsFort > points[(int) which]; break;
                 case PlayerPoints.FortCaptureHexa: areTherePoints = Settings.pointsFortCapture > 0 && Settings.pointsFortCapture > points[(int)which]; break;
-                case PlayerPoints.FortParade: areTherePoints = Settings.pointsFortParade > 0 && Settings.pointsFortParade > points[(int)which]; break;
+                case PlayerPoints.FortParade: 
+                    areTherePoints = Settings.pointsFortParade > 0 && Settings.pointsFortParade > points[(int)which];
+                    AddMilitaryTraining();
+                    break;
                 case PlayerPoints.FortStealSources: areTherePoints = Settings.pointsFortSteal > 0 && Settings.pointsFortSteal > points[(int)which]; break;
                 case PlayerPoints.LicenceLvl1: areTherePoints = Settings.pointsMarketLvl1 > 0 && Settings.pointsMarketLvl1 > points[(int)which]; break;
                 case PlayerPoints.LicenceLvl2: areTherePoints = Settings.pointsMarketLvl2 > 0 && Settings.pointsMarketLvl2 > points[(int)which]; break;
@@ -484,6 +489,11 @@ namespace Expanze
             statistic.AddStat(Statistic.Kind.Actions, 1, GameMaster.Inst().GetTurnNumber());
         }
 
+        public void AddMilitaryTraining()
+        {
+            militaryTrainings++;
+        }
+
         internal void AddSumSourcesStat()
         {
             statistic.AddStat(Statistic.Kind.SumSources, source.GetAsArray().Sum(), GameMaster.Inst().GetTurnNumber());
@@ -507,6 +517,13 @@ namespace Expanze
         internal bool GetIsDiscovered(int hexaID)
         {
             return discoveredHexa[hexaID - 1];
+        }
+
+        public int MilitaryTrainings {
+            get
+            {
+                return militaryTrainings;
+            }
         }
     }
 }

@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<map>
+  <settings>
+    <name>
+      <cz>Nedostatek kamene</cz>
+      <eng>Not enough stone</eng>
+    </name>
+    <players>
+      <player>
+        <name>You</name>
+        <color>Red</color>
+        <AI>Human</AI>
+      </player>
+    </players>
+    <points>
+      <Town>0</Town>
+      <Road>0</Road>
+      <Fort>0</Fort>
+      <Monastery>0</Monastery>
+      <Market>0</Market>
+      <Medal>0</Medal>
+      <FortParade>0</FortParade>
+      <UpgradeLvl1>0</UpgradeLvl1>
+      <MarketLvl1>0</MarketLvl1>
+      <UpgradeLvl2>0</UpgradeLvl2>
+      <MarketLvl2>0</MarketLvl2>
+      <Mill>0</Mill>
+      <Stepherd>0</Stepherd>
+      <Saw>0</Saw>
+      <Quarry>0</Quarry>
+      <Mine>0</Mine>
+      <FortCapture>0</FortCapture>
+      <FortSteal>0</FortSteal>
+      <turnLimit>70</turnLimit>
+      <Stone>120</Stone>
+      <Ore>120</Ore>
+    </points>
+    <ban>
+      <RandomEvents>0</RandomEvents>
+      <ChangeSources>0</ChangeSources>
+      <Fort>0</Fort>
+      <Monastery>0</Monastery>
+      <Market>0</Market>
+      <FortCapture>0</FortCapture>
+      <FortSteal>0</FortSteal>
+      <FortParade>0</FortParade>
+      <UpgradeLvl2>0</UpgradeLvl2>
+      <MarketLvl2>0</MarketLvl2>
+    </ban>
+  </settings>
+  <map-definition>
+    <row>
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="water" />
+    </row>
+    <row>
+      <hexa type="water" />
+      <hexa type="3" productivity="?" />
+      <hexa type="water"/>
+      <hexa type="3" productivity="-" />
+      <hexa type="3" productivity="-" />
+      <hexa type="stone" productivity="8" />
+      <hexa type="3" productivity="-" />
+      <hexa type="3" productivity="-" />
+      <hexa type="water" />
+      <hexa type="3" productivity="?" />
+      <hexa type="water" />
+    </row>
+    <row>
+      <hexa type="space" />
+      <hexa type="water" />
+      <hexa type="3" productivity="?" />
+      <hexa type="3" productivity="?" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="3" productivity="?" />
+      <hexa type="3" productivity="?" />
+      <hexa type="water" />
+      <hexa type="water" />
+    </row>
+    <row>
+      <hexa type="space" />
+      <hexa type="water" />
+      <hexa type="3" productivity="?" />
+      <hexa type="desert" />
+      <hexa type="water" />
+      <hexa type="mountains" productivity="20" />
+      <hexa type="water" />
+      <hexa type="stone" productivity="12" />
+      <hexa type="water" />
+      <hexa type="desert" />
+      <hexa type="3" productivity="?" />
+      <hexa type="3" productivity="?" />
+      <hexa type="water" />
+    </row>
+    <row>
+      <hexa type="space" />
+      <hexa type="water" />
+      <hexa type="3" productivity="?" />
+      <hexa type="3" productivity="?" />
+      <hexa type="3" productivity="?" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="desert" />
+      <hexa type="3" productivity="?" />
+      <hexa type="water" />
+    </row>
+    <row>
+      <hexa type="space" />
+      <hexa type="space" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="3" productivity="?" />
+      <hexa type="desert" />
+      <hexa type="3" productivity="?" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="water" />
+    </row>
+    <row>
+      <hexa type="space" />
+      <hexa type="space" />
+      <hexa type="space" />
+      <hexa type="water" />
+      <hexa type="3" productivity="+" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="water" />
+    </row>
+    <row>
+      <hexa type="space" />
+      <hexa type="space" />
+      <hexa type="space" />
+      <hexa type="space" />
+      <hexa type="water" />
+      <hexa type="water" />
+    </row>
+  </map-definition>
+</map>

@@ -171,7 +171,7 @@ namespace Expanze
 
             hasAIThreadStarted = false;
 
-            if(players[0].GetBuildingCount(Building.Town) == 0)
+            if (players[0].GetBuildingCount(Building.Town) == 0 && players[0].GetBuildingCount(Building.Road) == 0)
                 state = EGameState.StateFirstTown;
             else
                 state = EGameState.StateGame;
@@ -186,8 +186,7 @@ namespace Expanze
             {
                 Settings.banFortStealSources = true;
             }
-            if (Settings.pointsFortParade == 0)
-                Settings.banFortParade = true;
+
             if (Settings.banChangeSources)
                 Settings.banMarket = true;
 

@@ -109,6 +109,11 @@ namespace Expanze
             return new SourceAll(s.GetCorn() / a, s.GetMeat() / a, s.GetStone() / a, s.GetWood() / a, s.GetOre() / a);
         }
 
+        public static SourceAll operator *(SourceAll s, double a)
+        {
+            return new SourceAll((int) (s.GetCorn() * a), (int) (s.GetMeat() * a), (int) (s.GetStone() * a), (int) (s.GetWood() * a), (int) (s.GetOre() * a));
+        }
+
         public override bool Equals(object obj)
         {
             SourceAll b = (SourceAll)obj;

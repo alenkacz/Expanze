@@ -526,11 +526,25 @@ namespace Expanze
                     return HexaKind.Water;
                 case "2" :
                     return (rndNumber < 0.5 ? HexaKind.Stone : HexaKind.Mountains);
+
+                case "2+":
+                    if (rndNumber < 1.0 / 3.0) return HexaKind.Stone;
+                    if (rndNumber < 2.0 / 3.0) return HexaKind.Mountains;
+                    return HexaKind.Desert;
+
                 case "3" :
                     if (rndNumber < 1.0 / 3.0) return HexaKind.Forest;
                     if (rndNumber < 2.0 / 3.0) return HexaKind.Cornfield;
                     return HexaKind.Pasture;
+                
                 case "?":
+                    if (rndNumber < 1.0 / 5.0) return HexaKind.Forest;
+                    if (rndNumber < 2.0 / 5.0) return HexaKind.Cornfield;
+                    if (rndNumber < 3.0 / 5.0) return HexaKind.Pasture;
+                    if (rndNumber < 4.0 / 5.0) return HexaKind.Stone;
+                    return HexaKind.Mountains;
+
+                case "?+":
                     if (rndNumber < 1.0 / 6.0) return HexaKind.Forest;
                     if (rndNumber < 2.0 / 6.0) return HexaKind.Cornfield;
                     if (rndNumber < 3.0 / 6.0) return HexaKind.Pasture;

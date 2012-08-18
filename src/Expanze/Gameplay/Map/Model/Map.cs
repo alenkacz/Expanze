@@ -261,7 +261,7 @@ namespace Expanze.Gameplay.Map
             float eyeBonus = hexaMapModel.Length * 0.04f;
             if (eye.X > 0.6f + (yMax - eye.Y) / 2 + eyeBonus)
             {
-                target.X = 0.3f + (yMax - eye.Y) / 2 + eyeBonus;
+                target.X = 0.2f + (yMax - eye.Y) / 2 + eyeBonus;
                 eye.X = 0.5999f + (yMax - eye.Y) / 2 + eyeBonus;
             }
 
@@ -271,15 +271,18 @@ namespace Expanze.Gameplay.Map
                 target.X = -1.5f - (yMax - eye.Y);
                 eye.X = -1.1f - (yMax - eye.Y);
             }
-            if (eye.Z > 0.5 + (yMax - eye.Y))
+
+            // vpravo
+            eyeBonus = hexaMapModel[1].Length * 0.04f;
+            if (eye.Z > 0.4 + (yMax - eye.Y) + eyeBonus)
             {
-                eye.Z = 0.5f + (yMax - eye.Y);
-                target.Z = 0.5f + (yMax - eye.Y);
+                eye.Z = 0.4f + (yMax - eye.Y) + eyeBonus;
+                target.Z = 0.4f + (yMax - eye.Y + eyeBonus);
             }
-            if (eye.Z < -0.5 - (yMax - eye.Y))
+            if (eye.Z < -0.4 - (yMax - eye.Y) - eyeBonus)
             {
-                eye.Z = -0.5f - (yMax - eye.Y);
-                target.Z = -0.5f - (yMax - eye.Y);
+                eye.Z = -0.4f - (yMax - eye.Y) - eyeBonus;
+                target.Z = -0.4f - (yMax - eye.Y) - eyeBonus;
             }
             //target = new Vector3(0.0f, 0.0f, 0.0f);
             //eye = new Vector3(0.4f, 1.5f, 0.0f);
@@ -508,8 +511,7 @@ namespace Expanze.Gameplay.Map
                 {
                     if (hexaMapModel[i][j] != null)
                     {
-                        if (GameMaster.Inst().GetRandomNumber() < Settings.captureFreeChance && 
-                            activePlayer == hexaMapModel[i][j].GetCapturedPlayer())
+                        if (activePlayer == hexaMapModel[i][j].GetCapturedPlayer())
                         {
                             hexaMapModel[i][j].SetFree();
                         }

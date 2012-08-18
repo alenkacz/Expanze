@@ -606,7 +606,7 @@ namespace Expanze.Gameplay.Map
                 HexaModel hexa = map.GetHexaByID(hexaID);
                
                 SourceAll source = new SourceAll(0);
-                int amount = gm.GetRandomInt(70) + ((hexa.GetDestroyed()) ? 0 : 70);
+                int amount = gm.GetRandomInt(60 + gm.GetActivePlayer().MilitaryTrainings * 7) + ((hexa.GetDestroyed()) ? 0 : 60 + gm.GetActivePlayer().MilitaryTrainings * 5);
                 hexa.Destroy();
                 
                 switch(hexa.GetKind())
@@ -669,9 +669,13 @@ namespace Expanze.Gameplay.Map
             if (CanStealSources(playerName) == DestroySourcesError.OK)
             {
                 SourceAll source = (SourceAll) player.GetSource();
-                player.PayForSomething(new SourceAll(source / 2));
+
+                double partMin = 0.25 + 0.01 * activePlayer.MilitaryTrainings;
+                double partMax = 0.5 + 0.05 * activePlayer.MilitaryTrainings;
+                double part = partMin + (partMax - partMin) * GameMaster.Inst().GetRandomNumber();
+                player.PayForSomething(new SourceAll(source * part));
                 activePlayer.AddSources(-Settings.costFortSources, TransactionState.TransactionStart);
-                activePlayer.AddSources(source / 2, TransactionState.TransactionEnd);
+                activePlayer.AddSources(source * part, TransactionState.TransactionEnd);
                 activePlayer.AddFortAction();
                 activePlayer.AddPoints(PlayerPoints.FortStealSources);
                 if (activePlayer.GetIsAI())

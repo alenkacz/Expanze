@@ -15,7 +15,7 @@ namespace Expanze
 
     static class Settings
     {
-        public static Vector2[] allResolutions = { new Vector2(800, 600), new Vector2(1024, 768), new Vector2(1280, 800), new Vector2(1366, 768) };
+        public static Vector2[] allResolutions = { new Vector2(800, 600), new Vector2(1024, 768), new Vector2(1280, 800), new Vector2(1366, 768), new Vector2(1440, 900) };
         public static Vector2 maximumResolution = new Vector2(1440,900);
 
         /// indexed by enum Types
