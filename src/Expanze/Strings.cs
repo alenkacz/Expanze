@@ -410,13 +410,13 @@ namespace Expanze
             texts = new string[(int) TextEnum.COUNT];
 
             defaultLanguage = "cz";
-            languageName = "English";
-            LoadTexts("eng");
+            LoadTexts("eng", "English");
         }
 
-        public void LoadTexts(string language)
+        public void LoadTexts(string language, string languageName)
         {
             this.language = language;
+            this.languageName = languageName;
 
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load("Content/Maps/texts.xml");

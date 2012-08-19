@@ -462,6 +462,9 @@ namespace Expanze
                 }
                 if (playerAI == null)
                     playerName = Settings.playerName;
+                else
+                    playerPersonality = Settings.hero[playerName];
+
                 Player player = new Player(playerName, playerColor, playerAI, playerOrder, playerPersonality, playerGen);
                 players.Add(player);
             }

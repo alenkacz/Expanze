@@ -202,9 +202,7 @@ namespace Expanze
             if (activeLanguage >= languages.Length)
                 activeLanguage = 0;
 
-            Strings.Inst().Language = languageCodes[activeLanguage];
-            Strings.Inst().LanguageName = languages[activeLanguage];
-            Strings.Inst().LoadTexts(languageCodes[activeLanguage]);
+            Strings.Inst().LoadTexts(languageCodes[activeLanguage], languages[activeLanguage]);
             SetMenuEntryText();
         }
 

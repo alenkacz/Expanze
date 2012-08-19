@@ -45,11 +45,14 @@ namespace Expanze
         {
             Content.RootDirectory = "Content";
 
+            Settings.LoadAllSettings();
+
             graphics = new GraphicsDeviceManager(this);
             Settings.GraphicsDeviceManager = graphics;
             Settings.Game = this;
-            graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 600;
+            graphics.IsFullScreen = Settings.isFullscreen;
+            graphics.PreferredBackBufferWidth = (int) Settings.activeResolution.X;
+            graphics.PreferredBackBufferHeight = (int) Settings.activeResolution.Y;
             graphics.PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8;
             graphics.ApplyChanges();
 
@@ -112,8 +115,10 @@ namespace Expanze
             using (ExpanzeGame game = new ExpanzeGame())
             {
                 game.Run();
+
+                Settings.SaveSettings();
             }
-        }
+        }        
     }
 
     #endregion

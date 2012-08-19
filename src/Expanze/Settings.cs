@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using CorePlugin;
+using System.Xml;
+using Expanze.Utils.Genetic;
 
 namespace Expanze
 {
@@ -126,6 +128,7 @@ namespace Expanze
         public static Game Game = null;
 
         public static bool isFullscreen = false;
+        public static Dictionary<String, int[][]> hero;
 
         public static Matrix spriteScale = Matrix.CreateScale(Settings.activeResolution.X / Settings.maximumResolution.X, Settings.activeResolution.Y / Settings.maximumResolution.Y, 1);
 
@@ -178,5 +181,63 @@ namespace Expanze
         public static int activeRoad = 0;
         public static int activeHexa = 0;
         public static string playerName = "Victoria Murden";
+
+        public static void LoadAllSettings()
+        {
+            LoadSettings();
+            LoadHeroes();
+        }
+
+        public static void SaveSettings()
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load("Content/Maps/settings.xml");
+
+            xDoc.GetElementsByTagName("fullscreen")[0].InnerText = (Settings.isFullscreen) ? "true" : "false";
+            xDoc.GetElementsByTagName("screen-width")[0].InnerText = activeResolution.X + "";
+            xDoc.GetElementsByTagName("screen-height")[0].InnerText = activeResolution.Y + "";
+
+            xDoc.GetElementsByTagName("language-code")[0].InnerText = Strings.Inst().Language;
+            xDoc.GetElementsByTagName("language-name")[0].InnerText = Strings.Inst().LanguageName;
+
+            xDoc.Save("Content/Maps/settings.xml");
+        }
+
+        private static void LoadSettings()
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load("Content/Maps/settings.xml");
+
+            Settings.isFullscreen = xDoc.GetElementsByTagName("fullscreen")[0].InnerText == "true";
+            int screenWidth = Convert.ToInt32(xDoc.GetElementsByTagName("screen-width")[0].InnerText);
+            int screenHeight = Convert.ToInt32(xDoc.GetElementsByTagName("screen-height")[0].InnerText);
+            Settings.activeResolution = new Vector2(screenWidth, screenHeight);
+            scaleChange();
+
+            Strings.Inst().LoadTexts(xDoc.GetElementsByTagName("language-code")[0].InnerText, xDoc.GetElementsByTagName("language-name")[0].InnerText);
+        }
+
+        private static void LoadHeroes()
+        {
+            hero = new Dictionary<string, int[][]>();
+
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load("Content/Maps/heroes.xml");
+
+            XmlNodeList heroes = xDoc.GetElementsByTagName("hero");
+            string defaultPersonality = "";
+
+            foreach (XmlNode heroNode in heroes)
+            {
+                string name = heroNode.FirstChild.InnerText;
+                string personality = heroNode.LastChild.InnerText;
+                if (defaultPersonality.Length == 0)
+                    defaultPersonality = personality;
+                if (personality.Length == 0)
+                    personality = defaultPersonality;
+
+                hero.Add(name, Genetic.ParsePersonality(personality));
+            }
+        }
     }
 }

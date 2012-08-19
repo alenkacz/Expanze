@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<settings>
+  <common>
+    <language-code>cz</language-code>
+    <language-name>Česky</language-name>
+  </common>
+  <graphics>
+    <fullscreen>false</fullscreen>
+    <quality>low</quality>
+    <resolution>
+      <screen-width>1024</screen-width>
+      <screen-height>768</screen-height>
+    </resolution>
+  </graphics>
+</settings>

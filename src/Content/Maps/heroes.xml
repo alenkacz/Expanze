@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<heroes>
+  <hero>
+    <name>Pedro de Mendoza</name>
+    <personality>346;  5; 88;  7;;397; 66;;609; 51; 21; 28;;105; 32; 18; 39; 11;;603; 65;;231; 43; 13; 10; 12; 22;; 67;  7; 46; 28; 15;  4;;338; 87;;535; 46;; 11; 73;;355; 85;;292;  1; 60; 39;;971;  7;;167; 64; 18; 18;;225; 18; 22; 32; 28;;179; 20;;656; 24; 28; 20; 10; 18;;977; 36;  6; 12; 27; 19;;340; 29;;546; 61;;337; 82;; 43; 27;;</personality>
+  </hero>
+  <hero>
+    <name>Raimundus Lullus</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Hernando de Soto</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Francisco Pizarro</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Diego de Almagro</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Juan de la Cosa</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Francis Drake</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Willem Barents</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Vasco Núńez</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Abel Tasman</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Ibn Battúta</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Tolomeo Dias</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Kira Salak</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Frank Cole</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Michael Asher</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Robyn Davidson</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Lee Spence</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Rein Messner</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Robert Ballard</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Valentina Teresh</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Isabella Bird</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Xu Fu</name>
+    <personality>758; 23; 20; 57;;354; 75;;900; 38; 52; 10;;693; 13; 35; 38; 14;;264; 57;;851; 27; 10; 22;  9; 32;;570; 26; 21; 10;  6; 37;;913; 85;;499; 44;;151; 53;;737; 11;;  5; 15; 23; 62;;813; 81;;682; 41;  6; 53;;805;  1;  8; 45; 46;; 59;  2;;484; 19; 10; 24;  1; 46;;270; 25; 11; 10; 10; 44;;390; 94;;960; 66;;409; 29;;540; 87;;</personality>
+  </hero>
+  <hero>
+    <name>Dicuil</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Erik the Red</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Zheng he</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Piri Reis</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Luis Váez</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Samuel Champlain</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Carl Linnaeus</name>
+    <personality>346;  5; 88;  7;;397; 66;;609; 51; 21; 28;;105; 32; 18; 39; 11;;603; 65;;231; 43; 13; 10; 12; 22;; 67;  7; 46; 28; 15;  4;;338; 87;;535; 46;; 11; 73;;355; 85;;292;  1; 60; 39;;971;  7;;167; 64; 18; 18;;225; 18; 22; 32; 28;;179; 20;;656; 24; 28; 20; 10; 18;;977; 36;  6; 12; 27; 19;;340; 29;;546; 61;;337; 82;; 43; 27;;</personality>
+  </hero>
+  <hero>
+    <name>Alessandro Malas</name>
+    <personality>100;30;70;0;50;10;20000;100;0;0;500;10;0;90;5;0;0;0;0;0;0;0;0;50;100;0;0;0;0;1000;0;0;0;0;0;400;0;1000;30;70;0;50;10;1000;100;0;0;5000;10;0;90;0;0;0;0;0;0;0;0;0;50;100;0;0;0;0;1000;0;0;0;1;0;400;0</personality>
+  </hero>
+  <hero>
+    <name>Alex Humboldt</name>
+    <personality>100;30;70;0;50;10;20000;100;0;0;500;10;0;90;5;0;0;0;0;0;0;0;0;50;100;0;0;0;0;1000;0;0;0;0;0;400;0;1000;30;70;0;50;10;1000;100;0;0;5000;10;0;90;0;0;0;0;0;0;0;0;0;50;100;0;0;0;0;1000;0;0;0;1;0;400;0</personality>
+  </hero>
+  <hero>
+    <name>Mungo Park</name>
+    <personality>100;30;70;0;50;10;20000;100;0;0;500;10;0;90;5;0;0;0;0;0;0;0;0;50;100;0;0;0;0;1000;0;0;0;0;0;400;0;1000;30;70;0;50;10;1000;100;0;0;5000;10;0;90;0;0;0;0;0;0;0;0;0;50;100;0;0;0;0;1000;0;0;0;1;0;400;0</personality>
+  </hero>
+  <hero>
+    <name>Sacagawea</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Charles Wilkes</name>
+    <personality>346;  5; 88;  7;;397; 66;;609; 51; 21; 28;;105; 32; 18; 39; 11;;603; 65;;231; 43; 13; 10; 12; 22;; 67;  7; 46; 28; 15;  4;;338; 87;;535; 46;; 11; 73;;355; 85;;292;  1; 60; 39;;971;  7;;167; 64; 18; 18;;225; 18; 22; 32; 28;;179; 20;;656; 24; 28; 20; 10; 18;;977; 36;  6; 12; 27; 19;;340; 29;;546; 61;;337; 82;; 43; 27;;</personality>
+  </hero>
+  <hero>
+    <name>John Rae</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Otto Sverdrup</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Tom Crean</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Helen Thayer</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Jonê County</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Victoria Murden</name>
+    <personality></personality>
+  </hero>
+  <hero>
+    <name>Emil Holub</name>
+    <personality></personality>
+  </hero>
+</heroes>
