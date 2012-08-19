@@ -7,24 +7,7 @@
     </name>
     <players>
       <player>
-        <name>Alessandro Malas</name>
-        <color>Green</color>
-        <AI>AI Gen</AI>
-        <roads>
-          <id>106</id>
-          <id>59</id>
-          <id>91</id>
-        </roads>
-        <source>
-          <ore>200</ore>
-          <meat>200</meat>
-          <stone>200</stone>
-          <wood>200</wood>
-          <corn>200</corn>
-        </source>
-      </player>
-      <player>
-        <name>Alex Humboldt</name>
+        <name>Frank Cole</name>
         <color>Orange</color>
         <AI>AI Gen</AI>
         <roads>
@@ -58,7 +41,24 @@
         </source>
       </player>
       <player>
-        <name>Mungo Park</name>
+        <name>Michael Asher</name>
+        <color>Green</color>
+        <AI>AI Gen</AI>
+        <roads>
+          <id>106</id>
+          <id>59</id>
+          <id>91</id>
+        </roads>
+        <source>
+          <ore>200</ore>
+          <meat>200</meat>
+          <stone>200</stone>
+          <wood>200</wood>
+          <corn>200</corn>
+        </source>
+      </player>
+      <player>
+        <name>Kira Salak</name>
         <color>Purple</color>
         <AI>AI Gen</AI>
         <roads>

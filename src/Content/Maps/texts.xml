@@ -1054,8 +1054,8 @@
     <eng>Failure, bitter failure. </eng>
   </text>
   <text id="MESSAGE_DESCRIPTION_END_GAME_LOOSE2">
-    <cz> turns wasnt enought to fulfil all goals.</cz>
-    <eng></eng>
+    <cz> kol ke splnění všech úkolů.</cz>
+    <eng> turns wasnt enought to fulfil all goals.</eng>
   </text>
 
   <text id="ERROR_NO_SOURCES">

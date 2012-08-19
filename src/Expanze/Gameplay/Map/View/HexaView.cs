@@ -210,7 +210,7 @@ namespace Expanze
              */
 
             if (model.GetCurrentSource() == 0 &&
-                (!model.SecretKind || GameMaster.Inst().LastHumanPlayer.GetIsDiscovered(hexaID))) // desert
+                (!model.SecretProductivity || GameMaster.Inst().LastHumanPlayer.GetIsDiscovered(hexaID))) // desert
                 return;
 
             string textNumber = (model.SecretProductivity && !GameMaster.Inst().LastHumanPlayer.GetIsDiscovered(hexaID)) ? " ?" :

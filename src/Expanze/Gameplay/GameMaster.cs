@@ -98,8 +98,8 @@ namespace Expanze
 
         public void AddToPlayerCount(int i) { 
             playerCount += i;
-            if (playerCount == 1)
-                winnerNew = true;
+            //if (playerCount == 1)
+            //    winnerNew = true;
         }
 
         public bool StartGame()
@@ -882,8 +882,9 @@ namespace Expanze
                 return true;
             }
 
-            if (activePlayerIndex == players.Count - 1)
+            if (activePlayerIndex == 0)
                 CheckWinner();
+
             if (winnerNew)
             {
                 return true;
