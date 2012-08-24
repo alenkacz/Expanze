@@ -16,7 +16,7 @@ namespace AIGen
         public FortStealSources(IMapController map, int k, int depth)
             : base(map, depth, "Steal sources")
         {
-            kPoints = k / 1000.0f;
+            kPoints = k / 100.0f;
             kSteal = 1 - kPoints;
         }
 
@@ -34,6 +34,9 @@ namespace AIGen
 
         public override double GetDesirability()
         {
+            if (map.GetPlayerMe().GetFort().Count == 0)
+                return 0.0;
+
             double maxDesirability = 0.0;
             double tempDesirability;
 
@@ -49,7 +52,10 @@ namespace AIGen
                 }
             }
 
-            double points = (map.GetActionPoints(PlayerPoints.FortStealSources) > 0) ? 1.0 : 0.0;
+            double points = 0.0;
+            if (map.GetActionPoints(PlayerPoints.FortStealSources) - map.GetPlayerMe().GetPoints()[(int)PlayerPoints.FortStealSources] > 0)
+                points = 1.0;
+
             return maxDesirability * kSteal + points * kPoints;
         }
 

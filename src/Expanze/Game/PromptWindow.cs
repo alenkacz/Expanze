@@ -266,7 +266,7 @@ namespace Expanze
                         spriteBatch.Draw(pickTextOK, yesPos, yesPick.pickColor);
                     else
                     {
-                        isYesMarket = (amount == 0) ? false : true;
+                        isYesMarket = (amount > 0 && itemList[activeItem].RealCost) ? true : false;
                         spriteBatch.Draw((isYesMarket) ? yesMarket : yes, yesPos, hoverYes ? Settings.colorHoverItem : Settings.colorPassiveItem);
                     }
                 }

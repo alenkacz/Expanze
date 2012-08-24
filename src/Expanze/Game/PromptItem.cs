@@ -20,6 +20,7 @@ namespace Expanze
         Texture2D icon;         // image icon of item
         bool isSourceCost;      /// is that cost or it means something else? (ex. sources of some player)
         bool showZeroSources;   /// show source if it is zero?
+        bool realCost;
 
         public bool getShowZeroSources() { return showZeroSources; }
         public bool getIsSourceCost() { return isSourceCost;}
@@ -36,6 +37,7 @@ namespace Expanze
             this.icon = icon;
             this.isSourceCost = isSourceCost;
             this.showZeroSources = showZeroSources;
+            realCost = true;
         }
 
         public virtual void DrawIcon(Vector2 iconPosition, bool isMouseOver)
@@ -55,6 +57,17 @@ namespace Expanze
         public virtual String TryExecute()
         {
             return null;
+        }
+
+        public bool RealCost {
+            get
+            {
+                return realCost;
+            }
+            set
+            {
+                realCost = value;
+            }
         }
     }
 }

@@ -882,8 +882,7 @@ namespace Expanze
                 return true;
             }
 
-            if (activePlayerIndex == 0)
-                CheckWinner();
+            CheckWinner();
 
             if (winnerNew)
             {

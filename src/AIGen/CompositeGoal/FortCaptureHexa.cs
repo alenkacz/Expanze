@@ -19,7 +19,7 @@ namespace AIGen
         public FortCaptureHexa(IMapController map, int k, int depth)
             : base(map, depth, "Capture hexa")
         {
-            kPoints = k / 1000.0f;
+            kPoints = k / 100.0f;
             kCapture = 1 - kPoints;
             bestHexa = null;
             bestHexaIDs = new List<int>();
@@ -96,7 +96,10 @@ namespace AIGen
             if (bestHexa == null)
                 return 0.0f;
 
-            double points = (map.GetActionPoints(PlayerPoints.FortCaptureHexa) > 0) ? 1.0 : 0.0;
+            double points = 0.0;
+            if (map.GetActionPoints(PlayerPoints.FortCaptureHexa) - map.GetPlayerMe().GetPoints()[(int)PlayerPoints.FortCaptureHexa] > 0)
+                points = 1.0;
+
             return bestDesirability * kCapture + points * kPoints;
         }
 

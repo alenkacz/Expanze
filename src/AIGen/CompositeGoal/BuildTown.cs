@@ -299,7 +299,9 @@ namespace AIGen
                     coef = (dst <= 2) ? 1 - (dst * 0.1) : 1 - (dst * 0.15);
 
                     if (tempCapture != null && coef < 0.5)
-                        coef = 0.95;
+                    {
+                        coef = 0.95 + map.GetActionPoints(PlayerPoints.FortCaptureHexa) - map.GetPlayerMe().GetPoints()[(int) PlayerPoints.FortCaptureHexa];
+                    }
                     else
                         tempCapture = null;
 

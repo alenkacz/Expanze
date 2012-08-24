@@ -76,9 +76,9 @@
       </player>
     </players>
 	<points>
-        <Town>9</Town>
+        <Town>5</Town>
         <Road>0</Road>
-        <Fort>0</Fort>
+        <Fort>3</Fort>
         <Monastery>0</Monastery>
         <Market>0</Market>
         <Medal>0</Medal>
@@ -92,9 +92,9 @@
         <Saw>0</Saw>
         <Quarry>0</Quarry>
         <Mine>0</Mine>
-        <FortCapture>0</FortCapture>
-        <FortSteal>0</FortSteal>
-        <turnLimit>65</turnLimit>
+        <FortCapture>3</FortCapture>
+        <FortSteal>3</FortSteal>
+        <turnLimit>75</turnLimit>
 	</points>
 	<ban>
 		<Fort>0</Fort>

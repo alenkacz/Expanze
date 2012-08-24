@@ -88,7 +88,7 @@
   </text>
   <text id="MENU_PAUSE_GAME_ARE_YOU_SURE">
     <cz>Opravdu chcete ukončit hru?</cz>
-    <eng>Are you sure you want exit the game</eng>
+    <eng>Are you sure you want to leave the game?</eng>
   </text>
 
   <text id="MENU_LOADING_LOADING">
@@ -145,6 +145,7 @@
     <cz>Alena Varkočková - programátorka</cz>
     <eng>Alena Varkockova - programmer</eng>
   </text>
+  <!-- graphic -->
   <text id="MENU_CREATORS_PAVLA">
     <cz>Pavla Balíková - grafička</cz>
     <eng>Pavla Balikova - graphic</eng>
@@ -177,9 +178,10 @@
     <cz>Počet tržišť</cz>
     <eng>Markets</eng>
   </text>
+  <!-- rights -->
   <text id="MENU_GRAPH_LICENCE">
     <cz>Koupených licencí</cz>
-    <eng>Scrolls</eng>
+    <eng>Licences</eng>
   </text>
   <text id="MENU_GRAPH_UPGRADE">
     <cz>Vynalezených vylepšení</cz>
@@ -189,6 +191,7 @@
     <cz>Provedených akcí</cz>
     <eng>Fort actions</eng>
   </text>
+  <!-- at the end -->
   <text id="MENU_GRAPH_SUMSOURCES">
     <cz>Suma surovin na konci kola</cz>
     <eng>Sources in the end of turn</eng>
@@ -231,19 +234,20 @@
   </text>
   <text id="GAME_ALERT_TITLE_GAME_STARTED">
     <cz>Expanze začíná!</cz>
-    <eng>Expanze begins!</eng>
+    <eng>Expansion begins!</eng>
   </text>
   <text id="GAME_ALERT_DESCRIPTION_GAME_STARTED">
     <cz>Rozestavění prvních měst je u konce, boj o území může začít.</cz>
-    <eng></eng>
+    <eng>First towns have been placed. Fight over land may start.</eng>
   </text>
+  <!-- později -->
   <text id="GAME_ALERT_TITLE_AI_EXCEPTION">
     <cz>O jednoho míň</cz>
-    <eng>Player left the game</eng>
+    <eng>One player resigns</eng>
   </text>
   <text id="GAME_ALERT_DESCRIPTION_AI_EXCEPTION">
-    <cz>vzdává hru a již dále nebude pokračovat v expanzi ostrova.</cz>
-    <eng>give up expansion of the island.</eng>
+    <cz>vzdává hru a již dále nebude pokračovat v osidlování ostrova.</cz>
+    <eng>leaves the game and will no longer participate in settling the island.</eng>
   </text>
   <text id="GAME_ALERT_TITLE_NEXT_TURN_BAD_STATE">
     <cz>Postav město</cz>
@@ -251,8 +255,8 @@
   </text>
   
   <text id="GAME_ALERT_DESCRIPTION_NEXT_TURN_BAD_STATE">
-    <cz>Založ město na jednom z mnoha rozcestníků tří hex.</cz>
-    <eng>Build town on one from corners of 3 hexes</eng>
+    <cz>Nejdřív musíš postavit své město.</cz>
+    <eng>You have to build your town first.</eng>
   </text>
   <text id="GAME_ALERT_TITLE_AI_IS_THINKING">
     <cz>Soupeř přemýšlí</cz>
@@ -264,26 +268,26 @@
   </text>
   <text id="GAME_ALERT_TITLE_MARKET_BAD_TURN">
     <cz>Tržiště jsou zavřena</cz>
-    <eng>Marketplaces are closed</eng>
+    <eng>Markets are closed</eng>
   </text>
   <text id="GAME_ALERT_DESCRIPTION_MARKET_BAD_TURN">
     <cz>Na tržištích nikdo není. Není s kým obchodovat.</cz>
-    <eng>There is nobody at market.</eng>
+    <eng>There is nobody to trade with.</eng>
   </text>
 
   <text id="ALERT_TITLE_THIS_IS_NOT_YOURS">
     <cz>Tohle není tvoje. Můžeš pouze koukat.</cz>
-    <eng>This is not yours.</eng>
+    <eng>This is not yours. You can look only.</eng>
   </text>
   <text id="ALERT_TITLE_NOT_ENOUGH_SOURCES">
     <cz>Nemáš dostatek surovin.</cz>
-    <eng>You haven't enough sources.</eng>
+    <eng>You don't have enough sources.</eng>
   </text>
 
   <!-- Town buildings alerts -->
   <text id="ALERT_TITLE_TOWN_IS_BUILD">
     <cz>Město již postaveno.</cz>
-    <eng>The town is already built</eng>
+    <eng>The town has been built</eng>
   </text>
   <text id="ALERT_TITLE_NO_ROAD_IS_CLOSE">
     <cz>Nevede sem tvoje cesta.</cz>
@@ -291,13 +295,13 @@
   </text>
   <text id="ALERT_TITLE_OTHER_TOWN_IS_CLOSE">
     <cz>Jiné město v blízkosti.</cz>
-    <eng>Other town is too close.</eng>
+    <eng>Another town is too close.</eng>
   </text>
 
   <!-- road buildings alerts -->
   <text id="ALERT_TITLE_ROAD_IS_BUILD">
     <cz>Cesta již postavena.</cz>
-    <eng>Road is already built.</eng>
+    <eng>Road has been already built.</eng>
   </text>
   <text id="ALERT_TITLE_NO_ROAD_OR_TOWN_IS_CLOSE">
     <cz>Žádná tvoje cesta či město v blízkosti.</cz>
@@ -307,11 +311,11 @@
   <!-- special buildings alerts -->
   <text id="ALERT_TITLE_ALREADY_HAVE_SECOND_UPGRADE">
     <cz>Již máš koupen tento pokrok.</cz>
-    <eng>You already have second upgrade.</eng>
+    <eng>You already have this upgrade.</eng>
   </text>
   <text id="ALERT_TITLE_NO_UPGRADE">
     <cz>Prvně musíš vynaleznout pokrok v kláštěře.</cz>
-    <eng>First you have to invet upragde in a monastery.</eng>
+    <eng>First you have to invent the upgrade in a monastery.</eng>
   </text>
   <text id="ALERT_TITLE_MAX_UPGRADES">
     <cz>Už máš zakoupené 3 pokroky.</cz>
@@ -335,6 +339,7 @@
     <cz>Pastvina</cz>
     <eng>Pasture</eng>
   </text>
+  <!-- mohyla? -->
   <text id="HEXA_NAME_STONE">
     <cz>Kamenná mohyla</cz>
     <eng>Stone hill</eng>
@@ -343,6 +348,7 @@
     <cz>Jehličnatý les</cz>
     <eng>Spruce forest</eng>
   </text>
+  <!-- obilí -->
   <text id="HEXA_NAME_CORNFIELD">
     <cz>Obilné pole</cz>
     <eng>Cornfield</eng>
@@ -352,6 +358,7 @@
     <eng>Desert</eng>
   </text>
 
+  <!-- corn -->
   <text id="GOAL_CORN_PART1">
     <cz>Zvyš výnosy o</cz>
     <eng>Raise corn production by</eng>
@@ -392,13 +399,14 @@
     <cz>rudy za kolo</cz>
     <eng>units per turn</eng>
   </text>
+  <!-- tady koncime -->
   <text id="GOAL_TOWNID_PART1">
     <cz>Zbývá ti postavit</cz>
     <eng>Build</eng>
   </text>
   <text id="GOAL_TOWNID_PART2">
     <cz>ze šedivých cest</cz>
-    <eng>from grey towns</eng>
+    <eng>grey town(s)</eng>
   </text>
   <text id="GOAL_ROADID_PART1">
     <cz>Zbývá ti postavit</cz>
@@ -406,15 +414,15 @@
   </text>
   <text id="GOAL_ROADID_PART2">
     <cz>ze šedivých cest</cz>
-    <eng>from grey roads</eng>
+    <eng>grey road(s)</eng>
   </text>
   <text id="GOAL_TOWN_PART1">
     <cz>Založ ještě</cz>
     <eng>Build</eng>
   </text>
   <text id="GOAL_TOWN_PART2">
-    <cz>krát město</cz>
-    <eng>towns</eng>
+    <cz>město(a)</cz>
+    <eng>town(s)</eng>
   </text>
   <text id="GOAL_ROAD_PART1">
     <cz>Postav ještě</cz>
@@ -429,7 +437,7 @@
     <eng>Build</eng>
   </text>
   <text id="GOAL_MONASTERY_PART2">
-    <cz>krát kláštěr</cz>
+    <cz>kláštěr(y)</cz>
     <eng>monasteries</eng>
   </text>
   <text id="GOAL_FORT_PART1">
@@ -437,24 +445,24 @@
     <eng>Build</eng>
   </text>
   <text id="GOAL_FORT_PART2">
-    <cz>krát pevnost</cz>
-    <eng>forts</eng>
+    <cz>pevnost(i)</cz>
+    <eng>fort(s)</eng>
   </text>
   <text id="GOAL_MARKET_PART1">
     <cz>Zbývá ti postavit</cz>
     <eng>Build</eng>
   </text>
   <text id="GOAL_MARKET_PART2">
-    <cz>krát tržiště</cz>
-    <eng>markets</eng>
+    <cz>tržiště</cz>
+    <eng>market(s)</eng>
   </text>
   <text id="GOAL_STEPHERD_PART1">
     <cz>Zbývá ti postavit</cz>
     <eng>Build</eng>
   </text>
   <text id="GOAL_STEPHERD_PART2">
-    <cz>krát pastevce</cz>
-    <eng>stepherd's huts</eng>
+    <cz>chatrč(e) pastevce</cz>
+    <eng>stepherd's hut(s)</eng>
   </text>
   <text id="GOAL_MINE_PART1">
     <cz>Zbývá ti vyhloubit</cz>
@@ -462,15 +470,15 @@
   </text>
   <text id="GOAL_MINE_PART2">
     <cz>krát důl na rudu</cz>
-    <eng>ore mines</eng>
+    <eng>ore mine(s)</eng>
   </text>
   <text id="GOAL_SAW_PART1">
     <cz>Postav ještě</cz>
     <eng>Build</eng>
   </text>
   <text id="GOAL_SAW_PART2">
-    <cz>krát pilu</cz>
-    <eng>sawmills</eng>
+    <cz>pilu(y)</cz>
+    <eng>sawmill(s)</eng>
   </text>
   <text id="GOAL_MILL_PART1">
     <cz>Zbývá ti postavit</cz>
@@ -494,7 +502,7 @@
   </text>
   <text id="GOAL_UPGRADE1_PART2">
     <cz>vylepšení prvního stupně</cz>
-    <eng>new level 1 upgrades</eng>
+    <eng>new first upgrades</eng>
   </text>
   <text id="GOAL_UPGRADE2_PART1">
     <cz>Vzdělanci musí vynaleznout</cz>
@@ -502,7 +510,7 @@
   </text>
   <text id="GOAL_UPGRADE2_PART2">
     <cz>vylepšení druhého stupně</cz>
-    <eng>new level 2 upgrades</eng>
+    <eng>new second upgrades</eng>
   </text>
   <text id="GOAL_LICENCE1_PART1">
     <cz>Musíš koupit</cz>
@@ -510,7 +518,7 @@
   </text>
   <text id="GOAL_LICENCE1_PART2">
     <cz>krát první licenci</cz>
-    <eng>market level 1 scrolls</eng>
+    <eng>first market licence</eng>
   </text>
   <text id="GOAL_LICENCE2_PART1">
     <cz>Musíš koupit</cz>
@@ -518,38 +526,40 @@
   </text>
   <text id="GOAL_LICENCE2_PART2">
     <cz>krát druhou licenci</cz>
-    <eng>market level 2 scrolls</eng>
+    <eng>second market licence</eng>
   </text>
   <text id="GOAL_FORT_PARADE_PART1">
-    <cz>Zbývá ti zorganizovat</cz>
-    <eng>You have to show</eng>
+    <cz>Zaplať ještě</cz>
+    <eng>Pay for</eng>
   </text>
   <text id="GOAL_FORT_PARADE_PART2">
-    <cz>krát vojenskou přehlídku</cz>
-    <eng>fort parades</eng>
+    <cz>vojenské výcviky</cz>
+    <eng>military trainings</eng>
   </text>
   <text id="GOAL_FORT_CRUSADE_PART1">
     <cz>Zbývá ti vyslat</cz>
     <eng>You have to send</eng>
   </text>
   <text id="GOAL_FORT_CRUSADE_PART2">
-    <cz>krát vojenskou výpravu</cz>
+    <cz>vojenské výpravy</cz>
     <eng>crusades</eng>
   </text>
   <text id="GOAL_FORT_STEAL_PART1">
     <cz>Musíš ještě okrást</cz>
-    <eng>You have to steal</eng>
+    <eng>You have to steal sources from</eng>
   </text>
+  <!-- oponent -->
   <text id="GOAL_FORT_STEAL_PART2">
     <cz>soupeře</cz>
-    <eng>other opponents</eng>
+    <eng>oponents</eng>
   </text>
+  <!-- conquer -->
   <text id="GOAL_FORT_CAPTURE_PART1">
     <cz>Zbývá ti obsadit</cz>
     <eng>You have to capture</eng>
   </text>
   <text id="GOAL_FORT_CAPTURE_PART2">
-    <cz>krát pole</cz>
+    <cz>hexy</cz>
     <eng>more hexes</eng>
   </text>
 
@@ -559,7 +569,7 @@
   </text>
   <text id="ALERT_TITLE_BUILDING_IS_BUILD">
     <cz>Už tu stojí budova.</cz>
-    <eng>There is already other building.</eng>
+    <eng>Other building is standing there.</eng>
   </text>
 
   <text id="PROMT_TITLE_WANT_TO_BUILD_TOWN">
@@ -568,7 +578,7 @@
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUILD_TOWN">
     <cz>U města můžeš postavit spoustu užitečných budov.</cz>
-    <eng>You can build many useful buildings by town.</eng>
+    <eng>You can build many useful buildings in the town.</eng>
   </text>
   <text id="PROMT_TITLE_WANT_TO_BUILD_ROAD">
     <cz>Cesta</cz>
@@ -576,7 +586,7 @@
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUILD_ROAD">
     <cz>Umožní rozšířit tvé území, stavět nová města na konci cest.</cz>
-    <eng>Helps to spread your impact.</eng>
+    <eng>Helps to spread your impact over the island.</eng>
   </text>
 
   <text id="PROMT_TITLE_WANT_TO_BUILD_MINE">
@@ -585,7 +595,7 @@
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUILD_MINE">
     <cz>Horníci budou pro tebe těžit z dolu rudu.</cz>
-    <eng>Miners will mine ore from mountains.</eng>
+    <eng>Miners will mine ore from the mountains.</eng>
   </text>
   <text id="PROMPT_TITLE_WANT_TO_UPGRADE_1_MINE">
     <cz>Vozíky na rudu</cz>
@@ -601,20 +611,21 @@
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_MINE">
     <cz>Horníci s novými helmami nebudou tak často na marodce. Zisky rudy o 100% lepší.</cz>
-    <eng>Miners with new helms won't be too ofen injured. Ore benefits will be 100% higher.</eng>
+    <eng>Miners with new helms are less likely to get injured. Ore profit will be 100% higher.</eng>
   </text>
 
   <text id="PROMT_TITLE_WANT_TO_BUILD_QUARRY">
     <cz>Kamenný lom</cz>
     <eng>Stone quarry</eng>
   </text>
+  <!-- těžit rock -->
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUILD_QUARRY">
     <cz>Horníci budou těžit stavební kámen.  Po vynalezení pokroku z Kláštera jim to půjde líp.</cz>
-    <eng>Miners will get stone for you.</eng>
+    <eng>Miners will mine stone for you. After the invention of an upgrade in the monastery their productivity will rise.</eng>
   </text>
   <text id="PROMPT_TITLE_WANT_TO_UPGRADE_1_QUARRY">
     <cz>Lepší krumpáče</cz>
-    <eng>Sharper picks</eng>
+    <eng>Better picks</eng>
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_QUARRY">
     <cz>Pořídíš-li horníkům lepší krumpáče, budou pracovat o 50% lépe.</cz>
@@ -626,7 +637,7 @@
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_QUARRY">
     <cz>Horníci s trhavinou dovedou divy. Zisky kamene o 100% lepší.</cz>
-    <eng>100% higher benefit with new explosives.</eng>
+    <eng>100% higher profit with new explosives.</eng>
   </text>
 
   <text id="PROMT_TITLE_WANT_TO_BUILD_SAW">
@@ -635,7 +646,7 @@
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUILD_SAW">
     <cz>Dřevorubci natahají z lesa dřevo.  Po vynalezení pokroku z Kláštera bude těžba účinější.</cz>
-    <eng>Lumberjacks will cut timber in forest.</eng>
+    <eng>Lumberjacks will cut timber in the forest. After the invention of an upgrade in the monastery their productivity will rise.</eng>
   </text>
   <text id="PROMPT_TITLE_WANT_TO_UPGRADE_1_SAW">
     <cz>Sekery</cz>
@@ -650,26 +661,28 @@
     <eng>Draft horses</eng>
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_SAW">
-    <cz>Tažní koně velice urychlí práci. Zisky dřeva o 100% lepší.</cz>
-    <eng>Draf horses accelerate work. Wood benefits 100% better.</eng>
+    <cz>Tažní koně velice urychlí práci. Zisky dřeva o 100% větší.</cz>
+    <eng>Draft horses will accelerate work. Wood profit will be 100% higher.</eng>
   </text>
 
-
+ 
+  <!-- wind mill -->
   <text id="PROMT_TITLE_WANT_TO_BUILD_MILL">
     <cz>Větrný mlýn</cz>
-    <eng>Mill</eng>
+    <eng>Windmill</eng>
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUILD_MILL">
     <cz>Mlynář z pole získá spoustu obilí. Po vynalezení pokroku z Kláštera lze mlýn vylepšit, aby zisky byly vyšší.</cz>
-    <eng>Miller gets a lot fo corn from field.</eng>
+    <eng>Miller gets a lot of corn from the field.  After the invention of an upgrade in the monastery their productivity will rise.</eng>
   </text>
+  <!-- miraculous -->
   <text id="PROMPT_TITLE_WANT_TO_UPGRADE_1_MILL">
     <cz>Zázračné hnojivo</cz>
     <eng>Miraculous fertilizer</eng>
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_MILL">
     <cz>S hnojivem ti roste obilí o 50% víc.</cz>
-    <eng>With new fertilizer you get 50% more corn</eng>
+    <eng>With new fertilizer you will get 50% more corn</eng>
   </text>
   <text id="PROMPT_TITLE_WANT_TO_UPGRADE_2_MILL">
     <cz>Nové lopaty</cz>
@@ -677,17 +690,18 @@
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_MILL">
     <cz>Mlýnské lopaty urychlí zpracování obilí o 100%.</cz>
-    <eng>Mill vanes accelerate getting corn by 100%.</eng>
+    <eng>Mill vanes will accelerate corn processing by 100%.</eng>
   </text>
 
   <text id="PROMT_TITLE_WANT_TO_BUILD_STEPHERD">
     <cz>Chatrč pastevce</cz>
-    <eng>Pasture's hut</eng>
+    <eng>Stepherd's hut</eng>
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUILD_STEPHERD">
     <cz>Pastevec ti bude dodávat mnoho oveček.  Po vynalezení pokroku z Kláštera budeš mít ovcí mnohem víc.</cz>
-    <eng>Stepherd gifts you many sheeps.</eng>
+    <eng>Stepherd will supply you with many new sheep. After the invention of an upgrade in the monastery you will get much more.</eng>
   </text>
+  <!-- krmivo -->
   <text id="PROMPT_TITLE_WANT_TO_UPGRADE_1_STEPHERD">
     <cz>Krmivo pro ovce</cz>
     <eng>Feed for sheep</eng>
@@ -698,11 +712,11 @@
   </text>
   <text id="PROMPT_TITLE_WANT_TO_UPGRADE_2_STEPHERD">
     <cz>Naslouchej ovcím</cz>
-    <eng>Listen to sheeps</eng>
+    <eng>Listen to sheep</eng>
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_UPGRADE_2_STEPHERD">
     <cz>Pastevec se naučí ovcím naslouchat, bude jich dvakrát tolik.</cz>
-    <eng>Stepherds will get new knowledge about sheeps. You will get more sheeps.</eng>
+    <eng>Stepherds will learn how to listen to sheep. You will get twice as many sheep.</eng>
   </text>
 
   <text id="PROMPT_TITLE_WANT_TO_BUILD_FORT">
@@ -711,7 +725,7 @@
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUILD_FORT">
     <cz>Z pevnosti můžeš poslat vojsko ukrást suroviny protihráči, nebo získat body za vojenskou přehlídku.</cz>
-    <eng>From fort you can steal oponents sources, capture hexas or make crusades.</eng>
+    <eng>With a fort you can steal oponent's sources, capture hexes or make crusades.</eng>
   </text>
   <text id="PROMPT_TITLE_WANT_TO_BUILD_MARKET">
     <cz>Tržiště</cz>
@@ -719,7 +733,7 @@
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUILD_MARKET">
     <cz>Na tržišti si můžeš koupit lepší směnný kurz pro výměnu surovin. Chceš-li měnit alespoň tři ku jedné, tržiště je jasná volba.</cz>
-    <eng>You can buy scrolls on the market and get better exchange rate with them.</eng>
+    <eng>You can buy licences on the market and get better exchange rate. If you want to exchange sources at a rate of 3 to 1, market is the right choise.</eng>
   </text>
   <text id="PROMPT_TITLE_WANT_TO_BUILD_MONASTERY">
     <cz>Klášter</cz>
@@ -732,15 +746,15 @@
 
   <text id="PROMPT_DESCRIPTION_ALL_UPGRADES_INVENTED">
     <cz>Vynalezl jsi již všechny dostupné pokroky.</cz>
-    <eng>You have invented all upgrades.</eng>
+    <eng>All available upgrades have been invented.</eng>
   </text>
   <text id="PROMPT_DESCRIPTION_ALL_LICENCES_BOUGHT">
     <cz>Koupil jsi již všechny dostupné licence umožňující výhodnější směnu jednotlivých surovin.</cz>
-    <eng>You have bought all scrolls.</eng>
+    <eng>All available licences have been purchased.</eng>
   </text>
   <text id="PROMPT_DESCRIPTION_ALL_UPGRADES_USED">
     <cz>S dvěma vylepšeními ti vynáší tato budova dvojnásobek oproti základní budově. Budovu již nelze dále vylepšovat.</cz>
-    <eng>You get to times more sources from that building.</eng>
+    <eng>Twice upgraded, this building brings you as much as it can and can no longer be upgraded.</eng>
   </text>
 
   <text id="PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_CORN_1">
@@ -753,11 +767,11 @@
   </text>
   <text id="PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_MEAT_1">
     <cz>Výhradní výměnné právo na ovce</cz>
-    <eng>Exclusive sheeps exchange rate</eng>
+    <eng>Exclusive sheep exchange rate</eng>
   </text>
   <text id="PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_MEAT_2">
     <cz>Výměnné právo na ovce druhého stupně</cz>
-    <eng>Exclusive level 2 sheeps exchange rate</eng>
+    <eng>Exclusive level 2 sheep exchange rate</eng>
   </text>
   <text id="PROMPT_TITLE_WANT_TO_BUY_MARKET_UPGRADE_STONE_1">
     <cz>Výhradní výměnné právo na kámen</cz>
@@ -785,43 +799,43 @@
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_CORN_1">
     <cz>S touto listinou můžeš měnit 3 obilí za jednu jinou surovinu.</cz>
-    <eng>With this scroll you can change 3 corn for 1 other source.</eng>
+    <eng>With this licence you can change 3 corn for 1 other source.</eng>
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_CORN_2">
     <cz>S touto listinou můžeš měnit 2 obilí za jednu jinou surovinu.</cz>
-    <eng>With this scroll you can change 2 corn for 1 other source.</eng>
+    <eng>With this licence you can change 2 corn for 1 other source.</eng>
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_MEAT_1">
     <cz>S touto listinou můžeš měnit 3 ovce za jednu jinou surovinu.</cz>
-    <eng>With this scroll you can change 3 sheeps for 1 other source.</eng>
+    <eng>With this licence you can change 3 sheep for 1 other source.</eng>
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_MEAT_2">
     <cz>S touto listinou můžeš měnit 2 ovce za jednu jinou surovinu.</cz>
-    <eng>With this scroll you can change 2 sheeps for 1 other source.</eng>
+    <eng>With this licence you can change 2 sheep for 1 other source.</eng>
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_STONE_1">
     <cz>S touto listinou můžeš měnit 3 stavební kameny za jednu jinou surovinu.</cz>
-    <eng>With this scroll you can change 3 stones for 1 other source.</eng>
+    <eng>With this licence you can change 3 stones for 1 other source.</eng>
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_STONE_2">
     <cz>S touto listinou můžeš měnit 2 stavební kameny za jednu jinou surovinu.</cz>
-    <eng>With this scroll you can change 2 stones for 1 other source.</eng>
+    <eng>With this licence you can change 2 stones for 1 other source.</eng>
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_WOOD_1">
     <cz>S touto listinou můžeš měnit 3 dřeva za jednu jinou surovinu.</cz>
-    <eng>With this scroll you can change 3 wood for 1 other source.</eng>
+    <eng>With this licence you can change 3 wood for 1 other source.</eng>
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_WOOD_2">
     <cz>S touto listinou můžeš měnit 2 dřeva za jednu jinou surovinu.</cz>
-    <eng>With this scroll you can change 2 wood for 1 other source.</eng>
+    <eng>With this licence you can change 2 wood for 1 other source.</eng>
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_ORE_1">
     <cz>S touto listinou můžeš měnit 3 rudy za jednu jinou surovinu.</cz>
-    <eng>With this scroll you can change 3 ore pieces for 1 other source.</eng>
+    <eng>With this licence you can change 3 units of ore for 1 other source.</eng>
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUY_MARKET_UPGRADE_ORE_2">
     <cz>S touto listinou můžeš měnit 2 rudy za jednu jinou surovinu.</cz>
-    <eng>With this scroll you can change 2 ore pieces for 1 other source.</eng>
+    <eng>With this licence you can change 2 units of ore for 1 other source.</eng>
   </text>
 
   <text id="PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_CAPTURE">
@@ -842,14 +856,15 @@
   </text>
 
   <text id="PROMPT_DESCTIPTION_MESSAGE_FORT_ACTION_PARADE">
-    <cz>qqq</cz>
-    <eng></eng>
+    <cz>Po vojenském tréninku budou veškeré vojenské akce úspěšnější.</cz>
+    <eng>Upon the completion of military training all military actions will be more succesful.</eng>
   </text>
 
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_CAPTURE">
-    <cz>Všechny těžební budovy na poli budou dávat suroviny pouze tobě. Při pokusu obsadit stejné pole 2x, bude pole uvolněno.</cz>
-    <eng>You will get sources from all source buildings on hex. </eng>
+    <cz>Všechny těžební budovy na poli budou dávat suroviny pouze tobě.</cz>
+    <eng>You will get sources from all source buildings on the captured hex.</eng>
   </text>
+  <!-- koncime -->
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_CRUSADE">
     <cz>Tvoji vojáci vyplení dané pole a přinesou z něj kořist. Sníží výnosy pole na polovinu na několik kol.</cz>
     <eng>Soldiers will get a lot of sources from target hex. Hex will be damage for several turns.</eng>

@@ -34,6 +34,9 @@
       <turnLimit>70</turnLimit>
       <Stone>120</Stone>
       <Ore>120</Ore>
+      <Corn>120</Corn>
+      <Meat>120</Meat>
+      <Wood>120</Wood>
     </points>
     <ban>
       <RandomEvents>0</RandomEvents>

@@ -71,18 +71,18 @@
       <road>83</road>
       <road>66</road>
 	</points>
-	<ban>
-    <RandomEvents>1</RandomEvents>
-    <ChangeSources>1</ChangeSources>
-		<Fort>0</Fort>
-        <Monastery>0</Monastery>
-        <Market>0</Market>
-		<FortCapture>1</FortCapture>
-        <FortSteal>0</FortSteal>
-		<FortParade>0</FortParade>
-		<UpgradeLvl2>0</UpgradeLvl2>
-        <MarketLvl2>0</MarketLvl2>
-	</ban>
+    <ban>
+      <RandomEvents>1</RandomEvents>
+      <ChangeSources>1</ChangeSources>
+      <Fort>0</Fort>
+      <Monastery>0</Monastery>
+      <Market>0</Market>
+      <FortCapture>1</FortCapture>
+      <FortSteal>0</FortSteal>
+      <FortParade>0</FortParade>
+      <UpgradeLvl2>0</UpgradeLvl2>
+      <MarketLvl2>0</MarketLvl2>
+    </ban>
   </settings>
   <map-definition>
     <row>

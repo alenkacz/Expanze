@@ -14,7 +14,7 @@ namespace AIGen
         public FortShowParade(IMapController map, int k, int depth)
             : base(map, depth, "Show Parade")
         {
-            this.kHasSources = k / 1000.0f;
+            this.kHasSources = k / 100.0f;
             this.kPoints = 1- kHasSources;
         }
 
@@ -29,8 +29,10 @@ namespace AIGen
             if (map.GetPlayerMe().GetBuildingCount(Building.Fort) == 0)
                 return 0.0;
 
-            double pointsDesirability = (map.GetActionPoints(PlayerPoints.FortParade) > 0) ? 1.0 : 0.0;
-            double desirability = Desirability.GetHasSources(PriceKind.AParade) * kHasSources + pointsDesirability * kPoints;
+            double points = 0.0;
+            if (map.GetActionPoints(PlayerPoints.FortParade) - map.GetPlayerMe().GetPoints()[(int)PlayerPoints.FortParade] > 0)
+                points = 1.0;
+            double desirability = Desirability.GetHasSources(PriceKind.AParade) * kHasSources + points * kPoints;
 
             return desirability;
         }

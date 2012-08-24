@@ -72,10 +72,10 @@
         </towns>
         <source>
           <ore>150</ore>
-          <meat>250</meat>
+          <meat>300</meat>
           <stone>150</stone>
           <wood>250</wood>
-          <corn>250</corn>
+          <corn>300</corn>
         </source>
       </player>
     </players>
@@ -94,9 +94,9 @@
         <Mill>0</Mill>
         <Stepherd>0</Stepherd>
         <Saw>0</Saw>
-        <Quarry>0</Quarry>
-        <Mine>0</Mine>
-        <FortCapture>0</FortCapture>
+        <Quarry>7</Quarry>
+        <Mine>7</Mine>
+        <FortCapture>3</FortCapture>
         <FortSteal>0</FortSteal>
         <turnLimit>50</turnLimit>
 	</points>

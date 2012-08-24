@@ -16,7 +16,7 @@ namespace Expanze.Gameplay
             : base(title, description, source, isSourceCost, true, icon)
         {
             this.player = player;
-
+            RealCost = false;
         }
 
         public override void DrawIcon(Microsoft.Xna.Framework.Vector2 iconPosition, bool isMouseOver)

@@ -7,6 +7,11 @@
     </name>
     <players>
       <player>
+        <name>You</name>
+        <color>Red</color>
+        <AI>Human</AI>
+      </player>
+      <player>
         <name>Otto Sverdrup</name>
         <color>Orange</color>
         <AI>AI Gen</AI>
@@ -17,11 +22,6 @@
           <wood>50</wood>
           <corn>50</corn>
         </source>
-      </player>
-      <player>
-        <name>You</name>
-        <color>Red</color>
-        <AI>Human</AI>
       </player>
     </players>
 	<points>
@@ -36,11 +36,11 @@
         <MarketLvl1>0</MarketLvl1>
         <UpgradeLvl2>0</UpgradeLvl2>
         <MarketLvl2>0</MarketLvl2>
-        <Mill>0</Mill>
-        <Stepherd>0</Stepherd>
+        <Mill>3</Mill>
+        <Stepherd>3</Stepherd>
         <Saw>8</Saw>
-        <Quarry>0</Quarry>
-        <Mine>0</Mine>
+        <Quarry>3</Quarry>
+        <Mine>3</Mine>
         <FortCapture>0</FortCapture>
         <FortSteal>0</FortSteal>
         <turnLimit>75</turnLimit>
@@ -86,7 +86,7 @@
       <hexa type="water" />
       <hexa type="cornfield" productivity="-" secretProductivity="yes" />
       <hexa type="cornfield" productivity="?" secretProductivity="yes" />
-      <hexa type="pasture" productivity="?" secretProductivity="yes" />
+      <hexa type="pasture" productivity="+" secretProductivity="yes" />
       <hexa type="forest" productivity="-" secretProductivity="yes" />
       <hexa type="water" />
       <hexa type="forest" productivity="?" secretProductivity="yes" />
