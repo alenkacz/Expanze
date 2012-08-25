@@ -40,7 +40,7 @@ namespace Expanze
         // costs of actions
         public static SourceAll costFortParade = new SourceAll(50, 50, 50, 80, 0);
         public static SourceAll costFortCrusade = new SourceAll(80, 80, 0, 80, 0);
-        public static SourceAll costFortSources = new SourceAll(80, 50, 50, 80, 0);
+        public static SourceAll costFortSources = new SourceAll(0, 0, 0, 100, 50);
         public static SourceAll costFortCapture = new SourceAll(80, 80, 0, 50, 50);
         // costs of market upgrades
         public static SourceAll costMarketCorn1 = new SourceAll(90, 0, 0, 0, 0);

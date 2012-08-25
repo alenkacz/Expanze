@@ -16,7 +16,7 @@ namespace AIGen
         public InventUpgrade(IMapController map, int k, int depth)
             : base(map, depth, "Invent upgrade")
         {
-            kPoints = k / 1000.0f;
+            kPoints = k / 100.0f;
             kUpgrade = 1 - kPoints;
         }
 
@@ -61,9 +61,12 @@ namespace AIGen
                 }
             }
 
+            if (bestKind == SourceBuildingKind.Count)
+                return 0.0;
+
             double bestSourceDesirability = ((max - 40) / 60.0) / 2.0;
             if (bestSourceDesirability < 0.0)
-                return 0.0;
+                bestSourceDesirability = 0.0;
             if (bestSourceDesirability > 1.0)
                 bestSourceDesirability = 1.0;
 
@@ -80,6 +83,9 @@ namespace AIGen
                     points = 0.0f;
                     break;
             }
+            if (bestSourceDesirability < 0.000001 && points < 0.00001)
+                return 0.0;
+            
             if (points > 1)
                 points = 1.0;
 

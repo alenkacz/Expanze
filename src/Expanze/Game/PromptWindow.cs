@@ -343,7 +343,8 @@ namespace Expanze
 
         void DrawSources()
         {
-            GameMaster.Inst().GetActivePlayer().SetMaterialChange(-((SourceAll) itemList[activeItem].getCost()));
+            int sign = itemList[activeItem].RealCost ? -1 : 1;
+            GameMaster.Inst().GetActivePlayer().SetMaterialChange(((SourceAll) itemList[activeItem].getCost()) * sign);
             float border = 16.0f;
             float sourcesWidth = -border;
             for (int loop1 = 0; loop1 < 5; loop1++)

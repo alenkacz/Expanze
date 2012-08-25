@@ -325,6 +325,7 @@ namespace Expanze.Gameplay.Map
                 {
                     effect.Alpha = 0.25f + (1.0f - GameState.SunHeight) / 2.5f;
                     effect.LightingEnabled = true;
+                    effect.EmissiveColor = Vector3.Zero;
                     effect.AmbientLightColor = Vector3.Zero;
                     effect.DirectionalLight0.Enabled = false;
                     effect.World = transforms[mesh.ParentBone.Index] * world * shadow;

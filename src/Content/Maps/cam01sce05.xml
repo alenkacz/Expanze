@@ -16,17 +16,17 @@
             <source-building>1</source-building>
             <source-building>2</source-building>
           </town>
-          <town id="16">
+          <town id="32">
+            <source-building>2</source-building>
+            <source-building>1</source-building>
+            <source-building>0</source-building>
+          </town>
+          <town id="47">
             <source-building>2</source-building>
             <source-building>1</source-building>
             <source-building>0</source-building>
           </town>
         </towns>
-        <roads>
-          <id>9</id>
-          <id>16</id>
-          <id>17</id>
-        </roads>
         <source>
           <ore>100</ore>
           <meat>50</meat>
@@ -36,29 +36,57 @@
         </source>
       </player>
       <player>
-        <name>Charles Wilkes</name>
-        <color>Blue</color>
+        <name>Carl Linnaeus</name>
+        <color>Orange</color>
         <AI>AI Gen</AI>
         <towns>
-          <town id="22">
+          <town id="20">
             <source-building>0</source-building>
             <source-building>1</source-building>
             <source-building>2</source-building>
           </town>
-          <town id="43">
+          <town id="41">
             <source-building>2</source-building>
             <source-building>1</source-building>
             <source-building>0</source-building>
           </town>
         </towns>
         <roads>
-          <id>53</id>
-          <id>47</id>
+          <id>52</id>
+          <id>46</id>
         </roads>
         <source>
-          <ore>50</ore>
+          <ore>130</ore>
           <meat>50</meat>
-          <stone>50</stone>
+          <stone>120</stone>
+          <wood>50</wood>
+          <corn>50</corn>
+        </source>
+      </player>
+      <player>
+        <name>Charles Wilkes</name>
+        <color>Blue</color>
+        <AI>AI Gen</AI>
+        <towns>
+          <town id="61">
+            <source-building>0</source-building>
+            <source-building>1</source-building>
+            <source-building>2</source-building>
+          </town>
+          <town id="68">
+            <source-building>2</source-building>
+            <source-building>1</source-building>
+            <source-building>0</source-building>
+          </town>
+        </towns>
+        <roads>
+          <id>91</id>
+          <id>85</id>
+        </roads>
+        <source>
+          <ore>130</ore>
+          <meat>50</meat>
+          <stone>120</stone>
           <wood>50</wood>
           <corn>50</corn>
         </source>
@@ -112,7 +140,6 @@
       <hexa type="water" />
       <hexa type="water" />
       <hexa type="mountains" productivity="20" />
-      <hexa type="water" />
       <hexa type="cornfield" productivity="16" />
       <hexa type="pasture" productivity="20" />
       <hexa type="forest" productivity="20" />
@@ -125,7 +152,6 @@
       <hexa type="pasture" productivity="12" />
       <hexa type="water" />
       <hexa type="water" />
-      <hexa type="water" />
       <hexa type="forest" productivity="16" />
       <hexa type="forest" productivity="24" />
       <hexa type="water" />
@@ -136,7 +162,6 @@
       <hexa type="mountains" productivity="16" />
       <hexa type="water" />
       <hexa type="forest" productivity="8" />
-      <hexa type="stone" productivity="12" />
       <hexa type="stone" productivity="24" />
       <hexa type="mountains" productivity="20" />
 	    <hexa type="water" />
@@ -148,8 +173,8 @@
       <hexa type="pasture" productivity="16" />
       <hexa type="cornfield" productivity="16" />
       <hexa type="stone" productivity="20" />
-      <hexa type="water" />
       <hexa type="desert" />
+      <hexa type="?" productivity="?" />
 	    <hexa type="water" />
       <hexa type="water" />
     </row>
@@ -159,9 +184,8 @@
       <hexa type="water" />
       <hexa type="water" />
       <hexa type="water" />
-      <hexa type="water" />
-      <hexa type="stone" productivity="16" />
-      <hexa type="forest" productivity="8" />
+      <hexa type="3" productivity="?" />
+      <hexa type="3" productivity="?" />
       <hexa type="water" />
     </row>
     <row>
@@ -171,8 +195,8 @@
 	    <hexa type="water" />
       <hexa type="water" />
       <hexa type="water" />
-      <hexa type="mountains" productivity="20" />
-      <hexa type="stone" productivity="12" />
+      <hexa type="2" productivity="?" />
+      <hexa type="2" productivity="?" />
       <hexa type="water" />
     </row>
     <row>

@@ -122,9 +122,9 @@ namespace Expanze.Gameplay
 
                         case 2 :
                             //costSources += new SourceAll(30);
-                            gm.GetActivePlayer().AddSources(GetUpgradeCost(upgradeKind, upgradeNumber), TransactionState.TransactionStart);
-                            gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
-                            gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
+                            //gm.GetActivePlayer().AddSources(GetUpgradeCost(upgradeKind, upgradeNumber), TransactionState.TransactionStart);
+                            //gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
+                            //gm.GetActivePlayer().AddSources(new SourceAll(0), TransactionState.TransactionEnd);
                             win.Show(PromptWindow.Mod.Buyer, Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_SOURCES), true);
                             for (int loop1 = 0; loop1 < gm.GetPlayerCount(); loop1++)
                             {

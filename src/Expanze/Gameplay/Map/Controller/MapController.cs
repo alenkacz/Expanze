@@ -666,6 +666,10 @@ namespace Expanze.Gameplay.Map
             Player player = gm.GetPlayer(playerName);
             Player activePlayer = gm.GetActivePlayer();
 
+            if (!activePlayer.GetIsAI())
+            {
+                activePlayer.AddSources(Settings.costFortSources, TransactionState.TransactionEnd);
+            }
             if (CanStealSources(playerName) == DestroySourcesError.OK)
             {
                 SourceAll source = (SourceAll) player.GetSource();
@@ -674,14 +678,15 @@ namespace Expanze.Gameplay.Map
                 double partMax = 0.5 + 0.05 * activePlayer.MilitaryTrainings;
                 double part = partMin + (partMax - partMin) * GameMaster.Inst().GetRandomNumber();
                 player.PayForSomething(new SourceAll(source * part));
-                activePlayer.AddSources(-Settings.costFortSources, TransactionState.TransactionStart);
-                activePlayer.AddSources(source * part, TransactionState.TransactionEnd);
+                activePlayer.PayForSomething(Settings.costFortSources);
                 activePlayer.AddFortAction();
                 activePlayer.AddPoints(PlayerPoints.FortStealSources);
                 if (activePlayer.GetIsAI())
                 {
+                    
                     Message.Inst().Show("Někdo krade!", activePlayer.GetName() + " se vloupal do skladišť " + player.GetName() + " a odnesl si lup polovinu jeho zásob.", GameResources.Inst().GetHudTexture(HUDTexture.IconFortSources));
                 }
+                activePlayer.AddSources(source * part, TransactionState.TransactionEnd);
                 return true;
             }
             return false;

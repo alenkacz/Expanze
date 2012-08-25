@@ -21,7 +21,7 @@ namespace AIGen
         public BuildMonastery(IMapController map, double kHexa, double kHasSources, double kBestSource, double kHasOtherMonastery, double kPoints, int depth)
             : base(map, depth, "Build Monastery")
         {
-            kHasMonastery = 0.2;
+            kHasMonastery = 0.9;
 
             double sum = kHexa + kHasSources + kBestSource + kHasOtherMonastery + kPoints;
 
