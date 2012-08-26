@@ -89,6 +89,11 @@ namespace Expanze
             return (buildingPos == -1) ? BuildingKind.NoBuilding : buildingKind[buildingPos];
         }
 
+        public SpecialBuilding GetSpecialBuildingPos(byte pos)
+        {
+            return building[pos];
+        }
+
         public SpecialBuilding GetSpecialBuilding(int hexaID)
         {
             if (!isBuild)

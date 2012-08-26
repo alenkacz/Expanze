@@ -47,10 +47,10 @@ namespace Expanze
 
         private Statistic statistic;
 
-        public Player(String name, Color color, IComponentAI componentAI, int orderID) : this(name, color, componentAI, orderID, null, false)
+        public Player(String name, Color color, string colorName, IComponentAI componentAI, int orderID) : this(name, color, colorName, componentAI, orderID, null, false)
         {
         }
-        public Player(String name, Color color, IComponentAI componentAI, int orderID, int[][] personality, bool gen)
+        public Player(String name, Color color, string colorName, IComponentAI componentAI, int orderID, int[][] personality, bool gen)
         {
             this.orderID = orderID;
             this.gen = gen;
@@ -84,6 +84,7 @@ namespace Expanze
             militaryTrainings = 0;
 
             this.color = color;
+            this.colorName = colorName;
             this.name = name;
             this.componentAI = componentAI;
             this.personality = personality;
@@ -523,6 +524,17 @@ namespace Expanze
             get
             {
                 return militaryTrainings;
+            }
+        }
+
+        private string colorName;
+        public string ColorName { 
+            get {
+                return colorName;
+            }
+            set
+            {
+                colorName = value;
             }
         }
     }

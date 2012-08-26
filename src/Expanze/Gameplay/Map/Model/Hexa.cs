@@ -686,5 +686,28 @@ namespace Expanze
 
             captureTurn--;
         }
+
+        public int TurnMiracle
+        {
+            get
+            {
+                return turnMiracle;
+            }
+        }
+
+        public int TurnDisaster
+        {
+            get
+            {
+                return turnDisaster;
+            }
+        }
+
+        public int TurnDestroy {
+            get
+            {
+                return turnDestroy;
+            }
+        }
     }
 }

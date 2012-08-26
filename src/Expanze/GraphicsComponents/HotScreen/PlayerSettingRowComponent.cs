@@ -25,16 +25,18 @@ namespace Expanze
         List<ButtonComponent> playerButtons = new List<ButtonComponent>();
         Texture2D playerColorTexture;
         Color playerColor;
+        string playerColorName;
         ButtonComponent playerState;
         String name = "Player";
         ButtonComponent addButton;
         ButtonComponent remButton;
 
-        public PlayerSettingRowComponent(Game game, int x, int y, SpriteFont font, int width, int height, Color c,String name, int changeState) 
+        public PlayerSettingRowComponent(Game game, int x, int y, SpriteFont font, int width, int height, Color c, string playerColorName, String name, int changeState) 
             : base(game,x,y,font,width,height,null) 
         {
             playerColorTexture = game.Content.Load<Texture2D>("pcolor");
             playerColor = c;
+            this.playerColorName = playerColorName;
             this.name = name;
             playerState = new ButtonComponent(game, x + 500, y - 6, font, Settings.scaleW(200), Settings.scaleH(45), null, Settings.PlayerState);
             playerState.Actions += PlayerStateButtonAction;
@@ -71,7 +73,7 @@ namespace Expanze
             if (active)
             {
                 if (Strings.Inst().GetString(TextEnum.MENU_HOT_SEAT_NO_AI) == playerState.getSelectedState())
-                    return new Player(name, playerColor, null, GameMaster.Inst().GetPlayerCount());
+                    return new Player(name, playerColor, playerColorName, null, GameMaster.Inst().GetPlayerCount());
                 else
                 {
                     IComponentAI componentAI = null;
@@ -84,7 +86,7 @@ namespace Expanze
                         }
                     }
                     IComponentAI componentAICopy = componentAI.Clone();
-                    return new Player(name, playerColor, componentAICopy, GameMaster.Inst().GetPlayerCount());
+                    return new Player(name, playerColor, playerColorName, componentAICopy, GameMaster.Inst().GetPlayerCount());
                 }
             }
 

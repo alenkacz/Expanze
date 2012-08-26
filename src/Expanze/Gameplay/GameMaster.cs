@@ -123,7 +123,7 @@ namespace Expanze
             for(int loop1 = 0; loop1 < players.Count; loop1++)
             {
                 setArray = players[loop1].GetPersonality();
-                players[loop1] = new Player(players[loop1].GetName(), players[loop1].GetColor(), players[loop1].GetComponentAI(), loop1, setArray, players[loop1].GetGen());
+                players[loop1] = new Player(players[loop1].GetName(), players[loop1].GetColor(), players[loop1].ColorName, players[loop1].GetComponentAI(), loop1, setArray, players[loop1].GetGen());
                 AI = players[loop1].GetComponentAI();
 
                 if (AI != null) // its computer then
@@ -392,6 +392,7 @@ namespace Expanze
 
             String playerName;
             Color playerColor;
+            string playerColorName;
             IComponentAI playerAI;
             int playerOrder;
             int[][] playerPersonality;
@@ -401,6 +402,7 @@ namespace Expanze
             {
                 playerName = "";
                 playerColor = Color.Black;
+                playerColorName = "Black";
                 playerAI = null;
                 playerOrder = 0;
                 playerPersonality = null;
@@ -417,6 +419,7 @@ namespace Expanze
                             playerName = info.InnerText;
                             break;
                         case "color":
+                            playerColorName = info.InnerText;
                             switch (info.InnerText)
                             {
                                 case "Red": playerColor = Color.Red; break;
@@ -465,7 +468,7 @@ namespace Expanze
                 else
                     playerPersonality = Settings.hero[playerName];
 
-                Player player = new Player(playerName, playerColor, playerAI, playerOrder, playerPersonality, playerGen);
+                Player player = new Player(playerName, playerColor, playerColorName, playerAI, playerOrder, playerPersonality, playerGen);
                 players.Add(player);
             }
         }
@@ -602,11 +605,11 @@ namespace Expanze
             if (componentAI != null)
             {
                 IComponentAI componentAICopy = componentAI.Clone();
-                this.players.Add(new Player(Strings.Inst().PlayerNames[secondPlayerNameID], Color.Blue, componentAICopy, 0));
+                this.players.Add(new Player(Strings.Inst().PlayerNames[secondPlayerNameID], Color.Blue, "Blue", componentAICopy, 0));
             } else
-                this.players.Add(new Player(Strings.Inst().PlayerNames[secondPlayerNameID], Color.Blue, null, 0));
+                this.players.Add(new Player(Strings.Inst().PlayerNames[secondPlayerNameID], Color.Blue, "Blue", null, 0));
 
-            this.players.Add(new Player(Strings.Inst().PlayerNames[firstPlayerNameID], Color.Red, null, 1));
+            this.players.Add(new Player(Strings.Inst().PlayerNames[firstPlayerNameID], Color.Red, "Red", null, 1));
         }
 
         public GameSettings GetGameSettings()
@@ -1392,6 +1395,145 @@ namespace Expanze
             {
                 player.InitNewGame();
             }
+        }
+
+
+        public void SaveGame()
+        {
+            XmlTextWriter writer = new XmlTextWriter("Content/Maps/save-game.xml", null);
+            writer.Formatting = Formatting.Indented;
+            writer.WriteStartDocument();
+            writer.WriteStartElement("map");
+            SaveSettings(writer);
+            SaveMap(writer);
+            writer.WriteEndElement();
+            writer.Close();
+        }
+
+        private void SaveMap(XmlTextWriter writer)
+        {
+            writer.WriteStartElement("map-definition");
+            foreach (HexaModel[] hexaRow in map.GetHexaMapModel())
+            {
+                writer.WriteStartElement("row");
+                foreach (HexaModel hexa in hexaRow)
+                {
+                    writer.WriteStartElement("hexa");
+                    if (hexa == null)
+                    {
+                        writer.WriteAttributeString("type", "space");
+                        writer.WriteEndElement();
+                        continue;
+                    }
+                    writer.WriteAttributeString("type", hexa.GetKind().ToString().ToLower());
+                    if (hexa.GetKind() != HexaKind.Null && hexa.GetKind() != HexaKind.Water && hexa.GetKind() != HexaKind.Nothing && hexa.GetKind() != HexaKind.Desert)
+                    {
+                        writer.WriteAttributeString("productivity", hexa.GetStartSource() + "");
+                        if(hexa.SecretKind)
+                            writer.WriteAttributeString("secretKind", "yes");
+                        if (hexa.SecretProductivity)
+                            writer.WriteAttributeString("secretProductivity", "yes");
+                        if(hexa.GetCaptured())
+                        {
+                            writer.WriteAttributeString("captured", hexa.GetCapturedPlayer().GetName());
+                        }
+                        if (hexa.GetDestroyed())
+                        {
+                            writer.WriteAttributeString("destroyed", hexa.TurnDestroy + "");
+                        }
+                        if (hexa.TurnDisaster > 0)
+                        {
+                            writer.WriteAttributeString("disaster", hexa.TurnDisaster + "");
+                        }
+                        if (hexa.TurnMiracle > 0)
+                        {
+                            writer.WriteAttributeString("miracle", hexa.TurnMiracle + "");
+                        }
+                    }
+                    writer.WriteEndElement();
+                }
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        private void SaveSettings(XmlTextWriter writer)
+        {
+            writer.WriteStartElement("settings");
+            writer.WriteElementString("turn", turnNumber + "");
+            writer.WriteStartElement("players");
+
+            foreach (Player player in players)
+            {
+                writer.WriteStartElement("player");
+                    writer.WriteElementString("name", player.GetName());
+                    writer.WriteElementString("color", player.ColorName);
+                    writer.WriteElementString("AI", (player.GetIsAI()) ? player.GetComponentAI().GetAIName() : "Human");
+                    writer.WriteStartElement("progress");
+                    writer.WriteStartElement("licence");
+                    writer.WriteElementString("corn", player.GetMarketLicence(SourceKind.Corn).ToString());
+                    writer.WriteElementString("meat", player.GetMarketLicence(SourceKind.Meat).ToString());
+                    writer.WriteElementString("stone", player.GetMarketLicence(SourceKind.Stone).ToString());
+                    writer.WriteElementString("wood", player.GetMarketLicence(SourceKind.Wood).ToString());
+                    writer.WriteElementString("ore", player.GetMarketLicence(SourceKind.Ore).ToString());
+                    writer.WriteEndElement();
+                    writer.WriteStartElement("upgrade");
+                    writer.WriteElementString("mill", player.GetMonasteryUpgrade(SourceBuildingKind.Mill).ToString());
+                    writer.WriteElementString("stepherd", player.GetMonasteryUpgrade(SourceBuildingKind.Stepherd).ToString());
+                    writer.WriteElementString("quarry", player.GetMonasteryUpgrade(SourceBuildingKind.Quarry).ToString());
+                    writer.WriteElementString("saw", player.GetMonasteryUpgrade(SourceBuildingKind.Saw).ToString());
+                    writer.WriteElementString("mine", player.GetMonasteryUpgrade(SourceBuildingKind.Mine).ToString());
+                    writer.WriteEndElement();
+                    writer.WriteStartElement("fort");
+                    writer.WriteElementString("training", player.MilitaryTrainings + "");
+                    writer.WriteElementString("capture", player.GetPoints(PlayerPoints.FortCaptureHexa) + "");
+                    writer.WriteElementString("steal", player.GetPoints(PlayerPoints.FortStealSources) + "");
+                    writer.WriteEndElement();
+                    writer.WriteEndElement();
+                    writer.WriteStartElement("towns");
+                    foreach (TownModel town in player.GetTown())
+                    {
+                        writer.WriteStartElement("town");
+                        writer.WriteAttributeString("id", town.GetTownID() + "");
+                        for (byte loop1 = 0; loop1 < 3; loop1++)
+                        {
+                            switch (town.GetBuildingKind(loop1))
+                            {
+                                case BuildingKind.SourceBuilding :
+                                    writer.WriteElementString("source-building", loop1 + "");
+                                    break;
+                                case BuildingKind.FortBuilding:
+                                    writer.WriteElementString("fort", loop1 + "");
+                                    break;
+                                case BuildingKind.MonasteryBuilding:
+                                    writer.WriteElementString("monastery", loop1 + "");
+                                    break;
+                                case BuildingKind.MarketBuilding:
+                                    writer.WriteElementString("market", loop1 + "");
+                                    break;
+                            }
+                        }
+                        writer.WriteEndElement();
+                    }
+                    writer.WriteEndElement();
+                    writer.WriteStartElement("roads");
+                    foreach(RoadModel road in player.GetRoad())
+                    {
+                        writer.WriteElementString("id", road.GetRoadID() + "");
+                    }
+                    writer.WriteEndElement();
+                    writer.WriteStartElement("source");
+                    writer.WriteElementString("corn", player.GetCorn() + "");
+                    writer.WriteElementString("meat", player.GetMeat() + "");
+                    writer.WriteElementString("stone", player.GetStone() + "");
+                    writer.WriteElementString("wood", player.GetWood() + "");
+                    writer.WriteElementString("ore", player.GetOre() + "");
+                    writer.WriteEndElement();
+                writer.WriteEndElement();
+            }
+
+            writer.WriteEndElement();
+            writer.WriteEndElement();
         }
     }
 }
