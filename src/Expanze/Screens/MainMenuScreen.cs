@@ -20,6 +20,7 @@ namespace Expanze
     {
         #region Initialization
 
+        MenuEntry continueMenuEntry;
         MenuEntry hotseatMenuEntry;
         MenuEntry quickMenuEntry;
         MenuEntry campaignMenuEntry;
@@ -34,6 +35,7 @@ namespace Expanze
             : base("Main Menu")
         {
             // Create our menu entries.
+            continueMenuEntry = new MenuEntry(Strings.Inst().GetString(TextEnum.MENU_MAIN_CONTINUE));
             hotseatMenuEntry = new MenuEntry(Strings.Inst().GetString(TextEnum.MENU_MAIN_HOT_SEAT));
             quickMenuEntry = new MenuEntry(Strings.Inst().GetString(TextEnum.MENU_MAIN_QUICK_GAME));
             campaignMenuEntry = new MenuEntry(Strings.Inst().GetString(TextEnum.MENU_MAIN_CAMPAIGN));
@@ -42,6 +44,7 @@ namespace Expanze
             exitMenuEntry = new MenuEntry(Strings.Inst().GetString(TextEnum.MENU_MAIN_EXIT));
 
             // Hook up menu event handlers.
+            continueMenuEntry.Selected += ContinueMenuEntrySelected;
             hotseatMenuEntry.Selected += HotseatMenuEntrySelected;
             quickMenuEntry.Selected += QuickMenuEntrySelected;
             campaignMenuEntry.Selected += CampaignMenuEntrySelected;
@@ -50,6 +53,7 @@ namespace Expanze
             exitMenuEntry.Selected += OnCancel;
 
             // Add entries to the menu.
+            MenuEntries.Add(continueMenuEntry);
             //MenuEntries.Add(quickMenuEntry);
             MenuEntries.Add(campaignMenuEntry);
             //MenuEntries.Add(hotseatMenuEntry);
@@ -74,6 +78,17 @@ namespace Expanze
                 GameState.hotSeatScreen = new HotSeatScreen();
 
             ScreenManager.AddScreen(GameState.hotSeatScreen, e.PlayerIndex);
+        }
+
+        /// <summary>
+        /// Event handler for when the Play Game menu entry is selected.
+        /// </summary>
+        void ContinueMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        {
+            GameMaster.Inst().SetMapSource("save-game.xml");
+            // now is used for AI
+            GameLoadScreen.Load(ScreenManager, true, e.PlayerIndex,
+                               new GameplayScreen(false));
         }
 
         /// <summary>

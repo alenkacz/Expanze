@@ -20,8 +20,13 @@ namespace Expanze
         private bool sourceMiracle;   /// is on hex miracle
         private int turnMiracle;      /// how many turns miracle will last
 
-        private bool captureIs;       /// has been hexa captured from fort?
         private Player capturePlayer; /// who has captured hexa
+
+        internal Player CapturePlayer
+        {
+            get { return capturePlayer; }
+            set { capturePlayer = value; }
+        }
         private int captureTurn;      /// how many turns it will be at least captured
 
         /// destroying was in the game
@@ -89,7 +94,6 @@ namespace Expanze
             sourceDisaster = false;
             sourceMiracle = false;
             hexaDestroy = false;
-            captureIs = false;
             capturePlayer = null;
         }
 
@@ -97,7 +101,7 @@ namespace Expanze
         public static int GetHexaCount() { return counter; }
         public static IFort GetHexaFort() { return hexaFort; }
         public static void SetHexaFort(IFort fort) { hexaFort = fort; }
-        public bool GetCaptured() { return captureIs; }
+        public bool GetCaptured() { return capturePlayer != null; }
         public bool GetDestroyed() { return hexaDestroy; }
         public Player GetCapturedPlayer() { return capturePlayer; }
         public IPlayer GetCapturedIPlayer() { return capturePlayer; }
@@ -629,7 +633,6 @@ namespace Expanze
 
         public void Capture(Player player)
         {
-            captureIs = true;
             capturePlayer = player;
             captureTurn = player.MilitaryTrainings / 2 + 2;
             /*
@@ -674,13 +677,12 @@ namespace Expanze
 
         internal void SetFree()
         {
-            if (captureIs && captureTurn <= 0)
+            if (GetCaptured() && captureTurn <= 0)
             {
                 double chanceToStayCaptured = 0.2 + capturePlayer.MilitaryTrainings * 0.04;
                 if (GameMaster.Inst().GetRandomNumber() > chanceToStayCaptured)
                 {
                     capturePlayer = null;
-                    captureIs = false;
                 }
             }
 
@@ -693,6 +695,11 @@ namespace Expanze
             {
                 return turnMiracle;
             }
+
+            set
+            {
+                turnMiracle = value;
+            }
         }
 
         public int TurnDisaster
@@ -701,6 +708,8 @@ namespace Expanze
             {
                 return turnDisaster;
             }
+
+            set { turnDisaster = value; }
         }
 
         public int TurnDestroy {
@@ -708,6 +717,14 @@ namespace Expanze
             {
                 return turnDestroy;
             }
+
+            set { turnDestroy = value; }
+        }
+
+        public int CaptureTurn
+        {
+            get { return captureTurn; }
+            set { captureTurn = value; }
         }
     }
 }

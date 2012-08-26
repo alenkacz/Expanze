@@ -473,7 +473,11 @@ namespace Expanze
             }
         }
 
-      
+        internal void ContinueGame(string name)
+        {
+            mapSource = name;
+            StartGame();
+        }
 
         internal void PrepareCampaignScenario()
         {
@@ -547,7 +551,59 @@ namespace Expanze
                                 int ID = Convert.ToInt16(roadID.InnerText);
                                 map.GetMapController().BuildRoad(ID);
                             }
+                            break;
 
+                        case "progress" :
+                            foreach (XmlNode progressNode in info.ChildNodes)
+                            {
+                                switch (progressNode.Name)
+                                {
+                                    case "licence" :
+                                        for(int loop3 = 0; loop3 < 5; loop3++)
+                                            if (progressNode.ChildNodes[loop3].InnerText != "NoLicence")
+                                            {
+                                                map.GetMapController().BuyLicence((SourceKind)loop3);
+                                                if (progressNode.ChildNodes[loop3].InnerText == "SecondLicence")
+                                                {
+                                                    map.GetMapController().BuyLicence((SourceKind)loop3);
+                                                }
+                                            }
+                                        break;
+                                    case "upgrade":
+                                        for (int loop3 = 0; loop3 < 5; loop3++)
+                                            if (progressNode.ChildNodes[loop3].InnerText != "NoUpgrade")
+                                            {
+                                                map.GetMapController().InventUpgrade((SourceBuildingKind)loop3);
+                                                if (progressNode.ChildNodes[loop3].InnerText == "SecondUpgrade")
+                                                {
+                                                    map.GetMapController().InventUpgrade((SourceBuildingKind)loop3);
+                                                }
+                                            }
+                                        break;
+                                    case "fort":
+                                        foreach (XmlNode actionNode in progressNode.ChildNodes)
+                                        {
+                                            int number = Convert.ToInt16(actionNode.InnerText);
+                                            switch (actionNode.Name)
+                                            {
+                                                case "training" :
+                                                    activePlayer.MilitaryTrainings = number;
+                                                    for (int loop3 = 0; loop3 < number; loop3++)
+                                                        activePlayer.AddPoints(PlayerPoints.FortParade);
+                                                    break;
+                                                case "capture" :
+                                                    for(int loop3 = 0; loop3 < number; loop3++)
+                                                        activePlayer.AddPoints(PlayerPoints.FortCaptureHexa);
+                                                    break;
+                                                case "steal" :
+                                                    for (int loop3 = 0; loop3 < number; loop3++)
+                                                        activePlayer.AddPoints(PlayerPoints.FortStealSources);
+                                                    break;
+                                            }
+                                        }
+                                        break;
+                                }
+                            }
                             break;
 
                         case "source":
@@ -576,6 +632,41 @@ namespace Expanze
                             }
                             //activePlayer.AddSources(new SourceAll(0), TransactionState.TransactionEnd);
                             break;
+                    }
+                }
+            }
+
+            XmlNodeList rows = xDoc.GetElementsByTagName("row");
+
+            HexaModel[][] mapModel = map.GetHexaMapModel();
+            for (int i = 0; i < rows.Count; ++i)
+            {
+                XmlNodeList hexas = rows[i].ChildNodes;
+
+                for (int loop1 = 0; loop1 < hexas.Count; ++loop1)
+                {
+                    foreach (XmlAttribute attribute in hexas[loop1].Attributes)
+                    {
+                        switch (attribute.Name)
+                        {
+                            case "destroyed":
+                                mapModel[i][loop1].TurnDestroy = Convert.ToInt32(attribute.Value);
+                                break;
+                            case "captured":
+                                mapModel[i][loop1].CaptureTurn = Convert.ToInt32(attribute.Value);
+                                break;
+                            case "capturedPlayer":
+                                Player player = GameMaster.Inst().GetPlayer(attribute.Value);
+                                mapModel[i][loop1].CapturePlayer = player;
+                                break;
+                            case "miracle":
+                                mapModel[i][loop1].TurnMiracle = Convert.ToInt32(attribute.Value);
+                                break;
+
+                            case "disaster":
+                                mapModel[i][loop1].TurnDisaster = Convert.ToInt32(attribute.Value);
+                                break;
+                        }
                     }
                 }
             }
@@ -1171,7 +1262,10 @@ namespace Expanze
                 lastHumanPlayer = activePlayer;
 
             if (state == EGameState.StateGame && activePlayerIndex == 0)
+            {
+                SaveGame();
                 turnNumber++;
+            }
 
             if (!activePlayer.GetActive())
                 return ChangeActivePlayer();
@@ -1435,7 +1529,8 @@ namespace Expanze
                             writer.WriteAttributeString("secretProductivity", "yes");
                         if(hexa.GetCaptured())
                         {
-                            writer.WriteAttributeString("captured", hexa.GetCapturedPlayer().GetName());
+                            writer.WriteAttributeString("capturedPlayer", hexa.GetCapturedPlayer().GetName());
+                            writer.WriteAttributeString("captured", hexa.CaptureTurn + "");
                         }
                         if (hexa.GetDestroyed())
                         {
@@ -1460,7 +1555,6 @@ namespace Expanze
         private void SaveSettings(XmlTextWriter writer)
         {
             writer.WriteStartElement("settings");
-            writer.WriteElementString("turn", turnNumber + "");
             writer.WriteStartElement("players");
 
             foreach (Player player in players)
@@ -1469,27 +1563,7 @@ namespace Expanze
                     writer.WriteElementString("name", player.GetName());
                     writer.WriteElementString("color", player.ColorName);
                     writer.WriteElementString("AI", (player.GetIsAI()) ? player.GetComponentAI().GetAIName() : "Human");
-                    writer.WriteStartElement("progress");
-                    writer.WriteStartElement("licence");
-                    writer.WriteElementString("corn", player.GetMarketLicence(SourceKind.Corn).ToString());
-                    writer.WriteElementString("meat", player.GetMarketLicence(SourceKind.Meat).ToString());
-                    writer.WriteElementString("stone", player.GetMarketLicence(SourceKind.Stone).ToString());
-                    writer.WriteElementString("wood", player.GetMarketLicence(SourceKind.Wood).ToString());
-                    writer.WriteElementString("ore", player.GetMarketLicence(SourceKind.Ore).ToString());
-                    writer.WriteEndElement();
-                    writer.WriteStartElement("upgrade");
-                    writer.WriteElementString("mill", player.GetMonasteryUpgrade(SourceBuildingKind.Mill).ToString());
-                    writer.WriteElementString("stepherd", player.GetMonasteryUpgrade(SourceBuildingKind.Stepherd).ToString());
-                    writer.WriteElementString("quarry", player.GetMonasteryUpgrade(SourceBuildingKind.Quarry).ToString());
-                    writer.WriteElementString("saw", player.GetMonasteryUpgrade(SourceBuildingKind.Saw).ToString());
-                    writer.WriteElementString("mine", player.GetMonasteryUpgrade(SourceBuildingKind.Mine).ToString());
-                    writer.WriteEndElement();
-                    writer.WriteStartElement("fort");
-                    writer.WriteElementString("training", player.MilitaryTrainings + "");
-                    writer.WriteElementString("capture", player.GetPoints(PlayerPoints.FortCaptureHexa) + "");
-                    writer.WriteElementString("steal", player.GetPoints(PlayerPoints.FortStealSources) + "");
-                    writer.WriteEndElement();
-                    writer.WriteEndElement();
+                    
                     writer.WriteStartElement("towns");
                     foreach (TownModel town in player.GetTown())
                     {
@@ -1522,6 +1596,29 @@ namespace Expanze
                         writer.WriteElementString("id", road.GetRoadID() + "");
                     }
                     writer.WriteEndElement();
+
+                    writer.WriteStartElement("progress");
+                    writer.WriteStartElement("licence");
+                    writer.WriteElementString("corn", player.GetMarketLicence(SourceKind.Corn).ToString());
+                    writer.WriteElementString("meat", player.GetMarketLicence(SourceKind.Meat).ToString());
+                    writer.WriteElementString("stone", player.GetMarketLicence(SourceKind.Stone).ToString());
+                    writer.WriteElementString("wood", player.GetMarketLicence(SourceKind.Wood).ToString());
+                    writer.WriteElementString("ore", player.GetMarketLicence(SourceKind.Ore).ToString());
+                    writer.WriteEndElement();
+                    writer.WriteStartElement("upgrade");
+                    writer.WriteElementString("mill", player.GetMonasteryUpgrade(SourceBuildingKind.Mill).ToString());
+                    writer.WriteElementString("stepherd", player.GetMonasteryUpgrade(SourceBuildingKind.Stepherd).ToString());
+                    writer.WriteElementString("quarry", player.GetMonasteryUpgrade(SourceBuildingKind.Quarry).ToString());
+                    writer.WriteElementString("saw", player.GetMonasteryUpgrade(SourceBuildingKind.Saw).ToString());
+                    writer.WriteElementString("mine", player.GetMonasteryUpgrade(SourceBuildingKind.Mine).ToString());
+                    writer.WriteEndElement();
+                    writer.WriteStartElement("fort");
+                    writer.WriteElementString("training", player.MilitaryTrainings + "");
+                    writer.WriteElementString("capture", player.GetPoints(PlayerPoints.FortCaptureHexa) + "");
+                    writer.WriteElementString("steal", player.GetPoints(PlayerPoints.FortStealSources) + "");
+                    writer.WriteEndElement();
+                    writer.WriteEndElement();
+
                     writer.WriteStartElement("source");
                     writer.WriteElementString("corn", player.GetCorn() + "");
                     writer.WriteElementString("meat", player.GetMeat() + "");
@@ -1533,6 +1630,57 @@ namespace Expanze
             }
 
             writer.WriteEndElement();
+
+            writer.WriteStartElement("points");
+            writer.WriteElementString("Town", Settings.pointsTown + "");
+            writer.WriteElementString("Road", Settings.pointsRoad + "");
+            writer.WriteElementString("Fort", Settings.pointsFort + "");
+            writer.WriteElementString("Monastery", Settings.pointsMonastery + "");
+            writer.WriteElementString("Market", Settings.pointsMarket + "");
+            writer.WriteElementString("Medal", Settings.pointsMedal + "");
+            writer.WriteElementString("FortParade", Settings.pointsFortParade + "");
+            writer.WriteElementString("UpgradeLvl1", Settings.pointsUpgradeLvl1 + "");
+            writer.WriteElementString("MarketLvl1", Settings.pointsMarketLvl1 + "");
+            writer.WriteElementString("UpgradeLvl2", Settings.pointsUpgradeLvl2 + "");
+            writer.WriteElementString("MarketLvl2", Settings.pointsMarketLvl2 + "");
+            writer.WriteElementString("Mill", Settings.pointsMill + "");
+            writer.WriteElementString("Stepherd", Settings.pointsStepherd + "");
+            writer.WriteElementString("Saw", Settings.pointsSaw + "");
+            writer.WriteElementString("Quarry", Settings.pointsQuarry + "");
+            writer.WriteElementString("Mine", Settings.pointsMine + "");
+            writer.WriteElementString("Corn", Settings.pointsCorn + "");
+            writer.WriteElementString("Meat", Settings.pointsMeat + "");
+            writer.WriteElementString("Stone", Settings.pointsStone + "");
+            writer.WriteElementString("Wood", Settings.pointsWood + "");
+            writer.WriteElementString("Ore", Settings.pointsOre + "");
+            writer.WriteElementString("FortCapture", Settings.pointsFortCapture + "");
+            writer.WriteElementString("FortSteal", Settings.pointsFortSteal + "");
+            writer.WriteElementString("turnLimit", (Settings.maxTurn - turnNumber) + "");
+            writer.WriteElementString("roadID", Settings.goalRoadID + "");
+            writer.WriteElementString("townID", Settings.goalTownID + "");
+            foreach (int road in Settings.goalRoad)
+            {
+                writer.WriteElementString("road", road + "");
+            }
+            foreach (int town in Settings.goalTown)
+            {
+                writer.WriteElementString("town", town + "");
+            }
+            writer.WriteEndElement();
+
+            writer.WriteStartElement("ban");
+            writer.WriteElementString("Fort", (Settings.banFort) ? "1" : "0");
+            writer.WriteElementString("Monastery", (Settings.banMonastery) ? "1" : "0");
+            writer.WriteElementString("Market", (Settings.banMarket) ? "1" : "0");
+            writer.WriteElementString("ChangeSources", (Settings.banChangeSources) ? "1" : "0");
+            writer.WriteElementString("UpgradeLvl2", (Settings.banSecondUpgrade) ? "1" : "0");
+            writer.WriteElementString("MarketLvl2", (Settings.banSecondLicence) ? "1" : "0");
+            writer.WriteElementString("FortCapture", (Settings.banFortCaptureHexa) ? "1" : "0");
+            writer.WriteElementString("FortSteal", (Settings.banFortStealSources) ? "1" : "0");
+            writer.WriteElementString("FortParade", (Settings.banFortParade) ? "1" : "0");
+            writer.WriteElementString("FortCrusade", (Settings.banFortCrusade) ? "1" : "0");
+            writer.WriteEndElement();
+
             writer.WriteEndElement();
         }
     }

@@ -76,14 +76,18 @@ namespace Expanze.Gameplay
         abstract public Texture2D GetIconActive();
         abstract public Texture2D GetIconPassive();
         abstract protected void ApplyEffect(UpgradeKind upgradeKind, int upgradeNumber);
-        
+
+        public virtual bool GetFreePlaceForUpgrade()
+        {
+            return false;
+        }
 
         public virtual BuyingUpgradeError CanActivePlayerBuyUpgrade(UpgradeKind upgradeKind, int upgradeNumber)
         {
             GameMaster gm = GameMaster.Inst();
             Player activePlayer = gm.GetActivePlayer();
 
-            if (upgradeCount == upgradeMax)
+            if (!GetFreePlaceForUpgrade())
             {
                 GameState.map.GetMapController().SetLastError(Strings.Inst().GetString(TextEnum.ERROR_MAX_UPGRADES));
                 return BuyingUpgradeError.MaxUpgrades;

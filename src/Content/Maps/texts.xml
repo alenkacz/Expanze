@@ -31,6 +31,10 @@
     <cz>Kampaň</cz>
     <eng>Campaign</eng>
   </text>
+  <text id="MENU_MAIN_CONTINUE">
+    <cz>Pokračovat</cz>
+    <eng>Continue</eng>
+  </text>
   <text id="MENU_MAIN_HOT_SEAT">
     <cz>Hot seat</cz>
     <eng>Hot seat</eng>
@@ -274,7 +278,18 @@
     <cz>Na tržištích nikdo není. Není s kým obchodovat.</cz>
     <eng>There is nobody to trade with.</eng>
   </text>
-
+  <text id="GAME_ALERT_TITLE_SOMEONE_STEAL">
+    <cz>Někdo krade!</cz>
+    <eng></eng>
+  </text>
+  <text id="GAME_ALERT_DESCRIPTION_SOMEONE_STEAL1">
+    <cz> se vloupal do skladišť </cz>
+    <eng></eng>
+  </text>
+  <text id="GAME_ALERT_DESCRIPTION_SOMEONE_STEAL2">
+    <cz> a odnesl si část jeho zásob.</cz>
+    <eng></eng>
+  </text>
   <text id="ALERT_TITLE_THIS_IS_NOT_YOURS">
     <cz>Tohle není tvoje. Můžeš pouze koukat.</cz>
     <eng>This is not yours. You can look only.</eng>
@@ -318,8 +333,8 @@
     <eng>First you have to invent the upgrade in a monastery.</eng>
   </text>
   <text id="ALERT_TITLE_MAX_UPGRADES">
-    <cz>Už máš zakoupené 3 pokroky.</cz>
-    <eng>You have already invented 3 upgrades.</eng>
+    <cz>Potřebuješ další budovu.</cz>
+    <eng>You need new building.</eng>
   </text>
 
   <!-- buildings -->

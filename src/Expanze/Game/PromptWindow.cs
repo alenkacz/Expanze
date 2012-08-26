@@ -256,6 +256,7 @@ namespace Expanze
             
                 spriteBatch.Draw(background, bgPos, color);
 
+                
                 string error = itemList[activeItem].TryExecute();
                 int amount = GameMaster.Inst().CanChangeSourcesFor((SourceAll)itemList[activeItem].getCost());
                 if ((error == null ||

@@ -213,6 +213,11 @@ namespace Expanze.Gameplay
             return MonasteryError.OK;
         }
 
+        public override bool GetFreePlaceForUpgrade()
+        {
+            return owner.UpgradeFreeSlot > 0;
+        }
+
         #region IMonastery Members
 
 

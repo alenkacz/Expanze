@@ -186,7 +186,7 @@ namespace Expanze
                 height += menuEntry.GetHeight(this);
             }*/
 
-            Vector2 positionTop = new Vector2(0f, (Settings.maximumResolution.Y - height) / 2.0f + ((menuEntries.Count >=6) ? 70.0f : 70.0f));
+            Vector2 positionTop = new Vector2(0f, (Settings.maximumResolution.Y - height) / 2.0f + ((menuEntries.Count >=6) ? 70.0f : 100.0f));
             Vector2 position = positionTop;
             // update each menu entry's location in turn
 

@@ -140,10 +140,12 @@ namespace Expanze.Gameplay.Map
             if (building == null)
                 return false;
 
-            BuyingUpgradeError error = building.CanActivePlayerBuyUpgrade(upgradeKind, upgradeNumber);
+            BuyingUpgradeError error = (gm.GetState() == EGameState.BeforeGame) ? BuyingUpgradeError.OK : building.CanActivePlayerBuyUpgrade(upgradeKind, upgradeNumber);
             if (error == BuyingUpgradeError.OK)
             {
-                gm.GetActivePlayer().PayForSomething(building.GetUpgradeCost(upgradeKind, upgradeNumber));
+                if(gm.GetState() == EGameState.StateGame)
+                    gm.GetActivePlayer().PayForSomething(building.GetUpgradeCost(upgradeKind, upgradeNumber));
+
                 building.BuyUpgrade(upgradeKind, upgradeNumber);
 
                 return true;
@@ -359,7 +361,7 @@ namespace Expanze.Gameplay.Map
 
             foreach (IMonastery m in monastery)
             {
-                switch (m.CanInventUpgrade(building))
+                switch ((gm.GetState() == EGameState.BeforeGame) ? MonasteryError.OK : m.CanInventUpgrade(building))
                 {
                     case MonasteryError.BanSecondUpgrade:
                         return false;
@@ -413,7 +415,7 @@ namespace Expanze.Gameplay.Map
 
             foreach (IMarket m in market)
             {
-                switch (m.CanBuyLicence(source))
+                switch ((gm.GetState() == EGameState.BeforeGame) ? MarketError.OK : m.CanBuyLicence(source))
                 {
                     case MarketError.HaveSecondLicence:
                     case MarketError.BanSecondLicence:
@@ -683,8 +685,8 @@ namespace Expanze.Gameplay.Map
                 activePlayer.AddPoints(PlayerPoints.FortStealSources);
                 if (activePlayer.GetIsAI())
                 {
-                    
-                    Message.Inst().Show("Někdo krade!", activePlayer.GetName() + " se vloupal do skladišť " + player.GetName() + " a odnesl si lup polovinu jeho zásob.", GameResources.Inst().GetHudTexture(HUDTexture.IconFortSources));
+
+                    Message.Inst().Show(Strings.Inst().GetString(TextEnum.GAME_ALERT_TITLE_SOMEONE_STEAL), activePlayer.GetName() + Strings.Inst().GetString(TextEnum.GAME_ALERT_DESCRIPTION_SOMEONE_STEAL1) + player.GetName() + Strings.Inst().GetString(TextEnum.GAME_ALERT_DESCRIPTION_SOMEONE_STEAL2), GameResources.Inst().GetHudTexture(HUDTexture.IconFortSources));
                 }
                 activePlayer.AddSources(source * part, TransactionState.TransactionEnd);
                 return true;

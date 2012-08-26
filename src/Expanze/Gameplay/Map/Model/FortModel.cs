@@ -150,6 +150,11 @@ namespace Expanze.Gameplay
             }
         }
 
+        public override bool GetFreePlaceForUpgrade()
+        {
+            return true;
+        }
+
         public override SourceAll GetUpgradeCost(UpgradeKind upgradeKind, int upgradeNumber)
         {
             if (upgradeKind == UpgradeKind.FirstUpgrade)

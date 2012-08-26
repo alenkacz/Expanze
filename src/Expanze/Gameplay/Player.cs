@@ -31,6 +31,20 @@ namespace Expanze
         int maxSource;
         LicenceKind[] licenceMarket;
         UpgradeKind[] upgradeMonastery;
+        int licenceFreeSlot;
+
+        public int LicenceFreeSlot
+        {
+            get { return licenceFreeSlot; }
+            set { licenceFreeSlot = value; }
+        }
+        int upgradeFreeSlot;
+
+        public int UpgradeFreeSlot
+        {
+            get { return upgradeFreeSlot; }
+            set { upgradeFreeSlot = value; }
+        }
         int militaryTrainings;
 
         bool[] discoveredHexa;
@@ -81,6 +95,8 @@ namespace Expanze
                 upgradeMonastery[loop1] = UpgradeKind.NoUpgrade;
             }
             maxSource = 500;
+            licenceFreeSlot = 0;
+            upgradeFreeSlot = 0;
             militaryTrainings = 0;
 
             this.color = color;
@@ -183,6 +199,7 @@ namespace Expanze
         public void AddMarket(IMarket m)
         {
             market.Add(m);
+            licenceFreeSlot += 3;
         }
 
         public List<IMarket> GetMarket()
@@ -193,6 +210,7 @@ namespace Expanze
         public void AddMonastery(IMonastery m)
         {
             monastery.Add(m);
+            upgradeFreeSlot += 3;
         }
 
         public List<IMonastery> GetMonastery() { return monastery; }
@@ -472,6 +490,7 @@ namespace Expanze
                 }
             }
             upgradeMonastery[upgradeNumber] = upgradeKind;
+            upgradeFreeSlot--;
         }
 
         public void BuyMarketLicence(LicenceKind licenceKind, int upgradeNumber)
@@ -483,6 +502,7 @@ namespace Expanze
                 AddPoints(PlayerPoints.LicenceLvl2);
 
             licenceMarket[upgradeNumber] = licenceKind;
+            licenceFreeSlot--;
         }
 
         public void AddFortAction()
@@ -524,6 +544,11 @@ namespace Expanze
             get
             {
                 return militaryTrainings;
+            }
+
+            set
+            {
+                militaryTrainings = value;
             }
         }
 

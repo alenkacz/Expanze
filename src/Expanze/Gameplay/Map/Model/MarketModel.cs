@@ -140,6 +140,11 @@ namespace Expanze.Gameplay
             }
         }
 
+        public override bool GetFreePlaceForUpgrade()
+        {
+            return owner.LicenceFreeSlot > 0;
+        }
+
         public override SourceAll GetUpgradeCost(UpgradeKind upgradeKind, int upgradeNumber)
         {
             switch (upgradeKind)

@@ -243,7 +243,7 @@ namespace Expanze
                 
                 spriteBatch.End();
 
-                toGraphButton.Draw(gameTime);
+                //toGraphButton.Draw(gameTime);
                 toMenuButton.Draw(gameTime);
         }
 
