@@ -530,7 +530,7 @@ namespace Expanze
                 }
             }
 
-            Logger.Inst().Log(playersACR.ToUpper() + gs.GetMapSizeXML() + gs.GetMapTypeXML() + gs.GetMapWealthXML() + ".csv", message);
+            Logger.Inst().Log(playersACR.ToUpper() + ".csv", message);
         }
 
         int frames = 0;

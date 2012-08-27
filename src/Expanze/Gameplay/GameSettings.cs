@@ -10,86 +10,67 @@ namespace Expanze
     class GameSettings : IGameSetting
     {
         MapType mapType;
-        MapSize mapSize;
-        MapWealth mapWealth;
+        MapSource mapSource;
+        MapProductivity mapProductivity;
+        MapKind mapKind;
+        int playerCount;
 
-        public GameSettings(int points, string mapType, string mapSize, string mapWealth) 
+        public GameSettings(int playerCount, string mapTypeS, string mapSourceS, string mapKindS, string mapProductivityS) 
         {
-            if (mapType == Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_TYPE_LOWLAND))
-                this.mapType = MapType.LOWLAND;
-            else if (mapType == Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_TYPE_NORMAL))
-                this.mapType = MapType.NORMAL;
+            this.playerCount = playerCount;
+
+            if (mapTypeS == Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_TYPE_ISLAND))
+                mapType = MapType.ISLAND;
+            else if (mapTypeS == Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_TYPE_2_ISLANDS))
+                mapType = MapType.TWO_ISLANDS;
             else
-                this.mapType = MapType.WASTELAND;
+                mapType = MapType.LITTLE_ISLANDS;
 
-            if (mapSize == Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SIZE_SMALL))
-                this.mapSize = MapSize.SMALL;
-            else if (mapSize == Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SIZE_MEDIUM))
-                this.mapSize = MapSize.MEDIUM;
+            if (mapSourceS == Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SOURCE_LOWLAND))
+                mapSource = MapSource.LOWLAND;
+            else if (mapSourceS == Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SOURCE_NORMAL))
+                mapSource = MapSource.NORMAL;
             else
-                this.mapSize = MapSize.BIG;
+                mapSource = MapSource.WASTELAND;
 
-            if (mapWealth == Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_WEALTH_LOW))
-                this.mapWealth = MapWealth.LOW;
-            else if (mapWealth == Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_WEALTH_MEDIUM))
-                this.mapWealth = MapWealth.MEDIUM;
+            if (mapKindS == Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_KIND_HIDDEN))
+                mapKind = MapKind.HIDDEN;
+            else if (mapKindS == Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_KIND_HALF))
+                mapKind = MapKind.HALF;
             else
-                this.mapWealth = MapWealth.HIGH;
-        }
+                mapKind = MapKind.VISIBLE;
 
-        public string GetMapSizeXML() 
-        {
-            switch (mapSize)
-            {
-                case MapSize.SMALL: return "small";
-                case MapSize.MEDIUM: return "medium";
-                case MapSize.BIG: return "big";
-            }
-            return "";
-        }
-
-        public string GetMapTypeXML()
-        {
-            switch (mapType)
-            {
-                case MapType.NORMAL: return "normal";
-                case MapType.LOWLAND: return "lowland";
-                case MapType.WASTELAND: return "wasteland";
-            }
-            return "";
-        }
-
-        public string GetMapWealthXML()
-        {
-            switch (mapWealth)
-            {
-                case MapWealth.LOW: return "low";
-                case MapWealth.MEDIUM: return "medium";
-                case MapWealth.HIGH: return "high";
-            }
-            return "";
+            if (mapProductivityS == Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_PRODUCTIVITY_HIDDEN))
+                mapProductivity = MapProductivity.HIDDEN;
+            else if (mapProductivityS == Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_PRODUCTIVITY_HALF))
+                mapProductivity = MapProductivity.HALF;
+            else
+                mapProductivity = MapProductivity.VISIBLE;
         }
 
 
         #region IGameSetting Members
-
-        public MapSize GetMapSize()
-        {
-            return mapSize;
-        }
 
         public MapType GetMapType()
         {
             return mapType;
         }
 
-        public MapWealth GetMapWealth()
+        public MapSource GetMapSource()
         {
-            return mapWealth;
+            return mapSource;
         }
 
+        public MapProductivity GetMapProductivity()
+        {
+            return mapProductivity;
+        }
+
+        public MapKind GetMapKind()
+        {
+            return mapKind;
+        }
 
         #endregion
-
     }
 }

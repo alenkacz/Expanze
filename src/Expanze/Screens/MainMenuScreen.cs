@@ -56,7 +56,7 @@ namespace Expanze
             MenuEntries.Add(continueMenuEntry);
             //MenuEntries.Add(quickMenuEntry);
             MenuEntries.Add(campaignMenuEntry);
-            //MenuEntries.Add(hotseatMenuEntry);
+            MenuEntries.Add(hotseatMenuEntry);
             MenuEntries.Add(settingsMenuEntry);
             MenuEntries.Add(creatorsMenuEntry);
             MenuEntries.Add(exitMenuEntry);
@@ -158,6 +158,7 @@ namespace Expanze
         {
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
 
+            continueMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_MAIN_CONTINUE);
             hotseatMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_MAIN_HOT_SEAT);
             quickMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_MAIN_QUICK_GAME);
             campaignMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_MAIN_CAMPAIGN);

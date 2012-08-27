@@ -251,9 +251,9 @@ namespace Expanze
         {
             return mapSource;
         }
-        public void SetGameSettings(int points, string mapType, string mapSize, string mapWealth)
+        public void SetGameSettings(int playerCount, string mapType, string mapSource, string mapKind, string mapProductivity)
         {
-            gameSettings = new GameSettings(points,mapType,mapSize,mapWealth);
+            gameSettings = new GameSettings(playerCount, mapType, mapSource, mapKind, mapProductivity);
         }
 
 
@@ -711,7 +711,7 @@ namespace Expanze
             }
             else
             {
-                gameSettings = new GameSettings(Settings.winPoints[0], Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_TYPE_NORMAL), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SIZE_SMALL), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_WEALTH_MEDIUM));
+                gameSettings = new GameSettings(playerCount, Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_TYPE_2_ISLANDS), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SOURCE_NORMAL), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_KIND_VISIBLE), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_PRODUCTIVITY_HALF));
                 return gameSettings;
             }
         }

@@ -115,6 +115,8 @@ namespace Expanze
             road = new List<IRoad>();
 
             statistic = new Statistic();
+
+            InitNewGame();
         }
 
         public int GetBuildingCount(Building building) { return buildingCount[(int)building]; }

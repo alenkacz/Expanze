@@ -36,8 +36,8 @@
     <eng>Continue</eng>
   </text>
   <text id="MENU_MAIN_HOT_SEAT">
-    <cz>Hot seat</cz>
-    <eng>Hot seat</eng>
+    <cz>Více hráčů</cz>
+    <eng>Multiplayer</eng>
   </text>
   <text id="MENU_MAIN_QUICK_GAME">
     <cz>Rychlá hra</cz>
@@ -60,22 +60,25 @@
     <cz>Hráč</cz>
     <eng>Player</eng>
   </text>
-  
-  <text id="MENU_HOT_SEAT_POINTS">
-    <cz>Počet bodů</cz>
-    <eng>Points</eng>
+  <text id="MENU_HOT_SEAT_AI">
+    <cz>Počítač</cz>
+    <eng>Computer</eng>
   </text>
   <text id="MENU_HOT_SEAT_MAP_TYPE">
-    <cz>Druh mapy</cz>
-    <eng>Map kind</eng>
+    <cz>Typ mapy</cz>
+    <eng>Map type</eng>
   </text>
-  <text id="MENU_HOT_SEAT_MAP_SIZE">
-    <cz>Velikost mapy</cz>
-    <eng>Map size</eng>
+  <text id="MENU_HOT_SEAT_MAP_SOURCE">
+    <cz>Druh surovin</cz>
+    <eng>Source kind</eng>
   </text>
-  <text id="MENU_HOT_SEAT_MAP_WEALTH">
-    <cz>Bohatství surovin</cz>
-    <eng>Source wealth</eng>
+  <text id="MENU_HOT_SEAT_MAP_SECRET_PRODUCTIVITY">
+    <cz>Produkce hex</cz>
+    <eng>Hexa productivity</eng>
+  </text>
+  <text id="MENU_HOT_SEAT_MAP_SECRET_KIND">
+    <cz>Druh hex</cz>
+    <eng>Hexa kind</eng>
   </text>
 
   <text id="MENU_PAUSE_GAME_ITEM_RESUME">
@@ -200,39 +203,51 @@
     <cz>Suma surovin na konci kola</cz>
     <eng>Sources in the end of turn</eng>
   </text>
-  <text id="GAME_SETTINGS_MAP_SIZE_SMALL">
-    <cz>Malá</cz>
-    <eng>Small</eng>
+  <text id="GAME_SETTINGS_MAP_PRODUCTIVITY_HIDDEN">
+    <cz>Skrytá</cz>
+    <eng>Hidden</eng>
   </text>
-  <text id="GAME_SETTINGS_MAP_SIZE_MEDIUM">
-    <cz>Střední</cz>
-    <eng>Medium</eng>
+  <text id="GAME_SETTINGS_MAP_PRODUCTIVITY_HALF">
+    <cz>Částečně</cz>
+    <eng>Partly</eng>
   </text>
-  <text id="GAME_SETTINGS_MAP_SIZE_BIG">
-    <cz>Velká</cz>
-    <eng>Big</eng>
+  <text id="GAME_SETTINGS_MAP_PRODUCTIVITY_VISIBLE">
+    <cz>Viditelná</cz>
+    <eng>Visible</eng>
   </text>
-  <text id="GAME_SETTINGS_MAP_WEALTH_LOW">
-    <cz>Nízké</cz>
-    <eng>Low</eng>
+  <text id="GAME_SETTINGS_MAP_KIND_HIDDEN">
+    <cz>Skrytá</cz>
+    <eng>Hidden</eng>
   </text>
-  <text id="GAME_SETTINGS_MAP_WEALTH_MEDIUM">
-    <cz>Střední</cz>
-    <eng>Medium</eng>
+  <text id="GAME_SETTINGS_MAP_KIND_HALF">
+    <cz>Částečně</cz>
+    <eng>Partly</eng>
   </text>
-  <text id="GAME_SETTINGS_MAP_WEALTH_HIGH">
-    <cz>Vysoké</cz>
-    <eng>High</eng>
+  <text id="GAME_SETTINGS_MAP_KIND_VISIBLE">
+    <cz>Viditelná</cz>
+    <eng>Visible</eng>
   </text>
-  <text id="GAME_SETTINGS_MAP_TYPE_NORMAL">
+  <text id="GAME_SETTINGS_MAP_TYPE_ISLAND">
+    <cz>Ostrov</cz>
+    <eng>Island</eng>
+  </text>
+  <text id="GAME_SETTINGS_MAP_TYPE_2_ISLANDS">
+    <cz>2 ostrovy</cz>
+    <eng>2 islands</eng>
+  </text>
+  <text id="GAME_SETTINGS_MAP_TYPE_SMALL_ISLANDS">
+    <cz>Malé ostrůvky</cz>
+    <eng>Little islands</eng>
+  </text>
+  <text id="GAME_SETTINGS_MAP_SOURCE_NORMAL">
     <cz>Normální</cz>
     <eng>Normal</eng>
   </text>
-  <text id="GAME_SETTINGS_MAP_TYPE_LOWLAND">
+  <text id="GAME_SETTINGS_MAP_SOURCE_LOWLAND">
     <cz>Nížiny</cz>
     <eng>Lowlands</eng>
   </text>
-  <text id="GAME_SETTINGS_MAP_TYPE_WASTELAND">
+  <text id="GAME_SETTINGS_MAP_SOURCE_WASTELAND">
     <cz>Pustina</cz>
     <eng>Wasteland</eng>
   </text>

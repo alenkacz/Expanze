@@ -84,6 +84,10 @@ namespace Expanze
                             componentAI = AI;
                             break;
                         }
+                        else
+                        {
+                            componentAI = AI;
+                        }
                     }
                     IComponentAI componentAICopy = componentAI.Clone();
                     return new Player(name, playerColor, playerColorName, componentAICopy, GameMaster.Inst().GetPlayerCount());

@@ -5,14 +5,16 @@ using System.Text;
 
 namespace CorePlugin
 {
-    public enum MapSize { SMALL, MEDIUM, BIG }
-    public enum MapType { NORMAL, LOWLAND, WASTELAND }
-    public enum MapWealth { LOW, MEDIUM, HIGH }
+    public enum MapType { ISLAND, TWO_ISLANDS, LITTLE_ISLANDS }
+    public enum MapSource { NORMAL, LOWLAND, WASTELAND }
+    public enum MapProductivity { HIDDEN, HALF, VISIBLE }
+    public enum MapKind { HIDDEN, HALF, VISIBLE }
 
     public interface IGameSetting
     {
-        MapSize GetMapSize();
         MapType GetMapType();
-        MapWealth GetMapWealth();
+        MapSource GetMapSource();
+        MapProductivity GetMapProductivity();
+        MapKind GetMapKind();
     }
 }

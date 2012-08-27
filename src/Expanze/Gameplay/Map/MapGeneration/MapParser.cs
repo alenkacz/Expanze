@@ -67,20 +67,20 @@ namespace Expanze
 
                 for (int loop1 = 0; loop1 < hexas.Count; ++loop1)
                 {
-                    HexaKind type = HexaKind.Nothing;
-                    int hexanum = 0;
                     bool secretProductivity = false;
                     bool secretKind = false;
+                    string typeS = "?";
+                    string hexanumS = "?";
 
                     foreach (XmlAttribute attribute in hexas[loop1].Attributes)
                     {
                         switch(attribute.Name)
                         {
                             case "type" :
-                                type = decideType(attribute.Value);
+                                typeS = attribute.Value;
                                 break;
                             case "productivity" :
-                                hexanum = decideProductivity(attribute.Value);
+                                hexanumS = attribute.Value;
                                 break;
                             case "secretKind" :
                                 secretKind = (attribute.Value == "yes") ? true : false;
@@ -92,40 +92,11 @@ namespace Expanze
                         }
                     }
 
-                    map[i][loop1] = HexaCreator.create(type, hexanum, secretKind, secretProductivity);
+                    map[i][loop1] = HexaCreator.create(typeS, hexanumS, secretKind, secretProductivity);
                 }
 
             }           
             return map;
-        }
-
-        private int decideProductivity(string productivity)
-        {
-            double rndNumber = random.NextDouble();
-            if (productivity == "+")
-            {
-                if (rndNumber < 0.25) return  16;
-                if (rndNumber < 0.75) return  20;
-                return 24;
-            }
-            else if (productivity == "-")
-            {
-                if (rndNumber < 0.25) return 8;
-                if (rndNumber < 0.75) return 12;
-                return 16;
-            }
-            else if (productivity == "?")
-            {
-                if (rndNumber < 1.0 / 5.0) return 8;
-                if (rndNumber < 2.0 / 5.0) return 12;
-                if (rndNumber < 3.0 / 5.0) return 16;
-                if (rndNumber < 4.0 / 5.0) return 20;
-                return 24;
-            }
-            else
-            {
-                return Convert.ToInt32(productivity);
-            }
         }
 
         public HexaModel[][] parse(string mapSize, string mapType, string mapWealth)
@@ -213,7 +184,7 @@ namespace Expanze
                     }
 
 
-                    map[i][j] = HexaCreator.create(type, hexanum, false, false);
+                    map[i][j] = HexaCreator.create(type.ToString(), hexanum + "", false, false);
                 }
                 
             }
@@ -331,7 +302,7 @@ namespace Expanze
                 // decrement number of available productivity numbers
                 --activeMapTypes[type];
 
-                return decideType(type);
+                return HexaCreator.decideType(type);
             }
 
             return HexaKind.Nothing;
@@ -499,65 +470,6 @@ namespace Expanze
             return 1; // generator.Next(getNumberOfMaps() - 1) + 1;
         }
 
-        /// <summary>
-        /// Returns type of the hexas
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        private HexaKind decideType(String type)
-        {
-            double rndNumber = random.NextDouble();
-            switch (type)
-            {
-                case "cornfield":
-                    return HexaKind.Cornfield;
-                case "forest":
-                    return HexaKind.Forest;
-                case "desert":
-                    return HexaKind.Desert;
-                case "mountains":
-                case "mountain" :
-                    return HexaKind.Mountains;
-                case "pasture":
-                    return HexaKind.Pasture;
-                case "stone":
-                    return HexaKind.Stone;
-                case "water":
-                    return HexaKind.Water;
-                case "2" :
-                    return (rndNumber < 0.5 ? HexaKind.Stone : HexaKind.Mountains);
-
-                case "2+":
-                    if (rndNumber < 1.0 / 3.0) return HexaKind.Stone;
-                    if (rndNumber < 2.0 / 3.0) return HexaKind.Mountains;
-                    return HexaKind.Desert;
-
-                case "3" :
-                    if (rndNumber < 1.0 / 3.0) return HexaKind.Forest;
-                    if (rndNumber < 2.0 / 3.0) return HexaKind.Cornfield;
-                    return HexaKind.Pasture;
-                
-                case "?":
-                    if (rndNumber < 1.0 / 5.0) return HexaKind.Forest;
-                    if (rndNumber < 2.0 / 5.0) return HexaKind.Cornfield;
-                    if (rndNumber < 3.0 / 5.0) return HexaKind.Pasture;
-                    if (rndNumber < 4.0 / 5.0) return HexaKind.Stone;
-                    return HexaKind.Mountains;
-
-                case "?+":
-                    if (rndNumber < 1.0 / 6.0) return HexaKind.Forest;
-                    if (rndNumber < 2.0 / 6.0) return HexaKind.Cornfield;
-                    if (rndNumber < 3.0 / 6.0) return HexaKind.Pasture;
-                    if (rndNumber < 4.0 / 6.0) return HexaKind.Stone;
-                    if (rndNumber < 5.0 / 6.0) return HexaKind.Mountains;
-                    return HexaKind.Desert;
-
-                case "nothing" :
-                case "space":
-                    return HexaKind.Nothing;
-                default :
-                    return HexaKind.Null;
-            }
-        }
+        
     }
 }

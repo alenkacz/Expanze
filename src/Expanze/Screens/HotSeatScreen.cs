@@ -40,10 +40,10 @@ namespace Expanze
 
         List<ButtonComponent> playerButtons = new List<ButtonComponent>();
 
-        MapSettingRowComponent points;
         MapSettingRowComponent mapType;
-        MapSettingRowComponent mapSize;
-        MapSettingRowComponent wealth;
+        MapSettingRowComponent sourceKind;
+        MapSettingRowComponent secretProductivity;
+        MapSettingRowComponent secretKind;
 
         Random random;
 
@@ -122,15 +122,15 @@ namespace Expanze
             //margin betweent sections
             colorPosition.Y += 80;
 
-            points = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.Inst().GetString(TextEnum.MENU_HOT_SEAT_POINTS), new List<String>() { Settings.winPoints[0].ToString(), Settings.winPoints[1].ToString(), Settings.winPoints[2].ToString() });
-            mapType = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 50, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.Inst().GetString(TextEnum.MENU_HOT_SEAT_MAP_TYPE), new List<String>() { Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_TYPE_LOWLAND), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_TYPE_NORMAL), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_TYPE_WASTELAND) });
-            mapSize = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 100, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.Inst().GetString(TextEnum.MENU_HOT_SEAT_MAP_SIZE), new List<String>() { Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SIZE_SMALL), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SIZE_MEDIUM), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SIZE_BIG) });
-            wealth = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 150, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.Inst().GetString(TextEnum.MENU_HOT_SEAT_MAP_WEALTH), new List<String>() { Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_WEALTH_LOW), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_WEALTH_MEDIUM), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_WEALTH_HIGH) });
+            mapType = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.Inst().GetString(TextEnum.MENU_HOT_SEAT_MAP_TYPE), new List<String>() { Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_TYPE_ISLAND), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_TYPE_2_ISLANDS), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_TYPE_SMALL_ISLANDS) });
+            sourceKind = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 50, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.Inst().GetString(TextEnum.MENU_HOT_SEAT_MAP_SOURCE), new List<String>() { Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SOURCE_LOWLAND), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SOURCE_NORMAL), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SOURCE_WASTELAND) });
+            secretProductivity = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 100, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.Inst().GetString(TextEnum.MENU_HOT_SEAT_MAP_SECRET_KIND), new List<String>() { Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_KIND_HIDDEN), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_KIND_HALF), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_KIND_VISIBLE) });
+            secretKind = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 150, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.Inst().GetString(TextEnum.MENU_HOT_SEAT_MAP_SECRET_PRODUCTIVITY), new List<String>() { Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_PRODUCTIVITY_HIDDEN), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_PRODUCTIVITY_HALF), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_PRODUCTIVITY_VISIBLE) });
 
-            guiComponents.Add(points);
             guiComponents.Add(mapType);
-            guiComponents.Add(mapSize);
-            guiComponents.Add(wealth);
+            guiComponents.Add(sourceKind);
+            guiComponents.Add(secretProductivity);
+            guiComponents.Add(secretKind);
 
             foreach (GuiComponent guiComponent in guiComponents)
             {
@@ -223,33 +223,11 @@ namespace Expanze
                 guiComponent.Update(gameTime);
             }
 
-            points.SetActiveRadio(true, 2);
-            mapSize.SetActiveRadio(true, 0);
-            mapSize.SetActiveRadio(true, 1);
-            mapSize.SetActiveRadio(true, 2);
-            switch (GetActivePlayerCount())
-            {
-                default: 
-                    break;
-                case 3 :
-                    if (mapSize.getSelectedSettings() == Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SIZE_SMALL))
-                        points.SetActiveRadio(false, 2);
-                    break;
-                case 4 :
-                    mapSize.SetActiveRadio(false, 0);
-                    mapSize.SetActiveRadio(true, 1);
-                    mapSize.SetActiveRadio(true, 2);
-                    if (mapSize.getSelectedSettings() == Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SIZE_MEDIUM))
-                        points.SetActiveRadio(false, 2);
-                    break;
-                case 5:
-                case 6:
-                    mapSize.SetActiveRadio(false, 0);
-                    mapSize.SetActiveRadio(false, 1);
-                    mapSize.SetActiveRadio(true, 2);
-                    points.SetActiveRadio(false, 2);
-                    break;
-            }
+            mapType.SetActiveRadio(true, 2);
+            secretProductivity.SetActiveRadio(true, 0);
+            secretProductivity.SetActiveRadio(true, 1);
+            secretProductivity.SetActiveRadio(true, 2);
+            
 
             foreach (PlayerSettingRowComponent p in playersSettings)
             {
@@ -322,24 +300,26 @@ namespace Expanze
 
         private void saveScreenData()
         {
+            int playerCount = 0;
             foreach (PlayerSettingRowComponent p in playersSettings)
             {
                 Player pl = p.getPlayerSettings();
-
+                
                 if (pl != null)
                 {
                     GameMaster.Inst().AddPlayer(pl);
+                    playerCount++;
                 }
             }
 
-            int point = Int16.Parse(points.getSelectedSettings());
-            String type = mapType.getSelectedSettings();
-            String size = mapSize.getSelectedSettings();
-            String wealthMap = wealth.getSelectedSettings();
+            string type = mapType.getSelectedSettings();
+            String source = sourceKind.getSelectedSettings();
+            String productivity = secretProductivity.getSelectedSettings();
+            String kind = secretKind.getSelectedSettings();
 
             GameMaster.Inst().ResetGameSettings();
             GameMaster.Inst().SetMapSource(null);
-            GameMaster.Inst().SetGameSettings(point,type,size,wealthMap);
+            GameMaster.Inst().SetGameSettings(playerCount, type, source, productivity, kind);
         }
 
         #region Draw

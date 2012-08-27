@@ -143,6 +143,8 @@ namespace Expanze
 
             string selected = resolution[currentResolution];
             bool fullscreen = isFullscreen;
+            Strings.Inst().LoadTexts(languageCodes[activeLanguage], languages[activeLanguage]);
+            SetMenuEntryText();
             GraphicsDeviceManager gdm = Settings.GraphicsDeviceManager;
 
             if (selected != resolutionToString(Settings.activeResolution))
@@ -202,8 +204,7 @@ namespace Expanze
             if (activeLanguage >= languages.Length)
                 activeLanguage = 0;
 
-            Strings.Inst().LoadTexts(languageCodes[activeLanguage], languages[activeLanguage]);
-            SetMenuEntryText();
+            languageMenuEntry.Text = languages[activeLanguage];
         }
 
         #endregion

@@ -185,9 +185,35 @@ namespace Expanze.Gameplay.Map
               parser = new MapParser();
             GameSettings gs = GameMaster.Inst().GetGameSettings();
             if (GameMaster.Inst().GetMapSource() == null)
-                return parser.getMap(gs.GetMapSizeXML(), gs.GetMapTypeXML(), gs.GetMapWealthXML());
+            {
+                HexaModel[][] tempMap = GenerateScenarioMap(gs);
+                GameMaster.Inst().InitPlayers();
+                return tempMap;
+            }
             else
                 return parser.parseCampaignMap(GameMaster.Inst().GetMapSource());
+        }
+
+        private HexaModel[][] GenerateScenarioMap(GameSettings gs)
+        {
+            HexaModel[][] map = new HexaModel[3][];
+            for (int loop1 = 0; loop1 < map.Length; loop1++)
+            {
+                map[loop1] = new HexaModel[9];
+                for (int loop2 = 0; loop2 < map[loop1].Length; loop2++)
+                {
+                    if (loop1 == 1 && loop2 > 0 && loop2 < map[loop1].Length - 1)
+                    {
+                        map[loop1][loop2] = HexaCreator.create("?", "?", false, false);
+                    }
+                    else
+                    {
+                        map[loop1][loop2] = new WaterHexa(false, false);
+                    }
+                }
+            }
+
+            return map;
         }
 
         public override void LoadContent()

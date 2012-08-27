@@ -290,7 +290,10 @@ namespace Expanze
 
             if (switchTexts != null)
             {
-                spriteBatch.DrawString(gameFont, switchTexts.ElementAt(activeText), spritePosition, Color.BurlyWood);
+                string buttonString = switchTexts.ElementAt(activeText);
+                if (buttonString == "AI Gen")
+                    buttonString = Strings.Inst().GetString(TextEnum.MENU_HOT_SEAT_AI);
+                spriteBatch.DrawString(gameFont, buttonString, spritePosition, Color.BurlyWood);
             }
 
             spriteBatch.End();
