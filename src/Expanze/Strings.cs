@@ -369,8 +369,8 @@ namespace Expanze
 
     class Strings
     {
-        private string[] playerNames = { "Luis Váez", "Samuel Champlain", "Carl Linnaeus", "Alessandro Malas", "Alex Humboldt", "Mungo Park", "Sacagawea", "Charles Wilkes", "John Rae", "Otto Sverdrup", "Tom Crean", "Helen Thayer", "Jonê County", "Victoria Murden", "Emil Holub" };
-
+        private string[] playerNames =  { "Pedro de Mendoza", "Raimundus Lullus", "Hernando de Soto", "Francisco Pizarro", "Diego de Almagro", "Juan de la Cosa", "Francis Drake", "Willem Barents", "Willem Barents", "Vasco Núńez", "Abel Tasman", "Ibn Battúta", "Tolomeo Dias", "Kira Salak", "Frank Cole", "Michael Asher", "Robyn Davidson", "Lee Spence", "Rein Messner", "Robert Ballard", "Valentina Teresh", "Isabella Bird", "Xu Fu", "Dicuil", "Erik the Red", "Zheng he", "Piri Reis",
+                                           "Luis Váez", "Samuel Champlain", "Carl Linnaeus", "Alessandro Malas", "Alex Humboldt" , "Mungo Park" , "Sacagawea", "Charles Wilkes", "John Rae" , "Otto Sverdrup", "Tom Crean", "Helen Thayer", "Jonê County", "Victoria Murden", "Emil Holub"}; 
         public string[] PlayerNames
         {
             get { return playerNames; }

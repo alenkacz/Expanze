@@ -463,7 +463,7 @@ namespace Expanze
                             break;
                     }
                 }
-                if (playerAI == null)
+                if (playerAI == null && playerName == "You")
                     playerName = Settings.playerName;
                 else
                     playerPersonality = Settings.hero[playerName];

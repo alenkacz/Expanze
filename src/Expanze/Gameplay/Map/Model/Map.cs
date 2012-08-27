@@ -213,6 +213,39 @@ namespace Expanze.Gameplay.Map
                 }
             }
 
+            for (int loop1 = 0; loop1 < map.Length; loop1++)
+            {
+                for (int loop2 = 0; loop2 < map[loop1].Length; loop2++)
+                {
+                    switch (gs.GetMapKind())
+                    {
+                        case MapKind.VISIBLE:
+                            map[loop1][loop2].SecretKind = false;
+                            break;
+                        case MapKind.HALF:
+
+                            map[loop1][loop2].SecretKind = (GameMaster.Inst().GetRandomNumber() > 0.45) ? false : true;
+                            break;
+                        case MapKind.HIDDEN:
+                            map[loop1][loop2].SecretKind = true;
+                            break;
+                    }
+
+                    switch (gs.GetMapProductivity())
+                    {
+                        case MapProductivity.VISIBLE:
+                            map[loop1][loop2].SecretProductivity = false;
+                            break;
+                        case MapProductivity.HALF:
+                            map[loop1][loop2].SecretProductivity = (GameMaster.Inst().GetRandomNumber() > 0.45) ? false : true;
+                            break;
+                        case MapProductivity.HIDDEN:
+                            map[loop1][loop2].SecretProductivity = true;
+                            break;
+                    }
+                }
+            }
+
             return map;
         }
 

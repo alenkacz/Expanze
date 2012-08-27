@@ -46,14 +46,25 @@ namespace Expanze
         public bool SecretKind
         {
             get { return secretKind; }
-            set { secretKind = value; }
+            set
+            {
+                if (kind == HexaKind.Water || kind == HexaKind.Null || kind == HexaKind.Nothing)
+                    secretKind = false;
+                else
+                    secretKind = value;
+            }
         }
         private bool secretProductivity;
 
         public bool SecretProductivity
         {
             get { return secretProductivity; }
-            set { secretProductivity = value; }
+            set {
+                if (kind == HexaKind.Water || kind == HexaKind.Null || kind == HexaKind.Nothing)
+                    secretProductivity = false;
+                else
+                    secretProductivity = value; 
+            }
         }
         private HexaKind kind;
         private SourceKind sourceKind;

@@ -26,8 +26,8 @@ namespace Expanze
         Texture2D playerColorTexture;
         Color playerColor;
         string playerColorName;
+        ButtonComponent playerName;
         ButtonComponent playerState;
-        String name = "Player";
         ButtonComponent addButton;
         ButtonComponent remButton;
 
@@ -37,13 +37,20 @@ namespace Expanze
             playerColorTexture = game.Content.Load<Texture2D>("pcolor");
             playerColor = c;
             this.playerColorName = playerColorName;
-            this.name = name;
+
             playerState = new ButtonComponent(game, x + 500, y - 6, font, Settings.scaleW(200), Settings.scaleH(45), null, Settings.PlayerState);
             playerState.Actions += PlayerStateButtonAction;
-            for(int loop1 = 0; loop1 < changeState; loop1++)
+            for (int loop1 = 0; loop1 < changeState; loop1++)
                 playerState.nextText();
-
             playerState.Initialize(); playerState.LoadContent();
+
+            playerName = new ButtonComponent(game, x + 80, y - 6, font, Settings.scaleW(200), Settings.scaleH(45), null, Strings.Inst().PlayerNames.ToList<string>());
+            playerName.Actions += PlayerNameButtonAction;
+            changeState = GameMaster.Inst().GetRandomInt(Strings.Inst().PlayerNames.Length);
+            for (int loop1 = 0; loop1 < changeState; loop1++)
+                playerName.nextText();
+            playerName.Initialize(); playerName.LoadContent();
+
             addButton = new ButtonComponent(game, x, y, new Rectangle(), font, 34, 32, "HUD/hotseat_plus");
             addButton.Actions += AddButtonAction;
             addButton.Initialize(); addButton.LoadContent();
@@ -52,12 +59,13 @@ namespace Expanze
             remButton.Initialize(); remButton.LoadContent();
         }
 
-        public string GetName() { return name; }
+        public string GetName() { return playerName.getSelectedState(); }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
             playerState.Update(gameTime);
+            playerName.Update(gameTime);
             addButton.Update(gameTime);
             remButton.Update(gameTime);
         }
@@ -73,7 +81,7 @@ namespace Expanze
             if (active)
             {
                 if (Strings.Inst().GetString(TextEnum.MENU_HOT_SEAT_NO_AI) == playerState.getSelectedState())
-                    return new Player(name, playerColor, playerColorName, null, GameMaster.Inst().GetPlayerCount());
+                    return new Player(playerName.getSelectedState(), playerColor, playerColorName, null, GameMaster.Inst().GetPlayerCount());
                 else
                 {
                     IComponentAI componentAI = null;
@@ -90,7 +98,7 @@ namespace Expanze
                         }
                     }
                     IComponentAI componentAICopy = componentAI.Clone();
-                    return new Player(name, playerColor, playerColorName, componentAICopy, GameMaster.Inst().GetPlayerCount());
+                    return new Player(playerName.getSelectedState(), playerColor, playerColorName, componentAICopy, GameMaster.Inst().GetPlayerCount(), Settings.hero[playerName.getSelectedState()], false);
                 }
             }
 
@@ -120,6 +128,17 @@ namespace Expanze
             else
             {
                 alreadyChanged = false;
+            }
+        }
+
+        /// <summary>
+        /// Event handler for player state button
+        /// </summary>
+        void PlayerNameButtonAction(object sender, PlayerIndexEventArgs e)
+        {
+            if (active)
+            {
+                playerName.changeText();
             }
         }
 
@@ -177,11 +196,14 @@ namespace Expanze
                 addButton.Draw(gameTime);
             }
 
-            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.PlayerNameFont), name, new Vector2(spritePosition.X + 80, spritePosition.Y - 6), c);
+            //spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.PlayerNameFont), name, new Vector2(spritePosition.X + 80, spritePosition.Y - 6), c);
             spriteBatch.Draw(playerColorTexture, new Vector2(spritePosition.X + 420, spritePosition.Y), playerColor);
-
-            if( active )
+            
+            if (active)
+            {
+                playerName.Draw(gameTime);
                 playerState.Draw(gameTime);
+            }
 
             spriteBatch.End();
         }
