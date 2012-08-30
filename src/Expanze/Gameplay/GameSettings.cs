@@ -15,6 +15,12 @@ namespace Expanze
         MapKind mapKind;
         int playerCount;
 
+        public int PlayerCount
+        {
+            get { return playerCount; }
+            set { playerCount = value; }
+        }
+
         public GameSettings(int playerCount, string mapTypeS, string mapSourceS, string mapKindS, string mapProductivityS) 
         {
             this.playerCount = playerCount;

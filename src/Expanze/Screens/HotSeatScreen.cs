@@ -156,8 +156,8 @@ namespace Expanze
                 p.LoadContent();
             }
 
-                playerColorTexture = ScreenManager.Game.Content.Load<Texture2D>("pcolor");
-                startGameButton.Initialize(); startGameButton.LoadContent();
+            playerColorTexture = ScreenManager.Game.Content.Load<Texture2D>("pcolor");
+            startGameButton.Initialize(); startGameButton.LoadContent();
             ScreenManager.Game.ResetElapsedTime();
         }
 

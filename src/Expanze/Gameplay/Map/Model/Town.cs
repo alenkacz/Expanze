@@ -326,7 +326,7 @@ namespace Expanze
 
                 foreach (HexaModel hexa in hexaNeighbour)
                 {
-                    if (hexa.GetCapturedPlayer() != null && hexa.GetCapturedPlayer() == activePlayer)
+                    if (hexa != null && hexa.GetCapturedPlayer() != null && hexa.GetCapturedPlayer() == activePlayer)
                         hasActivePlayerRoadNeighbour = true;
                 }
 

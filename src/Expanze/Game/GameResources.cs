@@ -10,6 +10,12 @@ using Expanze.Utils;
 
 namespace Expanze
 {
+    public enum MenuTexture
+    {
+        LogoBackground,
+        Logo, 
+        Player, Color
+    }
     public enum HUDTexture
     {
         HammersPassive, HammersActive, SwordsActive, SwordsPassive, DestroyActive, DestroyPassive,

@@ -186,67 +186,12 @@ namespace Expanze.Gameplay.Map
             GameSettings gs = GameMaster.Inst().GetGameSettings();
             if (GameMaster.Inst().GetMapSource() == null)
             {
-                HexaModel[][] tempMap = GenerateScenarioMap(gs);
+                HexaModel[][] tempMap = MapGenerator.GenerateScenarioMap(gs);
                 GameMaster.Inst().InitPlayers();
                 return tempMap;
             }
             else
                 return parser.parseCampaignMap(GameMaster.Inst().GetMapSource());
-        }
-
-        private HexaModel[][] GenerateScenarioMap(GameSettings gs)
-        {
-            HexaModel[][] map = new HexaModel[3][];
-            for (int loop1 = 0; loop1 < map.Length; loop1++)
-            {
-                map[loop1] = new HexaModel[9];
-                for (int loop2 = 0; loop2 < map[loop1].Length; loop2++)
-                {
-                    if (loop1 == 1 && loop2 > 0 && loop2 < map[loop1].Length - 1)
-                    {
-                        map[loop1][loop2] = HexaCreator.create("?", "?", false, false);
-                    }
-                    else
-                    {
-                        map[loop1][loop2] = new WaterHexa(false, false);
-                    }
-                }
-            }
-
-            for (int loop1 = 0; loop1 < map.Length; loop1++)
-            {
-                for (int loop2 = 0; loop2 < map[loop1].Length; loop2++)
-                {
-                    switch (gs.GetMapKind())
-                    {
-                        case MapKind.VISIBLE:
-                            map[loop1][loop2].SecretKind = false;
-                            break;
-                        case MapKind.HALF:
-
-                            map[loop1][loop2].SecretKind = (GameMaster.Inst().GetRandomNumber() > 0.45) ? false : true;
-                            break;
-                        case MapKind.HIDDEN:
-                            map[loop1][loop2].SecretKind = true;
-                            break;
-                    }
-
-                    switch (gs.GetMapProductivity())
-                    {
-                        case MapProductivity.VISIBLE:
-                            map[loop1][loop2].SecretProductivity = false;
-                            break;
-                        case MapProductivity.HALF:
-                            map[loop1][loop2].SecretProductivity = (GameMaster.Inst().GetRandomNumber() > 0.45) ? false : true;
-                            break;
-                        case MapProductivity.HIDDEN:
-                            map[loop1][loop2].SecretProductivity = true;
-                            break;
-                    }
-                }
-            }
-
-            return map;
         }
 
         public override void LoadContent()

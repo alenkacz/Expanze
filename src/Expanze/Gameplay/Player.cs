@@ -172,7 +172,7 @@ namespace Expanze
             {
                 for(byte loop1 = 0; loop1 <= 2; loop1++)
                 {
-                    if(t.GetIHexa(loop1).GetKind() != HexaKind.Water)
+                    if(t.GetIHexa(loop1) != null && t.GetIHexa(loop1).GetKind() != HexaKind.Water)
                         discoveredHexa[t.GetIHexa(loop1).GetID() - 1] = true;
                 }
             }
@@ -192,7 +192,7 @@ namespace Expanze
 
             for (byte loop1 = 0; loop1 <= 2; loop1++)
             {
-                if (t.GetIHexa(loop1).GetKind() != HexaKind.Water)
+                if (t.GetIHexa(loop1) != null && t.GetIHexa(loop1).GetKind() != HexaKind.Water)
                     discoveredHexa[t.GetIHexa(loop1).GetID() - 1] = true;
             }
         }

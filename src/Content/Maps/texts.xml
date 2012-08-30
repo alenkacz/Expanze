@@ -65,8 +65,8 @@
     <eng>Computer</eng>
   </text>
   <text id="MENU_HOT_SEAT_MAP_TYPE">
-    <cz>Typ mapy</cz>
-    <eng>Map type</eng>
+    <cz>Množství</cz>
+    <eng>Water</eng>
   </text>
   <text id="MENU_HOT_SEAT_MAP_SOURCE">
     <cz>Druh surovin</cz>
@@ -228,16 +228,16 @@
     <eng>Visible</eng>
   </text>
   <text id="GAME_SETTINGS_MAP_TYPE_ISLAND">
-    <cz>Ostrov</cz>
-    <eng>Island</eng>
+    <cz>Málo</cz>
+    <eng>Little</eng>
   </text>
   <text id="GAME_SETTINGS_MAP_TYPE_2_ISLANDS">
-    <cz>2 ostrovy</cz>
-    <eng>2 islands</eng>
+    <cz>Středně</cz>
+    <eng>Normal</eng>
   </text>
   <text id="GAME_SETTINGS_MAP_TYPE_SMALL_ISLANDS">
-    <cz>Malé ostrůvky</cz>
-    <eng>Little islands</eng>
+    <cz>Hodně</cz>
+    <eng>Much</eng>
   </text>
   <text id="GAME_SETTINGS_MAP_SOURCE_NORMAL">
     <cz>Normální</cz>

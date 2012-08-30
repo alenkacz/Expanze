@@ -57,7 +57,12 @@ namespace Expanze
         private int actualAITime;           // how much time has AI before it will be aborted
         private bool hasAIThreadStarted;
 
-        private Random randomNumber;
+        private Random randomGenerator;
+
+        public Random RandomGenerator
+        {
+            get { return randomGenerator; }
+        }
 
         private static GameMaster instance = null;
 
@@ -92,7 +97,7 @@ namespace Expanze
         /// </summary>
         private GameMaster() 
         {
-            randomNumber = new Random();
+            randomGenerator = new Random();
             gameCount = 0;
         }
 
@@ -178,7 +183,7 @@ namespace Expanze
 
             fortState = EFortState.Normal;
 
-            randomNumber = new System.Random();
+            randomGenerator = new System.Random();
             hasBuiltTown = false;
             turnNumber = 1;
 
@@ -685,12 +690,12 @@ namespace Expanze
 
             int nameCount = Strings.Inst().PlayerNames.Length;
 
-            int firstPlayerNameID = randomNumber.Next() % nameCount;
+            int firstPlayerNameID = randomGenerator.Next() % nameCount;
             int secondPlayerNameID;
 
             do
             {
-                secondPlayerNameID = randomNumber.Next() % nameCount;
+                secondPlayerNameID = randomGenerator.Next() % nameCount;
             } while (secondPlayerNameID == firstPlayerNameID);
 
             if (componentAI != null)
@@ -924,9 +929,9 @@ namespace Expanze
 
         private void RandomEvents()
         {
-            if (randomNumber.Next() % 5 == 2)
+            if (randomGenerator.Next() % 5 == 2)
             {       
-                GameState.map.ApplyEvent(RndEvent.getRandomEvent(randomNumber));
+                GameState.map.ApplyEvent(RndEvent.getRandomEvent(randomGenerator));
             }
         }
 
@@ -1378,12 +1383,12 @@ namespace Expanze
 
         public double GetRandomNumber()
         {
-            return randomNumber.NextDouble();
+            return randomGenerator.NextDouble();
         }
 
         public int GetRandomInt(int bound)
         {
-            return randomNumber.Next(bound);
+            return randomGenerator.Next(bound);
         }
 
         internal void RestartGame()
