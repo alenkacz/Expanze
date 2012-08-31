@@ -539,6 +539,9 @@ namespace Expanze
 
         internal bool GetIsDiscovered(int hexaID)
         {
+            if (Settings.HiddenEverything)
+                return false;
+
             return discoveredHexa[hexaID - 1];
         }
 

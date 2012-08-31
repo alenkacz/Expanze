@@ -240,5 +240,17 @@ namespace Expanze
                 hero.Add(name, Genetic.ParsePersonality(personality));
             }
         }
+
+        private static bool hiddenEverything;
+        public static bool HiddenEverything {
+            get
+            {
+                return hiddenEverything;
+            }
+            set
+            {
+                hiddenEverything = value;
+            }
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace Expanze
 {
     public enum EFortState { Normal, DestroyingHexa, CapturingHexa };
 
-    class GameMaster
+    class GameMaster : Trigger
     {
         private int playerCount;
         private List<Player> players = new List<Player>();
@@ -1275,6 +1275,13 @@ namespace Expanze
             if (!activePlayer.GetActive())
                 return ChangeActivePlayer();
 
+            if (!activePlayer.GetIsAI())
+            {
+                Settings.HiddenEverything = true;
+                TriggerManager.Inst().Attach(this, TriggerType.MessageClose);
+                Message.Inst().Show("Připraven?", "Odklikni až tvůj lidský soupeř nebude v dosahu.", GameResources.Inst().GetHudTexture(HUDTexture.HammersPassive));
+            }
+
             return true;
         }
 
@@ -1688,5 +1695,19 @@ namespace Expanze
 
             writer.WriteEndElement();
         }
+
+        #region Trigger Members
+
+        public void TurnOn()
+        {
+            Settings.HiddenEverything = false;
+        }
+
+        public int Restriction1()
+        {
+            return 0;
+        }
+
+        #endregion
     }
 }

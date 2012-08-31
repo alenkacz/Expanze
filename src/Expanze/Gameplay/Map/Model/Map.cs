@@ -276,8 +276,16 @@ namespace Expanze.Gameplay.Map
                 eye.X = -1.1f - (yMax - eye.Y);
             }
 
+            int max = 0;
+            int maxID = 0;
+            for (int loop1 = 0; loop1 < hexaMapModel.Length; loop1++)
+                if (hexaMapModel[loop1].Length > max)
+                {
+                    max = hexaMapModel[loop1].Length;
+                    maxID = loop1;
+                }
             // vpravo
-            eyeBonus = hexaMapModel[1].Length * 0.04f;
+            eyeBonus = hexaMapModel[maxID].Length * 0.06f;
             if (eye.Z > 0.4 + (yMax - eye.Y) + eyeBonus)
             {
                 eye.Z = 0.4f + (yMax - eye.Y) + eyeBonus;
