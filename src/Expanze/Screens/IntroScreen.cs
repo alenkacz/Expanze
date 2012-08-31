@@ -66,7 +66,8 @@ namespace Expanze
 
             GameResources.game = ScreenManager.Game;
 
-            backgroundTexture = ScreenManager.Game.Content.Load<Texture2D>("intro");
+            GameResources.Inst().LoadMenuTexture();
+            backgroundTexture = GameResources.Inst().GetMenuTexture(MenuTexture.LogoBackground);
 
         }
 

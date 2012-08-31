@@ -124,8 +124,8 @@ namespace Expanze
 
             mapType = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.Inst().GetString(TextEnum.MENU_HOT_SEAT_MAP_TYPE), new List<String>() { Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_TYPE_ISLAND), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_TYPE_2_ISLANDS), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_TYPE_SMALL_ISLANDS) });
             sourceKind = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 50, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.Inst().GetString(TextEnum.MENU_HOT_SEAT_MAP_SOURCE), new List<String>() { Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SOURCE_LOWLAND), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SOURCE_NORMAL), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_SOURCE_WASTELAND) });
-            secretProductivity = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 100, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.Inst().GetString(TextEnum.MENU_HOT_SEAT_MAP_SECRET_KIND), new List<String>() { Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_KIND_HIDDEN), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_KIND_HALF), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_KIND_VISIBLE) });
-            secretKind = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 150, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.Inst().GetString(TextEnum.MENU_HOT_SEAT_MAP_SECRET_PRODUCTIVITY), new List<String>() { Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_PRODUCTIVITY_HIDDEN), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_PRODUCTIVITY_HALF), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_PRODUCTIVITY_VISIBLE) });
+            secretProductivity = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 100, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.Inst().GetString(TextEnum.MENU_HOT_SEAT_MAP_SECRET_KIND), new List<String>() { Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_KIND_HIDDEN), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_KIND_VISIBLE), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_KIND_HALF) });
+            secretKind = new MapSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y + 150, GameResources.Inst().GetFont(EFont.MedievalBig), 400, 200, Strings.Inst().GetString(TextEnum.MENU_HOT_SEAT_MAP_SECRET_PRODUCTIVITY), new List<String>() { Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_PRODUCTIVITY_HIDDEN), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_PRODUCTIVITY_VISIBLE), Strings.Inst().GetString(TextEnum.GAME_SETTINGS_MAP_PRODUCTIVITY_HALF)});
 
             guiComponents.Add(mapType);
             guiComponents.Add(sourceKind);
@@ -166,7 +166,7 @@ namespace Expanze
             int nameCount = Strings.Inst().PlayerNames.Length;
             int nameID = -1;
             bool uniqueID;
-            do
+            //do
             {
                 nameID = random.Next() % nameCount;
                 uniqueID = true;
@@ -178,7 +178,7 @@ namespace Expanze
                         continue;
                     }
                 }
-            } while (!uniqueID);
+            }// while (!uniqueID);
 
             return nameID;
         }

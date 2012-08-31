@@ -63,7 +63,7 @@ namespace Expanze
             textureRight = Settings.Game.Content.Load<Texture2D>("HUD/hud-top-right");
             textureMiddle = Settings.Game.Content.Load<Texture2D>("HUD/hud-top-middle");
             textureMedal = Settings.Game.Content.Load<Texture2D>("HUD/score_medaile");
-            textureColor = Settings.Game.Content.Load<Texture2D>("pcolor");
+            textureColor = GameResources.Inst().GetMenuTexture(MenuTexture.PlayerColor);
         }
 
         public override void Update(GameTime gameTime)

@@ -69,7 +69,7 @@ namespace Expanze
             //cursorComp = new CustomCursor(ScreenManager.Game);
             //cursorComp.Initialize();
             //cursorComp.LoadContent();
-            menuLogo = ScreenManager.Game.Content.Load<Texture2D>("HUD/main_menu_logo");
+            menuLogo = GameResources.Inst().GetMenuTexture(MenuTexture.Logo);
         }
 
 

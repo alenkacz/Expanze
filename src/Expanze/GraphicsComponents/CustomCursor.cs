@@ -24,7 +24,7 @@ namespace Expanze
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
-            myCursor = myGame.Content.Load<Texture2D>("cursor");
+            myCursor = GameResources.Inst().GetMenuTexture(MenuTexture.Cursor);
         }
 
         public override void Update(GameTime gameTime)

@@ -723,7 +723,7 @@ namespace Expanze
 
         public void ResetGameSettings()
         {
-            gameSettings = null;
+            //gameSettings = null;
             SetDefaultSettings();
         }
 

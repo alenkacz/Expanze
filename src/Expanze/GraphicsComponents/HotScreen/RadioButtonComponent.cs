@@ -42,9 +42,9 @@ namespace Expanze
             base.LoadContent();
 
             spriteBatch = new SpriteBatch(myGame.GraphicsDevice);
-            activeTexture = myGame.Content.Load<Texture2D>("radiobutton_active");
-            bgTexture = myGame.Content.Load<Texture2D>("radiobutton_bg");
-            bgPassiveTexture = myGame.Content.Load<Texture2D>("radiobutton_bgpas");
+            activeTexture = GameResources.Inst().GetMenuTexture(MenuTexture.RadioActive);
+            bgTexture = GameResources.Inst().GetMenuTexture(MenuTexture.RadioBackground);
+            bgPassiveTexture = GameResources.Inst().GetMenuTexture(MenuTexture.RadioPassive);
         }
 
         public override void Update(GameTime gameTime)

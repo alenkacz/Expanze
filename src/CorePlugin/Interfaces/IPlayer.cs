@@ -22,5 +22,14 @@ namespace CorePlugin
         ISourceAll GetCollectSourcesNormal();
         int GetBuildingCount(Building building);
         String GetName();
+
+        int LicenceFreeSlot { 
+            get;
+        }
+        int UpgradeFreeSlot
+        {
+            get; 
+        }
+
     }
 }

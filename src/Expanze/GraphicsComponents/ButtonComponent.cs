@@ -129,7 +129,7 @@ namespace Expanze
             {
                 //rectangle not specifies, whole place is clickable
                 clickablePos = new Rectangle(Settings.scaleW(x), Settings.scaleH(y), width, height);
-                pickedTexture = myGame.Content.Load<Texture2D>("HUD/ic_active");
+                pickedTexture = GameResources.Inst().GetHudTexture(HUDTexture.IconActive);
             }
             else
             {

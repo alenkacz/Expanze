@@ -17,7 +17,7 @@ namespace Expanze.Gameplay
             int[] waterArray = new int[10];
 
             int hexCount = 0;
-            int hexMax = 5 + 3 * gs.PlayerCount;
+            int hexMax = 5 + 9 * gs.PlayerCount / 2;
 
             int pos = 0;
             int size = rnd.Next(3) + 1;

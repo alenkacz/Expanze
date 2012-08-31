@@ -14,7 +14,12 @@ namespace Expanze
     {
         LogoBackground,
         Logo, 
-        Player, Color
+        PlayerColor,
+        Cursor,
+        RadioActive,
+        RadioPassive,
+        RadioBackground,
+        Count
     }
     public enum HUDTexture
     {
@@ -94,6 +99,7 @@ namespace Expanze
 
         Texture2D[] hud;
         Texture2D[] hexaTexture;
+        Texture2D[] menuTexture;
         private const int N_FONT = 9;
         SpriteFont[] font;
 
@@ -160,6 +166,25 @@ namespace Expanze
             else
                 return Strings.Inst().GetString(TextEnum.MENU_GAME_LOADING_MAP);
 
+        }
+
+        public void LoadMenuTexture()
+        {
+            if (content == null)
+                content = new ContentManager(game.Services, "Content");
+            menuTexture = new Texture2D[(int) MenuTexture.Count];
+            menuTexture[(int)MenuTexture.Cursor] = content.Load<Texture2D>("cursor");
+            menuTexture[(int)MenuTexture.Logo] = content.Load<Texture2D>("HUD/main_menu_logo");
+            menuTexture[(int)MenuTexture.LogoBackground] = content.Load<Texture2D>("intro");
+            menuTexture[(int)MenuTexture.PlayerColor] = content.Load<Texture2D>("pcolor");
+            menuTexture[(int)MenuTexture.RadioActive] = content.Load<Texture2D>("radiobutton_active");
+            menuTexture[(int)MenuTexture.RadioBackground] = content.Load<Texture2D>("radiobutton_bg");
+            menuTexture[(int)MenuTexture.RadioPassive] = content.Load<Texture2D>("radiobutton_bgpas");
+        }
+
+        public Texture2D GetMenuTexture(MenuTexture texture)
+        {
+            return menuTexture[(int)texture];
         }
 
         public void LoadContent()

@@ -34,7 +34,7 @@ namespace Expanze
         public PlayerSettingRowComponent(Game game, int x, int y, SpriteFont font, int width, int height, Color c, string playerColorName, String name, int changeState) 
             : base(game,x,y,font,width,height,null) 
         {
-            playerColorTexture = game.Content.Load<Texture2D>("pcolor");
+            playerColorTexture = GameResources.Inst().GetMenuTexture(MenuTexture.PlayerColor);
             playerColor = c;
             this.playerColorName = playerColorName;
 

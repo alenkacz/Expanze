@@ -94,14 +94,7 @@ namespace AIGen
 
         private bool HasFreeSlot()
         {
-            List<IMonastery> monasteryList = map.GetPlayerMe().GetMonastery();
-            foreach (IMonastery monastery in monasteryList)
-            {
-                if (monastery.GetFreeSlot() > 0)
-                    return true;
-            }
-
-            return false;
+            return map.GetPlayerMe().UpgradeFreeSlot > 0;
         }
     }
 }

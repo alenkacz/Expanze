@@ -115,14 +115,7 @@ namespace AIGen
 
         private bool HasFreeSlot()
         {
-            List<IMarket> marketList = map.GetPlayerMe().GetMarket();
-            foreach (IMarket market in marketList)
-            {
-                if (market.GetFreeSlot() > 0)
-                    return true;
-            }
-
-            return false;
+            return map.GetPlayerMe().LicenceFreeSlot > 0;
         }
     }
 }
