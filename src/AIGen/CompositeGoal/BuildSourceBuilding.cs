@@ -24,6 +24,13 @@ namespace AIGen
             this.kHasSources = kHasSources / sum;
             this.kPoints = kPoints / sum;
 
+            if ((map.GetActionPoints(PlayerPoints.Saw) > 0 || 
+                 map.GetActionPoints(PlayerPoints.Mill) > 0 || 
+                 map.GetActionPoints(PlayerPoints.Mine) > 0 || 
+                 map.GetActionPoints(PlayerPoints.Quarry) > 0 || 
+                 map.GetActionPoints(PlayerPoints.Stepherd) > 0) && map.GetTurnNumber() > 10)
+                kPoints += 0.1;
+
             lastBestTown = null;
             lastBestPos = 0;
         }

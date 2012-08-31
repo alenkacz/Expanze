@@ -31,6 +31,9 @@ namespace AIGen
             this.kHasOtherMarket = kHasOtherMarket / sum;
             this.kPoints = kPoints / sum;
 
+            if (map.GetActionPoints(PlayerPoints.Market) > 0 && map.GetTurnNumber() > 10)
+                kPoints += 0.1;
+
             lastBestTown = null;
             lastBestPos = 0;
         }

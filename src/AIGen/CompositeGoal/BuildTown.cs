@@ -40,6 +40,9 @@ namespace AIGen
             this.kTownItself = kTownItself / sum;
             this.kPoints = kPoints / sum;
             this.buildingGoal = buildingGoal;
+
+            if (map.GetActionPoints(PlayerPoints.Town) > 0 && map.GetTurnNumber() > 10)
+                kPoints += 0.1;
         }
 
         public override void Init()

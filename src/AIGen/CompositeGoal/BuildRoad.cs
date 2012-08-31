@@ -18,6 +18,10 @@ namespace AIGen
         {
             kPoints = k / 1000.0f;
             kCantBuildTown = 1.0f - kPoints;
+
+            if (map.GetActionPoints(PlayerPoints.Road) > 0 && map.GetTurnNumber() > 10)
+                kPoints += 0.1;
+
             lastBestRoad = null;
         }
 

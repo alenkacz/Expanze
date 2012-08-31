@@ -1263,8 +1263,6 @@ namespace Expanze
             }
 
             activePlayer = players[activePlayerIndex];
-            if (!activePlayer.GetIsAI())
-                lastHumanPlayer = activePlayer;
 
             if (state == EGameState.StateGame && activePlayerIndex == 0)
             {
@@ -1275,12 +1273,22 @@ namespace Expanze
             if (!activePlayer.GetActive())
                 return ChangeActivePlayer();
 
-            if (!activePlayer.GetIsAI())
+            int aliveHumanPlayers = 0;
+            foreach (Player p in players)
+            {
+                if (p.GetActive() && !p.GetIsAI())
+                    aliveHumanPlayers++;
+            }
+
+            if (!activePlayer.GetIsAI() && aliveHumanPlayers >= 2 && lastHumanPlayer != activePlayer)
             {
                 Settings.HiddenEverything = true;
                 TriggerManager.Inst().Attach(this, TriggerType.MessageClose);
-                Message.Inst().Show("Připraven?", "Odklikni až tvůj lidský soupeř nebude v dosahu.", GameResources.Inst().GetHudTexture(HUDTexture.HammersPassive));
+                Message.Inst().Show(Strings.Inst().GetString(TextEnum.GAME_ALERT_TITLE_HUMAN_NEXT_TURN), Strings.Inst().GetString(TextEnum.GAME_ALERT_DESTRIPTION_HUMAN_NEXT_TURN), GameResources.Inst().GetHudTexture(HUDTexture.HammersPassive));
             }
+
+            if (!activePlayer.GetIsAI())
+                lastHumanPlayer = activePlayer;
 
             return true;
         }

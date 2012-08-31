@@ -17,6 +17,9 @@ namespace AIGen
         {
             kPoints = k / 100.0f;
             kLicence = 1 - kPoints;
+
+            if (map.GetActionPoints(PlayerPoints.LicenceLvl2) > 0 && map.GetTurnNumber() > 10)
+                kPoints += 0.1;
         }
 
         public override void Init()

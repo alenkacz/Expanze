@@ -16,6 +16,9 @@ namespace AIGen
         {
             this.kHasSources = k / 100.0f;
             this.kPoints = 1- kHasSources;
+
+            if (map.GetActionPoints(PlayerPoints.FortParade) > 0 && map.GetTurnNumber() > 10)
+                kPoints += 0.1;
         }
 
         public override void Init()

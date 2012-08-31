@@ -18,6 +18,9 @@ namespace AIGen
         {
             kPoints = k / 100.0f;
             kUpgrade = 1 - kPoints;
+
+            if (map.GetActionPoints(PlayerPoints.UpgradeLvl2) > 0 && map.GetTurnNumber() > 10)
+                kPoints += 0.1;
         }
 
         public override void Init()

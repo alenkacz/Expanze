@@ -31,6 +31,9 @@ namespace AIGen
             this.kHasOtherMonastery = kHasOtherMonastery / sum;
             this.kPoints = kPoints / sum;
 
+            if (map.GetActionPoints(PlayerPoints.Monastery) > 0 && map.GetTurnNumber() > 10)
+                kPoints += 0.1;
+
             lastBestTown = null;
             lastBestPos = 0;
         }

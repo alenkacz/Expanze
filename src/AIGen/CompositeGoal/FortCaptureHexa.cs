@@ -23,6 +23,9 @@ namespace AIGen
             kCapture = 1 - kPoints;
             bestHexa = null;
             bestHexaIDs = new List<int>();
+
+            if (map.GetActionPoints(PlayerPoints.FortCaptureHexa) > 0 && map.GetTurnNumber() > 10)
+                kPoints += 0.1;
         }
 
         public override void Init()

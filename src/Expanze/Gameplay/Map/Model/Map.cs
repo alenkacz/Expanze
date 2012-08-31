@@ -301,7 +301,7 @@ namespace Expanze.Gameplay.Map
 
             if (GameState.CurrentMouseState.ScrollWheelValue - GameState.LastMouseState.ScrollWheelValue != 0)
             {
-                eye.Y += (GameState.CurrentMouseState.ScrollWheelValue - GameState.LastMouseState.ScrollWheelValue) / 6000.0f * gameTime.ElapsedGameTime.Milliseconds;
+                eye.Y -= (GameState.CurrentMouseState.ScrollWheelValue - GameState.LastMouseState.ScrollWheelValue) / 6000.0f * gameTime.ElapsedGameTime.Milliseconds;
             }
             if (InputManager.Inst().GetGameAction("game", "cameratop").IsPressed())
             {
