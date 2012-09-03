@@ -277,21 +277,22 @@
     <cz>Nejdřív musíš postavit své město.</cz>
     <eng>You have to build your town first.</eng>
   </text>
+  
+  <text id="GAME_ALERT_TITLE_HUMAN_NEXT_TURN">
+    <cz>Připraven?</cz>
+    <eng>Ready?</eng>
+  </text>
+  <text id="GAME_ALERT_DESTRIPTION_HUMAN_NEXT_TURN">
+    <cz>Začni svůj tah odklepnutím této zprávy.</cz>
+    <eng>Begin your turn by closing this message.</eng>
+  </text>
   <text id="GAME_ALERT_TITLE_AI_IS_THINKING">
     <cz>Soupeř přemýšlí</cz>
     <eng>Oponent is thinking</eng>
   </text>
-  <text id="GAME_ALERT_TITLE_HUMAN_NEXT_TURN">
-    <cz>Soupeř přemýšlí</cz>
-    <eng>Oponent is thinking</eng>
-  </text>
-  <text id="GAME_ALERT_DESTRIPTION_HUMAN_NEXT_TURN">
-    <cz>Připraven?</cz>
-    <eng>Ready?</eng>
-  </text>
   <text id="GAME_ALERT_DESCRIPTION_AI_IS_THINKING">
-    <cz>Začni svůj tah odklepnutím této zprávy.</cz>
-    <eng>Begin your turn by closing this message.</eng>
+    <cz>Počkej chvíli než tvůj oponent provede svůj tah.</cz>
+    <eng>Wait a while. Your oponent nead some time to make his turn.</eng>
   </text>
   <text id="GAME_ALERT_TITLE_MARKET_BAD_TURN">
     <cz>Tržiště jsou zavřena</cz>

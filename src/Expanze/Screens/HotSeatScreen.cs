@@ -284,6 +284,11 @@ namespace Expanze
             PlayerIndex index;
             if (input.IsNewKeyPress(Microsoft.Xna.Framework.Input.Keys.Enter, null, out index))
                 StartGameSelected(null, new PlayerIndexEventArgs(index));
+
+            if (input.IsNewKeyPress(Microsoft.Xna.Framework.Input.Keys.Escape, null, out index))
+            {
+                BackSelected(null, new PlayerIndexEventArgs(index));
+            }
         }
 
         /// <summary>

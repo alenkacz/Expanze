@@ -159,11 +159,13 @@ namespace Expanze
                 return;
 
             Texture2D text = passive;
-            spriteBatch.Draw(text, new Vector2(pos.X - (text.Width >> 1), pos.Y - (text.Height >> 1)), Color.White);
+            if(text != null)
+                spriteBatch.Draw(text, new Vector2(pos.X - (text.Width >> 1), pos.Y - (text.Height >> 1)), Color.White);
             if (!pickVars.pickActive && activeHexaID != hexaID)
             {
                 text = active;
-                spriteBatch.Draw(text, new Vector2(pos.X - (text.Width >> 1), pos.Y - (text.Height >> 1)), Color.White);
+                if(text != null)
+                    spriteBatch.Draw(text, new Vector2(pos.X - (text.Width >> 1), pos.Y - (text.Height >> 1)), Color.White);
             }
         }
 

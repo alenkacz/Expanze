@@ -73,11 +73,11 @@ namespace Expanze
                 return;
             }
 
-            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), act.GetCorn().ToString(), new Vector2(this.spritePosition.X + start, this.spritePosition.Y + 100), Color.White);
-            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), act.GetMeat().ToString(), new Vector2(this.spritePosition.X + start + space, this.spritePosition.Y + 100), Color.White);
-            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), act.GetStone().ToString(), new Vector2(this.spritePosition.X + start + 2 * space, this.spritePosition.Y + 100), Color.White);
-            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), act.GetWood().ToString(), new Vector2(this.spritePosition.X + start + 3 * space, this.spritePosition.Y + 100), Color.White);
-            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), act.GetOre().ToString(), new Vector2(this.spritePosition.X + start + 4 * space, this.spritePosition.Y + 100), Color.White);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), (Settings.HiddenEverything) ? "?" : act.GetCorn().ToString(), new Vector2(this.spritePosition.X + start, this.spritePosition.Y + 100), Color.White);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), (Settings.HiddenEverything) ? "?" : act.GetMeat().ToString(), new Vector2(this.spritePosition.X + start + space, this.spritePosition.Y + 100), Color.White);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), (Settings.HiddenEverything) ? "?" : act.GetStone().ToString(), new Vector2(this.spritePosition.X + start + 2 * space, this.spritePosition.Y + 100), Color.White);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), (Settings.HiddenEverything) ? "?" : act.GetWood().ToString(), new Vector2(this.spritePosition.X + start + 3 * space, this.spritePosition.Y + 100), Color.White);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalSmall), (Settings.HiddenEverything) ? "?" : act.GetOre().ToString(), new Vector2(this.spritePosition.X + start + 4 * space, this.spritePosition.Y + 100), Color.White);
 
             //spriteBatch.DrawString(GameState.hudMaterialsFont, changeMaterials.ToString(), new Vector2(200, 200), Color.White);
 

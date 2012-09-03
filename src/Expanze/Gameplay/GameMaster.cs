@@ -1056,7 +1056,7 @@ namespace Expanze
                     Message.Inst().Show(Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_END_GAME), bestPlayer.GetName() + Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_END_GAME_WIN), GameResources.Inst().GetHudTexture(HUDTexture.IconFortParade));  
                 } else
 
-                if (turnNumber == Settings.maxTurn)
+                if (turnNumber > Settings.maxTurn)
                 {
                     winnerNew = true;
                     Message.Inst().Show(Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_END_GAME), Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_END_GAME_LOOSE1) + Settings.maxTurn + Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_END_GAME_LOOSE2), GameResources.Inst().GetHudTexture(HUDTexture.HammersPassive));

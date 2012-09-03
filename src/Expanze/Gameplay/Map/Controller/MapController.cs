@@ -193,6 +193,38 @@ namespace Expanze.Gameplay.Map
         public BuildingBuildError CanBuildBuildingInTown(int townID, int hexaID, BuildingKind kind)
         {
             GameMaster gm = GameMaster.Inst();
+
+            TownModel town = map.GetTownByID(townID);
+            if (town == null)
+            {
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_INVALID_TOWN_ID));
+                return BuildingBuildError.InvalidTownID;
+            }
+            int buildingPos = town.FindBuildingByHexaID(hexaID);
+            if (buildingPos == -1)
+            {
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_INVALID_HEXA_ID));
+                return BuildingBuildError.TownHasNoHexaWithThatHexaID;
+            }
+
+            HexaModel hexa = town.GetHexa(buildingPos);
+            if (hexa.GetKind() == HexaKind.Desert && kind == BuildingKind.SourceBuilding)
+            {
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_SOURCE_BUILDING_FOR_DESERT));
+                return BuildingBuildError.NoSourceBuildingForDesert;
+            }
+
+            if (hexa.GetKind() == HexaKind.Water)
+            {
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_BUILDING_FOR_WATER));
+                return BuildingBuildError.NoBuildingForWater;
+            }
+            if (hexa.GetKind() == HexaKind.Mountains && kind != BuildingKind.SourceBuilding)
+            {
+                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_SPECIAL_BUIDLING_FOR_MOUNTAINS));
+                return BuildingBuildError.NoSpecialBuildingForMountains;
+            }
+
             if (gm.GetState() == EGameState.BeforeGame)
                 return BuildingBuildError.OK;
 
@@ -212,38 +244,6 @@ namespace Expanze.Gameplay.Map
             {
                 SetLastError(Strings.Inst().GetString(TextEnum.ERROR_BAN_MONASTERY));
                 return BuildingBuildError.Ban;
-            }
-
-            
-            TownModel town = map.GetTownByID(townID);
-            if (town == null)
-            {
-                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_INVALID_TOWN_ID));
-                return BuildingBuildError.InvalidTownID;
-            }
-
-            int buildingPos = town.FindBuildingByHexaID(hexaID);
-            if (buildingPos == -1)
-            {
-                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_INVALID_HEXA_ID));
-                return BuildingBuildError.TownHasNoHexaWithThatHexaID;
-            }
-
-            HexaModel hexa = town.GetHexa(buildingPos);
-            if (hexa.GetKind() == HexaKind.Desert && kind == BuildingKind.SourceBuilding)
-            {
-                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_SOURCE_BUILDING_FOR_DESERT));
-                return BuildingBuildError.NoSourceBuildingForDesert;
-            }
-            if (hexa.GetKind() == HexaKind.Water)
-            {
-                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_BUILDING_FOR_WATER));
-                return BuildingBuildError.NoBuildingForWater;
-            }
-            if (hexa.GetKind() == HexaKind.Mountains && kind != BuildingKind.SourceBuilding)
-            {
-                SetLastError(Strings.Inst().GetString(TextEnum.ERROR_NO_SPECIAL_BUIDLING_FOR_MOUNTAINS));
-                return BuildingBuildError.NoSpecialBuildingForMountains;
             }
 
             return town.CanActivePlayerBuildBuildingInTown(buildingPos, kind);

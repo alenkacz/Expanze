@@ -56,7 +56,7 @@
         <town>1</town>
         <town>62</town>
         <town>68</town>
-        <turnLimit>111</turnLimit>
+        <turnLimit>75</turnLimit>
 	</points>
 	<ban>
 		<Fort>0</Fort>
