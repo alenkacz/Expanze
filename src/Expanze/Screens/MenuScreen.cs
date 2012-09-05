@@ -58,8 +58,8 @@ namespace Expanze
         {
             this.menuTitle = menuTitle;
 
-            TransitionOnTime = TimeSpan.FromSeconds(0.5);
-            TransitionOffTime = TimeSpan.FromSeconds(0.5);
+            TransitionOnTime = TimeSpan.FromSeconds(0.8);
+            TransitionOffTime = TimeSpan.FromSeconds(0.8);
         }
 
         public override void LoadContent()
@@ -70,6 +70,11 @@ namespace Expanze
             //cursorComp.Initialize();
             //cursorComp.LoadContent();
             menuLogo = GameResources.Inst().GetMenuTexture(MenuTexture.Logo);
+
+            backButton = new ButtonComponent(ScreenManager.Game, 60, (int)(Settings.maximumResolution.Y - 200), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(79), Settings.scaleH(66), "HUD/hotseat_back");
+            backButton.Actions += OnCancel;
+            backButton.Initialize();
+            backButton.LoadContent();
         }
 
 
@@ -141,6 +146,7 @@ namespace Expanze
             menuEntries[entryIndex].OnSelectEntry(playerIndex);
         }
 
+        ButtonComponent backButton;
 
         /// <summary>
         /// Handler for when the user has cancelled the menu.
@@ -235,6 +241,13 @@ namespace Expanze
 
                 menuEntries[i].Update(this, isSelected, gameTime);
             }
+
+            base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+
+            if (menuTitle != "Main Menu")
+            {
+                backButton.Update(gameTime);
+            }
         }
 
 
@@ -272,6 +285,12 @@ namespace Expanze
             float transitionOffset = (float)Math.Pow(TransitionPosition, 2);
 
             spriteBatch.End();
+
+            if (menuTitle != "Main Menu")
+            {
+                base.Draw(gameTime);
+                backButton.Draw(gameTime);
+            }
         }
 
 

@@ -144,6 +144,22 @@
     <cz>Fullscreen</cz>
     <eng>Fullscreen</eng>
   </text>
+  <text id="MENU_OPTION_LANGUAGE">
+    <cz>Jazyk</cz>
+    <eng>Language</eng>
+  </text>
+  <text id="MENU_OPTION_DIFFICULTY">
+    <cz>Obtížnost</cz>
+    <eng>Difficulty</eng>
+  </text>
+  <text id="MENU_OPTION_DIFFICULTY_EASY">
+    <cz>Lehká</cz>
+    <eng>Easy</eng>
+  </text>
+  <text id="MENU_OPTION_DIFFICULTY_NORMAL">
+    <cz>Běžná</cz>
+    <eng>Normal</eng>
+  </text>
   <text id="MENU_CREATORS_LUKAS">
     <cz>Lukáš Beran - teamleader, programátor</cz>
     <eng>Lukas Beran - teamleader, programmer</eng>

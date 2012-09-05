@@ -26,17 +26,20 @@ namespace Expanze
         MenuEntry resolutionMenuEntry;
         MenuEntry fullscreenMenuEntry;
         MenuEntry languageMenuEntry;
+        MenuEntry difficultyMenuEntry;
         MenuEntry apply;
-        MenuEntry back;
+        
 
         static string[] resolution = new string[Settings.allResolutions.Length];
         static string[] fullscreen = {Strings.Inst().GetString(TextEnum.MENU_COMMON_NO), Strings.Inst().GetString(TextEnum.MENU_COMMON_YES)};
+        
         string[] languages;
         string[] languageCodes;
 
         static int currentResolution = 0;
         static bool isFullscreen = false;
         static int activeLanguage = 0;
+        static int activeDifficulty = 0;
 
         #endregion
 
@@ -73,11 +76,11 @@ namespace Expanze
             fillResolutionsMenu();
 
             // Create our menu entries.
+            difficultyMenuEntry = new MenuEntry(string.Empty);
             resolutionMenuEntry = new MenuEntry(string.Empty);
             fullscreenMenuEntry = new MenuEntry(string.Empty);
             languageMenuEntry = new MenuEntry(string.Empty);
             apply = new MenuEntry(Strings.Inst().GetString(TextEnum.MENU_OPTION_ACTIVATE_CHANGES));
-            back = new MenuEntry(Strings.Inst().GetString(TextEnum.MENU_COMMON_BACK));
 
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load("Content/Maps/texts.xml");
@@ -92,22 +95,23 @@ namespace Expanze
                 if (languageCodes[loop1] == Strings.Inst().Language)
                     activeLanguage = loop1;
             }
+            activeDifficulty = (int) Settings.difficulty;
 
             SetMenuEntryText();
 
             // Hook up menu event handlers.
             resolutionMenuEntry.Selected += ResolutionMenuEntrySelected;
             fullscreenMenuEntry.Selected += FullscreenMenuEntrySelected;
+            difficultyMenuEntry.Selected += DifficultyMenuEntrySelected;
             languageMenuEntry.Selected += LanguageMenuEntrySelected;
             apply.Selected += ApplyChangesSelected;
-            back.Selected += OnCancel;
-            
+
             // Add entries to the menu.
             MenuEntries.Add(resolutionMenuEntry);
             MenuEntries.Add(fullscreenMenuEntry);
+            MenuEntries.Add(difficultyMenuEntry);
             MenuEntries.Add(languageMenuEntry);
             MenuEntries.Add(apply);
-            MenuEntries.Add(back);
 
             isFullscreen = Settings.isFullscreen;
 
@@ -124,9 +128,10 @@ namespace Expanze
             fullscreen[0] = Strings.Inst().GetString(TextEnum.MENU_COMMON_NO);
             fullscreen[1] = Strings.Inst().GetString(TextEnum.MENU_COMMON_YES);
             fullscreenMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_OPTION_FULLSCREEN) + ": " + fullscreen[(isFullscreen) ? 1 : 0];
-            languageMenuEntry.Text = Strings.Inst().LanguageName;
+            string[] difficulty = { Strings.Inst().GetString(TextEnum.MENU_OPTION_DIFFICULTY_EASY), Strings.Inst().GetString(TextEnum.MENU_OPTION_DIFFICULTY_NORMAL) };
+            difficultyMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_OPTION_DIFFICULTY) + ": " + difficulty[activeDifficulty];
+            languageMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_OPTION_LANGUAGE) + ": " + languages[activeLanguage];
             apply.Text = Strings.Inst().GetString(TextEnum.MENU_OPTION_ACTIVATE_CHANGES);
-            back.Text = Strings.Inst().GetString(TextEnum.MENU_COMMON_BACK);
         }
 
 
@@ -172,6 +177,8 @@ namespace Expanze
                 Settings.isFullscreen = fullscreen;
                 gdm.ApplyChanges();
             }
+
+            Settings.difficulty = (Settings.Difficulty)activeDifficulty;
         }
 
 
@@ -198,13 +205,23 @@ namespace Expanze
             SetMenuEntryText();
         }
 
+        void DifficultyMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        {
+            activeDifficulty++;
+            string[] difficulty = { Strings.Inst().GetString(TextEnum.MENU_OPTION_DIFFICULTY_EASY), Strings.Inst().GetString(TextEnum.MENU_OPTION_DIFFICULTY_NORMAL) };
+            if (activeDifficulty >= difficulty.Length)
+                activeDifficulty = 0;
+
+            SetMenuEntryText();
+        }
+
         void LanguageMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
             activeLanguage++;
             if (activeLanguage >= languages.Length)
                 activeLanguage = 0;
 
-            languageMenuEntry.Text = languages[activeLanguage];
+            languageMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_OPTION_LANGUAGE) + ": " + languages[activeLanguage];
         }
 
         #endregion

@@ -53,7 +53,7 @@ namespace Expanze
             MenuEntries.Add(lukasMenuEntry);
             MenuEntries.Add(alenaMenuEntry);
             MenuEntries.Add(pavlaMenuEntry);
-            MenuEntries.Add(back);
+            //MenuEntries.Add(back);
         }
 
 

@@ -471,7 +471,10 @@ namespace Expanze
                 if (playerAI == null && playerName == "You")
                     playerName = Settings.playerName;
                 else
-                    playerPersonality = Settings.hero[playerName];
+                {
+                    if(playerAI != null)
+                        playerPersonality = Settings.hero[playerName];
+                }
 
                 Player player = new Player(playerName, playerColor, playerColorName, playerAI, playerOrder, playerPersonality, playerGen);
                 players.Add(player);
@@ -513,6 +516,9 @@ namespace Expanze
             {
                 XmlNode playerNode = playersNodes[loop1];
                 activePlayer = players[loop1];
+
+                if (Settings.difficulty == Settings.Difficulty.Easy && !activePlayer.GetIsAI())
+                    activePlayer.AddSources(new SourceAll(50), TransactionState.TransactionMiddle);
 
                 for (int loop2 = 0; loop2 < playerNode.ChildNodes.Count; loop2++)
                 {

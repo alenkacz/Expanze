@@ -3,6 +3,7 @@
   <common>
     <language-code>cz</language-code>
     <language-name>Česky</language-name>
+    <difficulty>0</difficulty>
   </common>
   <graphics>
     <fullscreen>false</fullscreen>

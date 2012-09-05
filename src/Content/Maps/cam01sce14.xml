@@ -96,7 +96,7 @@
         <Saw>0</Saw>
         <Quarry>7</Quarry>
         <Mine>7</Mine>
-        <FortCapture>3</FortCapture>
+        <FortCapture>0</FortCapture>
         <FortSteal>0</FortSteal>
         <turnLimit>50</turnLimit>
 	</points>
