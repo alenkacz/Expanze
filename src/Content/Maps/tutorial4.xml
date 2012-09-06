@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<tutorial>
+  <tutorialItem>
+    <trigger>MessageClose</trigger>
+    <pairs>
+      <pair>
+        <text>
+          <cz>Shořelá mapa</cz>
+          <eng>The burned map</eng>
+        </text>
+      </pair>
+      <pair>
+        <text>
+          <cz>Při požáru byla ztracena mapa tohoto ostrova.</cz>
+          <eng></eng>
+        </text>
+      </pair>
+      <pair>
+        <text>
+          <cz>Neví se, jaké suroviny, ani v jakém množství lze zde těžit.</cz>
+          <eng></eng>
+        </text>
+      </pair>
+      <pair>
+        <text>
+          <cz>Nezbývá ti nic než ostrov prozkoumat a postavit zde dost klášterů a tržišť.</cz>
+          <eng></eng>
+        </text>
+      </pair>
+    </pairs>
+  </tutorialItem>
+</tutorial>

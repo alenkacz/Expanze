@@ -87,7 +87,7 @@ namespace Expanze
         /// </summary>
         protected internal virtual void OnSelectEntry(PlayerIndex playerIndex)
         {
-            if (Selected != null)
+            if (Selected != null && !disabled)
                 Selected(this, new PlayerIndexEventArgs(playerIndex));
         }
 
@@ -100,10 +100,9 @@ namespace Expanze
         /// <summary>
         /// Constructs a new menu entry with the specified text.
         /// </summary>
-        public MenuEntry(string text)
+        public MenuEntry(string text) : this(text, null)
         {
-            this.text = text;
-            font = null;
+
         }
 
         /// <summary>
@@ -113,6 +112,10 @@ namespace Expanze
         {
             this.text = text;
             this.font = font;
+
+            disabled = false;
+            colorHover = Color.Yellow;
+            colorNormal = Color.BurlyWood;
         }
 
 
@@ -156,7 +159,7 @@ namespace Expanze
 #endif
 
             // Draw the selected entry in yellow, otherwise white.
-            Color color = isSelected ? Color.Yellow : Color.BurlyWood;
+            Color color = isSelected ? colorHover : colorNormal;
 
 
             float scale = 1;
@@ -207,5 +210,31 @@ namespace Expanze
 
 
         #endregion
+
+        Color colorNormal;
+        public Color ColorNormal {
+            set
+            {
+                colorNormal = value;
+            }
+        }
+
+        Color colorHover;
+        public Color ColorHover
+        {
+            set
+            {
+                colorHover = value;
+            }
+        }
+
+        bool disabled;
+        public bool Disabled
+        {
+            set
+            {
+                disabled = value;
+            }
+        }
     }
 }

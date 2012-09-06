@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
+using Expanze.Utils.Music;
 #endregion
 
 namespace Expanze
@@ -63,12 +64,14 @@ namespace Expanze
         {
             if (ScreenManager.Game.Content == null)
                 ScreenManager.Game.Content = new ContentManager(ScreenManager.Game.Services, "Content");
-
+            GameState.game = ScreenManager.Game;
             GameResources.game = ScreenManager.Game;
 
             GameResources.Inst().LoadMenuTexture();
             backgroundTexture = GameResources.Inst().GetMenuTexture(MenuTexture.LogoBackground);
 
+            MusicManager.Inst().Content = ScreenManager.Game.Content;
+            MusicManager.Inst().PlaySong(SongEnum.menu);
         }
 
 

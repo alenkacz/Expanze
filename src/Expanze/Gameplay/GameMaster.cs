@@ -434,6 +434,8 @@ namespace Expanze
                                 case "Yellow": playerColor = Color.Yellow; break;
                                 case "Black": playerColor = Color.Black; break;
                                 case "Purple": playerColor = Color.Purple; break;
+                                case "White": playerColor = Color.White; break;
+                                case "DarkMagenta": playerColor = Color.DarkMagenta; break;
                             }
                             break;
                         case "AI":
@@ -1053,18 +1055,25 @@ namespace Expanze
                         {
                             maxPoints = player.GetPointSum();
                             bestPlayer = player;
+
+                            if (!player.GetIsAI() && Settings.level > Settings.campaign)
+                            {
+                                Settings.campaign = Settings.level;
+                            }
                         }
                     }
                 }
 
                 if (winnerNew)
                 {
+                    Settings.level = -1;
                     Message.Inst().Show(Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_END_GAME), bestPlayer.GetName() + Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_END_GAME_WIN), GameResources.Inst().GetHudTexture(HUDTexture.IconFortParade));  
                 } else
 
                 if (turnNumber > Settings.maxTurn)
                 {
                     winnerNew = true;
+                    Settings.level = -1;
                     Message.Inst().Show(Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_END_GAME), Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_END_GAME_LOOSE1) + Settings.maxTurn + Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_END_GAME_LOOSE2), GameResources.Inst().GetHudTexture(HUDTexture.HammersPassive));
                 }
 
@@ -1520,7 +1529,18 @@ namespace Expanze
 
         public void SaveGame()
         {
-            XmlTextWriter writer = new XmlTextWriter("Content/Maps/save-game.xml", null);
+            XmlTextWriter writer = null;
+            try
+            {
+                writer = new XmlTextWriter("Content/Maps/save-game.xml", null);
+            }
+            catch (Exception ex)
+            {
+            }
+
+            if (writer == null)
+                return;
+
             writer.Formatting = Formatting.Indented;
             writer.WriteStartDocument();
             writer.WriteStartElement("map");

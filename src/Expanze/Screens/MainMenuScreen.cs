@@ -9,6 +9,7 @@
 
 #region Using Statements
 using Microsoft.Xna.Framework;
+using Expanze.Utils.Music;
 #endregion
 
 namespace Expanze
@@ -59,11 +60,16 @@ namespace Expanze
             MenuEntries.Add(hotseatMenuEntry);
             MenuEntries.Add(settingsMenuEntry);
             MenuEntries.Add(creatorsMenuEntry);
-            MenuEntries.Add(exitMenuEntry);
+            MenuEntries.Add(exitMenuEntry);           
         }
 
 
         #endregion
+
+        public override void LoadContent()
+        {
+            base.LoadContent();
+        }
 
         #region Handle Input
 

@@ -22,6 +22,7 @@ using Expanze.Utils;
 using Expanze.Gameplay;
 using Microsoft.Xna.Framework.Audio;
 using Expanze.Utils.Genetic;
+using Expanze.Utils.Music;
 #endregion
 
 namespace Expanze
@@ -258,6 +259,8 @@ namespace Expanze
             {
                 Thread.Sleep(100);
             }
+
+            MusicManager.Inst().StopSong();
         }
 
 

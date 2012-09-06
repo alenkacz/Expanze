@@ -4,13 +4,14 @@
     <language-code>cz</language-code>
     <language-name>Česky</language-name>
     <difficulty>0</difficulty>
+    <campaign>0</campaign>
   </common>
   <graphics>
     <fullscreen>false</fullscreen>
     <quality>low</quality>
     <resolution>
-      <screen-width>1024</screen-width>
-      <screen-height>768</screen-height>
+      <screen-width>800</screen-width>
+      <screen-height>600</screen-height>
     </resolution>
   </graphics>
 </settings>

@@ -120,7 +120,7 @@ namespace Expanze
             colorHover = Settings.colorHoverItem;
         }
 
-        private void init(Rectangle clickablePosition, int x, int y, int width, int height)
+        public void init(Rectangle clickablePosition, int x, int y, int width, int height)
         {
             visible = true;
 

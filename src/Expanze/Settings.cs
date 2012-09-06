@@ -200,7 +200,7 @@ namespace Expanze
 
             xDoc.GetElementsByTagName("language-code")[0].InnerText = Strings.Inst().Language;
             xDoc.GetElementsByTagName("language-name")[0].InnerText = Strings.Inst().LanguageName;
-
+            xDoc.GetElementsByTagName("campaign")[0].InnerText = Settings.campaign + "";
             xDoc.GetElementsByTagName("difficulty")[0].InnerText = ((int) Settings.difficulty) + "";
             xDoc.Save("Content/Maps/settings.xml");
         }
@@ -215,6 +215,7 @@ namespace Expanze
             int screenHeight = Convert.ToInt32(xDoc.GetElementsByTagName("screen-height")[0].InnerText);
             Settings.activeResolution = new Vector2(screenWidth, screenHeight);
             Settings.difficulty = (Difficulty) Convert.ToInt32(xDoc.GetElementsByTagName("difficulty")[0].InnerText);
+            Settings.campaign = Convert.ToInt32(xDoc.GetElementsByTagName("campaign")[0].InnerText);
             scaleChange();
 
             Strings.Inst().LoadTexts(xDoc.GetElementsByTagName("language-code")[0].InnerText, xDoc.GetElementsByTagName("language-name")[0].InnerText);
@@ -249,6 +250,8 @@ namespace Expanze
             Normal
         }
         public static Difficulty difficulty = Difficulty.Normal;
+        public static int level = -1;
+        public static int campaign = 1;
         private static bool hiddenEverything;
         public static bool HiddenEverything {
             get

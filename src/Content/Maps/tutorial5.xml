@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<tutorial>
+  <tutorialItem>
+    <trigger>MessageClose</trigger>
+    <pairs>
+      <pair>
+        <text>
+          <cz>Pevnost</cz>
+          <eng>Fort</eng>
+        </text>
+      </pair>
+      <pair>
+        <text>
+          <cz>Poslední speciální budovou je pevnost.</cz>
+          <eng>Tha last special building is a fort.</eng>
+        </text>
+      </pair>
+      <pair>
+        <text>
+          <cz>Můžeš ji využít k obsazování i takových polí, kam se po souši nedostaneš.</cz>
+          <eng></eng>
+        </text>
+      </pair>
+      <pair>
+        <text>
+          <cz>Postav pevnost u vody, obsaď pole za vodou a na jeho kraji postav město.</cz>
+          <eng></eng>
+        </text>
+      </pair>
+    </pairs>
+  </tutorialItem>
+
+  <tutorialItem>
+    <trigger>NextTurn</trigger>
+    <pairs>
+    </pairs>
+  </tutorialItem>
+
+  <tutorialItem>
+    <trigger>NextTurn</trigger>
+    <pairs>
+    </pairs>
+  </tutorialItem>
+  <tutorialItem>
+    <trigger>MessageClose</trigger>
+    <pairs>
+      <pair>
+        <text>
+          <cz>Upozornění!</cz>
+          <eng>Warning!</eng>
+        </text>
+      </pair>
+      <pair>
+        <text>
+          <cz>Pole nebude obsazené na pořád. Musíte u něj postavit město rychle.</cz>
+          <eng></eng>
+        </text>
+      </pair>
+      <pair>
+        <text>
+          <cz>Pokud zaplatíš vojákům výcvik, pole obsadí na delší dobu.</cz>
+          <eng></eng>
+        </text>
+      </pair>
+    </pairs>
+  </tutorialItem>
+</tutorial>

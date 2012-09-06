@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework;
 using System.IO;
 using System.Xml;
 using System.Collections.Generic;
+using System;
 #endregion
 
 namespace Expanze
@@ -37,6 +38,7 @@ namespace Expanze
             xDoc = new XmlDocument();
             mapnamesource = new Dictionary<string, string>();
             MenuEntry levelMenuItem;
+            int campID = 0;
             if (subFiles.Length > 0)
             {
                 foreach (FileInfo subFile in subFiles)
@@ -44,6 +46,7 @@ namespace Expanze
                     string name = subFile.Name;
                     if(name.StartsWith("cam"))
                     {
+                        campID++;
                         xDoc.Load(subFile.FullName);
                         XmlNodeList nameNode = xDoc.GetElementsByTagName("name");
                         foreach (XmlNode language in nameNode[0].ChildNodes)
@@ -53,6 +56,12 @@ namespace Expanze
                                 mapnamesource.Add(language.InnerText, name);
                                 levelMenuItem = new MenuEntry(language.InnerText, GameResources.Inst().GetFont(EFont.MedievalBigest));
                                 levelMenuItem.Selected += CampaignLevelSelected;
+                                if (campID > Settings.campaign + 1)
+                                {
+                                    levelMenuItem.Disabled = true;
+                                    levelMenuItem.ColorHover = Color.OrangeRed;
+                                    levelMenuItem.ColorNormal = Color.OrangeRed;
+                                }
                                 MenuEntries.Add(levelMenuItem);
                             }
                         }
@@ -75,6 +84,9 @@ namespace Expanze
             MenuEntry menu = (MenuEntry)sender;
             string src;
             mapnamesource.TryGetValue(menu.Text, out src);
+            String levelStr = src;
+            int level = Int32.Parse(levelStr.Substring(8, 2));
+            Settings.level = level;
             GameMaster.Inst().SetMapSource(src);// PrepareCampaignMap(src);
 
             // now is used for AI

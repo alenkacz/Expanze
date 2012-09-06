@@ -2,39 +2,84 @@
 <map>
   <settings>
     <name>
-      <cz>Tři ostrůvky</cz>
-      <eng>Three isles</eng>
+      <cz>Meč a štít</cz>
+      <eng>Sword and shield</eng>
     </name>
+    <tutorial>tutorial7</tutorial>
     <players>
+      <player>
+        <name>Frank Cole</name>
+        <color>Orange</color>
+        <AI>AI Gen</AI>
+        <roads>
+          <id>23</id>
+          <id>103</id>
+          <id>87</id>
+        </roads>
+        <source>
+          <ore>200</ore>
+          <meat>200</meat>
+          <stone>200</stone>
+          <wood>200</wood>
+          <corn>200</corn>
+        </source>
+      </player>
       <player>
         <name>You</name>
         <color>Red</color>
         <AI>Human</AI>
-        <towns>
-          <town id="31">
-            <source-building>0</source-building>
-            <source-building>1</source-building>
-            <source-building>2</source-building>
-          </town>
-          <town id="43">
-            <source-building>2</source-building>
-            <source-building>1</source-building>
-            <source-building>0</source-building>
-          </town>
-        </towns>
+        <roads>
+          <id>78</id>
+          <id>42</id>
+          <id>63</id>
+        </roads>
         <source>
-          <ore>65</ore>
-          <meat>65</meat>
-          <stone>65</stone>
-          <wood>65</wood>
-          <corn>65</corn>
+          <ore>200</ore>
+          <meat>200</meat>
+          <stone>200</stone>
+          <wood>200</wood>
+          <corn>200</corn>
+        </source>
+      </player>
+      <player>
+        <name>Michael Asher</name>
+        <color>Green</color>
+        <AI>AI Gen</AI>
+        <roads>
+          <id>106</id>
+          <id>59</id>
+          <id>91</id>
+        </roads>
+        <source>
+          <ore>200</ore>
+          <meat>200</meat>
+          <stone>200</stone>
+          <wood>200</wood>
+          <corn>200</corn>
+        </source>
+      </player>
+      <player>
+        <name>Kira Salak</name>
+        <color>Purple</color>
+        <AI>AI Gen</AI>
+        <roads>
+          <id>71</id>
+          <id>26</id>
+          <id>118</id>
+        </roads>
+        <source>
+          <ore>200</ore>
+          <meat>200</meat>
+          <stone>200</stone>
+          <wood>200</wood>
+          <corn>200</corn>
         </source>
       </player>
     </players>
 	<points>
-        <Town>0</Town>
+        <Town>5</Town>
         <Road>0</Road>
-        <Fort>0</Fort>
+        <Fort>3</Fort>
         <Monastery>0</Monastery>
         <Market>0</Market>
         <Medal>0</Medal>
@@ -48,13 +93,9 @@
         <Saw>0</Saw>
         <Quarry>0</Quarry>
         <Mine>0</Mine>
-        <FortCapture>0</FortCapture>
-        <FortSteal>0</FortSteal>
-        <townID>3</townID>
-        <town>2</town>
-        <town>16</town>
-        <town>35</town>
-        <turnLimit>35</turnLimit>
+        <FortCapture>3</FortCapture>
+        <FortSteal>3</FortSteal>
+        <turnLimit>75</turnLimit>
 	</points>
 	<ban>
 		<Fort>0</Fort>
@@ -75,59 +116,92 @@
       <hexa type="water" />
       <hexa type="water" />
       <hexa type="water" />
-    </row>
-	<row>
       <hexa type="water" />
       <hexa type="water" />
-      <hexa type="2" productivity="24" />
-      <hexa type="water" />
-      <hexa type="3" productivity="+" />
       <hexa type="water" />
     </row>
     <row>
       <hexa type="water" />
-      <hexa type="3" productivity="24" />
+      <hexa type="water" />
+      <hexa type="?" productivity="24" secretKind="yes" />
+      <hexa type="water" />
+      <hexa type="?" productivity="8" secretKind="yes" />
       <hexa type="water" />
       <hexa type="water" />
-      <hexa type="3" productivity="-" />
-      <hexa type="3" productivity="-" />
+      <hexa type="?" productivity="16" secretKind="yes" />
+      <hexa type="?" productivity="12" secretKind="yes" />
+      <hexa type="water" />
       <hexa type="water" />
     </row>
     <row>
-      <hexa type="space" />
+      <hexa type="water" />
+      <hexa type="?" productivity="20" secretKind="yes"/>
+      <hexa type="?" productivity="16" secretKind="yes"/>
+      <hexa type="water" />
+      <hexa type="?" productivity="20" secretKind="yes"/>
+      <hexa type="?" productivity="16" secretKind="yes"/>
+      <hexa type="water" />
+      <hexa type="?" productivity="8" secretKind="yes"/>
+      <hexa type="?" productivity="20" secretKind="yes"/>
+      <hexa type="?" productivity="12" secretKind="yes" />
+      <hexa type="?" productivity="16" secretKind="yes" />
+      <hexa type="water" />
+    </row>
+    <row>
+      <hexa type="water" />
+      <hexa type="?" productivity="12" secretKind="yes"/>
+      <hexa type="?" productivity="8" secretKind="yes"/>
       <hexa type="water" />
       <hexa type="water" />
+      <hexa type="?" productivity="12" secretKind="yes"/>
       <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="?" productivity="24" secretKind="yes"/>
       <hexa type="desert" />
-      <hexa type="2" productivity="+" />
-      <hexa type="3" productivity="-" />
+      <hexa type="desert" />
+      <hexa type="?" productivity="8" secretKind="yes" />
+      <hexa type="water" />
+    </row>
+    <row>
+      <hexa type="water" />
+      <hexa type="?" productivity="16" secretKind="yes"/>
+      <hexa type="?" productivity="20" secretKind="yes"/>
+      <hexa type="water" />
+      <hexa type="?" productivity="16" secretKind="yes"/>
+      <hexa type="?" productivity="8" secretKind="yes"/>
+      <hexa type="?" productivity="12" secretKind="yes" />
+      <hexa type="?" productivity="12" secretKind="yes" />
+      <hexa type="water" />
+      <hexa type="?" productivity="12" secretKind="yes"/>
+      <hexa type="?" productivity="8" secretKind="yes"/>
+      <hexa type="?" productivity="16" secretKind="yes"/>
+      <hexa type="water" />
+    </row>
+    <row>
+      <hexa type="space" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="?" productivity="12" secretKind="yes"/>
+      <hexa type="water" />
+      <hexa type="?" productivity="24" secretKind="yes"/>
+      <hexa type="?" productivity="20" secretKind="yes"/>
+      <hexa type="?" productivity="16" secretKind="yes" />
+      <hexa type="water" />
+      <hexa type="?" productivity="16" secretKind="yes"/>
+      <hexa type="?" productivity="12" secretKind="yes"/>
+      <hexa type="?" productivity="20" secretKind="yes"/>
+      <hexa type="water" />
+    </row>
+    <row>
+      <hexa type="space" />
+      <hexa type="space" />
+      <hexa type="space" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="water" />
 	    <hexa type="water" />
-    </row>
-    <row>
-      <hexa type="space" />
-      <hexa type="water" />
-      <hexa type="water" />
-      <hexa type="?" productivity="24" />
-      <hexa type="water" />
-      <hexa type="2" productivity="-" />
-      <hexa type="3" productivity="+" />
-      <hexa type="water" />
-    </row>
-    <row>
-      <hexa type="space" />
-      <hexa type="space" />
-      <hexa type="water" />
-      <hexa type="water" />
-      <hexa type="water" />
-      <hexa type="2" productivity="+" />
-      <hexa type="3" productivity="-" />
-      <hexa type="water" />
-    </row>
-    <row>
-      <hexa type="space" />
-      <hexa type="space" />
-      <hexa type="water" />
-      <hexa type="water" />
       <hexa type="water" />
       <hexa type="water" />
       <hexa type="water" />

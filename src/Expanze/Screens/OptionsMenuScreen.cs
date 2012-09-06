@@ -178,6 +178,7 @@ namespace Expanze
                 gdm.ApplyChanges();
             }
 
+            SetNewResolution();
             Settings.difficulty = (Settings.Difficulty)activeDifficulty;
         }
 

@@ -1301,7 +1301,7 @@
     <eng>Will you find only one cheat in the game?</eng>
   </text>
   <text id="TIP_GAME_10">
-    <cz></cz>
-    <eng></eng>
+    <cz>Nemůžeš se v kampani posunout dál? Zvol si v nastavení nižší obtížnost.</cz>
+    <eng>You can't progress any more? Change game difficulty in option menu.</eng>
   </text>
 </texts>

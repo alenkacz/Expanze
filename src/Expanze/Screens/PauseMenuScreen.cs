@@ -9,6 +9,7 @@
 
 #region Using Statements
 using Microsoft.Xna.Framework;
+using Expanze.Utils.Music;
 #endregion
 
 namespace Expanze
@@ -92,6 +93,7 @@ namespace Expanze
         /// </summary>
         void ConfirmQuitMessageBoxAccepted(object sender, PlayerIndexEventArgs e)
         {
+            MusicManager.Inst().PlaySong(SongEnum.menu);
             LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(),
                                                            new MainMenuScreen());
         }

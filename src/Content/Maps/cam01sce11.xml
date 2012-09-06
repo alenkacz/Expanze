@@ -2,8 +2,8 @@
 <map>
   <settings>
     <name>
-      <cz>Zlatý důl</cz>
-      <eng>Gold mine</eng>
+      <cz>Mniši a kupci</cz>
+      <eng>Monks and merchants</eng>
     </name>
     <players>
       <player>
@@ -11,7 +11,36 @@
         <color>Red</color>
         <AI>Human</AI>
         <towns>
-          <town id="22">
+          <town id="10">
+            <source-building>0</source-building>
+            <source-building>1</source-building>
+            <source-building>2</source-building>
+          </town>
+          <town id="32">
+            <source-building>2</source-building>
+            <source-building>1</source-building>
+            <source-building>0</source-building>
+          </town>
+          <town id="47">
+            <source-building>2</source-building>
+            <source-building>1</source-building>
+            <source-building>0</source-building>
+          </town>
+        </towns>
+        <source>
+          <ore>100</ore>
+          <meat>50</meat>
+          <stone>100</stone>
+          <wood>50</wood>
+          <corn>50</corn>
+        </source>
+      </player>
+      <player>
+        <name>Carl Linnaeus</name>
+        <color>Orange</color>
+        <AI>AI Gen</AI>
+        <towns>
+          <town id="20">
             <source-building>0</source-building>
             <source-building>1</source-building>
             <source-building>2</source-building>
@@ -22,12 +51,44 @@
             <source-building>0</source-building>
           </town>
         </towns>
+        <roads>
+          <id>52</id>
+          <id>46</id>
+        </roads>
         <source>
-          <ore>150</ore>
-          <meat>150</meat>
-          <stone>150</stone>
-          <wood>150</wood>
-          <corn>150</corn>
+          <ore>130</ore>
+          <meat>50</meat>
+          <stone>120</stone>
+          <wood>50</wood>
+          <corn>50</corn>
+        </source>
+      </player>
+      <player>
+        <name>Charles Wilkes</name>
+        <color>Blue</color>
+        <AI>AI Gen</AI>
+        <towns>
+          <town id="61">
+            <source-building>0</source-building>
+            <source-building>1</source-building>
+            <source-building>2</source-building>
+          </town>
+          <town id="68">
+            <source-building>2</source-building>
+            <source-building>1</source-building>
+            <source-building>0</source-building>
+          </town>
+        </towns>
+        <roads>
+          <id>91</id>
+          <id>85</id>
+        </roads>
+        <source>
+          <ore>130</ore>
+          <meat>50</meat>
+          <stone>120</stone>
+          <wood>50</wood>
+          <corn>50</corn>
         </source>
       </player>
     </players>
@@ -41,8 +102,8 @@
         <FortParade>0</FortParade>
         <UpgradeLvl1>0</UpgradeLvl1>
         <MarketLvl1>0</MarketLvl1>
-        <UpgradeLvl2>0</UpgradeLvl2>
-        <MarketLvl2>0</MarketLvl2>
+        <UpgradeLvl2>4</UpgradeLvl2>
+        <MarketLvl2>4</MarketLvl2>
         <Mill>0</Mill>
         <Stepherd>0</Stepherd>
         <Saw>0</Saw>
@@ -50,21 +111,15 @@
         <Mine>0</Mine>
         <FortCapture>0</FortCapture>
         <FortSteal>0</FortSteal>
-        <townID>4</townID>
-        <town>93</town>
-        <town>51</town>
-        <town>1</town>
-        <town>62</town>
-        <town>68</town>
-        <turnLimit>75</turnLimit>
+        <turnLimit>40</turnLimit>
 	</points>
 	<ban>
-		<Fort>0</Fort>
+		<Fort>1</Fort>
         <Monastery>0</Monastery>
         <Market>0</Market>
 		<FortCapture>0</FortCapture>
-        <FortSteal>1</FortSteal>
-		<FortParade>1</FortParade>
+        <FortSteal>0</FortSteal>
+		<FortParade>0</FortParade>
 		<UpgradeLvl2>0</UpgradeLvl2>
         <MarketLvl2>0</MarketLvl2>
 	</ban>
@@ -78,96 +133,70 @@
       <hexa type="water" />
       <hexa type="water" />
       <hexa type="water" />
-      <hexa type="water" />
-      <hexa type="water" />
-      <hexa type="water" />
+	  <hexa type="water" />
     </row>
 	<row>
       <hexa type="water" />
-      <hexa type="forest" productivity="24" />
       <hexa type="water" />
       <hexa type="water" />
-      <hexa type="water" />
-      <hexa type="water" />
-      <hexa type="mountains" productivity="12" />
-      <hexa type="water" />
-      <hexa type="forest" productivity="12" />
-      <hexa type="cornfield" productivity="24" />
+      <hexa type="mountains" productivity="20" />
+      <hexa type="cornfield" productivity="16" />
+      <hexa type="pasture" productivity="20" />
+      <hexa type="forest" productivity="20" />
       <hexa type="water" />
     </row>
     <row>
-      <hexa type="space" />
-      <hexa type="water" />
-      <hexa type="mountains" productivity="16" />
-      <hexa type="mountains" productivity="8" />
-      <hexa type="water" />
-      <hexa type="desert" />
-      <hexa type="desert" />
-      <hexa type="water" />
-      <hexa type="water" />
-      <hexa type="pasture" productivity="16" />
-      <hexa type="cornfield" productivity="20" />
-      <hexa type="water" />
-    </row>
-    <row>
-      <hexa type="space" />
-      <hexa type="water" />
-      <hexa type="water" />
-      <hexa type="pasture" productivity="12" secretKind="yes" />
-      <hexa type="pasture" productivity="20" secretKind="yes" />
-	    <hexa type="water" />
-      <hexa type="water" />
-      <hexa type="stone" productivity="12" />
-      <hexa type="water" />
-      <hexa type="water" />
-      <hexa type="water" />
-      <hexa type="water" />
-    </row>
-    <row>
-      <hexa type="space" />
-      <hexa type="water" />
-      <hexa type="forest" productivity="8" />
-      <hexa type="water" />
-      <hexa type="water" />
-      <hexa type="water" />
-      <hexa type="water" />
-      <hexa type="water" />
-      <hexa type="water" />
-      <hexa type="water" />
-      <hexa type="desert" secretKind="yes" secretProductivity="yes" />
-      <hexa type="desert" secretKind="yes" secretProductivity="yes" />
-      <hexa type="water" />
-    </row>
-    <row>
-      <hexa type="space" />
-      <hexa type="space" />
-      <hexa type="water" />
-      <hexa type="forest" productivity="20" secretKind="yes" />
-      <hexa type="forest" productivity="12" secretKind="yes" />
-      <hexa type="water" />
-      <hexa type="?" productivity="12" secretKind="yes" />
-      <hexa type="water" />
-      <hexa type="water" />
-      <hexa type="water" />
-      <hexa type="?" productivity="+" />
-      <hexa type="water" />
-      <hexa type="desert" secretKind="yes" secretProductivity="yes" />
-      <hexa type="water" />
-    </row>
-    <row>
-      <hexa type="space" />
-      <hexa type="space" />
-      <hexa type="space" />
       <hexa type="water" />
       <hexa type="forest" productivity="16" />
-      <hexa type="water" />
-      <hexa type="?" productivity="8" />
-      <hexa type="?" productivity="8" secretKind="yes" />
-      <hexa type="?" productivity="8" secretKind="yes" />
-      <hexa type="3" productivity="12" secretKind="yes" />
+      <hexa type="cornfield" productivity="16" />
+      <hexa type="pasture" productivity="12" />
       <hexa type="water" />
       <hexa type="water" />
+      <hexa type="forest" productivity="16" />
+      <hexa type="forest" productivity="24" />
       <hexa type="water" />
+    </row>
+    <row>
+      <hexa type="water" />
+      <hexa type="stone" productivity="24" />
+      <hexa type="mountains" productivity="16" />
+      <hexa type="water" />
+      <hexa type="forest" productivity="8" />
+      <hexa type="stone" productivity="24" />
+      <hexa type="mountains" productivity="20" />
+	    <hexa type="water" />
+	    <hexa type="water" />
+    </row>
+    <row>
+	    <hexa type="space" />
+      <hexa type="water" />
+      <hexa type="pasture" productivity="16" />
+      <hexa type="cornfield" productivity="16" />
+      <hexa type="stone" productivity="20" />
+      <hexa type="desert" />
+      <hexa type="?" productivity="?" />
+	    <hexa type="water" />
+      <hexa type="water" />
+    </row>
+    <row>
+	    <hexa type="space" />
+      <hexa type="space" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="3" productivity="?" />
+      <hexa type="3" productivity="?" />
+      <hexa type="water" />
+    </row>
+    <row>
+      <hexa type="space" />
+      <hexa type="space" />
+	    <hexa type="space" />
+	    <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="water" />
+      <hexa type="2" productivity="?" />
+      <hexa type="2" productivity="?" />
       <hexa type="water" />
     </row>
     <row>
@@ -175,10 +204,8 @@
       <hexa type="space" />
       <hexa type="space" />
       <hexa type="space" />
-      <hexa type="water" />
-      <hexa type="water" />
-      <hexa type="water" />
-      <hexa type="water" />
+      <hexa type="space" />
+      <hexa type="space" />
       <hexa type="water" />
       <hexa type="water" />
       <hexa type="water" />
