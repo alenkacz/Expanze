@@ -272,11 +272,27 @@ namespace Expanze
 
         public int GetPoints(PlayerPoints kind) { return points[(int)kind]; }
         public int[] GetPoints() { return points; }
-        public int GetPointSum()
+        public float GetPointSum()
         {
-            int pointSum = 0;
+            float pointSum = 0;
             for (int loop1 = 0; loop1 < (int)PlayerPoints.Count; loop1++)
                 pointSum += points[loop1];
+
+            if (Settings.pointsOre > 0)
+                pointSum += ((collectSourcesNormal.GetOre() > Settings.pointsOre) ? Settings.pointsOre : collectSourcesNormal.GetOre()) / ((float)Settings.pointsOre);
+
+            if (Settings.pointsWood > 0)
+                pointSum += ((collectSourcesNormal.GetWood() > Settings.pointsWood) ? Settings.pointsWood : collectSourcesNormal.GetWood()) / ((float)Settings.pointsWood);
+
+            if (Settings.pointsStone > 0)
+                pointSum += ((collectSourcesNormal.GetStone() > Settings.pointsStone) ? Settings.pointsStone : collectSourcesNormal.GetStone()) / ((float)Settings.pointsStone);
+
+            if (Settings.pointsMeat > 0)
+                pointSum += ((collectSourcesNormal.GetMeat() > Settings.pointsMeat) ? Settings.pointsMeat : collectSourcesNormal.GetMeat()) / ((float)Settings.pointsMeat);
+
+            if (Settings.pointsCorn > 0)
+                pointSum += ((collectSourcesNormal.GetCorn() > Settings.pointsCorn) ? Settings.pointsCorn : collectSourcesNormal.GetCorn()) / ((float)Settings.pointsCorn);
+            
             return pointSum;
         }
 

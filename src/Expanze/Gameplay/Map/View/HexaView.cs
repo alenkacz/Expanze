@@ -116,7 +116,7 @@ namespace Expanze
             }
         }
 
-        public void SetWorld(Matrix m)
+        public virtual void SetWorld(Matrix m)
         {
             world = m;
             Matrix rotation;

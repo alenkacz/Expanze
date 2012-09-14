@@ -160,10 +160,14 @@ namespace Expanze
                 GameAction debugInfo = new GameAction("debuginfo", GameAction.ActionKind.OnlyInitialPress);
 
                 GameAction changeGraphicsQuality = new GameAction("graphicsquality", GameAction.ActionKind.OnlyInitialPress);
+
+                /*
                 im.MapToKey(stateGame, debugInfo, Keys.A);
                 im.MapToKey(stateGame, switchWireModel, Keys.W);
                 im.MapToKey(stateGame, showPickingTexture, Keys.Q);
+                 *  */
                 im.MapToKey(stateGame, changeGraphicsQuality, Keys.G);
+                
 
                 im.MapToKey(stateGame, enablemessages, Keys.P);
                 im.MapToKey(stateGame, selectTown, Keys.T);
@@ -440,6 +444,7 @@ namespace Expanze
             if (InputManager.Inst().GetGameAction("game", "resigngame").IsPressed())
                 gMaster.GetActivePlayer().SetActive(false);
 
+            /*
             if (InputManager.Inst().GetGameAction("game", "switchwiremodel").IsPressed())
             {
                 GameState.wireModel = !GameState.wireModel;
@@ -448,7 +453,7 @@ namespace Expanze
 
                 rasterizerState.FillMode = (GameState.wireModel) ? FillMode.WireFrame : FillMode.Solid;
                 GameState.rasterizerState = rasterizerState;
-            }
+            }*/
             if (InputManager.Inst().GetGameAction("game", "graphicsquality").IsPressed())
             {
                 switch (Settings.graphics)
@@ -459,6 +464,7 @@ namespace Expanze
                 }
             }
 
+            /*
             if (InputManager.Inst().GetGameAction("game", "debuginfo").IsPressed())
             {
                 GameState.debugInfo = !GameState.debugInfo;
@@ -472,7 +478,7 @@ namespace Expanze
                     case PickingState.normalAndPicking: GameState.pickingTexture = PickingState.onlyPicking; break;
                     case PickingState.onlyPicking: GameState.pickingTexture = PickingState.onlyNormal; break;
                 }
-            }
+            }*/
 
             if (InputManager.Inst().GetGameAction("gamemessage", "cheatsources").IsPressed())
                 GameMaster.Inst().GetActivePlayer().PayForSomething(new SourceAll(-1000));

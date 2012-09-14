@@ -199,7 +199,7 @@ namespace Expanze
                 SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
                 SpriteFont font;
 
-                String message = Strings.Inst().GetString(TextEnum.MENU_VICTORY_SCREEN_STATISTIC_AFTER) + GameMaster.Inst().GetTurnNumber() + Strings.Inst().GetString(TextEnum.MENU_VICTORY_SCREEN_TURN);
+                String message = Strings.Inst().GetString(TextEnum.MENU_VICTORY_SCREEN_STATISTIC_AFTER) + (GameMaster.Inst().GetTurnNumber() - 1) + Strings.Inst().GetString(TextEnum.MENU_VICTORY_SCREEN_TURN);
 
                 // Center the text in the viewport.
                 font = GameResources.Inst().GetFont(EFont.MenuFont);

@@ -69,16 +69,16 @@
     <eng>Water amount</eng>
   </text>
   <text id="MENU_HOT_SEAT_MAP_SOURCE">
-    <cz>Druh surovin</cz>
-    <eng>Source kind</eng>
+    <cz>Typ mapy</cz>
+    <eng>Map type</eng>
   </text>
   <text id="MENU_HOT_SEAT_MAP_SECRET_PRODUCTIVITY">
     <cz>Produkce hex</cz>
-    <eng>Hexa productivity</eng>
+    <eng>Hex productivity</eng>
   </text>
   <text id="MENU_HOT_SEAT_MAP_SECRET_KIND">
     <cz>Druh hex</cz>
-    <eng>Hexa kind</eng>
+    <eng>Hex kind</eng>
   </text>
 
   <text id="MENU_PAUSE_GAME_ITEM_RESUME">
@@ -173,6 +173,10 @@
     <cz>Pavla Balíková - grafička</cz>
     <eng>Pavla Balikova - graphic</eng>
   </text>
+  <text id="MENU_CREATORS_VACLAV">
+    <cz>Václav Špíral - hudba</cz>
+    <eng>Vaclav Spiral - music</eng>
+  </text>
   <text id="MENU_GRAPH_POINTS">
     <cz>Počet bodů</cz>
     <eng>Total points</eng>
@@ -232,7 +236,7 @@
     <eng>Visible</eng>
   </text>
   <text id="GAME_SETTINGS_MAP_KIND_HIDDEN">
-    <cz>Skrytá</cz>
+    <cz>Skrytý</cz>
     <eng>Hidden</eng>
   </text>
   <text id="GAME_SETTINGS_MAP_KIND_HALF">
@@ -240,7 +244,7 @@
     <eng>Partly</eng>
   </text>
   <text id="GAME_SETTINGS_MAP_KIND_VISIBLE">
-    <cz>Viditelná</cz>
+    <cz>Viditelný</cz>
     <eng>Visible</eng>
   </text>
   <text id="GAME_SETTINGS_MAP_TYPE_ISLAND">
@@ -256,8 +260,8 @@
     <eng>Much</eng>
   </text>
   <text id="GAME_SETTINGS_MAP_SOURCE_NORMAL">
-    <cz>Normální</cz>
-    <eng>Normal</eng>
+    <cz>Vrchovina</cz>
+    <eng>Highland</eng>
   </text>
   <text id="GAME_SETTINGS_MAP_SOURCE_LOWLAND">
     <cz>Nížiny</cz>
@@ -304,11 +308,11 @@
   </text>
   <text id="GAME_ALERT_TITLE_AI_IS_THINKING">
     <cz>Soupeř přemýšlí</cz>
-    <eng>Oponent is thinking</eng>
+    <eng>Opponent is thinking</eng>
   </text>
   <text id="GAME_ALERT_DESCRIPTION_AI_IS_THINKING">
     <cz>Počkej chvíli než tvůj oponent provede svůj tah.</cz>
-    <eng>Wait a while. Your oponent nead some time to make his turn.</eng>
+    <eng>Wait a while. Your opponent nead some time to make his turn.</eng>
   </text>
   <text id="GAME_ALERT_TITLE_MARKET_BAD_TURN">
     <cz>Tržiště jsou zavřena</cz>
@@ -320,15 +324,15 @@
   </text>
   <text id="GAME_ALERT_TITLE_SOMEONE_STEAL">
     <cz>Někdo krade!</cz>
-    <eng></eng>
+    <eng>Steal!</eng>
   </text>
   <text id="GAME_ALERT_DESCRIPTION_SOMEONE_STEAL1">
     <cz> se vloupal do skladišť </cz>
-    <eng></eng>
+    <eng> breaks in </eng>
   </text>
   <text id="GAME_ALERT_DESCRIPTION_SOMEONE_STEAL2">
     <cz> a odnesl si část jeho zásob.</cz>
-    <eng></eng>
+    <eng> storeroom and has taken part of supply.</eng>
   </text>
   <text id="ALERT_TITLE_THIS_IS_NOT_YOURS">
     <cz>Tohle není tvoje. Můžeš pouze koukat.</cz>
@@ -377,6 +381,19 @@
     <eng>You need new building.</eng>
   </text>
 
+  <text id="MARKET_TITLE">
+    <cz>Tržiště</cz>
+    <eng>Market place</eng>
+  </text>
+  <text id="MARKET_WHAT_CHANGE">
+    <cz>Co vyměnit</cz>
+    <eng>What change</eng>
+  </text>
+  <text id="MARKET_FOR_WHAT">
+    <cz>Za co</cz>
+    <eng>For what</eng>
+  </text>
+  
   <!-- buildings -->
   <text id="HEXA_TRI">
     <cz>Rozcestí</cz>
@@ -606,12 +623,12 @@
   <!-- oponent -->
   <text id="GOAL_FORT_STEAL_PART2">
     <cz>soupeře</cz>
-    <eng>oponents</eng>
+    <eng>opponents</eng>
   </text>
   <!-- conquer -->
   <text id="GOAL_FORT_CAPTURE_PART1">
     <cz>Zbývá ti obsadit</cz>
-    <eng>You have to capture</eng>
+    <eng>You have to occupy</eng>
   </text>
   <text id="GOAL_FORT_CAPTURE_PART2">
     <cz>hexy</cz>
@@ -780,7 +797,7 @@
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUILD_FORT">
     <cz>Z pevnosti můžeš poslat vojsko ukrást suroviny protihráči, nebo získat body za vojenskou přehlídku.</cz>
-    <eng>With a fort you can steal oponent's sources, capture hexes or make crusades.</eng>
+    <eng>With a fort you can steal opponent's sources, occupy hexes or make crusades.</eng>
   </text>
   <text id="PROMPT_TITLE_WANT_TO_BUILD_MARKET">
     <cz>Tržiště</cz>
@@ -895,7 +912,7 @@
 
   <text id="PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_CAPTURE">
     <cz>Obsadit pole</cz>
-    <eng>Capture hex</eng>
+    <eng>Occupy hex</eng>
   </text>
   <text id="PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_CRUSADE">
     <cz>Válečná výprava</cz>
@@ -917,7 +934,7 @@
 
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_CAPTURE">
     <cz>Všechny těžební budovy na poli budou dávat suroviny pouze tobě.</cz>
-    <eng>You will get sources from all source buildings on the captured hex.</eng>
+    <eng>You will get sources from all source buildings on the occupied hex.</eng>
   </text>
   <!-- koncime -->
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_CRUSADE">
@@ -926,7 +943,7 @@
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_SOURCES">
     <cz>Vyšle vojsko, které získá část zásob soupeře.</cz>
-    <eng>Soldiers will steal part of oponent sources.</eng>
+    <eng>Soldiers will steal part of opponent sources.</eng>
   </text>
   <text id="PROMPT_DESCRIPTION_WANT_TO_BUY_FORT_ACTION_PARADE">
     <cz>Vojenský výcvik zvýší účinnost ostatních vojenských akcí.</cz>
@@ -946,46 +963,46 @@
   </text>
   <text id="MESSAGE_DESCRIPTION_DISASTER_CORNFIELD">
     <cz>Zemi postihla extrémní sucha. Výnosy z polí budou poloviční.</cz>
-    <eng></eng>
+    <eng>Extreme drought hits the land. Revenues from the cornfields will be halved.</eng>
   </text>
   <text id="MESSAGE_DESCRIPTION_DISASTER_PASTURE">
     <cz>Vlci napadli stádo ovcí. Pastevci ti jich budou dodávat o polovinu méně.</cz>
-    <eng></eng>
+    <eng>Wolves has attacked a flock of sheep. Stephers will deliver them half as much.</eng>
   </text>
   <text id="MESSAGE_DESCRIPTION_DISASTER_STONE">
     <cz>Sesuvy kamení dělají práci nebezpečnou a horníci nepracují. Těžba bude poloviční.</cz>
-    <eng></eng>
+    <eng>Landslides do the work dangerous and miners do not work. Mining will be halved.</eng>
   </text>
   <text id="MESSAGE_DESCRIPTION_DISASTER_FOREST">
     <cz>Požár zachvátil lesy v zemi. Těžba dřeva musí být omezena na polovinu.</cz>
-    <eng></eng>
+    <eng>The fire engulfed the forests in the country. Logging must be limited to half.</eng>
   </text>
   <text id="MESSAGE_DESCRIPTION_DISASTER_MOUNTAINS">
     <cz>V dolech straší a horníci se bojí. Budou těžit jen ti nejodvážnější. Zisky poloviční.</cz>
-    <eng></eng>
+    <eng>The haunted mines. Miners are afraid. Only the bravest will benefit. Profits are halved.</eng>
   </text>
 
   <!-- miracles -->
 
   <text id="MESSAGE_DESCRIPTION_MIRACLE_CORNFIELD">
     <cz>Teplé počasí polím přálo, obilí rostlo mnohem víc, rovnou o polovinu víc.</cz>
-    <eng></eng>
+    <eng>It was warm weather last days. Corn grew much more, half more.</eng>
   </text>
   <text id="MESSAGE_DESCRIPTION_MIRACLE_PASTURE">
     <cz>Ovcím se narodilo spoustu mláďat, bude jich o polovinu více.</cz>
-    <eng></eng>
+    <eng>Many lambs were born. You will get half more.</eng>
   </text>
   <text id="MESSAGE_DESCRIPTION_MIRACLE_STONE">
     <cz>Nikdo neví, co se stalo. Těžba jde teď mnohem lépe, je zrychlena o polovinu.</cz>
-    <eng></eng>
+    <eng>Nobody knows what happened. Mining is now much better. It is accelerated by half.</eng>
   </text>
   <text id="MESSAGE_DESCRIPTION_MIRACLE_FOREST">
     <cz>Silný vítr vyvrátil mnoho stromů. Těžba dřeva bude rychlejší o polovinu.</cz>
-    <eng></eng>
+    <eng>Strong winds refuted many trees. Logging will be faster by half.</eng>
   </text>
   <text id="MESSAGE_DESCRIPTION_MIRACLE_MOUNTAINS">
     <cz>Nalezeny nové žíly, může se těžit naplno. Zisky rud budou o polovinu vyšší.</cz>
-    <eng></eng>
+    <eng>New veins were discoverd. Ore profits will be about half higher.</eng>
   </text>
 
   <text id="MESSAGE_TITLE_MIRACLE">
@@ -995,95 +1012,95 @@
 
   <text id="MESSAGE_TITLE_MESSAGE_ON">
     <cz>Zprávy znovu aktivovány.</cz>
-    <eng></eng>
+    <eng>News reactivated.</eng>
   </text>
   <text id="MESSAGE_DESCRIPTION_MESSAGE_ON">
     <cz>Opět budeš informován o akcích hráče, nových medailích, katastrofách a zázracích.</cz>
-    <eng></eng>
+    <eng>You will be informed of player actions, new medals, disasters and miracles again.</eng>
   </text>
 
   <!-- medaile -->
 
   <text id="MESSAGE_TITLE_MEDAL_TOWN">
     <cz>Medaile za expanzi</cz>
-    <eng></eng>
+    <eng>Medal of expanzion</eng>
   </text>
   <text id="MESSAGE_TITLE_MEDAL_ROAD">
     <cz>Medaile cestovatele</cz>
-    <eng></eng>
+    <eng>Explorers medal</eng>
   </text>
   <text id="MESSAGE_TITLE_MEDAL_MARKET">
     <cz>Medaile obchodníka</cz>
-    <eng></eng>
+    <eng>Merchant medal</eng>
   </text>
   <text id="MESSAGE_TITLE_MEDAL_FORT">
     <cz>Medaile válečníka</cz>
-    <eng></eng>
+    <eng>War medal</eng>
   </text>
   <text id="MESSAGE_TITLE_MEDAL_MONASTERY">
     <cz>Medaile učence</cz>
-    <eng></eng>
+    <eng>Monk medal</eng>
   </text>
   <text id="MESSAGE_TITLE_MEDAL_SAW">
     <cz>Medaile pily</cz>
-    <eng></eng>
+    <eng>Saw medal</eng>
   </text>
   <text id="MESSAGE_TITLE_MEDAL_MILL">
     <cz>Medaile mlýna</cz>
-    <eng></eng>
+    <eng>Windmill medal</eng>
   </text>
   <text id="MESSAGE_TITLE_MEDAL_QUARRY">
     <cz>Medaile lomu</cz>
-    <eng></eng>
+    <eng>Quarry medal</eng>
   </text>
   <text id="MESSAGE_TITLE_MEDAL_STEPHERD">
     <cz>Medaile pastevce</cz>
-    <eng></eng>
+    <eng>Stepherd medal</eng>
   </text>
   <text id="MESSAGE_TITLE_MEDAL_MINE">
     <cz>Medaile dolu</cz>
-    <eng></eng>
+    <eng>Mine medal</eng>
   </text>
 
   <text id="MESSAGE_DESCRIPTION_MEDAL_TOWN">
     <cz>Získá ji ten, který má nejvíce měst, avšak minimálně 5.</cz>
-    <eng></eng>
+    <eng>NOT IN GAME</eng>
   </text>
   <text id="MESSAGE_DESCRIPTION_MEDAL_ROAD">
     <cz>Získá ji ten, jenž postaví nejvíce cest, avšak nejméně 10.</cz>
-    <eng></eng>
+    <eng>NOT IN GAME</eng>
   </text>
   <text id="MESSAGE_DESCRIPTION_MEDAL_MARKET">
     <cz>Rozený obchodník, jsi první, kdo postavil tržiště.</cz>
-    <eng></eng>
+    <eng>NOT IN GAME</eng>
   </text>
   <text id="MESSAGE_DESCRIPTION_MEDAL_FORT">
     <cz>Jako první bojovník si postavil pevnost, medaile patří tobě.</cz>
-    <eng></eng>
+    <eng>NOT IN GAME</eng>
   </text>
   <text id="MESSAGE_DESCRIPTION_MEDAL_MONASTERY">
     <cz>Medaile patří tomu, kdo první postaví klášter pro učence.</cz>
-    <eng></eng>
+    <eng>NOT IN GAME</eng>
   </text>
   <text id="MESSAGE_DESCRIPTION_MEDAL_SAW">
     <cz>Postav víc pil než ostatní, avšak minimálně tři a tato medaile je tvá.</cz>
-    <eng></eng>
+    <eng>NOT IN GAME</eng>
   </text>
   <text id="MESSAGE_DESCRIPTION_MEDAL_MILL">
     <cz>Postav víc mlýnů než ostatní, avšak minimálně tři a tato medaile je tvá.</cz>
-    <eng></eng>
+    <eng>NOT IN GAME</eng>
   </text>
   <text id="MESSAGE_DESCRIPTION_MEDAL_QUARRY">
     <cz>Postav víc lomů než ostatní, avšak minimálně tři a tato medaile je tvá.</cz>
-    <eng></eng>
+    <eng>NOT IN GAME</eng>
   </text>
   <text id="MESSAGE_DESCRIPTION_MEDAL_STEPHERD">
     <cz>Postav víc chatrčí pastevce než ostatní, avšak minimálně tři a tato medaile je tvá.</cz>
-    <eng></eng>
+    <eng>NOT IN GAME</eng>
   </text>
   <text id="MESSAGE_DESCRIPTION_MEDAL_MINE">
     <cz>Postav víc dolů na rudu než ostatní, avšak minimálně tři a tato medaile je tvá.</cz>
-    <eng></eng>
+    <eng>NOT IN GAME</eng>
   </text>
 
   <text id="MESSAGE_TITLE_MARKET_NOT_SOURCES">
@@ -1142,103 +1159,103 @@
   </text>
   <text id="ERROR_THERE_IS_NO_BUILDING">
     <cz>There is no building</cz>
-    <eng></eng>
+    <eng>There is no building</eng>
   </text>
   <text id="ERROR_INVALID_ROAD_ID">
     <cz>Invalid road ID</cz>
-    <eng></eng>
+    <eng>Invalid road ID</eng>
   </text>
   <text id="ERROR_INVALID_TOWN_ID">
     <cz>Invalid town ID</cz>
-    <eng></eng>
+    <eng>Invalid town ID</eng>
   </text>
   <text id="ERROR_NO_BUILDING_FOR_WATER">
     <cz>No building for water</cz>
-    <eng></eng>
+    <eng>No building for water</eng>
   </text>
   <text id="ERROR_INVALID_HEXA_ID">
-    <cz>Invalid hexa ID</cz>
-    <eng></eng>
+    <cz>Invalid hex ID</cz>
+    <eng>Invalid hex ID</eng>
   </text>
   <text id="ERROR_NO_SOURCE_BUILDING_FOR_DESERT">
     <cz>No source building for desert</cz>
-    <eng></eng>
+    <eng>No source building for desert</eng>
   </text>
   <text id="ERROR_NO_SPECIAL_BUIDLING_FOR_MOUNTAINS">
     <cz>No special building for mountains</cz>
-    <eng></eng>
+    <eng>No special building for mountains</eng>
   </text>
   <text id="ERROR_BAN_SECOND_UPGRADE">
     <cz>In this scenario you cant buy second upgrades</cz>
-    <eng></eng>
+    <eng>In this scenario you cant buy second upgrades</eng>
   </text>
   <text id="ERROR_HAVE_SECOND_UPGRADE">
     <cz>You already have second upgrade for this source kind</cz>
-    <eng></eng>
+    <eng>You already have second upgrade for this source kind</eng>
   </text>
   <text id="ERROR_BAN_SECOND_LICENCE">
     <cz>In this scenario you cant buy second licence</cz>
-    <eng></eng>
+    <eng>In this scenario you cant buy second licence</eng>
   </text>
   <text id="ERROR_HAVE_SECOND_LICENCE">
     <cz>You already have second licence for this source kind</cz>
-    <eng></eng>
+    <eng>You already have second licence for this source kind</eng>
   </text>
   <text id="ERROR_MAX_UPGRADES">
     <cz>You dont have free slot for upgrade</cz>
-    <eng></eng>
+    <eng>You dont have free slot for upgrade</eng>
   </text>
   <text id="ERROR_MAX_LICENCES">
     <cz>You dont have free slot for licence</cz>
-    <eng></eng>
+    <eng>You dont have free slot for licence</eng>
   </text>
   <text id="ERROR_TOO_FAR_FROM_FORT">
-    <cz>Hexa is too far from any fort</cz>
-    <eng></eng>
+    <cz>Hex is too far from any fort</cz>
+    <eng>You dont have free slot for licence</eng>
   </text>
   <text id="ERROR_NO_FORT">
     <cz>You dont have fort</cz>
-    <eng></eng>
+    <eng>You dont have fort</eng>
   </text>
   <text id="ERROR_BAN_FORT_CAPTURE_HEXA">
-    <cz>In this scenario you cant capture hexa.</cz>
-    <eng></eng>
+    <cz>In this scenario you cant occupy hexs.</cz>
+    <eng>In this scenario you cant occupy hexs.</eng>
   </text>
   <text id="ERROR_BAN_FORT_STEAL_SOURCES">
     <cz>In this scenario you cant steal sources.</cz>
-    <eng></eng>
+    <eng>In this scenario you cant steal sources.</eng>
   </text>
   <text id="ERROR_BAN_FORT_SHOW_PARADE">
     <cz>In this scenario you cant show parade.</cz>
-    <eng></eng>
+    <eng>In this scenario you cant show parade.</eng>
   </text>
   <text id="ERROR_BAN_MARKET">
     <cz>In this scenario you cant built market.</cz>
-    <eng></eng>
+    <eng>In this scenario you cant built market.</eng>
   </text>
   <text id="ERROR_BAN_MONASTERY">
     <cz>In this scenario you cant built monastery.</cz>
-    <eng></eng>
+    <eng>In this scenario you cant built monastery.</eng>
   </text>
   <text id="ERROR_BAN_FORT">
     <cz>In this scenario you cant built fort.</cz>
-    <eng></eng>
+    <eng>In this scenario you cant built fort.</eng>
   </text>
   <text id="ERROR_ALREADY_BUILD">
-    <cz>It has been already built</cz>
-    <eng></eng>
+    <cz>It has been already built.</cz>
+    <eng>It has been already built.</eng>
   </text>
   <text id="ERROR_NO_OWNER">
     <cz>You are not owner of this</cz>
-    <eng></eng>
+    <eng>You are not owner of this</eng>
   </text>
   <text id="ERROR_OTHER_TOWN_IS_TOO_CLOSE">
     <cz>Other town is too close</cz>
-    <eng></eng>
+    <eng>Other town is too close</eng>
   </text>
   <text id="ERROR_NO_PLAYER_ROAD">
     <cz>There is no your road connected with this spot.</cz>
-    <eng></eng>
+    <eng>There is no your road connected with this spot</eng>
   </text>
   <text id="ERROR_YOU_HAVE_BUILT_TOWN_THIS_TURN">
     <cz>You have already built town this turn.</cz>
@@ -1258,11 +1275,11 @@
   </text>
   <text id="MENU_VICTORY_SCREEN_STATISTIC_AFTER">
     <cz>Statistiky po </cz>
-    <eng>Statistics after </eng>
+    <eng>Statistics after turn</eng>
   </text>
   <text id="MENU_VICTORY_SCREEN_TURN">
     <cz>. kole</cz>
-    <eng>. turn</eng>
+    <eng> </eng>
   </text>
   <text id="TIP_GAME_1">
     <cz>Používej klávesovou zkratku TAB pro nové kole</cz>
@@ -1274,7 +1291,7 @@
   </text>
   <text id="TIP_GAME_3">
     <cz>Stav města na kraji tebou obsazené hexy.</cz>
-    <eng>Build town on captured hex's corners.</eng>
+    <eng>Build town on occupied hex's corners.</eng>
   </text>
   <text id="TIP_GAME_4">
     <cz>Přepínej mezi městy pomocí klávesy T</cz>

@@ -206,7 +206,8 @@ namespace Expanze.Gameplay
         private static void GenerateSetup(GameSettings gs)
         {
             GameMaster.Inst().ResetGameSettings();
-            Settings.pointsTown = 7;
+            Settings.pointsTown = 8 - (gs.PlayerCount + 2) / 3;
+            Settings.maxTurn = 45 + 5 * gs.PlayerCount;
             for (int loop1 = 0; loop1 < 3; loop1++)
             {
                 switch (rnd.Next(12))

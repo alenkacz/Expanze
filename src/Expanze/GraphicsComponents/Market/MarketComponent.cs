@@ -108,14 +108,14 @@ namespace Expanze
             exit_button.Actions += CloseButtonAction;
             this.content.Add(exit_button);
 
-            GuiComponent title = new GuiComponent(Settings.Game, range.Left + 240, (int)(range.Top + 20), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(217), Settings.scaleH(43), "trziste_nadpis");
-            this.content.Add(title);
+            //GuiComponent title = new GuiComponent(Settings.Game, range.Left + 240, (int)(range.Top + 20), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(217), Settings.scaleH(43), "trziste_nadpis");
+            //this.content.Add(title);
 
-            GuiComponent firstRow = new GuiComponent(Settings.Game, range.Left + 3*w_space, (int)(range.Top + topMargin + space + 10), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(154), Settings.scaleH(22), "co_vymenit");
-            this.content.Add(firstRow);
+            //GuiComponent firstRow = new GuiComponent(Settings.Game, range.Left + 3*w_space, (int)(range.Top + topMargin + space + 10), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(154), Settings.scaleH(22), "co_vymenit");
+            //this.content.Add(firstRow);
 
-            GuiComponent secondRow = new GuiComponent(Settings.Game, range.Left + 3 * w_space, (int)(range.Top + topMargin + buttonSize.Y + 2 * space + 10), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(77), Settings.scaleH(14), "za_co_vymenit");
-            this.content.Add(secondRow);
+            //GuiComponent secondRow = new GuiComponent(Settings.Game, range.Left + 3 * w_space, (int)(range.Top + topMargin + buttonSize.Y + 2 * space + 10), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(77), Settings.scaleH(14), "za_co_vymenit");
+            //this.content.Add(secondRow);
 
             marketSlider = new MarketSliderComponent(Settings.Game, range.Left + 130, (int)(range.Top + topMargin + buttonSize.Y + 4 * space + 10), GameResources.Inst().GetFont(EFont.MedievalBig),372,16,"slider_market");
             //this.content.Add(marketSlider);
@@ -421,7 +421,11 @@ namespace Expanze
                 marketSlider.Draw(gameTime);
                 drawSelectedKind();
             }
-
+            float titleWidth = GameResources.Inst().GetFont(EFont.MedievalBigest).MeasureString(Strings.Inst().GetString(TextEnum.MARKET_TITLE)).X;
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalBigest), Strings.Inst().GetString(TextEnum.MARKET_TITLE), new Vector2(range.Left + (range.Width - titleWidth) / 2, (int)(range.Top + 20)), Color.LightBlue);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), Strings.Inst().GetString(TextEnum.MARKET_WHAT_CHANGE), new Vector2(range.Left + 2 * w_space, (int)(range.Top + topMargin + space + 10)), Color.LightBlue);
+            spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), Strings.Inst().GetString(TextEnum.MARKET_FOR_WHAT), new Vector2(range.Left + 2 * w_space, (int)(range.Top + topMargin + buttonSize.Y + 2 * space + 10)), Color.LightBlue);
+            
             spriteBatch.End();
         }
 

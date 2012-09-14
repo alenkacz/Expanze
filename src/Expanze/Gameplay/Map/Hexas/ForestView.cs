@@ -24,19 +24,6 @@ namespace Expanze.Gameplay.Map
 
             if(rnd == null)
             rnd = new Random();
-
-            for (int loop1 = 0; loop1 < 6; loop1++)
-            {
-                for (int loop2 = 0; loop2 < 8; loop2++)
-                {
-                    colorT[loop2 + 8 * loop1] = new Vector3(0.0f, (float)rnd.NextDouble() / 2.0f, 0.0f);
-                    //translateM[loop1] = Matrix.CreateTranslation(new Vector3((float) (rnd.NextDouble() - 0.5) / 2.0f, 0, (float) (rnd.NextDouble() - 0.5) / 2.0f));
-                    scaleM[loop2 + 8 * loop1] = Matrix.CreateScale((float)(0.001 - 0.0002 + 0.0004 * rnd.NextDouble()));
-                    //objectMatrix[loop1] = scaleM[loop1] * translateM[loop1];
-
-                    objectMatrix[loop2 + 8 * loop1] = scaleM[loop2 + 8 * loop1] * Matrix.CreateTranslation(new Vector3((float)(rnd.NextDouble() - 0.5) / 6.0f + 0.17f, 0, 0)) * Matrix.CreateRotationY((float)(Math.PI / 3.0 * ((6 - loop1) + 0.5 + 2) + Math.PI / 3.0 * rnd.NextDouble()));
-                }
-            }
         }
 
         public int MAX_TREE = 48;
@@ -52,28 +39,29 @@ namespace Expanze.Gameplay.Map
             Matrix[] transforms = new Matrix[m.Bones.Count];
             m.CopyAbsoluteBoneTransformsTo(transforms);
 
-            for (int loop1 = 0; loop1 < translateM.Length; loop1++)
+            foreach (ModelMesh mesh in m.Meshes)
             {
-                if (model.getTown((CorePlugin.TownPos)(loop1 / 8)).GetBuildingKind(model.GetID()) != BuildingKind.NoBuilding)
-                    continue;
-
-                foreach (ModelMesh mesh in m.Meshes)
+                foreach (BasicEffect effect in mesh.Effects)
                 {
-                    foreach (BasicEffect effect in mesh.Effects)
+                    effect.Alpha = 1.0f;
+                    effect.LightingEnabled = true;
+                    
+                    // GameState.MaterialAmbientColor;
+                    effect.DirectionalLight0.Direction = GameState.LightDirection;
+                    effect.DirectionalLight0.DiffuseColor = GameState.LightDiffusionColor;
+                    effect.DirectionalLight0.SpecularColor = GameState.LightSpecularColor;
+                    effect.DirectionalLight0.Enabled = true;
+                    effect.View = GameState.view;
+                    effect.Projection = GameState.projection;
+                    for (int loop1 = 0; loop1 < translateM.Length; loop1++)
                     {
-                        effect.Alpha = 1.0f;
-                        effect.LightingEnabled = true;
+                        if (model.getTown((CorePlugin.TownPos)(loop1 / 8)).GetBuildingKind(model.GetID()) != BuildingKind.NoBuilding)
+                            continue;
+
                         effect.AmbientLightColor = colorT[loop1];
-                        // GameState.MaterialAmbientColor;
-                        effect.DirectionalLight0.Direction = GameState.LightDirection;
-                        effect.DirectionalLight0.DiffuseColor = GameState.LightDiffusionColor;
-                        effect.DirectionalLight0.SpecularColor = GameState.LightSpecularColor;
-                        effect.DirectionalLight0.Enabled = true;
-                        effect.World = transforms[mesh.ParentBone.Index] * objectMatrix[loop1] * world;
-                        effect.View = GameState.view;
-                        effect.Projection = GameState.projection;
+                        effect.World = transforms[mesh.ParentBone.Index] * objectMatrix[loop1];// *world;
+                        mesh.Draw();
                     }
-                    mesh.Draw();
                 }
             }
         }
@@ -94,7 +82,7 @@ namespace Expanze.Gameplay.Map
                 if (model.getTown((CorePlugin.TownPos)(loop1 / 8)).GetBuildingKind(model.GetID()) != BuildingKind.NoBuilding)
                     continue;
 
-                mapView.DrawShadow(m, objectMatrix[loop1] * world, shadow);
+                mapView.DrawShadow(m, objectMatrix[loop1], shadow);
             }
         }
 
@@ -106,6 +94,25 @@ namespace Expanze.Gameplay.Map
                 return;
 
             DrawTrees(gameTime);
+        }
+
+        public override void SetWorld(Matrix m)
+        {
+            base.SetWorld(m);
+
+            for (int loop1 = 0; loop1 < 6; loop1++)
+            {
+                for (int loop2 = 0; loop2 < 8; loop2++)
+                {
+                    colorT[loop2 + 8 * loop1] = new Vector3(0.0f, (float)rnd.NextDouble() / 2.0f, 0.0f);
+                    //translateM[loop1] = Matrix.CreateTranslation(new Vector3((float) (rnd.NextDouble() - 0.5) / 2.0f, 0, (float) (rnd.NextDouble() - 0.5) / 2.0f));
+                    scaleM[loop2 + 8 * loop1] = Matrix.CreateScale((float)(0.001 - 0.0002 + 0.0004 * rnd.NextDouble()));
+                    //objectMatrix[loop1] = scaleM[loop1] * translateM[loop1];
+
+                    objectMatrix[loop2 + 8 * loop1] = scaleM[loop2 + 8 * loop1] * Matrix.CreateTranslation(new Vector3((float)(rnd.NextDouble() - 0.5) / 6.0f + 0.17f, 0, 0)) * Matrix.CreateRotationY((float)(Math.PI / 3.0 * ((6 - loop1) + 0.5 + 2) + Math.PI / 3.0 * rnd.NextDouble()));
+                    objectMatrix[loop2 + 8 * loop1] = objectMatrix[loop2 + 8 * loop1] * world;
+                }
+            }
         }
     }
 }

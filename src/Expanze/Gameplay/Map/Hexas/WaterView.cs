@@ -23,7 +23,7 @@ namespace Expanze.Gameplay.Map
 
         public override void Draw(GameTime gameTime)
         {
-            if (Settings.graphics == GraphicsQuality.LOW_GRAPHICS)
+            if (Settings.graphics != GraphicsQuality.HIGH_GRAPHICS)
             {
                 bool hasNoWaterNeighbour = false;
                 for(int loop1 = 0; loop1 < 6; loop1++)

@@ -55,6 +55,7 @@ namespace Expanze
         MENU_CREATORS_LUKAS,
         MENU_CREATORS_ALENA,
         MENU_CREATORS_PAVLA,
+        MENU_CREATORS_VACLAV,
 
         MENU_GRAPH_POINTS,
         MENU_GRAPH_TOWNS,
@@ -113,6 +114,10 @@ namespace Expanze
         ALERT_TITLE_ALREADY_HAVE_SECOND_UPGRADE,
         ALERT_TITLE_NO_UPGRADE,
         ALERT_TITLE_MAX_UPGRADES,
+
+        MARKET_TITLE,
+        MARKET_WHAT_CHANGE,
+        MARKET_FOR_WHAT,
 
         // Source buildings building
         HEXA_TRI,

@@ -1017,7 +1017,7 @@ namespace Expanze
             if (!winnerNew)
             {
                 int[] points;
-                int maxPoints = -1;
+                float maxPoints = -1;
                 Player bestPlayer = null;
 
                 
@@ -1055,13 +1055,12 @@ namespace Expanze
                         {
                             maxPoints = player.GetPointSum();
                             bestPlayer = player;
-
-                            if (!player.GetIsAI() && Settings.level > Settings.campaign)
-                            {
-                                Settings.campaign = Settings.level;
-                            }
                         }
                     }
+                }
+                if (winnerNew && bestPlayer != null && !bestPlayer.GetIsAI() && Settings.level > Settings.campaign)
+                {
+                    Settings.campaign = Settings.level;
                 }
 
                 if (winnerNew)
@@ -1281,7 +1280,8 @@ namespace Expanze
 
             if (state == EGameState.StateGame && activePlayerIndex == 0)
             {
-                SaveGame();
+                if(turnNumber > 2)
+                    SaveGame();
                 turnNumber++;
             }
 
