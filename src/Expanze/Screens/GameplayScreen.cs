@@ -296,6 +296,7 @@ namespace Expanze
         /// </summary>
         void MenuButtonAction(object sender, PlayerIndexEventArgs e)
         {
+            MusicManager.Inst().PlaySound(SoundEnum.button2);
             GameMaster.Inst().SetPausedNew(true);
         }
 
@@ -304,6 +305,7 @@ namespace Expanze
         /// </summary>
         void ChangeTurnButtonAction(object sender, PlayerIndexEventArgs e)
         {
+            MusicManager.Inst().PlaySound(SoundEnum.button2);
             NextTurn();
         }
 
@@ -321,6 +323,7 @@ namespace Expanze
         /// </summary>
         void MarketButtonAction(object sender, PlayerIndexEventArgs e)
         {
+            MusicManager.Inst().PlaySound(SoundEnum.button2);
             TriggerManager.Inst().TurnTrigger(TriggerType.MarketOpen);
             MarketWindowOpenClose();
         }

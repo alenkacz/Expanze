@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using System;
 using CorePlugin;
+using Expanze.Utils.Music;
 #endregion
 
 namespace Expanze
@@ -259,6 +260,7 @@ namespace Expanze
         /// </summary>
         void StartGameSelected(object sender, PlayerIndexEventArgs e)
         {
+            MusicManager.Inst().PlaySound(SoundEnum.button1);
             //counting all players
 
             if (GetActivePlayerCount() < 1)
@@ -296,6 +298,7 @@ namespace Expanze
         /// </summary>
         void BackSelected(object sender, PlayerIndexEventArgs e)
         {
+            MusicManager.Inst().PlaySound(SoundEnum.button1);
             ScreenManager.AddScreen(new BackgroundScreen(), e.PlayerIndex);
             ScreenManager.AddScreen(new MainMenuScreen(), e.PlayerIndex);
 

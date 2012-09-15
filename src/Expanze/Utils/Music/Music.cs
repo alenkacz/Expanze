@@ -14,10 +14,29 @@ namespace Expanze.Utils.Music
         menu
     }
 
+    public enum SoundEnum
+    {
+        building,
+        button1,
+        button2,
+        coins,
+        fort,
+        market,
+        mine,
+        monastery,
+        quarry,
+        road,
+        sawmill,
+        stepherd,
+        town,
+        windmill
+    }
+
     public class MusicManager
     {
         private static MusicManager inst;
         private Dictionary<string, Song> songs;
+        private Dictionary<string, SoundEffect> sounds;
         Song playedSong;
         ContentManager content;
 
@@ -25,6 +44,7 @@ namespace Expanze.Utils.Music
         {
             playedSong = null;
             songs = new Dictionary<string, Song>();
+            sounds = new Dictionary<string, SoundEffect>();
             MediaPlayer.IsMuted = false;
             MediaPlayer.IsRepeating = true;
             MediaPlayer.IsShuffled = true;
@@ -38,6 +58,22 @@ namespace Expanze.Utils.Music
             }
             return inst;
         }
+
+        public void PlaySound(SoundEnum soundEnum)
+        {
+            string name = soundEnum.ToString();
+
+            if (!sounds.ContainsKey(name))
+            {
+                Thread loading = new Thread(X => LoadAndPlaySound(name));
+                loading.Start();
+            }
+            else
+            {
+                sounds[name].Play();
+            }
+        }
+
 
         public void PlaySong(SongEnum songEnum)
         {
@@ -78,6 +114,18 @@ namespace Expanze.Utils.Music
             songs[name] = song;
             playedSong = song;
             MediaPlayer.Play(playedSong);
+        }
+
+        private void LoadSound(string name)
+        {
+            string src = "Sounds/" + name;
+            SoundEffect sound = content.Load<SoundEffect>(src);
+            sounds[name] = sound;
+        }
+        private void LoadAndPlaySound(string name)
+        {
+            LoadSound(name);
+            sounds[name].Play();
         }
 
         public ContentManager Content {

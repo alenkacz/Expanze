@@ -9,6 +9,7 @@ using Expanze.Gameplay.Map;
 using CorePlugin;
 using Expanze.Utils;
 using Microsoft.Xna.Framework.Input;
+using Expanze.Utils.Music;
 
 namespace Expanze
 {
@@ -69,8 +70,9 @@ namespace Expanze
 
         private void NextMessage()
         {
+            MusicManager.Inst().PlaySound(SoundEnum.button2);
             if (queue.Count == 0)
-            {
+            {       
                 TriggerManager.Inst().TurnTrigger(TriggerType.MessageClose);
                 messageActive = null;
             }

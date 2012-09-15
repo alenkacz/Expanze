@@ -8,6 +8,7 @@ using CorePlugin;
 using Microsoft.Xna.Framework.Graphics;
 using Expanze.Gameplay.Map;
 using Expanze.Gameplay;
+using Expanze.Utils.Music;
 
 namespace Expanze
 {
@@ -28,7 +29,10 @@ namespace Expanze
 
         public override void Execute()
         {
-            GameState.map.GetMapController().BuildBuildingInTown(townID, hexaID, kind);
+            if (GameState.map.GetMapController().BuildBuildingInTown(townID, hexaID, kind))
+                MusicManager.Inst().PlaySound(SoundEnum.building);
+            else
+                MusicManager.Inst().PlaySound(SoundEnum.button2);           
         }
 
         public override string TryExecute()
@@ -694,7 +698,7 @@ namespace Expanze
 
                                 default:
                                     mod = (townView[loop1].getTownModel().GetOwner() == GameMaster.Inst().GetActivePlayer()) ? PromptWindow.Mod.Buyer : PromptWindow.Mod.Viewer;
-                                    townView[loop1].getTownModel().GetSpecialBuilding(hexaID).SetPromptWindow(mod);
+                                    townView[loop1].getTownModel().GetSpecialBuilding(hexaID).SetPromptWindow(mod, false);
                                     break;
                             }
                         }
@@ -704,6 +708,7 @@ namespace Expanze
                 case EFortState.DestroyingHexa:
                     if (IsInFortRadius())// && !model.GetDestroyed())
                     {
+                        MusicManager.Inst().PlaySound(SoundEnum.fort);
                         GameState.map.GetMapController().DestroyHexa(hexaID, null);
                         GameMaster.Inst().SetFortState(EFortState.Normal);
                     }
@@ -712,6 +717,7 @@ namespace Expanze
                 case EFortState.CapturingHexa:
                     if (IsInFortRadius())
                     {
+                        MusicManager.Inst().PlaySound(SoundEnum.fort);
                         GameState.map.GetMapController().CaptureHexa(hexaID, HexaModel.GetHexaFort());
                         GameMaster.Inst().SetFortState(EFortState.Normal);
                     }

@@ -249,15 +249,15 @@
   </text>
   <text id="GAME_SETTINGS_MAP_TYPE_ISLAND">
     <cz>Málo</cz>
-    <eng>Little</eng>
+    <eng>Low</eng>
   </text>
   <text id="GAME_SETTINGS_MAP_TYPE_2_ISLANDS">
     <cz>Středně</cz>
-    <eng>Normal</eng>
+    <eng>Medium</eng>
   </text>
   <text id="GAME_SETTINGS_MAP_TYPE_SMALL_ISLANDS">
     <cz>Hodně</cz>
-    <eng>Much</eng>
+    <eng>High</eng>
   </text>
   <text id="GAME_SETTINGS_MAP_SOURCE_NORMAL">
     <cz>Vrchovina</cz>
@@ -334,6 +334,88 @@
     <cz> a odnesl si část jeho zásob.</cz>
     <eng> storeroom and has taken part of supply.</eng>
   </text>
+
+  <text id="GAME_ALERT_TITLE_AI_BOUGHT_LICENCE">
+    <cz> koupil licenci</cz>
+    <eng> has bought a licence</eng>
+  </text>
+  <text id="GAME_ALERT_DESTRIPTION_AI_BOUGHT_LICENCE1">
+    <cz> zakoupil </cz>
+    <eng> has bought</eng>
+  </text>
+  <text id="GAME_ALERT_DESTRIPTION_AI_BOUGHT_LICENCE2">
+    <cz> pro výhodnější výměnu </cz>
+    <eng> for better exchange rate of </eng>
+  </text>
+  <text id="GAME_ALERT_AI_BOUGHT_LICENCE_CORN">
+    <cz>obilí</cz>
+    <eng>corn</eng>
+  </text>
+  <text id="GAME_ALERT_AI_BOUGHT_LICENCE_MEAT">
+    <cz>masa</cz>
+    <eng>meat</eng>
+  </text>
+  <text id="GAME_ALERT_AI_BOUGHT_LICENCE_STONE">
+    <cz>kamene</cz>
+    <eng>stone</eng>
+  </text>
+  <text id="GAME_ALERT_AI_BOUGHT_LICENCE_WOOD">
+    <cz>dřeva</cz>
+    <eng>wood</eng>
+  </text>
+  <text id="GAME_ALERT_AI_BOUGHT_LICENCE_ORE">
+    <cz>rudy</cz>
+    <eng>ore</eng>
+  </text>
+  <text id="GAME_ALERT_AI_BOUGHT_LICENCE_1">
+    <cz>první licence</cz>
+    <eng>first licence</eng>
+  </text>
+  <text id="GAME_ALERT_AI_BOUGHT_LICENCE_2">
+    <cz>druhou licenci</cz>
+    <eng>second licence</eng>
+  </text>
+  <text id="GAME_ALERT_TITLE_AI_INVENTED_UPGRADE">
+    <cz> vynalezl pokrok</cz>
+    <eng> has invented upgrade</eng>
+  </text>
+  <text id="GAME_ALERT_DESTRIPTION_AI_INVENTED_UPGRADE1">
+    <cz> vynalezl </cz>
+    <eng> has invented </eng>
+  </text>
+  <text id="GAME_ALERT_DESTRIPTION_AI_INVENTED_UPGRADE2">
+    <cz> pro větší zisky surovin z </cz>
+    <eng> for better profit from </eng>
+  </text>
+  <text id="GAME_ALERT_AI_INVENTED_UPGRADE_STEPHERD">
+    <cz>chatrče pastevce</cz>
+    <eng>stepherd's huts</eng>
+  </text>
+  <text id="GAME_ALERT_AI_INVENTED_UPGRADE_MILL">
+    <cz>větrného mlýna</cz>
+    <eng>windmills</eng>
+  </text>
+  <text id="GAME_ALERT_AI_INVENTED_UPGRADE_QUARRY">
+    <cz>kamenného lomu</cz>
+    <eng>stone quarries</eng>
+  </text>
+  <text id="GAME_ALERT_AI_INVENTED_UPGRADE_SAWMILL">
+    <cz>pily</cz>
+    <eng>sawmills</eng>
+  </text>
+  <text id="GAME_ALERT_AI_INVENTED_UPGRADE_MINE">
+    <cz>dolu na rudu</cz>
+    <eng>ore mines</eng>
+  </text>
+  <text id="GAME_ALERT_AI_INVENTED_UPGRADE_1">
+    <cz>první pokrok</cz>
+    <eng>first upgrade</eng>
+  </text>
+  <text id="GAME_ALERT_AI_INVENTED_UPGRADE_2">
+    <cz>druhý pokrok</cz>
+    <eng>second upgrade</eng>
+  </text>
+
   <text id="ALERT_TITLE_THIS_IS_NOT_YOURS">
     <cz>Tohle není tvoje. Můžeš pouze koukat.</cz>
     <eng>This is not yours. You can look only.</eng>

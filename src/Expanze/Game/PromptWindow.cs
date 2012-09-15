@@ -9,6 +9,7 @@ using Expanze.Gameplay.Map;
 using CorePlugin;
 using Expanze.Utils;
 using Microsoft.Xna.Framework.Input;
+using Expanze.Utils.Music;
 
 namespace Expanze
 {
@@ -166,8 +167,9 @@ namespace Expanze
                 for (int loop1 = 0; loop1 < itemPick.Count; loop1++)
                 {
                     Map.SetPickVariables(c == itemPick[loop1].pickColor, itemPick[loop1]);
-                    if (itemPick[loop1].pickNewPress)
+                    if (itemPick[loop1].pickNewPress && activeItem != loop1)
                     {
+                        MusicManager.Inst().PlaySound(SoundEnum.button2);
                         activeItem = loop1;
                     }
 
@@ -194,6 +196,7 @@ namespace Expanze
 
                 if (InputManager.Inst().GetGameAction("gamewindow", "left").IsPressed())
                 {
+                    MusicManager.Inst().PlaySound(SoundEnum.button2);
                     activeItem--;
                     if (activeItem < 0)
                         activeItem = 0;
@@ -201,6 +204,7 @@ namespace Expanze
 
                 if (InputManager.Inst().GetGameAction("gamewindow", "right").IsPressed())
                 {
+                    MusicManager.Inst().PlaySound(SoundEnum.button2);
                     activeItem++;
                     if (activeItem >= itemList.Count)
                         activeItem = itemList.Count - 1;
@@ -218,6 +222,7 @@ namespace Expanze
 
                     if (isYesMarket)
                     {
+                        MusicManager.Inst().PlaySound(SoundEnum.coins);
                         GameMaster.Inst().ChangeSourcesFor((SourceAll)itemList[activeItem].getCost());
                     }
                     else
@@ -228,6 +233,7 @@ namespace Expanze
                 }
                 else if (noPick.pickNewPress || InputManager.Inst().GetGameAction("gamewindow", "close").IsPressed())
                 {
+                    MusicManager.Inst().PlaySound(SoundEnum.button2);
                     noPick.pickNewPress = false;
                     Deactive();
                 }

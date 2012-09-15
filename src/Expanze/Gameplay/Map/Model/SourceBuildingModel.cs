@@ -5,6 +5,7 @@ using System.Text;
 using CorePlugin;
 using Expanze.Gameplay;
 using Microsoft.Xna.Framework.Graphics;
+using Expanze.Utils.Music;
 
 namespace Expanze.Gameplay
 {
@@ -25,6 +26,7 @@ namespace Expanze.Gameplay
         Texture2D upgrade2icon;
         SourceAll upgrade1cost;
         SourceAll upgrade2cost;
+        SoundEnum sound;
         SourceBuildingKind buildingKind;
 
 
@@ -70,6 +72,7 @@ namespace Expanze.Gameplay
             {
                 case HexaKind.Mountains:
                     buildingKind = SourceBuildingKind.Mine;
+                    sound = SoundEnum.mine;
                     titleBuilding = Strings.Inst().GetString(TextEnum.PROMT_TITLE_WANT_TO_BUILD_MINE);
                     upgrade1Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_1_MINE);
                     upgrade2Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_2_MINE);
@@ -81,6 +84,7 @@ namespace Expanze.Gameplay
                     upgrade2icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMine2);
                     break;
                 case HexaKind.Forest:
+                    sound = SoundEnum.sawmill;
                     buildingKind = SourceBuildingKind.Saw;
                     titleBuilding = Strings.Inst().GetString(TextEnum.PROMT_TITLE_WANT_TO_BUILD_SAW);
                     upgrade1Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_1_SAW);
@@ -93,6 +97,7 @@ namespace Expanze.Gameplay
                     upgrade2icon = GameResources.Inst().GetHudTexture(HUDTexture.IconSaw2);
                     break;
                 case HexaKind.Cornfield:
+                    sound = SoundEnum.windmill;
                     buildingKind = SourceBuildingKind.Mill;
                     titleBuilding = Strings.Inst().GetString(TextEnum.PROMT_TITLE_WANT_TO_BUILD_MILL);
                     upgrade1Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_1_MILL);
@@ -105,6 +110,7 @@ namespace Expanze.Gameplay
                     upgrade2icon = GameResources.Inst().GetHudTexture(HUDTexture.IconMill2);
                     break;
                 case HexaKind.Pasture:
+                    sound = SoundEnum.stepherd;
                     buildingKind = SourceBuildingKind.Stepherd;
                     titleBuilding = Strings.Inst().GetString(TextEnum.PROMT_TITLE_WANT_TO_BUILD_STEPHERD);
                     upgrade1Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_1_STEPHERD);
@@ -117,6 +123,7 @@ namespace Expanze.Gameplay
                     upgrade2icon = GameResources.Inst().GetHudTexture(HUDTexture.IconStepherd2);
                     break;
                 case HexaKind.Stone:
+                    sound = SoundEnum.quarry;
                     buildingKind = SourceBuildingKind.Quarry;
                     titleBuilding = Strings.Inst().GetString(TextEnum.PROMT_TITLE_WANT_TO_BUILD_QUARRY);
                     upgrade1Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_1_QUARRY);
@@ -134,7 +141,7 @@ namespace Expanze.Gameplay
         protected override void ApplyEffect(UpgradeKind upgradeKind, int upgradeNumber)
         {
             upgrade = upgradeKind;
-            SetPromptWindow(PromptWindow.Mod.Buyer);
+            SetPromptWindow(PromptWindow.Mod.Buyer, true);
         }
 
         public UpgradeKind GetUpgrade() { return owner.GetMonasteryUpgrade(buildingKind);}
@@ -155,7 +162,7 @@ namespace Expanze.Gameplay
             }
         }
 
-        public override void SetPromptWindow(PromptWindow.Mod mod)
+        public override void SetPromptWindow(PromptWindow.Mod mod, bool silent)
         {
             PromptWindow win = PromptWindow.Inst();
             GameResources res = GameResources.Inst();
@@ -171,6 +178,7 @@ namespace Expanze.Gameplay
            
                 //win.AddPromptItem(new PromptItem(titleBuilding, Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_ALL_UPGRADES_USED), new SourceAll(0), false, false, upgrade2icon));
             }
+            MusicManager.Inst().PlaySound(sound);
         }
 
         public override BuyingUpgradeError CanActivePlayerBuyUpgrade(UpgradeKind upgradeKind, int upgradeNumber)

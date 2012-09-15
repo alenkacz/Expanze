@@ -5,6 +5,7 @@ using System.Text;
 using CorePlugin;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Expanze.Utils.Music;
 
 namespace Expanze.Gameplay
 {
@@ -69,8 +70,10 @@ namespace Expanze.Gameplay
             return GameResources.Inst().GetHudTexture(HUDTexture.IconFort);
         }
 
-        public override void SetPromptWindow(PromptWindow.Mod mod)
+        public override void SetPromptWindow(PromptWindow.Mod mod, bool silent)
         {
+            if(!silent)
+                MusicManager.Inst().PlaySound(SoundEnum.fort);
             if (!playerPrompt)
             {
                 PromptWindow win = PromptWindow.Inst();

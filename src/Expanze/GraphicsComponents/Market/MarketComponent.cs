@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using CorePlugin;
 using Expanze.Utils;
+using Expanze.Utils.Music;
 
 namespace Expanze
 {
@@ -215,6 +216,7 @@ namespace Expanze
         /// </summary>
         void MaterialButtonAction(object sender, PlayerIndexEventArgs e)
         {
+            MusicManager.Inst().PlaySound(SoundEnum.button2);
             ButtonComponent btn = (ButtonComponent)sender;
 
             if (disallowChangingSameTypes(btn))
@@ -305,6 +307,7 @@ namespace Expanze
         /// </summary>
         void ChangeButtonAction(object sender, PlayerIndexEventArgs e)
         {
+            MusicManager.Inst().PlaySound(SoundEnum.coins);
             ChangeMaterial();
         }
 
@@ -327,6 +330,7 @@ namespace Expanze
         /// </summary>
         void CloseButtonAction(object sender, PlayerIndexEventArgs e)
         {
+            MusicManager.Inst().PlaySound(SoundEnum.button2);
             TriggerManager.Inst().TurnTrigger(TriggerType.MarketClose);
             SetIsActive(false);
         }

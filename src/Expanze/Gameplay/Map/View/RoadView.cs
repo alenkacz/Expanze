@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Expanze.Gameplay.Map;
 using Microsoft.Xna.Framework.Graphics;
 using CorePlugin;
+using Expanze.Utils.Music;
 
 namespace Expanze.Gameplay.Map.View
 {
@@ -21,7 +22,10 @@ namespace Expanze.Gameplay.Map.View
 
         public override void Execute()
         {
-            GameState.map.GetMapController().BuildRoad(roadID);
+            if (GameState.map.GetMapController().BuildRoad(roadID) != null)
+                MusicManager.Inst().PlaySound(SoundEnum.building);
+            else
+                MusicManager.Inst().PlaySound(SoundEnum.button2);
         }
 
         public override string TryExecute()
@@ -199,6 +203,8 @@ namespace Expanze.Gameplay.Map.View
                 pickVars.pickNewPress = false;
                 if (GameMaster.Inst().GetState() == EGameState.StateGame)
                 {
+                    if(model.GetIsBuild())
+                        MusicManager.Inst().PlaySound(SoundEnum.road);
                     PromptWindow.Inst().Show(PromptWindow.Mod.Buyer, Strings.Inst().GetString(TextEnum.HEXA_DUO), true);
                     PromptWindow.Inst().AddPromptItem(
                             new RoadPromptItem(roadID,

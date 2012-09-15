@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using CorePlugin;
 using Microsoft.Xna.Framework.Graphics;
+using Expanze.Utils.Music;
 
 namespace Expanze.Gameplay
 {
@@ -43,12 +44,12 @@ namespace Expanze.Gameplay
             if (!p.GetIsAI())
             {
                 int tempItem = PromptWindow.Inst().GetActiveItem();
-                SetPromptWindow(PromptWindow.Mod.Buyer);
+                SetPromptWindow(PromptWindow.Mod.Buyer, true);
                 PromptWindow.Inst().SetActiveItem(tempItem);
             }
             else
             {
-                Message.Inst().Show(p.GetName() + " koupil licenci", p.GetName() + " zakoupil " + GetLicenceKindString(licenceKind) + " pro výhodnější výměnu " + GetLicenceSourceName(upgradeNumber) + ".", GetLicenceIcon(licenceKind, upgradeNumber));
+                Message.Inst().Show(p.GetName() + Strings.Inst().GetString(TextEnum.GAME_ALERT_TITLE_AI_BOUGHT_LICENCE), p.GetName() + Strings.Inst().GetString(TextEnum.GAME_ALERT_DESTRIPTION_AI_BOUGHT_LICENCE1) + GetLicenceKindString(licenceKind) + Strings.Inst().GetString(TextEnum.GAME_ALERT_DESTRIPTION_AI_BOUGHT_LICENCE2) + GetLicenceSourceName(upgradeNumber) + ".", GetLicenceIcon(licenceKind, upgradeNumber));
             }
         }
 
@@ -56,11 +57,11 @@ namespace Expanze.Gameplay
         {
             switch (number)
             {
-                case 0: return "obilí";
-                case 1: return "masa";
-                case 2: return "kamene";
-                case 3: return "dřeva";
-                case 4: return "rudy";
+                case 0: return Strings.Inst().GetString(TextEnum.GAME_ALERT_AI_BOUGHT_LICENCE_CORN);
+                case 1: return Strings.Inst().GetString(TextEnum.GAME_ALERT_AI_BOUGHT_LICENCE_MEAT);
+                case 2: return Strings.Inst().GetString(TextEnum.GAME_ALERT_AI_BOUGHT_LICENCE_STONE);
+                case 3: return Strings.Inst().GetString(TextEnum.GAME_ALERT_AI_BOUGHT_LICENCE_WOOD);
+                case 4: return Strings.Inst().GetString(TextEnum.GAME_ALERT_AI_BOUGHT_LICENCE_ORE);
             }
             return "";
         }
@@ -69,8 +70,8 @@ namespace Expanze.Gameplay
         {
             switch (kind)
             {
-                case LicenceKind.FirstLicence: return "první licenci";
-                case LicenceKind.SecondLicence: return "druhou licenci";
+                case LicenceKind.FirstLicence: return Strings.Inst().GetString(TextEnum.GAME_ALERT_AI_BOUGHT_LICENCE_1);
+                case LicenceKind.SecondLicence: return Strings.Inst().GetString(TextEnum.GAME_ALERT_AI_BOUGHT_LICENCE_2);
             }
             return "";
         }
@@ -104,8 +105,10 @@ namespace Expanze.Gameplay
             return null;
         }
 
-        public override void SetPromptWindow(PromptWindow.Mod mod)
+        public override void SetPromptWindow(PromptWindow.Mod mod, bool silent)
         {
+            if(!silent)
+                MusicManager.Inst().PlaySound(SoundEnum.market);
             PromptWindow win = PromptWindow.Inst();
             GameResources res = GameResources.Inst();
             win.Show(mod, Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_BUILD_MARKET), true);

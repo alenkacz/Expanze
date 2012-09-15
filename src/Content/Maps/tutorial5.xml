@@ -18,13 +18,13 @@
       <pair>
         <text>
           <cz>Můžeš ji využít k obsazování i takových polí, kam se po souši nedostaneš.</cz>
-          <eng></eng>
+          <eng>You can use it to occupy hexes. Even hexes not reachable by land.</eng>
         </text>
       </pair>
       <pair>
         <text>
           <cz>Postav pevnost u vody, obsaď pole za vodou a na jeho kraji postav město.</cz>
-          <eng></eng>
+          <eng>Build a fort near water, than occupy small islands and build a town there.</eng>
         </text>
       </pair>
     </pairs>
@@ -53,13 +53,13 @@
       <pair>
         <text>
           <cz>Pole nebude obsazené na pořád. Musíte u něj postavit město rychle.</cz>
-          <eng></eng>
+          <eng>Hex won't be occupied forever. You have to build the town quickly.</eng>
         </text>
       </pair>
       <pair>
         <text>
           <cz>Pokud zaplatíš vojákům výcvik, pole obsadí na delší dobu.</cz>
-          <eng></eng>
+          <eng>If you pay for soldiers training, they will occupy hex for longer time.</eng>
         </text>
       </pair>
     </pairs>

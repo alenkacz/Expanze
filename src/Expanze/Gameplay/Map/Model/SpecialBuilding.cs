@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using CorePlugin;
+using Expanze.Utils.Music;
 
 namespace Expanze.Gameplay
 {
@@ -27,11 +28,13 @@ namespace Expanze.Gameplay
 
         public override void Execute()
         {
+            
             int tempItem = PromptWindow.Inst().GetActiveItem();
-            building.SetPromptWindow(PromptWindow.Mod.Buyer);
+            building.SetPromptWindow(PromptWindow.Mod.Buyer, true);
             PromptWindow.Inst().SetActiveItem(tempItem);
             
-            GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, upgradeKind, upgradeNumber);            
+            if(GameState.map.GetMapController().BuyUpgradeInSpecialBuilding(townID, hexaID, upgradeKind, upgradeNumber))
+                MusicManager.Inst().PlaySound(SoundEnum.coins);
         }
 
         public override string TryExecute()
@@ -71,7 +74,7 @@ namespace Expanze.Gameplay
             ApplyEffect(kind, upgradeNumber);
         }
 
-        abstract public void SetPromptWindow(PromptWindow.Mod mod);
+        abstract public void SetPromptWindow(PromptWindow.Mod mod, bool silent);
         abstract public SourceAll GetUpgradeCost(UpgradeKind upgradeKind, int upgradeNumber);
         abstract public Texture2D GetIconActive();
         abstract public Texture2D GetIconPassive();

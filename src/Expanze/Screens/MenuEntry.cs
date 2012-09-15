@@ -11,6 +11,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Expanze.Utils.Music;
 #endregion
 
 namespace Expanze
@@ -87,6 +88,7 @@ namespace Expanze
         /// </summary>
         protected internal virtual void OnSelectEntry(PlayerIndex playerIndex)
         {
+            MusicManager.Inst().PlaySound(SoundEnum.button1);
             if (Selected != null && !disabled)
                 Selected(this, new PlayerIndexEventArgs(playerIndex));
         }

@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using CorePlugin;
+using Expanze.Utils.Music;
 
 namespace Expanze.Gameplay.Map
 {
@@ -19,8 +20,11 @@ namespace Expanze.Gameplay.Map
         }
 
         public override void Execute()
-        {
-            GameState.map.GetMapController().BuildTown(townID);
+        {          
+            if(GameState.map.GetMapController().BuildTown(townID) != null)
+                MusicManager.Inst().PlaySound(SoundEnum.building);
+            else
+                MusicManager.Inst().PlaySound(SoundEnum.button2);
         }
 
         public override string TryExecute()
@@ -275,8 +279,9 @@ namespace Expanze.Gameplay.Map
                                                     GameResources.Inst().GetHudTexture(HUDTexture.IconTown)));
                         }
                         else
-                        {
-                            GameState.map.GetMapController().BuildTown(townID);
+                        {                        
+                            if(GameState.map.GetMapController().BuildTown(townID) != null)
+                                MusicManager.Inst().PlaySound(SoundEnum.building);
                         }
                 }
             }

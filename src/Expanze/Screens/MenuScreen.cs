@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Input;
+using Expanze.Utils.Music;
 #endregion
 
 namespace Expanze
@@ -161,6 +162,7 @@ namespace Expanze
         /// </summary>
         protected virtual void OnCancel(PlayerIndex playerIndex)
         {
+            MusicManager.Inst().PlaySound(SoundEnum.button1);
             ExitScreen();
         }
 
@@ -170,6 +172,7 @@ namespace Expanze
         /// </summary>
         protected void OnCancel(object sender, PlayerIndexEventArgs e)
         {
+            MusicManager.Inst().PlaySound(SoundEnum.button1);
             OnCancel(e.PlayerIndex);
         }
 

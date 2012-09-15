@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using CorePlugin;
 using Microsoft.Xna.Framework.Graphics;
+using Expanze.Utils.Music;
 
 namespace Expanze.Gameplay
 {
@@ -35,12 +36,12 @@ namespace Expanze.Gameplay
             if (!player.GetIsAI())
             {
                 int tempItem = PromptWindow.Inst().GetActiveItem();
-                SetPromptWindow(PromptWindow.Mod.Buyer);
+                SetPromptWindow(PromptWindow.Mod.Buyer, true);
                 PromptWindow.Inst().SetActiveItem(tempItem);
             }
             else
             {
-                Message.Inst().Show(player.GetName() + " vynalezl pokrok", player.GetName() + " vynalezl " + GetUpgradeKindString(upgradeKind) + " pro větší zisky surovin z " + GetUpgradeBuildingName(upgradeNumber) + ".", GetUpgradeIcon(upgradeKind, upgradeNumber));
+                Message.Inst().Show(player.GetName() + Strings.Inst().GetString(TextEnum.GAME_ALERT_TITLE_AI_INVENTED_UPGRADE), player.GetName() + Strings.Inst().GetString(TextEnum.GAME_ALERT_DESTRIPTION_AI_INVENTED_UPGRADE1) + GetUpgradeKindString(upgradeKind) + Strings.Inst().GetString(TextEnum.GAME_ALERT_DESTRIPTION_AI_INVENTED_UPGRADE2) + GetUpgradeBuildingName(upgradeNumber) + ".", GetUpgradeIcon(upgradeKind, upgradeNumber));
             }
         }
 
@@ -77,11 +78,11 @@ namespace Expanze.Gameplay
         {
             switch (number)
             {
-                case 0: return "větrného mlýna";
-                case 1: return "chatrče pastevce";
-                case 2: return "kamenného lomu";
-                case 3: return "pily";
-                case 4: return "dolu na rudu";
+                case 0: return Strings.Inst().GetString(TextEnum.GAME_ALERT_AI_INVENTED_UPGRADE_MILL);
+                case 1: return Strings.Inst().GetString(TextEnum.GAME_ALERT_AI_INVENTED_UPGRADE_STEPHERD);
+                case 2: return Strings.Inst().GetString(TextEnum.GAME_ALERT_AI_INVENTED_UPGRADE_QUARRY);
+                case 3: return Strings.Inst().GetString(TextEnum.GAME_ALERT_AI_INVENTED_UPGRADE_SAWMILL);
+                case 4: return Strings.Inst().GetString(TextEnum.GAME_ALERT_AI_INVENTED_UPGRADE_MINE);
             }
             return "";
         }
@@ -90,14 +91,16 @@ namespace Expanze.Gameplay
         {
             switch (kind)
             {
-                case UpgradeKind.FirstUpgrade: return "první pokrok";
-                case UpgradeKind.SecondUpgrade: return "druhý pokrok";
+                case UpgradeKind.FirstUpgrade: return Strings.Inst().GetString(TextEnum.GAME_ALERT_AI_INVENTED_UPGRADE_1);
+                case UpgradeKind.SecondUpgrade: return Strings.Inst().GetString(TextEnum.GAME_ALERT_AI_INVENTED_UPGRADE_2);
             }
             return "";
         }
 
-        public override void SetPromptWindow(PromptWindow.Mod mod)
+        public override void SetPromptWindow(PromptWindow.Mod mod, bool silent)
         {
+            if(!silent)
+                MusicManager.Inst().PlaySound(SoundEnum.monastery);
             PromptWindow win = PromptWindow.Inst();
             GameResources res = GameResources.Inst();
             win.Show(mod, Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_BUILD_MONASTERY), true);
