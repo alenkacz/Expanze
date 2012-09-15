@@ -5,12 +5,14 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Expanze.Gameplay.Map.View;
 
 namespace Expanze.Gameplay.Map
 {
     class CornfieldView : HexaView
     {
-        public CornfieldView(HexaModel model, int x, int y) : base(model, x, y)
+        public CornfieldView(HexaModel model, int x, int y, ModelView modelView)
+            : base(model, x, y, modelView)
         {
         }
 

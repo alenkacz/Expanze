@@ -5,13 +5,14 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using CorePlugin;
+using Expanze.Gameplay.Map.View;
 
 namespace Expanze.Gameplay.Map
 {
     class StoneView : HexaView
     {
-        public StoneView(HexaModel model, int x, int y)
-            : base(model, x, y)
+        public StoneView(HexaModel model, int x, int y, ModelView modelView)
+            : base(model, x, y, modelView)
         {
 
         }

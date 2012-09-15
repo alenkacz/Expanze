@@ -455,8 +455,14 @@
     <eng>You already have this upgrade.</eng>
   </text>
   <text id="ALERT_TITLE_NO_UPGRADE">
-    <cz>Prvně musíš vynaleznout pokrok v kláštěře.</cz>
-    <eng>First you have to invent the upgrade in a monastery.</eng>
+    <cz>      
+      
+    </cz>
+    <eng>      
+      
+    </eng>
+    <!--  <cz>Prvně musíš vynaleznout pokrok v kláštěře.</cz>
+    <eng>First you have to invent the upgrade in a monastery.</eng>  -->
   </text>
   <text id="ALERT_TITLE_MAX_UPGRADES">
     <cz>Potřebuješ další budovu.</cz>

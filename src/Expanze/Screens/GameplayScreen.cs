@@ -161,11 +161,12 @@ namespace Expanze
 
                 GameAction changeGraphicsQuality = new GameAction("graphicsquality", GameAction.ActionKind.OnlyInitialPress);
 
-                /*
                 im.MapToKey(stateGame, debugInfo, Keys.A);
+                /*
                 im.MapToKey(stateGame, switchWireModel, Keys.W);
                 im.MapToKey(stateGame, showPickingTexture, Keys.Q);
-                 *  */
+                 * */
+                 
                 im.MapToKey(stateGame, changeGraphicsQuality, Keys.G);
                 
 
@@ -466,13 +467,13 @@ namespace Expanze
                     case GraphicsQuality.LOW_GRAPHICS: Settings.graphics = GraphicsQuality.MEDIUM_GRAPHICS; break;
                 }
             }
-
-            /*
+          
             if (InputManager.Inst().GetGameAction("game", "debuginfo").IsPressed())
             {
                 GameState.debugInfo = !GameState.debugInfo;
             }
 
+            /*
             if (InputManager.Inst().GetGameAction("game", "showpickingtexture").IsPressed())
             {
                 switch (GameState.pickingTexture)

@@ -99,8 +99,9 @@ namespace Expanze
         private HexaView[] hexaNeighbours;
         private int x, y;
 
-        public HexaView(HexaModel model, int x, int y)
+        public HexaView(HexaModel model, int x, int y, ModelView modelView)
         {
+            this.modelView = modelView;
             this.x = x;
             this.y = y;
 
@@ -131,7 +132,7 @@ namespace Expanze
 
         public void CreateRoadView(RoadPos pos, Matrix relative)
         {
-            roadView[(int)pos] = new RoadView(model.GetRoad(pos), relative * world);
+            roadView[(int)pos] = new RoadView(model.GetRoad(pos), relative * world, modelView);
         }
 
         public bool GetIsCenterOnScreen() { return centerOnScreen; }
@@ -147,7 +148,7 @@ namespace Expanze
 
         public void CreateTownView(TownPos pos, Matrix relative)
         {
-            townView[(int)pos] = new TownView(model.getTown(pos), relative * world);
+            townView[(int)pos] = new TownView(model.getTown(pos), relative * world, modelView);
         }
 
         public TownView GetTownView(TownPos pos) { return townView[(int)pos]; }
@@ -226,12 +227,12 @@ namespace Expanze
 
             Color numberColor;
             if (pickVars.pickActive)
-                numberColor = Color.Red;
-            else
                 numberColor = Color.DarkRed;
+            else
+                numberColor = Color.Red;
 
             if (hexaID == activeHexaID)
-                numberColor = Color.IndianRed;
+                numberColor = Color.DarkRed;
 
             spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), textNumber, pos, numberColor);
         }
@@ -809,5 +810,7 @@ namespace Expanze
                 hexaNeighbours[loop1] = neighboursView[loop1];
 
         }
+
+        protected ModelView modelView;
     }
 }

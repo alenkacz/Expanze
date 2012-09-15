@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using CorePlugin;
+using Expanze.Gameplay.Map.View;
 
 namespace Expanze.Gameplay.Map
 {
@@ -12,7 +13,8 @@ namespace Expanze.Gameplay.Map
     {
         Matrix mineMatrix;
 
-        public MountainsView(HexaModel model, int x, int y) : base(model, x, y)
+        public MountainsView(HexaModel model, int x, int y, ModelView modelView)
+            : base(model, x, y, modelView)
         {
        
         }

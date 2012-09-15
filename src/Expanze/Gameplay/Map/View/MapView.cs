@@ -13,12 +13,14 @@ namespace Expanze.Gameplay.Map
     {
         HexaView[][] hexaMapView;
         ViewQueue viewQueue;
+        ModelView view;
         Map map;
 
         public MapView(Map map)
         {
             this.map = map;
             viewQueue = new ViewQueue(this);
+            view = new ModelView();
         }
 
         public HexaView[][] GetHexaMapView() { return hexaMapView; }
@@ -26,6 +28,7 @@ namespace Expanze.Gameplay.Map
         public void Initialize()
         {
             viewQueue.Clear();
+            view.Clear();
 
             HexaModel[][] hexaMapModel = map.GetHexaMapModel();
 
@@ -40,29 +43,29 @@ namespace Expanze.Gameplay.Map
                         switch (hexaMapModel[i][j].GetKind())
                         {
                             case HexaKind.Mountains:
-                                hexaMapView[i][j] = new MountainsView(hexaMapModel[i][j], i, j);
+                                hexaMapView[i][j] = new MountainsView(hexaMapModel[i][j], i, j, view);
                                 break;
                             case HexaKind.Cornfield:
-                                hexaMapView[i][j] = new CornfieldView(hexaMapModel[i][j], i, j);
+                                hexaMapView[i][j] = new CornfieldView(hexaMapModel[i][j], i, j, view);
                                 break;
                             case HexaKind.Stone:
-                                hexaMapView[i][j] = new StoneView(hexaMapModel[i][j], i, j);
+                                hexaMapView[i][j] = new StoneView(hexaMapModel[i][j], i, j, view);
                                 break;
                             case HexaKind.Water:
                                 hexaMapView[i][j] = getWaterView(i, j);
                                 break;
                             case HexaKind.Forest:
-                                hexaMapView[i][j] = new ForestView(hexaMapModel[i][j], i, j);
+                                hexaMapView[i][j] = new ForestView(hexaMapModel[i][j], i, j, view);
                                 break;
                             case HexaKind.Pasture:
-                                hexaMapView[i][j] = new PastureView(hexaMapModel[i][j], i, j);
+                                hexaMapView[i][j] = new PastureView(hexaMapModel[i][j], i, j, view);
                                 break;
                             case HexaKind.Desert:
-                                hexaMapView[i][j] = new DesertView(hexaMapModel[i][j], i, j);
+                                hexaMapView[i][j] = new DesertView(hexaMapModel[i][j], i, j, view);
                                 break;
 
                             default:
-                                hexaMapView[i][j] = new HexaView(hexaMapModel[i][j], i, j);
+                                hexaMapView[i][j] = new HexaView(hexaMapModel[i][j], i, j, view);
                                 break;
                         }
                     }
@@ -190,8 +193,8 @@ namespace Expanze.Gameplay.Map
             }
 
             Texture2D t = GameResources.Inst().GetHexaTexture(n);
-
-            return new WaterView(hexaMapModel[i][j], t, rotation, i, j);
+            
+            return new WaterView(hexaMapModel[i][j], t, rotation, i, j, view);
         }
 
         public void Update(GameTime gameTime)
@@ -269,6 +272,8 @@ namespace Expanze.Gameplay.Map
                     }
                 }
             }
+
+            view.Draw(gameTime);
 
             if (Settings.graphics != GraphicsQuality.HIGH_GRAPHICS)
                 return;

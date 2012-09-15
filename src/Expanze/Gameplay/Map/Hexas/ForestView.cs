@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using CorePlugin;
+using Expanze.Gameplay.Map.View;
 
 namespace Expanze.Gameplay.Map
 {
@@ -14,8 +15,8 @@ namespace Expanze.Gameplay.Map
     {
         private static Random rnd;
 
-        public ForestView(HexaModel model, int x, int y)
-            : base(model, x, y)
+        public ForestView(HexaModel model, int x, int y, ModelView modelView)
+            : base(model, x, y, modelView)
         {
             translateM = new Matrix[MAX_TREE];
             scaleM = new Matrix[MAX_TREE];

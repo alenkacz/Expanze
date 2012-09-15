@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using CorePlugin;
 using Expanze.Utils.Music;
+using Expanze.Gameplay.Map.View;
 
 namespace Expanze.Gameplay.Map
 {
@@ -80,8 +81,9 @@ namespace Expanze.Gameplay.Map
         public static void SetPickTownID(int id) { pickTownID = id; HexaView.SetActiveHexaID(-1); }
         public static int GetPickTownID() { return pickTownID; }
 
-        public TownView(TownModel model, Matrix world)
+        public TownView(TownModel model, Matrix world, ModelView modelView)
         {
+            this.modelView = modelView;
             this.model = model;
             this.townID = model.GetTownID();
             townRotation = GameMaster.Inst().GetRandomInt(6);
@@ -311,5 +313,7 @@ namespace Expanze.Gameplay.Map
                 mapView.DrawShadow(m, world, shadow);
             }
         }
+
+        ModelView modelView;
     }
 }

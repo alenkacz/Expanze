@@ -67,6 +67,13 @@ namespace Expanze.Gameplay.Map.View
         private PickVariables pickVars;
         private Matrix world;
         private Matrix worldShape;
+        private PlayerInstanceView roadInstance;
+
+        private static Vector3 colorBlack = new Vector3(0.0f, 0.0f, 0.0f);
+        private static Vector3 colorTutorial = new Vector3(0.5f, 0.5f, 0.0f);
+        private static Vector3 colorGoal = new Vector3(0.7f, 0.7f, 0.7f);
+        private static Vector3 colorCanBuild = new Vector3(0.0f, 0.5f, 0);
+        private static Vector3 colorCantBuild = new Vector3(0.5f, 0.0f, 0);
 
         public Matrix World
         {
@@ -89,14 +96,16 @@ namespace Expanze.Gameplay.Map.View
             set { RoadView.tutorialID = value; }
         }
 
-        public RoadView(RoadModel model, Matrix world)
+        public RoadView(RoadModel model, Matrix world, ModelView modelView)
         {
+            this.modelView = modelView;
             this.model = model;
             this.roadID = model.GetRoadID();
             this.pickRoadColor = new Color(0.0f, 1.0f - roadID / 256.0f, 0.0f);
             this.world = Matrix.CreateTranslation(new Vector3(0.0f, 0.012f, 0.0f)) * Matrix.CreateScale(0.1f) * world;
             worldShape = Matrix.CreateTranslation(new Vector3(0.0f, 0.03f, 0.0f)) * Matrix.CreateScale(0.25f) * world;
             pickVars = new PickVariables(pickRoadColor);
+            roadInstance = (PlayerInstanceView) modelView.AddInstance(GameResources.Inst().GetRoadModel(), new PlayerInstanceView(this.world, 2, 3));
             isBuildView = false;
         }
 
@@ -109,64 +118,41 @@ namespace Expanze.Gameplay.Map.View
             if ((pickVars.pickActive && gm.GetState() == EGameState.StateGame) || isBuildView ||
                 model.GoalRoad || tutorialID == roadID)
             {
-                Model m = GameResources.Inst().GetRoadModel();
-                Matrix[] transforms = new Matrix[m.Bones.Count];
-                m.CopyAbsoluteBoneTransformsTo(transforms);
-
-                int a = 0;
+                roadInstance.Visible = true;
 
                 Player player = model.GetOwner();
                 if (player == null)
                     player = GameMaster.Inst().GetActivePlayer();
                 Vector3 color = player.GetColor().ToVector3();
 
-                foreach (ModelMesh mesh in m.Meshes)
+                roadInstance.PlayerEmissiveColor = color * 0.5f;
+                roadInstance.PlayerDiffuseColor = color * 0.9f;
+                roadInstance.PlayerAmbientLightColor = color / 3.0f;
+
+                roadInstance.NormalEmissiveColor = colorBlack;
+                if (tutorialID == roadID)
                 {
-                    foreach (BasicEffect effect in mesh.Effects)
-                    {
-                        effect.Alpha = 1.0f;
-                        effect.LightingEnabled = true;
-                        effect.DirectionalLight0.Direction = GameState.LightDirection;
-                        effect.DirectionalLight0.DiffuseColor = GameState.LightDiffusionColor;
-                        effect.DirectionalLight0.SpecularColor = GameState.LightSpecularColor;
-                        effect.DirectionalLight0.Enabled = true;
-
-                        effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
-                        if (tutorialID == roadID)
-                        {
-                            effect.EmissiveColor = new Vector3(0.5f, 0.5f, 0.0f);
-                        }
-                        // if player wants to build new Road, can he? Show it in red/green color
-                        if (model.GoalRoad && !isBuildView && !(pickVars.pickActive && gm.GetState() == EGameState.StateGame))
-                        {
-                            effect.EmissiveColor = new Vector3(0.7f, 0.7f, 0.7f);
-                        }
-
-                        if (pickVars.pickActive && !isBuildView)
-                        {
-                            if (model.CanBuildRoad() != RoadBuildError.OK)
-                            {
-                                effect.EmissiveColor = new Vector3(0.5f, 0.0f, 0);
-                            }
-                            else
-                                effect.EmissiveColor = new Vector3(0, 0.5f, 0);
-                        }
-
-                        // is it model part which is for flags? They have to be in player colors
-                        if (a == 2 || a == 3)
-                        {
-                            effect.EmissiveColor = color * 0.5f;
-                            effect.DiffuseColor = color * 0.9f;
-                            effect.AmbientLightColor = color / 3.0f;
-                        }
-
-                        effect.World = transforms[mesh.ParentBone.Index] * world;
-                        effect.View = GameState.view;
-                        effect.Projection = GameState.projection;
-                    }
-                    a++;
-                    mesh.Draw();
+                    roadInstance.NormalEmissiveColor = colorTutorial;
                 }
+                // if player wants to build new Road, can he? Show it in red/green color
+                if (model.GoalRoad && !isBuildView && !(pickVars.pickActive && gm.GetState() == EGameState.StateGame))
+                {
+                    roadInstance.NormalEmissiveColor = colorGoal;
+                }
+
+                if (pickVars.pickActive && !isBuildView)
+                {
+                    if (model.CanBuildRoad() != RoadBuildError.OK)
+                    {
+                        roadInstance.NormalEmissiveColor = colorCantBuild;
+                    }
+                    else
+                        roadInstance.NormalEmissiveColor = colorCanBuild;
+                }
+            }
+            else
+            {
+                roadInstance.Visible = false;
             }
         }
 
@@ -224,5 +210,7 @@ namespace Expanze.Gameplay.Map.View
                 mapView.DrawShadow(m, world, shadow);
             }
         }
+
+        ModelView modelView;
     }
 }

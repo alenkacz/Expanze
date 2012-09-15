@@ -14,8 +14,8 @@ namespace Expanze.Gameplay.Map
         Texture2D waterTexture;
         Matrix rotation;
 
-        public WaterView(HexaModel model, Texture2D waterTexture, Matrix rotation, int x, int y)
-            : base(model, x, y)
+        public WaterView(HexaModel model, Texture2D waterTexture, Matrix rotation, int x, int y, ModelView modelView)
+            : base(model, x, y, modelView)
         {
             this.waterTexture = waterTexture;
             this.rotation = rotation;

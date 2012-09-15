@@ -16,6 +16,7 @@ namespace Expanze.Gameplay
         UpgradeKind upgrade;
 
         String titleBuilding;
+        String descriptionBuilding;
         String upgrade1Title;
         String upgrade1Description;
         String upgrade2Title;
@@ -24,6 +25,7 @@ namespace Expanze.Gameplay
         Texture2D upgrade0icon;
         Texture2D upgrade1icon;
         Texture2D upgrade2icon;
+        SourceAll upgrade0cost;
         SourceAll upgrade1cost;
         SourceAll upgrade2cost;
         SoundEnum sound;
@@ -66,6 +68,7 @@ namespace Expanze.Gameplay
             }
             playerOwner.AddCollectSources(sourceNormal, new SourceAll(0));
 
+            upgrade0cost = new SourceAll(0);
             upgrade1cost = new SourceAll(0);
             upgrade2cost = new SourceAll(0);
             switch (hexa.GetKind())
@@ -74,6 +77,7 @@ namespace Expanze.Gameplay
                     buildingKind = SourceBuildingKind.Mine;
                     sound = SoundEnum.mine;
                     titleBuilding = Strings.Inst().GetString(TextEnum.PROMT_TITLE_WANT_TO_BUILD_MINE);
+                    descriptionBuilding = Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_BUILD_MINE);
                     upgrade1Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_1_MINE);
                     upgrade2Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_2_MINE);
                     upgrade1Description = Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_MINE);
@@ -86,6 +90,7 @@ namespace Expanze.Gameplay
                 case HexaKind.Forest:
                     sound = SoundEnum.sawmill;
                     buildingKind = SourceBuildingKind.Saw;
+                    descriptionBuilding = Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_BUILD_SAW);
                     titleBuilding = Strings.Inst().GetString(TextEnum.PROMT_TITLE_WANT_TO_BUILD_SAW);
                     upgrade1Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_1_SAW);
                     upgrade2Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_2_SAW);
@@ -99,6 +104,7 @@ namespace Expanze.Gameplay
                 case HexaKind.Cornfield:
                     sound = SoundEnum.windmill;
                     buildingKind = SourceBuildingKind.Mill;
+                    descriptionBuilding = Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_BUILD_MILL);
                     titleBuilding = Strings.Inst().GetString(TextEnum.PROMT_TITLE_WANT_TO_BUILD_MILL);
                     upgrade1Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_1_MILL);
                     upgrade2Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_2_MILL);
@@ -113,6 +119,7 @@ namespace Expanze.Gameplay
                     sound = SoundEnum.stepherd;
                     buildingKind = SourceBuildingKind.Stepherd;
                     titleBuilding = Strings.Inst().GetString(TextEnum.PROMT_TITLE_WANT_TO_BUILD_STEPHERD);
+                    descriptionBuilding = Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_BUILD_STEPHERD);
                     upgrade1Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_1_STEPHERD);
                     upgrade2Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_2_STEPHERD);
                     upgrade1Description = Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_STEPHERD);
@@ -126,6 +133,7 @@ namespace Expanze.Gameplay
                     sound = SoundEnum.quarry;
                     buildingKind = SourceBuildingKind.Quarry;
                     titleBuilding = Strings.Inst().GetString(TextEnum.PROMT_TITLE_WANT_TO_BUILD_QUARRY);
+                    descriptionBuilding = Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_BUILD_QUARRY);
                     upgrade1Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_1_QUARRY);
                     upgrade2Title = Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_UPGRADE_2_QUARRY);
                     upgrade1Description = Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_WANT_TO_UPGRADE_1_QUARRY);
@@ -169,12 +177,12 @@ namespace Expanze.Gameplay
             win.Show(mod, titleBuilding, true);
             upgrade = GetUpgrade();
             if (upgrade == UpgradeKind.NoUpgrade)
-                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, this, upgrade1Title, upgrade1Description, upgrade1cost, true, upgrade1icon));
+                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.NoUpgrade, 0, this, titleBuilding, descriptionBuilding, upgrade0cost, false, upgrade0icon));
             else if (upgrade == UpgradeKind.FirstUpgrade)
-                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 0, this, upgrade2Title, upgrade2Description, upgrade2cost, true, upgrade2icon));
+                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.FirstUpgrade, 0, this, upgrade1Title, upgrade1Description, upgrade1cost, false, upgrade1icon));
             else
             {
-                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 0, this, titleBuilding, Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_ALL_UPGRADES_USED), new SourceAll(0), true, upgrade2icon));
+                win.AddPromptItem(new SpecialBuildingPromptItem(townID, hexaID, UpgradeKind.SecondUpgrade, 0, this, upgrade2Title, upgrade2Description, upgrade2cost, false, upgrade2icon));
            
                 //win.AddPromptItem(new PromptItem(titleBuilding, Strings.Inst().GetString(TextEnum.PROMPT_DESCRIPTION_ALL_UPGRADES_USED), new SourceAll(0), false, false, upgrade2icon));
             }

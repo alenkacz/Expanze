@@ -228,7 +228,8 @@ namespace Expanze
                     else
                     {
                         Deactive();
-                        itemList[activeItem].Execute();
+                        if(itemList[activeItem].getCost().GetAsArray().Sum() > 0)
+                            itemList[activeItem].Execute();
                     }
                 }
                 else if (noPick.pickNewPress || InputManager.Inst().GetGameAction("gamewindow", "close").IsPressed())
@@ -265,7 +266,8 @@ namespace Expanze
                 
                 string error = itemList[activeItem].TryExecute();
                 int amount = GameMaster.Inst().CanChangeSourcesFor((SourceAll)itemList[activeItem].getCost());
-                if ((error == null ||
+                if (itemList[activeItem].getCost().GetAsArray().Sum() > 0 &&
+                    (error == null ||
                     (error == "" && !Settings.banChangeSources && amount >= 0))
                     && mod == Mod.Buyer) // it means that it is ok
                 {
