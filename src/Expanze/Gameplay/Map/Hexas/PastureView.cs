@@ -113,7 +113,13 @@ namespace Expanze.Gameplay.Map
             base.DrawBuildings(gameTime);
 
             if (Settings.graphics == GraphicsQuality.LOW_GRAPHICS)
+            {
+                for (int loop1 = 0; loop1 < sheeps.Length; loop1++)
+                {
+                    sheeps[loop1].Visible = false;
+                }
                 return;
+            }
 
             DrawSheeps(gameTime);
 

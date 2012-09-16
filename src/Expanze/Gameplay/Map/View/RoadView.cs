@@ -105,7 +105,7 @@ namespace Expanze.Gameplay.Map.View
             this.world = Matrix.CreateTranslation(new Vector3(0.0f, 0.012f, 0.0f)) * Matrix.CreateScale(0.1f) * world;
             worldShape = Matrix.CreateTranslation(new Vector3(0.0f, 0.03f, 0.0f)) * Matrix.CreateScale(0.25f) * world;
             pickVars = new PickVariables(pickRoadColor);
-            roadInstance = (PlayerInstanceView) modelView.AddInstance(GameResources.Inst().GetRoadModel(), new PlayerInstanceView(this.world, 2, 3));
+            roadInstance = (PlayerInstanceView) modelView.AddInstance(GameResources.Inst().GetRoadModel(), new PlayerInstanceView(this.world, 0, 1));
             isBuildView = false;
         }
 
@@ -119,6 +119,9 @@ namespace Expanze.Gameplay.Map.View
                 model.GoalRoad || tutorialID == roadID)
             {
                 roadInstance.Visible = true;
+
+                //if (roadID == 77)
+                //  roadInstance.Visible = true;
 
                 Player player = model.GetOwner();
                 if (player == null)

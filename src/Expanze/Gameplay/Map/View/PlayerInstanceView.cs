@@ -8,40 +8,65 @@ namespace Expanze.Gameplay.Map.View
 {
     class PlayerInstanceView : InstanceView
     {
-        Vector3 normalEmissiveColor;
+        protected Vector3 normalEmissiveColor;
         public Vector3 NormalEmissiveColor
         {
-            set { normalEmissiveColor = value; }
+            set { 
+                normalEmissiveColor.X = value.X;
+                normalEmissiveColor.Y = value.Y;
+                normalEmissiveColor.Z = value.Z; 
+            }
         }
        
-        Vector3 playerEmissiveColor;
+        protected Vector3 playerEmissiveColor;
         public Vector3 PlayerEmissiveColor
         {
-            set { playerEmissiveColor = value; }
+            set { 
+                playerEmissiveColor.X = value.X;
+                playerEmissiveColor.Y = value.Y;
+                playerEmissiveColor.Z = value.Z;
+            }
         }
-        Vector3 playerDiffuseColor;
+        protected Vector3 playerDiffuseColor;
         public Vector3 PlayerDiffuseColor
         {
-            set { playerDiffuseColor = value; }
+            set { 
+                playerDiffuseColor.X = value.X;
+                playerDiffuseColor.Y = value.Y;
+                playerDiffuseColor.Z = value.Z;
+            }
         }
-        Vector3 playerAmbientLightColor;
+        protected Vector3 playerAmbientLightColor;
         public Vector3 PlayerAmbientLightColor
         {
-            set { playerAmbientLightColor = value; }
+            set {
+                if (playerAmbientLightColor.X != value.X ||
+                    playerAmbientLightColor.Y != value.Y)
+                {
+                    int a = 3 + 5;
+                }
+                playerAmbientLightColor.X = value.X;
+                playerAmbientLightColor.Y = value.Y;
+                playerAmbientLightColor.Z = value.Z;
+            }
         }
-        int playerMesh1, playerMesh2;
+        protected int playerMesh1, playerMesh2;
 
         public PlayerInstanceView(Matrix world, int playerMesh1, int playerMesh2) : base(world)
         {
             this.playerMesh1 = playerMesh1;
             this.playerMesh2 = playerMesh2;
+
+            playerAmbientLightColor = new Vector3();
+            playerDiffuseColor = new Vector3();
+            playerEmissiveColor = new Vector3();
+            normalEmissiveColor = new Vector3();
         }
 
         internal override void UpdateEffect(Microsoft.Xna.Framework.Graphics.BasicEffect effect, int meshNumber)
         {
-            base.UpdateEffect(effect, meshNumber);
-
-            if (meshNumber == playerMesh1 || meshNumber == playerMesh2)
+            if (meshNumber != playerMesh1 &&
+                meshNumber != playerMesh2)
             {
                 effect.AmbientLightColor = playerAmbientLightColor;
                 effect.DiffuseColor = playerDiffuseColor;
@@ -50,6 +75,8 @@ namespace Expanze.Gameplay.Map.View
             else
             {
                 effect.EmissiveColor = normalEmissiveColor;
+                effect.DiffuseColor = new Vector3(0.8f);
+                effect.AmbientLightColor = new Vector3(0.0f);
             }
         }
     }

@@ -75,9 +75,12 @@ namespace Expanze.Gameplay.Map.View
 
         public void Draw(GameTime gameTime)
         {
-            int meshNumber = 0;
-            foreach (ModelMesh mesh in model.Meshes)
+            if (visibleItems == 0)
+                return;
+
+            for(int loop1 = 0; loop1 < model.Meshes.Count; loop1++)
             {
+                ModelMesh mesh = model.Meshes[loop1];
                 foreach (BasicEffect effect in mesh.Effects)
                 {
                     effect.Alpha = 1.0f;
@@ -88,17 +91,20 @@ namespace Expanze.Gameplay.Map.View
                     effect.DirectionalLight0.Enabled = true;
                     effect.View = GameState.view;
                     effect.Projection = GameState.projection;
-                    for (int loop1 = 0; loop1 < validItems; loop1++)
+                    for (int loop2 = 0; loop2 < validItems; loop2++)
                     {
-                        if (instance[loop1].Visible)
+                        if (instance[loop2].Visible)
                         {
-                            effect.World = transforms[mesh.ParentBone.Index] * instance[loop1].World;
-                            instance[loop1].UpdateEffect(effect, meshNumber);
+                            instance[loop2].UpdateEffect(effect, loop1);
+                            effect.World = transforms[mesh.ParentBone.Index] * instance[loop2].World;
+                            
                             mesh.Draw();
+              
+                            //if(loop1 > 4)
+                            //    break;
                         }
                     }
                 }
-                meshNumber++;
             }
         }
     }

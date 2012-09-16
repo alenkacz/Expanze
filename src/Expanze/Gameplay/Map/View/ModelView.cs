@@ -23,7 +23,8 @@ namespace Expanze.Gameplay.Map.View
                 viewItems[model] = new ViewItem(model);
             }
 
-            return viewItems[model].Add(newInstance);
+            viewItems[model].Add(newInstance);
+            return newInstance;
         }
 
         public void ChangeVisibility(Model model, int id)

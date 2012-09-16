@@ -66,6 +66,7 @@ namespace Expanze.Gameplay.Map
         private int townID;
         private bool isBuildView;       // Could be diffrent from model Town isBuild, first is in model true but it is not draw, it waits
         private int townRotation;
+        private TownInstanceView townInstance;
 
         private Color pickTownColor;
         private PickVariables pickVars;
@@ -99,6 +100,8 @@ namespace Expanze.Gameplay.Map
             for (int loop1 = 0; loop1 < buildingIsBuild.Length; loop1++)
                 buildingIsBuild[loop1] = false;
             pickVars = new PickVariables(pickTownColor);
+
+            townInstance = (TownInstanceView) modelView.AddInstance(GameResources.Inst().GetTownModel() , new TownInstanceView(this.world, 0, 2));
         }
 
         public Matrix getWorld() { return world; }
@@ -123,84 +126,45 @@ namespace Expanze.Gameplay.Map
         {
             if (pickVars.pickActive || isBuildView || model.GoalTown || townID == tutorialID)
             {
+                townInstance.Visible = true;
+
                 Model m = GameResources.Inst().GetTownModel();
                 Matrix[] transforms = new Matrix[m.Bones.Count];
                 m.CopyAbsoluteBoneTransformsTo(transforms);
-
-                int a = 0;
 
                 Player player = model.GetOwner();
                 if (player == null)
                     player = GameMaster.Inst().GetActivePlayer();
                 Vector3 color = player.GetColor().ToVector3();
+                townInstance.PlayerEmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
+                townInstance.PlayerDiffuseColor = color * 0.9f;
+                townInstance.RoofDiffusiveColor = color * 0.6f;
+                townInstance.PlayerAmbientLightColor = color * 0.3f;
 
-                int sum = 0;
-                foreach (ModelMesh mesh in m.Meshes)
+
+                townInstance.NormalEmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
+                if (townID == tutorialID)
                 {
-                    foreach (BasicEffect effect in mesh.Effects)
-                    {
-                        effect.Alpha = 1.0f;
-                        effect.LightingEnabled = true;
-                        effect.DirectionalLight0.Direction = GameState.LightDirection;
-                        effect.DirectionalLight0.DiffuseColor = GameState.LightDiffusionColor;
-                        effect.DirectionalLight0.SpecularColor = GameState.LightSpecularColor;
-                        effect.DirectionalLight0.Enabled = true;
-
-                        if (a == 0)
-                        {
-                            effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
-                            effect.DiffuseColor = color * 0.9f;
-                            effect.AmbientLightColor = color * 0.3f;
-                        }
-                        else if(a == 2)
-                        {
-                            effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
-                            effect.DiffuseColor = color * 0.6f;
-                            effect.AmbientLightColor = color * 0.3f;
-                            //effect.DiffuseColor = new Vector3(0.64f, 0.64f, 0.64f);
-                        }
-
-                        effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
-                        if (townID == tutorialID)
-                        {
-                            effect.EmissiveColor = new Vector3(0.7f, 0.7f, 0.0f);
-                        }
-
-                        if (model.GoalTown && !isBuildView && !pickVars.pickActive)
-                        {
-                            effect.EmissiveColor = new Vector3(0.8f, 0.8f, 0.8f);
-                        }
-
-                        if (pickVars.pickActive && !isBuildView)
-                        {
-                            if (model.CanBuildTown() != TownBuildError.OK &&
-                                !(model.GetIsBuild() && !isBuildView))
-                            {
-                                if (a != 0)
-                                    effect.EmissiveColor = new Vector3(0.5f, 0.0f, 0);
-                            }
-                            else
-                            {
-                                if (a != 0)
-                                    effect.EmissiveColor = new Vector3(0, 0.5f, 0);
-                            }
-                        }
-                            
-
-                        effect.World = transforms[mesh.ParentBone.Index] * world;
-                        effect.View = GameState.view;
-                        effect.Projection = GameState.projection;
-                    }
-                    mesh.Draw();
-
-                    a++;
-                    foreach (ModelMeshPart part in mesh.MeshParts)
-                    {
-                        sum += part.PrimitiveCount;
-                    }
+                    townInstance.NormalEmissiveColor = new Vector3(0.7f, 0.7f, 0.0f);
                 }
 
-                sum++;
+                if (model.GoalTown && !isBuildView && !pickVars.pickActive)
+                {
+                    townInstance.NormalEmissiveColor = new Vector3(0.8f, 0.8f, 0.8f);
+                }
+
+                if (pickVars.pickActive && !isBuildView)
+                {
+                    if (model.CanBuildTown() != TownBuildError.OK &&
+                        !(model.GetIsBuild() && !isBuildView))
+                    {
+                        townInstance.NormalEmissiveColor = new Vector3(0.5f, 0.0f, 0);
+                    }
+                    else
+                    {
+                        townInstance.NormalEmissiveColor = new Vector3(0, 0.5f, 0);
+                    }
+                }
 
                 if (pickTownID == townID || (pickVars.pickActive && isBuildView))
                 {
@@ -218,6 +182,10 @@ namespace Expanze.Gameplay.Map
                         mesh.Draw();
                     }
                 }
+            }
+            else
+            {
+                townInstance.Visible = false;
             }
         }
 

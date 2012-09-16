@@ -18,52 +18,23 @@ namespace Expanze.Gameplay.Map
         public ForestView(HexaModel model, int x, int y, ModelView modelView)
             : base(model, x, y, modelView)
         {
-            translateM = new Matrix[MAX_TREE];
-            scaleM = new Matrix[MAX_TREE];
-            objectMatrix = new Matrix[MAX_TREE];
-            colorT = new Vector3[MAX_TREE];
+            treeInstance = new AmbientInstanceView[MAX_TREE];
 
             if(rnd == null)
             rnd = new Random();
         }
 
         public int MAX_TREE = 48;
-        Matrix[] translateM;
-        Matrix[] scaleM;
-        Matrix[] objectMatrix;
-        Vector3[] colorT;
+        AmbientInstanceView[] treeInstance;
 
         public void DrawTrees(GameTime gameTime)
         {
-            Model m = GameResources.Inst().GetTreeModel(0);
-
-            Matrix[] transforms = new Matrix[m.Bones.Count];
-            m.CopyAbsoluteBoneTransformsTo(transforms);
-
-            foreach (ModelMesh mesh in m.Meshes)
+            for (int loop1 = 0; loop1 < treeInstance.Length; loop1++)
             {
-                foreach (BasicEffect effect in mesh.Effects)
-                {
-                    effect.Alpha = 1.0f;
-                    effect.LightingEnabled = true;
-                    
-                    // GameState.MaterialAmbientColor;
-                    effect.DirectionalLight0.Direction = GameState.LightDirection;
-                    effect.DirectionalLight0.DiffuseColor = GameState.LightDiffusionColor;
-                    effect.DirectionalLight0.SpecularColor = GameState.LightSpecularColor;
-                    effect.DirectionalLight0.Enabled = true;
-                    effect.View = GameState.view;
-                    effect.Projection = GameState.projection;
-                    for (int loop1 = 0; loop1 < translateM.Length; loop1++)
-                    {
-                        if (model.getTown((CorePlugin.TownPos)(loop1 / 8)).GetBuildingKind(model.GetID()) != BuildingKind.NoBuilding)
-                            continue;
-
-                        effect.AmbientLightColor = colorT[loop1];
-                        effect.World = transforms[mesh.ParentBone.Index] * objectMatrix[loop1];// *world;
-                        mesh.Draw();
-                    }
-                }
+                if (model.getTown((CorePlugin.TownPos)(loop1 / 8)).GetBuildingKind(model.GetID()) != BuildingKind.NoBuilding)
+                    treeInstance[loop1].Visible = false;
+                else
+                    treeInstance[loop1].Visible = true;
             }
         }
 
@@ -78,12 +49,12 @@ namespace Expanze.Gameplay.Map
 
             Model m = GameResources.Inst().GetTreeModel(0);
 
-            for (int loop1 = 0; loop1 < translateM.Length; loop1++)
+            for (int loop1 = 0; loop1 < treeInstance.Length; loop1++)
             {
                 if (model.getTown((CorePlugin.TownPos)(loop1 / 8)).GetBuildingKind(model.GetID()) != BuildingKind.NoBuilding)
                     continue;
 
-                mapView.DrawShadow(m, objectMatrix[loop1], shadow);
+                mapView.DrawShadow(m, treeInstance[loop1].World, shadow);
             }
         }
 
@@ -92,7 +63,13 @@ namespace Expanze.Gameplay.Map
             base.DrawBuildings(gameTime);
 
             if (Settings.graphics == GraphicsQuality.LOW_GRAPHICS)
+            {
+                for (int loop1 = 0; loop1 < treeInstance.Length; loop1++)
+                {
+                    treeInstance[loop1].Visible = false;
+                }
                 return;
+            }
 
             DrawTrees(gameTime);
         }
@@ -105,13 +82,15 @@ namespace Expanze.Gameplay.Map
             {
                 for (int loop2 = 0; loop2 < 8; loop2++)
                 {
-                    colorT[loop2 + 8 * loop1] = new Vector3(0.0f, (float)rnd.NextDouble() / 2.0f, 0.0f);
                     //translateM[loop1] = Matrix.CreateTranslation(new Vector3((float) (rnd.NextDouble() - 0.5) / 2.0f, 0, (float) (rnd.NextDouble() - 0.5) / 2.0f));
-                    scaleM[loop2 + 8 * loop1] = Matrix.CreateScale((float)(0.001 - 0.0002 + 0.0004 * rnd.NextDouble()));
+                    Matrix scale  = Matrix.CreateScale((float)(0.001 - 0.0002 + 0.0004 * rnd.NextDouble()));
                     //objectMatrix[loop1] = scaleM[loop1] * translateM[loop1];
 
-                    objectMatrix[loop2 + 8 * loop1] = scaleM[loop2 + 8 * loop1] * Matrix.CreateTranslation(new Vector3((float)(rnd.NextDouble() - 0.5) / 6.0f + 0.17f, 0, 0)) * Matrix.CreateRotationY((float)(Math.PI / 3.0 * ((6 - loop1) + 0.5 + 2) + Math.PI / 3.0 * rnd.NextDouble()));
-                    objectMatrix[loop2 + 8 * loop1] = objectMatrix[loop2 + 8 * loop1] * world;
+                    Matrix objectM = scale * Matrix.CreateTranslation(new Vector3((float)(rnd.NextDouble() - 0.5) / 6.0f + 0.17f, 0, 0)) * Matrix.CreateRotationY((float)(Math.PI / 3.0 * ((6 - loop1) + 0.5 + 2) + Math.PI / 3.0 * rnd.NextDouble()));
+                    objectM = objectM * world;
+
+                    treeInstance[loop2 + 8 * loop1] = (AmbientInstanceView)modelView.AddInstance(GameResources.Inst().GetTreeModel(0), new AmbientInstanceView(objectM));
+                    treeInstance[loop2 + 8 * loop1].AmbientLightColor = new Vector3(0.0f, (float)rnd.NextDouble() / 2.0f, 0.0f);
                 }
             }
         }

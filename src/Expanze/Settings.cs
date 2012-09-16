@@ -109,6 +109,7 @@ namespace Expanze
         public static bool banFortCaptureHexa = false;
         public static bool banFortStealSources = false;
 
+        public static bool bordGameView = true;
         public static GraphicsQuality graphics = GraphicsQuality.HIGH_GRAPHICS;
         public static Color colorHoverItem = Color.BurlyWood;
         public static Color colorHovorCorner = Color.AntiqueWhite;

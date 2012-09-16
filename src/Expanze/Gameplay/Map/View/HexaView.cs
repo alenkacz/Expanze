@@ -299,7 +299,7 @@ namespace Expanze
                         }
                     }
 
-                    if (drawNumber && pickVars.pickActive)
+                    if (drawNumber && (pickVars.pickActive))
                     {
                         HUDTexture texture = HUDTexture.HUDCount;
                         switch (kind)

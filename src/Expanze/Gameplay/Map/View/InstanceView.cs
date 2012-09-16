@@ -16,7 +16,7 @@ namespace Expanze.Gameplay.Map.View
         {
             this.world = world;
 
-            visible = true;
+            visible = false;
         }
 
         public bool Visible
