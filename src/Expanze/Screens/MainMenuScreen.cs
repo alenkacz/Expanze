@@ -10,6 +10,7 @@
 #region Using Statements
 using Microsoft.Xna.Framework;
 using Expanze.Utils.Music;
+using System.IO;
 #endregion
 
 namespace Expanze
@@ -54,7 +55,10 @@ namespace Expanze
             exitMenuEntry.Selected += OnCancel;
 
             // Add entries to the menu.
-            MenuEntries.Add(continueMenuEntry);
+
+            if (File.Exists("Content/Maps/save-game.xml"))
+                MenuEntries.Add(continueMenuEntry);
+
             //MenuEntries.Add(quickMenuEntry);
             MenuEntries.Add(campaignMenuEntry);
             MenuEntries.Add(hotseatMenuEntry);

@@ -36,7 +36,7 @@ namespace Expanze.Gameplay.Map
 #if  GENETIC
         private int ENQUEUE_TIME = 0; /// Delay time between two actions
 #else
-        private int ENQUEUE_TIME = 0; /// Delay time between two actions
+        private int ENQUEUE_TIME = 250; /// Delay time between two actions
 #endif
         private int lastEnque;  /// how much time last to new enque from queue
 

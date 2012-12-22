@@ -1,0 +1,30 @@
+Zvuky pøi kliknutí na budovu :
+Vìtrnı mlın (vítr?)
+Pastevec (ovce)
+Pila (øezání pilou)
+Lom na kamenní
+Dùl na rudu
+Klášter (zvon?)
+Pevnost
+Trištì
+Mìsto
+
+Jeden zvuk pøi postavení jakékoliv stavby (kladivo?)
+
+Zvuk stisku tlaèítka v menu
+Zvuk zaktivnìní tlaèítka (najetí myši, pomocí kláves na volbu menu)
+
+Zvuk pøi vımìnì surovin (nìco s mincemi)
+Zvuk pøi koupi pokroku, zaplacení za nìco, co není budova 
+(tedy kdy se nìco koupí a nemá se pøehrát zvuk stavby - mùe bıt stejnı jako zvuk pro vımìnu surovin)
+
+Zvuk, kdy se stane ve høe zázrak (pozitivní událost, která zvıší všem hráèùm vınosy)
+Zvuk, kdy se stane pohroma (opak zázraku, negativní událost)
+
+Zvuky pro vojenské akce (mùe bıt jeden spoleènı, nebo pro kadou zvláš, kdy budou nápady)
+- Ukradení surovin soupeøi
+- Ponièení hexy
+- Obsazení hexy
+- Vıcvik armády
+
+Pak jsou ve høe obèas dialogová okna (tøeba pøi stavbì) - zvuk pro tlaèítko ok a pro køíek (zavøení okna) - asi bych dal jiné ne do menu

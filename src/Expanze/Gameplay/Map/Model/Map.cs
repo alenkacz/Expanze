@@ -258,7 +258,7 @@ namespace Expanze.Gameplay.Map
             }
 
             float yMax = 2.4f;
-            float yMin = 0.2f;
+            //float yMin = 0.2f;
 
 
             // dolu mapa

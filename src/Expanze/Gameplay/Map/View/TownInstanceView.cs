@@ -26,7 +26,8 @@ namespace Expanze.Gameplay.Map.View
 
         internal override void UpdateEffect(Microsoft.Xna.Framework.Graphics.BasicEffect effect, int meshNumber)
         {
-            if (meshNumber == playerMesh1 || meshNumber == playerMesh2)
+            if (meshNumber == playerMesh1 || meshNumber == playerMesh2 ||
+                (Settings.graphics == GraphicsQuality.LOW_GRAPHICS && normalEmissiveColor.LengthSquared() < 0.01))
             {
                 effect.AmbientLightColor = playerAmbientLightColor;
                 effect.EmissiveColor = playerEmissiveColor;

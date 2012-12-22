@@ -40,11 +40,6 @@ namespace Expanze.Gameplay.Map.View
         public Vector3 PlayerAmbientLightColor
         {
             set {
-                if (playerAmbientLightColor.X != value.X ||
-                    playerAmbientLightColor.Y != value.Y)
-                {
-                    int a = 3 + 5;
-                }
                 playerAmbientLightColor.X = value.X;
                 playerAmbientLightColor.Y = value.Y;
                 playerAmbientLightColor.Z = value.Z;
@@ -65,8 +60,9 @@ namespace Expanze.Gameplay.Map.View
 
         internal override void UpdateEffect(Microsoft.Xna.Framework.Graphics.BasicEffect effect, int meshNumber)
         {
-            if (meshNumber != playerMesh1 &&
-                meshNumber != playerMesh2)
+            if ((meshNumber != playerMesh1 &&
+                 meshNumber != playerMesh2) ||
+                Settings.graphics == GraphicsQuality.LOW_GRAPHICS && normalEmissiveColor.LengthSquared() < 0.01)
             {
                 effect.AmbientLightColor = playerAmbientLightColor;
                 effect.DiffuseColor = playerDiffuseColor;

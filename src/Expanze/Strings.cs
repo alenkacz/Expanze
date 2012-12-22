@@ -470,14 +470,21 @@ namespace Expanze
 
                 foreach (XmlNode text in textNode)
                 {
-                    if(text.LocalName == language && text.InnerText.Length > 0)
+                    if(text.LocalName == language && (text.InnerText.Length > 0 || text.InnerText.CompareTo("EmPtY") == 0))
                     {
-                        bestText = text.InnerText;
+                        if (text.InnerText.CompareTo("EmPtY") == 0)
+                            bestText = "";
+                        else
+                            bestText = text.InnerText;
+
                         break;
                     }
-                    else if (text.LocalName == defaultLanguage && text.InnerText.Length > 0)
+                    else if (text.LocalName == defaultLanguage && (text.InnerText.Length > 0 || text.InnerText.CompareTo("EmPtY") == 0))
                     {
-                        defaultText = text.InnerText;
+                        if (text.InnerText.CompareTo("EmPtY") == 0)
+                            defaultText = "";
+                        else
+                            defaultText = text.InnerText;
                     } else if(defaultText == null)
                         defaultText = text.InnerText;
                 }

@@ -1536,6 +1536,7 @@ namespace Expanze
             }
             catch (Exception ex)
             {
+                Logger.Inst().Log("ouch.txt", ex.Message);
             }
 
             if (writer == null)

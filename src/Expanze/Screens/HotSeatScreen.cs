@@ -167,7 +167,7 @@ namespace Expanze
             int nameCount = Strings.Inst().PlayerNames.Length;
             int nameID = -1;
             bool uniqueID;
-            //do
+            do
             {
                 nameID = random.Next() % nameCount;
                 uniqueID = true;
@@ -179,7 +179,7 @@ namespace Expanze
                         continue;
                     }
                 }
-            }// while (!uniqueID);
+            } while (!uniqueID);
 
             return nameID;
         }

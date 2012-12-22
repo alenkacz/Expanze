@@ -6,7 +6,7 @@
       <pair>
         <text>
           <cz>Vítej v Expanzi!</cz>
-          <eng>Welcome in Expanze</eng>
+          <eng>Welcome to Expanze</eng>
         </text>
       </pair>
       <pair>
@@ -18,7 +18,7 @@
       <pair>
         <text>
           <cz>Pokrok hrou znázorňuje symbol cesty v pravém horním rohu.</cz>
-          <eng>Game progress is shown by road symbor in top right corner.</eng>
+          <eng>Game progress is showned with the road symbol in the top right corner.</eng>
         </text>
       </pair>
       <pair>
@@ -30,13 +30,13 @@
       <pair>
         <text>
           <cz>Ale neboj se. Na této mapě ti poradím, jak vše včas stihnout.</cz>
-          <eng>Don't worry. On this map I will help you how to make it in time.</eng>
+          <eng>Don't worry. I will help you how to make it in time.</eng>
         </text>
       </pair>
       <pair>
         <text>
           <cz>Máš málo surovin. Klikni na další kolo, nějaké suroviny získáš.</cz>
-          <eng>You haven't enough sources. Click for the next turn. You'll get sources.</eng>
+          <eng>You haven't enough sources. Click for the next turn. You'll profit sources.</eng>
         </text>
       </pair>
     </pairs>

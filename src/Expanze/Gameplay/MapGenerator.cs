@@ -235,15 +235,15 @@ namespace Expanze.Gameplay
                         switch (gs.GetMapSource())
                         {
                             case MapSource.LOWLAND:
-                                Settings.pointsCorn = 80 + rnd.Next(30);
+                                Settings.pointsCorn = 8 + rnd.Next(5) * 8;
                                 break;
                             case MapSource.WASTELAND:
-                                Settings.pointsOre = 80 + rnd.Next(30);
+                                Settings.pointsOre = 8 + rnd.Next(5) * 8;
                                 break;
                             case MapSource.NORMAL:
-                                Settings.pointsWood = rnd.Next(50);
-                                Settings.pointsMeat = rnd.Next(50);
-                                Settings.pointsStone = rnd.Next(50);
+                                Settings.pointsWood = rnd.Next(8) * 8;
+                                Settings.pointsMeat = rnd.Next(8) * 8;
+                                Settings.pointsStone = rnd.Next(8) * 8;
                                 break;
                         }
                         break;
