@@ -31,7 +31,7 @@ namespace Expanze
         ButtonComponent addButton;
         ButtonComponent remButton;
 
-        public PlayerSettingRowComponent(Game game, int x, int y, SpriteFont font, int width, int height, Color c, string playerColorName, String name, int changeState) 
+        public PlayerSettingRowComponent(Game game, int x, int y, SpriteFont font, int width, int height, Color c, string playerColorName, String name, List<String> playerNames, int changeState) 
             : base(game,x,y,font,width,height,null) 
         {
             playerColorTexture = GameResources.Inst().GetMenuTexture(MenuTexture.PlayerColor);
@@ -44,7 +44,7 @@ namespace Expanze
                 playerState.nextText();
             playerState.Initialize(); playerState.LoadContent();
 
-            playerName = new ButtonComponent(game, x + 80, y - 6, font, Settings.scaleW(200), Settings.scaleH(45), null, Strings.Inst().PlayerNames.ToList<string>());
+            playerName = new ButtonComponent(game, x + 80, y - 6, font, Settings.scaleW(200), Settings.scaleH(45), null, playerNames);
             playerName.Actions += PlayerNameButtonAction;
             changeState = GameMaster.Inst().GetRandomInt(Strings.Inst().PlayerNames.Length);
             for (int loop1 = 0; loop1 < changeState; loop1++)

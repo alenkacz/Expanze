@@ -18,6 +18,13 @@ namespace Expanze
 
         List<String> switchTexts = null;
         int activeText = 0;
+        int ActiveText
+        {
+            set
+            {
+                activeText = value;
+            }
+        }
         Texture2D pickedTexture;
         Texture2D nonactiveTexture = null;
 

@@ -102,11 +102,16 @@ namespace Expanze
              * 
              */
 
+            String [] playerNames = Strings.Inst().PlayerNames;
             for (int loop1 = 0; loop1 < Settings.playerColors.Count; loop1++)
             {
+                String[] tempNames = new String[7];
+                Array.Copy(playerNames, loop1 * 7, tempNames, 0, 7);
                 int playerNameID = GetRandomPlayerID();
 
-                PlayerSettingRowComponent pSwitch = new PlayerSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameResources.Inst().GetFont(EFont.PlayerNameFont), 200, 200, Settings.playerColors[loop1], Settings.playerColorNames[loop1], Strings.Inst().PlayerNames[playerNameID],
+                PlayerSettingRowComponent pSwitch = new PlayerSettingRowComponent(ScreenManager.Game, (int)colorPosition.X, (int)colorPosition.Y, GameResources.Inst().GetFont(EFont.PlayerNameFont), 200, 200, Settings.playerColors[loop1], Settings.playerColorNames[loop1], 
+                                                                                  Strings.Inst().PlayerNames[playerNameID],
+                                                                                  new List<String>(tempNames),
                                                                                   (counter == 0 || counter ==2) ? 1 : 0);
                 playersSettings.Add(pSwitch);
                 colorPosition.Y += playerSpace;
