@@ -15,6 +15,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Expanze.Utils;
 using Expanze.Utils.Genetic;
 using System.Xml;
+using System.IO;
 
 namespace Expanze
 {
@@ -1064,7 +1065,12 @@ namespace Expanze
                 }
 
                 if (winnerNew)
-                {
+                {                   
+                    if (mapSource != null)
+                    {
+                        File.Delete("Content/Maps/save-game.xml");
+                        //File.Copy("Content/Maps/cam01sce" + ((Settings.level < 10) ? ("0" + Settings.level) : ("" + Settings.level)), "Content/Maps/save-game.xml");
+                    }
                     Settings.level = -1;
                     Message.Inst().Show(Strings.Inst().GetString(TextEnum.MESSAGE_TITLE_END_GAME), bestPlayer.GetName() + Strings.Inst().GetString(TextEnum.MESSAGE_DESCRIPTION_END_GAME_WIN), GameResources.Inst().GetHudTexture(HUDTexture.IconFortParade));  
                 } else

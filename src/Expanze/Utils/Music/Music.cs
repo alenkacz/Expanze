@@ -11,7 +11,8 @@ namespace Expanze.Utils.Music
 {
     public enum SongEnum
     {
-        menu
+        menu,
+        ingame1
     }
 
     public enum SoundEnum

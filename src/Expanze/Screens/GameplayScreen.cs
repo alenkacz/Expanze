@@ -265,7 +265,7 @@ namespace Expanze
                 Thread.Sleep(100);
             }
 
-            MusicManager.Inst().StopSong();
+            MusicManager.Inst().PlaySong(SongEnum.ingame1);
         }
 
 

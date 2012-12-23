@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using CorePlugin;
+using Expanze.Utils.Music;
 #endregion
 
 namespace Expanze
@@ -82,6 +83,8 @@ namespace Expanze
 
             screenManager.AddScreen(new BackgroundScreen(), controllingPlayer);
             screenManager.AddScreen(loadingScreen, controllingPlayer);
+
+            MusicManager.Inst().PlaySong(SongEnum.menu);
         }
 
 
