@@ -77,7 +77,7 @@ namespace Expanze
                 return;
             }
 
-            startGameButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 150), (int)(Settings.maximumResolution.Y - 200), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(79), Settings.scaleH(66), "HUD/hotseat_hra_button");
+            startGameButton = new ButtonComponent(ScreenManager.Game, (int)(Settings.maximumResolution.X - 150), (int)(Settings.maximumResolution.Y - 200), new Rectangle(), GameResources.Inst().GetFont(EFont.MedievalBig), Settings.scaleW(79), Settings.scaleH(66), "HUD/menu_next");
             startGameButton.Actions += StartGameSelected;
             //guiComponents.Add(changeTurnButton);
 

@@ -237,6 +237,7 @@ namespace Expanze
                 foreach(Player player in players) {
                     spriteBatch.Draw(GameResources.Inst().GetHudTexture(HUDTexture.PlayerColor), new Vector2(startX + 20, startY), player.GetColor());
                     spriteBatch.DrawString(font, player.GetName(), new Vector2(startName, startY), color);
+                    spriteBatch.DrawString(font, Math.Round(player.GetPointSum() * 100) + "%", new Vector2(startName + 300, startY), color);
                     //if(player.GetIsAI())
                     //    spriteBatch.DrawString(font, player.GetComponentAI().GetAIName(), new Vector2(startX + 450, startY), color);
                     //spriteBatch.DrawString(font, player.GetPointSum() + "", new Vector2(startX + 80, startY), color);
@@ -296,7 +297,7 @@ namespace Expanze
         {
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 
-            int x = 500 + pointNumber * 80;
+            int x = 630 + pointNumber * 80;
             int y = 300;
             spriteBatch.Draw(texture2D, new Vector2(x, y - texture2D.Height), Color.White);
 

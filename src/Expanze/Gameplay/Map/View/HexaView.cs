@@ -553,18 +553,23 @@ namespace Expanze
                 {
                     foreach (BasicEffect effect in mesh.Effects)
                     {
-                        /*
-                        if (a == roofID)
+                        if (Settings.graphics == GraphicsQuality.LOW_GRAPHICS)
                         {
                             Vector3 color = model.getTown((CorePlugin.TownPos)loop1).GetOwner().GetColor().ToVector3();
                             effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
                             effect.DiffuseColor = color * 0.6f;
                             effect.AmbientLightColor = color * 0.3f;
-                        }*/
+                        }
+                        else
+                        {
+                            effect.EmissiveColor = new Vector3(0.0f, 0.0f, 0.0f);
+                            effect.DiffuseColor = new Vector3(0.64f, 0.64f, 0.64f);
+                            effect.AmbientLightColor = GameState.MaterialAmbientColor;
+                        }
 
                         effect.Alpha = 1.0f;
                         effect.LightingEnabled = true;
-                        effect.AmbientLightColor = GameState.MaterialAmbientColor;
+                        
                         effect.DirectionalLight0.Direction = GameState.LightDirection;
                         effect.DirectionalLight0.DiffuseColor = GameState.LightDiffusionColor;
                         effect.DirectionalLight0.SpecularColor = GameState.LightSpecularColor;

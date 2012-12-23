@@ -69,6 +69,7 @@ namespace Expanze
         // goals
         public static int maxTurn = 50;
         public static int[] winPoints = {10, 15, 20};
+        public static int[] pointsGoal = new int[(int)PlayerPoints.Count];
         public static int pointsTown = 0; /// points for new town
         public static int pointsRoad = 1; /// points for new road
         public static int pointsFort = 0; /// points for new fort
@@ -263,6 +264,34 @@ namespace Expanze
             {
                 hiddenEverything = value;
             }
+        }
+
+        internal static void RecopyGoalsToArray()
+        {
+            pointsGoal[(int) PlayerPoints.Fort] = Settings.pointsFort;
+            pointsGoal[(int) PlayerPoints.FortCaptureHexa] = Settings.pointsFortCapture;
+            pointsGoal[(int) PlayerPoints.FortParade] = Settings.pointsFortParade;
+            pointsGoal[(int) PlayerPoints.FortStealSources] = Settings.pointsFortSteal;
+            pointsGoal[(int) PlayerPoints.LicenceLvl1] = Settings.pointsMarketLvl1;
+            pointsGoal[(int) PlayerPoints.LicenceLvl2] = Settings.pointsMarketLvl2;
+            pointsGoal[(int) PlayerPoints.Market] = Settings.pointsMarket;
+            pointsGoal[(int) PlayerPoints.RoadID] = Settings.goalRoadID;
+            pointsGoal[(int) PlayerPoints.TownID] = Settings.goalTownID;
+            pointsGoal[(int) PlayerPoints.Mill] = Settings.pointsMill;
+            pointsGoal[(int) PlayerPoints.Mine] = Settings.pointsMine;
+            pointsGoal[(int) PlayerPoints.Monastery] = Settings.pointsMonastery;
+            pointsGoal[(int) PlayerPoints.Quarry] = Settings.pointsQuarry;
+            pointsGoal[(int) PlayerPoints.Road] = Settings.pointsRoad;
+            pointsGoal[(int) PlayerPoints.Saw] = Settings.pointsSaw;
+            pointsGoal[(int) PlayerPoints.Stepherd] = Settings.pointsStepherd;
+            pointsGoal[(int) PlayerPoints.Town] = Settings.pointsTown;
+            pointsGoal[(int) PlayerPoints.UpgradeLvl1] = Settings.pointsUpgradeLvl1;
+            pointsGoal[(int) PlayerPoints.UpgradeLvl2] = Settings.pointsUpgradeLvl2;
+            pointsGoal[(int) PlayerPoints.Corn] = Settings.pointsCorn;
+            pointsGoal[(int) PlayerPoints.Meat] = Settings.pointsMeat;
+            pointsGoal[(int) PlayerPoints.Stone] = Settings.pointsStone;
+            pointsGoal[(int) PlayerPoints.Wood] = Settings.pointsWood;
+            pointsGoal[(int) PlayerPoints.Ore] = Settings.pointsOre;
         }
     }
 }

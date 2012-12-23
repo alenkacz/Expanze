@@ -186,7 +186,6 @@ namespace Expanze
 
             randomGenerator = new System.Random();
             hasBuiltTown = false;
-            turnNumber = 1;
 
             if (playerCount == 1)
             {
@@ -309,6 +308,7 @@ namespace Expanze
                     case "Corn": Settings.pointsCorn = value; break;
                     case "Ore": Settings.pointsOre = value; break;
                     case "turnLimit": Settings.maxTurn = value; break;
+                    case "turn": turnNumber = value; break;
                     case "road" :
                         Settings.goalRoad.Add(value);
                         map.GetRoadByID(value).GoalRoad = true;
@@ -344,10 +344,13 @@ namespace Expanze
                     case "MarketLvl2": Settings.banSecondLicence = value; break;
                 }
             }
+
+            Settings.RecopyGoalsToArray();
         }
 
         private void SetDefaultSettings()
         {
+            turnNumber = 1;
             Settings.banFort = false;
             Settings.banFortCaptureHexa = false;
             Settings.banFortParade = false;
@@ -1066,7 +1069,7 @@ namespace Expanze
 
                 if (winnerNew)
                 {                   
-                    if (mapSource != null)
+                    if (File.Exists("Content/Maps/save-game.xml"))
                     {
                         File.Delete("Content/Maps/save-game.xml");
                         //File.Copy("Content/Maps/cam01sce" + ((Settings.level < 10) ? ("0" + Settings.level) : ("" + Settings.level)), "Content/Maps/save-game.xml");
@@ -1448,7 +1451,7 @@ namespace Expanze
                 players[3] = tempPlayer;
             }
 #endif
-
+            Settings.RecopyGoalsToArray();
             StartGame();
         }
 
@@ -1708,7 +1711,8 @@ namespace Expanze
             writer.WriteElementString("Ore", Settings.pointsOre + "");
             writer.WriteElementString("FortCapture", Settings.pointsFortCapture + "");
             writer.WriteElementString("FortSteal", Settings.pointsFortSteal + "");
-            writer.WriteElementString("turnLimit", (Settings.maxTurn - turnNumber) + "");
+            writer.WriteElementString("turn", turnNumber + "");
+            writer.WriteElementString("turnLimit", Settings.maxTurn + "");
             writer.WriteElementString("roadID", Settings.goalRoadID + "");
             writer.WriteElementString("townID", Settings.goalTownID + "");
             foreach (int road in Settings.goalRoad)

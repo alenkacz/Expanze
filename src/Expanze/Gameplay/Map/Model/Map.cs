@@ -148,7 +148,7 @@ namespace Expanze.Gameplay.Map
             TownModel.ResetCounter();
 
             hexaMapModel = GetMap(newMap);
-
+            
             mapView.Initialize();
 
             CreateHexaWorldMatrices(); // have to be before Create Towns and roads

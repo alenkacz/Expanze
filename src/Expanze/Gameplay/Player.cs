@@ -275,8 +275,15 @@ namespace Expanze
         public float GetPointSum()
         {
             float pointSum = 0;
+            int pointsKind = 0;
             for (int loop1 = 0; loop1 < (int)PlayerPoints.Count; loop1++)
-                pointSum += points[loop1];
+            {
+                if (Settings.pointsGoal[loop1] > 0)
+                {
+                    pointsKind++;
+                    pointSum += (float) points[loop1] / Settings.pointsGoal[loop1];
+                }
+            }
 
             if (Settings.pointsOre > 0)
                 pointSum += ((collectSourcesNormal.GetOre() > Settings.pointsOre) ? Settings.pointsOre : collectSourcesNormal.GetOre()) / ((float)Settings.pointsOre);
@@ -293,7 +300,7 @@ namespace Expanze
             if (Settings.pointsCorn > 0)
                 pointSum += ((collectSourcesNormal.GetCorn() > Settings.pointsCorn) ? Settings.pointsCorn : collectSourcesNormal.GetCorn()) / ((float)Settings.pointsCorn);
             
-            return pointSum;
+            return pointSum / pointsKind;
         }
 
         public int GetConversionRate(SourceKind kind)
