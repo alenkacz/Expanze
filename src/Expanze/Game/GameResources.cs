@@ -303,10 +303,21 @@ namespace Expanze
 
 
 
-                hexaTexture = new Texture2D[3];
+                hexaTexture = new Texture2D[14];
                 hexaTexture[0] = content.Load<Texture2D>("Models/hexa_voda3");
                 hexaTexture[1] = content.Load<Texture2D>("Models/hexa_voda2");
                 hexaTexture[2] = content.Load<Texture2D>("Models/hexa_voda1");
+                hexaTexture[3] = content.Load<Texture2D>("Models/hexa_voda6");
+                hexaTexture[4] = content.Load<Texture2D>("Models/hexa_voda7");
+                hexaTexture[5] = content.Load<Texture2D>("Models/hexa_voda4");
+                hexaTexture[6] = content.Load<Texture2D>("Models/hexa_voda5");
+                hexaTexture[7] = content.Load<Texture2D>("Models/hexa_voda8");
+                hexaTexture[8] = content.Load<Texture2D>("Models/hexa_voda9");
+                hexaTexture[9] = content.Load<Texture2D>("Models/hexa_voda10");
+                hexaTexture[10] = content.Load<Texture2D>("Models/hexa_voda11");
+                hexaTexture[11] = content.Load<Texture2D>("Models/hexa_voda12");
+                hexaTexture[12] = content.Load<Texture2D>("Models/hexa_voda13");
+                hexaTexture[13] = content.Load<Texture2D>("Models/hexa_voda14");
 
                 shapeModel = new Model[N_SHAPE_MODEL];
 

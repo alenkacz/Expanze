@@ -1222,7 +1222,7 @@
   </text>
   <text id="MESSAGE_DESCRIPTION_END_GAME_WIN">
     <cz>, hráč, který včas splnil všechny úkoly.</cz>
-    <eng>, player who fulfil all goals.</eng>
+    <eng>, player who fulfill all goals.</eng>
   </text>
   <text id="MESSAGE_DESCRIPTION_END_GAME_LOOSE1">
     <cz>Prohra, hořká prohra. Nestačilo ti </cz>

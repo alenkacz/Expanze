@@ -400,8 +400,7 @@ namespace Expanze
                     } else
 #endif
                     {
-                        SoundEffect fanfara = ScreenManager.Game.Content.Load<SoundEffect>("Sounds/assembly");
-                        fanfara.Play();
+                        MusicManager.Inst().PlaySound(SoundEnum.assembly);
                         VictoryScreen.Load(ScreenManager, true, ControllingPlayer,
                                    new GameScreen[] { new MainMenuScreen() });
                     }

@@ -15,12 +15,15 @@ namespace Expanze.Gameplay.Map
         ViewQueue viewQueue;
         ModelView view;
         Map map;
+        Dictionary<String, String> waterTexture;
 
         public MapView(Map map)
         {
             this.map = map;
             viewQueue = new ViewQueue(this);
             view = new ModelView();
+            waterTexture = new Dictionary<string, string>();
+            MakeDictionaryForWaterTextures();
         }
 
         public HexaView[][] GetHexaMapView() { return hexaMapView; }
@@ -87,112 +90,137 @@ namespace Expanze.Gameplay.Map
             return false;
         }
 
+        void MakeDictionaryForWaterTextures()
+        {
+            waterTexture["000000"] = "00";
+            waterTexture["000001"] = "21";
+            waterTexture["000010"] = "31";
+            waterTexture["000011"] = "32";
+            waterTexture["000100"] = "41";
+            waterTexture["000101"] = "59";
+            waterTexture["000110"] = "42";
+            waterTexture["000111"] = "33";
+            waterTexture["001000"] = "51";
+            waterTexture["001001"] = "28";
+            waterTexture["001010"] = "09";
+            waterTexture["001011"] = "211";
+            waterTexture["001100"] = "52";
+            waterTexture["001101"] = "512";
+            waterTexture["001110"] = "43";
+            waterTexture["001111"] = "34";
+            waterTexture["010000"] = "01";
+            waterTexture["010001"] = "39";
+            waterTexture["010010"] = "38";
+            waterTexture["010011"] = "312";
+            waterTexture["010100"] = "19";
+            waterTexture["010101"] = "010";
+            waterTexture["010110"] = "311";
+            waterTexture["010111"] = "313";
+            waterTexture["011000"] = "02";
+            waterTexture["011001"] = "511";
+            waterTexture["011010"] = "012";
+            waterTexture["011011"] = "37";
+            waterTexture["011100"] = "53";
+            waterTexture["011101"] = "513";
+            waterTexture["011110"] = "44";
+            waterTexture["011111"] = "35";
+            waterTexture["100000"] = "11";
+            waterTexture["100001"] = "22";
+            waterTexture["100010"] = "49";
+            waterTexture["100011"] = "23";
+            waterTexture["100100"] = "18";
+            waterTexture["100101"] = "111";
+            waterTexture["100110"] = "412";
+            waterTexture["100111"] = "24";
+            waterTexture["101000"] = "29";
+            waterTexture["101001"] = "212";
+            waterTexture["101010"] = "010";
+            waterTexture["101011"] = "213";
+            waterTexture["101100"] = "411";
+            waterTexture["101101"] = "27";
+            waterTexture["101110"] = "413";
+            waterTexture["101111"] = "25";
+            waterTexture["110000"] = "12";
+            waterTexture["110001"] = "13";
+            waterTexture["110010"] = "011";
+            waterTexture["110011"] = "14";
+            waterTexture["110100"] = "112";
+            waterTexture["110101"] = "113";
+            waterTexture["110110"] = "17";
+            waterTexture["110111"] = "15";
+            waterTexture["111000"] = "03";
+            waterTexture["111001"] = "04";
+            waterTexture["111010"] = "013";
+            waterTexture["111011"] = "05";
+            waterTexture["111100"] = "54";
+            waterTexture["111101"] = "55";
+            waterTexture["111110"] = "45";
+            waterTexture["111111"] = "06";
+        }
+
         WaterView getWaterView(int i, int j)
         {
             HexaModel[][] hexaMapModel = map.GetHexaMapModel();
-            int neighbours = 0;
-            bool upLeft = false;
-            bool upRight = false;
-            bool left = false;
-            bool right = false;
-            bool bottomLeft = false;
-            bool bottomRight = false;
+            int neighbourNumber = 0;
 
+            String neighbours = "";
             if (IsSourceHex(i - 1, j))
             {
-                neighbours += 1;
-                upLeft = true;
+                neighbourNumber += 1;
+                //upLeft = true;
+                neighbours += "1";
             }
+            else neighbours += "0";
 
             if (IsSourceHex(i - 1, j - 1))
             {
-                neighbours += 1;
-                upRight = true;
+                neighbourNumber += 1;
+                //upRight = true;
+                neighbours += "1";
             }
-
-            if (IsSourceHex(i, j + 1))
-            {
-                neighbours += 1;
-                left = true;
-            }
+            else neighbours += "0";
 
             if (IsSourceHex(i, j - 1))
             {
-                neighbours += 1;
-                right = true;
+                neighbourNumber += 1;
+                //right = true;
+                neighbours += "1";
             }
-
-            if (IsSourceHex(i + 1, j + 1))
-            {
-                neighbours += 1;
-                bottomLeft = true;
-            }
+            else neighbours += "0";
 
             if (IsSourceHex(i + 1, j))
             {
-                neighbours += 1;
-                bottomRight = true;
+                neighbourNumber += 1;
+                //bottomRight = true;
+                neighbours += "1";
             }
+            else neighbours += "0";
 
+            if (IsSourceHex(i + 1, j + 1))
+            {
+                neighbourNumber += 1;
+                //bottomLeft = true;
+                neighbours += "1";
+            }
+            else neighbours += "0";
+
+            if (IsSourceHex(i, j + 1))
+            {
+                neighbourNumber += 1;
+                //left = true;
+                neighbours += "1";
+            }
+            else neighbours += "0";
+
+            String value = waterTexture[neighbours];
+            int rotationNumber = value[0] - '0';
+            int textureNumber = Convert.ToInt32(value.Substring(1));
             Matrix rotation = Matrix.Identity;
-
-            if (right && upRight)
+            if (rotationNumber > 0)
             {
+                rotation = Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (rotationNumber));
             }
-            else 
-                if (upLeft && upRight)
-            {
-                rotation = Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (1));
-            }
-            else if (upLeft && left)
-            {
-                rotation = Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (2));
-            }
-            else if (bottomLeft && left)
-            {
-                rotation = Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (3));
-            }
-            else if (bottomRight && bottomLeft)
-            {
-                rotation = Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (4));
-            }
-            else
-                if (right)
-            {
-                rotation = Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (5));
-            } else
-                if (upLeft)
-            {
-                rotation = Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (1));
-            }
-            else
-                if (left)
-            {
-                rotation = Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (2));
-            }
-            else
-            if (bottomLeft)
-            {
-                rotation = Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (3));
-            }
-            else
-            if (bottomRight)
-            {
-                rotation = Matrix.CreateRotationY(((float)Math.PI / 3.0f) * (4));
-            }
-
-            int n = (neighbours > 2) ? 2 : neighbours;
-            if (n == 2 && ((!bottomRight || !bottomLeft) &&
-                          (!bottomRight || !right) &&
-                          (!right || !upRight) &&
-                          (!upRight || !upLeft) &&
-                          (!upLeft || !left) &&
-                          (!left || !bottomLeft)))
-            {
-                n = 1;
-            }
-
-            Texture2D t = GameResources.Inst().GetHexaTexture(n);
+            Texture2D t = GameResources.Inst().GetHexaTexture(textureNumber);
             
             return new WaterView(hexaMapModel[i][j], t, rotation, i, j, view);
         }

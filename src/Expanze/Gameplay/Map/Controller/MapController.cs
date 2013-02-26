@@ -5,6 +5,7 @@ using System.Text;
 using CorePlugin;
 using Expanze.Gameplay.Map.View;
 using Expanze.Utils;
+using Expanze.Utils.Music;
 
 namespace Expanze.Gameplay.Map
 {
@@ -143,8 +144,11 @@ namespace Expanze.Gameplay.Map
             BuyingUpgradeError error = (gm.GetState() == EGameState.BeforeGame) ? BuyingUpgradeError.OK : building.CanActivePlayerBuyUpgrade(upgradeKind, upgradeNumber);
             if (error == BuyingUpgradeError.OK)
             {
-                if(gm.GetState() == EGameState.StateGame)
+                if (gm.GetState() == EGameState.StateGame)
+                {
                     gm.GetActivePlayer().PayForSomething(building.GetUpgradeCost(upgradeKind, upgradeNumber));
+                    MusicManager.Inst().PlaySound(SoundEnum.upgrade);
+                }
 
                 building.BuyUpgrade(upgradeKind, upgradeNumber);
 
@@ -545,6 +549,7 @@ namespace Expanze.Gameplay.Map
                 player.PayForSomething(Settings.costFortCapture);
                 player.AddFortAction();
                 player.AddPoints(PlayerPoints.FortCaptureHexa);
+                MusicManager.Inst().PlaySound(SoundEnum.fortcapture);
                 return true;
             }
             return false;
@@ -610,6 +615,7 @@ namespace Expanze.Gameplay.Map
                 SourceAll source = new SourceAll(0);
                 int amount = gm.GetRandomInt(60 + gm.GetActivePlayer().MilitaryTrainings * 7) + ((hexa.GetDestroyed()) ? 0 : 60 + gm.GetActivePlayer().MilitaryTrainings * 5);
                 hexa.Destroy();
+                MusicManager.Inst().PlaySound(SoundEnum.fortdestroyhex);
                 
                 switch(hexa.GetKind())
                 {
@@ -683,6 +689,7 @@ namespace Expanze.Gameplay.Map
                 activePlayer.PayForSomething(Settings.costFortSources);
                 activePlayer.AddFortAction();
                 activePlayer.AddPoints(PlayerPoints.FortStealSources);
+                MusicManager.Inst().PlaySound(SoundEnum.fortcapture);
                 if (activePlayer.GetIsAI())
                 {
 
@@ -726,6 +733,7 @@ namespace Expanze.Gameplay.Map
                 activePlayer.AddPoints(PlayerPoints.FortParade);
                 activePlayer.AddFortAction();
                 activePlayer.PayForSomething(GetPrice(PriceKind.AParade));
+                MusicManager.Inst().PlaySound(SoundEnum.forttraining);
                 if (gm.GetActivePlayer().GetIsAI())
                 {
                     Message.Inst().Show(Strings.Inst().GetString(TextEnum.PROMPT_TITLE_WANT_TO_BUY_FORT_ACTION_PARADE), Strings.Inst().GetString(TextEnum.PROMPT_DESCTIPTION_MESSAGE_FORT_ACTION_PARADE), GameResources.Inst().GetHudTexture(HUDTexture.IconFortParade));

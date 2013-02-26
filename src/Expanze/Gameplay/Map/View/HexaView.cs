@@ -714,7 +714,7 @@ namespace Expanze
                 case EFortState.DestroyingHexa:
                     if (IsInFortRadius())// && !model.GetDestroyed())
                     {
-                        MusicManager.Inst().PlaySound(SoundEnum.fort);
+                        //MusicManager.Inst().PlaySound(SoundEnum.fort);
                         GameState.map.GetMapController().DestroyHexa(hexaID, null);
                         GameMaster.Inst().SetFortState(EFortState.Normal);
                     }
@@ -723,7 +723,7 @@ namespace Expanze
                 case EFortState.CapturingHexa:
                     if (IsInFortRadius())
                     {
-                        MusicManager.Inst().PlaySound(SoundEnum.fort);
+                        //MusicManager.Inst().PlaySound(SoundEnum.fort);
                         GameState.map.GetMapController().CaptureHexa(hexaID, HexaModel.GetHexaFort());
                         GameMaster.Inst().SetFortState(EFortState.Normal);
                     }

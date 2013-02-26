@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using CorePlugin;
 using Microsoft.Xna.Framework.Graphics;
+using Expanze.Utils.Music;
 
 namespace Expanze.Gameplay
 {
@@ -93,6 +94,11 @@ namespace Expanze.Gameplay
         {
             HexaKind hexa = (HexaKind)(randomNumber.Next() % 5);
             bool positiveEvent = (randomNumber.Next() % 2) == 0;
+
+            if(positiveEvent)
+                MusicManager.Inst().PlaySound(SoundEnum.miracle);
+            else
+                MusicManager.Inst().PlaySound(SoundEnum.disaster);
             return new RndEvent(hexa, positiveEvent);
         }
     }

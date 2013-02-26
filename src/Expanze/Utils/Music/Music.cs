@@ -12,7 +12,7 @@ namespace Expanze.Utils.Music
     public enum SongEnum
     {
         menu,
-        ingame1
+        ingame1,
     }
 
     public enum SoundEnum
@@ -30,7 +30,14 @@ namespace Expanze.Utils.Music
         sawmill,
         stepherd,
         town,
-        windmill
+        windmill,
+        disaster,
+        miracle, 
+        fortcapture,
+        fortdestroyhex,
+        forttraining,
+        upgrade,
+        assembly
     }
 
     public class MusicManager
@@ -39,12 +46,14 @@ namespace Expanze.Utils.Music
         private Dictionary<string, Song> songs;
         private Dictionary<string, SoundEffect> sounds;
         Song playedSong;
+        SoundEffect lastPlayedSound;
         ContentManager content;
 
         private MusicManager()
         {
             playedSong = null;
             songs = new Dictionary<string, Song>();
+            lastPlayedSound = null;
             sounds = new Dictionary<string, SoundEffect>();
             MediaPlayer.IsMuted = false;
             MediaPlayer.IsRepeating = true;
@@ -71,7 +80,8 @@ namespace Expanze.Utils.Music
             }
             else
             {
-                sounds[name].Play();
+                lastPlayedSound = sounds[name];
+                lastPlayedSound.Play();
             }
         }
 
@@ -92,6 +102,7 @@ namespace Expanze.Utils.Music
                 MediaPlayer.Play(playedSong);
                 //MediaPlayer.ActiveSongChanged += new EventHandler<EventArgs>(MediaPlayer_ActiveSongChanged);
             }
+            MediaPlayer.Volume = 0.025f;
         }
 
         void MediaPlayer_ActiveSongChanged(object sender, EventArgs e)
