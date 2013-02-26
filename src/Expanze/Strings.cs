@@ -56,6 +56,7 @@ namespace Expanze
         MENU_CREATORS_ALENA,
         MENU_CREATORS_PAVLA,
         MENU_CREATORS_VACLAV,
+        MENU_CREATORS_ADAM,
 
         MENU_GRAPH_POINTS,
         MENU_GRAPH_TOWNS,
@@ -396,6 +397,7 @@ namespace Expanze
         TIP_GAME_8,
         TIP_GAME_9,
         TIP_GAME_10,
+        TIP_GAME_11,
         COUNT
     }
 

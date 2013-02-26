@@ -26,6 +26,7 @@ namespace Expanze
         MenuEntry lukasMenuEntry;
         MenuEntry pavlaMenuEntry;
         MenuEntry vaclavMenuEntry;
+        MenuEntry adamMenuEntry;
 
 
         #endregion
@@ -44,6 +45,7 @@ namespace Expanze
             pavlaMenuEntry = new MenuEntry(string.Empty);
             lukasMenuEntry = new MenuEntry(string.Empty);
             vaclavMenuEntry = new MenuEntry(string.Empty);
+            adamMenuEntry = new MenuEntry(string.Empty);
 
             SetMenuEntryText();
 
@@ -57,6 +59,7 @@ namespace Expanze
             MenuEntries.Add(alenaMenuEntry);
             MenuEntries.Add(pavlaMenuEntry);
             MenuEntries.Add(vaclavMenuEntry);
+            MenuEntries.Add(adamMenuEntry);
             //MenuEntries.Add(back);
         }
 
@@ -70,6 +73,7 @@ namespace Expanze
             alenaMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_CREATORS_ALENA);
             pavlaMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_CREATORS_PAVLA);
             vaclavMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_CREATORS_VACLAV);
+            adamMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_CREATORS_ADAM);
         }
 
 

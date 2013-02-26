@@ -5,6 +5,8 @@
     <language-name>Česky</language-name>
     <difficulty>0</difficulty>
     <campaign>0</campaign>
+    <sound>500</sound>
+    <music>25</music>
   </common>
   <graphics>
     <fullscreen>false</fullscreen>

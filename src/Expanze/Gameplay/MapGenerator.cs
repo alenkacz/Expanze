@@ -31,19 +31,19 @@ namespace Expanze.Gameplay
             for (int loop1 = 0; loop1 < sizeArray.Length - 1; loop1++)
             {
                 double rndNumber = rnd.NextDouble();
-                if (rndNumber > ((size < 3)  ? 0.3 : 0.6) && size <= 3 + gs.PlayerCount / 2)
+                if (rndNumber - size * 0.05 > ((size < 3)  ? 0.3 : 0.6) && size + pos <= 3 + gs.PlayerCount / 2)
                     size += 1;
                 else if (rndNumber < ((size > 4) ? 0.6 : 0.3) && size - pos >= 3)
                     size -= 1;
                 if (rnd.NextDouble() > 0.75)
                 {
-                    if (rndNumber > 0.6 && size <= 3 + gs.PlayerCount)
+                    if (rndNumber > 0.6 && size + pos <= 3 + gs.PlayerCount)
                         size += 1;
-                    else if (rndNumber < 0.3 && size >= 3)
+                    else if (rndNumber < 0.5 && size >= 3)
                         size -= 1;
                 }
 
-                if (loop1 > 1 && rnd.NextDouble() > 0.55)
+                if ((loop1 > 1 && rnd.NextDouble() > 0.55) || pos < row - 2)
                     pos++;
 
                 if (loop1 != 0)

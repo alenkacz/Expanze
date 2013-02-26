@@ -49,7 +49,7 @@ namespace Expanze
             this.screensToLoad = screensToLoad;
             otherScreensAreGone = false;
 
-            tips = new string[10];
+            tips = new string[11];
             tips[0] = Strings.Inst().GetString(TextEnum.TIP_GAME_1);
             tips[1] = Strings.Inst().GetString(TextEnum.TIP_GAME_2);
             tips[2] = Strings.Inst().GetString(TextEnum.TIP_GAME_3);
@@ -60,6 +60,7 @@ namespace Expanze
             tips[7] = Strings.Inst().GetString(TextEnum.TIP_GAME_8);
             tips[8] = Strings.Inst().GetString(TextEnum.TIP_GAME_9);
             tips[9] = Strings.Inst().GetString(TextEnum.TIP_GAME_10);
+            tips[10] = Strings.Inst().GetString(TextEnum.TIP_GAME_11);
             tip = tips[GameMaster.Inst().GetRandomInt(tips.Length)];
         }
 

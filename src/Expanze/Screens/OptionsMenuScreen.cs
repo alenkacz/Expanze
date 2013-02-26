@@ -27,6 +27,8 @@ namespace Expanze
         MenuEntry fullscreenMenuEntry;
         MenuEntry languageMenuEntry;
         MenuEntry difficultyMenuEntry;
+        MenuEntry musicVolumeEntry;
+        MenuEntry soundVolumeEntry;
         MenuEntry apply;
         
 
@@ -40,6 +42,8 @@ namespace Expanze
         static bool isFullscreen = false;
         static int activeLanguage = 0;
         static int activeDifficulty = 0;
+        static int soundVolume = 0;
+        static int musicVolume = 0;
 
         #endregion
 
@@ -80,6 +84,9 @@ namespace Expanze
             resolutionMenuEntry = new MenuEntry(string.Empty);
             fullscreenMenuEntry = new MenuEntry(string.Empty);
             languageMenuEntry = new MenuEntry(string.Empty);
+            soundVolumeEntry = new MenuEntry(string.Empty);
+            musicVolumeEntry = new MenuEntry(string.Empty);
+
             apply = new MenuEntry(Strings.Inst().GetString(TextEnum.MENU_OPTION_ACTIVATE_CHANGES));
 
             XmlDocument xDoc = new XmlDocument();
@@ -97,6 +104,9 @@ namespace Expanze
             }
             activeDifficulty = (int) Settings.difficulty;
 
+            soundVolume = (int) Settings.soundVolume;
+            musicVolume = (int) Settings.musicVolume;
+
             SetMenuEntryText();
 
             // Hook up menu event handlers.
@@ -111,6 +121,8 @@ namespace Expanze
             MenuEntries.Add(fullscreenMenuEntry);
             MenuEntries.Add(difficultyMenuEntry);
             MenuEntries.Add(languageMenuEntry);
+            //MenuEntries.Add(soundVolumeEntry);
+            //MenuEntries.Add(musicVolumeEntry);
             MenuEntries.Add(apply);
 
             isFullscreen = Settings.isFullscreen;
@@ -131,6 +143,8 @@ namespace Expanze
             string[] difficulty = { Strings.Inst().GetString(TextEnum.MENU_OPTION_DIFFICULTY_EASY), Strings.Inst().GetString(TextEnum.MENU_OPTION_DIFFICULTY_NORMAL) };
             difficultyMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_OPTION_DIFFICULTY) + ": " + difficulty[activeDifficulty];
             languageMenuEntry.Text = Strings.Inst().GetString(TextEnum.MENU_OPTION_LANGUAGE) + ": " + languages[activeLanguage];
+            soundVolumeEntry.Text = Strings.Inst().GetString(TextEnum.MENU_OPTION_LANGUAGE) + ": " + soundVolume;
+            musicVolumeEntry.Text = Strings.Inst().GetString(TextEnum.MENU_OPTION_LANGUAGE) + ": " + musicVolume;
             apply.Text = Strings.Inst().GetString(TextEnum.MENU_OPTION_ACTIVATE_CHANGES);
         }
 

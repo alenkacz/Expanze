@@ -177,6 +177,10 @@
     <cz>Václav Špíral - hudba</cz>
     <eng>Vaclav Spiral - music</eng>
   </text>
+  <text id="MENU_CREATORS_ADAM">
+    <cz>Adam Kružík - korektura</cz>
+    <eng>Adam Kruzik - proofreading</eng>
+  </text>
   <text id="MENU_GRAPH_POINTS">
     <cz>Počet bodů</cz>
     <eng>Total points</eng>
@@ -1370,7 +1374,7 @@
     <eng>EmPtY</eng>
   </text>
   <text id="TIP_GAME_1">
-    <cz>Používej klávesovou zkratku TAB pro nové kole</cz>
+    <cz>Používej klávesovou zkratku TAB pro nové kolo</cz>
     <eng>You can use TAB shortcut for new turn</eng>
   </text>
   <text id="TIP_GAME_2">
@@ -1390,8 +1394,8 @@
     <eng>Change graphics quality with G key</eng>
   </text>
   <text id="TIP_GAME_6">
-    <cz>Hru můžeš vzdát stisknutím F12. Ostatní hráči mohou hrát dál.</cz>
-    <eng>You can give up game pressing F12. Other players will continue playing.</eng>
+    <cz>Hru můžeš vzdát stisknutím F4. Ostatní hráči mohou hrát dál.</cz>
+    <eng>You can give up game pressing F4. Other players will continue playing.</eng>
   </text>
   <text id="TIP_GAME_7">
     <cz>Okno s měněním surovin se zobrazí stisknutím klávesy M.</cz>
@@ -1408,5 +1412,9 @@
   <text id="TIP_GAME_10">
     <cz>Nemůžeš se v kampani posunout dál? Zvol si v nastavení nižší obtížnost.</cz>
     <eng>You can't progress any more? Change game difficulty in option menu.</eng>
+  </text>
+  <text id="TIP_GAME_11">
+    <cz>Hlasitost hudby a zvuků můžeš měnit klávesami F11/F12 a F9/F10.</cz>
+    <eng>You can adjust music and sound volume with keys F11/F12 and F9/10.</eng>
   </text>
 </texts>

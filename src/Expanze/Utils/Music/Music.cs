@@ -73,6 +73,8 @@ namespace Expanze.Utils.Music
         {
             string name = soundEnum.ToString();
 
+            SoundEffect.MasterVolume = Settings.soundVolume / 1000.0f;
+
             if (!sounds.ContainsKey(name))
             {
                 Thread loading = new Thread(X => LoadAndPlaySound(name));
@@ -102,7 +104,7 @@ namespace Expanze.Utils.Music
                 MediaPlayer.Play(playedSong);
                 //MediaPlayer.ActiveSongChanged += new EventHandler<EventArgs>(MediaPlayer_ActiveSongChanged);
             }
-            MediaPlayer.Volume = 0.025f;
+            MediaPlayer.Volume = Settings.musicVolume / 1000.0f;
         }
 
         void MediaPlayer_ActiveSongChanged(object sender, EventArgs e)
@@ -126,6 +128,11 @@ namespace Expanze.Utils.Music
             songs[name] = song;
             playedSong = song;
             MediaPlayer.Play(playedSong);
+        }
+
+        public void SetMusicVolume(float volume)
+        {
+            MediaPlayer.Volume = Settings.musicVolume / 1000.0f;
         }
 
         private void LoadSound(string name)

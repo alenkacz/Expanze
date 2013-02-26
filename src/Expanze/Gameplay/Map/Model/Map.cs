@@ -10,6 +10,7 @@ using CorePlugin;
 using Expanze.Gameplay.Map;
 using Expanze.Gameplay.Map.View;
 using Expanze.Utils;
+using Expanze.Utils.Music;
 
 namespace Expanze.Gameplay.Map
 {
@@ -348,6 +349,7 @@ namespace Expanze.Gameplay.Map
 
             ChangeCamera(gameTime);
             ChangeLight(gameTime);
+            ChangeVolume(gameTime);
 
             mapView.Update(gameTime);
 
@@ -355,6 +357,70 @@ namespace Expanze.Gameplay.Map
                 for (int j = 0; j < hexaMapModel[i].Length; j++)
                     if (hexaMapModel[i][j] != null)
                         hexaMapModel[i][j].Update(gameTime);
+        }
+
+        int showMusic = 0;
+        int showSound = 0;
+        private void ChangeVolume(GameTime gameTime)
+        {
+            showMusic -= gameTime.ElapsedGameTime.Milliseconds;
+            showSound -= gameTime.ElapsedGameTime.Milliseconds;
+            int time = 1000;
+
+            if (showMusic < 0)
+            {
+                Settings.showMusicVolume = false;
+                showMusic = 0;
+            }
+
+            if (showSound < 0)
+            {
+                Settings.showSoundVolume = false;
+                showSound = 0;
+            }
+
+            if (InputManager.Inst().GetGameAction("game", "sounddown").IsPressed())
+            {
+                Settings.soundVolume -= gameTime.ElapsedGameTime.Milliseconds * 0.3f;
+                if (Settings.soundVolume < 0.0f)
+                    Settings.soundVolume = 0.0f;
+
+                showSound = time;
+                Settings.showSoundVolume = true;
+            }
+            if (InputManager.Inst().GetGameAction("game", "musicdown").IsPressed())
+            {
+                Settings.musicVolume -= gameTime.ElapsedGameTime.Milliseconds * 0.3f;
+                if (Settings.musicVolume < 0.0f)
+                    Settings.musicVolume = 0.0f;
+
+                Settings.showMusicVolume = true;
+                showMusic = time;
+
+                MusicManager.Inst().SetMusicVolume(Settings.musicVolume);
+            }
+
+            if (InputManager.Inst().GetGameAction("game", "soundup").IsPressed())
+            {
+                Settings.soundVolume += gameTime.ElapsedGameTime.Milliseconds * 0.3f;
+                if (Settings.soundVolume > 1000.0f)
+                    Settings.soundVolume = 1000.0f;
+
+                showSound = time;
+                Settings.showSoundVolume = true;
+            }
+
+            if (InputManager.Inst().GetGameAction("game", "musicup").IsPressed())
+            {
+                Settings.musicVolume += gameTime.ElapsedGameTime.Milliseconds * 0.3f;
+                if (Settings.musicVolume > 1000.0f)
+                    Settings.musicVolume = 1000.0f;
+
+                Settings.showMusicVolume = true;
+                showMusic = time;
+
+                MusicManager.Inst().SetMusicVolume(Settings.musicVolume);
+            }
         }
 
         public override void HandlePickableAreas(Color c)

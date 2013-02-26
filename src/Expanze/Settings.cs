@@ -20,6 +20,7 @@ namespace Expanze
         public static Vector2[] allResolutions = { new Vector2(800, 600), new Vector2(1024, 768), new Vector2(1280, 800), new Vector2(1366, 768), new Vector2(1440, 900) };
         public static Vector2 maximumResolution = new Vector2(1440,900);
 
+
         /// indexed by enum Types
         public static String[] hexaSrcPath = new String[] { "Models/yellowhex", "Models/greenhex", "Models/greyhex", "Models/brownhex", "Models/redhex", "Models/orangehex", "Models/simplehex" };
 
@@ -120,6 +121,10 @@ namespace Expanze
         public static Color colorMenuText = Color.BurlyWood;
 
         public static Vector2 activeResolution = new Vector2(800,600);
+        public static float musicVolume = 25;
+        public static float soundVolume = 500;
+        public static bool showSoundVolume = false;
+        public static bool showMusicVolume = false;
 
         public static float getScale()
         {
@@ -204,6 +209,9 @@ namespace Expanze
             xDoc.GetElementsByTagName("language-name")[0].InnerText = Strings.Inst().LanguageName;
             xDoc.GetElementsByTagName("campaign")[0].InnerText = Settings.campaign + "";
             xDoc.GetElementsByTagName("difficulty")[0].InnerText = ((int) Settings.difficulty) + "";
+            xDoc.GetElementsByTagName("sound")[0].InnerText = (int) (soundVolume + 0.5f) + "";
+            xDoc.GetElementsByTagName("music")[0].InnerText = (int) (musicVolume + 0.5f) + "";
+
             xDoc.Save("Content/Maps/settings.xml");
         }
 
@@ -218,6 +226,9 @@ namespace Expanze
             Settings.activeResolution = new Vector2(screenWidth, screenHeight);
             Settings.difficulty = (Difficulty) Convert.ToInt32(xDoc.GetElementsByTagName("difficulty")[0].InnerText);
             Settings.campaign = Convert.ToInt32(xDoc.GetElementsByTagName("campaign")[0].InnerText);
+
+            Settings.soundVolume = (float) Convert.ToInt32(xDoc.GetElementsByTagName("sound")[0].InnerText);
+            Settings.musicVolume = (float) Convert.ToInt32(xDoc.GetElementsByTagName("music")[0].InnerText);
             scaleChange();
 
             Strings.Inst().LoadTexts(xDoc.GetElementsByTagName("language-code")[0].InnerText, xDoc.GetElementsByTagName("language-name")[0].InnerText);

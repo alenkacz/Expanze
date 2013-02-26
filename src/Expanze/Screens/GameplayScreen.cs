@@ -149,6 +149,11 @@ namespace Expanze
                 GameAction cameratop = new GameAction("cameratop", GameAction.ActionKind.Normal);
                 GameAction camerabottom = new GameAction("camerabottom", GameAction.ActionKind.Normal);
 
+                GameAction soundDown = new GameAction("sounddown", GameAction.ActionKind.Normal);
+                GameAction soundUp = new GameAction("soundup", GameAction.ActionKind.Normal);
+                GameAction musicDown = new GameAction("musicdown", GameAction.ActionKind.Normal);
+                GameAction musicUp = new GameAction("musicup", GameAction.ActionKind.Normal);
+
                 GameAction enablemessages = new GameAction("enablemessages", GameAction.ActionKind.OnlyInitialPress);
                 GameAction selectTown = new GameAction("selecttown", GameAction.ActionKind.OnlyInitialPress);
                 GameAction selectHexa = new GameAction("selecthexa", GameAction.ActionKind.OnlyInitialPress);
@@ -174,7 +179,7 @@ namespace Expanze
                 im.MapToKey(stateGame, selectTown, Keys.T);
                 im.MapToKey(stateGame, selectHexa, Keys.H);
                 im.MapToKey(stateGame, activateHexa, Keys.Enter);
-                im.MapToKey(stateGame, resignGame, Keys.F12);
+                im.MapToKey(stateGame, resignGame, Keys.F4);
 
                 im.MapToKey(stateGame, pause, Keys.Escape);
                 im.MapToKey(stateGame, nextTurn, Keys.Tab);
@@ -185,6 +190,11 @@ namespace Expanze
                 im.MapToKey(stateGame, cameradown, Keys.Down);
                 im.MapToKey(stateGame, cameratop, Keys.PageUp);
                 im.MapToKey(stateGame, camerabottom, Keys.PageDown);
+
+                im.MapToKey(stateGame, soundDown, Keys.F9);
+                im.MapToKey(stateGame, soundUp, Keys.F10);
+                im.MapToKey(stateGame, musicDown, Keys.F11);
+                im.MapToKey(stateGame, musicUp, Keys.F12);
             }
             im.SetActiveState(stateGame);
 
@@ -634,7 +644,26 @@ namespace Expanze
                 spriteBatch.End();
             }
 
-            
+
+            if (Settings.showMusicVolume)
+            {
+                spriteBatch.Begin();
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), "Music " + (int) (Settings.musicVolume / 10.0f + 0.499f) + "%", new Vector2(12, 202), Color.Black);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), "Music " + (int) (Settings.musicVolume / 10.0f  + 0.499f) + "%", new Vector2(10, 200), Settings.colorMainText);
+                spriteBatch.End();
+            }
+
+            if (Settings.showSoundVolume)
+            {
+                spriteBatch.Begin();
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), "Sound " + (int)(Settings.soundVolume / 10.0f + 0.499f) + "%", new Vector2(12, 172), Color.Black);
+                spriteBatch.DrawString(GameResources.Inst().GetFont(EFont.MedievalMedium), "Sound " + (int)(Settings.soundVolume / 10.0f + 0.499f) + "%", new Vector2(10, 170), Settings.colorMainText);
+                spriteBatch.End();
+            } 
+
+           
+
+            GameState.debugInfo = false;
             if (gameTime.ElapsedGameTime.Milliseconds != 0 &&
                 GameState.debugInfo)
             {
