@@ -115,7 +115,16 @@ namespace Expanze
         /// <returns></returns>
         public bool checkFinished(GameTime time)
         {
-            if (time.TotalGameTime.TotalSeconds > 4.5 || Keyboard.GetState().IsKeyDown(Keys.Enter) || Keyboard.GetState().IsKeyDown(Keys.Escape) || Mouse.GetState().LeftButton == ButtonState.Pressed)
+            bool keyPress = false;
+
+            try
+            {
+                keyPress = Keyboard.GetState().IsKeyDown(Keys.Enter) || Keyboard.GetState().IsKeyDown(Keys.Escape);
+            }
+            catch
+            {
+            }
+            if (time.TotalGameTime.TotalSeconds > 4.5 || keyPress || Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
                 InputState.waitForRelease();
                 return true;

@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using System.Collections.Generic;
+using System;
 #endregion
 
 namespace Expanze
@@ -95,7 +96,14 @@ namespace Expanze
                 LastGamePadStates[i] = CurrentGamePadStates[i];
                 LastMouseState = CurrentMouseState;
 
-                CurrentKeyboardStates[i] = Keyboard.GetState((PlayerIndex)i);
+                try
+                {
+                    CurrentKeyboardStates[i] = Keyboard.GetState((PlayerIndex)i);
+                }
+                catch(Exception e)
+                {
+
+                }
                 CurrentGamePadStates[i] = GamePad.GetState((PlayerIndex)i);
                 CurrentMouseState = Mouse.GetState();
 

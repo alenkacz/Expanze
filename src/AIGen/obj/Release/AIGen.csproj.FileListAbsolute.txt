@@ -5,3 +5,8 @@ C:\_Projekty\Expanze2\src\AIGen\obj\Release\1AIGen.dll
 C:\_Projekty\Expanze2\src\AIGen\obj\Release\1AIGen.pdb
 C:\_Projekty\Expanze2\src\Expanze\bin\x86\Release\Content\Plugins\1AIGen.dll
 C:\_Projekty\Expanze2\src\Expanze\bin\x86\Release\Content\Plugins\1AIGen.pdb
+C:\_projekty\Expanze\src\Expanze\bin\x86\Release\Content\Plugins\1AIGen.dll
+C:\_projekty\Expanze\src\Expanze\bin\x86\Release\Content\Plugins\1AIGen.pdb
+C:\_projekty\Expanze\src\AIGen\obj\Release\1AIGen.dll
+C:\_projekty\Expanze\src\AIGen\obj\Release\1AIGen.pdb
+C:\_projekty\Expanze\src\AIGen\obj\Release\AIGen.csprojResolveAssemblyReference.cache
